@@ -43,6 +43,9 @@ public class Room {
     public int roomHeight;
     public int index;
 
+    /**
+     * Loop through all objects that are in the room and tell them to update. (call obj.update() on each)
+     */
     public void updateObjs() {
         try {
             for (GameObject obj : objs) {
