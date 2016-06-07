@@ -1,0 +1,131 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package MagicTextb2.Rooms;
+
+import MagicTextb2.GameObjects.*;
+import MagicTextb2.ImageOrg;
+import MagicTextb2.Layer;
+import MagicTextb2.art;
+
+import java.lang.reflect.Array;
+
+/**
+ *
+ * @author 119184
+ */
+public class TestRoom extends Room {
+    
+    ImageOrg org;
+    int maxH;
+    int maxW;
+    
+    private void loop(Player play){
+        for (int ii = 0 ; ii < 1000 ; ii++){
+            try {
+                Thread.sleep(75);
+                System.out.println("I'm not dead yet! " + ii);
+                updateObjs();
+                play.update();//Update player
+                play.reportPos();
+                org.compileImage();
+                if (getFoodCount() == 0){
+                    return;
+                }
+            } catch (InterruptedException ex) {}
+        }
+    }
+    
+    public void startup(ImageOrg org, Player player){
+        super.baseHitMesh = new boolean[super.roomHeight][super.roomWidth];
+        super.hitMesh = new boolean[super.roomHeight][super.roomWidth];
+        emptyHitMesh();
+        art arty = new art();
+        String[][] base = art.strToArray(arty.hand1);
+        String[] solids = {"P", "8", "'", ",", "a","b","d","I","f","_","\"",".","`",")","Y","#"};
+        addToBaseHitMesh(base, solids);
+        Layer lay1 = new Layer(base, "Test");
+        for (int i=0; i<lay1.self.length; i++){
+            for (int j=0; j<lay1.self[0].length; j++){
+                if (lay1.self[i][j].equals("#")){
+                    lay1.self[i][j] = " ";
+                }
+            }
+        }
+        org.addLayer(lay1);        
+        
+        String foodLayerName = "foooooooooood";
+        Layer foodstuffs = new Layer(new String[maxH][maxW], foodLayerName);
+        org.addLayer(foodstuffs);
+        for (int i = 0 ; i < 10 ; i++){
+            Food aFood = new Food(org, foodLayerName, this);
+            addObject(aFood);
+        }
+        super.playo = player;
+        Layer playerLayer = org.getLayer(org.getPosLayer(player.layerName));
+        org.addLayer(playerLayer);
+        
+        Layer HUDd = new Layer(new String[maxH][maxW], "HUD", false);
+        org.addLayer(HUDd);
+        HUD hud = new HUD(org, this, HUDd);
+        addObject(hud);
+
+        FallingDot dot = new FallingDot(org, this);
+        Layer dotLand = new Layer(new String[30][50], dot.layerName);
+        org.addLayer(dotLand);
+        addObject(dot);
+        dot = new FallingDot(org, this);
+        addObject(dot);
+        dot = new FallingDot(org, this);
+        addObject(dot);
+        dot = new FallingDot(org, this);
+        addObject(dot);
+    }
+    
+    /** 
+     * Enter the room. IE, start loops and stuff now.
+     */
+    public void enter(Player player){
+        org.compileImage();
+        player.frozen = false;
+        loop(player);
+        player.frozen = true;
+        super.cleanLayersForExit(org);
+    }
+    
+    public TestRoom(ImageOrg orgo){
+        org = orgo;
+        maxH = org.getWindow().maxH();
+        maxW = org.getWindow().maxW();
+        super.roomHeight = maxH;
+        super.roomWidth = maxW;
+        super.index = 1;
+    }
+    
+    private String[][] makeABox(int width, int height){
+        String[][] output = new String[height][width];
+        for(int ii = 0; ii < height; ii++){
+            for (int iii = 0 ; iii < width; iii++){
+                if (ii == 0 || ii == height - 1){
+                    if (iii == 0 || iii == width - 1){
+                        output[ii][iii] = "O";
+                    } else {
+                        output[ii][iii] = "-";
+                    }
+                } else {
+                    if (iii == 0 || iii == width - 1){
+                        output[ii][iii] = "|";
+                    } else if (ii % 3 == 0 && iii % 6 == 0){
+                        output[ii][iii] = ".";
+                    } else {
+                        output[ii][iii] = " ";
+                    }
+                }
+            }
+        }
+        return output;
+    }
+
+}
