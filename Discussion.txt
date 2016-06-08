@@ -1,18 +1,32 @@
+////                                 D I S C U S S I O N   D O C                                                   /////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Resources:
-A Google Slides presentation on this project is available: https://docs.google.com/presentation/d/1wqmLg43CqofbB66FV9tE0U2QGllomzUqPrsI-etT_kA/edit#slide=id.g14d6ba0ce4_0_116
+A Google Slides presentation on this project is available:
+  https://docs.google.com/presentation/d/1wqmLg43CqofbB66FV9tE0U2QGllomzUqPrsI-etT_kA/edit#slide=id.g14d6ba0ce4_0_116
 This project is tracked on GitHub: https://github.com/random-person-001/MagicText.git
 
+
 Jared: Let's move to Github.  Jetbrains makes it easy in a way Netbeans never could.
-    Go to VCS > Checkout from Version Control > GitHub
+    Go to the menu VCS > Checkout from Version Control > GitHub
     Enter your login credentials
     In the box, paste:  https://github.com/random-person-001/MagicText.git
-    Say yes to it being a new .idea project, accepting its defaults
+    Say yes to it being a new .idea project, accepting its numerous defaults
 
     Then it's done!  We can version control correctly and collaborate concurrently!
 
 
-Generally Relevant words:
+I feel like we can refine the proposed-gameplay a bit.  I like explorey and sandbox games (though I doubt sandbox would
+ be feasible here).  I like the idea of throwing in some puzzles, satires, and easter eggs but don't know about a
+ general overlying gameplay.
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                              G E N E R A L L Y   R E L E V A N T   W O R D S
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 <story>
 There once was a time, which was rather recent, that the world was simple. @'s were people, #'s were walls and terrain.
