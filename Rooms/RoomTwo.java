@@ -26,10 +26,10 @@ public class RoomTwo extends Room {
         for (int ii = 0 ; ii < 1000 ; ii++){
             try {
                 Thread.sleep(75);
-                System.out.println("I'm not dead yet! " + ii);
+                //System.out.println("I'm not dead yet! " + ii);
                 updateObjs();
                 play.update();//Update player
-                play.reportPos();
+                //play.reportPos();
                 org.compileImage();
                 if (getFoodCount() == 0){
                     return;

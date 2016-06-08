@@ -56,6 +56,7 @@ public class Player extends GameObject {
     private final int DOWN = 1;
     private final int LEFT = 2;
     private final int RIGHT = 3;
+    private int superCheatProgress = 0;
 
     public int baseAttack = 3;
     public int baseDefend = 3;
@@ -327,6 +328,57 @@ public class Player extends GameObject {
         }
         graphicUpdate();
         org.setCam(x - 22, y - 8);
+        checkCheatProgress(key);
+    }
+
+
+    /**
+     * Tracker for Up up down down left right left right b a [whatever] cheat.
+     * @param c character that was pressed
+     */
+    private void checkCheatProgress(char c){
+        System.out.println(superCheatProgress);
+        if (superCheatProgress > 9){
+            // Yay!
+            org.getWindow().txtArea.setBackground(Color.MAGENTA);
+            room.foodEaten += 42;
+            //for (Color col : Color)
+            superCheatProgress = 0;
+            org.getWindow().txtArea.setBackground(Color.GRAY);
+        }
+        switch (superCheatProgress){
+            case 0:
+                if (c == 'w'){ superCheatProgress++; return; }
+                break;
+            case 1:
+                if (c == 'w'){ superCheatProgress++; return; }
+                break;
+            case 2:
+                if (c == 's'){ superCheatProgress++; return; }
+                break;
+            case 3:
+                if (c == 's'){ superCheatProgress++; return; }
+                break;
+            case 4:
+                if (c == 'a'){ superCheatProgress++; return; }
+                break;
+            case 5:
+                if (c == 'd'){ superCheatProgress++; return; }
+                break;
+            case 6:
+                if (c == 'a'){ superCheatProgress++; return; }
+                break;
+            case 7:
+                if (c == 'd'){ superCheatProgress++; return; }
+                break;
+            case 8:
+                if (c == 'b'){ superCheatProgress++; return; }
+                break;
+            case 9:
+                if (c == 'a'){ superCheatProgress++; return; }
+                break;
+        }
+        superCheatProgress = 0;
     }
 
     public void reportPos() {

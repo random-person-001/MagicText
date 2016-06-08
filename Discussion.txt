@@ -1,4 +1,4 @@
-////                                 D I S C U S S I O N   D O C                                                   /////
+////                                    D I S C U S S I O N   D O C                                                /////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Resources:
@@ -18,8 +18,7 @@ Jared: Let's move to Github.  Jetbrains makes it easy in a way Netbeans never co
 
 I feel like we can refine the proposed-gameplay a bit.  I like explorey and sandbox games (though I doubt sandbox would
  be feasible here).  I like the idea of throwing in some puzzles, satires, and easter eggs but don't know about a
- general overlying gameplay.
-
+ general overlying gameplay.  I feel like some flashbacks scattered through the beginning may be a good thing to do.
 
 
 
@@ -68,7 +67,7 @@ Your attacks are casting spells. You can have up to two spells equipped at a tim
  D key respectively. Pushing the corresponding button will cast the spell in the direction of your orientation. Some
  spells may be cast on yourself and thus doesn't utilize orientation. Shooting a fireball will.
 
-Pushing the W key will open a menu where you can conifgure inventory and spells. Spells are discovered throughout your
+Pushing the W key will open a menu where you can configure inventory and spells. Spells are discovered throughout your
  journey.
 
 Spells have a cost attached to them, rather than require a cooling down period. They consume a resource called "mana."
