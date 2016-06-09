@@ -7,7 +7,7 @@ A Google Slides presentation on this project is available:
 This project is tracked on GitHub: https://github.com/random-person-001/MagicText.git
 
 
-Jared: Let's move to Github.  Jetbrains makes it easy in a way Netbeans never could.
+Riley: Let's move to Github.  Jetbrains makes it easy in a way Netbeans never could.
     Go to the menu VCS > Checkout from Version Control > GitHub
     Enter your login credentials
     In the box, paste:  https://github.com/random-person-001/MagicText.git
@@ -22,6 +22,21 @@ I feel like we can refine the proposed-gameplay a bit.  I like explorey and sand
 
 
 
+
+
+Jared:
+What do you think of the other possible titles for our game?
+
+"Sourcery Text"
+"Alphanumeric Misadventures"
+
+...or does "Magic Text" work well enough?
+
+
+Riley:
+I also like Sourcery Text, although the other is also good.
+
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                               G E N E R A L L Y   R E L E V A N T   W O R D S
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -29,32 +44,51 @@ I feel like we can refine the proposed-gameplay a bit.  I like explorey and sand
 
 <story>
 There once was a time, which was rather recent, that the world was simple. @'s were people, #'s were walls and terrain.
+
 It was simple, and somewhat elegant too.
 
 You couldn't have asked for anything more.
+
+
 Unfortunately, someone other than you could. That scoundrel decided the world needed more than 3 characters, and
  switched the world's settings to enable the use of all characters.
+
+
 
 Numbers, letters, and other non-alphanumeric characters flooded the world, making it complex, interesting, and also
  confusing.
 
+
+
 You decide this wasn't a good thing. And so you embark on a wayward journey to dive into the gaping hole in the earth,
  called The Source, and switch the settings back to normal.  Most worlds are closed-source, and that just stinks. This
- world is special, however.  It is open-source. The Source is a giant pit in the universe that leads to the source code
+ world is special, however.  It is open-source. 
+
+The Source is a giant pit in the universe that leads to the source code
  of the world and anyone in there can change anything.
 
-The only problem is that you need a rope strong enough to survive exiting the universe and into its settings. Those
- ropes are, as it turns out, pretty scarce. They do exist though, since that guy found a way into the settings. To start
- the whole mess.  Without a rope, you would fall out of the universe and never come back, or achieve anything.
+
+The only problem is that you need a rope strong enough to survive exiting the universe and into its settings. 
+
+Those ropes are, as it turns out, pretty scarce. They do exist though, since that guy found a way into the settings in
+ the first place. Without a rope, you would fall out of the universe and never come back, or achieve anything.
+
+
 
 And thus the quest for the wondrous rope began.
+
+
 </story>
 
 
 
 <possible-gameplay>
+
+
 I really like the top-down perspective, so I feel as if we should go with that. So here is what I'm thinking of: (NOTE:
  the controls are best visualized on a qwerty keyboard)
+
+
 
 The UP, DOWN, LEFT, and RIGHT arrow keys control movement. Moving in a direction will set your orientation in that
  direction. Orientation doesn't change when you stop moving.  Pressing the A key will toggle locking your orientation at
@@ -63,22 +97,33 @@ The UP, DOWN, LEFT, and RIGHT arrow keys control movement. Moving in a direction
 (The + symbol helps the player remember know they are orientation-locked and what their orientation is despite their
  movements; '@+' means oriented to the right)
 
+
+
 Your attacks are casting spells. You can have up to two spells equipped at a time. The two spells are bound to the S and
  D key respectively. Pushing the corresponding button will cast the spell in the direction of your orientation. Some
  spells may be cast on yourself and thus doesn't utilize orientation. Shooting a fireball will.
 
+
+
 Pushing the W key will open a menu where you can configure inventory and spells. Spells are discovered throughout your
  journey.
+
 
 Spells have a cost attached to them, rather than require a cooling down period. They consume a resource called "mana."
  (A common name for magic resource) Each spell uses different amounts of mana and thus can be casted a different amount
  of times in succession.
 
-Not casting a spell for 2 seconds (could a have a stat modifier; could possibly be longer than 2 as a base) will quickly
+ Not casting a spell for 2 seconds (could a have a stat modifier; could possibly be longer than 2 as a base) will quickly
  recharge your mana back to full.
 
-Enemies that attack you will deplete a health stat. Reaching zero health or below will result in death. The game will
- then reset to the most recently saved state.  (A fairly standard mechanic).  Enemies can also die.
+
+
+Enemies that attack you will deplete a health stat. Reaching zero health or below will result in death. 
+The game will
+ then reset to the most recently saved state.  (A fairly standard mechanic).  
+
+Enemies can also die.
+
 
 Combat will consist of locking your orientation (aiming), and then fire spells while strafing to dodge enemy attacks or
  run from enemies with melee weapons. When the players runs out of mana, they will will then have to focus more on
@@ -88,5 +133,4 @@ Combat will consist of locking your orientation (aiming), and then fire spells w
 Hopefully, different enemy types, environments, and spells throughout the game will keep the combat interesting enough
  to keep the player from getting bored of the somewhat inherently repetitive gameplay.
 </possible-gameplay>
-
 

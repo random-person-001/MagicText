@@ -146,10 +146,9 @@ public class ImageOrg {
      */
     public void compileImage(){
         window.clearImage();
-        //reportCam();
         for (int id = 0; id < layers.size() ; id++){
-            Layer get = (Layer)layers.get(id);
-            if (get.getCamOb() == true){
+            Layer get = layers.get(id);
+            if (get.getCamOb()){
                 window.placeLayer(get, camX, camY);
             } else {
                 window.setLayer(get);

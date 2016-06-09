@@ -20,6 +20,7 @@ import MagicTextb2.Rooms.Room;
 import MagicTextb2.Window;
 import MagicTextb2.art;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -340,11 +341,24 @@ public class Player extends GameObject {
         System.out.println(superCheatProgress);
         if (superCheatProgress > 9){
             // Yay!
-            org.getWindow().txtArea.setBackground(Color.MAGENTA);
+            Window w = org.getWindow();
+            JTextArea ta = w.txtArea;
             room.foodEaten += 42;
             //for (Color col : Color)
+            try {
+                for (float r = 0; r < 1; r+=.33){  // Using steps of .33, 4 colors are shown each, for total of 64.
+                    for (float g = 0; g < 1; g+=.33){
+                        for (float b = 0; b < 1; b+=.33){
+                            ta.setBackground(new Color(r,g,b));
+                            w.validateContainer();
+                            Thread.sleep(90);
+                        }
+                    }
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             superCheatProgress = 0;
-            org.getWindow().txtArea.setBackground(Color.GRAY);
         }
         switch (superCheatProgress){
             case 0:

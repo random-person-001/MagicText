@@ -16,12 +16,13 @@ import javax.swing.JFrame;
 import javax.swing.JTextArea;
 
 
+
 /**
  *
  * @author 119184
  */
 public class Window extends JFrame{
-
+    private static final String OPAQUE_SPACE = "\t";
     public JTextArea txtArea = new JTextArea();
     private Container c = getContentPane();
     
@@ -32,7 +33,7 @@ public class Window extends JFrame{
      */
     public int maxH(){
         return 62;
-    }
+    } //Note that this must be >= any layer sizes, but other than that it's arbitrary
 
     /**
      * @return the maximum allowable width in the game
@@ -80,14 +81,14 @@ public class Window extends JFrame{
 
     /** Perform some sort of magic.   I quote from the function, "This stuff is complicated!!!!"
      * @param layer a new Layer to be placed
-     * @param camX
-     * @param camY
+     * @param camX camera X coord
+     * @param camY camera Y coord
      */
     public void placeLayer(Layer layer, int camX, int camY){ //Layers place on top of each other
         for (int row = 0; row < layer.getRows() ; row++){
             for (int col = 0; col < layer.getColumns(); col++){ //This stuff is complicated!!!!
                 if (!" ".equals(layer.getStr(row,col))){ 
-                    if ("".equals(layer.getStr(row, col)) || layer.getStr(row, col) == null){
+                    if ("".equals(layer.getStr(row, col)) || layer.getStr(row, col) == null || layer.getStr(row, col).equals(OPAQUE_SPACE)){
                         fullImage.placeStr(row + layer.getX() - camX,col + layer.getY() - camY," ");
                     } else {
                         fullImage.setStr(row + layer.getX() - camX, col + layer.getY() - camY, layer.getStr(row,col));
@@ -98,13 +99,13 @@ public class Window extends JFrame{
     }
 
     /** Much like placeLayer, but ignores camera.
-     * @param layer
+     * @param layer a layer to place on top of fullImage
      */
     public void setLayer(Layer layer){ //Much like placeLayer, but ignores camera
         for (int row = 0; row < fullImage.getRows() ; row++){
             for (int col = 0; col < fullImage.getColumns(); col++){ //This stuff is complicated!!!!
                 if (!" ".equals(layer.getStr(row, col))){ 
-                    if ("".equals(layer.getStr(row, col)) || layer.getStr(row, col) == null){
+                    if ("".equals(layer.getStr(row, col)) || layer.getStr(row, col) == null || layer.getStr(row, col).equals(OPAQUE_SPACE)){
                         fullImage.placeStr(row, col, " ");
                     } else {
                         fullImage.setStr(row, col, layer.getStr(row,col));
@@ -136,7 +137,7 @@ public class Window extends JFrame{
     }
 
     /** Toss some string onto the end of the window's text area.  Note that in most cases, this will be off the screen.
-     * @param str
+     * @param str the String to append
      */
     public void append(String str){
         txtArea.setText(txtArea.getText() + str);
@@ -179,6 +180,10 @@ public class Window extends JFrame{
         c.validate();
     }
 
+    public void validateContainer(){
+        c.validate();
+    }
+
     /**
      * Perform some sort of magic, of questionable usefulness.
      */
@@ -188,6 +193,7 @@ public class Window extends JFrame{
         
         c.add(txtArea);
         c.validate();
+        txtArea.requestFocusInWindow();
     }
     
 
