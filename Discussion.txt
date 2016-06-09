@@ -7,7 +7,7 @@ A Google Slides presentation on this project is available:
 This project is tracked on GitHub: https://github.com/random-person-001/MagicText.git
 
 
-Riley: Let's move to Github.  Jetbrains makes it easy in a way Netbeans never could.
+>>> Riley: Let's move to Github.  Jetbrains makes it easy in a way Netbeans never could.
     Go to the menu VCS > Checkout from Version Control > GitHub
     Enter your login credentials
     In the box, paste:  https://github.com/random-person-001/MagicText.git
@@ -15,8 +15,7 @@ Riley: Let's move to Github.  Jetbrains makes it easy in a way Netbeans never co
 
     Then it's done!  We can version control correctly and collaborate concurrently!
 
-
-I feel like we can refine the proposed-gameplay a bit.  I like explorey and sandbox games (though I doubt sandbox would
+I feel like we can refine the proposed-gameplay a bit.  I like exploring and sandbox games (though I doubt sandbox would
  be feasible here).  I like the idea of throwing in some puzzles, satires, and easter eggs but don't know about a
  general overlying gameplay.  I feel like some flashbacks scattered through the beginning may be a good thing to do.
 
@@ -24,7 +23,7 @@ I feel like we can refine the proposed-gameplay a bit.  I like explorey and sand
 
 
 
-Jared:
+>>> Jared:
 What do you think of the other possible titles for our game?
 
 "Sourcery Text"
@@ -33,11 +32,55 @@ What do you think of the other possible titles for our game?
 ...or does "Magic Text" work well enough?
 
 
-Riley:
+
+
+>>> Riley:
 I also like Sourcery Text, although the other is also good.
 
 I edited Window.java lines 91 and 109 with the hope of making opaque spaces, but that didn't seem to work.  Should
  opaque spaces be in Layer.setStr() or .placeStr()?
+
+
+
+
+Proposed game starting:
+ > A scene (of nostalgic colors) fades into the screen, with the first paragraph (2 sent.) of the story
+ > The text fades to the next paragraph, possibly with a different scene, for the entire <story></story>
+ > Once the story finishes, the screen fades to white and "2 Weeks Later" appears, and then it cuts to a the live level
+ > You wander around without direction in a small room, and when you pick up [mana/food/a spellbook/etc], you're told
+      what it is and how to use it.
+ > You can then get out of the room into another controlled space, where ideally, you'd test that thing
+ > At some point, I'd like a more open world, but that'd be later
+ > As users accommodate to the flow of the game, things like staff upgrades, different weapons and powerups, and more
+      freedom get introduced (larger levels/areas/worlds where you don't have to do things sequentially)
+
+
+Cool things that could be included:
+ * Different Biomes/Environments
+ * Fighting yourself or a clone of yourself that wanders around and gets killed, drains useful stuff from you
+ * A dungeon that claims to be dynamically generated but is always bugged/blocked so says to try again
+ * Numerous H2G2 references
+ * A mirror room, where you're in the middle of a bunch of identical-looking rooms as far as eye can see, and when you
+       exit one, you really just reenter the same room at a corresponding door, but you'd never know
+ * Old hermit that gives you advice that gets you killed, later in game seen laughing and remarking how was joking
+ * I feel like doing some essential-to-reality but never included in games task, like going to the bathroom, eating,
+       or sleeping should be done sometimes
+ * A place where another character remarks how they can't find their way out of a maze, but from your birds-eye-view
+       it is obvious.
+ * You should be able to throw your staff or a book or something as a last resort, or maybe that's just how you start
+        off.  I actually like that as being how you start off - throwing your spellbook at a beast because you have
+        nothing else.  Then as you learn new stuff, you can be notified that you are more civilized than tossing blunt
+        objects, and "can cast spells like a decent member of our society"
+ * 
+
+
+TODO> Make the window the same size (or contain the same amount of text) across different OSs
+  * I actually would like to see if we could make it a bit bigger, for a more immersive experience than just a sixth
+        of the screen
+TODO> Make opaque spaces [see line 38 of this file]
+TODO> Do you have to validate the window or something after changing the background color, or is 90ms just too short to
+ TODO  wait? (as seen in the Player cheating method)
+TODO>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                               G E N E R A L L Y   R E L E V A N T   W O R D S
