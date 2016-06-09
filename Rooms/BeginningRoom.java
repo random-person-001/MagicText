@@ -47,12 +47,8 @@ public class BeginningRoom extends Room {
         String foodLayerName = "foooooooooood";
         Layer foodstuffs = new Layer(new String[maxH][maxW], foodLayerName);
         org.addLayer(foodstuffs);
-        //ArrayList<Food> worldFoodSupply = new ArrayList<>();
-        for (int i = 0 ; i < totalFood ; i++){
-            Food aFood = new Food(org, foodLayerName, (Room)this);
-            addObject(aFood);
-        }
-        super.playo = player;
+        Food aFood = new Food(org, foodLayerName, this);
+        addObject(aFood);
 
         Layer playerLayer = new Layer(new String[maxH][maxW], player.layerName);
         org.addLayer(playerLayer);
