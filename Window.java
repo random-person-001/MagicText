@@ -148,15 +148,20 @@ public class Window extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Magic Text!");
         setResizable(false);
-        setVisible(true);
 
+        clearImage();
+        build(0,0);
         txtArea.setBackground(Color.BLACK);
         txtArea.setForeground(Color.WHITE);
         //txtArea.setFont(new Font("Consolas", Font.PLAIN, 15));
         txtArea.setFont(new Font("Monospaced", Font.PLAIN, 15));
         txtArea.setEditable(false);
 
-        init();
+        c.add(txtArea);
+        c.validate();
+
+        setVisible(true);
+        txtArea.requestFocusInWindow();
     }
     
     private void test() throws InterruptedException{
