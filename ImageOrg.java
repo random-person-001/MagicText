@@ -5,6 +5,7 @@
  */
 package MagicTextb2;
 
+import javax.naming.OperationNotSupportedException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,11 +24,47 @@ public class ImageOrg {
         window = game;
     }
 
-    /** Add a layer onto the top
+    /** Add a layer onto the top, or somewhere near it if there's more important things
      * @param lay a Layer to be known about by everything
      */
     public void addLayer(Layer lay){
         layers.add(lay);
+        //updateOrder();
+    }
+
+    /**
+     * Reorder the list of layers to observe each one's <>importance</>
+     */
+    private void updateOrder() {
+        //throw new OperationNotSupportedException
+        boolean swapped = true;
+        while (swapped) {
+            swapped = false;
+            for (int i = 0; i < layers.size(); i++) {
+                if (layers.get(i-1).getImportance() > layers.get(i).getImportance()){
+                    Layer temp = layers.get(i-1);
+                    layers.remove(i-1);
+                    layers.add(i, temp);
+                }
+
+            }
+        }
+    }
+
+    public void sortArray(int[] x) {
+        boolean swapped = true;
+        while (swapped) {
+            swapped = false;
+            for(int i=1; i<x.length; i++) {
+                int temp=0;
+                if(x[i-1] > x[i]) {
+                    temp = x[i-1];
+                    x[i-1] = x[i];
+                    x[i] = temp;
+                    swapped = true;
+                }
+            }
+        }
     }
 
     /** Return the Layer specified by its index

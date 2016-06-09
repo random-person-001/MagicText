@@ -30,7 +30,7 @@ import java.util.Random;
 import static java.lang.Math.abs;
 
 /**
- * Player-controlled protagonist
+ * Player-controlled protagonist  CHECK YOUR EMAIL, JARED!
  *
  * @author Riley
  */
@@ -55,6 +55,12 @@ public class Player extends GameObject {
     private final int DOWN = 1;
     private final int LEFT = 2;
     private final int RIGHT = 3;
+
+    private int orientation = UP;
+    boolean orientationLocked = false;
+
+    public Layer castingLayer;
+
     private int superCheatProgress = 0;
     private Color restingBackground = Color.black;
 
@@ -247,6 +253,7 @@ public class Player extends GameObject {
      */
     public void graphicUpdate() {
         org.editLayer((big) ? smallChar : largeChar, layerName, y, x);
+
     }
 
     private void move(int direction) {
@@ -260,18 +267,26 @@ public class Player extends GameObject {
             case UP:
                 if (!room.isPlaceSolid(x, y - 1))
                     y--;
+                if (!orientationLocked)
+                    orientation = UP;
                 break;
             case DOWN:
                 if (!room.isPlaceSolid(x, y + 1))
                     y++;
+                if (!orientationLocked)
+                    orientation = DOWN;
                 break;
             case LEFT:
                 if (!room.isPlaceSolid(x - 1, y))
                     x--;
+                if (!orientationLocked)
+                    orientation = LEFT;
                 break;
             case RIGHT:
                 if (!room.isPlaceSolid(x + 1, y))
                     x++;
+                if (!orientationLocked)
+                    orientation = RIGHT;
                 break;
             default:
                 System.out.println("Bro, you're using Player.move wrong.");
@@ -290,16 +305,16 @@ public class Player extends GameObject {
         }
         loc = org.getPosLayer(layerName);
         switch (key) {
-            case 'w':
+            case '©':
                 move(UP);
                 break;
-            case 'a':
+            case 'µ':
                 move(LEFT);
                 break;
-            case 's':
+            case '®':
                 move(DOWN);
                 break;
-            case 'd':
+            case 'æ':
                 move(RIGHT);
                 break;
             case 'q':
@@ -325,6 +340,10 @@ public class Player extends GameObject {
                 //System.exit(0);
                 shouldPause = true;
                 break;
+            case 's':
+                castSpell();
+            case 'a':
+                orientationLocked = !orientationLocked;
             default:
                 System.out.print(key);
         }
@@ -333,6 +352,10 @@ public class Player extends GameObject {
         checkCheatProgress(key);
     }
 
+
+    public void castSpell(){
+        room.addObject(new Spark(org, (Room)room, castingLayer, x, y, orientation));
+    }
     /**
      * @param newColor a new Color for the player to perceive as the proper one for a background to be
      */
@@ -446,19 +469,19 @@ class MKeyListener extends KeyAdapter {
         player.keyPressed(ch);
         if (event.getKeyCode() == KeyEvent.VK_UP) {
             //System.out.println("UP! Key codes: " + event.getKeyCode());
-            player.keyPressed('w');
+            player.keyPressed('©');
         }
         if (event.getKeyCode() == KeyEvent.VK_DOWN) {
             //System.out.println("DOWN! Key codes: " + event.getKeyCode());
-            player.keyPressed('s');
+            player.keyPressed('®');
         }
         if (event.getKeyCode() == KeyEvent.VK_LEFT) {
             //System.out.println("LEFT! Key codes: " + event.getKeyCode());
-            player.keyPressed('a');
+            player.keyPressed('µ');
         }
         if (event.getKeyCode() == KeyEvent.VK_RIGHT) {
             //System.out.println("RIGHT! Key codes: " + event.getKeyCode());
-            player.keyPressed('d');
+            player.keyPressed('æ');
         }
         if (event.getKeyCode() == KeyEvent.VK_ESCAPE) {
             //System.out.println("RIGHT! Key codes: " + event.getKeyCode());

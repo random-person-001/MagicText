@@ -16,9 +16,15 @@ public class Layer {
     private boolean keyExists = false;
     private boolean opaque = false;
     private boolean cameraObedient = true;
-    
     private int xPos = 0;
     private int yPos = 0;
+    /**
+     * Pertinent to ordering the layers.
+     * Higher is more important/will mean more on top
+     * -1 is no preference to layer order,  100 is the Player's layer, 101 is the HUD, and anything higher than that
+     * will display above those
+     */
+    private int importance = -1;
     
     /*
     Note to future self:
@@ -26,7 +32,7 @@ public class Layer {
                       cols = layer.length
     Each array in the array represent a column, and entries in each array repesent a row
     therefore:
-    layer[col][row]    // Wait, what?  Everywhere here it's the other way around!?!?!?!!!
+    layer[col][row]    // Wait, what?  Everywhere here it's the other way around!?!?!?!!! -Riley
 
     */
     
@@ -174,15 +180,32 @@ public class Layer {
     }
 
     /**
-     * @param input
+     * @param input a string that may be the name of the layer
      * @return true iff the Strings are the same and keyExists (whatever that is)
      */
-    public boolean nameMatches (String input){
-        if (keyExists){
-            return input.equals(name);
-        } else {
-            return false;
-        }
+    public boolean nameMatches (String input) {
+        return keyExists && input.equals(name);
+    }
+
+    /**
+     * Pertinent to ordering the layers.
+     * Higher importance will mean more on top
+     * -1 is no preference to layer order,  100 is the Player's layer, 101 is the HUD, and anything higher than that
+     * will display above those
+     * @return what it is for this Layer
+     */
+    public int getImportance(){
+        return importance;
+    }
+    /**
+     * Pertinent to ordering the layers.
+     * Higher importance will mean more on top
+     * -1 is no preference to layer order,  100 is the Player's layer, 101 is the HUD, and anything higher than that
+     * will display above those
+     * @param newImportance what it should be set to now
+     */
+    public void setImportance(int newImportance){
+        importance = newImportance;
     }
 
     /**

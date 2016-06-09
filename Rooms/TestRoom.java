@@ -39,9 +39,13 @@ public class TestRoom extends Room {
     }
     
     public void startup(ImageOrg org, Player player){
+        Layer spells = new Layer(new String[maxH][maxW], "Spellz", true);
+        org.addLayer(spells);
+
         super.playo = player;
+        player.castingLayer = spells;
         super.baseHitMesh = new boolean[super.roomHeight][super.roomWidth];
-        super.hitMesh = new boolean[super.roomHeight][super.roomWidth];
+        super.objHitMesh = new boolean[super.roomHeight][super.roomWidth];
         emptyHitMesh();
         art arty = new art();
         String[][] base = art.strToArray(arty.hand1);
@@ -67,7 +71,10 @@ public class TestRoom extends Room {
         super.playo = player;
         Layer playerLayer = org.getLayer(org.getPosLayer(player.layerName));
         org.addLayer(playerLayer);
-        
+
+        Spark sparky = new Spark(org, (Room)this, spells, 15, 15, 0);
+        addObject(sparky);
+
         Layer HUDd = new Layer(new String[maxH][maxW], "HUD", false);
         org.addLayer(HUDd);
         HUD hud = new HUD(org, this, HUDd);
