@@ -32,16 +32,16 @@ What do you think of the other possible titles for our game?
 ...or does "Magic Text" work well enough?
 
 
-
-
 >>> Riley:
 I also like Sourcery Text, although the other is also good.
 
 I edited Window.java lines 91 and 109 with the hope of making opaque spaces, but that didn't seem to work.  Should
  opaque spaces be in Layer.setStr() or .placeStr()?
 
-
-
+I really like how KSP does their descriptions; we should strive to do things similarly:
+   "The Mk16 Parachute might be considered by some to be little more than a random stitching together of the surplus
+   parts it is, in fact, made from. But the fact remains that the Mk16 has been widely accepted as a generally better
+   alternative to being in freefall."
 
 Proposed game starting:
  > A scene (of nostalgic colors) fades into the screen, with the first paragraph (2 sent.) of the story
@@ -53,7 +53,6 @@ Proposed game starting:
  > At some point, I'd like a more open world, but that'd be later
  > As users accommodate to the flow of the game, things like staff upgrades, different weapons and powerups, and more
       freedom get introduced (larger levels/areas/worlds where you don't have to do things sequentially)
-
 
 Cool things that could be included:
  * Different Biomes/Environments
