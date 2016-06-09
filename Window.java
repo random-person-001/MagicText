@@ -146,7 +146,7 @@ public class Window extends JFrame{
     public Window() throws InterruptedException{
         setBounds(100, 100, 412, 412);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setTitle("Magic Text!");
+        setTitle("Sourcery Text  -  an alphanumeric misadventure");
         setResizable(false);
 
         clearImage();
