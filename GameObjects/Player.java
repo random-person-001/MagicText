@@ -59,6 +59,9 @@ public class Player extends GameObject {
     private int orientation = UP;
     boolean orientationLocked = false;
 
+    private Layer aimDispLayer;
+    private String aimDispName = "aimDisp";
+
     public Layer castingLayer;
 
     private int superCheatProgress = 0;
@@ -79,7 +82,9 @@ public class Player extends GameObject {
         room = theRoom;
         org = theOrg;
         Layer playerLayer = new Layer(new String[org.getWindow().maxH()][org.getWindow().maxW()], layerName);
+        aimDispLayer = new Layer(new String[org.getWindow().maxH()][org.getWindow().maxW()], aimDispName);
         org.addLayer(playerLayer);
+        org.addLayer(aimDispLayer);
         loc = org.getPosLayer(layerName);
 
         Window window = org.getWindow();
@@ -136,6 +141,7 @@ public class Player extends GameObject {
             org.editLayer((s1) ? state1 : state2, loc, y, x);
         } else {
             graphicUpdate();
+            aimDispUpdate();
         }
         if (autonomous) {
             closestFood = getClosestVisibleFood();
@@ -161,6 +167,30 @@ public class Player extends GameObject {
         }
         updateBackground();
     }
+
+    private void aimDispUpdate(){
+        if (orientationLocked){
+            int editAt = org.getPosLayer(aimDispName);
+            org.getLayer(editAt).clear();
+            switch(orientation){
+                case UP:
+                    org.editLayer("+", editAt, y - 1, x);
+                    break;
+                case DOWN:
+                    org.editLayer("+", editAt, y + 1, x);
+                    break;
+                case LEFT:
+                    org.editLayer("+", editAt, y, x - 1);
+                    break;
+                case RIGHT:
+                    org.editLayer("+", editAt, y, x + 1);
+                    break;
+                default:
+                    System.out.println("No valid orientation? IMPOSSIBLE");
+            }
+        }
+    }
+
 
     /**Generate a random int between 0 and max, inclusive.
      * @param max the largest number that amy be returned
@@ -342,8 +372,10 @@ public class Player extends GameObject {
                 break;
             case 's':
                 castSpell();
+                break;
             case 'a':
                 orientationLocked = !orientationLocked;
+                break;
             default:
                 System.out.print(key);
         }
