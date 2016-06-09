@@ -41,7 +41,7 @@ public class RoomTwo extends Room {
     public void startup(ImageOrg org, Player player){
         super.playo = player;
         super.baseHitMesh = new boolean[super.roomHeight][super.roomWidth];
-        super.hitMesh = new boolean[super.roomHeight][super.roomWidth];
+        super.objHitMesh = new boolean[super.roomHeight][super.roomWidth];
         emptyHitMesh();
         art arty = new art();
         String[][] roomArr = art.strToArray(arty.dualRoom);
