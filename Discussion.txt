@@ -12,6 +12,11 @@ This project is tracked on GitHub: https://github.com/random-person-001/MagicTex
     Enter your login credentials
     In the box, paste:  https://github.com/random-person-001/MagicText.git
     Say yes to it being a new .idea project, accepting its numerous defaults
+TODO sorry, I just said todo because it makes the colors different.  Anyway
+    When there're new changes on github, you can make them be on your computer too, by using VCS > Git > Fetch.
+    When committing changes, most of the time you probably want to hover over the actual button to commit, and then select
+    "commit and push"
+    We should probably stop dropboxing, now that we're successfully using git.
 
     Then it's done!  We can version control correctly and collaborate concurrently!
 
