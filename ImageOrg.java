@@ -15,8 +15,7 @@ import java.util.List;
  */
 public class ImageOrg {
     private Window window;
-    ArrayList<Layer> layers = new ArrayList<>();
-    
+    private ArrayList<Layer> layers = new ArrayList<>();
     private int camX = 0;
     private int camY = 0;
     
@@ -33,7 +32,7 @@ public class ImageOrg {
 
     /** Return the Layer specified by its index
      * @param go the Layer's index
-     * @return
+     * @return that Layer
      */
     public Layer getLayer(int go){
         return layers.get(go);
@@ -91,11 +90,11 @@ public class ImageOrg {
     }
 
     /** Change the camera's absolute position
-     * @param x units along x axis
-     * @param y units along y axis
+     * @param x units, x axis
+     * @param y units, y axis
      */
     public void setCam(int x, int y){
-        camX = y; //This is totally intentional
+        camX = y; //This is totally intentional.  We really ought to do something about that.
         camY = x;
         //reportCam();
     }
@@ -107,8 +106,11 @@ public class ImageOrg {
     public int getCamY(){
         return camX;
     }
-    
-    
+
+
+    /**
+     * Print the camera's x and y coordinates to the console
+     */
     private void reportCam(){
         System.out.println("camX: " + camY);
         System.out.println("camY: " + camX);
@@ -121,7 +123,7 @@ public class ImageOrg {
     public int getPosLayer(String layerName){
         int result = -1;
         for (int id = 0; id < layers.size() ; id++){
-            Layer get = (Layer)layers.get(id);
+            Layer get = layers.get(id);
             if (get.nameMatches(layerName)){
                 result = id;
             }
@@ -146,14 +148,12 @@ public class ImageOrg {
      */
     public void compileImage(){
         window.clearImage();
-        for (int id = 0; id < layers.size() ; id++){
-            Layer get = layers.get(id);
-            if (get.getCamOb()){
+        for (Layer get : layers) {
+            if (get.getCamOb()) {
                 window.placeLayer(get, camX, camY);
             } else {
                 window.setLayer(get);
             }
-            
         }
         window.build(camX, camY);
     }
