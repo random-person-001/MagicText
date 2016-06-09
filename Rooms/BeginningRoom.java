@@ -22,17 +22,18 @@ public class BeginningRoom extends Room {
                 Thread.sleep(75);
                 //System.out.println("I'm not dead yet! " + ii);
                 updateObjs();
-                super.playo.update();//Update player
-                //play.reportPos();
+                super.playo.update();
                 org.compileImage();
                 if (getFoodCount() == 0){
                     return;
                 }
-            } catch (InterruptedException ex) {}
+            } catch (InterruptedException ex) {
+                System.exit(0);
+            }
         }
     }
 
-    public void startup(ImageOrg org, Player player){
+    public void startup(Player player){
         super.playo = player;
         super.baseHitMesh = new boolean[super.roomHeight][super.roomWidth];
         super.objHitMesh = new boolean[super.roomHeight][super.roomWidth];
@@ -55,7 +56,7 @@ public class BeginningRoom extends Room {
 
         Layer HUDd = new Layer(new String[maxH][maxW], "HUD", false);
         org.addLayer(HUDd);
-        HUD hud = new HUD(org, (Room)this, HUDd);
+        HUD hud = new HUD(org, this, HUDd);
         addObject(hud);
     }
 
