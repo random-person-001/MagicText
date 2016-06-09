@@ -17,6 +17,8 @@ import static java.lang.Math.abs;
  */
 public class HUD extends GameObject{
     String layerName;
+    String spell1Name = "     ";
+    String spell2Name = "     ";
 
     public HUD (ImageOrg org, Room theRoom, Layer place){
         super.strClass = "HUD";
@@ -50,12 +52,18 @@ public class HUD extends GameObject{
         orgo.editLayer(Integer.toString(abs(room.foodEaten / 1 - 10*(int)(room.foodEaten / 10))), loc, y , x+3);
         orgo.editLayer("]", loc, y , x+4);
 
-        /*
-        String[] testHUD = {"[","a","b","c","d","]"," ","[","e","f","g","h","]","","{","0","0","","_","_","_","_","_","_","_","_","_","_","}"};
-        for (int it = 0 ; it < testHUD.length ; it ++) {
-            orgo.editLayer(testHUD[it], loc, y, x + 8 + it);
+        orgo.editLayer("(", loc, y, x + 6);
+        for (int ii = 0 ; ii < 5; ii++){
+            orgo.editLayer(String.valueOf(spell1Name.charAt(ii)), loc, y, x+7+ii);
         }
-        */
+
+        orgo.editLayer(")", loc, y, x + 12);
+        orgo.editLayer("", loc, y, x + 13);
+        orgo.editLayer("(", loc, y, x + 14);
+        for (int ii = 0 ; ii < 5; ii++){
+            orgo.editLayer(String.valueOf(spell1Name.charAt(ii)), loc, y, x+15+ii);
+        }
+        orgo.editLayer(")", loc, y, x+21);
     }
     
 }

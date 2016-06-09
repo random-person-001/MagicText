@@ -27,7 +27,7 @@ public class RoomTwo extends Room {
             try {
                 Thread.sleep(75);
                 //System.out.println("I'm not dead yet! " + ii);
-                updateObjs();
+                updateObjs(75);
                 play.update();//Update player
                 //play.reportPos();
                 org.compileImage();

@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import MagicTextb2.GameObjects.GameObject;
+import MagicTextb2.GameObjects.HUD;
 import MagicTextb2.GameObjects.Player;
 import MagicTextb2.ImageOrg;
 import MagicTextb2.Layer;
@@ -46,10 +47,11 @@ public class Room {
     /**
      * Loop through all objects that are in the room and tell them to update. (call obj.update() on each)
      */
-    public void updateObjs() {
+    public void updateObjs(int timeElapsed) {
         try {
             for (GameObject obj : objs) {
                 obj.update();
+                obj.addTime(timeElapsed);
             }
         } catch (ConcurrentModificationException ex) {
             System.out.println("Whoops, something weird! [Room.java: updateObjs(): caught a ConcurrentModificationException]");
@@ -83,6 +85,14 @@ public class Room {
             return false;
         }
     }*/
+    public void addHUD(ImageOrg org){  //Fixes redundancy;
+        Layer HUDd = new Layer(new String[40][70], "HUD", false);
+        org.addLayer(HUDd);
+        HUD hud = new HUD(org, (Room)this, HUDd);
+        addObject(hud);
+    }
+
+
     public boolean isPlaceSolid(int x, int y) { //Useful when defining walls of rooms
         if ((x > 0 && x < objHitMesh[0].length - 1) && (y > 0 && y < objHitMesh.length - 1)) { // Buffer of 1 for room walls
             return objHitMesh[y][x] || baseHitMesh[y][x];

@@ -32,6 +32,11 @@ public class GameObject {
     int x;
     int y;
 
+    double xVel;
+    double yVel;
+
+    int time;
+
     /**
      *
      */
@@ -42,6 +47,18 @@ public class GameObject {
                 orgo.editLayer(image.getStr(row, col), loc, y, x);
             }
         }
+    }
+
+    public void addTime(int add){
+        time += add;
+    }
+
+    public int getTime(){
+        return time;
+    }
+
+    public void applyVelocity(){
+
     }
 
     /**

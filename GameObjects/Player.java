@@ -67,8 +67,15 @@ public class Player extends GameObject {
     private int superCheatProgress = 0;
     private Color restingBackground = Color.black;
 
+    //STATS
+
     public int baseAttack = 3;
     public int baseDefend = 3;
+
+    public int maxMana = 20;
+    public int mana = maxMana;
+
+    //NO MORE STATS
     public boolean dead = false;
     Map<String, Integer> inventory; // A dict-like thing for an inventory!
     private int technicolorIndex = 0;

@@ -25,9 +25,9 @@ public class TestRoom extends Room {
     private void loop(Player play){
         for (int ii = 0 ; ii < 1000 ; ii++){
             try {
-                Thread.sleep(75);
+                Thread.sleep(20);
                 //System.out.println("I'm not dead yet! " + ii);
-                updateObjs();
+                updateObjs(20);
                 play.update();//Update player
                 //play.reportPos();
                 org.compileImage();
@@ -75,10 +75,7 @@ public class TestRoom extends Room {
         Spark sparky = new Spark(org, (Room)this, spells, 15, 15, 0);
         addObject(sparky);
 
-        Layer HUDd = new Layer(new String[maxH][maxW], "HUD", false);
-        org.addLayer(HUDd);
-        HUD hud = new HUD(org, this, HUDd);
-        addObject(hud);
+        addHUD(org);
 
         FallingDot dot = new FallingDot(org, this);
         Layer dotLand = new Layer(new String[30][50], dot.layerName);

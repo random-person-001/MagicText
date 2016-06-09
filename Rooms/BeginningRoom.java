@@ -21,7 +21,7 @@ public class BeginningRoom extends Room {
             try {
                 Thread.sleep(75);
                 //System.out.println("I'm not dead yet! " + ii);
-                updateObjs();
+                updateObjs(75);
                 super.playo.update();
                 org.compileImage();
                 if (getFoodCount() == 0){
