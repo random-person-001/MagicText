@@ -147,7 +147,12 @@ public class Layer {
             self[r][c] = str;
         }
     }
-    
+
+    /** Hey Jared!  I think this is where to put in the opaque spaces.
+     * @param r
+     * @param c
+     * @param str
+     */
     public void placeStr(int r, int c, String str){
         if (!(r < 0 || r >= getRows() || c < 0 || c >= getColumns()) &&
          !("".equals(self[r][c]) || " ".equals(self[r][c]) || (self[r][c]) != null)){
