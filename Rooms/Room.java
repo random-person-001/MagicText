@@ -24,13 +24,13 @@ import java.util.ConcurrentModificationException;
 import static java.awt.Color.*;
 
 /**
- * @author Jared
+ * @author Jared  CHECK YOUR EMAIL, JARED
  */
 public class Room {
 
     public List<GameObject> objs = new ArrayList<GameObject>();
     public HashMap storedStuff = new HashMap<String, Integer>();
-    public boolean[][] hitMesh;
+    public boolean[][] objHitMesh;
     public boolean[][] baseHitMesh;
 
     public Player playo;
@@ -84,8 +84,8 @@ public class Room {
         }
     }*/
     public boolean isPlaceSolid(int x, int y) { //Useful when defining walls of rooms
-        if ((x > 0 && x < hitMesh[0].length - 1) && (y > 0 && y < hitMesh.length - 1)) { // Buffer of 1 for room walls
-            return hitMesh[y][x] || baseHitMesh[y][x];
+        if ((x > 0 && x < objHitMesh[0].length - 1) && (y > 0 && y < objHitMesh.length - 1)) { // Buffer of 1 for room walls
+            return objHitMesh[y][x] || baseHitMesh[y][x];
             //return false;
         } else { // Outside wall
             return true;
@@ -113,9 +113,9 @@ public class Room {
                 baseHitMesh[i][j] = false;
             }
         }
-        for (int i = 0; i < hitMesh.length; i++) {
-            for (int j = 0; j < hitMesh[0].length; j++) {
-                hitMesh[i][j] = false;
+        for (int i = 0; i < objHitMesh.length; i++) {
+            for (int j = 0; j < objHitMesh[0].length; j++) {
+                objHitMesh[i][j] = false;
             }
         }
     }
