@@ -37,7 +37,7 @@ public class RoomThree extends Room {
     public void startup(ImageOrg org, Player player){
         super.playo = player;
         super.baseHitMesh = new boolean[super.roomHeight][super.roomWidth];
-        super.hitMesh = new boolean[super.roomHeight][super.roomWidth];
+        super.objHitMesh = new boolean[super.roomHeight][super.roomWidth];
         emptyHitMesh();
         String[][] test = makeABox(maxW,maxH);
         Layer lay1 = new Layer(test, "Test");
