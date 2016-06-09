@@ -39,6 +39,7 @@ public class RoomTwo extends Room {
     }
     
     public void startup(ImageOrg org, Player player){
+        super.playo = player;
         super.baseHitMesh = new boolean[super.roomHeight][super.roomWidth];
         super.hitMesh = new boolean[super.roomHeight][super.roomWidth];
         emptyHitMesh();

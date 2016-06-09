@@ -18,9 +18,7 @@ import MagicTextb2.ImageOrg;
 import MagicTextb2.Layer;
 import MagicTextb2.Rooms.Room;
 import MagicTextb2.Window;
-import MagicTextb2.art;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -58,11 +56,13 @@ public class Player extends GameObject {
     private final int LEFT = 2;
     private final int RIGHT = 3;
     private int superCheatProgress = 0;
+    private Color restingBackground = Color.black;
 
     public int baseAttack = 3;
     public int baseDefend = 3;
     public boolean dead = false;
     Map<String, Integer> inventory; // A dict-like thing for an inventory!
+    private int technicolorIndex = 0;
 
     /**Initialize a whole lotta variables.
      * @param theOrg the ImageOrg (anizer)
@@ -153,6 +153,7 @@ public class Player extends GameObject {
         } else { // Unset
             closestFood = null;
         }
+        updateBackground();
     }
 
     /**Generate a random int between 0 and max, inclusive.
@@ -332,7 +333,35 @@ public class Player extends GameObject {
         checkCheatProgress(key);
     }
 
+    /**
+     * @param newColor a new Color for the player to perceive as the proper one for a background to be
+     */
+    public void setBackgroundColor(Color newColor){
+        restingBackground = newColor;
+    }
 
+    private void updateBackground(){ // Max is about 15 or 16
+        if (technicolorIndex > 0) {
+            float r,g,b;
+            r = 0; b = 0; g = 0;
+            // RGB:  001 010 011 100 101 110 111
+            //         1   2   3   4   5   6   7
+            if ((technicolorIndex/4) % 2 > 0.){
+                r = .5f;
+            }
+            if ((technicolorIndex/2) % 2 > 0){ // Uh
+                g = .5f;
+            }
+            if (technicolorIndex % 2 > 0){ // On odds
+                b = .5f;
+            }
+            technicolorIndex--;
+            org.getWindow().txtArea.setBackground(new Color(r,g,b));
+        }
+        else {
+            org.getWindow().txtArea.setBackground(restingBackground);
+        }
+    }
     /**
      * Tracker for Up up down down left right left right b a [whatever] cheat.
      * @param c character that was pressed
@@ -341,23 +370,8 @@ public class Player extends GameObject {
         System.out.println(superCheatProgress);
         if (superCheatProgress > 9){
             // Yay!
-            Window w = org.getWindow();
-            JTextArea ta = w.txtArea;
             room.foodEaten += 42;
-            //for (Color col : Color)
-            try {
-                for (float r = 0; r < 1; r+=.33){  // Using steps of .33, 4 colors are shown each, for total of 64.
-                    for (float g = 0; g < 1; g+=.33){
-                        for (float b = 0; b < 1; b+=.33){
-                            ta.setBackground(new Color(r,g,b));
-                            w.validateContainer();
-                            Thread.sleep(90);
-                        }
-                    }
-                }
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            technicolorIndex = 16;
             superCheatProgress = 0;
         }
         switch (superCheatProgress){

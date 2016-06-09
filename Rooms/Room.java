@@ -253,6 +253,8 @@ public class Room {
                 Thread.sleep(70);
             } catch (InterruptedException e) {}
         }
+        try{ playo.setBackgroundColor(window.txtArea.getBackground()); }
+        catch (NullPointerException e){ System.out.println(e); }
         org.setCam(camStartX, org.getCamY());
         org.removeLayer("opts");
         org.removeLayer("texty");
