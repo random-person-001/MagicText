@@ -169,9 +169,9 @@ public class Player extends GameObject {
     }
 
     private void aimDispUpdate(){
+        int editAt = org.getPosLayer(aimDispName);
+        org.getLayer(editAt).clear();
         if (orientationLocked){
-            int editAt = org.getPosLayer(aimDispName);
-            org.getLayer(editAt).clear();
             switch(orientation){
                 case UP:
                     org.editLayer("+", editAt, y - 1, x);
