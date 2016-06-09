@@ -86,7 +86,7 @@ public class RoomTwo extends Room {
     
     public RoomTwo(ImageOrg orgo){
         org = orgo;
-        maxH = 39;
+        maxH = 40;
         maxW = 70; //69
         super.totalFood = 99;
         super.roomHeight = maxH;
