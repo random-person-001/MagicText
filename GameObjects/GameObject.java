@@ -43,8 +43,10 @@ public class GameObject {
             }
         }
     }
-    
+
+    /**
+     * Override this method with custom updates.  Usually for display updating
+     */
     public void update(){
-        //OVERIDE THIS WITH DISPLAY UPDATE INFORMATION
     }
 }
