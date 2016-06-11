@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package MagicTextb2.GameObjects;
+package SourceryTextb1.GameObjects;
 
-import MagicTextb2.ImageOrg;
-import MagicTextb2.Layer;
-import MagicTextb2.Rooms.Room;
+import SourceryTextb1.ImageOrg;
+import SourceryTextb1.Layer;
+import SourceryTextb1.Rooms.Room;
 
 import static java.lang.Math.abs;
 

@@ -1,11 +1,11 @@
-package MagicTextb2.Rooms;
+package SourceryTextb1.Rooms;
 
-import MagicTextb2.GameObjects.Food;
-import MagicTextb2.GameObjects.HUD;
-import MagicTextb2.GameObjects.Player;
-import MagicTextb2.ImageOrg;
-import MagicTextb2.Layer;
-import MagicTextb2.art;
+import SourceryTextb1.GameObjects.Food;
+import SourceryTextb1.GameObjects.HUD;
+import SourceryTextb1.GameObjects.Player;
+import SourceryTextb1.ImageOrg;
+import SourceryTextb1.Layer;
+import SourceryTextb1.art;
 
 /**
  * Created by riley-ubuntu on 09-Jun-2016.

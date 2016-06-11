@@ -12,7 +12,7 @@
  * See the incense for the specific language governing permissions and
  * limitations.
  */
-package MagicTextb2;
+package SourceryTextb1;
 
 /**
  * @author Riley

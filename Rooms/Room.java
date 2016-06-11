@@ -3,7 +3,7 @@
 * To change this template file, choose Tools | Templates
 * and open the template in the editor.
 */
-package MagicTextb2.Rooms;
+package SourceryTextb1.Rooms;
 
 import java.awt.*;
 import java.awt.event.KeyAdapter;
@@ -12,13 +12,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import MagicTextb2.GameObjects.GameObject;
-import MagicTextb2.GameObjects.HUD;
-import MagicTextb2.GameObjects.Player;
-import MagicTextb2.ImageOrg;
-import MagicTextb2.Layer;
-import MagicTextb2.Window;
-import MagicTextb2.art;
+import SourceryTextb1.GameObjects.GameObject;
+import SourceryTextb1.GameObjects.HUD;
+import SourceryTextb1.GameObjects.Player;
+import SourceryTextb1.ImageOrg;
+import SourceryTextb1.Layer;
+import SourceryTextb1.Window;
+import SourceryTextb1.art;
 
 import java.util.ConcurrentModificationException;
 

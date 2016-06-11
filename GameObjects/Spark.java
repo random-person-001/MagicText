@@ -1,12 +1,12 @@
-package MagicTextb2.GameObjects;
+package SourceryTextb1.GameObjects;
 
 /** A Spark
  * Created by Jared on 6/9/2016.
  */
 
-import MagicTextb2.ImageOrg;
-import MagicTextb2.Layer;
-import MagicTextb2.Rooms.Room;
+import SourceryTextb1.ImageOrg;
+import SourceryTextb1.Layer;
+import SourceryTextb1.Rooms.Room;
 
 public class Spark extends GameObject{
     String layerName;
@@ -45,11 +45,14 @@ public class Spark extends GameObject{
                 break;
         }
 
-
         if (x%2 == 0 ^ y%2 == 0) { //A really lazy way to alternate between two characters ('^' means XOR)
             orgo.editLayer("x", drawTo, y, x);
         } else {
             orgo.editLayer("+", drawTo, y, x);
+        }
+
+        if (room.isPlaceSolid(x,y)){
+            room.removeObject(this);
         }
     }
 }

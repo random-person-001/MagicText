@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package MagicTextb2;
+package SourceryTextb1;
 
-import MagicTextb2.GameObjects.Player;
-import MagicTextb2.Rooms.Room;
-import MagicTextb2.Rooms.RoomThree;
-import MagicTextb2.Rooms.RoomTwo;
-import MagicTextb2.Rooms.TestRoom;
+import SourceryTextb1.GameObjects.Player;
+import SourceryTextb1.Rooms.Room;
+import SourceryTextb1.Rooms.RoomThree;
+import SourceryTextb1.Rooms.RoomTwo;
+import SourceryTextb1.Rooms.TestRoom;
 
 
 /**

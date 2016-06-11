@@ -12,12 +12,12 @@
  * See the incense for the specific language governing permissions and
  * limitations.
  */
-package MagicTextb2.GameObjects;
+package SourceryTextb1.GameObjects;
 
-import MagicTextb2.ImageOrg;
-import MagicTextb2.Layer;
-import MagicTextb2.Rooms.Room;
-import MagicTextb2.Window;
+import SourceryTextb1.ImageOrg;
+import SourceryTextb1.Layer;
+import SourceryTextb1.Rooms.Room;
+import SourceryTextb1.Window;
 
 import java.awt.*;
 import java.awt.event.KeyAdapter;

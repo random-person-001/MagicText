@@ -6,7 +6,7 @@
 
 
 
-package MagicTextb2;
+package SourceryTextb1;
 
 import java.awt.Color;
 import java.awt.Container;

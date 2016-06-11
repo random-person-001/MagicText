@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package MagicTextb2.Rooms;
+package SourceryTextb1.Rooms;
 
-import MagicTextb2.GameObjects.*;
-import MagicTextb2.ImageOrg;
-import MagicTextb2.Layer;
-import MagicTextb2.art;
+import SourceryTextb1.GameObjects.*;
+import SourceryTextb1.ImageOrg;
+import SourceryTextb1.Layer;
+import SourceryTextb1.art;
 
 import java.lang.reflect.Array;
 
@@ -75,7 +75,7 @@ public class TestRoom extends Room {
         Layer playerLayer = org.getLayer(org.getPosLayer(player.layerName));
         org.addLayer(playerLayer);
 
-        Spark sparky = new Spark(org, (Room)this, spells, 15, 15, 0);
+        Spark sparky = new Spark(org, this, spells, 15, 15, 0);
         addObject(sparky);
 
         addHUD(org);
