@@ -86,7 +86,7 @@ public class Room {
         }
     }*/
     public void addHUD(ImageOrg org){  //Fixes redundancy;
-        Layer HUDd = new Layer(new String[40][70], "HUD", false);
+        Layer HUDd = new Layer(new String[1][70], "HUD", false, true);
         org.addLayer(HUDd);
         HUD hud = new HUD(org, (Room)this, HUDd);
         addObject(hud);
@@ -130,6 +130,10 @@ public class Room {
         }
     }
 
+    public void enterANewRoom(){
+
+    }
+
     public Player getPlayer() {
         return playo;
     }
@@ -170,12 +174,12 @@ public class Room {
 
     public void infoMessage(ImageOrg org, String usefulTip) {
         art arty = new art();
-        Layer bkgd = new Layer(art.strToArray(arty.usefulTipBkgd), "tip", org.getCamY()+7, org.getCamX()+5);
+        Layer bkgd = new Layer(art.strToArray(arty.usefulTipBkgd), "tip", org.getCamY()+7, org.getCamX()+5, true, false);
         char[] tipArr = usefulTip.toCharArray();
         String[] strArr = new String[tipArr.length];
         for (int i=0; i<tipArr.length; i++){
             strArr[i] = String.valueOf(tipArr[i]);
-            strArr[i] = (strArr[i].equals(" ")) ? "_" : strArr[i]; // Replace spaces with something else for layering
+            strArr[i] = (strArr[i].equals(" ")) ? " " : strArr[i]; // Replace spaces with something else for layering
         }
         int n = 5;
         for (int i=0; i<strArr.length; i++){

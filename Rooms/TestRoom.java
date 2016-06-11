@@ -79,17 +79,6 @@ public class TestRoom extends Room {
         addObject(sparky);
 
         addHUD(org);
-
-        FallingDot dot = new FallingDot(org, this);
-        Layer dotLand = new Layer(new String[30][50], dot.layerName);
-        org.addLayer(dotLand);
-        addObject(dot);
-        dot = new FallingDot(org, this);
-        addObject(dot);
-        dot = new FallingDot(org, this);
-        addObject(dot);
-        dot = new FallingDot(org, this);
-        addObject(dot);
     }
     
     /** 

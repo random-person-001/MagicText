@@ -94,6 +94,17 @@ public class Layer {
         cameraObedient = camOb;
         opaque = opacity;
     }
+
+    public Layer(String[][] assign, String inkey, int xSet, int ySet, boolean camOb, boolean opacity){
+        self = assign;
+        name = inkey;
+        keyExists = true;
+        cameraObedient = camOb;
+        opaque = opacity;
+
+        xPos = xSet;
+        yPos = ySet;
+    }
     
     public void setCamOb(boolean set){  // JARED, I'M WORKING ON THIS
         cameraObedient = set;
@@ -173,7 +184,11 @@ public class Layer {
      */
     public String getStr(int r, int c){
         if (!(r < 0 || r >= getRows() || c < 0 || c >= getColumns())){
-            return self[r][c];
+            if ((getOpacity()) && ("".equals(self[r][c]) || " ".equals(self[r][c]) || self[r][c] == null)){
+                return "ñ";
+            } else {
+                return self[r][c];
+            }
         } else {
             return "";
         }

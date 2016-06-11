@@ -40,6 +40,7 @@ public class HUD extends GameObject{
     }
     
     private void createLayer(int loc){
+
         if (room.foodEaten < 0) {
             orgo.editLayer("[", loc, y, x + 0);
             orgo.editLayer("-", loc, y, x + 1);
@@ -58,7 +59,7 @@ public class HUD extends GameObject{
         }
 
         orgo.editLayer(")", loc, y, x + 12);
-        orgo.editLayer("", loc, y, x + 13);
+
         orgo.editLayer("(", loc, y, x + 14);
         for (int ii = 0 ; ii < 5; ii++){
             orgo.editLayer(String.valueOf(spell1Name.charAt(ii)), loc, y, x+15+ii);
@@ -78,6 +79,16 @@ public class HUD extends GameObject{
         }
 
         orgo.editLayer("}", loc, y, x+36);
+
+        /*
+        for (int ii = 0 ; ii < 45; ii++){
+            if (ii%5 == 0){
+                orgo.editLayer("|", loc, y, x+ii);
+            } else {
+                orgo.editLayer(" ", loc, y, x+ii);
+            }
+        }
+        */
     }
     
 }

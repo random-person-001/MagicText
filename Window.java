@@ -22,7 +22,7 @@ import javax.swing.JTextArea;
  * @author 119184
  */
 public class Window extends JFrame{
-    private static final String OPAQUE_SPACE = "\t";
+    private static final String OPAQUE_SPACE = "ñ";
     public JTextArea txtArea = new JTextArea();
     private Container c = getContentPane();
     
@@ -87,9 +87,20 @@ public class Window extends JFrame{
     public void placeLayer(Layer layer, int camX, int camY){ //Layers place on top of each other
         for (int row = 0; row < layer.getRows() ; row++){
             for (int col = 0; col < layer.getColumns(); col++){ //This stuff is complicated!!!!
-                if (!" ".equals(layer.getStr(row,col))){ 
+                /*
+                if (!" ".equals(layer.getStr(row,col))){
                     if ("".equals(layer.getStr(row, col)) || layer.getStr(row, col) == null || layer.getStr(row, col).equals(OPAQUE_SPACE)){
                         fullImage.placeStr(row + layer.getX() - camX,col + layer.getY() - camY," ");
+                    } else {
+                        fullImage.setStr(row + layer.getX() - camX, col + layer.getY() - camY, layer.getStr(row,col));
+                    }
+                }
+                */
+                if (!" ".equals(layer.getStr(row, col))){
+                    if  ("".equals(layer.getStr(row, col)) || layer.getStr(row, col) == null){
+                        fullImage.placeStr(row + layer.getX() - camX,col + layer.getY() - camY, " ");
+                    } else if (layer.getStr(row, col).equals(OPAQUE_SPACE)){
+                        fullImage.setStr(row, col, " ");
                     } else {
                         fullImage.setStr(row + layer.getX() - camX, col + layer.getY() - camY, layer.getStr(row,col));
                     }
@@ -104,9 +115,11 @@ public class Window extends JFrame{
     public void setLayer(Layer layer){ //Much like placeLayer, but ignores camera
         for (int row = 0; row < fullImage.getRows() ; row++){
             for (int col = 0; col < fullImage.getColumns(); col++){ //This stuff is complicated!!!!
-                if (!" ".equals(layer.getStr(row, col))){ 
-                    if ("".equals(layer.getStr(row, col)) || layer.getStr(row, col) == null || layer.getStr(row, col).equals(OPAQUE_SPACE)){
+                if (!" ".equals(layer.getStr(row, col))){
+                    if  ("".equals(layer.getStr(row, col)) || layer.getStr(row, col) == null){
                         fullImage.placeStr(row, col, " ");
+                    } else if (layer.getStr(row, col).equals(OPAQUE_SPACE)){
+                        fullImage.setStr(row, col, " ");
                     } else {
                         fullImage.setStr(row, col, layer.getStr(row,col));
                     }

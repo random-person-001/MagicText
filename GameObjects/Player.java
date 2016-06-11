@@ -95,7 +95,7 @@ public class Player extends GameObject {
         room = theRoom;
         org = theOrg;
         Layer playerLayer = new Layer(new String[org.getWindow().maxH()][org.getWindow().maxW()], layerName);
-        aimDispLayer = new Layer(new String[org.getWindow().maxH()][org.getWindow().maxW()], aimDispName);
+        setupForNewRoom();
         org.addLayer(playerLayer);
         org.addLayer(aimDispLayer);
         loc = org.getPosLayer(layerName);
@@ -114,6 +114,7 @@ public class Player extends GameObject {
 
     public void setupForNewRoom(){
         aimDispLayer = new Layer(new String[org.getWindow().maxH()][org.getWindow().maxW()], aimDispName);
+        org.setCam(x - 22, y - 8);
     }
 
     /**Change the Player's perception of which room it is in.  As a bonus, celebrate a bit.
