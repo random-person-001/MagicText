@@ -23,16 +23,19 @@ public class TestRoom extends Room {
     int maxW;
     
     private void loop(Player play){
-        for (int ii = 0 ; ii < 1000 ; ii++){
+        int exitCode = 0;
+        while (exitCode == 0){
             try {
                 Thread.sleep(20);
                 //System.out.println("I'm not dead yet! " + ii);
                 updateObjs(20);
+                play.addTime(20);
                 play.update();//Update player
+
                 //play.reportPos();
                 org.compileImage();
                 if (getFoodCount() == 0){
-                    return;
+                   exitCode = 1;
                 }
             } catch (InterruptedException ex) {}
         }

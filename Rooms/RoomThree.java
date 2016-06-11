@@ -19,7 +19,8 @@ public class RoomThree extends Room {
     int maxW;
 
     private void loop(Player play){
-        for (int ii = 0 ; ii < 1000 ; ii++){
+        int exitCode = 0;
+        while(exitCode == 0){
             try {
                 Thread.sleep(75);
                 //System.out.println("I'm not dead yet! " + ii);
@@ -28,14 +29,18 @@ public class RoomThree extends Room {
                 //play.reportPos();
                 org.compileImage();
                 if (getFoodCount() == 0){
-                    return;
+                    exitCode = 1;
                 }
             } catch (InterruptedException ex) {}
         }
     }
 
     public void startup(ImageOrg org, Player player){
+        Layer spells = new Layer(new String[maxH][maxW], "Spellz", true);
+        org.addLayer(spells);
+
         super.playo = player;
+        player.castingLayer = spells;
         super.baseHitMesh = new boolean[super.roomHeight][super.roomWidth];
         super.objHitMesh = new boolean[super.roomHeight][super.roomWidth];
         emptyHitMesh();

@@ -32,10 +32,7 @@ public class GameObject {
     int x;
     int y;
 
-    double xVel;
-    double yVel;
-
-    int time;
+    int time; //May be useful when trying to do something asynchronous with room update timings
 
     /**
      *
@@ -52,6 +49,8 @@ public class GameObject {
     public void addTime(int add){
         time += add;
     }
+
+    public void resetTime(){ time = 0;}
 
     public int getTime(){
         return time;

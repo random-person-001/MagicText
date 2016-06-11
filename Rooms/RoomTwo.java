@@ -39,7 +39,11 @@ public class RoomTwo extends Room {
     }
     
     public void startup(ImageOrg org, Player player){
+        Layer spells = new Layer(new String[maxH][maxW], "Spellz", true);
+        org.addLayer(spells);
+
         super.playo = player;
+        player.castingLayer = spells;
         super.baseHitMesh = new boolean[super.roomHeight][super.roomWidth];
         super.objHitMesh = new boolean[super.roomHeight][super.roomWidth];
         emptyHitMesh();

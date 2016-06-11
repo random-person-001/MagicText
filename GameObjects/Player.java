@@ -74,14 +74,20 @@ public class Player extends GameObject {
 
     public int maxMana = 20;
     public int mana = maxMana;
+    public int manaRegen = 10; //Mana per second
+    private int manaRegenClock = 0;
+    //private int manaWaitClock = 0;
+    public int manaWaitStat = 2000; //Waiting before restoring mana
+    public int manaWait = 0;
 
     //NO MORE STATS
+
     public boolean dead = false;
     Map<String, Integer> inventory; // A dict-like thing for an inventory!
     private int technicolorIndex = 0;
 
     /**Initialize a whole lotta variables.
-     * @param theOrg the ImageOrg (anizer)
+     * @param theOrg the ImageOrg(anizer)
      * @param theRoom the Room the Player should consider itself to be in initially
      */
     public Player(ImageOrg theOrg, Room theRoom) {
@@ -104,6 +110,10 @@ public class Player extends GameObject {
         inventory.put("longEnoughLever", 0);
         inventory.put("mashedPotatoes", 0);
         inventory.put("food", 0);
+    }
+
+    public void setupForNewRoom(){
+        aimDispLayer = new Layer(new String[org.getWindow().maxH()][org.getWindow().maxW()], aimDispName);
     }
 
     /**Change the Player's perception of which room it is in.  As a bonus, celebrate a bit.
@@ -129,7 +139,7 @@ public class Player extends GameObject {
      * Perform a general update of the player.
      */
     @Override
-    public void update() {
+    public void update(){
         if (shouldPause) {
             room.pause(org);
         }
@@ -141,6 +151,22 @@ public class Player extends GameObject {
             return;
         }
         shouldPause = false;
+
+        manaRegenClock += getTime();
+        //manaWaitClock += getTime();
+
+        if (manaWait > 0){
+            manaWait -= getTime();
+            manaRegenClock = 0;
+        } else if (manaRegenClock >= (1000 / manaRegen) && mana < maxMana){
+            mana++;
+            manaRegenClock = 0;
+        }
+
+        //System.out.println(getTime());
+
+        resetTime();
+
         if (celeCount > 0) { // Celebrate
             celeCount--;
             s1 = !s1;
@@ -177,23 +203,25 @@ public class Player extends GameObject {
 
     private void aimDispUpdate(){
         int editAt = org.getPosLayer(aimDispName);
-        org.getLayer(editAt).clear();
-        if (orientationLocked){
-            switch(orientation){
-                case UP:
-                    org.editLayer("+", editAt, y - 1, x);
-                    break;
-                case DOWN:
-                    org.editLayer("+", editAt, y + 1, x);
-                    break;
-                case LEFT:
-                    org.editLayer("+", editAt, y, x - 1);
-                    break;
-                case RIGHT:
-                    org.editLayer("+", editAt, y, x + 1);
-                    break;
-                default:
-                    System.out.println("No valid orientation? IMPOSSIBLE");
+        if (editAt > -1) {  //Basically, if aimDispLayer != null
+            org.getLayer(editAt).clear();
+            if (orientationLocked) {
+                switch (orientation) {
+                    case UP:
+                        org.editLayer("+", editAt, y - 1, x);
+                        break;
+                    case DOWN:
+                        org.editLayer("+", editAt, y + 1, x);
+                        break;
+                    case LEFT:
+                        org.editLayer("+", editAt, y, x - 1);
+                        break;
+                    case RIGHT:
+                        org.editLayer("+", editAt, y, x + 1);
+                        break;
+                    default:
+                        System.out.println("No valid orientation? IMPOSSIBLE");
+                }
             }
         }
     }
@@ -393,7 +421,12 @@ public class Player extends GameObject {
 
 
     public void castSpell(){
-        room.addObject(new Spark(org, (Room)room, castingLayer, x, y, orientation));
+        if (mana > 1) {
+            room.addObject(new Spark(org, (Room) room, castingLayer, x, y, orientation));
+            manaWait = manaWaitStat;
+            mana -= 2;
+            System.out.println("PEW");
+        }
     }
     /**
      * @param newColor a new Color for the player to perceive as the proper one for a background to be
@@ -429,7 +462,7 @@ public class Player extends GameObject {
      * @param c character that was pressed
      */
     private void checkCheatProgress(char c){
-        System.out.println(superCheatProgress);
+        //System.out.println(superCheatProgress);
         if (superCheatProgress > 9){
             // Yay!
             room.foodEaten += 42;

@@ -64,6 +64,20 @@ public class HUD extends GameObject{
             orgo.editLayer(String.valueOf(spell1Name.charAt(ii)), loc, y, x+15+ii);
         }
         orgo.editLayer(")", loc, y, x+21);
+
+        orgo.editLayer("{", loc, y, x+23);
+        orgo.editLayer(Integer.toString(abs(room.playo.mana / 10)), loc, y , x+24);
+        orgo.editLayer(Integer.toString(abs(room.playo.mana / 1 - 10*(int)(room.playo.mana / 10))), loc, y , x+25);
+
+        for (int ii = 0; ii < 10 ; ii++){
+            if (ii < (((float)room.playo.mana / (float)room.playo.maxMana) * 10)){
+                orgo.editLayer("=", loc, y, x+26+ii);
+            } else {
+                orgo.editLayer("_", loc, y, x+26+ii);
+            }
+        }
+
+        orgo.editLayer("}", loc, y, x+36);
     }
     
 }
