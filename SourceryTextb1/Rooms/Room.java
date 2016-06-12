@@ -174,14 +174,13 @@ public class Room {
 
     public void infoMessage(ImageOrg org, String usefulTip) {
         art arty = new art();
-        Layer bkgd = new Layer(art.strToArray(arty.usefulTipBkgd), "tip", org.getCamY()+7, org.getCamX()+5, true, false);
+        Layer bkgd = new Layer(art.strToArray(arty.usefulTipBkgd), "tip", org.getCamY()+5, org.getCamX()+5);
         char[] tipArr = usefulTip.toCharArray();
         String[] strArr = new String[tipArr.length];
         for (int i=0; i<tipArr.length; i++){
             strArr[i] = String.valueOf(tipArr[i]);
-            strArr[i] = (strArr[i].equals(" ")) ? " " : strArr[i]; // Replace spaces with something else for layering
         }
-        int n = 5;
+        int n = 3;
         for (int i=0; i<strArr.length; i++){
             bkgd.self[n][i%28+5] = strArr[i];
             if (i%28 == 27){
@@ -190,8 +189,6 @@ public class Room {
         }
         org.addLayer(bkgd);
         org.compileImage();
-        ///org.clearArea(1, 78, 1, 50); /// Hopeless
-        ///org.getWindow().build(org.getCamX(), org.getCamY());
 
         Window window = org.getWindow();
         Dismissal keyListener = new Dismissal();
@@ -281,9 +278,9 @@ public class Room {
 
 
 class PauseSelector extends KeyAdapter {
-    ImageOrg org;
-    int x = 14;
-    int y = 14;
+    private ImageOrg org;
+    private int x = 14;
+    private int y = 14;
     public boolean resume = false;
     public boolean options = false;
 
@@ -313,7 +310,7 @@ class PauseSelector extends KeyAdapter {
         }
         System.out.println(y);
     }
-    void select(){
+    private void select(){
         switch (y){
             case 14: // Exit
                 System.exit(0);
@@ -330,10 +327,10 @@ class PauseSelector extends KeyAdapter {
 }
 
 class OptionsSelector extends KeyAdapter {
-    ImageOrg org;
+    private ImageOrg org;
     public boolean resume = false;
-    String font = "Monospaced";
-    int ii = 0;
+    private String font = "Monospaced";
+    private int ii = 0;
 
     public OptionsSelector(ImageOrg o) {
         org = o;
@@ -392,7 +389,7 @@ class OptionsSelector extends KeyAdapter {
 }
 
 class Dismissal extends KeyAdapter {
-    public boolean resume = false;
+    boolean resume = false;
 
     @Override
     public void keyPressed(KeyEvent event) {
