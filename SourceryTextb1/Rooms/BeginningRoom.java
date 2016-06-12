@@ -1,9 +1,6 @@
 package SourceryTextb1.Rooms;
 
-import SourceryTextb1.GameObjects.Food;
-import SourceryTextb1.GameObjects.HUD;
-import SourceryTextb1.GameObjects.Player;
-import SourceryTextb1.GameObjects.Staff;
+import SourceryTextb1.GameObjects.*;
 import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
 import SourceryTextb1.art;
@@ -15,21 +12,24 @@ import SourceryTextb1.art;
  *  > You have been introduced to the backstory
  *  > That's it
  *
+ * KEY: V: complete  >: to do  _: partial
+ *
  * What Happens Here:
- *  > You become familiar with moving around the character and the format of the world
- *  > You're informed of how to lock orientation and attack
+ *  V You become familiar with moving around the character and the format of the world
+ *  V You're informed of how to lock orientation and attack
  *       "If you want to lock your orientation, you can press A to toggle a Locked Orientation, indicated with a "+".
  *       Go ahead, try it out!  Just don't press S until you're ready, or you will have a sad day."
  *       "Press S to use whatever is selected as your weapon.  In this case, all you have is an old, musty spellbook to
  *       throw.  You probably should not miss, as you don't have multiple copies."
- *  > You kill a small enemy by throwing [whatever you have] at them,
+ *  _ You kill a small enemy by throwing [whatever you have] at them,
  *       "It appears you have come across an enemy.  It is suggested that you chose to be the survivor in this
  *       encounter.  Remember, A is lock orientation and S is fire.  Good luck."
- *  > Loot: what's needed to cast normal spells (for the next level)
- *  > You're informed of how to equip that into your inventory
+ *      > actual mechanism of killing
+ *  V Loot: what's needed to cast normal spells (for the next level) [A Wooden Staff]
+ *  V You're informed of how to equip that into your inventory
  *       "It would probably behoove you to place that into your inventory, such that you are more civilized than tossing
  *       blunt objects, and can cast spells like a decent member of our society.  Press enter to learn how."
- *  > Then you move on to the next level!
+ *  V Then you move on to the next level!
  */
 
 public class BeginningRoom extends Room {
@@ -48,6 +48,17 @@ public class BeginningRoom extends Room {
                 if (super.playo.x > 51){
                     return;
                 }
+                if (ii == 1){
+                    infoMessage(org, "If you want to lock your orientation, you can press A to toggle a Locked " +
+                            "Orientation, indicated with a \"+\".  Go ahead, try it out!  Just don't press S until " +
+                            "you're ready, or you will have a sad day.");
+                }else if (ii == 2){
+                    infoMessage(org, "Press S to use whatever is selected as your weapon.  In this case, all you have " +
+                            "is an old, musty spellbook to throw.  You probably should not miss, as you don't have " +
+                            "multiple copies.");
+                }
+
+
             } catch (InterruptedException ex) {
                 System.exit(0);
             }
@@ -68,6 +79,9 @@ public class BeginningRoom extends Room {
 
         Staff staff = new Staff(org, this, 38, 2);
         addObject(staff);
+
+        PotOfPetunias flowers = new PotOfPetunias(org, this, 30, 2);
+        addObject(flowers);
 
         Layer playerLayer = new Layer(new String[maxH][maxW], player.layerName);
         org.addLayer(playerLayer);
