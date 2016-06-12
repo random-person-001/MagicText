@@ -155,12 +155,12 @@ public class Player extends GameObject {
         shouldPause = false;
 
         manaRegenClock += getTime();
-        //manaWaitClock += getTime();
+            //manaWaitClock += getTime();
 
-        if (manaWait > 0){
+        if (manaWait > 0) {
             manaWait -= getTime();
             manaRegenClock = 0;
-        } else if (manaRegenClock >= (1000 / manaRegen) && mana < maxMana){
+        } else if (manaRegenClock >= (1000 / manaRegen) && mana < maxMana) {
             mana++;
             manaRegenClock = 0;
         }

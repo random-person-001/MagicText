@@ -100,7 +100,7 @@ public class Window extends JFrame{
                     if  ("".equals(layer.getStr(row, col)) || layer.getStr(row, col) == null){
                         fullImage.placeStr(row + layer.getX() - camX,col + layer.getY() - camY, " ");
                     } else if (layer.getStr(row, col).equals(OPAQUE_SPACE)){
-                        fullImage.setStr(row, col, " ");
+                        fullImage.setStr(row + layer.getX() - camX, col + layer.getY() - camY, " ");
                     } else {
                         fullImage.setStr(row + layer.getX() - camX, col + layer.getY() - camY, layer.getStr(row,col));
                     }

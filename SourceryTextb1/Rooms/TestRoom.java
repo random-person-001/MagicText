@@ -24,6 +24,7 @@ public class TestRoom extends Room {
     
     private void loop(Player play){
         int exitCode = 0;
+        int count = 0;
         while (exitCode == 0){
             try {
                 Thread.sleep(20);
@@ -31,7 +32,11 @@ public class TestRoom extends Room {
                 updateObjs(20);
                 play.addTime(20);
                 play.update();//Update player
-
+                count++;
+                if (count == 50){
+                    compactTextBox(org, "Welcome to the world of Sourcery Text!", "");
+                    compactTextBox(org, "All things considered,\nLife ain't that bad, although\nThe new text's crazy", "Haiku");
+                }
                 //play.reportPos();
                 org.compileImage();
                 if (getFoodCount() == 0){

@@ -37,6 +37,8 @@ public class Room {
     public Player playo;
     public Layer playerLayer;
 
+
+
     public int foodEaten = 0;
     public int totalFood = 0;
 
@@ -199,6 +201,42 @@ public class Room {
             } catch (InterruptedException e) {}
         }
         org.removeLayer("tip");
+        window.txtArea.removeKeyListener(keyListener);
+    }
+
+    public void compactTextBox(ImageOrg org, String text, String speaker){
+        art artsedo = new art();
+        Layer txtBox = new Layer(artsedo.strToArray(artsedo.textBox), "Dialog", 13, 0, false, true);
+
+        for (int ii = 0; ii < speaker.length(); ii++) {
+            txtBox.setStr(0, ii + 2, String.valueOf(speaker.charAt(ii)));
+        }
+
+        if (speaker.length() != 0){ txtBox.setStr(0, speaker.length() + 2, ":"); }
+
+        int line = 1;
+        int newLineAdjust = 0;
+        for (int ii = 0; ii < text.length(); ii++){
+            if (text.charAt(ii) == '\n'){
+                line++;
+                newLineAdjust = ii + 1;
+            } else {
+                txtBox.setStr(line, ii + 1 - newLineAdjust, String.valueOf(text.charAt(ii)));
+            }
+        }
+
+        org.addLayer(txtBox);
+        org.compileImage();
+
+        Window window = org.getWindow();
+        Dismissal keyListener = new Dismissal();
+        window.txtArea.addKeyListener(keyListener); // Add key listeners.
+        while (!keyListener.resume){
+            try {
+                Thread.sleep(300);
+            } catch (InterruptedException e) {}
+        }
+        org.removeLayer("Dialog");
         window.txtArea.removeKeyListener(keyListener);
     }
 
