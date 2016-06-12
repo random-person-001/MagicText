@@ -45,7 +45,7 @@ public class BeginningRoom extends Room {
                 updateObjs(75);
                 super.playo.update();
                 org.compileImage();
-                if (super.playo.x > 50){
+                if (super.playo.x > 51){
                     return;
                 }
             } catch (InterruptedException ex) {
@@ -66,12 +66,12 @@ public class BeginningRoom extends Room {
         Layer lay1 = new Layer(roomArr, "base");
         org.addLayer(lay1);
 
-        Staff staff = new Staff(org, this, 4, 3);
+        Staff staff = new Staff(org, this, 38, 2);
         addObject(staff);
 
         Layer playerLayer = new Layer(new String[maxH][maxW], player.layerName);
         org.addLayer(playerLayer);
-        player.goTo(6, 3);
+        player.goTo(6, 2);
 
         Layer HUDd = new Layer(new String[maxH][maxW], "HUD", false);
         org.addLayer(HUDd);
@@ -94,7 +94,7 @@ public class BeginningRoom extends Room {
     public BeginningRoom(ImageOrg orgo){
         org = orgo;
         maxH = 7;
-        maxW = 54;
+        maxW = 55;
         super.roomHeight = maxH;
         super.roomWidth = maxW;
         super.index = 1;
