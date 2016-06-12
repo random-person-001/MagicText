@@ -29,11 +29,11 @@ public class ImageOrg {
      */
     public void addLayer(Layer lay){
         layers.add(lay);
-        //updateOrder();
+        //updateOrder();  //Uncomment this when it starts working.
     }
 
     /**
-     * Reorder the list of layers to observe each one's <>importance</>
+     * Reorder the list of layers to observe each one's <>importance</>  Probably doesn't work yet!
      */
     private void updateOrder() {
         //throw new OperationNotSupportedException
@@ -51,6 +51,9 @@ public class ImageOrg {
         }
     }
 
+    /** Example bubble sorter, for writing updateOrder() off of
+     * @param x array to sort
+     */
     public void sortArray(int[] x) {
         boolean swapped = true;
         while (swapped) {
@@ -123,7 +126,6 @@ public class ImageOrg {
     public void moveCam(int x, int y){
         camX += y;
         camY += x;
-        //reportCam();
     }
 
     /** Change the camera's absolute position
@@ -133,7 +135,6 @@ public class ImageOrg {
     public void setCam(int x, int y){
         camX = y; //This is totally intentional.  We really ought to do something about that.
         camY = x;
-        //reportCam();
     }
     
     public int getCamX(){
@@ -195,18 +196,6 @@ public class ImageOrg {
         window.build(camX, camY);
     }
 
-    /**
-     * Clear out a rectangle in the compiled layers to be spacey quotes.  Note that this will be overwritten/ignored
-     * next time org.compileImage() is called
-     * @param rStart starting row
-     * @param rEnd ending row
-     * @param cStart starting column
-     * @param cEnd ending column
-     */
-    public void clearArea(int rStart, int rEnd, int cStart, int cEnd){
-        window.clearArea(rStart, rEnd, cStart, cEnd);
-    }
-    
     /**
      * For the Player and stuff to be able to attach its key bindings (and change colors).
      * @return the Window.
