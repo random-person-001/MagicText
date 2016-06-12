@@ -6,10 +6,7 @@
 package SourceryTextb1;
 
 import SourceryTextb1.GameObjects.Player;
-import SourceryTextb1.Rooms.Room;
-import SourceryTextb1.Rooms.RoomThree;
-import SourceryTextb1.Rooms.RoomTwo;
-import SourceryTextb1.Rooms.TestRoom;
+import SourceryTextb1.Rooms.*;
 
 
 /**
@@ -34,6 +31,11 @@ public class Start {
         levelAnimation(org, 1,2);
         roomOne.startup(org, player);
         roomOne.enter(player);
+
+        BeginningRoom broom = new BeginningRoom(org);
+        prepLevel(org, game, player, broom, 1);
+        broom.startup(player);
+        broom.enter();
 
         RoomTwo roomTwo = new RoomTwo(org);
         prepLevel(org, game, player, roomTwo, 2);

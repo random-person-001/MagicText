@@ -3,6 +3,7 @@ package SourceryTextb1.Rooms;
 import SourceryTextb1.GameObjects.Food;
 import SourceryTextb1.GameObjects.HUD;
 import SourceryTextb1.GameObjects.Player;
+import SourceryTextb1.GameObjects.Staff;
 import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
 import SourceryTextb1.art;
@@ -44,7 +45,7 @@ public class BeginningRoom extends Room {
                 updateObjs(75);
                 super.playo.update();
                 org.compileImage();
-                if (getFoodCount() == 0){
+                if (super.playo.x > 50){
                     return;
                 }
             } catch (InterruptedException ex) {
@@ -65,14 +66,12 @@ public class BeginningRoom extends Room {
         Layer lay1 = new Layer(roomArr, "base");
         org.addLayer(lay1);
 
-        String foodLayerName = "foooooooooood";
-        Layer foodstuffs = new Layer(new String[maxH][maxW], foodLayerName);
-        org.addLayer(foodstuffs);
-        Food aFood = new Food(org, foodLayerName, this);
-        addObject(aFood);
+        Staff staff = new Staff(org, this, 4, 3);
+        addObject(staff);
 
         Layer playerLayer = new Layer(new String[maxH][maxW], player.layerName);
         org.addLayer(playerLayer);
+        player.goTo(6, 3);
 
         Layer HUDd = new Layer(new String[maxH][maxW], "HUD", false);
         org.addLayer(HUDd);
@@ -95,7 +94,7 @@ public class BeginningRoom extends Room {
     public BeginningRoom(ImageOrg orgo){
         org = orgo;
         maxH = 7;
-        maxW = 10;
+        maxW = 54;
         super.roomHeight = maxH;
         super.roomWidth = maxW;
         super.index = 1;

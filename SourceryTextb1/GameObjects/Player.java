@@ -110,6 +110,7 @@ public class Player extends GameObject {
         inventory.put("longEnoughLever", 0);
         inventory.put("mashedPotatoes", 0);
         inventory.put("food", 0);
+        inventory.put("WoodStaff", 0);
     }
 
     public void setupForNewRoom(){
@@ -422,11 +423,14 @@ public class Player extends GameObject {
 
 
     public void castSpell(){
-        if (mana > 1) {
+        if (mana > 1 && inventory.get("WoodStaff") > 0) {
             room.addObject(new Spark(org, (Room) room, castingLayer, x, y, orientation));
             manaWait = manaWaitStat;
             mana -= 2;
             System.out.println("PEW");
+        }
+        else{
+            System.out.println("Not enough mana or you don't have a staff yet!");
         }
     }
     /**
