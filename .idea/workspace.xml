@@ -114,7 +114,7 @@
         <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-85">
-              <caret line="1" column="21" selection-start-line="1" selection-start-column="21" selection-end-line="1" selection-end-column="21" />
+              <caret line="8" column="21" selection-start-line="8" selection-start-column="21" selection-end-line="8" selection-end-column="21" />
               <folding />
             </state>
           </provider>
@@ -710,7 +710,14 @@
       <option name="project" value="LOCAL" />
       <updated>1465760670480</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="CompactTextBox retry">
+      <created>1465763144601</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1465763144601</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TodoView">
@@ -770,7 +777,8 @@
     <MESSAGE value="Staff gives Tip when picked up" />
     <MESSAGE value="Clean up Spark class" />
     <MESSAGE value="Added a new. less obnoxious text box!&#10;&#10;It doesn't cover the whole screen and nicely chains together to create dialog!&#10;It even includes the speaker's name!&#10;&#10;It's amazing!" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added a new. less obnoxious text box!&#10;&#10;It doesn't cover the whole screen and nicely chains together to create dialog!&#10;It even includes the speaker's name!&#10;&#10;It's amazing!" />
+    <MESSAGE value="CompactTextBox retry" />
+    <option name="LAST_COMMIT_MESSAGE" value="CompactTextBox retry" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1182,7 +1190,7 @@
     <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-85">
-          <caret line="1" column="21" selection-start-line="1" selection-start-column="21" selection-end-line="1" selection-end-column="21" />
+          <caret line="8" column="21" selection-start-line="8" selection-start-column="21" selection-end-line="8" selection-end-column="21" />
           <folding />
         </state>
       </provider>
