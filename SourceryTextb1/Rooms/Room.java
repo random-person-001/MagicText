@@ -205,7 +205,7 @@ public class Room {
     public void pause(ImageOrg org) {
         art arty = new art();
         int camStartX = org.getCamX();
-        Layer bkgd = new Layer(art.strToArray(arty.getPauseBkgdDot), "pause", false);
+        Layer bkgd = new Layer(art.strToArray(arty.pauseBkgd), "pause", false, true);
         org.addLayer(bkgd);
         String[][] textArr = art.strToArray(arty.pausedText);
         Layer texty = new Layer(textArr, "texty", org.getCamY()+1, org.getCamX());
@@ -242,7 +242,7 @@ public class Room {
     public void options(ImageOrg org) {
         art arty = new art();
         int camStartX = org.getCamX();
-        Layer bkgd = new Layer(art.strToArray(arty.optionsbkgd), "opts", false);
+        Layer bkgd = new Layer(art.strToArray(arty.optionsbkgd), "opts", false, true);
         org.addLayer(bkgd);
         String[][] textArry = art.strToArray(arty.optionsText);
         Layer texty = new Layer(textArry, "texty", org.getCamY()+1, org.getCamX());
@@ -280,11 +280,11 @@ public class Room {
 class PauseSelector extends KeyAdapter {
     private ImageOrg org;
     private int x = 14;
-    private int y = 14;
-    public boolean resume = false;
-    public boolean options = false;
+    private int y = 15;
+    boolean resume = false;
+    boolean options = false;
 
-    public PauseSelector(ImageOrg o) {
+    PauseSelector(ImageOrg o) {
         org = o;
         org.editLayer("@", "pause", y, x);
     }
@@ -293,13 +293,13 @@ class PauseSelector extends KeyAdapter {
     public void keyPressed(KeyEvent event) {
         char ch = event.getKeyChar();
         if (event.getKeyCode() == KeyEvent.VK_UP || ch == 'w') {
-            org.editLayer(".", "pause", y, x);
-            y = (y>14) ? y-2 : y;
+            org.editLayer(" ", "pause", y, x);
+            y = (y>15) ? y-2 : y;
             org.editLayer("@", "pause", y, x);
         }
         if (event.getKeyCode() == KeyEvent.VK_DOWN || ch == 's') {
-            org.editLayer(".", "pause", y, x);
-            y = (y<18) ? y+2 : y;
+            org.editLayer(" ", "pause", y, x);
+            y = (y<19) ? y+2 : y;
             org.editLayer("@", "pause", y, x);
         }
         if (event.getKeyCode() == KeyEvent.VK_ESCAPE) {
@@ -312,12 +312,12 @@ class PauseSelector extends KeyAdapter {
     }
     private void select(){
         switch (y){
-            case 14: // Exit
+            case 15: // Exit
                 System.exit(0);
-            case 16: // Resume
+            case 17: // Resume
                 resume = true;
                 break;
-            case 18: // Options
+            case 19: // Options
                 options = true;
                 break;
             default:
@@ -328,11 +328,11 @@ class PauseSelector extends KeyAdapter {
 
 class OptionsSelector extends KeyAdapter {
     private ImageOrg org;
-    public boolean resume = false;
+    boolean resume = false;
     private String font = "Monospaced";
     private int ii = 0;
 
-    public OptionsSelector(ImageOrg o) {
+    OptionsSelector(ImageOrg o) {
         org = o;
     }
 
