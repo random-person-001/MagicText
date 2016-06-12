@@ -174,7 +174,7 @@ public class Room {
 
     public void infoMessage(ImageOrg org, String usefulTip) {
         art arty = new art();
-        Layer bkgd = new Layer(art.strToArray(arty.usefulTipBkgd), "tip", org.getCamY()+5, org.getCamX()+5);
+        Layer bkgd = new Layer(art.strToArray(arty.usefulTipBkgd), "tip", 5, 5, false, true);
         char[] tipArr = usefulTip.toCharArray();
         String[] strArr = new String[tipArr.length];
         for (int i=0; i<tipArr.length; i++){

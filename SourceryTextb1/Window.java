@@ -117,11 +117,11 @@ public class Window extends JFrame{
             for (int col = 0; col < fullImage.getColumns(); col++){ //This stuff is complicated!!!!
                 if (!" ".equals(layer.getStr(row, col))){
                     if  ("".equals(layer.getStr(row, col)) || layer.getStr(row, col) == null){
-                        fullImage.placeStr(row, col, " ");
+                        fullImage.placeStr(row + layer.getX(), col + layer.getY(), " ");
                     } else if (layer.getStr(row, col).equals(OPAQUE_SPACE)){
-                        fullImage.setStr(row, col, " ");
+                        fullImage.setStr(row + layer.getX(), col + layer.getY(), " ");
                     } else {
-                        fullImage.setStr(row, col, layer.getStr(row,col));
+                        fullImage.setStr(row + layer.getX(), col + layer.getY(), layer.getStr(row,col));
                     }
                 }
             }
