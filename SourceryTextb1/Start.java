@@ -19,6 +19,7 @@ import SourceryTextb1.Rooms.*;
  *
  */
 public class Start {
+    private static boolean doDemo = false;
 
     public static void main(String[] args) throws InterruptedException {
         Window game = new Window();
@@ -26,26 +27,34 @@ public class Start {
         ImageOrg org = new ImageOrg(game);
         org.addLayer(base);
 
-        TestRoom roomOne = new TestRoom(org);
-        Player player = new Player(org, roomOne);
-        levelAnimation(org, 1,2);
-        roomOne.startup(org, player);
-        roomOne.enter(player);
+        if (doDemo) {
+            TestRoom roomOne = new TestRoom(org);
+            Player player = new Player(org, roomOne);
+            levelAnimation(org, 1, 2);
+            roomOne.startup(org, player);
+            roomOne.enter(player);
 
-        BeginningRoom broom = new BeginningRoom(org);
-        prepLevel(org, game, player, broom, 1);
-        broom.startup(player);
-        broom.enter();
+            BeginningRoom broom = new BeginningRoom(org);
+            prepLevel(org, game, player, broom, 1);
+            broom.startup(player);
+            broom.enter();
 
-        RoomTwo roomTwo = new RoomTwo(org);
-        prepLevel(org, game, player, roomTwo, 2);
-        roomTwo.startup(org, player);
-        roomTwo.enter(player);
+            RoomTwo roomTwo = new RoomTwo(org);
+            prepLevel(org, game, player, roomTwo, 2);
+            roomTwo.startup(org, player);
+            roomTwo.enter(player);
 
-        RoomThree roomThree = new RoomThree(org);
-        prepLevel(org, game, player, roomThree, 3);
-        roomThree.startup(org, player);
-        roomThree.enter(player);
+            RoomThree roomThree = new RoomThree(org);
+            prepLevel(org, game, player, roomThree, 3);
+            roomThree.startup(org, player);
+            roomThree.enter(player);
+        } else {
+            TutorialBasement forest = new TutorialBasement(org);
+            Player player = new Player(org, forest);
+            prepLevel(org, game, player, forest, 0);
+            forest.startup(org, player);
+            forest.enter(player);
+        }
 
 
         // Win screen
@@ -60,7 +69,9 @@ public class Start {
     private static void prepLevel(ImageOrg org, Window game, Player player, Room newRoom, int levelNum){
         org.removeAllButPlayer(); //Cleanup, happens when loop is done.
         game.clearImage();
-        levelAnimation(org, levelNum,2);
+        if (levelNum != 0) {
+            levelAnimation(org, levelNum, 2);
+        }
         player.goTo(6,6);
         player.changeRoom(newRoom);
     }

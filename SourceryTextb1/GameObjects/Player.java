@@ -83,7 +83,7 @@ public class Player extends GameObject {
     //NO MORE STATS
 
     public boolean dead = false;
-    Map<String, Integer> inventory; // A dict-like thing for an inventory!
+    public Map<String, Integer> inventory; // A dict-like thing for an inventory!
     private int technicolorIndex = 0;
 
     /**Initialize a whole lotta variables.
@@ -97,7 +97,7 @@ public class Player extends GameObject {
         Layer playerLayer = new Layer(new String[org.getWindow().maxH()][org.getWindow().maxW()], layerName);
         setupForNewRoom();
         org.addLayer(playerLayer);
-        org.addLayer(aimDispLayer);
+
         loc = org.getPosLayer(layerName);
 
         Window window = org.getWindow();
@@ -115,6 +115,11 @@ public class Player extends GameObject {
 
     public void setupForNewRoom(){
         aimDispLayer = new Layer(new String[org.getWindow().maxH()][org.getWindow().maxW()], aimDispName);
+        org.setCam(x - 22, y - 8);
+        org.addLayer(aimDispLayer);
+    }
+
+    public void centerCamera(){
         org.setCam(x - 22, y - 8);
     }
 
@@ -177,6 +182,7 @@ public class Player extends GameObject {
         } else {
             graphicUpdate();
             aimDispUpdate();
+            //reportPos();
         }
         if (autonomous) {
             closestFood = getClosestVisibleFood();
@@ -226,6 +232,10 @@ public class Player extends GameObject {
                 }
             }
         }
+    }
+
+    private void reoprtPos(){
+        System.out.println("Player X: " + x + "\nPlayer Y: " + y + "\n");
     }
 
 

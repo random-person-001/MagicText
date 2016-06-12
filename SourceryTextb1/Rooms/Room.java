@@ -204,9 +204,14 @@ public class Room {
         window.txtArea.removeKeyListener(keyListener);
     }
 
-    public void compactTextBox(ImageOrg org, String text, String speaker){
+    public void compactTextBox(ImageOrg org, String text, String speaker, boolean helpful){
         art artsedo = new art();
-        Layer txtBox = new Layer(artsedo.strToArray(artsedo.textBox), "Dialog", 13, 0, false, true);
+        Layer txtBox;
+        if (helpful) {
+            txtBox = new Layer(artsedo.strToArray(artsedo.textBoxHelpful), "Dialog", 13, 0, false, true);
+        } else {
+            txtBox = new Layer(artsedo.strToArray(artsedo.textBox), "Dialog", 13, 0, false, true);
+        }
 
         for (int ii = 0; ii < speaker.length(); ii++) {
             txtBox.setStr(0, ii + 2, String.valueOf(speaker.charAt(ii)));
