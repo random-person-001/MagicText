@@ -5,9 +5,7 @@
  */
 package SourceryTextb1;
 
-import javax.naming.OperationNotSupportedException;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * An intermediate between the countless Layers and the Window, to organise and keep all the Layers in line.
