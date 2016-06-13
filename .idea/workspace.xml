@@ -1,22 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2135375f-4dfd-4c17-b9a7-4b7586bd0b6e" name="Default" comment="">
+    <list default="true" id="2135375f-4dfd-4c17-b9a7-4b7586bd0b6e" name="Default" comment="Dropping items is slightly better.  Still keeps trying to update it, though.&#10;" />
+    <list id="34ceb256-3d32-4fbc-81c9-79e8bf939c6e" name="New changelist" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SourceryTextb1/GameObjects/DroppedItem.java" afterPath="$PROJECT_DIR$/SourceryTextb1/GameObjects/DroppedItem.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SourceryTextb1/GameObjects/Inventory.java" afterPath="$PROJECT_DIR$/SourceryTextb1/GameObjects/Inventory.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SourceryTextb1/GameObjects/Player.java" afterPath="$PROJECT_DIR$/SourceryTextb1/GameObjects/Player.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SourceryTextb1/GameObjects/PotOfPetunias.java" afterPath="$PROJECT_DIR$/SourceryTextb1/GameObjects/PotOfPetunias.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SourceryTextb1/ImageOrg.java" afterPath="$PROJECT_DIR$/SourceryTextb1/ImageOrg.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SourceryTextb1/Rooms/BeginningRoom.java" afterPath="$PROJECT_DIR$/SourceryTextb1/Rooms/BeginningRoom.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SourceryTextb1/Rooms/Room.java" afterPath="$PROJECT_DIR$/SourceryTextb1/Rooms/Room.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SourceryTextb1/Rooms/TutorialBasement.java" afterPath="$PROJECT_DIR$/SourceryTextb1/Rooms/TutorialBasement.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SourceryTextb1/art.java" afterPath="$PROJECT_DIR$/SourceryTextb1/art.java" />
     </list>
     <ignored path="MagicTextb1.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <file path="$PROJECT_DIR$/.idea/workspace.xml" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,8 +43,8 @@
       <file leaf-file-name="Inventory.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/SourceryTextb1/GameObjects/Inventory.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2511">
-              <caret line="155" column="65" selection-start-line="155" selection-start-column="65" selection-end-line="155" selection-end-column="65" />
+            <state relative-caret-position="243">
+              <caret line="29" column="19" selection-start-line="29" selection-start-column="19" selection-end-line="29" selection-end-column="19" />
               <folding>
                 <element signature="e#5897#5898#0" expanded="true" />
                 <element signature="e#5938#5939#0" expanded="true" />
@@ -694,6 +689,7 @@
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="2135375f-4dfd-4c17-b9a7-4b7586bd0b6e" name="Default" comment="" />
+      <changelist id="34ceb256-3d32-4fbc-81c9-79e8bf939c6e" name="New changelist" comment="" />
       <created>1465100929766</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -783,7 +779,14 @@
       <option name="project" value="LOCAL" />
       <updated>1465848749986</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Dropping items is slightly better.  Still keeps trying to update it, though.&#10;">
+      <created>1465854513765</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1465854513765</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TodoView">
@@ -851,7 +854,9 @@
     <MESSAGE value="Clean up the basement and add a pot of petunias in it to kill." />
     <MESSAGE value="Add dropped items, made petunia pot drop a Spark spell, delete redundant Spark class (use Spell instead)" />
     <MESSAGE value="fixed player freeze on opening new menus (from earlier deletion of player.update()), worked a bit on inventory" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed player freeze on opening new menus (from earlier deletion of player.update()), worked a bit on inventory" />
+    <MESSAGE value="Dropping items is slightly better.  Still keeps trying to update it, though.&#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="Dropping items is slightly better.  Still keeps trying to update it, though.&#10;" />
+    <option name="PRESELECT_EXISTING_CHANGELIST" value="false" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1275,8 +1280,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/SourceryTextb1/GameObjects/Inventory.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2511">
-          <caret line="155" column="65" selection-start-line="155" selection-start-column="65" selection-end-line="155" selection-end-column="65" />
+        <state relative-caret-position="243">
+          <caret line="29" column="19" selection-start-line="29" selection-start-column="19" selection-end-line="29" selection-end-column="19" />
           <folding>
             <element signature="e#5897#5898#0" expanded="true" />
             <element signature="e#5938#5939#0" expanded="true" />
