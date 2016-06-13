@@ -5,6 +5,7 @@ package SourceryTextb1.GameObjects;
  * Created by riley on 12-Jun-2016.
  */
 public class Enemy extends GameObject {
+    String layerName;
     private int health = 10;
     private int attack = 0;
 
@@ -23,5 +24,18 @@ public class Enemy extends GameObject {
     }
     public void setAttack(int newAttack){
         attack = newAttack;
+    }
+
+    boolean checkDeath() {
+        if (getHealth() <= 0){
+            room.playo.inventory.put(super.strClass, 1);
+            room.removeEnemy(this);
+            try {
+                orgo.editLayer(" ", layerName, y, x);
+                orgo.removeLayer(layerName);
+            }catch (NullPointerException ignore){}
+            return true;
+        }
+        return false;
     }
 }

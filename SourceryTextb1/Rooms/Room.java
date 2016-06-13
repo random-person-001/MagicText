@@ -12,9 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import SourceryTextb1.GameObjects.GameObject;
-import SourceryTextb1.GameObjects.HUD;
-import SourceryTextb1.GameObjects.Player;
+import SourceryTextb1.GameObjects.*;
 import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
 import SourceryTextb1.Window;
@@ -30,6 +28,7 @@ import static java.awt.Color.*;
 public class Room {
 
     public List<GameObject> objs = new ArrayList<GameObject>();
+    public List<Enemy> enemies = new ArrayList<Enemy>();
     public HashMap storedStuff = new HashMap<String, Integer>();
     public boolean[][] objHitMesh;
     public boolean[][] baseHitMesh;
@@ -45,6 +44,22 @@ public class Room {
     public int roomWidth;
     public int roomHeight;
     public int index;
+
+    /** Try to hurt an enemy at a specified location
+     * @param x the X coord of the possible enemy
+     * @param y the Y coord of the possible enemy
+     * @param damage how much to hurt any enemies if they're there
+     * @return whether there was an enemy there, and thus whether they got hurt
+     */
+    public boolean hurtSomethingAt(int x, int y, int damage) {
+        for (Enemy e : enemies){
+            if (e.getX() == x && e.getY() == y) {
+                e.subtractHealth(damage);
+                return true;
+            }
+        }
+        return false;
+    }
 
     /**
      * Loop through all objects that are in the room and tell them to update. (call obj.update() on each)
@@ -94,6 +109,27 @@ public class Room {
         addObject(hud);
     }
 
+
+    /**
+     * Add a new enemy to the room, and to the list of enemies.  As a bonus, it'll change the objectsHitMesh to
+     * reflect that.
+     * @param newBadGuy a new Enemy
+     */
+    public void addEnemy(Enemy newBadGuy) {
+        addObject(newBadGuy);
+        enemies.add(newBadGuy);
+        objHitMesh[newBadGuy.getY()][newBadGuy.getX()] = true;
+    }
+
+
+    /** Remove an Enemy from the world and enemy list, and make it so they no longer obstruct your way
+     * @param e the Enemy to be removed
+     */
+    public void removeEnemy(Enemy e) {
+        removeObject(e);
+        enemies.remove(e);
+        objHitMesh[e.getY()][e.getX()] = false;
+    }
 
     public boolean isPlaceSolid(int x, int y) { //Useful when defining walls of rooms
         if ((x > 0 && x < objHitMesh[0].length - 1) && (y > 0 && y < objHitMesh.length - 1)) { // Buffer of 1 for room walls

@@ -66,7 +66,11 @@ public class BeginningRoom extends Room {
     }
 
     public void startup(Player player){
+        Layer spells = new Layer(new String[maxH][maxW], "Spellz", true);
+        org.addLayer(spells);
+
         super.playo = player;
+        player.castingLayer = spells;
         super.baseHitMesh = new boolean[super.roomHeight][super.roomWidth];
         super.objHitMesh = new boolean[super.roomHeight][super.roomWidth];
         emptyHitMesh();
@@ -81,7 +85,7 @@ public class BeginningRoom extends Room {
         addObject(staff);
 
         PotOfPetunias flowers = new PotOfPetunias(org, this, 30, 2);
-        addObject(flowers);
+        addEnemy(flowers);
 
         Layer playerLayer = new Layer(new String[maxH][maxW], player.layerName);
         org.addLayer(playerLayer);

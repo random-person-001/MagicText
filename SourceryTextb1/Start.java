@@ -19,7 +19,7 @@ import SourceryTextb1.Rooms.*;
  *
  */
 public class Start {
-    private static boolean doDemo = false;
+    private static boolean doDemo = true;
 
     public static void main(String[] args) throws InterruptedException {
         Window game = new Window();

@@ -447,14 +447,19 @@ public class Player extends GameObject {
 
     public void castSpell(){
         if (mana > 1) {
-            if (inventory.get("WoodStaff") > 0) { // Spark
-                room.addObject(new Spark(org, room, castingLayer, x, y, orientation));
+            if (primarySpell.equals("Book")) {
+                room.addObject(new Spell(org, room, castingLayer, x, y, orientation, "Book"));
             }
-            if (primarySpell.equals("Book")) {    // Book
-                room.addObject(new Spark(org, room, castingLayer, x, y, orientation));
+            if (primarySpell.equals("Spark")) {
+                room.addObject(new Spell(org, room, castingLayer, x, y, orientation, "Spark"));
+                manaWait = manaWaitStat;
+                mana -= 2;
             }
-            manaWait = manaWaitStat;
-            mana -= 2;
+            if (primarySpell.equals("Flame")) {
+                room.addObject(new Spell(org, room, castingLayer, x, y, orientation, "Flame"));
+                manaWait = manaWaitStat;
+                mana -= 3;
+            }
             System.out.println("PEW");
         }
         else{

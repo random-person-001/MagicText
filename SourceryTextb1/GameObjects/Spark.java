@@ -13,7 +13,7 @@ public class Spark extends GameObject{
     private int orientation = 0;
 
     public Spark (ImageOrg org, Room theRoom, Layer place, int setX, int setY, int setOr){
-        strClass = "HUD";
+        strClass = "Spark";
         orgo = org;
         room = theRoom;
         layerName = place.getName();

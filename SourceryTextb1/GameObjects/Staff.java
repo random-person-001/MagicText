@@ -33,6 +33,7 @@ public class Staff extends GameObject{
                             +       "blunt objects, and can cast spells like a decent member of our society.  Press enter to learn how.");
             orgo.editLayer(" ", layerName, y, x);
             room.playo.inventory.put(super.strClass, 1);
+            room.playo.setPrimarySpell("Spark");  //Set primary spell for the player.
             orgo.removeLayer(layerName);
             room.removeObject(this);
         }
