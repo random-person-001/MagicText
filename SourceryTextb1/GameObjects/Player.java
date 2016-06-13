@@ -40,8 +40,6 @@ public class Player extends GameObject {
     private ImageOrg org;
     private Room room;
     public String layerName = "playerLayer";
-    public int x = 10;
-    public int y = 10;
     private int celeCount = 0;
     private boolean s1 = true; //toggler for celeb anim
     private String state1 = "+";

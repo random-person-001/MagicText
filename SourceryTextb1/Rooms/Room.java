@@ -82,6 +82,8 @@ public class Room {
             }
         } catch (ConcurrentModificationException ex) {
             System.out.println("Whoops, something weird! [Room.java: updateObjs(): caught a ConcurrentModificationException]");
+        } catch (NullPointerException ex) {
+            System.out.println("Well, by then if you want to nullpoint me. [Room.java: updateObjs(): caught nullpointer");
         }
     }
 

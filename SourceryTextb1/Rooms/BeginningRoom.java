@@ -45,7 +45,7 @@ public class BeginningRoom extends Room {
                 updateObjs(75);
                 super.playo.update();
                 org.compileImage();
-                if (super.playo.x > 51){
+                if (super.playo.getX() > 51){
                     return;
                 }
                 if (ii == 1){

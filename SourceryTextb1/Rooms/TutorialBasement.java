@@ -36,12 +36,12 @@ public class TutorialBasement extends Room {
                     compactTextBox(org, "You should explore the basement!\nUse the arrow keys to navigate the place.", "", false);
                     count++;
                 }
-                if (count == 1 && getPlayer().x == 16 && getPlayer().y == 10){
+                if (count == 1 && getPlayer().getX() == 16 && getPlayer().getY() == 10){
                     compactTextBox(org, "The world is now filled with dangers!\n Use the 'A' key to lock your aim\n Use the 'S' key to fire a spell!", "", false);
                     compactTextBox(org, "The bar on the top-right is your mana bar.\n Casting spells costs mana.\nLuckily, your mana refills after a bit.", "", false);
                     count++;
                 }
-                if (count == 2 && getPlayer().x == 24 && getPlayer().y == 3){
+                if (count == 2 && getPlayer().getX() == 24 && getPlayer().getY() == 3){
                     compactTextBox(org, "One such grave danger awaits you nearby.\n None other than a Pot of Petunias is ahead.\n You have but a book to kill it with.","",false);
                     compactTextBox(org, "Use the 'A' key to lock your aim\n Use the 'S' key to fire!", "", false);
                     count++;

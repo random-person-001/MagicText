@@ -2,6 +2,7 @@ package SourceryTextb1.GameObjects;
 
 import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
+import SourceryTextb1.Rooms.Room;
 
 /**
  * A dropped item that will put itself in the player's inventory when stepped on.
@@ -13,11 +14,10 @@ public class DroppedItem extends GameObject{
     private String itemName;
     private String char1;
     private String layerName;
-    private Layer thisLayer;
 
-    public DroppedItem(Player playo, ImageOrg org, String messageOnPickup, String callMyself, String layername, String displayChar, int setx,int sety){
+    public DroppedItem(Room room, ImageOrg org, String messageOnPickup, String callMyself, String layername, String displayChar, int setx, int sety){
         strClass = "DroppedItem";
-        player = playo;
+        player = room.playo;
         orgo = org;
         pickUpMessage = messageOnPickup;
         itemName = callMyself;
@@ -25,23 +25,25 @@ public class DroppedItem extends GameObject{
         layerName = layername;
         x = setx;
         y = sety;
-        thisLayer = new Layer(new String[y+2][x+2], layerName, x, y);
-    }
-
-    void pickup(){
+        Layer thisLayer = new Layer(new String[1][1], layerName, y, x);
+        org.addLayer(thisLayer);
     }
 
     @Override
     public void update(){
-        orgo.editLayer(char1, layerName, y, x);
+        orgo.editLayer(char1, layerName, 0, 0);
         if (x == player.getX() && y == player.getY()){
+            System.out.println("Hi!  It's a " + itemName);
             if (player.inventory.containsKey(itemName)){
                 int n = player.inventory.get(itemName);
                 player.inventory.put(itemName, n+1);
             }else{
                 player.inventory.put(itemName,1);
             }
-            orgo.editLayer(" ", layerName, y, x);
+            orgo.editLayer(" ", layerName, 0, 0);
+            orgo.removeLayer(layerName);
+            room.removeObject(this);
+            room.compactTextBox(orgo, pickUpMessage,"",false);
         }
     }
 }

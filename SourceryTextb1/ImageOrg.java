@@ -201,4 +201,12 @@ public class ImageOrg {
     public Window getWindow(){
         return window;
     }
+
+    /** Wipe a layer clean
+     * @param layName string of layer
+     */
+    public void clearLayer(String layName) {
+        int loc = getPosLayer(layName);
+        layers.get(loc).clear();
+    }
 }

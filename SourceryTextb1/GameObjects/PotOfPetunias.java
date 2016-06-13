@@ -33,7 +33,7 @@ public class PotOfPetunias extends Enemy{
 //            sentMessageBefore = true;
 //        }
         if (checkDeath()){
-            DroppedItem sparkSpell = new DroppedItem(room.playo, orgo, "You got a new spell: Spark!", "Spark", "DropSparkLayer", "!",x,y);
+            DroppedItem sparkSpell = new DroppedItem(room, orgo, "You got a new spell: Spark!", "Spark", "DropSparkLayer", "!",x,y);
             room.addObject(sparkSpell);
         }
     }
