@@ -19,7 +19,7 @@ import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
 import SourceryTextb1.Window;
 
-import java.awt.*;
+import java.awt.Color;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.HashMap;
@@ -30,15 +30,15 @@ import java.util.Random;
 import static java.lang.Math.abs;
 
 /**
- * Player-controlled protagonist  CHECK YOUR EMAIL, JARED!
+ * Player-controlled protagonist
  *
  * @author Riley
  */
 public class Player extends GameObject {
+    MKeyListener keyListener = new MKeyListener(this);
     private GameObject closestFood = null;
     private ImageOrg org;
     private Room room;
-    private int loc; // layer index
     public String layerName = "playerLayer";
     public int x = 10;
     public int y = 10;
@@ -48,7 +48,7 @@ public class Player extends GameObject {
     private String state2 = "X";
     private boolean autonomous = false;
     public boolean shouldPause = false;
-    public boolean frozen = false;
+    public boolean frozen = true; //This gets changed by a room upon beginning the level
 
     //Convenience variables
     private final int UP = 0;
@@ -85,6 +85,9 @@ public class Player extends GameObject {
     public boolean dead = false;
     public Map<String, Integer> inventory; // A dict-like thing for an inventory!
     private int technicolorIndex = 0;
+    private boolean shouldInventory = false;
+    private String primarySpell = "Book";
+    private String secondarySpell = "None";
 
     /**Initialize a whole lotta variables.
      * @param theOrg the ImageOrg(anizer)
@@ -98,10 +101,8 @@ public class Player extends GameObject {
         setupForNewRoom();
         org.addLayer(playerLayer);
 
-        loc = org.getPosLayer(layerName);
-
         Window window = org.getWindow();
-        window.txtArea.addKeyListener(new MKeyListener(this)); // Add key listeners. 
+        window.txtArea.addKeyListener(keyListener); // Add key listeners.
 
         inventory = new HashMap<String, Integer>(); // I have no idea why this can't go at a class-level with the declaration.
         inventory.put("spoon", 0);
@@ -111,6 +112,14 @@ public class Player extends GameObject {
         inventory.put("mashedPotatoes", 0);
         inventory.put("food", 0);
         inventory.put("WoodStaff", 0);
+        org.setCam(x-22, y-8);
+    }
+
+    public void setPrimarySpell (String spell){
+        primarySpell = spell;
+    }
+    public void setSecondarySpell (String spell){
+        secondarySpell = spell;
     }
 
     public void setupForNewRoom(){
@@ -136,10 +145,10 @@ public class Player extends GameObject {
      * @param newY
      */
     public void goTo(int newX, int newY) {
-        //loc = org.getPosLayer(layerName);
-        //org.editLayer(" ", loc, y, x);
+        org.editLayer(" ", layerName, y, x);
         x = newX;
         y = newY;
+        org.setCam(x - 22, y - 8);
     }
 
     /**
@@ -149,15 +158,21 @@ public class Player extends GameObject {
     public void update(){
         if (shouldPause) {
             room.pause(org);
+        }else if (shouldInventory){
+            org.getWindow().removeKeyListener(keyListener);
+            Inventory inv = new Inventory(org, this);
+            inv.show();
+            org.getWindow().addKeyListener(keyListener);
         }
+        shouldPause = false;
+        shouldInventory = false;
         if (frozen) {
             try {
                 org.editLayer(" ", layerName, y, x);
-            } catch (IndexOutOfBoundsException e) {
+            } catch (IndexOutOfBoundsException ignored) {
             }
             return;
         }
-        shouldPause = false;
 
         manaRegenClock += getTime();
             //manaWaitClock += getTime();
@@ -177,8 +192,7 @@ public class Player extends GameObject {
         if (celeCount > 0) { // Celebrate
             celeCount--;
             s1 = !s1;
-            loc = org.getPosLayer(layerName);
-            org.editLayer((s1) ? state1 : state2, loc, y, x);
+            org.editLayer((s1) ? state1 : state2, layerName, y, x);
         } else {
             graphicUpdate();
             aimDispUpdate();
@@ -201,7 +215,7 @@ public class Player extends GameObject {
                     move(r(3));
                 }
             } else { // Just finished a level / no visible food left
-                move(r(3));  //Move randomly
+                //move(r(3));  //Move randomly
             }
         } else { // Unset
             closestFood = null;
@@ -336,8 +350,7 @@ public class Player extends GameObject {
     private void move(int direction) {
         try {
             org.editLayer(" ", layerName, y, x);
-        } catch (IndexOutOfBoundsException e) {}
-        if (frozen) {
+        } catch (IndexOutOfBoundsException e) {
             return;
         }
         switch (direction) {
@@ -380,7 +393,6 @@ public class Player extends GameObject {
         if (shouldPause) {
             return;
         }
-        loc = org.getPosLayer(layerName);
         switch (key) {
             case '©':
                 move(UP);
@@ -413,8 +425,7 @@ public class Player extends GameObject {
             case 'b':
                 autonomous = !autonomous;
                 break;
-            case '\'': //Hotkey for killing this.
-                //System.exit(0);
+            case '\'':
                 shouldPause = true;
                 break;
             case 's':
@@ -423,6 +434,8 @@ public class Player extends GameObject {
             case 'a':
                 orientationLocked = !orientationLocked;
                 break;
+            case 'w':
+                shouldInventory = true;
             default:
                 System.out.print(key);
         }
@@ -433,8 +446,13 @@ public class Player extends GameObject {
 
 
     public void castSpell(){
-        if (mana > 1 && inventory.get("WoodStaff") > 0) {
-            room.addObject(new Spark(org, (Room) room, castingLayer, x, y, orientation));
+        if (mana > 1) {
+            if (inventory.get("WoodStaff") > 0) { // Spark
+                room.addObject(new Spark(org, room, castingLayer, x, y, orientation));
+            }
+            if (primarySpell.equals("Book")) {    // Book
+                room.addObject(new Spark(org, room, castingLayer, x, y, orientation));
+            }
             manaWait = manaWaitStat;
             mana -= 2;
             System.out.println("PEW");
@@ -552,28 +570,30 @@ class MKeyListener extends KeyAdapter {
 
     @Override
     public void keyPressed(KeyEvent event) {
-        char ch = event.getKeyChar();
-        player.keyPressed(ch);
-        if (event.getKeyCode() == KeyEvent.VK_UP) {
-            //System.out.println("UP! Key codes: " + event.getKeyCode());
-            player.keyPressed('©');
-        }
-        if (event.getKeyCode() == KeyEvent.VK_DOWN) {
-            //System.out.println("DOWN! Key codes: " + event.getKeyCode());
-            player.keyPressed('®');
-        }
-        if (event.getKeyCode() == KeyEvent.VK_LEFT) {
-            //System.out.println("LEFT! Key codes: " + event.getKeyCode());
-            player.keyPressed('µ');
-        }
-        if (event.getKeyCode() == KeyEvent.VK_RIGHT) {
-            //System.out.println("RIGHT! Key codes: " + event.getKeyCode());
-            player.keyPressed('æ');
-        }
-        if (event.getKeyCode() == KeyEvent.VK_ESCAPE) {
-            //System.out.println("RIGHT! Key codes: " + event.getKeyCode());
-            player.keyPressed('\'');
+        if (!player.frozen && !player.shouldPause) {
+            char ch = event.getKeyChar();
+            player.keyPressed(ch);
+            if (event.getKeyCode() == KeyEvent.VK_UP) {
+                //System.out.println("UP! Key codes: " + event.getKeyCode());
+                player.keyPressed('©');
+            }
+            if (event.getKeyCode() == KeyEvent.VK_DOWN) {
+                //System.out.println("DOWN! Key codes: " + event.getKeyCode());
+                player.keyPressed('®');
+            }
+            if (event.getKeyCode() == KeyEvent.VK_LEFT) {
+                //System.out.println("LEFT! Key codes: " + event.getKeyCode());
+                player.keyPressed('µ');
+            }
+            if (event.getKeyCode() == KeyEvent.VK_RIGHT) {
+                //System.out.println("RIGHT! Key codes: " + event.getKeyCode());
+                player.keyPressed('æ');
+            }
+            if (event.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                //System.out.println("RIGHT! Key codes: " + event.getKeyCode());
+                player.keyPressed('\'');
 
+            }
         }
     }
 }
