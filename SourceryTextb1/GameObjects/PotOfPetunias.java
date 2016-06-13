@@ -32,7 +32,10 @@ public class PotOfPetunias extends Enemy{
 //                    "the survivor in this encounter.  Remember, A is lock orientation and S is fire.  Good luck.");
 //            sentMessageBefore = true;
 //        }
-        checkDeath();
+        if (checkDeath()){
+            DroppedItem sparkSpell = new DroppedItem(room.playo, orgo, "You got a new spell: Spark!", "Spark", "DropSparkLayer", "!",x,y);
+            room.addObject(sparkSpell);
+        }
     }
 
 }

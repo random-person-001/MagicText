@@ -448,8 +448,9 @@ public class Player extends GameObject {
 
     public void castSpell(String spellName){
         if (mana > 1) {
-            if (spellName.equals("Book")) {
+            if (spellName.equals("Book") && inventory.get("Book") > 0) {
                 room.addObject(new Spell(org, room, castingLayer, x, y, orientation, "Book"));
+                inventory.put("Book",0);
             }
             if (spellName.equals("Spark")) {
                 room.addObject(new Spell(org, room, castingLayer, x, y, orientation, "Spark"));
