@@ -35,7 +35,7 @@ import static java.lang.Math.abs;
  * @author Riley
  */
 public class Player extends GameObject {
-    MKeyListener keyListener = new MKeyListener(this);
+    private MKeyListener playerKeyListener = new MKeyListener(this);
     private GameObject closestFood = null;
     private ImageOrg org;
     private Room room;
@@ -100,7 +100,7 @@ public class Player extends GameObject {
         org.addLayer(playerLayer);
 
         Window window = org.getWindow();
-        window.txtArea.addKeyListener(keyListener); // Add key listeners.
+        window.txtArea.addKeyListener(playerKeyListener); // Add key listeners.
 
         inventory = new HashMap<String, Integer>(); // I have no idea why this can't go at a class-level with the declaration.
         inventory.put("spoon", 0);
@@ -110,7 +110,7 @@ public class Player extends GameObject {
         inventory.put("mashedPotatoes", 0);
         inventory.put("food", 0);
         inventory.put("WoodStaff", 0);
-        org.setCam(x-22, y-8);
+        inventory.put("Book", 1);
     }
 
     public void setPrimarySpell (String spell){
@@ -155,15 +155,16 @@ public class Player extends GameObject {
     @Override
     public void update(){
         if (shouldPause) {
+            System.out.println("Pausing.");
             room.pause(org);
+            shouldPause = false;
         }else if (shouldInventory){
-            org.getWindow().removeKeyListener(keyListener);
+            //org.getWindow().removeKeyListener(playerKeyListener);
             Inventory inv = new Inventory(org, this);
             inv.show();
-            org.getWindow().addKeyListener(keyListener);
+            //org.getWindow().addKeyListener(playerKeyListener);
+            shouldInventory = false;
         }
-        shouldPause = false;
-        shouldInventory = false;
         if (frozen) {
             try {
                 org.editLayer(" ", layerName, y, x);
@@ -389,6 +390,7 @@ public class Player extends GameObject {
      */
     void keyPressed(char key) {
         if (shouldPause) {
+            System.out.println("No!");
             return;
         }
         switch (key) {
@@ -446,7 +448,7 @@ public class Player extends GameObject {
     }
 
 
-    public void castSpell(String spellName){
+    private void castSpell(String spellName){
         if (mana > 1) {
             if (spellName.equals("Book") && inventory.get("Book") > 0) {
                 room.addObject(new Spell(org, room, castingLayer, x, y, orientation, "Book"));
@@ -462,7 +464,7 @@ public class Player extends GameObject {
                 manaWait = manaWaitStat;
                 mana -= 3;
             }
-            System.out.println("PEW");
+            System.out.println("Unrecognised spell or you already threw your book from inventory");
         }
         else{
             System.out.println("Not enough mana or you don't have a staff yet!");

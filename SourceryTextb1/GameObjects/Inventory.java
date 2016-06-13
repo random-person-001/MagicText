@@ -16,7 +16,8 @@ import java.awt.event.KeyEvent;
 class Inventory{
     private Player player;
     private ImageOrg org;
-    private Layer invLayer;
+    private Layer invBkgdLayer;
+    private Layer itemsLayer;
     private String layerName = "Inventory";
     private int selectX = 0;
     private int selectY = 0;
@@ -26,11 +27,14 @@ class Inventory{
         org = orgo;
         player = p;
         art arty = new art();
-        invLayer = new Layer(art.strToArray(arty.inventoryBkgd), layerName, false, true);
     }
 
     public void show() {
-        org.addLayer(invLayer); // Background grid
+        player.frozen = true;
+        invBkgdLayer = new Layer(art.strToArray(new art().inventoryBkgd), layerName, false, true);
+        org.addLayer(invBkgdLayer); // Background grid
+        populateItems();
+        org.addLayer(itemsLayer);
         Layer selector = new Layer(new String[22][46], "selector", false, false);
         org.addLayer(selector); // Foreground stuff
 
@@ -46,9 +50,52 @@ class Inventory{
             }
         }
         org.removeLayer("selector");
+        org.removeLayer("invItems");
         org.removeLayer(layerName);
         window.txtArea.removeKeyListener(keyListener);
+        player.frozen = false;
     }
+
+    private void populateItems(){
+        itemsLayer = new Layer(new String[22][46], "invItems", false, false);
+        if (player.inventory.containsKey("Book") && player.inventory.get("Book")>0){
+            putItem(new art().oldBook, 1,1);
+        }
+    }
+
+    private void putItem (String thing, int indexX, int indexY){
+        String[][] arrThing = art.strToArray(thing);
+        for (int i = 0; i<arrThing[0].length; i++){
+            for (int j = 0; j<arrThing.length; j++){
+                org.editLayer(arrThing[j][i], "invItems", j+indexY, i+indexX);
+            }
+        }
+    }
+
+    String invenetoryBkgd =
+                    "///..........  I N V E N T O R Y  .........\\\\\\\n" +
+                    ".      ..       ..      ..      ..      ..   .\n" +
+                    ".      ..       ..      ..      ..      ..   .\n" +
+                    ".      ..       ..      ..      ..      ..   .\n" +
+                    "..........................................   .\n" +
+                    ".      ..       ..      ..      ..      ..   .\n" +
+                    ".      ..       ..      ..      ..      ..   .\n" +
+                    ".      ..       ..      ..      ..      ..   .\n" +
+                    "..........................................   .\n" +
+                    ".      ..       ..      ..      ..      ..   .\n" +
+                    ".      ..       ..      ..      ..      ..   .\n" +
+                    ".      ..       ..      ..      ..      ..   .\n" +
+                    "..........................................   .\n" +
+                    ".      ..       ..      ..      ..      ..   .\n" +
+                    ".      ..       ..      ..      ..      ..   .\n" +
+                    ".      ..       ..      ..      ..      ..   .\n" +
+                    "..............................................\n" +
+                    ".      ..       ..      ..|..EQUIPPED SPELLS..\n" +
+                    ".      ..       ..      ..|....1st......2nd...\n" +
+                    ".      ..       ..      ..|...      ..      ..\n" +
+                    "..........................|...      ..      ..\n" +
+                    "..........................|...      ..      ..\n" +
+                    "\\\\\\........................................///\n";
 
     private int getObject(int x,int y){
         return arrayOfStuff[x][y];

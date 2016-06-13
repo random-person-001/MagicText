@@ -29,6 +29,7 @@ public class TutorialBasement extends Room {
                 Thread.sleep(20);
                 //System.out.println("I'm not dead yet! " + ii);
                 updateObjs(20);
+                playo.update();
                 playo.addTime(20);
                 if (count == 0){
                     compactTextBox(org, "You've woken up in a basement somewhere.\nWoah, there's now lots of text everywhere!", "", true);
