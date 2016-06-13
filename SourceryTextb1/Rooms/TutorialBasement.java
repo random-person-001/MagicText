@@ -5,9 +5,8 @@
  */
 package SourceryTextb1.Rooms;
 
-import SourceryTextb1.GameObjects.Food;
 import SourceryTextb1.GameObjects.Player;
-import SourceryTextb1.GameObjects.Spark;
+import SourceryTextb1.GameObjects.PotOfPetunias;
 import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
 import SourceryTextb1.art;
@@ -18,11 +17,11 @@ import SourceryTextb1.art;
  */
 public class TutorialBasement extends Room {
 
-    ImageOrg org;
-    int maxH;
-    int maxW;
+    private ImageOrg org;
+    private int maxH;
+    private int maxW;
 
-    private void loop(Player play){
+    private void loop(){
         int exitCode = 0;
         int count = 0;
         while (exitCode == 0){
@@ -30,8 +29,7 @@ public class TutorialBasement extends Room {
                 Thread.sleep(20);
                 //System.out.println("I'm not dead yet! " + ii);
                 updateObjs(20);
-                play.addTime(20);
-                play.update();//Update player
+                playo.addTime(20);
                 if (count == 0){
                     compactTextBox(org, "You've woken up in a basement somewhere.\nWoah, there's now lots of text everywhere!", "", true);
                     compactTextBox(org, "You should explore the basement!\nUse the arrow keys to navigate the place.", "", false);
@@ -42,25 +40,31 @@ public class TutorialBasement extends Room {
                     compactTextBox(org, "The bar on the top-right is your mana bar.\n Casting spells costs mana.\nLuckily, your mana refills after a bit.", "", false);
                     count++;
                 }
-                //play.reportPos();
+                if (count == 2 && getPlayer().x == 24 && getPlayer().y == 3){
+                    compactTextBox(org, "One such grave danger awaits you nearby.\n None other than a Pot of Petunias is ahead.\n You have but a book to kill it with.","",false);
+                    compactTextBox(org, "Use the 'A' key to lock your aim\n Use the 'S' key to fire!", "", false);
+                    count++;
+                }
+                if (count == 3 && getCountOf("PotOfPetunias") == 0){
+                    compactTextBox(org, "You managed to destroy the flowers!\n Now let's move on.", "", false);
+                    compactTextBox(org, "Oh no, not again.", "Petunias", false);
+                    count++;
+                }
+                //playo.reportPos();
                 org.compileImage();
 
-            } catch (InterruptedException ex) {}
+            } catch (InterruptedException ignored) {}
         }
     }
 
-    public void startup(ImageOrg org, Player player){
+    public void startup(){
         Layer spells = new Layer(new String[maxH][maxW], "Spellz", true);
         org.addLayer(spells);
 
-        super.playo = player;
-        player.x = 7;
-        player.y = 20;
-        player.centerCamera();
-        player.castingLayer = spells;
+        playo.goTo(7,20);
+        playo.castingLayer = spells;
+        playo.setupForNewRoom();
 
-        playo.inventory.put("WoodStaff", 1);
-        player.setupForNewRoom();
 
         super.baseHitMesh = new boolean[super.roomHeight][super.roomWidth];
         super.objHitMesh = new boolean[super.roomHeight][super.roomWidth];
@@ -70,67 +74,43 @@ public class TutorialBasement extends Room {
         String[] solids = {"|","-","0"};
         addToBaseHitMesh(base, solids);
         Layer lay1 = new Layer(base, "Test");
-        for (int i=0; i<lay1.self.length; i++){
-            for (int j=0; j<lay1.self[0].length; j++){
-                if (lay1.self[i][j].equals("#")){
-                    lay1.self[i][j] = " ";
-                }
-            }
-        }
+//        for (int i=0; i<lay1.self.length; i++){
+//            for (int j=0; j<lay1.self[0].length; j++){
+//                if (lay1.self[i][j].equals("#")){
+//                    lay1.self[i][j] = " ";
+//                }
+//            }
+//        }
         org.addLayer(lay1);
 
-        super.playo = player;
-        Layer playerLayer = org.getLayer(org.getPosLayer(player.layerName));
+        Layer playerLayer = org.getLayer(org.getPosLayer(playo.layerName));
         org.addLayer(playerLayer);
 
-        Spark sparky = new Spark(org, this, spells, 15, 15, 0);
-        addObject(sparky);
-
         addHUD(org);
+
+        PotOfPetunias flowers = new PotOfPetunias(org, this, 27, 3);
+        addEnemy(flowers);
     }
 
     /**
      * Enter the room. IE, start loops and stuff now.
      */
-    public void enter(Player player){
+    public void enter(){
         org.compileImage();
-        player.frozen = false;
-        loop(player);
-        player.frozen = true;
+        playo.frozen = false;
+        loop();
+        playo.frozen = true;
         super.cleanLayersForExit(org);
     }
 
-    public TutorialBasement(ImageOrg orgo){
+    public TutorialBasement(ImageOrg orgo, Player player){
+        playo = player;
         org = orgo;
         maxH = org.getWindow().maxH();
         maxW = org.getWindow().maxW();
         super.roomHeight = maxH;
         super.roomWidth = maxW;
         super.index = 1;
-    }
-    
-    private String[][] makeABox(int width, int height){
-        String[][] output = new String[height][width];
-        for(int ii = 0; ii < height; ii++){
-            for (int iii = 0 ; iii < width; iii++){
-                if (ii == 0 || ii == height - 1){
-                    if (iii == 0 || iii == width - 1){
-                        output[ii][iii] = "O";
-                    } else {
-                        output[ii][iii] = "-";
-                    }
-                } else {
-                    if (iii == 0 || iii == width - 1){
-                        output[ii][iii] = "|";
-                    } else if (ii % 3 == 0 && iii % 6 == 0){
-                        output[ii][iii] = ".";
-                    } else {
-                        output[ii][iii] = " ";
-                    }
-                }
-            }
-        }
-        return output;
     }
 
 }

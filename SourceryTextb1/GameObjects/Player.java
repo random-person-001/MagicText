@@ -91,11 +91,9 @@ public class Player extends GameObject {
 
     /**Initialize a whole lotta variables.
      * @param theOrg the ImageOrg(anizer)
-     * @param theRoom the Room the Player should consider itself to be in initially
      */
-    public Player(ImageOrg theOrg, Room theRoom) {
+    public Player(ImageOrg theOrg) {
         super.strClass = "Player";
-        room = theRoom;
         org = theOrg;
         Layer playerLayer = new Layer(new String[org.getWindow().maxH()][org.getWindow().maxW()], layerName);
         setupForNewRoom();
@@ -135,7 +133,7 @@ public class Player extends GameObject {
     /**Change the Player's perception of which room it is in.  As a bonus, celebrate a bit.
      * @param newRoom a Room that Player should consider itself in
      */
-    public void changeRoom(Room newRoom) {
+    public void setRoom(Room newRoom) {
         celeCount = 12;
         room = newRoom;
     }
@@ -148,7 +146,7 @@ public class Player extends GameObject {
         org.editLayer(" ", layerName, y, x);
         x = newX;
         y = newY;
-        org.setCam(x - 22, y - 8);
+        centerCamera();
     }
 
     /**
@@ -429,7 +427,10 @@ public class Player extends GameObject {
                 shouldPause = true;
                 break;
             case 's':
-                castSpell();
+                castSpell(primarySpell);
+                break;
+            case 'd':
+                castSpell(secondarySpell);
                 break;
             case 'a':
                 orientationLocked = !orientationLocked;
@@ -445,17 +446,17 @@ public class Player extends GameObject {
     }
 
 
-    public void castSpell(){
+    public void castSpell(String spellName){
         if (mana > 1) {
-            if (primarySpell.equals("Book")) {
+            if (spellName.equals("Book")) {
                 room.addObject(new Spell(org, room, castingLayer, x, y, orientation, "Book"));
             }
-            if (primarySpell.equals("Spark")) {
+            if (spellName.equals("Spark")) {
                 room.addObject(new Spell(org, room, castingLayer, x, y, orientation, "Spark"));
                 manaWait = manaWaitStat;
                 mana -= 2;
             }
-            if (primarySpell.equals("Flame")) {
+            if (spellName.equals("Flame")) {
                 room.addObject(new Spell(org, room, castingLayer, x, y, orientation, "Flame"));
                 manaWait = manaWaitStat;
                 mana -= 3;

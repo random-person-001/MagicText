@@ -80,9 +80,6 @@ public class TestRoom extends Room {
         Layer playerLayer = org.getLayer(org.getPosLayer(player.layerName));
         org.addLayer(playerLayer);
 
-        Spark sparky = new Spark(org, this, spells, 15, 15, 0);
-        addObject(sparky);
-
         addHUD(org);
     }
     

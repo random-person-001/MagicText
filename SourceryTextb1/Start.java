@@ -19,7 +19,7 @@ import SourceryTextb1.Rooms.*;
  *
  */
 public class Start {
-    private static boolean doDemo = true;
+    private static boolean doDemo = false;
 
     public static void main(String[] args) throws InterruptedException {
         Window game = new Window();
@@ -29,7 +29,8 @@ public class Start {
 
         if (doDemo) {
             TestRoom roomOne = new TestRoom(org);
-            Player player = new Player(org, roomOne);
+            Player player = new Player(org);
+            player.setRoom(roomOne);
             levelAnimation(org, 1, 2);
             roomOne.startup(org, player);
             roomOne.enter(player);
@@ -49,11 +50,11 @@ public class Start {
             roomThree.startup(org, player);
             roomThree.enter(player);
         } else {
-            TutorialBasement forest = new TutorialBasement(org);
-            Player player = new Player(org, forest);
+            Player player = new Player(org);
+            TutorialBasement forest = new TutorialBasement(org, player);
             prepLevel(org, game, player, forest, 0);
-            forest.startup(org, player);
-            forest.enter(player);
+            forest.startup();
+            forest.enter();
         }
 
 
@@ -73,7 +74,7 @@ public class Start {
             levelAnimation(org, levelNum, 2);
         }
         player.goTo(6,6);
-        player.changeRoom(newRoom);
+        player.setRoom(newRoom);
     }
 
     private static void levelAnimation(ImageOrg org, int levelNum) {

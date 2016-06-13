@@ -61,6 +61,16 @@ public class Room {
         return false;
     }
 
+    public int getCountOf (String className){
+        int count = 0;
+        for (GameObject o : objs) {
+            if (o.strClass.equals(className)) {
+                count++;
+            }
+        }
+        return count;
+    }
+
     /**
      * Loop through all objects that are in the room and tell them to update. (call obj.update() on each)
      */
