@@ -55,6 +55,11 @@ public class Start {
             prepLevel(org, game, player, forest, 0);
             forest.startup();
             forest.enter();
+
+            DockAndShip boat = new DockAndShip(org, player);
+            prepLevel(org, game, player, boat, 0);
+            boat.startup();
+            boat.enter();
         }
 
 

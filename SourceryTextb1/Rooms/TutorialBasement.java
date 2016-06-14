@@ -84,10 +84,13 @@ public class TutorialBasement extends Room {
                     compactTextBox(org, "You may ask what that ^ is over yonder.\n I fear that is a Spike.","Narrator",false);
                     count++;
                 }
+                if (getPlayer().getX() > 73){
+                    exitCode = 4;
+                }
                 if (playo.dead){
                     exitCode = 1;
                 }
-                //playo.reportPos();
+                playo.reportPos();
                 org.compileImage();
 
             } catch (InterruptedException ignored) {}
