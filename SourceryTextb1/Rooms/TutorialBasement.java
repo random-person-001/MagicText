@@ -7,6 +7,7 @@ package SourceryTextb1.Rooms;
 
 import SourceryTextb1.GameObjects.Player;
 import SourceryTextb1.GameObjects.PotOfPetunias;
+import SourceryTextb1.GameObjects.Spike;
 import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
 import SourceryTextb1.art;
@@ -51,7 +52,11 @@ public class TutorialBasement extends Room {
                     compactTextBox(org, "Oh no, not again.", "Petunias", false);
                     count++;
                 }
-                //playo.reportPos();
+                if (count == 4 && getPlayer().getX() == 42 && getPlayer().getY() == 8){
+                    compactTextBox(org, "You may ask what that ^ is over yonder.\n I fear that is a Spike.","Narrator",false);
+                    count++;
+                }
+                playo.reportPos();
                 org.compileImage();
 
             } catch (InterruptedException ignored) {}
@@ -86,11 +91,16 @@ public class TutorialBasement extends Room {
 
         Layer playerLayer = org.getLayer(org.getPosLayer(playo.getLayerName()));
         org.addLayer(playerLayer);
+        addMortal(playo);
 
         addHUD(org);
 
         PotOfPetunias flowers = new PotOfPetunias(org, this, 27, 3);
         addMortal(flowers);
+
+        Spike spike = new Spike(org, this, 46, 8);
+        spike.setMoveFrq(10);
+        addMortal(spike);
     }
 
     /**

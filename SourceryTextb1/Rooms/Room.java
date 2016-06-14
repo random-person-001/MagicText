@@ -151,6 +151,30 @@ public class Room {
         }
     }
 
+    /**
+     * Tell the room that somewhere in the hit mesh of objects, there is a solid place.  Useful for making enemies not
+     * able to walk through
+     * @param x x coord in room
+     * @param y y coord in room
+     */
+    public void makePlaceSolid(int x, int y) {
+        if ((x > 0 && x < objHitMesh[0].length - 1) && (y > 0 && y < objHitMesh.length - 1)) { // Buffer of 1 for room walls
+            objHitMesh[y][x] = true;
+        }
+    }
+
+    /**
+     *  Unset a location in the hit mesh of objects  Useful for making Player able to walk through where an enemy hath
+     *  tread.
+     * @param x x coord in room
+     * @param y y coord in room
+     */
+    public void makePlaceNotSolid(int x, int y) {
+        if ((x > 0 && x < objHitMesh[0].length - 1) && (y > 0 && y < objHitMesh.length - 1)) { // Buffer of 1 for room walls
+            objHitMesh[y][x] = false;
+        }
+    }
+
     public void addToBaseHitMesh(String[][] picture, String[] solidChars) {
         for (String solid : solidChars){
             addToBaseHitMesh(picture, solid);

@@ -82,7 +82,7 @@ public class Player extends Mortal {
      * @param theOrg the ImageOrg(anizer)
      */
     public Player(ImageOrg theOrg) {
-        setHealth(50);
+        setHealth(7);
         super.strClass = "Player";
         orgo = theOrg;
         layerName = "playerLayer";
@@ -200,6 +200,12 @@ public class Player extends Mortal {
             }
         } else { // Unset
             closestFood = null;
+        }
+        if (checkDeath()){
+            System.out.println("Apparently you died.");
+            dead = true;
+            room.compactTextBox(orgo, "You were killed!", "Grim Reaper", false);
+            System.exit(0);
         }
         updateBackground();
     }
@@ -341,6 +347,7 @@ public class Player extends Mortal {
     private void move(int direction) {
         try {
             orgo.editLayer(" ", layerName, y, x);
+            room.makePlaceNotSolid(x,y);
         } catch (IndexOutOfBoundsException e) {
             return;
         }
@@ -372,6 +379,7 @@ public class Player extends Mortal {
             default:
                 System.out.println("Bro, you're using Player.move wrong.");
         }
+        room.makePlaceSolid(x,y);
         graphicUpdate();
     }
 
@@ -382,10 +390,6 @@ public class Player extends Mortal {
      * @param key a character that was pressed on the leopard
      */
     void keyPressed(char key) {
-        if (shouldPause) {
-            System.out.println("No!");
-            return;
-        }
         switch (key) {
             case '©':
                 move(UP);
@@ -574,7 +578,7 @@ class MKeyListener extends KeyAdapter {
 
     @Override
     public void keyPressed(KeyEvent event) {
-        if (!player.frozen && !player.shouldPause) {
+        if (!player.frozen && !player.shouldPause && !player.dead) {
             char ch = event.getKeyChar();
             player.keyPressed(ch);
             if (event.getKeyCode() == KeyEvent.VK_UP) {
@@ -598,6 +602,8 @@ class MKeyListener extends KeyAdapter {
                 player.keyPressed('\'');
 
             }
+        }if (player.dead){
+            System.out.println("No, stop.  You're dead.");
         }
     }
 }

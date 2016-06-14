@@ -6,23 +6,18 @@
 package SourceryTextb1.GameObjects;
 
 import SourceryTextb1.ImageOrg;
+import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
-import SourceryTextb1.GameObjects.GameObject;
-
-import java.awt.*;
 import java.util.Random;
+
+import static java.lang.Math.abs;
 
 /**
  * A dangerous class, to say the least!
  * @author riley-ubuntu
  */
-public class Spike extends GameObject{
+public class Spike extends Mortal{
     static Random rand = new Random();
-    ImageOrg org;
-    Room room;
-    public String layerName = "spikebed";
-    int x;
-    int y;
     private int xvariance = 1;
     private int yvariance = 1;
     private int moveFrq = 60; //Higher is slower
@@ -32,17 +27,26 @@ public class Spike extends GameObject{
     }
     public Spike(ImageOrg orga, Room theRoom, int xStart, int yStart){
         super.strClass = "Spike";
-        org = orga;
+        layerName = "spikebed";
+        orgo = orga;
         room = theRoom;
         x = xStart;
         y = yStart;
+        setHealth(12);
+        if (-1 == orga.getPosLayer(layerName)) {// Layer doesn't exist yet; add it
+            orgo.addLayer(new Layer(new String[y+10][x+10], layerName));
+        }
+    }
+
+    public void setMoveFrq(int newfrq){
+        moveFrq = newfrq;
     }
 
     @Override
     public void update(){  // Moves a bit when it feels the urge.
-        int loc = org.getPosLayer(layerName);
         if (r(moveFrq) < 1) {
-            org.editLayer(" ", loc, x, y);
+            orgo.editLayer(" ", layerName, y, x);
+            room.makePlaceNotSolid(x,y);
             boolean goodPlace = false;
             while (!goodPlace){
                 int newX = x + r(2 * xvariance) - xvariance;
@@ -51,18 +55,27 @@ public class Spike extends GameObject{
                     goodPlace = true;
                 }
             }
-            org.editLayer("^", loc, x, y);
+            orgo.editLayer("^", layerName, y, x);
+            room.makePlaceSolid(x,y);
         }else{
-            org.editLayer("^", loc, x, y);
+            orgo.editLayer("^", layerName, y, x);
         }
-        Player playo = room.getPlayer();
-        if (playo.y == x && playo.x == y) {
-            if (room.storedStuff.get("Spiked") == null && room.index == 3){
-                room.infoMessage(org, "Have you considered that stepping on a spike, as you just did, is detrimental?");
+        if (r(moveFrq/2) < 1) { // Cast a spell randomly!  Dangerous, eh?
+            room.addObject(new Spell(orgo, room, room.playo.castingLayer, x, y, r(3), "Spark"));
+        }
+
+        if (abs(room.playo.y - y) <= 2 && abs(room.playo.x - x) <= 2) {
+            if (room.storedStuff.get("Spiked") == null && room.index == 3){  // Legacy
+                room.infoMessage(orgo, "Have you considered that stepping on a spike, as you just did, is detrimental?");
                 room.storedStuff.put("Spiked", 1);
             }
             room.foodEaten -= 5;
             room.playo.hurt(3);
+        }
+        if (checkDeath()){
+            System.out.println("AAAAAaaaack, a spike died.");
+            DroppedItem flameSpell = new DroppedItem(room, orgo, "You got a new spell: Flame!", "Flame", "DropFlameLayer", "!",x,y);
+            room.addObject(flameSpell);
         }
     }
 

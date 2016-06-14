@@ -355,9 +355,9 @@ public class art {
                     "SPARK!\n" +
                     "/-|-.\\\n";
     public String flame=
-                    "      \n" +
-                    "      \n" +
-                    "      \n";
+                    "( ( ^.\n" +
+                    " ))  (\n" +
+                    ")|(^()\n";
     public String emptyItem=
                     "      \n" +
                     "      \n" +

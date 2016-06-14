@@ -127,7 +127,10 @@ class Inventory{
             putItem(itemsLayer, arty.oldBook, 2, 5);
         }
         if (hasItem("Spark")){
-            putItem(itemsLayer, arty.spark, 1, 2);
+            putItem(itemsLayer, arty.spark, 2, 1);
+        }
+        if (hasItem("Flame")){
+            putItem(itemsLayer, arty.flame, 3, 1);
         }
         return itemsLayer;
     }
@@ -144,6 +147,7 @@ class Inventory{
         org.editLayer("|", "selector", indexY+1, indexX+7);
         org.editLayer("|", "selector", indexY+2, indexX+7);
         String discription = getSelectedDescription(); // TODO Put item descriptions somewhere
+        System.out.println(discription);
         org.compileImage();
     }
 
@@ -194,7 +198,7 @@ class Inventory{
             }else if (what == 2){
                 return "A little spell that helps along the spontaneous reaction of an enemy with oxygen to form CO2 and H2O.";
             }
-            return arty.spark;
+            return arty.flame;
         } else {
             if (what == 1) {
                 return "None";
@@ -227,7 +231,7 @@ class Inventory{
         String[][] arrThing = art.strToArray(thing);
         for (int i = 0; i<arrThing.length; i++){
             for (int j = 0; j<arrThing[0].length; j++){
-                org.editLayer(arrThing[i][j], selectedSpellsLayer.name, i+y, j+x);//4,4);//i+y, j+x);
+                org.editLayer(arrThing[i][j], selectedSpellsLayer.name, i+y, j+x);
             }
         }
     }
