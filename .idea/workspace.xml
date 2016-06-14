@@ -3,12 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="2135375f-4dfd-4c17-b9a7-4b7586bd0b6e" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SourceryTextb1/GameObjects/DroppedItem.java" afterPath="$PROJECT_DIR$/SourceryTextb1/GameObjects/DroppedItem.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SourceryTextb1/GameObjects/Enemy.java" afterPath="$PROJECT_DIR$/SourceryTextb1/GameObjects/Enemy.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SourceryTextb1/GameObjects/Inventory.java" afterPath="$PROJECT_DIR$/SourceryTextb1/GameObjects/Inventory.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SourceryTextb1/GameObjects/Player.java" afterPath="$PROJECT_DIR$/SourceryTextb1/GameObjects/Player.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SourceryTextb1/GameObjects/Staff.java" afterPath="$PROJECT_DIR$/SourceryTextb1/GameObjects/Staff.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SourceryTextb1/art.java" afterPath="$PROJECT_DIR$/SourceryTextb1/art.java" />
     </list>
     <ignored path="MagicTextb1.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -49,13 +44,17 @@
       <file leaf-file-name="Inventory.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/SourceryTextb1/GameObjects/Inventory.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="207">
-              <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
+            <state relative-caret-position="4081">
+              <caret line="275" column="21" selection-start-line="275" selection-start-column="21" selection-end-line="275" selection-end-column="21" />
               <folding>
-                <element signature="e#2569#2570#0" expanded="true" />
-                <element signature="e#2613#2614#0" expanded="true" />
-                <element signature="e#8298#8299#0" expanded="true" />
-                <element signature="e#8339#8340#0" expanded="true" />
+                <element signature="e#2489#2490#0" expanded="true" />
+                <element signature="e#2533#2534#0" expanded="true" />
+                <element signature="e#5014#5015#0" expanded="true" />
+                <element signature="e#5051#5052#0" expanded="true" />
+                <element signature="e#5155#5156#0" expanded="true" />
+                <element signature="e#5192#5193#0" expanded="true" />
+                <element signature="e#5325#5326#0" expanded="true" />
+                <element signature="e#5362#5363#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -64,8 +63,18 @@
       <file leaf-file-name="Enemy.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/SourceryTextb1/GameObjects/Enemy.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="229">
-              <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+            <state relative-caret-position="301">
+              <caret line="31" column="16" selection-start-line="31" selection-start-column="16" selection-end-line="31" selection-end-column="16" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Spell.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/SourceryTextb1/GameObjects/Spell.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="208">
+              <caret line="27" column="20" selection-start-line="27" selection-start-column="20" selection-end-line="27" selection-end-column="20" />
               <folding />
             </state>
           </provider>
@@ -91,18 +100,6 @@
                 <element signature="e#796#803#0" expanded="true" />
                 <element signature="e#3061#3062#0" expanded="true" />
                 <element signature="e#3093#3094#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Food.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/SourceryTextb1/GameObjects/Food.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="356">
-              <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
-              <folding>
-                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -823,7 +820,14 @@
       <option name="project" value="LOCAL" />
       <updated>1465915480794</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Change all the inventory stuff to be in Inventory.java, improved on spell setting and storage.&#10;">
+      <created>1465919852659</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1465919852659</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TodoView">
@@ -894,7 +898,8 @@
     <MESSAGE value="Work on inventory.  Now has correct (but unused) selector and puts thing in spots nicely." />
     <MESSAGE value="Dropping items is slightly better.  Still keeps trying to update it, though.&#10;" />
     <MESSAGE value="Fixed bug #4, it was cuz the room variable wasn't being set and then things failed silently.&#10;" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed bug #4, it was cuz the room variable wasn't being set and then things failed silently.&#10;" />
+    <MESSAGE value="Change all the inventory stuff to be in Inventory.java, improved on spell setting and storage.&#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="Change all the inventory stuff to be in Inventory.java, improved on spell setting and storage.&#10;" />
     <option name="PRESELECT_EXISTING_CHANGELIST" value="false" />
   </component>
   <component name="XDebuggerManager">
@@ -1165,16 +1170,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/SourceryTextb1/GameObjects/Spell.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="172">
-          <caret line="25" column="8" selection-start-line="25" selection-start-column="8" selection-end-line="25" selection-end-column="8" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/SourceryTextb1/GameObjects/Spark.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="144">
@@ -1276,14 +1271,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/SourceryTextb1/GameObjects/Enemy.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="229">
-          <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/SourceryTextb1/GameObjects/Staff.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="280">
@@ -1327,15 +1314,35 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/SourceryTextb1/GameObjects/Spell.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="208">
+          <caret line="27" column="20" selection-start-line="27" selection-start-column="20" selection-end-line="27" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SourceryTextb1/GameObjects/Enemy.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="301">
+          <caret line="31" column="16" selection-start-line="31" selection-start-column="16" selection-end-line="31" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/SourceryTextb1/GameObjects/Inventory.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="207">
-          <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
+        <state relative-caret-position="4081">
+          <caret line="275" column="21" selection-start-line="275" selection-start-column="21" selection-end-line="275" selection-end-column="21" />
           <folding>
-            <element signature="e#2569#2570#0" expanded="true" />
-            <element signature="e#2613#2614#0" expanded="true" />
-            <element signature="e#8298#8299#0" expanded="true" />
-            <element signature="e#8339#8340#0" expanded="true" />
+            <element signature="e#2489#2490#0" expanded="true" />
+            <element signature="e#2533#2534#0" expanded="true" />
+            <element signature="e#5014#5015#0" expanded="true" />
+            <element signature="e#5051#5052#0" expanded="true" />
+            <element signature="e#5155#5156#0" expanded="true" />
+            <element signature="e#5192#5193#0" expanded="true" />
+            <element signature="e#5325#5326#0" expanded="true" />
+            <element signature="e#5362#5363#0" expanded="true" />
           </folding>
         </state>
       </provider>

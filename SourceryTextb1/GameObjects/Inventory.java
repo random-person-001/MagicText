@@ -26,7 +26,6 @@ class Inventory{
     private String layerName = "Inventory";
     private int selectX = 1;
     private int selectY = 1;
-    private int[][] arrayOfStuff; // TODO make the array of things in inventory
 
     public Inventory(ImageOrg orgo, Player p){
         org = orgo;
@@ -132,6 +131,7 @@ class Inventory{
         }
         return itemsLayer;
     }
+
     private void updateSelector(){
         int indexY = 4*(selectY-1) + 1;
         int indexX = 8*(selectX-1);
@@ -143,23 +143,63 @@ class Inventory{
         org.editLayer("|", "selector", indexY, indexX+7);
         org.editLayer("|", "selector", indexY+1, indexX+7);
         org.editLayer("|", "selector", indexY+2, indexX+7);
+        String discription = getSelectedDescription(); // TODO Put item descriptions somewhere
         org.compileImage();
     }
 
-    private String getSelected(boolean justName) {
+    /**
+     * @return A shortish description of what is selected
+     */
+    private String getSelectedDescription(){
+        return getSelected(1);
+    }
+
+    /**
+     * @return the item name of what is selected
+     */
+    private String getSelectedName(){
+        return getSelected(2);
+    }
+
+    /**
+     * @return the art (String, not String[][]) of the item currently selected
+     */
+    private String getSelectedArt(){
+        return getSelected(3);
+    }
+
+    /** Fetch-all method to get random stuff from what's selected currently.  Consider using the more intuitively
+     * named getSelectedArt(), getSelectedName(), or getSelectedDescription().
+     * @param what a magical integer that specifies which kind of thing to fetch
+     * @return a String thing corresponding to what you asked for.
+     */
+    private String getSelected(int what) {
         if (selectX == 1 && selectY == 1 && hasItem("Book")) {
-            if (justName) {
+            if (what == 1) {
                 return "Book";
+            }else if (what == 2){
+                return "This is an old book you found in your pocket.  You can't read it, so it's probably worth more as a weapon.";
             }
             return arty.oldBook;
-        } else if (selectX == 1 && selectY == 2 && hasItem("Spark")) {
-            if (justName) {
+        } else if (selectX == 2 && selectY == 1 && hasItem("Spark")) {
+            if (what == 1) {
                 return "Spark";
+            }else if (what == 2){
+                return "A small spell you found after killing a pot of petunias";
+            }
+            return arty.spark;
+        } else if (selectX == 3 && selectY == 1 && hasItem("Flame")) {
+            if (what == 1) {
+                return "Flame";
+            }else if (what == 2){
+                return "A little spell that helps along the spontaneous reaction of an enemy with oxygen to form CO2 and H2O.";
             }
             return arty.spark;
         } else {
-            if (justName) {
+            if (what == 1) {
                 return "None";
+            }else if (what == 2){
+                return "";
             }
             return arty.emptyItem;
         }
@@ -176,6 +216,11 @@ class Inventory{
             }
         }
     }
+
+    /**
+     * Put a new item art in the Primary Spell place
+     * @param thing a String (not String[][], this does that!).
+     */
     private void putPrimary (String thing){
         int y = 19;
         int x = 30;
@@ -186,6 +231,10 @@ class Inventory{
             }
         }
     }
+    /**
+     * Put a new item art in the Secondary Spell place
+     * @param thing a String (not String[][], this does that!).
+     */
     private void putSecondary (String thing){
         int y = 19;
         int x = 38;
@@ -223,10 +272,9 @@ class Inventory{
 //                    \\\........................................///
 
 
-    private int getObject(int x,int y){
-        return arrayOfStuff[x][y];
-    }
-
+    /** Press a key?  Call this to do stuff!
+     * @param c which character you have pressed on the board
+     */
     void keyPressed(char c){
         System.out.println(c);
         switch (c){
@@ -247,12 +295,12 @@ class Inventory{
                     selectX++;
                 break;
             case '1': // Set primary
-                putPrimary(getSelected(false));
-                player.setPrimarySpell(getSelected(true));
+                putPrimary(getSelectedArt());
+                player.setPrimarySpell(getSelectedName());
                 break;
             case '2': // Set secondary
-                putSecondary(getSelected(false));
-                player.setSecondarySpell(getSelected(true));
+                putSecondary(getSelectedArt());
+                player.setSecondarySpell(getSelectedName());
                 break;
             default:
                 break;
