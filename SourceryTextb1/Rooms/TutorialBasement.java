@@ -52,7 +52,7 @@ public class TutorialBasement extends Room {
                     compactTextBox(org, "Oh no, not again.", "Petunias", false);
                     count++;
                 }
-                if (count == 4 && getPlayer().getX() == 42 && getPlayer().getY() == 8){
+                if (count == 4 && ((getPlayer().getX() == 39 && getPlayer().getY() == 8) || (getPlayer().getX() == 38 && getPlayer().getY() == 7))){
                     compactTextBox(org, "You may ask what that ^ is over yonder.\n I fear that is a Spike.","Narrator",false);
                     count++;
                 }
