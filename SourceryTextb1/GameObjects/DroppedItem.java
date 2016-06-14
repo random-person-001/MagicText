@@ -15,8 +15,9 @@ public class DroppedItem extends GameObject{
     private String char1;
     private String layerName;
 
-    public DroppedItem(Room room, ImageOrg org, String messageOnPickup, String callMyself, String layername, String displayChar, int setx, int sety){
+    public DroppedItem(Room roomy, ImageOrg org, String messageOnPickup, String callMyself, String layername, String displayChar, int setx, int sety){
         strClass = "DroppedItem";
+        room = roomy;
         player = room.playo;
         orgo = org;
         pickUpMessage = messageOnPickup;
@@ -26,23 +27,23 @@ public class DroppedItem extends GameObject{
         x = setx;
         y = sety;
         Layer thisLayer = new Layer(new String[1][1], layerName, y, x);
-        org.addLayer(thisLayer);
+        orgo.addLayer(thisLayer);
     }
 
     @Override
     public void update(){
         orgo.editLayer(char1, layerName, 0, 0);
         if (x == player.getX() && y == player.getY()){
-            System.out.println("Hi!  It's a " + itemName);
+            System.out.println("You found a " + itemName);
+            room.removeObject(this);
+            orgo.editLayer(" ", layerName, 0, 0);
+            orgo.removeLayer(layerName);
             if (player.inventory.containsKey(itemName)){
                 int n = player.inventory.get(itemName);
                 player.inventory.put(itemName, n+1);
             }else{
                 player.inventory.put(itemName,1);
             }
-            orgo.editLayer(" ", layerName, 0, 0);
-            orgo.removeLayer(layerName);
-            room.removeObject(this);
             room.compactTextBox(orgo, pickUpMessage,"",false);
         }
     }
