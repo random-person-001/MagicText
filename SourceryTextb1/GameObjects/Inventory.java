@@ -148,16 +148,16 @@ class Inventory{
     }
 
     /**
-     * @return A shortish description of what is selected
+     * @return the item name of what is selected
      */
-    private String getSelectedDescription(){
+    private String getSelectedName(){
         return getSelected(1);
     }
 
     /**
-     * @return the item name of what is selected
+     * @return A shortish description of what is selected
      */
-    private String getSelectedName(){
+    private String getSelectedDescription(){
         return getSelected(2);
     }
 
