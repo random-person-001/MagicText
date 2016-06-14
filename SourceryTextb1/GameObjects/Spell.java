@@ -4,6 +4,8 @@ import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
 
+import static SourceryTextb1.GameObjects.Spike.r;
+
 /**
  * Create a new spell.  Attributes such as its character representation, damage, and range can be customized.
  * Created by riley on 13-Jun-2016.
@@ -25,6 +27,7 @@ public class Spell extends GameObject{
      * "Book",    1        3       b       B
      * "Spark",   5        4       X       x
      * "Flame"    9        5       M       m
+     * "Wanderer" 9        9*      W       w
      * @param org the ImageOrganizer
      * @param theRoom the Room
      * @param place a Layer for this piece of magic to reside in
@@ -68,6 +71,13 @@ public class Spell extends GameObject{
                 setChar1("M");
                 setChar2("m");
                 break;
+            case "Wanderer":
+                setDamage(9);
+                setRange(9);
+                setChar1("W");
+                setChar2("w");
+                orientation = -1;
+                break;
             case "None":
                 setDamage(0);
                 setRange(0);
@@ -106,6 +116,10 @@ public class Spell extends GameObject{
                 break;
             case 3:
                 x += 1;
+                break;
+            case -1: // Random dir
+                x += r(1)*2-1; // does not stay still; must move L or R
+                y += r(1)*2-1;
                 break;
             default:
                 break;

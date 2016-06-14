@@ -358,6 +358,18 @@ public class art {
                     "( ( ^.\n" +
                     " ))  (\n" +
                     ")|(^()\n";
+    public String wanderer=
+                    " ?|?  \n" +
+                    "--+---\n" +
+                    " ?|?  \n";
+    public String smallHealth=
+                    "|----|\n" +
+                    "|-+- |\n" +
+                    "|____|\n";
+    public String hugeHealth=
+                    ". | -|\n" +
+                    "--+--|\n" +
+                    "__|__|\n";
     public String emptyItem=
                     "      \n" +
                     "      \n" +

@@ -448,6 +448,21 @@ public class Player extends Mortal {
                 manaWait = manaWaitStat;
                 mana -= 3;
             }
+            if (spellName.equals("SmallHealth") && inv.hasItem("SmallHealth")) {
+                setHealth(getHealth()+10);
+                manaWait = manaWaitStat;
+                mana -= 3;
+            }
+            if (spellName.equals("HugeHealth") && inv.hasItem("HugeHealth")) {
+                setHealth(getHealth()+40);
+                manaWait = manaWaitStat;
+                mana -= 20;
+            }
+            if (spellName.equals("Wanderer") && inv.hasItem("Wanderer")) {
+                room.addObject(new Spell(orgo, room, castingLayer, x, y, orientation, "Wanderer"));
+                manaWait = manaWaitStat;
+                mana -= 2;
+            }
             if (spellName.equals("None")) {
                 System.out.println("No spell equipped.");
             }

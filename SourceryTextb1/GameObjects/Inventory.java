@@ -35,8 +35,11 @@ class Inventory{
 
         inventory.put("WoodStaff", 0);
         inventory.put("Book", 1);
-        inventory.put("Flame", 0);
+        inventory.put("Flame", 1);
         inventory.put("Spark", 0);
+        inventory.put("Wanderer", 1);
+        inventory.put("SmallHealth", 1);
+        inventory.put("HugeHealth", 1);
 
         //putPrimary(arty.oldBook);  // Wouldn't work, not sure why.
     }
@@ -123,14 +126,21 @@ class Inventory{
         Layer itemsLayer = new Layer(new String[22][47], "invItems", false, false);
         if (hasItem("Book")){
             putItem(itemsLayer, arty.oldBook, 1, 1);
-            putItem(itemsLayer, arty.oldBook, 4, 3);
-            putItem(itemsLayer, arty.oldBook, 2, 5);
         }
         if (hasItem("Spark")){
             putItem(itemsLayer, arty.spark, 2, 1);
         }
         if (hasItem("Flame")){
             putItem(itemsLayer, arty.flame, 3, 1);
+        }
+        if (hasItem("Wanderer")){
+            putItem(itemsLayer, arty.wanderer, 4, 1);
+        }
+        if (hasItem("SmallHealth")){
+            putItem(itemsLayer, arty.smallHealth, 5, 1);
+        }
+        if (hasItem("HugeHealth")){
+            putItem(itemsLayer, arty.hugeHealth, 1, 2);
         }
         return itemsLayer;
     }
@@ -199,6 +209,27 @@ class Inventory{
                 return "A little spell that helps along the spontaneous reaction of an enemy with oxygen to form CO2 and H2O.";
             }
             return arty.flame;
+        } else if (selectX == 4 && selectY == 1 && hasItem("Wanderer")) {
+            if (what == 1) {
+                return "Wanderer";
+            }else if (what == 2){
+                return "A respectable spell that wanders around and inflicts decent damage.  Not aimable, may hit you.";
+            }
+            return arty.wanderer;
+        } else if (selectX == 5 && selectY == 1 && hasItem("SmallHealth")) {
+            if (what == 1) {
+                return "SmallHealth";
+            }else if (what == 2){
+                return "You can regenerate a little health with this.";
+            }
+            return arty.smallHealth;
+        } else if (selectX == 1 && selectY == 2 && hasItem("HugeHealth")) {
+            if (what == 1) {
+                return "HugeHealth";
+            }else if (what == 2){
+                return "A huge boost to your health at a huge mana cost";
+            }
+            return arty.hugeHealth;
         } else {
             if (what == 1) {
                 return "None";
