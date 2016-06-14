@@ -30,15 +30,15 @@ public class Room {
     public List<GameObject> objs = new ArrayList<>();
     private List<Mortal> enemies = new ArrayList<>();
     public HashMap storedStuff = new HashMap<String, Integer>();
-    public boolean[][] objHitMesh;
-    public boolean[][] baseHitMesh;
+    boolean[][] objHitMesh;
+    boolean[][] baseHitMesh;
 
     public Player playo;
 
 
 
     public int foodEaten = 0;
-    public int totalFood = 0;
+    int totalFood = 0;
 
     public int roomWidth;
     public int roomHeight;
@@ -60,7 +60,7 @@ public class Room {
         return false;
     }
 
-    public int getCountOf (String className){
+    int getCountOf (String className){
         int count = 0;
         for (GameObject o : objs) {
             if (o.strClass.equals(className)) {
@@ -73,16 +73,17 @@ public class Room {
     /**
      * Loop through all objects that are in the room and tell them to update. (call obj.update() on each)
      */
-    public void updateObjs(int timeElapsed) {
+    void updateObjs(int timeElapsed) {
         try {
             for (GameObject obj : objs) {
                 obj.update();
                 obj.addTime(timeElapsed);
             }
-        } catch (ConcurrentModificationException ex) {
-            System.out.println("Whoops, something weird! [Room.java: updateObjs(): caught a ConcurrentModificationException]");
-        } catch (NullPointerException ex) {
-            System.out.println("Well, by then if you want to nullpoint me. [Room.java: updateObjs(): caught nullpointer");
+        } catch (ConcurrentModificationException ignore) { // Happens normally when an object is removed or added to the room
+            //System.out.println("Whoops, something weird! [Room.java: updateObjs(): caught a ConcurrentModificationException]");
+        } catch (NullPointerException e) {
+            System.out.println("[Room.java: updateObjs(): caught nullpointer!  Probably Not Good!");
+            System.out.println(e);
         }
     }
 
@@ -90,13 +91,7 @@ public class Room {
         objs.add(theObj);
     }
 
-    public void deleteAll() {
-        for (GameObject obj : objs) {
-            objs.remove(obj);
-        }
-    }
-
-    public void cleanLayersForExit(ImageOrg org) {
+    void cleanLayersForExit(ImageOrg org) {
         org.removeAllButPlayer(); //Cleanup, happens when loop is done.
         org.compileImage();
         org.getWindow().clearImage();
@@ -113,10 +108,10 @@ public class Room {
             return false;
         }
     }*/
-    public void addHUD(ImageOrg org){  //Fixes redundancy;
+    void addHUD(ImageOrg org){  //Fixes redundancy;
         Layer HUDd = new Layer(new String[1][70], "HUD", false, true);
         org.addLayer(HUDd);
-        HUD hud = new HUD(org, (Room)this, HUDd);
+        HUD hud = new HUD(org, this, HUDd);
         addObject(hud);
     }
 
@@ -126,7 +121,7 @@ public class Room {
      * reflect that.
      * @param newMortal a new Mortal
      */
-    public void addMortal(Mortal newMortal) {
+    void addMortal(Mortal newMortal) {
         addObject(newMortal);
         enemies.add(newMortal);
         objHitMesh[newMortal.getY()][newMortal.getX()] = true;
@@ -175,12 +170,12 @@ public class Room {
         }
     }
 
-    public void addToBaseHitMesh(String[][] picture, String[] solidChars) {
+    void addToBaseHitMesh(String[][] picture, String[] solidChars) {
         for (String solid : solidChars){
             addToBaseHitMesh(picture, solid);
         }
     }
-    public void addToBaseHitMesh(String[][] picture, String solidChar) {
+    void addToBaseHitMesh(String[][] picture, String solidChar) {
         for (int i = 0; i < picture.length; i++) {
             for (int j = 0; j < picture[0].length; j++) {
                 if (picture[i][j].equals(solidChar)) {
@@ -190,7 +185,7 @@ public class Room {
         }
     }
 
-    public void emptyHitMesh() {
+    void emptyHitMesh() {
         for (int i = 0; i < baseHitMesh.length; i++) {
             for (int j = 0; j < baseHitMesh[0].length; j++) {
                 baseHitMesh[i][j] = false;
@@ -201,10 +196,6 @@ public class Room {
                 objHitMesh[i][j] = false;
             }
         }
-    }
-
-    public void enterANewRoom(){
-
     }
 
     public Player getPlayer() {
@@ -269,7 +260,7 @@ public class Room {
         while (!keyListener.resume){
             try {
                 Thread.sleep(300);
-            } catch (InterruptedException e) {}
+            } catch (InterruptedException ignored) {}
         }
         org.removeLayer("tip");
         window.txtArea.removeKeyListener(keyListener);
@@ -279,9 +270,9 @@ public class Room {
         art artsedo = new art();
         Layer txtBox;
         if (helpful) {
-            txtBox = new Layer(artsedo.strToArray(artsedo.textBoxHelpful), "Dialog", 13, 0, false, true);
+            txtBox = new Layer(art.strToArray(artsedo.textBoxHelpful), "Dialog", 13, 0, false, true);
         } else {
-            txtBox = new Layer(artsedo.strToArray(artsedo.textBox), "Dialog", 13, 0, false, true);
+            txtBox = new Layer(art.strToArray(artsedo.textBox), "Dialog", 13, 0, false, true);
         }
 
         for (int ii = 0; ii < speaker.length(); ii++) {
@@ -310,7 +301,7 @@ public class Room {
         while (!keyListener.resume){
             try {
                 Thread.sleep(300);
-            } catch (InterruptedException e) {}
+            } catch (InterruptedException ignored) {}
         }
         org.removeLayer("Dialog");
         window.txtArea.removeKeyListener(keyListener);
@@ -345,7 +336,7 @@ public class Room {
                     keyListener.options = false;
                 }
                 Thread.sleep(70);
-            } catch (InterruptedException e) {}
+            } catch (InterruptedException ignored) {}
         }
         org.setCam(camStartX, org.getCamY());
         org.removeLayer("pause");
@@ -353,7 +344,7 @@ public class Room {
         window.txtArea.removeKeyListener(keyListener);
     }
 
-    public void options(ImageOrg org) {
+    private void options(ImageOrg org) {
         art arty = new art();
         int camStartX = org.getCamX();
         Layer bkgd = new Layer(art.strToArray(arty.optionsbkgd), "opts", false, true);
@@ -376,7 +367,7 @@ public class Room {
                 org.setCam(newX, org.getCamY());
                 org.compileImage();
                 Thread.sleep(70);
-            } catch (InterruptedException e) {}
+            } catch (InterruptedException ignored) {}
         }
         try{ playo.setBackgroundColor(window.txtArea.getBackground()); }
         catch (NullPointerException e){ System.out.println(e); }
@@ -443,7 +434,6 @@ class PauseSelector extends KeyAdapter {
 class OptionsSelector extends KeyAdapter {
     private ImageOrg org;
     boolean resume = false;
-    private String font = "Monospaced";
     private int ii = 0;
 
     OptionsSelector(ImageOrg o) {
@@ -469,6 +459,7 @@ class OptionsSelector extends KeyAdapter {
             else if (ii == 2){
                 i = Font.BOLD;
             }
+            String font = "Monospaced";
             Font f = new Font(font, i, 15);
             org.getWindow().txtArea.setFont(f);
         }
