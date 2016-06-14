@@ -354,6 +354,10 @@ public class art {
                     "\\-|-./\n" +
                     "SPARK!\n" +
                     "/-|-.\\\n";
+    public String emptyItem=
+                    "      \n" +
+                    "      \n" +
+                    "      \n";
     public String pausedText =
             " ____                                     __     \n" +
                     "/\\  _`\\                                  /\\ \\    \n" +

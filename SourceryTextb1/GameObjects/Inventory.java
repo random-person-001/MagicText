@@ -8,6 +8,7 @@ import SourceryTextb1.art;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Arrays;
+import java.util.HashMap;
 
 
 /**
@@ -15,10 +16,12 @@ import java.util.Arrays;
  * Created by riley on 12-Jun-2016.
  */
 class Inventory{
+    private HashMap<String, Integer> inventory;
     private Player player;
     private ImageOrg org;
     private Layer invBkgdLayer;
     private Layer itemsLayer;
+    private Layer selectedSpellsLayer;
     private art arty = new art();
     private String layerName = "Inventory";
     private int selectX = 1;
@@ -28,14 +31,72 @@ class Inventory{
     public Inventory(ImageOrg orgo, Player p){
         org = orgo;
         player = p;
+        inventory = new HashMap<>(); // I have no idea why this can't go at a class-level with the declaration.
+        selectedSpellsLayer = new Layer(new String[22][47], "selectedSpells", false);
+
+        inventory.put("WoodStaff", 0);
+        inventory.put("Book", 1);
+        inventory.put("Flame", 0);
+        inventory.put("Spark", 0);
+
+        //putPrimary(arty.oldBook);  // Wouldn't work, not sure why.
     }
 
+    /** Add another of an item in the inventory
+     * @param itemName which one?
+     */
+    public void addItem(String itemName){
+        if (inventory.containsKey(itemName)){
+            int n = inventory.get(itemName);
+            inventory.put(itemName, n+1);
+        }else{
+            inventory.put(itemName,1);
+        }
+    }
+
+    /** Make there be one less item in the player's inventory
+     * @param itemName which to have less of
+     */
+    public void subtractItem(String itemName){
+        if (inventory.containsKey(itemName)){
+            int n = inventory.get(itemName);
+            inventory.put(itemName, n-1);
+        }else{
+            inventory.put(itemName, 0);
+        }
+    }
+
+    /** How many of <X> do I have in my inventory?  Find out!
+     * @param itemName which item
+     * @return how many of itemName s there are
+     */
+    public int getItem(String itemName){
+        if (inventory.containsKey(itemName)){
+            return inventory.get(itemName);
+        }else{
+            inventory.put(itemName, 0);
+            return 0;
+        }
+    }
+    /** Do I have <X> in my inventory?  Find out!
+     * @param itemName which item
+     * @return whether there are more than 0
+     */
+    public boolean hasItem(String itemName){
+        return getItem(itemName) > 0;
+    }
+
+
+    /**
+     * Bring up the inventory for the player to do stuff with.
+     */
     public void show() {
         player.frozen = true;
         invBkgdLayer = new Layer(art.strToArray(new art().inventoryBkgd), layerName, false, true);
         org.addLayer(invBkgdLayer); // Background grid
         itemsLayer = populateItems();
         org.addLayer(itemsLayer);
+        org.addLayer(selectedSpellsLayer);
         Layer selector = new Layer(new String[22][46], "selector", false, false);
         org.addLayer(selector); // Foreground stuff
 
@@ -52,6 +113,7 @@ class Inventory{
             }
         }
         org.removeLayer("selector");
+        org.removeLayer(selectedSpellsLayer.name);
         org.removeLayer("invItems");
         org.removeLayer(layerName);
         window.txtArea.removeKeyListener(keyListener);
@@ -60,12 +122,12 @@ class Inventory{
 
     private Layer populateItems(){
         Layer itemsLayer = new Layer(new String[22][47], "invItems", false, false);
-        if (player.inventory.containsKey("Book") && player.inventory.get("Book")>0){
+        if (hasItem("Book")){
             putItem(itemsLayer, arty.oldBook, 1, 1);
             putItem(itemsLayer, arty.oldBook, 4, 3);
             putItem(itemsLayer, arty.oldBook, 2, 5);
         }
-        if (player.inventory.containsKey("Spark") && player.inventory.get("Spark")>0){
+        if (hasItem("Spark")){
             putItem(itemsLayer, arty.spark, 1, 2);
         }
         return itemsLayer;
@@ -73,7 +135,7 @@ class Inventory{
     private void updateSelector(){
         int indexY = 4*(selectY-1) + 1;
         int indexX = 8*(selectX-1);
-        System.out.println("X: " + indexX + "     Y:" + indexY);
+        System.out.println("X: " + selectX + "     Y:" + selectY);
         org.clearLayer("selector");
         org.editLayer("|", "selector", indexY, indexX);
         org.editLayer("|", "selector", indexY+1, indexX);
@@ -82,6 +144,25 @@ class Inventory{
         org.editLayer("|", "selector", indexY+1, indexX+7);
         org.editLayer("|", "selector", indexY+2, indexX+7);
         org.compileImage();
+    }
+
+    private String getSelected(boolean justName) {
+        if (selectX == 1 && selectY == 1 && hasItem("Book")) {
+            if (justName) {
+                return "Book";
+            }
+            return arty.oldBook;
+        } else if (selectX == 1 && selectY == 2 && hasItem("Spark")) {
+            if (justName) {
+                return "Spark";
+            }
+            return arty.spark;
+        } else {
+            if (justName) {
+                return "None";
+            }
+            return arty.emptyItem;
+        }
     }
 
     private void putItem (Layer lay, String thing, int indexX, int indexY){
@@ -101,7 +182,7 @@ class Inventory{
         String[][] arrThing = art.strToArray(thing);
         for (int i = 0; i<arrThing.length; i++){
             for (int j = 0; j<arrThing[0].length; j++){
-                org.editLayer(arrThing[i][j], "invItems", i+y, j+x);//4,4);//i+y, j+x);
+                org.editLayer(arrThing[i][j], selectedSpellsLayer.name, i+y, j+x);//4,4);//i+y, j+x);
             }
         }
     }
@@ -111,34 +192,35 @@ class Inventory{
         String[][] arrThing = art.strToArray(thing);
         for (int i = 0; i<arrThing.length; i++){
             for (int j = 0; j<arrThing[0].length; j++){
-                org.editLayer(arrThing[i][j], "invItems", i+y, j+x);
+                org.editLayer(arrThing[i][j], selectedSpellsLayer.name, i+y, j+x);
             }
         }
     }
-    String inveuntoryBkgd =
-                    "///.........  I N V E N T O R Y  ..........\\\\\\\n" +
-                    ".      ..      ..      ..      ..      ..    .\n" +
-                    ".      ..      ..      ..      ..      ..    .\n" +
-                    ".      ..      ..      ..      ..      ..    .\n" +
-                    ".........................................    .\n" +
-                    ".      ..      ..      ..      ..      ..    .\n" +
-                    ".      ..      ..      ..      ..      ..    .\n" +
-                    ".      ..      ..      ..      ..      ..    .\n" +
-                    ".........................................    .\n" +
-                    ".      ..      ..      ..      ..      ..    .\n" +
-                    ".      ..      ..      ..      ..      ..    .\n" +
-                    ".      ..      ..      ..      ..      ..    .\n" +
-                    ".........................................    .\n" +
-                    ".      ..      ..      ..      ..      ..    .\n" +
-                    ".      ..      ..      ..      ..      ..    .\n" +
-                    ".      ..      ..      ..      ..      ..    .\n" +
-                    "..............................................\n" +
-                    ".      ..      ..      ...|..EQUIPPED SPELLS..\n" +
-                    ".      ..      ..      ...|....1st......2nd...\n" +
-                    ".      ..      ..      ...|...      ..      ..\n" +
-                    "..........................|...      ..      ..\n" +
-                    "..........................|...      ..      ..\n" +
-                    "\\\\\\........................................///\n";
+//    For reference.  This actually doesn't do anything here
+//
+//                    ///.........  I N V E N T O R Y  ..........\\\
+//                    .      ..      ..      ..      ..      ..    .
+//                    .      ..      ..      ..      ..      ..    .
+//                    .      ..      ..      ..      ..      ..    .
+//                    .........................................    .
+//                    .      ..      ..      ..      ..      ..    .
+//                    .      ..      ..      ..      ..      ..    .
+//                    .      ..      ..      ..      ..      ..    .
+//                    .........................................    .
+//                    .      ..      ..      ..      ..      ..    .
+//                    .      ..      ..      ..      ..      ..    .
+//                    .      ..      ..      ..      ..      ..    .
+//                    .........................................    .
+//                    .      ..      ..      ..      ..      ..    .
+//                    .      ..      ..      ..      ..      ..    .
+//                    .      ..      ..      ..      ..      ..    .
+//                    ..............................................
+//                    .      ..      ..      ...|..EQUIPPED SPELLS..
+//                    .      ..      ..      ...|....1st......2nd...
+//                    .      ..      ..      ...|...      ..      ..
+//                    ..........................|...      ..      ..
+//                    ..........................|...      ..      ..
+//                    \\\........................................///
 
 
     private int getObject(int x,int y){
@@ -165,12 +247,12 @@ class Inventory{
                     selectX++;
                 break;
             case '1': // Set primary
-                putPrimary(arty.spark);
-                player.setPrimarySpell("Spark");
+                putPrimary(getSelected(false));
+                player.setPrimarySpell(getSelected(true));
                 break;
             case '2': // Set secondary
-                putSecondary(arty.oldBook);
-                player.setSecondarySpell("Book");
+                putSecondary(getSelected(false));
+                player.setSecondarySpell(getSelected(true));
                 break;
             default:
                 break;

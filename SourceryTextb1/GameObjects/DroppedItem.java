@@ -38,12 +38,7 @@ public class DroppedItem extends GameObject{
             room.removeObject(this);
             orgo.editLayer(" ", layerName, 0, 0);
             orgo.removeLayer(layerName);
-            if (player.inventory.containsKey(itemName)){
-                int n = player.inventory.get(itemName);
-                player.inventory.put(itemName, n+1);
-            }else{
-                player.inventory.put(itemName,1);
-            }
+            player.addItem(itemName);
             room.compactTextBox(orgo, pickUpMessage,"",false);
         }
     }

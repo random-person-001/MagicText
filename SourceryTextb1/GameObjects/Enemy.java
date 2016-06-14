@@ -28,7 +28,7 @@ public class Enemy extends GameObject {
 
     boolean checkDeath() {
         if (getHealth() <= 0){
-            room.playo.inventory.put(super.strClass, 1);
+            room.playo.addItem(super.strClass);
             room.removeEnemy(this);
             try {
                 orgo.editLayer(" ", layerName, y, x);

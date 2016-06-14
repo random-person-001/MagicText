@@ -22,8 +22,6 @@ import SourceryTextb1.Window;
 import java.awt.Color;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
 
@@ -39,6 +37,7 @@ public class Player extends GameObject {
     private GameObject closestFood = null;
     private ImageOrg org;
     private Room room;
+    private Inventory inv;
     public String layerName = "playerLayer";
     private int celeCount = 0;
     private boolean s1 = true; //toggler for celeb anim
@@ -81,7 +80,6 @@ public class Player extends GameObject {
     //NO MORE STATS
 
     public boolean dead = false;
-    public Map<String, Integer> inventory; // A dict-like thing for an inventory!
     private int technicolorIndex = 0;
     private boolean shouldInventory = false;
     private String primarySpell = "Book";
@@ -100,15 +98,7 @@ public class Player extends GameObject {
         Window window = org.getWindow();
         window.txtArea.addKeyListener(playerKeyListener); // Add key listeners.
 
-        inventory = new HashMap<String, Integer>(); // I have no idea why this can't go at a class-level with the declaration.
-        inventory.put("spoon", 0);
-        inventory.put("molotov", 0);
-        inventory.put("rocketBoots", 0);
-        inventory.put("longEnoughLever", 0);
-        inventory.put("mashedPotatoes", 0);
-        inventory.put("food", 0);
-        inventory.put("WoodStaff", 0);
-        inventory.put("Book", 1);
+        inv = new Inventory(org, this);
     }
 
     public void setPrimarySpell (String spell){
@@ -158,7 +148,6 @@ public class Player extends GameObject {
             shouldPause = false;
         }else if (shouldInventory){
             //org.getWindow().removeKeyListener(playerKeyListener);
-            Inventory inv = new Inventory(org, this);
             inv.show();
             //org.getWindow().addKeyListener(playerKeyListener);
             shouldInventory = false;
@@ -328,7 +317,7 @@ public class Player extends GameObject {
      * Start a celebration, now that a food has been eaten
      */
     public void celebrate() {
-        inventory.put("food", 1 + inventory.get("food"));
+        inv.addItem("food");
         celeCount = 5;
     }
 
@@ -448,24 +437,24 @@ public class Player extends GameObject {
 
     private void castSpell(String spellName){
         if (mana > 1) {
-            if (spellName.equals("Book") && inventory.get("Book") > 0) {
+            if (spellName.equals("Book") && inv.hasItem("Book")) {
                 room.addObject(new Spell(org, room, castingLayer, x, y, orientation, "Book"));
-                inventory.put("Book",0);
+                inv.subtractItem("Book");
             }
-            if (spellName.equals("Spark")) {
+            if (spellName.equals("Spark") && inv.hasItem("Spark")) {
                 room.addObject(new Spell(org, room, castingLayer, x, y, orientation, "Spark"));
                 manaWait = manaWaitStat;
                 mana -= 2;
             }
-            if (spellName.equals("Flame")) {
+            if (spellName.equals("Flame") && inv.hasItem("Flame")) {
                 room.addObject(new Spell(org, room, castingLayer, x, y, orientation, "Flame"));
                 manaWait = manaWaitStat;
                 mana -= 3;
             }
-            System.out.println("Unrecognised spell or you already threw your book from inventory");
+            System.out.println("Unrecognised spell or you don't have your primary spell in your inventory");
         }
         else{
-            System.out.println("Not enough mana or you don't have a staff yet!");
+            System.out.println("Not enough mana!");
         }
     }
     /**
@@ -562,6 +551,14 @@ public class Player extends GameObject {
 
     private void shiftCamUp() {
         org.moveCam(0, -1);
+    }
+
+    public String getPrimarySpell() {
+        return primarySpell;
+    }
+
+    public void addItem(String itemName) {
+        inv.addItem(itemName);
     }
 }
 
