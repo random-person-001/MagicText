@@ -4,11 +4,14 @@ package SourceryTextb1.GameObjects;
  * Base object (to extend) for Enemies
  * Created by riley on 12-Jun-2016.
  */
-public class Enemy extends GameObject {
+public class Mortal extends GameObject {
     String layerName;
     private int health = 10;
     private int attack = 0;
 
+    public String getLayerName(){
+        return layerName;
+    }
     public int getHealth(){
         return health;
     }
@@ -29,7 +32,7 @@ public class Enemy extends GameObject {
     boolean checkDeath() {
         if (getHealth() <= 0){
             room.playo.addItem(super.strClass);
-            room.removeEnemy(this);
+            room.removeMortal(this);
             try {
                 orgo.editLayer(" ", layerName, y, x);
                 orgo.removeLayer(layerName);

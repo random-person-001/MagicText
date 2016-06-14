@@ -84,13 +84,13 @@ public class TutorialBasement extends Room {
 //        }
         org.addLayer(lay1);
 
-        Layer playerLayer = org.getLayer(org.getPosLayer(playo.layerName));
+        Layer playerLayer = org.getLayer(org.getPosLayer(playo.getLayerName()));
         org.addLayer(playerLayer);
 
         addHUD(org);
 
         PotOfPetunias flowers = new PotOfPetunias(org, this, 27, 3);
-        addEnemy(flowers);
+        addMortal(flowers);
     }
 
     /**

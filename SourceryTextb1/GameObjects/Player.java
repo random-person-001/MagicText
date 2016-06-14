@@ -32,19 +32,17 @@ import static java.lang.Math.abs;
  *
  * @author Riley
  */
-public class Player extends GameObject {
+public class Player extends Mortal {
     private MKeyListener playerKeyListener = new MKeyListener(this);
     private GameObject closestFood = null;
-    private ImageOrg org;
-    private Room room;
     private Inventory inv;
-    public String layerName = "playerLayer";
     private int celeCount = 0;
     private boolean s1 = true; //toggler for celeb anim
     private String state1 = "+";
     private String state2 = "X";
     private boolean autonomous = false;
     public boolean shouldPause = false;
+    private boolean shouldInventory = false;
     public boolean frozen = true; //This gets changed by a room upon beginning the level
 
     //Convenience variables
@@ -56,7 +54,6 @@ public class Player extends GameObject {
     private int orientation = UP;
     boolean orientationLocked = false;
 
-    private Layer aimDispLayer;
     private String aimDispName = "aimDisp";
 
     public Layer castingLayer;
@@ -65,9 +62,6 @@ public class Player extends GameObject {
     private Color restingBackground = Color.black;
 
     //STATS
-
-    public int baseAttack = 3;
-    public int baseDefend = 3;
 
     public int maxMana = 20;
     public int mana = maxMana;
@@ -81,7 +75,6 @@ public class Player extends GameObject {
 
     public boolean dead = false;
     private int technicolorIndex = 0;
-    private boolean shouldInventory = false;
     private String primarySpell = "Book";
     private String secondarySpell = "None";
 
@@ -89,16 +82,18 @@ public class Player extends GameObject {
      * @param theOrg the ImageOrg(anizer)
      */
     public Player(ImageOrg theOrg) {
+        setHealth(50);
         super.strClass = "Player";
-        org = theOrg;
-        Layer playerLayer = new Layer(new String[org.getWindow().maxH()][org.getWindow().maxW()], layerName);
+        orgo = theOrg;
+        layerName = "playerLayer";
+        Layer playerLayer = new Layer(new String[orgo.getWindow().maxH()][orgo.getWindow().maxW()], layerName);
         setupForNewRoom();
-        org.addLayer(playerLayer);
+        orgo.addLayer(playerLayer);
 
-        Window window = org.getWindow();
+        Window window = orgo.getWindow();
         window.txtArea.addKeyListener(playerKeyListener); // Add key listeners.
 
-        inv = new Inventory(org, this);
+        inv = new Inventory(orgo, this);
     }
 
     public void setPrimarySpell (String spell){
@@ -109,13 +104,13 @@ public class Player extends GameObject {
     }
 
     public void setupForNewRoom(){
-        aimDispLayer = new Layer(new String[org.getWindow().maxH()][org.getWindow().maxW()], aimDispName);
-        org.setCam(x - 22, y - 8);
-        org.addLayer(aimDispLayer);
+        Layer aimDispLayer = new Layer(new String[orgo.getWindow().maxH()][orgo.getWindow().maxW()], aimDispName);
+        orgo.setCam(x - 22, y - 8);
+        orgo.addLayer(aimDispLayer);
     }
 
     public void centerCamera(){
-        org.setCam(x - 22, y - 8);
+        orgo.setCam(x - 22, y - 8);
     }
 
     /**Change the Player's perception of which room it is in.  As a bonus, celebrate a bit.
@@ -131,7 +126,7 @@ public class Player extends GameObject {
      * @param newY
      */
     public void goTo(int newX, int newY) {
-        org.editLayer(" ", layerName, y, x);
+        orgo.editLayer(" ", layerName, y, x);
         x = newX;
         y = newY;
         centerCamera();
@@ -144,17 +139,17 @@ public class Player extends GameObject {
     public void update(){
         if (shouldPause) {
             System.out.println("Pausing.");
-            room.pause(org);
+            room.pause(orgo);
             shouldPause = false;
         }else if (shouldInventory){
-            //org.getWindow().removeKeyListener(playerKeyListener);
+            //orgo.getWindow().removeKeyListener(playerKeyListener);
             inv.show();
-            //org.getWindow().addKeyListener(playerKeyListener);
+            //orgo.getWindow().addKeyListener(playerKeyListener);
             shouldInventory = false;
         }
         if (frozen) {
             try {
-                org.editLayer(" ", layerName, y, x);
+                orgo.editLayer(" ", layerName, y, x);
             } catch (IndexOutOfBoundsException ignored) {
             }
             return;
@@ -178,7 +173,7 @@ public class Player extends GameObject {
         if (celeCount > 0) { // Celebrate
             celeCount--;
             s1 = !s1;
-            org.editLayer((s1) ? state1 : state2, layerName, y, x);
+            orgo.editLayer((s1) ? state1 : state2, layerName, y, x);
         } else {
             graphicUpdate();
             aimDispUpdate();
@@ -210,22 +205,22 @@ public class Player extends GameObject {
     }
 
     private void aimDispUpdate(){
-        int editAt = org.getPosLayer(aimDispName);
+        int editAt = orgo.getPosLayer(aimDispName);
         if (editAt > -1) {  //Basically, if aimDispLayer != null
-            org.getLayer(editAt).clear();
+            orgo.getLayer(editAt).clear();
             if (orientationLocked) {
                 switch (orientation) {
                     case UP:
-                        org.editLayer("+", editAt, y - 1, x);
+                        orgo.editLayer("+", editAt, y - 1, x);
                         break;
                     case DOWN:
-                        org.editLayer("+", editAt, y + 1, x);
+                        orgo.editLayer("+", editAt, y + 1, x);
                         break;
                     case LEFT:
-                        org.editLayer("+", editAt, y, x - 1);
+                        orgo.editLayer("+", editAt, y, x - 1);
                         break;
                     case RIGHT:
-                        org.editLayer("+", editAt, y, x + 1);
+                        orgo.editLayer("+", editAt, y, x + 1);
                         break;
                     default:
                         System.out.println("No valid orientation? IMPOSSIBLE");
@@ -294,20 +289,30 @@ public class Player extends GameObject {
     }
 
     /**
-     * Hurt the player.  This will make the game freeze a little, the player flicker, and the text on the screen
-     * to flicker between red and white.
+     * Hurt the player by a specified amount of health.  This will make the game freeze a little, the player flicker,
+     * and the text on the screen to flicker between red and white.
+     * @param damage how much health to take away
+     */
+    public void hurt(int damage){
+        subtractHealth(damage);
+        hurt();
+    }
+
+    /**
+     * Hurt the player without damage.  This will make the game freeze a little, the player flicker, and the text on
+     * the screen to flicker between red and white.
      */
     public void hurt() {
         for (int i = 0; i < 2; i++) {
             try {
-                org.getWindow().txtArea.setForeground(Color.RED);
-                org.editLayer(" ", layerName, y, x);
-                org.compileImage();
+                orgo.getWindow().txtArea.setForeground(Color.RED);
+                orgo.editLayer(" ", layerName, y, x);
+                orgo.compileImage();
                 Thread.sleep(200);
                 graphicUpdate();
-                org.getWindow().txtArea.setForeground(Color.WHITE);
+                orgo.getWindow().txtArea.setForeground(Color.WHITE);
                 Thread.sleep(200);
-                org.compileImage();
+                orgo.compileImage();
             } catch (InterruptedException e) {
             }
         }
@@ -329,13 +334,13 @@ public class Player extends GameObject {
      * Update the Player symbol
      */
     public void graphicUpdate() {
-        org.editLayer((big) ? smallChar : largeChar, layerName, y, x);
-
+        orgo.editLayer((big) ? smallChar : largeChar, layerName, y, x);
+        centerCamera();
     }
 
     private void move(int direction) {
         try {
-            org.editLayer(" ", layerName, y, x);
+            orgo.editLayer(" ", layerName, y, x);
         } catch (IndexOutOfBoundsException e) {
             return;
         }
@@ -367,12 +372,13 @@ public class Player extends GameObject {
             default:
                 System.out.println("Bro, you're using Player.move wrong.");
         }
-        org.setCam(x - 22, y - 8);
         graphicUpdate();
     }
 
-    /** Handler for keypresses, and delegates appropriate actions based off them.  Note that this does not necessarily
+    /**
+     * Handler for keypresses, and delegates appropriate actions based off them.  Note that this does not necessarily
      * align with the game clock, or Update() method.
+     *
      * @param key a character that was pressed on the leopard
      */
     void keyPressed(char key) {
@@ -393,19 +399,6 @@ public class Player extends GameObject {
             case 'æ':
                 move(RIGHT);
                 break;
-            case 'q':
-                shiftCamLeft();// cam left
-                break;
-            case 'k': //Skip to next
-            case 'e':
-                shiftCamRight(); // cam right
-                break;
-            case 't':
-                shiftCamUp();// cam left
-                break;
-            case 'g':
-                shiftCamDown();// cam left
-                break;
             case ' ':
                 big = !big;
                 break;
@@ -416,21 +409,21 @@ public class Player extends GameObject {
                 shouldPause = true;
                 break;
             case 's':
-                castSpell(primarySpell);
+                castSpell(getPrimarySpell());
                 break;
             case 'd':
-                castSpell(secondarySpell);
+                castSpell(getSecondarySpell());
                 break;
             case 'a':
                 orientationLocked = !orientationLocked;
                 break;
             case 'w':
                 shouldInventory = true;
+                break;
             default:
                 System.out.print(key);
         }
         graphicUpdate();
-        org.setCam(x - 22, y - 8);
         checkCheatProgress(key);
     }
 
@@ -438,20 +431,23 @@ public class Player extends GameObject {
     private void castSpell(String spellName){
         if (mana > 1) {
             if (spellName.equals("Book") && inv.hasItem("Book")) {
-                room.addObject(new Spell(org, room, castingLayer, x, y, orientation, "Book"));
+                room.addObject(new Spell(orgo, room, castingLayer, x, y, orientation, "Book"));
                 inv.subtractItem("Book");
             }
             if (spellName.equals("Spark") && inv.hasItem("Spark")) {
-                room.addObject(new Spell(org, room, castingLayer, x, y, orientation, "Spark"));
+                room.addObject(new Spell(orgo, room, castingLayer, x, y, orientation, "Spark"));
                 manaWait = manaWaitStat;
                 mana -= 2;
             }
             if (spellName.equals("Flame") && inv.hasItem("Flame")) {
-                room.addObject(new Spell(org, room, castingLayer, x, y, orientation, "Flame"));
+                room.addObject(new Spell(orgo, room, castingLayer, x, y, orientation, "Flame"));
                 manaWait = manaWaitStat;
                 mana -= 3;
             }
-            System.out.println("Unrecognised spell or you don't have your primary spell in your inventory");
+            if (spellName.equals("None")) {
+                System.out.println("No spell equipped.");
+            }
+            System.out.println("Unrecognised spell ("+spellName+") or it isn't in your inventory");
         }
         else{
             System.out.println("Not enough mana!");
@@ -480,10 +476,10 @@ public class Player extends GameObject {
                 b = .5f;
             }
             technicolorIndex--;
-            org.getWindow().txtArea.setBackground(new Color(r,g,b));
+            orgo.getWindow().txtArea.setBackground(new Color(r,g,b));
         }
         else {
-            org.getWindow().txtArea.setBackground(restingBackground);
+            orgo.getWindow().txtArea.setBackground(restingBackground);
         }
     }
     /**
@@ -538,19 +534,19 @@ public class Player extends GameObject {
     }
 
     private void shiftCamRight() {
-        org.moveCam(1, 0);
+        orgo.moveCam(1, 0);
     }
 
     private void shiftCamLeft() {
-        org.moveCam(-1, 0);
+        orgo.moveCam(-1, 0);
     }
 
     private void shiftCamDown() {
-        org.moveCam(0, 1);
+        orgo.moveCam(0, 1);
     }
 
     private void shiftCamUp() {
-        org.moveCam(0, -1);
+        orgo.moveCam(0, -1);
     }
 
     public String getPrimarySpell() {
@@ -559,6 +555,10 @@ public class Player extends GameObject {
 
     public void addItem(String itemName) {
         inv.addItem(itemName);
+    }
+
+    public String getSecondarySpell() {
+        return secondarySpell;
     }
 }
 

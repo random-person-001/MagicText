@@ -77,7 +77,7 @@ public class TestRoom extends Room {
             addObject(aFood);
         }
         super.playo = player;
-        Layer playerLayer = org.getLayer(org.getPosLayer(player.layerName));
+        Layer playerLayer = org.getLayer(org.getPosLayer(player.getLayerName()));
         org.addLayer(playerLayer);
 
         addHUD(org);

@@ -23,9 +23,9 @@ public class Spike extends GameObject{
     public String layerName = "spikebed";
     int x;
     int y;
-    int xvariance = 1;
-    int yvariance = 1;
-    int moveFrq = 60; //Higher is slower
+    private int xvariance = 1;
+    private int yvariance = 1;
+    private int moveFrq = 60; //Higher is slower
 
     public Spike(ImageOrg orga, Room theRoom){
         this(orga, theRoom, 35, 9);
@@ -43,20 +43,26 @@ public class Spike extends GameObject{
         int loc = org.getPosLayer(layerName);
         if (r(moveFrq) < 1) {
             org.editLayer(" ", loc, x, y);
-            x += r(2 * xvariance) - xvariance;
-            y += r(2 * yvariance) - yvariance;
+            boolean goodPlace = false;
+            while (!goodPlace){
+                int newX = x + r(2 * xvariance) - xvariance;
+                int newY = y + r(2 * yvariance) - yvariance;
+                if (!room.isPlaceSolid(newX, newY)){
+                    goodPlace = true;
+                }
+            }
             org.editLayer("^", loc, x, y);
         }else{
             org.editLayer("^", loc, x, y);
         }
         Player playo = room.getPlayer();
         if (playo.y == x && playo.x == y) {
-            room.foodEaten -= 5;
             if (room.storedStuff.get("Spiked") == null && room.index == 3){
                 room.infoMessage(org, "Have you considered that stepping on a spike, as you just did, is detrimental?");
                 room.storedStuff.put("Spiked", 1);
             }
-            room.playo.hurt();
+            room.foodEaten -= 5;
+            room.playo.hurt(3);
         }
     }
 

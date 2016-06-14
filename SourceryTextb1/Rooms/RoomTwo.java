@@ -67,7 +67,7 @@ public class RoomTwo extends Room {
         }
         super.playo = player;
         
-        Layer playerLayer = new Layer(new String[maxH][maxW], player.layerName);
+        Layer playerLayer = new Layer(new String[maxH][maxW], player.getLayerName());
         org.addLayer(playerLayer);
         
         Layer HUDd = new Layer(new String[maxH][maxW], "HUD", false);

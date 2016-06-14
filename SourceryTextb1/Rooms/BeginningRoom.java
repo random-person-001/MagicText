@@ -85,9 +85,9 @@ public class BeginningRoom extends Room {
         addObject(staff);
 
         PotOfPetunias flowers = new PotOfPetunias(org, this, 30, 2);
-        addEnemy(flowers);
+        addMortal(flowers);
 
-        Layer playerLayer = new Layer(new String[maxH][maxW], player.layerName);
+        Layer playerLayer = new Layer(new String[maxH][maxW], player.getLayerName());
         org.addLayer(playerLayer);
         player.goTo(6, 2);
 

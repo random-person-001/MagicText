@@ -27,14 +27,13 @@ import static java.awt.Color.*;
  */
 public class Room {
 
-    public List<GameObject> objs = new ArrayList<GameObject>();
-    public List<Enemy> enemies = new ArrayList<Enemy>();
+    public List<GameObject> objs = new ArrayList<>();
+    private List<Mortal> enemies = new ArrayList<>();
     public HashMap storedStuff = new HashMap<String, Integer>();
     public boolean[][] objHitMesh;
     public boolean[][] baseHitMesh;
 
     public Player playo;
-    public Layer playerLayer;
 
 
 
@@ -45,14 +44,14 @@ public class Room {
     public int roomHeight;
     public int index;
 
-    /** Try to hurt an enemy at a specified location
-     * @param x the X coord of the possible enemy
-     * @param y the Y coord of the possible enemy
-     * @param damage how much to hurt any enemies if they're there
-     * @return whether there was an enemy there, and thus whether they got hurt
+    /** Try to hurt a mortal at a specified location
+     * @param x the X coord of the possible mortal
+     * @param y the Y coord of the possible mortal
+     * @param damage how much to hurt any mortals if they're there
+     * @return whether there was an mortals there, and thus whether they got hurt
      */
     public boolean hurtSomethingAt(int x, int y, int damage) {
-        for (Enemy e : enemies){
+        for (Mortal e : enemies){
             if (e.getX() == x && e.getY() == y) {
                 e.subtractHealth(damage);
                 return true;
@@ -123,24 +122,24 @@ public class Room {
 
 
     /**
-     * Add a new enemy to the room, and to the list of enemies.  As a bonus, it'll change the objectsHitMesh to
+     * Add a new mortal to the room, and to the list of mortals.  As a bonus, it'll change the objectsHitMesh to
      * reflect that.
-     * @param newBadGuy a new Enemy
+     * @param newMortal a new Mortal
      */
-    public void addEnemy(Enemy newBadGuy) {
-        addObject(newBadGuy);
-        enemies.add(newBadGuy);
-        objHitMesh[newBadGuy.getY()][newBadGuy.getX()] = true;
+    public void addMortal(Mortal newMortal) {
+        addObject(newMortal);
+        enemies.add(newMortal);
+        objHitMesh[newMortal.getY()][newMortal.getX()] = true;
     }
 
 
-    /** Remove an Enemy from the world and enemy list, and make it so they no longer obstruct your way
-     * @param e the Enemy to be removed
+    /** Remove an Mortal from the world and enemy list, and make it so they no longer obstruct your way
+     * @param m the Mortal to be removed
      */
-    public void removeEnemy(Enemy e) {
-        removeObject(e);
-        enemies.remove(e);
-        objHitMesh[e.getY()][e.getX()] = false;
+    public void removeMortal(Mortal m) {
+        removeObject(m);
+        enemies.remove(m);
+        objHitMesh[m.getY()][m.getX()] = false;
     }
 
     public boolean isPlaceSolid(int x, int y) { //Useful when defining walls of rooms

@@ -354,6 +354,10 @@ public class art {
                     "\\-|-./\n" +
                     "SPARK!\n" +
                     "/-|-.\\\n";
+    public String flame=
+                    "      \n" +
+                    "      \n" +
+                    "      \n";
     public String emptyItem=
                     "      \n" +
                     "      \n" +
