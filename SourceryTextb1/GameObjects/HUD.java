@@ -12,13 +12,14 @@ import SourceryTextb1.Rooms.Room;
 import static java.lang.Math.abs;
 
 /**
- *
+ * A nice heads-up display for stats on the Player
  * @author 119184
  */
 public class HUD extends GameObject{
     String layerName;
-    String spell1Name = "     ";
-    String spell2Name = "     ";
+    private String[] spell1Name = new String[6];
+    private String[] spell2Name = new String[6];
+    private int loc;
 
     public HUD (ImageOrg org, Room theRoom, Layer place){
         super.strClass = "HUD";
@@ -26,66 +27,103 @@ public class HUD extends GameObject{
         room = theRoom;
         layerName = place.getName();
     }
+
+    /** Take a string, and convert the first six characters in it to an array, filling with spaces when necessary
+     * @param s string to arrayize
+     * @return a String[][] with spaces at the end if needed
+     */
+    private String [] bufferWithSpaces(String s){
+        String[] returny = new String[6];
+        for (int i=0; i<6; i++){
+            char c;
+            try {
+                c = s.charAt(i);
+            }
+            catch (StringIndexOutOfBoundsException e){
+                c = ' ';
+            }
+            returny[i] = String.valueOf(c);
+        }
+        return returny;
+    }
     
     @Override
     public void update(){  // Edit layer acts after stuff.
-        //y = orgo.getCamX();
-        //x = orgo.getCamY();
-        y = (y<0)? 0 : y;
-        x = (x<0)? 0 : x;
+        spell1Name = bufferWithSpaces(room.getPlayer().getPrimarySpell());
+        spell2Name = bufferWithSpaces(room.getPlayer().getSecondarySpell());
         
-        int pos = (orgo.getPosLayer(layerName));
-        orgo.getLayer(pos).clear();
-        createLayer(pos);
+        loc = orgo.getPosLayer(layerName);
+        orgo.getLayer(loc).clear();
+        x = 0;
+        drawLayer();
     }
-    
-    private void createLayer(int loc){
 
+    /**
+     * Place a character on the layer, one over from where the last one was placed. (a fairly specialized fn)
+     * @param newChar a single-char long String to place in the Layer at the next spot.
+     */
+    private void putChar(String newChar){
+        orgo.editLayer(newChar, loc, 0, x);
+        x++;
+    }
+
+    /**
+     * Edit the layer to put all the stats and stuff on
+     */
+    private void drawLayer(){
+        loc = orgo.getPosLayer(layerName);
         if (room.foodEaten < 0) {
-            orgo.editLayer("[", loc, y, x + 0);
-            orgo.editLayer("-", loc, y, x + 1);
+            putChar("[");
+            putChar("-");
         }else{
-            orgo.editLayer(" ", loc, y, x + 0);
-            orgo.editLayer("[", loc, y, x + 1);
+            putChar(" ");
+            putChar("[");
         }
+        x++;
 
-        orgo.editLayer(Integer.toString(abs(room.foodEaten / 10)), loc, y , x+2);
-        orgo.editLayer(Integer.toString(abs(room.foodEaten / 1 - 10*(int)(room.foodEaten / 10))), loc, y , x+3);
-        orgo.editLayer("]", loc, y , x+4);
+        // Food count
+        putChar(Integer.toString(abs(room.foodEaten / 10)));
+        putChar(Integer.toString(abs(room.foodEaten / 1 - 10*(room.foodEaten / 10))));
+        putChar("]");
+        x++;
 
-        orgo.editLayer("(", loc, y, x + 6);
+        // Spell 1
+        putChar("(");
         for (int ii = 0 ; ii < 5; ii++){
-            orgo.editLayer(String.valueOf(spell1Name.charAt(ii)), loc, y, x+7+ii);
+            putChar(spell1Name[ii]);
         }
+        putChar(")");
+        x++;
 
-        orgo.editLayer(")", loc, y, x + 12);
-
-        orgo.editLayer("(", loc, y, x + 14);
+        // Spell 2
+        putChar("(");
         for (int ii = 0 ; ii < 5; ii++){
-            orgo.editLayer(String.valueOf(spell1Name.charAt(ii)), loc, y, x+15+ii);
+            putChar(spell2Name[ii]);
         }
-        orgo.editLayer(")", loc, y, x+21);
+        putChar(")");
+        x++;
 
-        orgo.editLayer("{", loc, y, x+23);
-        orgo.editLayer(Integer.toString(abs(room.playo.mana / 10)), loc, y , x+24);
-        orgo.editLayer(Integer.toString(abs(room.playo.mana / 1 - 10*(int)(room.playo.mana / 10))), loc, y , x+25);
+        // Mana count
+        putChar("{");
+        putChar(Integer.toString(abs(room.playo.mana / 10)));
+        putChar(Integer.toString(abs(room.playo.mana / 1 - 10*(room.playo.mana / 10))));
 
+        // Mana bar
         for (int ii = 0; ii < 10 ; ii++){
             if (ii < (((float)room.playo.mana / (float)room.playo.maxMana) * 10)){
-                orgo.editLayer("=", loc, y, x+26+ii);
+                putChar("=");
             } else {
-                orgo.editLayer("_", loc, y, x+26+ii);
+                putChar("_");
             }
         }
-
-        orgo.editLayer("}", loc, y, x+36);
+        putChar("}");
 
         /*
         for (int ii = 0 ; ii < 45; ii++){
             if (ii%5 == 0){
-                orgo.editLayer("|", loc, y, x+ii);
+                putChar("|", ii);
             } else {
-                orgo.editLayer(" ", loc, y, x+ii);
+                putChar(" ", ii);
             }
         }
         */

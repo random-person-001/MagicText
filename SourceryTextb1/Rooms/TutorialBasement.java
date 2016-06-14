@@ -13,9 +13,32 @@ import SourceryTextb1.Layer;
 import SourceryTextb1.art;
 
 /**
- *
+ * A place to begin a tutorial, guiding you through stuff.
  * @author 119184
+ *
+ *
+ * So Far:
+ *  > You have been introduced to the backstory
+ *  > That's it
+ *
+ * What Generally Happens Here:
+ *  > You become familiar with moving around the character and the format of the world
+ *  > You're informed of how to lock orientation and attack
+ *       "If you want to lock your orientation, you can press A to toggle a Locked Orientation, indicated with a "+".
+ *       Go ahead, try it out!  Just don't press S until you're ready, or you will have a sad day."
+ *       "Press S to use whatever is selected as your weapon.  In this case, all you have is an old, musty spellbook to
+ *       throw.  You probably should not miss, as you don't have multiple copies."
+ *  > You kill a small enemy by throwing [whatever you have] at them,
+ *       "It appears you have come across an enemy.  It is suggested that you chose to be the survivor in this
+ *       encounter.  Remember, A is lock orientation and S is fire.  Good luck."
+ *  > Loot: what's needed to cast normal spells (for the next level) [Spark spell]
+ *  > You're informed of how to equip that into your inventory
+ *       "It would probably behoove you to place that into your inventory, such that you are more civilized than tossing
+ *       blunt objects, and can cast spells like a decent member of our society.  Press enter to learn how."
+ *  > Then you move on to the next level!
  */
+
+
 public class TutorialBasement extends Room {
 
     private ImageOrg org;
@@ -48,15 +71,23 @@ public class TutorialBasement extends Room {
                     count++;
                 }
                 if (count == 3 && getCountOf("PotOfPetunias") == 0){
-                    compactTextBox(org, "You managed to destroy the flowers!\n Now let's move on.", "", false);
+                    compactTextBox(org, "You managed to destroy the flowers!\n \"It would probably behoove you to place \n that into your inventory, such ...", "", false);
+                    compactTextBox(org, "... that you are more civilized than\n tossing blunt objects, and can cast spells\n like a decent member of our society.", "",false);
                     compactTextBox(org, "Oh no, not again.", "Petunias", false);
                     count++;
                 }
-                if (count == 4 && ((getPlayer().getX() == 39 && getPlayer().getY() == 8) || (getPlayer().getX() == 38 && getPlayer().getY() == 7))){
+                if (count == 4 && getPlayer().getX() == 28 && getPlayer().getY() == 3){
+                    compactTextBox(org, "Press w to open your inventory.\n Press 1 to set primary spell. \n Press 2 to set secondary spell.", "A Voice From The Heavens", false);
+                    count++;
+                }
+                if (count == 5 && ((getPlayer().getX() == 39 && getPlayer().getY() == 8) || (getPlayer().getX() == 38 && getPlayer().getY() == 7))){
                     compactTextBox(org, "You may ask what that ^ is over yonder.\n I fear that is a Spike.","Narrator",false);
                     count++;
                 }
-                playo.reportPos();
+                if (playo.dead){
+                    exitCode = 1;
+                }
+                //playo.reportPos();
                 org.compileImage();
 
             } catch (InterruptedException ignored) {}
@@ -80,13 +111,6 @@ public class TutorialBasement extends Room {
         String[] solids = {"|","-","0"};
         addToBaseHitMesh(base, solids);
         Layer lay1 = new Layer(base, "Test");
-//        for (int i=0; i<lay1.self.length; i++){
-//            for (int j=0; j<lay1.self[0].length; j++){
-//                if (lay1.self[i][j].equals("#")){
-//                    lay1.self[i][j] = " ";
-//                }
-//            }
-//        }
         org.addLayer(lay1);
 
         Layer playerLayer = org.getLayer(org.getPosLayer(playo.getLayerName()));
