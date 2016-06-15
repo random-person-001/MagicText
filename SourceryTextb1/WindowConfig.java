@@ -9,21 +9,23 @@ import java.awt.event.KeyEvent;
  */
 class WindowConfig {
 
-    public Window window;
+    private Window window;
     public ImageOrg org;
 
     private int windowHeight = 408;
     private int windowWidth =  412;
+    private String OS = System.getProperty("os.name").toLowerCase();
 
-    public WindowConfig(Window win, ImageOrg orgo){
+    WindowConfig(Window win, ImageOrg orgo){
          window = win;
          org = orgo;
+         System.getProperties().list(System.out);  // Aw, cool!
     }
 
     /**
      * Bring up the inventory for the player to do stuff with.
      */
-    public void config() {
+    void config() {
         Navigator keyListener = new Navigator(this);
         window.txtArea.addKeyListener(keyListener); // Add key listeners.
 
@@ -34,7 +36,23 @@ class WindowConfig {
         Layer lay = new Layer(base, "helpful");
         org.addLayer(lay);
 
+        // Because this is not creepy at all.
+        String greeting = "Welcome, " + System.getProperty("user.name") + ", to Sourcery Text.";
+        char[] user = greeting.toCharArray();
+        for (int i=0; i<user.length; i++){
+            org.editLayer(String.valueOf(user[i]), "helpful", 15, i+2);
+        }
+
         org.compileImage();
+
+        if (OS.contains("nix") || OS.contains("nux")){
+            keyPressed('2');
+        } else if (OS.contains("win")){
+            keyPressed('1');
+        } else if (OS.contains("mac")){
+            System.out.println("Hello Mac user.");
+        }
+        System.out.println("Your home folder is " + System.getProperty("user.home") + ".  Say please if you want me not to trash it.");
 
         while (!keyListener.resume){
             try {
@@ -70,7 +88,15 @@ class WindowConfig {
                 break;
             case '1':
                 setSize(421, 513);
+                break;
+            case '2':
+                setSize(417, 412);
+                break;
+            case '3':
+                setSize(1312, 786);
+                break;
             default:
+                System.out.println(windowHeight + " h  x  w " + windowWidth);
                 break;
         }
     }
