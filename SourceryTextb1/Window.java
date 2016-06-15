@@ -32,7 +32,7 @@ public class Window extends JFrame{
      * @return the maximum allowable height in the game
      */
     public int maxH(){
-        return 62;
+        return 74;
     } //Note that this must be >= any layer sizes, but other than that it's arbitrary
 
     /**
