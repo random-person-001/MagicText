@@ -28,7 +28,7 @@ import static java.awt.Color.*;
 public class Room {
 
     public List<GameObject> objs = new ArrayList<>();
-    private List<Mortal> enemies = new ArrayList<>();
+    public List<Mortal> enemies = new ArrayList<>();
     public HashMap storedStuff = new HashMap<String, Integer>();
     boolean[][] objHitMesh;
     boolean[][] baseHitMesh;
@@ -48,12 +48,13 @@ public class Room {
      * @param x the X coord of the possible mortal
      * @param y the Y coord of the possible mortal
      * @param damage how much to hurt any mortals if they're there
+     * @param killMessage if you are hurting a player, what do you want to be said upon their death?
      * @return whether there was an mortals there, and thus whether they got hurt
      */
-    public boolean hurtSomethingAt(int x, int y, int damage) {
+    public boolean hurtSomethingAt(int x, int y, int damage, String killMessage) {
         for (Mortal e : enemies){
             if (e.getX() == x && e.getY() == y) {
-                e.subtractHealth(damage);
+                e.subtractHealth(damage, killMessage);
                 return true;
             }
         }
@@ -124,7 +125,7 @@ public class Room {
     void addMortal(Mortal newMortal) {
         addObject(newMortal);
         enemies.add(newMortal);
-        objHitMesh[newMortal.getY()][newMortal.getX()] = true;
+        makePlaceSolid(newMortal.getX(), newMortal.getY());
     }
 
 
@@ -134,7 +135,7 @@ public class Room {
     public void removeMortal(Mortal m) {
         removeObject(m);
         enemies.remove(m);
-        objHitMesh[m.getY()][m.getX()] = false;
+        makePlaceNotSolid(m.getX(), m.getY());
     }
 
     public boolean isPlaceSolid(int x, int y) { //Useful when defining walls of rooms
