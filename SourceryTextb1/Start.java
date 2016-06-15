@@ -7,7 +7,7 @@ package SourceryTextb1;
 
 import SourceryTextb1.GameObjects.Player;
 import SourceryTextb1.Rooms.*;
-
+import java.awt.Color;
 
 /**
  * Main class of MagicText.
@@ -20,11 +20,15 @@ import SourceryTextb1.Rooms.*;
  */
 public class Start {
     private static boolean doDemo = false;
+    private static boolean doIntro = true;
+
+    private static Window game;
+    private static ImageOrg org;
 
     public static void main(String[] args) throws InterruptedException {
-        Window game = new Window();
+        game = new Window();
         Layer base = new Layer(new String[game.maxH()][game.maxW()], "base");
-        ImageOrg org = new ImageOrg(game);
+        org = new ImageOrg(game);
         org.addLayer(base);
 
         if (doDemo) {
@@ -53,6 +57,146 @@ public class Start {
             WindowConfig wincnfg = new WindowConfig(game, org);
             wincnfg.config();
 
+            if (doIntro){
+                Layer lay1 = new Layer(new String[23][46], "Intro1");
+                lay1.setStr(10, 23, "@");
+                org.addLayer(lay1);
+                org.compileImage();
+
+                Thread.sleep(3000);
+
+                String thisIsYou = "This is you.";
+                for (int ii = 0; ii < thisIsYou.length(); ii++){
+                    org.getLayer(org.getPosLayer("Intro1")).setStr(12, 18 + ii, String.valueOf(thisIsYou.charAt(ii)));
+                }
+
+                org.compileImage();
+
+                Thread.sleep(5000);
+
+                org.removeLayer("Intro1");
+
+                art arty = new art();
+                String[][] town = art.strToArray(arty.intro1);
+                Layer lay = new Layer(town, "Intro2");
+                org.addLayer(lay);
+
+                Layer lay2Title = new Layer(new String[3][46], "Intro2Title", 30, 0);
+                org.addLayer(lay2Title);
+
+                org.setCam(0,10);
+                String explain = "Times were simple a couple weeks ago.";
+                for (int ii = 0; ii < explain.length(); ii++){
+                    int pos = org.getPosLayer("Intro2Title");
+                    org.getLayer(pos).setStr(1, 3 + ii, String.valueOf(explain.charAt(ii)));
+                }
+
+                org.compileImage();
+
+                Thread.sleep(5000);
+
+                String explainMore = "@'s were people, #'s were walls & terrain";
+                for (int ii = 0; ii < explainMore.length(); ii++){
+                    int pos = org.getPosLayer("Intro2Title");
+                    org.getLayer(pos).setStr(2, 3 + ii, String.valueOf(explainMore.charAt(ii)));
+                }
+
+
+                org.compileImage();
+
+                Thread.sleep(4000);
+
+                for (int pan = 0; pan < 13 ; pan++){
+                    org.moveCam(0, -1);
+                    org.compileImage();
+                    Thread.sleep(250);
+                }
+
+                Thread.sleep(2000);
+
+                org.removeLayer("Intro2");
+                org.removeLayer("Intro2Title");
+
+                Layer lay3 = new Layer(new String[23][46], "Intro3");
+                lay3.setStr(10, 22, "@");
+
+                org.addLayer(lay3);
+                org.setCam(0,0);
+
+                org.compileImage();
+
+                Thread.sleep(1500);
+
+
+                String villainIntro = "This is someone else.";
+                for (int ii = 0; ii < villainIntro.length(); ii++){
+                    org.getLayer(org.getPosLayer("Intro3")).setStr(7, 12 + ii, String.valueOf(villainIntro.charAt(ii)));
+                }
+
+                org.compileImage();
+
+                Thread.sleep(4500);
+
+                String goodExcuse = "(To be fair, everyone DOES look identical)";
+                for (int ii = 0; ii < goodExcuse.length(); ii++){
+                    org.getLayer(org.getPosLayer("Intro3")).setStr(8, 2 + ii, String.valueOf(goodExcuse.charAt(ii)));
+                }
+
+                org.compileImage();
+
+                Thread.sleep(5000);
+
+                String goodFollowUp = "He despised that fact. He desired complexity";
+                for (int ii = 0; ii < goodFollowUp.length(); ii++){
+                    org.getLayer(org.getPosLayer("Intro3")).setStr(12, 1 + ii, String.valueOf(goodFollowUp.charAt(ii)));
+                }
+
+                org.compileImage();
+
+                Thread.sleep(3000);
+
+                String resolution = "And so, he journeyed to The Source";
+                for (int ii = 0; ii < resolution.length(); ii++){
+                    org.getLayer(org.getPosLayer("Intro3")).setStr(13, 6 + ii, String.valueOf(resolution.charAt(ii)));
+                }
+
+                org.compileImage();
+
+                Thread.sleep(1500);
+
+                lay3.clear();
+
+                Thread.sleep(1500);
+
+                int line = 4;
+                introText("The Source is a gaping hole in the world.", 1, line);
+                Thread.sleep(3000);
+
+                introText("It leads out of the universe,", 1, line + 1);
+                introText(" and into its source code", 1, line + 2);
+                Thread.sleep(4000);
+
+                introText("Most worlds are closed-source, but", 1, line + 4);
+                introText(" this one is special. It's open-source.", 1, line + 5);
+                Thread.sleep(4000);
+
+                introText("That person found a rope strong enough", 1, line + 7);
+                introText(" to survive exiting the universe", 1, line + 8);
+                Thread.sleep(4000);
+
+                introText("He traveled to the distant island where", 1, line + 10);
+                introText(" The Source resides....", 1, line + 11);
+                introText(" The crossroads of myth and fact....", 1, line + 12);
+                Thread.sleep(4000);
+
+                lay3.clear();
+
+                String[][] code = art.strToArray(arty.intro1);
+                lay3 = new Layer(town, "Intro4");
+
+            }
+            /*
+
             Player player = new Player(org);
             TutorialBasement forest = new TutorialBasement(org, player);
             prepLevel(org, game, player, forest, 0);
@@ -63,13 +207,15 @@ public class Start {
             prepLevel(org, game, player, boat, 0);
             boat.startup();
             boat.enter();
+
+            */
         }
 
 
         // Win screen
-        org.removeAllButPlayer();
-        game.clearImage();
-        levelAnimation(org, -1,2);
+        //org.removeAllButPlayer();
+        //game.clearImage();
+        //levelAnimation(org, -1,2);
 
 
         // Just end.
@@ -83,6 +229,14 @@ public class Start {
         }
         player.goTo(6,6);
         player.setRoom(newRoom);
+    }
+
+    private static void introText(String text, int offset, int line){
+       for (int ii = 0; ii < text.length(); ii++){
+            org.getLayer(org.getPosLayer("Intro3")).setStr(line, ii + offset, String.valueOf(text.charAt(ii)));
+        }
+
+        org.compileImage();
     }
 
     private static void levelAnimation(ImageOrg org, int levelNum) {

@@ -73,7 +73,11 @@ public class ImageOrg {
      * @return that Layer
      */
     public Layer getLayer(int go){
-        return layers.get(go);
+        if (go == -1){
+            return null;
+        } else {
+            return layers.get(go);
+        }
     }
 
     /** Remove a layer by its String name.

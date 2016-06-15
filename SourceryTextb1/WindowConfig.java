@@ -70,6 +70,9 @@ class WindowConfig {
                 break;
             case '1':
                 setSize(421, 513);
+                break;
+            case '2':
+                setSize(412, 412);
             default:
                 break;
         }
