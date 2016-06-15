@@ -58,6 +58,7 @@ public class Start {
             wincnfg.config();
 
             if (doIntro){
+                game.txtArea.setBackground(Color.DARK_GRAY);
                 Layer lay1 = new Layer(new String[23][46], "Intro1");
                 lay1.setStr(10, 23, "@");
                 org.addLayer(lay1);
@@ -128,6 +129,7 @@ public class Start {
                 Thread.sleep(1500);
 
 
+                game.txtArea.setForeground(Color.RED);
                 String villainIntro = "This is someone else.";
                 for (int ii = 0; ii < villainIntro.length(); ii++){
                     org.getLayer(org.getPosLayer("Intro3")).setStr(7, 12 + ii, String.valueOf(villainIntro.charAt(ii)));
@@ -167,6 +169,7 @@ public class Start {
                 lay3.clear();
 
                 Thread.sleep(1500);
+                game.txtArea.setForeground(Color.white);
 
                 int line = 4;
                 introText("The Source is a gaping hole in the world.", 1, line);
@@ -198,11 +201,16 @@ public class Start {
 
 
             Player player = new Player(org);
-            /*TutorialBasement forest = new TutorialBasement(org, player);
+            TutorialBasement forest = new TutorialBasement(org, player);
             prepLevel(org, game, player, forest, 0);
             forest.startup();
             forest.enter();
-*/
+
+            Mountains mtns = new Mountains(org, player);
+            prepLevel(org, game, player, mtns, 0);
+            mtns.startup();
+            mtns.enter();
+
             DockAndShip boat = new DockAndShip(org, player);
             prepLevel(org, game, player, boat, 0);
             boat.startup();

@@ -7,11 +7,12 @@ import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
 import SourceryTextb1.art;
 
+import java.util.ConcurrentModificationException;
+
 /**
  * Created by riley on 14-Jun-2016.
  */
 public class DockAndShip extends Room{
-    private ImageOrg org;
     private int maxH;
     private int maxW;
 
@@ -49,18 +50,20 @@ public class DockAndShip extends Room{
                     docky.setY(docky.getY()+1);
                     System.out.println(docky.getX());
                     dockUpdate();
-                    for (Mortal m : enemies) {
-                        if (m.getX() > 42) {
-                            m.goTo(m.getX() + 1, m.getY() + 1);
-                            if (m.getX() > maxW || m.getY() > maxH) { //Later, this might be good to put in Enemy.checkDead()
-                                m.subtractHealth(30, "You were not long for this world. \n You *Were* told to get on the ship.");
-                            }
-                            if (count == 1 && m.strClass.equals("Player")) {
-                                compactTextBox(org, "You missed the ship!  I told you not to.", "THE PASSERBY", false);
-                                count++;
+                    try {
+                        for (Mortal m : enemies) {
+                            if (m.getX() > 42) {
+                                m.goTo(m.getX() + 1, m.getY() + 1);
+                                if (m.getX() > maxW || m.getY() > maxH) { //Later, this might be good to put in Enemy.checkDead()
+                                    m.subtractHealth(30, "You were not long for this world. \n You *Were* told to get on the ship.");
+                                }
+                                if (count == 1 && m.strClass.equals("Player")) {
+                                    compactTextBox(org, "You missed the ship!  I told you not to.", "THE PASSERBY", false);
+                                    count++;
+                                }
                             }
                         }
-                    }
+                    } catch (ConcurrentModificationException ignored){}
                     for (int i = 43; i<46; i++){ // Just needed the first time, but whatevs.
                         addToBaseHitMesh(42, i);
                         addToBaseHitMesh(43, i); // So you can't walk off the side
@@ -88,18 +91,8 @@ public class DockAndShip extends Room{
     }
 
     public void startup(){
-        Layer spells = new Layer(new String[maxH][maxW], "Spellz", true);
-        org.addLayer(spells);
-
+        ititHitMesh();
         playo.goTo(72,51);
-        playo.castingLayer = spells;
-        playo.setupForNewRoom();
-
-
-        super.baseHitMesh = new boolean[super.roomHeight][super.roomWidth];
-        super.objHitMesh = new boolean[super.roomHeight][super.roomWidth];
-        emptyHitMesh();
-        art arty = new art();
         String[][] base = art.strToArray(arty.largeBoat);
         String[] solids = {"|","-","\\", "/","_","="};
         addToBaseHitMesh(base, solids);
@@ -118,22 +111,13 @@ public class DockAndShip extends Room{
             org.editLayer("X", "Boat", i, 42);
         }
 
-
-
-        //X: 43  Y: 37
-
-        Layer playerLayer = org.getLayer(org.getPosLayer(playo.getLayerName()));
-        org.addLayer(playerLayer);
-        addMortal(playo);
-
-        addHUD(org);
-
         makeSpikeAt(30, 20); // Around front of boat
         makeSpikeAt(36, 25);
 
         makeSpikeAt(51, 43);
         makeSpikeAt(52, 45);
 
+        genericInitialize();
     }
 
     private void makeSpikeAt(int x, int y){

@@ -26,7 +26,8 @@ import static java.awt.Color.*;
  * @author Jared  CHECK YOUR EMAIL, JARED
  */
 public class Room {
-
+    ImageOrg org;
+    art arty = new art();
     public List<GameObject> objs = new ArrayList<>();
     public List<Mortal> enemies = new ArrayList<>();
     public HashMap storedStuff = new HashMap<String, Integer>();
@@ -234,6 +235,26 @@ public class Room {
                 objHitMesh[i][j] = false;
             }
         }
+    }
+
+    void ititHitMesh(){
+        baseHitMesh = new boolean[roomHeight][roomWidth];
+        objHitMesh = new boolean[roomHeight][roomWidth];
+        emptyHitMesh();
+    }
+
+    void genericInitialize() {
+        Layer spells = new Layer(new String[roomHeight][roomWidth], "Spellz", true);
+        org.addLayer(spells);
+
+        playo.castingLayer = spells;
+        playo.setupForNewRoom();
+
+        Layer playerLayer = org.getLayer(org.getPosLayer(playo.getLayerName()));
+        org.addLayer(playerLayer);
+        addMortal(playo);
+
+        addHUD(org);
     }
 
     public Player getPlayer() {

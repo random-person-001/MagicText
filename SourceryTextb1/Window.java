@@ -38,7 +38,7 @@ public class Window extends JFrame{
     /**
      * @return the maximum allowable width in the game
      */
-    public int maxW(){ return 95; }
+    public int maxW(){ return 150; }
 
     /**
      * Directly set the textArea contents to just an empty string
