@@ -72,18 +72,19 @@ public class HUD extends GameObject{
      */
     private void drawLayer(){
         loc = orgo.getPosLayer(layerName);
-        if (room.foodEaten < 0) {
-            putChar("[");
-            putChar("-");
-        }else{
-            putChar(" ");
-            putChar("[");
-        }
-        x++;
+
+        putChar("[");
 
         // Food count
-        putChar(Integer.toString(abs(room.foodEaten / 10)));
-        putChar(Integer.toString(abs(room.foodEaten / 1 - 10*(room.foodEaten / 10))));
+        putChar(Integer.toString(abs(room.playo.getHealth() / 10)));
+        putChar(Integer.toString(abs(room.playo.getHealth() / 1 - 10*(room.playo.getHealth() / 10))));
+        for (int ii = 0; ii < 10 ; ii++){
+            if (ii < (((float)room.playo.getHealth() / (float)room.playo.maxHP) * 10)){
+                putChar("#");
+            } else {
+                putChar("_");
+            }
+        }
         putChar("]");
         x++;
 

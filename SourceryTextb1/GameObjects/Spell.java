@@ -61,7 +61,7 @@ public class Spell extends GameObject{
                 break;
             case "Spark":
                 setDamage(5);
-                setRange(5);
+                setRange(6);
                 setChar1("X");
                 setChar2("+");
                 break;

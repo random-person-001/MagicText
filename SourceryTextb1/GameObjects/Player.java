@@ -62,6 +62,7 @@ public class Player extends Mortal {
     private Color restingBackground = Color.black;
 
     //STATS
+    public int maxHP = 10;
 
     public int maxMana = 20;
     public int mana = maxMana;
@@ -82,7 +83,7 @@ public class Player extends Mortal {
      * @param theOrg the ImageOrg(anizer)
      */
     public Player(ImageOrg theOrg) {
-        setHealth(7);
+        setHealth(maxHP);
         super.strClass = "Player";
         orgo = theOrg;
         layerName = "playerLayer";

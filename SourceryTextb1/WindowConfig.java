@@ -12,7 +12,7 @@ class WindowConfig {
     public Window window;
     public ImageOrg org;
 
-    private int windowHeight = 412;
+    private int windowHeight = 408;
     private int windowWidth =  412;
 
     public WindowConfig(Window win, ImageOrg orgo){
@@ -27,9 +27,11 @@ class WindowConfig {
         Navigator keyListener = new Navigator(this);
         window.txtArea.addKeyListener(keyListener); // Add key listeners.
 
+        setSize(windowWidth, windowHeight);
+
         art arty = new art();
         String[][] base = art.strToArray(arty.configBox);
-        Layer lay = new Layer(base, "Test");
+        Layer lay = new Layer(base, "helpful");
         org.addLayer(lay);
 
         org.compileImage();
@@ -42,7 +44,7 @@ class WindowConfig {
             }
         }
 
-        //org.removeLayer("helpful");
+        org.removeLayer("helpful");
         window.txtArea.removeKeyListener(keyListener);
     }
 
@@ -51,51 +53,61 @@ class WindowConfig {
         System.out.println(c);
         switch (c){
             case '©': // Up
-                windowHeight -= 15;
-                window.setBounds(100, 100, windowWidth, windowHeight);
+                windowHeight -= 21;
+                setSize(windowWidth, windowHeight);
                 break;
             case '®': // Down
-                windowHeight += 15;
-                window.setBounds(100, 100, windowWidth, windowHeight);
+                windowHeight += 21;
+                setSize(windowWidth, windowHeight);
                 break;
             case 'µ': // Left
                 windowWidth -= 9;
-                window.setBounds(100, 100, windowWidth, windowHeight);
+                setSize(windowWidth, windowHeight);
                break;
             case 'æ': // Right
                 windowWidth += 9;
-                window.setBounds(100, 100, windowWidth, windowHeight);
+                setSize(windowWidth, windowHeight);
                 break;
+            case '1':
+                setSize(421, 513);
             default:
                 break;
         }
+    }
+
+    private void setSize(int width, int height){
+        windowWidth = width;
+        windowHeight = height;
+        window.setSize(width, height);
     }
 
 }
 
 
 class Navigator extends KeyAdapter {
-    private WindowConfig inv;
+    private WindowConfig cnfg;
     boolean resume = false;
 
     Navigator(WindowConfig inventory) {
-        inv = inventory;
+        cnfg = inventory;
     }
 
     @Override
     public void keyPressed(KeyEvent event) {
         int key = event.getKeyCode();
+        char ch = event.getKeyChar();
+        cnfg.keyPressed(ch);
         if (key == KeyEvent.VK_UP) {
-            inv.keyPressed('©');
+            cnfg.keyPressed('©');
         }
         if (key == KeyEvent.VK_DOWN) {
-            inv.keyPressed('®');
+            cnfg.keyPressed('®');
         }
         if (key == KeyEvent.VK_LEFT) {
-            inv.keyPressed('µ');
+            cnfg.keyPressed('µ');
         }
         if (key == KeyEvent.VK_RIGHT) {
-            inv.keyPressed('æ');
+            cnfg.keyPressed('æ');
         }
         if (key == KeyEvent.VK_ESCAPE || key == KeyEvent.VK_ENTER) {
             resume = true;
