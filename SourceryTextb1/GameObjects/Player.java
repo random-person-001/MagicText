@@ -1,7 +1,7 @@
 /*
  * Copyleft 2016 Riley.
  *
- * Licensed under the Epoch Incense, Version 2.0; you may not use this 
+ * Licensed under the Epoch Incense, Version 2.0; you may not use this
  * file except in compliance with the incense.  You may obtain a copy
  * of the incense at
  *
@@ -126,6 +126,7 @@ public class Player extends Mortal {
      * @param newX
      * @param newY
      */
+    @Override
     public void goTo(int newX, int newY) {
         orgo.editLayer(" ", layerName, y, x);
         x = newX;
@@ -202,10 +203,8 @@ public class Player extends Mortal {
         } else { // Unset
             closestFood = null;
         }
-        if (checkDeath()){
+        if (dead){
             System.out.println("Apparently you died.");
-            dead = true;
-            room.compactTextBox(orgo, "You were killed!", "Grim Reaper", false);
             System.exit(0);
         }
         updateBackground();
@@ -300,16 +299,16 @@ public class Player extends Mortal {
      * and the text on the screen to flicker between red and white.
      * @param damage how much health to take away
      */
-    public void hurt(int damage){
-        subtractHealth(damage);
-        hurt();
+    public void hurt(int damage, String deathMessage){
+        subtractHealth(damage, deathMessage);
+        //hurt(); subtractHealth does that
     }
 
     /**
      * Hurt the player without damage.  This will make the game freeze a little, the player flicker, and the text on
      * the screen to flicker between red and white.
      */
-    public void hurt() {
+    public void hurt(String deathMessage) {
         for (int i = 0; i < 2; i++) {
             try {
                 orgo.getWindow().txtArea.setForeground(Color.RED);
@@ -322,6 +321,10 @@ public class Player extends Mortal {
                 orgo.compileImage();
             } catch (InterruptedException e) {
             }
+        }
+        if (checkDeath()){
+            room.compactTextBox(orgo, deathMessage, "An ominous voice from above", false);
+            dead = true;
         }
     }
 

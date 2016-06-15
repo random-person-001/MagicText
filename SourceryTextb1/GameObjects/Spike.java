@@ -33,8 +33,9 @@ public class Spike extends Mortal{
         x = xStart;
         y = yStart;
         setHealth(12);
-        if (-1 == orga.getPosLayer(layerName)) {// Layer doesn't exist yet; add it
-            orgo.addLayer(new Layer(new String[y+10][x+10], layerName));
+        if (-1 == orgo.getPosLayer(layerName)) {// Layer doesn't exist yet; add it
+            System.out.println("Spikebead doesn't yet exist");
+            orgo.addLayer(new Layer(new String[room.roomHeight][room.roomWidth], layerName));
         }
     }
 
@@ -70,7 +71,7 @@ public class Spike extends Mortal{
                 room.storedStuff.put("Spiked", 1);
             }
             room.foodEaten -= 5;
-            room.playo.hurt(3);
+            room.playo.hurt(3, "You know, maybe you should have listened \n when your mother told you not to \n step on spikes.");
         }
         if (checkDeath()){
             System.out.println("AAAAAaaaack, a spike died.");

@@ -1,5 +1,6 @@
 package SourceryTextb1.Rooms;
 
+import SourceryTextb1.GameObjects.Mortal;
 import SourceryTextb1.GameObjects.Player;
 import SourceryTextb1.GameObjects.Spike;
 import SourceryTextb1.ImageOrg;
@@ -30,13 +31,17 @@ public class DockAndShip extends Room{
                     compactTextBox(org, "You should probs get on the ship!", "A Passerby", false);
                     count++;
                 }
+                if (count == 1 && playo.getX() == 23 && playo.getY() == 1){
+                    compactTextBox(org, "Ahoy!  This is the front of the ship. \n ", "Seagull", false);
+                    count++;
+                }
                 if (playo.dead){
                     exitCode = 1;
                 }
                 playo.reportPos();
                 org.compileImage();
                 timer++;
-                if (timer > 200 && timer % 10 == 0){
+                if (timer > 200 && timer < 1000 && timer % 10 == 0){
                     System.out.println("Moving one");
                     int loc = org.getPosLayer("Dock");
                     Layer docky = org.getLayer(loc);
@@ -44,16 +49,26 @@ public class DockAndShip extends Room{
                     docky.setY(docky.getY()+1);
                     System.out.println(docky.getX());
                     dockUpdate();
-                    if (playo.getX() > 42){
-                        playo.goTo(playo.getX()+1, playo.getY()+1);
-                        if (playo.getX() > maxW || playo.getY() > maxH){ //Later, this might be good to put in Enemy.checkDead()
-                            playo.subtractHealth(30);
+                    for (Mortal m : enemies) {
+                        if (m.getX() > 42) {
+                            m.goTo(m.getX() + 1, m.getY() + 1);
+                            if (m.getX() > maxW || m.getY() > maxH) { //Later, this might be good to put in Enemy.checkDead()
+                                m.subtractHealth(30, "You were not long for this world. \n You *Were* told to get on the ship.");
+                            }
+                            if (count == 1 && m.strClass.equals("Player")) {
+                                compactTextBox(org, "You missed the ship!  I told you not to.", "THE PASSERBY", false);
+                                count++;
+                            }
                         }
                     }
                     for (int i = 43; i<46; i++){ // Just needed the first time, but whatevs.
                         addToBaseHitMesh(42, i);
+                        addToBaseHitMesh(43, i); // So you can't walk off the side
                         org.editLayer("|", "Boat", i, 42);
                     }
+                }
+                if (timer > 2000){
+                    System.out.println("It's been a long while.");
                 }
 
             } catch (InterruptedException ignored) {}
@@ -113,12 +128,16 @@ public class DockAndShip extends Room{
 
         addHUD(org);
 
+        makeSpikeAt(30, 20); // Around front of boat
+        makeSpikeAt(36, 25);
 
-        Spike spike = new Spike(org, this, 33, 20);
-        spike.setMoveFrq(15);
-        addMortal(spike);
+        makeSpikeAt(51, 43);
+        makeSpikeAt(52, 45);
 
-        spike = new Spike(org, this, 36, 25);
+    }
+
+    private void makeSpikeAt(int x, int y){
+        Spike spike = new Spike(org, this, x, y);
         spike.setMoveFrq(15);
         addMortal(spike);
     }

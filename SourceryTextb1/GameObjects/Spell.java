@@ -17,6 +17,7 @@ public class Spell extends GameObject{
     private String char1 = "X";
     private String char2 = "x";
     private int damage = 10;
+    private String killMessage = "You were electrocuted by a rouge spell";
 
     private String layerName;
     private int orientation = 0;
@@ -47,31 +48,35 @@ public class Spell extends GameObject{
 
         orientation = setOr;
         setName(name);
-        System.out.println("You cast a " + name + " Spell.");
+        System.out.println(name + " spell cast!");
     }
 
     public void setName(String newName){
         name = newName;
         switch (name){
             case "Book":
+                setKillMessage("You managed to get murdered by an old\n book.  Not a common fate, and \n I must say I am impressed.");
                 setDamage(1);
                 setRange(3);
                 setChar1("B");
                 setChar2("b");
                 break;
             case "Spark":
+                setKillMessage("You were electrocuted by a spark spell. \n Honestly, try harder next time.");
                 setDamage(5);
                 setRange(6);
                 setChar1("X");
                 setChar2("+");
                 break;
             case "Flame":
+                setKillMessage("You were burnt to a crisp with a Flame spell. \n At least it is a more noble death \n than dying by a Spark, like some.");
                 setDamage(9);
                 setRange(6);
                 setChar1("M");
                 setChar2("m");
                 break;
             case "Wanderer":
+                setKillMessage("");
                 setDamage(9);
                 setRange(9);
                 setChar1("W");
@@ -79,6 +84,7 @@ public class Spell extends GameObject{
                 orientation = -1;
                 break;
             case "None":
+                setKillMessage("");
                 setDamage(0);
                 setRange(0);
                 setChar1(" ");
@@ -99,6 +105,9 @@ public class Spell extends GameObject{
     }
     public void setRange(int newRange){
         range = newRange;
+    }
+    public void setKillMessage(String newKillMessage){
+        killMessage = newKillMessage;
     }
 
     public void update(){
@@ -131,7 +140,7 @@ public class Spell extends GameObject{
             orgo.editLayer(char2, layerName, y, x);
         }
 
-        boolean hitSomeOne = room.hurtSomethingAt(x, y, damage);
+        boolean hitSomeOne = room.hurtSomethingAt(x, y, damage, killMessage);
         if (room.isPlaceSolid(x,y) || hitSomeOne || range == 0){
             orgo.editLayer(" ", layerName, y, x);
             room.removeObject(this);

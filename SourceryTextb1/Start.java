@@ -195,20 +195,20 @@ public class Start {
                 lay3 = new Layer(town, "Intro4");
 
             }
-            /*
+
 
             Player player = new Player(org);
-            TutorialBasement forest = new TutorialBasement(org, player);
+            /*TutorialBasement forest = new TutorialBasement(org, player);
             prepLevel(org, game, player, forest, 0);
             forest.startup();
             forest.enter();
-
+*/
             DockAndShip boat = new DockAndShip(org, player);
             prepLevel(org, game, player, boat, 0);
             boat.startup();
             boat.enter();
 
-            */
+
         }
 
 

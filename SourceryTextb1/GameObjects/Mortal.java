@@ -8,6 +8,7 @@ public class Mortal extends GameObject {
     String layerName;
     private int health = 10;
     private int attack = 0;
+    private String deathMessage = "Unknown";
 
     public String getLayerName(){
         return layerName;
@@ -15,9 +16,16 @@ public class Mortal extends GameObject {
     public int getHealth(){
         return health;
     }
-    public void subtractHealth(int amountLost){
+    public void subtractHealth(int amountLost, String message){
         health -= amountLost;
+        if (strClass.equals("Player")){
+            room.playo.hurt(message);
+        }
     }
+    public void subtractHealth(int amountLost){
+        subtractHealth(amountLost, "Your killer is unknown.");
+    }
+
     public void setHealth(int newHealth){
         health = newHealth;
     }
@@ -40,5 +48,11 @@ public class Mortal extends GameObject {
             return true;
         }
         return false;
+    }
+
+    public void goTo(int newX, int newY) {
+        orgo.editLayer(" ", layerName, y, x);
+        x = newX;
+        y = newY;
     }
 }
