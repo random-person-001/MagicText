@@ -330,6 +330,31 @@ public class art {
                     "..........................|...      ..      ..\n" +
                     "\\\\\\........................................///\n";
 
+    public String configBox =
+            "+--------------------------------------------+\n" +
+            "| Use the ARROW keys to resize the window.   |\n" +
+            "| The edges of this box should lie at        |\n" +
+            "|   The edges of the window.                 |\n" +
+            "|                                            |\n" +
+            "| Press the following keys for automatic     |\n" +
+            "|   presets for the corresponding operating  |\n" +
+            "|   system:                                  |\n" +
+            "|                                            |\n" +
+            "|1 - Windows 10                              |\n" +
+            "|2 - Ubuntu Linux                            |\n" +
+            "|                                            |\n" +
+            "| Press ENTER to finish                      |\n" +
+            "|                                            |\n" +
+            "|                                            |\n" +
+            "|                                            |\n" +
+            "|                                            |\n" +
+            "|                                            |\n" +
+            "|                                            |\n" +
+            "|                                            |\n" +
+            "|                                            |\n" +
+            "|                                            |\n" +
+            "+--------------------------------------------+\n";
+
     public String woodStaff =
                     " _ \n"+
                     "/.\\\n"+
@@ -633,7 +658,7 @@ public class art {
         input = "\n" + input; //So it works.
         for (int i = 0; i < height; i++) {
             input = input.substring(1 + input.indexOf("\n"));
-            System.out.println(input.substring(0, width));
+            //System.out.println(input.substring(0, width));
             charresult[i] = input.substring(0, width).toCharArray();
         }
         if (debug) {

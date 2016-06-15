@@ -50,6 +50,9 @@ public class Start {
             roomThree.startup(org, player);
             roomThree.enter(player);
         } else {
+            WindowConfig wincnfg = new WindowConfig(game, org);
+            wincnfg.config();
+
             Player player = new Player(org);
             TutorialBasement forest = new TutorialBasement(org, player);
             prepLevel(org, game, player, forest, 0);

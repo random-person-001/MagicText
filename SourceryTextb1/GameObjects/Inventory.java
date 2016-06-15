@@ -23,7 +23,7 @@ class Inventory{
     private Layer itemsLayer;
     private Layer selectedSpellsLayer;
     private art arty = new art();
-    private String layerName = "Inventory";
+    private String layerName = "WindowConfig";
     private int selectX = 1;
     private int selectY = 1;
 
