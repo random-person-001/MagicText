@@ -49,11 +49,18 @@ public class Spike extends Mortal{
             orgo.editLayer(" ", layerName, y, x);
             room.makePlaceNotSolid(x,y);
             boolean goodPlace = false;
+            int rationality = 40000;
             while (!goodPlace){
                 int newX = x + r(2 * xvariance) - xvariance;
                 int newY = y + r(2 * yvariance) - yvariance;
                 if (!room.isPlaceSolid(newX, newY)){
                     goodPlace = true;
+                }
+                rationality --;
+                if (rationality < 0){ // We're stuck in a really bad spot.  Suicide is painless, so they say...
+                    room.removeMortal(this);
+                    System.out.println("Spike at x=" + x + " y=" + y + " committing suicide cuz there's a .01% chance it's not stuck");
+                    return;
                 }
             }
             orgo.editLayer("^", layerName, y, x);
