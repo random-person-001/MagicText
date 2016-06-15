@@ -233,4 +233,12 @@ public class Layer {
             }
         }
     }
+
+    public void setX(int x) {
+        xPos = x;
+    }
+
+    public void setY(int y) {
+        yPos = y;
+    }
 }

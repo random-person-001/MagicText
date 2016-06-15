@@ -157,6 +157,28 @@ public class Room {
             objHitMesh[y][x] = true;
         }
     }
+    void addToObjHitMesh(String[][] picture, String[] solidChars, int x, int y) {
+        for (String solid : solidChars){
+            addToObjHitMesh(picture, solid, x ,y);
+        }
+    }
+    public void addToObjHitMesh(String[][] picture, String solidChar, int x, int y) {
+        for (int i = 0; i < picture.length; i++) {
+            for (int j = 0; j < picture[0].length; j++) {
+                if (picture[i][j].equals(solidChar)) {
+                    makePlaceSolid(j+x, i+y);
+                }
+            }
+        }
+    }
+
+    void clearObjHitMesh(){
+        for (int i=0; i<objHitMesh.length; i++){
+            for (int ii=0; ii<objHitMesh[0].length; ii++){
+                objHitMesh[i][ii] = false;
+            }
+        }
+    }
 
     /**
      *  Unset a location in the hit mesh of objects  Useful for making Player able to walk through where an enemy hath
@@ -172,14 +194,29 @@ public class Room {
 
     void addToBaseHitMesh(String[][] picture, String[] solidChars) {
         for (String solid : solidChars){
-            addToBaseHitMesh(picture, solid);
+            addToBaseHitMesh(picture, solid, 0, 0);
         }
     }
+    void addToBaseHitMesh(String[][] picture, String[] solidChars, int x, int y) {
+        for (String solid : solidChars){
+            addToBaseHitMesh(picture, solid, x ,y);
+        }
+    }
+    void removeFromBaseHitMesh(int x, int y) {
+        baseHitMesh[y][x] = false;
+    }
+    void addToBaseHitMesh(int x, int y) {
+        baseHitMesh[y][x] = true;
+    }
     void addToBaseHitMesh(String[][] picture, String solidChar) {
+        addToBaseHitMesh(picture, solidChar, 0,0);
+    }
+
+    public void addToBaseHitMesh(String[][] picture, String solidChar, int x, int y) {
         for (int i = 0; i < picture.length; i++) {
             for (int j = 0; j < picture[0].length; j++) {
                 if (picture[i][j].equals(solidChar)) {
-                    baseHitMesh[i][j] = true;
+                    addToBaseHitMesh(j+x, i+y);
                 }
             }
         }
