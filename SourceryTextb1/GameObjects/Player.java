@@ -309,7 +309,6 @@ public class Player extends Mortal {
      * the screen to flicker between red and white.
      */
     public void hurt(String deathMessage) {
-        for (int i = 0; i < 2; i++) {
             try {
                 orgo.getWindow().txtArea.setForeground(Color.RED);
                 orgo.editLayer(" ", layerName, y, x);
@@ -317,12 +316,11 @@ public class Player extends Mortal {
                 Thread.sleep(200);
                 graphicUpdate();
                 orgo.getWindow().txtArea.setForeground(Color.WHITE);
-                Thread.sleep(200);
                 orgo.compileImage();
             } catch (InterruptedException e) {
             }
-        }
         if (checkDeath()){
+            orgo.getWindow().txtArea.setForeground(Color.RED);
             room.compactTextBox(orgo, deathMessage, "An ominous voice from above", false);
             dead = true;
         }

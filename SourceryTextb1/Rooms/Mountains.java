@@ -18,6 +18,7 @@ public class Mountains extends Room {
     private void loop() {
         int exitCode = 0;
         int count = 0;
+        boolean warnedOfEdge = false;
         while (exitCode == 0) {
             try {
                 org.compileImage();
@@ -32,8 +33,11 @@ public class Mountains extends Room {
                     count++;
                 }
                 if (baseLayer.getStr(playo.getY(), playo.getX()).equals(".")){ // Walking the critical edge
-                    compactTextBox(org, "Don't walk the critical edge!", "", false);
                     playo.hurt(1, "Do.  Not.  Walk.  The critical edge.");
+                    if (!warnedOfEdge) {
+                        compactTextBox(org, "Don't walk the critical edge!", "", false);
+                        warnedOfEdge = true;
+                    }
                 }
                 if (playerBelowEdge()){
                     playo.goTo(playo.getX(), playo.getY()+2);
