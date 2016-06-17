@@ -129,18 +129,19 @@ public class Window extends JFrame{
     }
 
     /** Place the temporary idea of what should be on the screen (fullImage) onto the actual display
-     * @param camX camera X coordinate
-     * @param camY camera Y coordinate
+     * Usually takes 40-70ms. (at least, with an 80x150 fullImage size)
      */
-    public void build(int camX, int camY){
-        //fullImage = new String[20][50];       
+    public void build(){
+        int maxH = maxH();
+        int maxW = maxW();
         String build = "";
-        for (int row = 0; row < maxH(); row++){// Used to be 20
-            for (int col = 0; col < maxW(); col++){ // Used to be 50
-                if ("".equals(fullImage.getStr(row,col)) || fullImage.getStr(row,col) == null){
+        for (int row = 0; row < maxH; row++){// Used to be 20
+            for (int col = 0; col < maxW; col++){ // Used to be 50
+                String s = fullImage.getStr(row,col);
+                if (s == null || s.equals("")){
                     build += " ";
                 } else {
-                    build += fullImage.getStr(row,col);
+                    build += s;
                 }
             }
             build += "\n";
@@ -163,7 +164,7 @@ public class Window extends JFrame{
         setResizable(false);
 
         clearImage();
-        build(0,0);
+        build();
         txtArea.setBackground(Color.BLACK);
         txtArea.setForeground(Color.WHITE);
         //txtArea.setFont(new Font("Consolas", Font.PLAIN, 15));
@@ -192,7 +193,7 @@ public class Window extends JFrame{
         
         clearImage();
         //placeLayer(lay1, 0, 0);
-        build(0,0);        
+        build();
         
         c.add(txtArea);
         c.validate();
@@ -207,7 +208,7 @@ public class Window extends JFrame{
      */
     private void init(){
         clearImage();
-        build(0,0);        
+        build();
         
         c.add(txtArea);
         c.validate();

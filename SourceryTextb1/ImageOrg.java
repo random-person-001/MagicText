@@ -195,7 +195,7 @@ public class ImageOrg {
                 window.setLayer(get);
             }
         }
-        window.build(camX, camY);
+        window.build();
     }
 
     /**
