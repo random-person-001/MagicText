@@ -3,13 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package SourceryTextb1.Rooms;
+package SourceryTextb1.Rooms.TheSource;
 
 import SourceryTextb1.GameObjects.Player;
 import SourceryTextb1.GameObjects.PotOfPetunias;
 import SourceryTextb1.GameObjects.Spike;
 import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
+import SourceryTextb1.Rooms.Room;
 import SourceryTextb1.art;
 
 /**
@@ -53,8 +54,6 @@ public class TutorialBasement extends Room {
                 Thread.sleep(20);
                 //System.out.println("I'm not dead yet! " + ii);
                 updateObjs(20);
-                playo.update();
-                playo.addTime(20);
                 if (count == 0){
                     compactTextBox(org, "You've woken up in a basement somewhere.\nWoah, there's now lots of text everywhere!", "", true);
                     compactTextBox(org, "You should explore the basement!\nUse the arrow keys to navigate the place.", "", false);
@@ -87,10 +86,10 @@ public class TutorialBasement extends Room {
                 if (getPlayer().getX() > 73){
                     exitCode = 4;
                 }
-                if (playo.dead){
+                if (super.playo.dead){
                     exitCode = 1;
                 }
-                playo.reportPos();
+                super.playo.reportPos();
                 org.compileImage();
 
             } catch (InterruptedException ignored) {}
@@ -98,16 +97,11 @@ public class TutorialBasement extends Room {
     }
 
     public void startup(){
-        Layer spells = new Layer(new String[maxH][maxW], "Spellz", true);
-        org.addLayer(spells);
+        ititHitMesh();
 
-        playo.goTo(7,20);
-        playo.castingLayer = spells;
-        playo.setupForNewRoom();
+        super.playo.goTo(7,20);
 
 
-        super.baseHitMesh = new boolean[super.roomHeight][super.roomWidth];
-        super.objHitMesh = new boolean[super.roomHeight][super.roomWidth];
         emptyHitMesh();
         art arty = new art();
         String[][] base = art.strToArray(arty.tutForest);
@@ -116,11 +110,6 @@ public class TutorialBasement extends Room {
         Layer lay1 = new Layer(base, "Test");
         org.addLayer(lay1);
 
-        Layer playerLayer = org.getLayer(org.getPosLayer(playo.getLayerName()));
-        org.addLayer(playerLayer);
-        addMortal(playo);
-
-        addHUD(org);
 
         PotOfPetunias flowers = new PotOfPetunias(org, this, 27, 3);
         addMortal(flowers);
@@ -128,6 +117,8 @@ public class TutorialBasement extends Room {
         Spike spike = new Spike(org, this, 46, 8);
         spike.setMoveFrq(10);
         addMortal(spike);
+
+        genericInitialize();
     }
 
     /**
@@ -135,14 +126,15 @@ public class TutorialBasement extends Room {
      */
     public void enter(){
         org.compileImage();
-        playo.frozen = false;
+        super.playo.frozen = false;
         loop();
-        playo.frozen = true;
+        super.playo.frozen = true;
         super.cleanLayersForExit(org);
     }
 
     public TutorialBasement(ImageOrg orgo, Player player){
-        playo = player;
+        super.playo = player;
+        super.org = orgo;
         org = orgo;
         maxH = org.getWindow().maxH();
         maxW = org.getWindow().maxW();

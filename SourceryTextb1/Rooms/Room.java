@@ -26,7 +26,7 @@ import static java.awt.Color.*;
  * @author Jared  CHECK YOUR EMAIL, JARED
  */
 public class Room {
-    ImageOrg org;
+    public ImageOrg org;
     art arty = new art();
     public List<GameObject> objs = new ArrayList<>();
     public List<Mortal> enemies = new ArrayList<>();
@@ -62,7 +62,7 @@ public class Room {
         return false;
     }
 
-    int getCountOf (String className){
+    protected int getCountOf(String className){
         int count = 0;
         for (GameObject o : objs) {
             if (o.strClass.equals(className)) {
@@ -75,7 +75,7 @@ public class Room {
     /**
      * Loop through all objects that are in the room and tell them to update. (call obj.update() on each)
      */
-    void updateObjs(int timeElapsed) {
+    protected void updateObjs(int timeElapsed) {
         try {
             for (GameObject obj : objs) {
                 obj.update();
@@ -93,7 +93,7 @@ public class Room {
         objs.add(theObj);
     }
 
-    void cleanLayersForExit(ImageOrg org) {
+    protected void cleanLayersForExit(ImageOrg org) {
         org.removeAllButPlayer(); //Cleanup, happens when loop is done.
         org.compileImage();
         org.getWindow().clearImage();
@@ -123,7 +123,7 @@ public class Room {
      * reflect that.
      * @param newMortal a new Mortal
      */
-    void addMortal(Mortal newMortal) {
+    protected void addMortal(Mortal newMortal) {
         addObject(newMortal);
         enemies.add(newMortal);
         makePlaceSolid(newMortal.getX(), newMortal.getY());
@@ -194,12 +194,12 @@ public class Room {
         }
     }
 
-    void addToBaseHitMesh(String[][] picture, String[] solidChars) {
+    protected void addToBaseHitMesh(String[][] picture, String[] solidChars) {
         for (String solid : solidChars){
             addToBaseHitMesh(picture, solid, 0, 0);
         }
     }
-    void addToBaseHitMesh(String[][] picture, String[] solidChars, int x, int y) {
+    protected void addToBaseHitMesh(String[][] picture, String[] solidChars, int x, int y) {
         for (String solid : solidChars){
             addToBaseHitMesh(picture, solid, x ,y);
         }
@@ -214,7 +214,7 @@ public class Room {
         addToBaseHitMesh(picture, solidChar, 0,0);
     }
 
-    public void addToBaseHitMesh(String[][] picture, String solidChar, int x, int y) {
+    protected void addToBaseHitMesh(String[][] picture, String solidChar, int x, int y) {
         for (int i = 0; i < picture.length; i++) {
             for (int j = 0; j < picture[0].length; j++) {
                 if (picture[i][j].equals(solidChar)) {
@@ -224,7 +224,7 @@ public class Room {
         }
     }
 
-    void emptyHitMesh() {
+    protected void emptyHitMesh() {
         for (int i = 0; i < baseHitMesh.length; i++) {
             for (int j = 0; j < baseHitMesh[0].length; j++) {
                 baseHitMesh[i][j] = false;
@@ -237,13 +237,13 @@ public class Room {
         }
     }
 
-    void ititHitMesh(){
+    protected void ititHitMesh(){
         baseHitMesh = new boolean[roomHeight][roomWidth];
         objHitMesh = new boolean[roomHeight][roomWidth];
         emptyHitMesh();
     }
 
-    void genericInitialize() {
+    protected void genericInitialize() {
         Layer spells = new Layer(new String[roomHeight][roomWidth], "Spellz", true);
         org.addLayer(spells);
 
