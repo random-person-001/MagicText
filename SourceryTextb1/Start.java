@@ -20,7 +20,7 @@ import java.awt.Color;
  */
 public class Start {
     private static boolean doDemo = false;
-    private static boolean doIntro = true;
+    private static boolean doIntro = false;
 
     private static Window game;
     private static ImageOrg org;

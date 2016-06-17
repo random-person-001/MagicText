@@ -1,7 +1,6 @@
 package SourceryTextb1.Rooms;
 
-import SourceryTextb1.GameObjects.Player;
-import SourceryTextb1.GameObjects.Spike;
+import SourceryTextb1.GameObjects.*;
 import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
 import SourceryTextb1.art;
@@ -39,10 +38,8 @@ public class Mountains extends Room {
                         warnedOfEdge = true;
                     }
                 }
-                if (playerBelowEdge()){
-                    playo.goTo(playo.getX(), playo.getY()+2);
-                    playo.hurt(3, "You fell off of a cliff!");
-                }
+                enemies.forEach(this::checkMortalBelowEdge); // OK, intelliJ.  Sure.
+
                 if (playo.getX() == 91 && playo.getY() == 44){
                     exitCode = 1;
                 }
@@ -51,15 +48,18 @@ public class Mountains extends Room {
         }
     }
 
-    private boolean playerBelowEdge(){
+    private void checkMortalBelowEdge(Mortal m){
         int numberOfDotsAbove = 0;
-        for (int i=0; i<playo.getY(); i++){
-            if (baseLayer.getStr(i, playo.getX()).equals(".")){
+        for (int i=0; i<m.getY(); i++){
+            if (baseLayer.getStr(i, m.getX()).equals(".")){
                 System.out.println("You're below the edge");
                 numberOfDotsAbove ++;
             }
         }
-        return numberOfDotsAbove % 2 == 1;
+        if (numberOfDotsAbove % 2 == 1) {
+            m.goTo(m.getX(), m.getY() + 2);
+            m.subtractHealth(3, "You fell off of a cliff!");
+        }
     }
 
     public void startup() {
@@ -70,8 +70,20 @@ public class Mountains extends Room {
         baseLayer = new Layer(base, "backgronud");
         org.addLayer(baseLayer);
 
+        makeTrollAt(58, 7);
+        makeTrollAt(56, 7);
+        makeTrollAt(36, 15);
+        makeTrollAt(62, 7);
+        makeTrollAt(70, 4);
+        makeTrollAt(72, 4);
+
         genericInitialize();
         playo.goTo(9, 6);
+    }
+
+    private void makeTrollAt(int x, int y){
+        DroppedItem d = new DroppedItem(this, org, "None", "TrollDrop", "droppedTrollStuff", " ", x, y);
+        addMortal(new Troll(org, this, x, y, d));
     }
 
 

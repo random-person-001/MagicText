@@ -39,7 +39,9 @@ public class DroppedItem extends GameObject{
             orgo.editLayer(" ", layerName, 0, 0);
             orgo.removeLayer(layerName);
             player.addItem(itemName);
-            room.compactTextBox(orgo, pickUpMessage,"",false);
+            if (!pickUpMessage.equals("None")) {
+                room.compactTextBox(orgo, pickUpMessage, "", false);
+            }
         }
     }
 }

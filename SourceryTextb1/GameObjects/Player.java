@@ -62,7 +62,7 @@ public class Player extends Mortal {
     private Color restingBackground = Color.black;
 
     //STATS
-    public int maxHP = 10;
+    public int maxHP = 100;//10;
 
     public int maxMana = 20;
     public int mana = maxMana;

@@ -1,5 +1,7 @@
 package SourceryTextb1.GameObjects;
 
+import static java.lang.StrictMath.abs;
+
 /**
  * Base object (to extend) for Enemies
  * Created by riley on 12-Jun-2016.
@@ -43,7 +45,6 @@ public class Mortal extends GameObject {
             room.removeMortal(this);
             try {
                 orgo.editLayer(" ", layerName, y, x);
-                orgo.removeLayer(layerName);
             }catch (NullPointerException ignore){}
             return true;
         }
@@ -54,5 +55,9 @@ public class Mortal extends GameObject {
         orgo.editLayer(" ", layerName, y, x);
         x = newX;
         y = newY;
+    }
+
+    int distanceTo(GameObject m){
+        return abs(x-m.getX()) + abs(y-m.getY());
     }
 }
