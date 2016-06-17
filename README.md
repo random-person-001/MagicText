@@ -43,3 +43,5 @@ And thus the quest for the wondrous rope began.
 
 
 </story>
+
+Storyboard [here](https://docs.google.com/document/d/13Jgz8AQe1RbVO4tKq_LVSkO_2qJnWmpNtH7HoiE8omQ/edit?usp=sharing).
