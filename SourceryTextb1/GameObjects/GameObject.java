@@ -26,11 +26,11 @@ import SourceryTextb1.Rooms.Room;
  */
 public class GameObject {
     public String strClass = "None";
-    ImageOrg orgo;
-    Room room;
+    protected ImageOrg orgo;
+    protected Room room;
     
-    int x;
-    int y;
+    protected int x;
+    protected int y;
 
     int time; //May be useful when trying to do something asynchronous with room update timings
 

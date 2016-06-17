@@ -7,10 +7,11 @@ import static java.lang.StrictMath.abs;
  * Created by riley on 12-Jun-2016.
  */
 public class Mortal extends GameObject {
-    String layerName;
+    protected String layerName;
     private int health = 10;
     private int attack = 0;
     private String deathMessage = "Unknown";
+    private boolean isGoodGuy = false;
 
     public String getLayerName(){
         return layerName;
@@ -38,8 +39,10 @@ public class Mortal extends GameObject {
     public void setAttack(int newAttack){
         attack = newAttack;
     }
+    public boolean isGoodGuy(){ return isGoodGuy; }
+    public void makeGoodGuy(){ isGoodGuy = true; }
 
-    boolean checkDeath() {
+    protected boolean checkDeath() {
         if (getHealth() <= 0){
             room.playo.addItem(super.strClass);
             room.removeMortal(this);
@@ -57,7 +60,22 @@ public class Mortal extends GameObject {
         y = newY;
     }
 
-    int distanceTo(GameObject m){
+    protected int distanceTo(GameObject m){
         return abs(x-m.getX()) + abs(y-m.getY());
+    }
+
+
+    protected Mortal getClosestGoodGuy(){
+        int closest = 50000000;
+        Mortal closestM = null;
+        for (Mortal m : room.enemies) {
+            if (m.isGoodGuy()) {
+                if (distanceTo(m) < closest) {
+                    closest = distanceTo(m);
+                    closestM = m;
+                }
+            }
+        }
+        return closestM;
     }
 }

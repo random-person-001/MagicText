@@ -27,7 +27,7 @@ import static java.awt.Color.*;
  */
 public class Room {
     public ImageOrg org;
-    art arty = new art();
+    protected art arty = new art();
     public List<GameObject> objs = new ArrayList<>();
     public List<Mortal> enemies = new ArrayList<>();
     public HashMap storedStuff = new HashMap<String, Integer>();
@@ -159,7 +159,7 @@ public class Room {
             objHitMesh[y][x] = true;
         }
     }
-    void addToObjHitMesh(String[][] picture, String[] solidChars, int x, int y) {
+    protected void addToObjHitMesh(String[][] picture, String[] solidChars, int x, int y) {
         for (String solid : solidChars){
             addToObjHitMesh(picture, solid, x ,y);
         }
@@ -174,7 +174,7 @@ public class Room {
         }
     }
 
-    void clearObjHitMesh(){
+    protected void clearObjHitMesh(){
         for (int i=0; i<objHitMesh.length; i++){
             for (int ii=0; ii<objHitMesh[0].length; ii++){
                 objHitMesh[i][ii] = false;
@@ -204,10 +204,10 @@ public class Room {
             addToBaseHitMesh(picture, solid, x ,y);
         }
     }
-    void removeFromBaseHitMesh(int x, int y) {
+    protected void removeFromBaseHitMesh(int x, int y) {
         baseHitMesh[y][x] = false;
     }
-    void addToBaseHitMesh(int x, int y) {
+    protected void addToBaseHitMesh(int x, int y) {
         baseHitMesh[y][x] = true;
     }
     void addToBaseHitMesh(String[][] picture, String solidChar) {

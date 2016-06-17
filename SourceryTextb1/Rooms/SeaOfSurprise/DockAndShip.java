@@ -1,10 +1,13 @@
-package SourceryTextb1.Rooms;
+package SourceryTextb1.Rooms.SeaOfSurprise;
 
+import SourceryTextb1.GameObjects.DroppedItem;
 import SourceryTextb1.GameObjects.Mortal;
 import SourceryTextb1.GameObjects.Player;
+import SourceryTextb1.GameObjects.SeaOfSurprise.SmallPiranha;
 import SourceryTextb1.GameObjects.Spike;
 import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
+import SourceryTextb1.Rooms.Room;
 import SourceryTextb1.art;
 
 import java.util.ConcurrentModificationException;
@@ -12,7 +15,7 @@ import java.util.ConcurrentModificationException;
 /**
  * Created by riley on 14-Jun-2016.
  */
-public class DockAndShip extends Room{
+public class DockAndShip extends Room {
     private int maxH;
     private int maxW;
 
@@ -111,11 +114,15 @@ public class DockAndShip extends Room{
             org.editLayer("X", "Boat", i, 42);
         }
 
-        makeSpikeAt(30, 20); // Around front of boat
+        makeSpikeAt(26, 20); // Around front of boat
         makeSpikeAt(36, 25);
 
         makeSpikeAt(51, 43);
         makeSpikeAt(52, 45);
+
+        makePiranahAt(20, 22);
+        makePiranahAt(24, 23);
+        makePiranahAt(28, 24);
 
         genericInitialize();
     }
@@ -124,6 +131,12 @@ public class DockAndShip extends Room{
         Spike spike = new Spike(org, this, x, y);
         spike.setMoveFrq(15);
         addMortal(spike);
+    }
+
+    private void makePiranahAt(int x, int y){
+        SmallPiranha p = new SmallPiranha(org, this, x, y, new DroppedItem(this, org, "None", "PiranhaDrop", "droppedPiranhaStuff", " ", x, y));
+        p.setMoveFrq(0);
+        addMortal(p);
     }
 
 

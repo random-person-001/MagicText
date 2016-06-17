@@ -7,6 +7,7 @@ package SourceryTextb1;
 
 import SourceryTextb1.GameObjects.Player;
 import SourceryTextb1.Rooms.*;
+import SourceryTextb1.Rooms.SeaOfSurprise.DockAndShip;
 import SourceryTextb1.Rooms.TheSource.TutorialBasement;
 
 import java.awt.Color;
@@ -202,7 +203,7 @@ public class Start {
             }
 
 
-            Player player = new Player(org);
+            Player player = new Player(org);/*
             TutorialBasement forest = new TutorialBasement(org, player);
             prepLevel(org, game, player, forest, 0);
             forest.startup();
@@ -211,7 +212,7 @@ public class Start {
             Mountains mtns = new Mountains(org, player);
             prepLevel(org, game, player, mtns, 0);
             mtns.startup();
-            mtns.enter();
+            mtns.enter();*/
 
             DockAndShip boat = new DockAndShip(org, player);
             prepLevel(org, game, player, boat, 0);

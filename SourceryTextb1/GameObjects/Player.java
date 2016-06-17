@@ -84,6 +84,7 @@ public class Player extends Mortal {
      */
     public Player(ImageOrg theOrg) {
         setHealth(maxHP);
+        makeGoodGuy(); // Set good-guy-ness to true
         super.strClass = "Player";
         orgo = theOrg;
         layerName = "playerLayer";
