@@ -748,6 +748,14 @@ public class art {
                     "/ ^ ^ ^  ^  ^  ^   ||||||||||||||||||||||||||||||oooooooooo| |oooooo\n" +
                     "ooooooooooooooooooooooooooooooooooooooooooooooooooooooooo           ";
 
+    public String topMenu =
+                    "+MENU-------------+\n" +
+                    "|  Spells         |\n" +
+                    "|  Items          |\n" +
+                    "|                 |\n" +
+                    "|                 |\n" +
+                    "+-----------------+";
+
     public String mountainPlace //See MountainyThing.txt
             = "                                                                                                                                                    \n" +
             "                                                                                                                                                    \n" +

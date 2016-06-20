@@ -42,7 +42,7 @@ class Inventory {
         inventory.put("SmallHealth", 1);
         inventory.put("HugeHealth", 1);
 
-        //putPrimary(arty.oldBook);  // Wouldn't work, not sure why.
+        //putPrimary(arty.oldBook);  // Wouldn't work, not sure whyy
     }
 
     /**

@@ -427,6 +427,10 @@ public class Player extends Mortal {
             case 'w':
                 shouldInventory = true;
                 break;
+            case 'q':
+                Menu menu = new Menu(this, orgo);
+                menu.popUp();
+                y+=1;
             default:
                 System.out.print(key);
         }
