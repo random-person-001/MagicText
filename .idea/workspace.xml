@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2135375f-4dfd-4c17-b9a7-4b7586bd0b6e" name="Default" comment="Back from vacation. Trying to make a master menu object for a new inve">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SourceryTextb1/GameObjects/Menu.java" />
+    <list default="true" id="2135375f-4dfd-4c17-b9a7-4b7586bd0b6e" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SourceryTextb1/GameObjects/Inventory.java" afterPath="$PROJECT_DIR$/SourceryTextb1/GameObjects/Inventory.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SourceryTextb1/GameObjects/Player.java" afterPath="$PROJECT_DIR$/SourceryTextb1/GameObjects/Player.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SourceryTextb1/art.java" afterPath="$PROJECT_DIR$/SourceryTextb1/art.java" />
     </list>
     <list id="42bd900a-8252-44a2-a35b-c4ae87b3831d" name="New changelist" comment="" />
     <list id="3449204e-476b-4d2f-bdfd-58dfe96dd1ac" name="New changelist " comment="" />
@@ -994,7 +990,14 @@
       <option name="project" value="LOCAL" />
       <updated>1466197659985</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="Back from vacation.  Tried making a new Menu object so we could get a clean starrt at building a new inventory&#10;screen.&#10; &#10; Having some trouble, though.">
+      <created>1466455361692</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1466455361692</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1080,7 +1083,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fixed player freeze on opening new menus (from earlier deletion of player.update()), worked a bit on inventory" />
     <MESSAGE value="Work on inventory.  Now has correct (but unused) selector and puts thing in spots nicely." />
     <MESSAGE value="Dropping items is slightly better.  Still keeps trying to update it, though.&#10;" />
     <MESSAGE value="Fixed bug #4, it was cuz the room variable wasn't being set and then things failed silently.&#10;" />
@@ -1105,7 +1107,8 @@
     <MESSAGE value="Roughly double FPS.&#10;Profiling told me that Window.build() was taking 150ms; now takes 60-70ms." />
     <MESSAGE value="Roughly double FPS.&#10;Profiling told me that Window.build() was taking 150ms; now takes 40-70ms." />
     <MESSAGE value="repackaging - make folder for Zone 1, etc" />
-    <option name="LAST_COMMIT_MESSAGE" value="repackaging - make folder for Zone 1, etc" />
+    <MESSAGE value="Back from vacation.  Tried making a new Menu object so we could get a clean starrt at building a new inventory&#10;screen.&#10; &#10; Having some trouble, though." />
+    <option name="LAST_COMMIT_MESSAGE" value="Back from vacation.  Tried making a new Menu object so we could get a clean starrt at building a new inventory&#10;screen.&#10; &#10; Having some trouble, though." />
     <option name="PRESELECT_EXISTING_CHANGELIST" value="false" />
   </component>
   <component name="XDebuggerManager">
