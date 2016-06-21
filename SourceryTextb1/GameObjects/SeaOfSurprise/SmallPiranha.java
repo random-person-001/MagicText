@@ -47,24 +47,28 @@ public class SmallPiranha extends Mortal{
         while (!goodPlace) {
             int newX = x;
             int newY = y;
-            System.out.println("Not good place yet");
+            if (orgo.getDebug())
+                System.out.println("Not good place yet");
             if (r(5)>1){ /// Most of the time go towards closest good guy
                 Mortal m = getClosestGoodGuy();
                 if (r(1) == 0 && x != m.getX())
                     newX += (x < m.getX()) ? 1 : -1;
                 else if (m.getY() != y)
                     newY += (y < m.getY()) ? 1 : -1;
-                System.out.println("Going towards good guy");
+                if (orgo.getDebug())
+                    System.out.println("Going towards good guy");
             } else if (r(8)>1){
                 Mortal m = room.playo;
                 if (r(1) == 0 && x != m.getX())
                     newX += (x < m.getX()) ? 1 : -1;
                 else if (m.getY() != y)
                     newY += (y < m.getY()) ? 1 : -1;
-                System.out.println("Going towards player");
+                if (orgo.getDebug())
+                    System.out.println("Going towards player");
             }
             else if (r(moveFrq) < 1) {
-                System.out.println("Moving randomly");
+                if (orgo.getDebug())
+                    System.out.println("Moving randomly");
                 if (r(1) < 0) {
                     newX += r(2) - 1;
                 } else {
@@ -90,7 +94,8 @@ public class SmallPiranha extends Mortal{
             room.playo.hurt(3, "You know, maybe you should have listened \n when your mother told you not to \n play with piranhas.");
         }
         if (checkDeath()) {
-            System.out.println("AAAAAaaaack, a piranha died.");
+            if (orgo.getDebug())
+                System.out.println("AAAAAaaaack, a piranha died.");
             room.addObject(itemOnDrop);
         }
     }

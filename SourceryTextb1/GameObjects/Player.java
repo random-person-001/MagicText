@@ -78,6 +78,7 @@ public class Player extends Mortal {
     private int technicolorIndex = 0;
     private String primarySpell = "Book";
     private String secondarySpell = "None";
+    private int hurtColor = 0;
 
     /**Initialize a whole lotta variables.
      * @param theOrg the ImageOrg(anizer)
@@ -302,6 +303,7 @@ public class Player extends Mortal {
      */
     public void hurt(int damage, String deathMessage){
         subtractHealth(damage, deathMessage);
+        hurtColor += damage/3;
         //hurt(); subtractHealth does that
     }
 
@@ -310,21 +312,14 @@ public class Player extends Mortal {
      * the screen to flicker between red and white.
      */
     public void hurt(String deathMessage) {
-            try {
-                orgo.getWindow().txtArea.setForeground(Color.RED);
-                orgo.editLayer(" ", layerName, y, x);
-                orgo.compileImage();
-                Thread.sleep(200);
-                graphicUpdate();
-                orgo.getWindow().txtArea.setForeground(Color.WHITE);
-                orgo.compileImage();
-            } catch (InterruptedException e) {
-            }
+        orgo.editLayer(" ", layerName, y, x);
+        orgo.compileImage();
         if (checkDeath()){
             orgo.getWindow().txtArea.setForeground(Color.RED);
             room.compactTextBox(orgo, deathMessage, "An ominous voice from above", false);
             dead = true;
         }
+        hurtColor += 3;
     }
 
     /**
@@ -441,31 +436,31 @@ public class Player extends Mortal {
 
     private void castSpell(String spellName){
         if (mana > 1) {
-            if (spellName.equals("Book") && inv.hasItem("Book")) {
+            if (mana >= 1 && spellName.equals("Book") && inv.hasItem("Book")) {
                 room.addObject(new Spell(orgo, room, castingLayer, x, y, orientation, "Book"));
                 inv.subtractItem("Book");
             }
-            if (spellName.equals("Spark") && inv.hasItem("Spark")) {
+            if (mana >= 1 && spellName.equals("Spark") && inv.hasItem("Spark")) {
                 room.addObject(new Spell(orgo, room, castingLayer, x, y, orientation, "Spark"));
                 manaWait = manaWaitStat;
                 mana -= 2;
             }
-            if (spellName.equals("Flame") && inv.hasItem("Flame")) {
+            if (mana >= 3 && spellName.equals("Flame") && inv.hasItem("Flame")) {
                 room.addObject(new Spell(orgo, room, castingLayer, x, y, orientation, "Flame"));
                 manaWait = manaWaitStat;
                 mana -= 3;
             }
-            if (spellName.equals("SmallHealth") && inv.hasItem("SmallHealth")) {
+            if (mana >= 3 && spellName.equals("SmallHealth") && inv.hasItem("SmallHealth")) {
                 setHealth(getHealth()+10);
                 manaWait = manaWaitStat;
                 mana -= 3;
             }
-            if (spellName.equals("HugeHealth") && inv.hasItem("HugeHealth")) {
+            if (mana >= 20 && spellName.equals("HugeHealth") && inv.hasItem("HugeHealth")) {
                 setHealth(getHealth()+40);
                 manaWait = manaWaitStat;
                 mana -= 20;
             }
-            if (spellName.equals("Wanderer") && inv.hasItem("Wanderer")) {
+            if (mana >= 2 && spellName.equals("Wanderer") && inv.hasItem("Wanderer")) {
                 room.addObject(new Spell(orgo, room, castingLayer, x, y, orientation, "Wanderer"));
                 manaWait = manaWaitStat;
                 mana -= 2;
@@ -473,10 +468,10 @@ public class Player extends Mortal {
             if (spellName.equals("None")) {
                 System.out.println("No spell equipped.");
             }
-            System.out.println("Unrecognised spell ("+spellName+") or it isn't in your inventory");
+            System.out.println("Unrecognised spell ("+spellName+") or it isn't in your inventory or not enough mana.");
         }
         else{
-            System.out.println("Not enough mana!");
+            System.out.println("You don't have any mana!");
         }
     }
     /**
@@ -487,7 +482,7 @@ public class Player extends Mortal {
     }
 
     private void updateBackground(){ // Max is about 15 or 16
-        if (technicolorIndex > 0) {
+        if (technicolorIndex > 0) { // Update the background color, if you did the supercheat.
             float r,g,b;
             r = 0; b = 0; g = 0;
             // RGB:  001 010 011 100 101 110 111
@@ -503,6 +498,15 @@ public class Player extends Mortal {
             }
             technicolorIndex--;
             orgo.getWindow().txtArea.setBackground(new Color(r,g,b));
+        }else if (hurtColor > 1){  // update the redness of the screen; more red = more recently hurt more
+            int top = 5;
+            if (hurtColor > top){
+                hurtColor = top;
+            }
+            float eh = (float)(hurtColor-1)/top;
+            Color c = new Color(1f - eh/2, 1f - eh, 1f - eh);
+            orgo.getWindow().txtArea.setForeground(c);
+            hurtColor--;
         }
         else {
             orgo.getWindow().txtArea.setBackground(restingBackground);
@@ -513,37 +517,38 @@ public class Player extends Mortal {
      * @param c character that was pressed
      */
     private void checkCheatProgress(char c){
-        //System.out.println(superCheatProgress);
-        if (superCheatProgress > 9){
+        System.out.println(superCheatProgress);
+        if (superCheatProgress > 9) {
             // Yay!
             room.foodEaten += 42;
             technicolorIndex = 16;
             superCheatProgress = 0;
         }
+        System.out.println(c);
         switch (superCheatProgress){
             case 0:
-                if (c == 'w'){ superCheatProgress++; return; }
+                if (c == '©'){ superCheatProgress++; return; }
                 break;
             case 1:
-                if (c == 'w'){ superCheatProgress++; return; }
+                if (c == '©'){ superCheatProgress++; return; }
                 break;
             case 2:
-                if (c == 's'){ superCheatProgress++; return; }
+                if (c == '®'){ superCheatProgress++; return; }
                 break;
             case 3:
-                if (c == 's'){ superCheatProgress++; return; }
+                if (c == '®'){ superCheatProgress++; return; }
                 break;
             case 4:
-                if (c == 'a'){ superCheatProgress++; return; }
+                if (c == 'µ'){ superCheatProgress++; return; }
                 break;
             case 5:
-                if (c == 'd'){ superCheatProgress++; return; }
+                if (c == 'æ'){ superCheatProgress++; return; }
                 break;
             case 6:
-                if (c == 'a'){ superCheatProgress++; return; }
+                if (c == 'µ'){ superCheatProgress++; return; }
                 break;
             case 7:
-                if (c == 'd'){ superCheatProgress++; return; }
+                if (c == 'æ'){ superCheatProgress++; return; }
                 break;
             case 8:
                 if (c == 'b'){ superCheatProgress++; return; }
@@ -552,6 +557,7 @@ public class Player extends Mortal {
                 if (c == 'a'){ superCheatProgress++; return; }
                 break;
         }
+        System.out.println("No!  You messed up.");
         superCheatProgress = 0;
     }
 

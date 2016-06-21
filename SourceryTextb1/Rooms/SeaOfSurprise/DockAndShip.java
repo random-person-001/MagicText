@@ -42,7 +42,7 @@ public class DockAndShip extends Room {
                 if (playo.dead){
                     exitCode = 1;
                 }
-                playo.reportPos();
+                //playo.reportPos();
                 org.compileImage();
                 timer++;
                 if (timer > 200 && timer < 1000 && timer % 10 == 0){

@@ -6,9 +6,12 @@
 package SourceryTextb1;
 
 import SourceryTextb1.GameObjects.Player;
-import SourceryTextb1.Rooms.*;
+import SourceryTextb1.Rooms.BeginningRoom;
+import SourceryTextb1.Rooms.Room;
+import SourceryTextb1.Rooms.RoomThree;
+import SourceryTextb1.Rooms.RoomTwo;
 import SourceryTextb1.Rooms.SeaOfSurprise.DockAndShip;
-import SourceryTextb1.Rooms.TheSource.TutorialBasement;
+import SourceryTextb1.Rooms.TestRoom;
 
 import java.awt.Color;
 

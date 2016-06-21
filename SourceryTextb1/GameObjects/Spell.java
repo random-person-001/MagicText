@@ -48,7 +48,9 @@ public class Spell extends GameObject{
 
         orientation = setOr;
         setName(name);
-        System.out.println(name + " spell cast!");
+
+        if (orgo.getDebug())
+            System.out.println(name + " spell cast!");
     }
 
     public void setName(String newName){

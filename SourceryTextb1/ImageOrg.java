@@ -17,6 +17,7 @@ public class ImageOrg {
     private ArrayList<Layer> layers = new ArrayList<>();
     private int camX = 0;
     private int camY = 0;
+    private boolean debugGame = false;
     
     public ImageOrg(Window game){
         window = game;
@@ -28,6 +29,10 @@ public class ImageOrg {
     public void addLayer(Layer lay){
         layers.add(lay);
         //updateOrder();  //Uncomment this when it starts working.
+    }
+
+    public boolean getDebug(){
+        return debugGame;
     }
 
     /**
