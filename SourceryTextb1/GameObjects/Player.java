@@ -43,6 +43,7 @@ public class Player extends Mortal {
     private boolean autonomous = false;
     public boolean shouldPause = false;
     private boolean shouldInventory = false;
+    private boolean shouldNewInv = false;
     public boolean frozen = true; //This gets changed by a room upon beginning the level
 
     //Convenience variables
@@ -145,11 +146,16 @@ public class Player extends Mortal {
             System.out.println("Pausing.");
             room.pause(orgo);
             shouldPause = false;
-        }else if (shouldInventory){
+        } else if (shouldInventory){
             //orgo.getWindow().removeKeyListener(playerKeyListener);
             inv.show();
             //orgo.getWindow().addKeyListener(playerKeyListener);
             shouldInventory = false;
+        } else if (shouldNewInv){
+            System.out.println("GAME PAUSED\n " + inv.pressedA);
+            inv.newShow();
+            shouldNewInv = false;
+            System.out.println("GAME UNPAUSED");
         }
         if (frozen) {
             try {
@@ -423,9 +429,7 @@ public class Player extends Mortal {
                 shouldInventory = true;
                 break;
             case 'q':
-                Menu menu = new Menu(this, orgo);
-                menu.popUp();
-                y+=1;
+                shouldNewInv = true;
             default:
                 System.out.print(key);
         }

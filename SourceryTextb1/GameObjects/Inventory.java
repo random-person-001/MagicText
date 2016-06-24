@@ -26,7 +26,14 @@ class Inventory {
     private String layerName = "WindowConfig";
     private int selectX = 1;
     private int selectY = 1;
+    private int newSelectY = 2;
     private int scrollTimer = 0;
+
+    private final int TOP = 1;
+    private final int SPELLS = 2;
+    private final int ITEMS = 3;
+    private final int STATS = 4;
+    private final int EXIT = 5;
 
     public Inventory(ImageOrg orgo, Player p) {
         org = orgo;
@@ -151,11 +158,13 @@ class Inventory {
             case '©': // Up
                 if (selectY > 1)
                     selectY--;
+                newSelectY --;
                 scrollTimer = 0;
                 break;
             case '®': // Down
                 if (selectY < 8)
                     selectY++;
+                newSelectY ++;
                 scrollTimer = 0;
                 break;
             case '1': // Set primary
@@ -176,7 +185,7 @@ class Inventory {
      */
     public void show() {
         player.frozen = true;
-        invBkgdLayer = new Layer(art.strToArray(new art().inventoryBkgd), layerName, false, true);
+        invBkgdLayer = new Layer(art.strToArray(new art().inventoryBkgd), layerName, 0, 0, false, true);
         org.addLayer(invBkgdLayer); // Background grid
         itemsLayer = populateItems();
         org.addLayer(itemsLayer);
@@ -200,6 +209,42 @@ class Inventory {
         org.removeLayer(selectedSpellsLayer.name);
         org.removeLayer("invItems");
         org.removeLayer(layerName);
+        window.txtArea.removeKeyListener(keyListener);
+        player.frozen = false;
+    }
+
+    private int menuID = 0;
+    public boolean pressedA = false;
+
+    private Layer topMenuLayer = new Layer(art.strToArray(new art().topMenu), "top", 1, 27, false, true);
+    private Layer itemsMenuLayer = new Layer(art.strToArray(new art().itemsMenu), "items", 1, 0, false, true);
+    private Layer spellsMenuLayer = new Layer(art.strToArray(new art().spellsMenu), "spells", 1, 0, false, true);
+    private Layer statsMenuLayer = new Layer(art.strToArray(new art().statsMenu), "stats", 1, 0, false, true);
+    private Layer selectorLayer = new Layer(new String[22][46], "selector", 0, 0, false, false);
+
+    public void newShow() {
+        player.frozen = true;
+        menuID = TOP;
+        newSelectY = 2;
+
+        org.addLayer(topMenuLayer);
+        org.addLayer(selectorLayer);
+
+        Window window = org.getWindow();
+        Navigator keyListener = new Navigator(this);
+        window.txtArea.addKeyListener(keyListener); // Add key listeners.
+        while (menuID != EXIT) {
+            try {
+                newUpdateSelector(menuID);
+                org.compileImage();
+                Thread.sleep(50);
+            } catch (InterruptedException e) {
+                System.exit(0);
+            }
+        }
+
+        org.removeLayer("selector");
+        org.removeLayer("top");
         window.txtArea.removeKeyListener(keyListener);
         player.frozen = false;
     }
@@ -266,6 +311,122 @@ class Inventory {
                 lay.setStr(yCoord, x, String.valueOf(arrThing[i]));
             }
         }
+
+        org.compileImage();
+    }
+
+    private void newUpdateSelector(int menuType) {
+        int indexX = 0;
+        org.clearLayer("selector");
+
+        switch(menuType) {
+            case TOP:
+                if (newSelectY <= 1) {
+                    newSelectY = 5;
+                }
+                if (newSelectY >= 6) {
+                    newSelectY = 2;
+                }
+                indexX = 28;
+                if (pressedA) {
+                    switch (newSelectY){
+                        case 2:
+                            org.removeLayer("top");
+                            org.removeLayer("selector");
+                            org.addLayer(spellsMenuLayer);
+                            org.addLayer(selectorLayer);
+                            menuID = SPELLS;
+                            newSelectY = 3;
+                            break;
+                        case 3:
+                            org.removeLayer("top");
+                            org.removeLayer("selector");
+                            org.addLayer(itemsMenuLayer);
+                            org.addLayer(selectorLayer);
+                            menuID = ITEMS;
+                            newSelectY = 3;
+                            break;
+                        case 4:
+                            org.removeLayer("top");
+                            org.removeLayer("selector");
+                            org.addLayer(statsMenuLayer);
+                            org.addLayer(selectorLayer);
+                            menuID = STATS;
+                            newSelectY = 2;
+                            break;
+                        case 5:
+                            org.removeLayer("top");
+                            org.removeLayer("selector");
+                            menuID = EXIT;
+                            break;
+                    }
+                }
+                break;
+            case SPELLS:
+                if (newSelectY <= 2) {
+                    newSelectY = 21;
+                }
+                if (newSelectY >= 22) {
+                    newSelectY = 3;
+                }
+                indexX = 31;
+                if (pressedA) {
+                    if (newSelectY == 21){
+                        org.removeLayer("spells");
+                        org.removeLayer("selector");
+                        org.addLayer(topMenuLayer);
+                        org.addLayer(selectorLayer);
+                        menuID = TOP;
+                        indexX = 28;
+                        newSelectY = 2;
+                    }
+                }
+                break;
+            case ITEMS:
+                if (newSelectY <= 2) {
+                    newSelectY = 21;
+                }
+                if (newSelectY >= 22) {
+                    newSelectY = 3;
+                }
+                indexX = 31;
+                if (pressedA) {
+                    if (newSelectY == 21){
+                        org.removeLayer("items");
+                        org.removeLayer("selector");
+                        org.addLayer(topMenuLayer);
+                        org.addLayer(selectorLayer);
+                        menuID = TOP;
+                        indexX = 28;
+                        newSelectY = 2;
+                    }
+                }
+                break;
+            case STATS:
+                if (newSelectY <= 1) {
+                    newSelectY = 10;
+                }
+                if (newSelectY >= 11) {
+                    newSelectY = 2;
+                }
+                indexX = 31;
+                if (pressedA) {
+                    if (newSelectY == 10){
+                        org.removeLayer("stats");
+                        org.removeLayer("selector");
+                        org.addLayer(topMenuLayer);
+                        org.addLayer(selectorLayer);
+                        menuID = TOP;
+                        indexX = 28;
+                        newSelectY = 2;
+                    }
+                }
+                break;
+        }
+
+        pressedA = false;
+        int indexY = newSelectY;
+        org.editLayer(">", "selector", indexY, indexX);
 
         org.compileImage();
     }
@@ -576,6 +737,9 @@ class Navigator extends KeyAdapter {
         }
         if (key == '2') {
             inv.keyPressed('2');
+        }
+        if (key == 'A') {
+            inv.pressedA = true;
         }
         if (key == KeyEvent.VK_ESCAPE || key == KeyEvent.VK_ENTER || event.getKeyChar() == 'w') {
             resume = true;

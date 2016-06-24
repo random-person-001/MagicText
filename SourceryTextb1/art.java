@@ -818,9 +818,93 @@ public class art {
                     "+MENU-------------+\n" +
                     "|  Spells         |\n" +
                     "|  Items          |\n" +
-                    "|                 |\n" +
-                    "|                 |\n" +
-                    "+-----------------+";
+                    "|  Stats          |\n" +
+                    "|  EXIT           |\n" +
+                    "+-----------------+\n";
+
+    public String itemsMenu =
+                    "+Info-----------------------+ +Items---------+\n" +
+                    "|                           | |===PAGE  / ===|\n" +
+                    "|                           | |              |\n" +
+                    "|                           | |              |\n" +
+                    "|                           | |              |\n" +
+                    "|                           | |              |\n" +
+                    "|                           | |              |\n" +
+                    "|                           | |              |\n" +
+                    "|                           | |              |\n" +
+                    "|                           | |              |\n" +
+                    "|                           | |              |\n" +
+                    "|                           | |              |\n" +
+                    "+---------------------------+ |              |\n" +
+                    "                              |              |\n" +
+                    "                              |              |\n" +
+                    "                              |              |\n" +
+                    "                              |              |\n" +
+                    "                              |              |\n" +
+                    "                              |              |\n" +
+                    "                              |  NEXT PAGE...|\n" +
+                    "                              |  EXIT        |\n" +
+                    "                              +--------------+\n";
+
+    public String spellsMenu =
+                    "#Info=======================# #Spells========#\n" +
+                    "|                           | |===PAGE  / ===|\n" +
+                    "|                           | |              |\n" +
+                    "|                           | |              |\n" +
+                    "|                           | |              |\n" +
+                    "|                           | |              |\n" +
+                    "|                           | |              |\n" +
+                    "|                           | |              |\n" +
+                    "|                           | |              |\n" +
+                    "|                           | |              |\n" +
+                    "|                           | |              |\n" +
+                    "|                           | |              |\n" +
+                    "#===========================# |              |\n" +
+                    "                              |              |\n" +
+                    "                              |              |\n" +
+                    "                              |              |\n" +
+                    "                              |              |\n" +
+                    "                              |              |\n" +
+                    "                              |              |\n" +
+                    "                              |  NEXT PAGE...|\n" +
+                    "                              |  EXIT        |\n" +
+                    "                              #==============#\n";
+
+    public String statsMenu =
+                    "+Info-----------------------+ +Stats---------+\n" +
+                    "|                           | |  xx Max HP   |\n" +
+                    "|                           | |  xx Max Mana |\n" +
+                    "|                           | |  xx Mana Rec.|\n" +
+                    "|                           | |              |\n" +
+                    "|                           | |  xx Adeptness|\n" +
+                    "|                           | |  xx Focus    |\n" +
+                    "|                           | |  xx Resist.  |\n" +
+                    "|                           | |              |\n" +
+                    "|                           | |  EXIT        |\n" +
+                    "+---------------------------+ +--------------+\n";
+
+    /*
+    STAT EXPLANATION
+    Max HP : Maximum Health.
+    Max Mana : Maximum Mana.
+
+    Mana Rec. : Increases Mana Recovery Rate
+        Mana Wait Time: 2000 - (Mana Rec. * 100) milliseconds, minimum of 500ms
+        Mana Regen Rate: (Mana Rec. * 2) mana per second
+
+    Adeptness : Boosts spell damage. Each spell has an "Adeptness Scalar" (ex. 60%).
+        Bonus Damage: + floor(Adeptness * Scalar) damage
+
+    Focus : Boosts Spell Buff Duration, Heals, and Range.
+        Instant Healing: + floor(Focus / 3) health
+        Buffs (Any spell effect with a timed positive effect on yourself): + (float)(Focus / 2) seconds
+        Range: + floor(Focus / 2)
+
+    Resistance : Reduces damage taken.
+        Damage Reduction: Damage Taken * (1 - (0.02 * Resistance))
+                    "(Resistance * 2)% Damage Reduction"
+
+    */
 
     public String mountainPlace //See MountainyThing.txt
             = "                                                                                                                                                    \n" +
