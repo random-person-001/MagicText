@@ -10,7 +10,7 @@ import SourceryTextb1.Rooms.BeginningRoom;
 import SourceryTextb1.Rooms.Room;
 import SourceryTextb1.Rooms.RoomThree;
 import SourceryTextb1.Rooms.RoomTwo;
-import SourceryTextb1.Rooms.SeaOfSurprise.DockAndShip;
+import SourceryTextb1.Rooms.TheSource.TutorialBasement;
 import SourceryTextb1.Rooms.TestRoom;
 
 import java.awt.Color;
@@ -206,22 +206,23 @@ public class Start {
             }
 
 
-            Player player = new Player(org);/*
+            Player player = new Player(org);
             TutorialBasement forest = new TutorialBasement(org, player);
             prepLevel(org, game, player, forest, 0);
             forest.startup();
             forest.enter();
-
+            /*
             Mountains mtns = new Mountains(org, player);
             prepLevel(org, game, player, mtns, 0);
             mtns.startup();
             mtns.enter();*/
 
+            /*
             DockAndShip boat = new DockAndShip(org, player);
             prepLevel(org, game, player, boat, 0);
             boat.startup();
             boat.enter();
-
+            */
 
         }
 

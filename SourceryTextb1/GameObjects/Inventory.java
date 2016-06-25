@@ -213,13 +213,14 @@ class Inventory {
         player.frozen = false;
     }
 
+    //BECAUSE SCOPE
     private int menuID = 0;
     public boolean pressedA = false;
 
     private Layer topMenuLayer = new Layer(art.strToArray(new art().topMenu), "top", 1, 27, false, true);
     private Layer itemsMenuLayer = new Layer(art.strToArray(new art().itemsMenu), "items", 1, 0, false, true);
     private Layer spellsMenuLayer = new Layer(art.strToArray(new art().spellsMenu), "spells", 1, 0, false, true);
-    private Layer statsMenuLayer = new Layer(art.strToArray(new art().statsMenu), "stats", 1, 0, false, true);
+    private Layer equipMenuLayer = new Layer(art.strToArray(new art().equipMenu), "equip", 1, 0, false, true);
     private Layer selectorLayer = new Layer(new String[22][46], "selector", 0, 0, false, false);
 
     public void newShow() {
@@ -315,112 +316,23 @@ class Inventory {
         org.compileImage();
     }
 
+    int indexX = 0;
     private void newUpdateSelector(int menuType) {
-        int indexX = 0;
         org.clearLayer("selector");
 
         switch(menuType) {
             case TOP:
-                if (newSelectY <= 1) {
-                    newSelectY = 5;
-                }
-                if (newSelectY >= 6) {
-                    newSelectY = 2;
-                }
+                operateTopMenu();
                 indexX = 28;
-                if (pressedA) {
-                    switch (newSelectY){
-                        case 2:
-                            org.removeLayer("top");
-                            org.removeLayer("selector");
-                            org.addLayer(spellsMenuLayer);
-                            org.addLayer(selectorLayer);
-                            menuID = SPELLS;
-                            newSelectY = 3;
-                            break;
-                        case 3:
-                            org.removeLayer("top");
-                            org.removeLayer("selector");
-                            org.addLayer(itemsMenuLayer);
-                            org.addLayer(selectorLayer);
-                            menuID = ITEMS;
-                            newSelectY = 3;
-                            break;
-                        case 4:
-                            org.removeLayer("top");
-                            org.removeLayer("selector");
-                            org.addLayer(statsMenuLayer);
-                            org.addLayer(selectorLayer);
-                            menuID = STATS;
-                            newSelectY = 2;
-                            break;
-                        case 5:
-                            org.removeLayer("top");
-                            org.removeLayer("selector");
-                            menuID = EXIT;
-                            break;
-                    }
-                }
                 break;
             case SPELLS:
-                if (newSelectY <= 2) {
-                    newSelectY = 21;
-                }
-                if (newSelectY >= 22) {
-                    newSelectY = 3;
-                }
-                indexX = 31;
-                if (pressedA) {
-                    if (newSelectY == 21){
-                        org.removeLayer("spells");
-                        org.removeLayer("selector");
-                        org.addLayer(topMenuLayer);
-                        org.addLayer(selectorLayer);
-                        menuID = TOP;
-                        indexX = 28;
-                        newSelectY = 2;
-                    }
-                }
+                operateSpellsMenu();
                 break;
             case ITEMS:
-                if (newSelectY <= 2) {
-                    newSelectY = 21;
-                }
-                if (newSelectY >= 22) {
-                    newSelectY = 3;
-                }
-                indexX = 31;
-                if (pressedA) {
-                    if (newSelectY == 21){
-                        org.removeLayer("items");
-                        org.removeLayer("selector");
-                        org.addLayer(topMenuLayer);
-                        org.addLayer(selectorLayer);
-                        menuID = TOP;
-                        indexX = 28;
-                        newSelectY = 2;
-                    }
-                }
+                operateItemsMenu();
                 break;
             case STATS:
-                if (newSelectY <= 1) {
-                    newSelectY = 10;
-                }
-                if (newSelectY >= 11) {
-                    newSelectY = 2;
-                }
-                indexX = 31;
-                if (pressedA) {
-                    if (newSelectY == 10){
-                        org.removeLayer("stats");
-                        org.removeLayer("selector");
-                        org.addLayer(topMenuLayer);
-                        org.addLayer(selectorLayer);
-                        menuID = TOP;
-                        indexX = 28;
-                        newSelectY = 2;
-                    }
-                }
+                operateEquipMenu();
                 break;
         }
 
@@ -429,6 +341,111 @@ class Inventory {
         org.editLayer(">", "selector", indexY, indexX);
 
         org.compileImage();
+    }
+
+    private void operateTopMenu(){
+        if (newSelectY <= 1) {
+            newSelectY = 6;
+        }
+        if (newSelectY >= 7) {
+            newSelectY = 2;
+        }
+        if (pressedA) {
+            switch (newSelectY){
+                case 2:
+                    jumpToNewMenu(spellsMenuLayer, SPELLS, "top");
+                    newSelectY = 3;
+                    break;
+                case 3:
+                    jumpToNewMenu(itemsMenuLayer, ITEMS, "top");
+                    newSelectY = 3;
+                    break;
+                case 4:
+                    jumpToNewMenu(equipMenuLayer, STATS, "top");
+                    newSelectY = 3;
+                    break;
+                case 5:
+                    System.exit(0);
+                    break;
+                case 6:
+                    org.removeLayer("top");
+                    org.removeLayer("selector");
+                    menuID = EXIT;
+                    break;
+            }
+        }
+    }
+
+    private void jumpToNewMenu(Layer goTo, int newID, String from){
+        org.removeLayer(from);
+        org.removeLayer("selector");
+        org.addLayer(goTo);
+        org.addLayer(selectorLayer);
+        menuID = newID;
+    }
+
+    private void operateSpellsMenu(){
+        if (newSelectY <= 2) {
+            newSelectY = 21;
+        }
+        if (newSelectY >= 22) {
+            newSelectY = 3;
+        }
+        indexX = 31;
+        if (pressedA) {
+            if (newSelectY == 21){
+                jumpToNewMenu(topMenuLayer, TOP, "spells");
+                indexX = 28;
+                newSelectY = 2;
+            }
+        }
+    }
+
+    private void operateItemsMenu(){
+        if (newSelectY <= 2) {
+            newSelectY = 21;
+        }
+        if (newSelectY >= 22) {
+            newSelectY = 3;
+        }
+        indexX = 31;
+        if (pressedA) {
+            if (newSelectY == 21){
+                jumpToNewMenu(topMenuLayer, TOP, "items");
+                indexX = 28;
+                newSelectY = 2;
+            }
+        }
+    }
+
+    private void operateEquipMenu(){
+        if (newSelectY <= 2) {
+            newSelectY = 21;
+        }
+        if (newSelectY >= 22) {
+            newSelectY = 3;
+        }
+        indexX = 31;
+        if (pressedA) {
+            if (newSelectY == 21){
+                jumpToNewMenu(topMenuLayer, TOP, "equip");
+                indexX = 28;
+                newSelectY = 2;
+            }
+        }
+    }
+
+    private void fillInfoText(String text, int startX, int startY){
+        int line = 1;
+        int newLineAdjust = 0;
+        for (int ii = 0; ii < text.length(); ii++){
+            if (text.charAt(ii) == '\n'){
+                line++;
+                newLineAdjust = ii + 1;
+            } else {
+                selectorLayer.setStr(startY + line, startX + ii - newLineAdjust, String.valueOf(text.charAt(ii)));
+            }
+        }
     }
 
     private String getSelected(int what){
@@ -746,3 +763,4 @@ class Navigator extends KeyAdapter {
         }
     }
 }
+
