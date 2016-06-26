@@ -26,7 +26,7 @@ import java.awt.Color;
  */
 public class Start {
     private static boolean doDemo = false;
-    private static boolean doIntro = true;
+    private static boolean doIntro = false;
 
     private static Window game;
     private static ImageOrg org;
@@ -259,10 +259,12 @@ public class Start {
                 lay3.clear();
                 org.compileImage();
 
+                /*
                 for (int eff = 255; eff >= 0; eff -= 5) {
                     game.txtArea.setBackground(new Color(eff, eff, eff, 255));
                     Thread.sleep(50);
                 }
+                */
 
                 game.txtArea.setBackground(Color.BLACK);
             }

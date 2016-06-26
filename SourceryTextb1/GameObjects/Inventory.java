@@ -42,8 +42,9 @@ class Inventory {
     private final int TOP = 1;
     private final int SPELLS = 2;
     private final int ITEMS = 3;
-    private final int STATS = 4;
+    private final int EQUIP = 4;
     private final int EXIT = 5;
+    private final int QUIT = 6;
 
     public Inventory(ImageOrg orgo, Player p) {
         org = orgo;
@@ -58,6 +59,45 @@ class Inventory {
         inventory.put("Wanderer", 1);
         inventory.put("SmallHealth", 1);
         inventory.put("HugeHealth", 1);
+
+        spells.add(new Item("Item 1","1st Entry"));
+        spells.get(0).setDmg(4);
+        spells.get(0).setRng(8);
+        spells.get(0).setDescMode("damage");
+        spells.add(new Item("Item 2","2nd Entry"));
+        spells.get(1).setHeal(7);
+        spells.get(1).setDescMode("healing");
+        spells.add(new Item("Item 3","3rd Entry"));
+        spells.get(2).setDur(3);
+        spells.get(2).setDescMode("buff");
+        spells.add(new Item("Item 4","4th Entry\n\nNothing special about this\n one"));
+        spells.add(new Item("Item 5","5th Entry"));
+        spells.add(new Item("Item 6","6th Entry"));
+        spells.add(new Item("Item 7","7th Entry"));
+        spells.add(new Item("Item 8","8th Entry"));
+        spells.add(new Item("Item 9","9th Entry"));
+        spells.add(new Item("Item 10","10th Entry"));
+        spells.add(new Item("Item 11","11th Entry"));
+        spells.add(new Item("Item 12","12th Entry"));
+        spells.add(new Item("Item 13","13th Entry"));
+        spells.add(new Item("Item 14","14th Entry"));
+        spells.add(new Item("Item 15","15th Entry"));
+        spells.add(new Item("Item 16","16th Entry"));
+        spells.add(new Item("Item 17","17th Entry"));
+        spells.add(new Item("Item 18","18th Entry"));
+        spells.add(new Item("Item 19","19th Entry"));
+
+        for (int spam = 0; spam < 20; spam++){
+            items.add(new Item("Postcard","Has not utility, but still\n costs $10\n\nDirectly sourced from\n The Mines of Mementos"));
+        }
+
+        for (int spam = 0; spam < 35; spam++){
+            items.add(new Item("Key Chain","A new chain to put your\n other pointless gifts on!\n\nLinking key chains together\n may generate lackluster\n results\n\nDirectly Sourced from\n The Mines of Mementos"));
+        }
+
+        equip.add(new Item("Pyro Glove","A glove that's on fire!\n\nIncreases the damage of\n fire spells by 1\n\n+1 (All) Spell Damage"));
+        equip.add(new Item("Broken Staff","A staff crafted by a\n dirt-poor student of\n The Magic Academy.\n\nMade of spare wood\n" +
+                " and animal bones, it's\n no surprise that it\n already snapped in two\n\n+1 (All) Spell Damage"));
 
         //putPrimary(arty.oldBook);  // Wouldn't work, not sure whyy
     }
@@ -341,7 +381,7 @@ class Inventory {
             case ITEMS:
                 operateItemsMenu();
                 break;
-            case STATS:
+            case EQUIP:
                 operateEquipMenu();
                 break;
         }
@@ -371,7 +411,7 @@ class Inventory {
                     newSelectY = 3;
                     break;
                 case 4:
-                    jumpToNewMenu(equipMenuLayer, STATS, "top");
+                    jumpToNewMenu(equipMenuLayer, EQUIP, "top");
                     newSelectY = 3;
                     break;
                 case 5:
@@ -385,6 +425,8 @@ class Inventory {
             }
         }
     }
+
+    private int page = 1;
 
     private void jumpToNewMenu(Layer goTo, int newID, String from){
         org.removeLayer(from);
@@ -401,12 +443,36 @@ class Inventory {
         if (newSelectY >= 22) {
             newSelectY = 3;
         }
+
+        double pageReq = Math.ceil((double)spells.size() / 16);
+
+        if (pageReq == 0){
+            pageReq = 1;
+        }
+
+        if (page > pageReq){
+            page = 1;
+        }
+
+        org.editLayer(String.valueOf((int)pageReq), "selector", 2, 41);
+        org.editLayer(String.valueOf(page), "selector", 2, 39);
+
+        fillItemNames(spells, 33, 3, page);
+
+        int index = newSelectY - 3 + ((page - 1) * 16);
+        if (index < spells.size() && newSelectY < 19){
+            fillInfoText(spells.get(index).getDesc(), 1, 1);
+        }
+
         indexX = 31;
         if (pressedA) {
             if (newSelectY == 21){
                 jumpToNewMenu(topMenuLayer, TOP, "spells");
                 indexX = 28;
                 newSelectY = 2;
+            }
+            if (newSelectY == 20){
+                page++;
             }
         }
     }
@@ -418,12 +484,36 @@ class Inventory {
         if (newSelectY >= 22) {
             newSelectY = 3;
         }
+
+        double pageReq = Math.ceil((double)items.size() / 16);
+
+        if (pageReq == 0){
+            pageReq = 1;
+        }
+
+        if (page > pageReq){
+            page = 1;
+        }
+
+        org.editLayer(String.valueOf((int)pageReq), "selector", 2, 41);
+        org.editLayer(String.valueOf(page), "selector", 2, 39);
+
+        fillItemNames(items, 33, 3, page);
+
+        int index = newSelectY - 3 + ((page - 1) * 16);
+        if (index < items.size() && newSelectY < 19){
+            fillInfoText(items.get(index).getDesc(), 1, 1);
+        }
+
         indexX = 31;
         if (pressedA) {
             if (newSelectY == 21){
                 jumpToNewMenu(topMenuLayer, TOP, "items");
                 indexX = 28;
                 newSelectY = 2;
+            }
+            if (newSelectY == 20){
+                page++;
             }
         }
     }
@@ -435,12 +525,36 @@ class Inventory {
         if (newSelectY >= 22) {
             newSelectY = 3;
         }
+
+        double pageReq = Math.ceil((double)equip.size() / 16);
+
+        if (pageReq == 0){
+            pageReq = 1;
+        }
+
+        if (page > pageReq){
+            page = 1;
+        }
+
+        org.editLayer(String.valueOf((int)pageReq), "selector", 2, 41);
+        org.editLayer(String.valueOf(page), "selector", 2, 39);
+
+        fillItemNames(equip, 33, 3, page);
+
+        int index = newSelectY - 3 + ((page - 1) * 16);
+        if (index < equip.size() && newSelectY < 19){
+            fillInfoText(equip.get(index).getDesc(), 1, 1);
+        }
+
         indexX = 31;
         if (pressedA) {
             if (newSelectY == 21){
                 jumpToNewMenu(topMenuLayer, TOP, "equip");
                 indexX = 28;
                 newSelectY = 2;
+            }
+            if (newSelectY == 20){
+                page++;
             }
         }
     }
@@ -454,6 +568,19 @@ class Inventory {
                 newLineAdjust = ii + 1;
             } else {
                 selectorLayer.setStr(startY + line, startX + ii - newLineAdjust, String.valueOf(text.charAt(ii)));
+            }
+        }
+    }
+
+    private void fillItemNames(ArrayList<Item> items, int startX, int startY, int page) {
+        int pageOffset = (page - 1) * 16;
+        int pageSize = items.size() - pageOffset;
+        if (pageSize > 16) { pageSize = 16; }
+
+        for (int ii = 0; ii < pageSize; ii++) {
+            String itemName = items.get(ii + pageOffset).getName();
+            for (int iii = 0; iii < itemName.length(); iii++) {
+                selectorLayer.setStr(startY + ii, startX + iii, String.valueOf(itemName.charAt(iii)));
             }
         }
     }
@@ -788,7 +915,7 @@ class Item{
         description = theDesc;
     }
 
-    public void setDescMode(String type, String mode){
+    public void setDescMode(String mode){
         displayMode = mode;
     }
 
@@ -800,7 +927,7 @@ class Item{
     public String getName() { return name; }
 
     public String getDesc() {
-        switch (displayMode) {
+        switch (displayMode.toLowerCase()) {
             case "blank":
                 return description;
             case "damage":
@@ -810,7 +937,7 @@ class Item{
             case "buff":
                 return description + "\n\nDuration: " + String.valueOf(duration);
             default:
-                return description + "\n\nPLEASE USE \"blank\" Desc. mode!";
+                return description + "\n\nINVALID DISPLAY MODE: \n  \"" + displayMode + "\"";
         }
     }
 }
