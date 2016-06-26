@@ -7,7 +7,7 @@ import SourceryTextb1.art;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 
@@ -17,6 +17,16 @@ import java.util.HashMap;
  */
 class Inventory {
     private HashMap<String, Integer> inventory;
+    private ArrayList<Item> spells = new ArrayList<>();
+    private ArrayList<Item> items = new ArrayList<>();
+    private ArrayList<Item> equip = new ArrayList<>();
+    private ArrayList<Item> equipped = new ArrayList<>();
+    /*"equip" and "equipped" are different. "equip" is possible equipment that you have stockpiled up.
+        In other words, all the gloves, staffs, and armor that you picked up along your journey.
+      "equipped" contains the armor you have equipped, and also the spells you have equipped too.
+        the first two elements in "equipped" are the two spells, and the third and fourth elements are weapon and armor respectively
+    */
+
     private Player player;
     private ImageOrg org;
     private Layer invBkgdLayer;
@@ -760,6 +770,47 @@ class Navigator extends KeyAdapter {
         }
         if (key == KeyEvent.VK_ESCAPE || key == KeyEvent.VK_ENTER || event.getKeyChar() == 'w') {
             resume = true;
+        }
+    }
+}
+
+class Item{
+
+    private String displayMode = "blank";
+
+    private String name = "";
+    private String description = "";
+
+    private int damage, range, healing, duration;
+
+    public Item(String theName, String theDesc){
+        name = theName;
+        description = theDesc;
+    }
+
+    public void setDescMode(String type, String mode){
+        displayMode = mode;
+    }
+
+    public void setDmg(int to) { damage = to; }
+    public void setRng(int to) { range = to; }
+    public void setHeal(int to) { healing = to; }
+    public void setDur(int to) { duration = to; }
+
+    public String getName() { return name; }
+
+    public String getDesc() {
+        switch (displayMode) {
+            case "blank":
+                return description;
+            case "damage":
+                return description + "\n\nDamage: " + String.valueOf(damage) + "\nRange : " + String.valueOf(range);
+            case "healing":
+                return description + "\n\nRestores " + String.valueOf(healing) + " Health";
+            case "buff":
+                return description + "\n\nDuration: " + String.valueOf(duration);
+            default:
+                return description + "\n\nPLEASE USE \"blank\" Desc. mode!";
         }
     }
 }

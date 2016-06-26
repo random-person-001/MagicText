@@ -754,21 +754,29 @@ public class art {
             "      setOrbit(star, velMultip, false);       \n" +
             "   }                                          \n" +
             "                                              \n" +
+            "   String useAllCharacters = false;           \n" +
             "                                              \n" +
+            "   public void getUsage(){                    \n" +
+            "      return useAllCharacters;                \n" +
+            "   }                                          \n" +
             "                                              \n" +
+            "   /*                                         \n" +
+            "   WARNING: setting useAllCharacters to       \n" +
+            "     true will enable a very buggy build of   \n" +
+            "     a world, and really shouldn't be used.   \n" +
+            "     I'll be fixing that on Thursday.         \n" +
+            "   */                                         \n" +
             "                                              \n" +
+            "   public void generateWorldMagic(){          \n" +
+            "      for(int ii = 0; ii < 9001; ii++){       \n" +
+            "         int x = Math.random() * 100:         \n" +
+            "         int y = Math.random() * 100;         \n" +
+            "         placeNodeOnSurface(x, y);            \n" +
+            "      }                                       \n" +
+            "      activateAllMagicNodes()                 \n" +
+            "   }                                          \n" +
             "                                              \n" +
-            "                                              \n" +
-            "                                              \n" +
-            "                                              \n" +
-            "                                              \n" +
-            "                                              \n" +
-            "                                              \n" +
-            "                                              \n" +
-            "                                              \n" +
-            "                                              \n" +
-            "                                              \n" +
-            "                                              \n";
+            "   //Gravity Calculations                     \n";
 
 
 

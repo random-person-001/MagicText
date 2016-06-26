@@ -26,7 +26,7 @@ import java.awt.Color;
  */
 public class Start {
     private static boolean doDemo = false;
-    private static boolean doIntro = false;
+    private static boolean doIntro = true;
 
     private static Window game;
     private static ImageOrg org;
@@ -63,17 +63,24 @@ public class Start {
             WindowConfig wincnfg = new WindowConfig(game, org);
             wincnfg.config();
 
-            if (doIntro){
-                game.txtArea.setBackground(Color.DARK_GRAY);
+            if (doIntro) {
+                game.txtArea.setBackground(Color.BLACK);
                 Layer lay1 = new Layer(new String[23][46], "Intro1");
                 lay1.setStr(10, 23, "@");
                 org.addLayer(lay1);
                 org.compileImage();
 
-                Thread.sleep(3000);
+                Thread.sleep(750);
+
+                for (int eff = 0; eff < 40; eff++) {
+                    game.txtArea.setBackground(new Color(eff, eff, eff, 255));
+                    Thread.sleep(50);
+                }
+
+                Thread.sleep(2000);
 
                 String thisIsYou = "This is you.";
-                for (int ii = 0; ii < thisIsYou.length(); ii++){
+                for (int ii = 0; ii < thisIsYou.length(); ii++) {
                     org.getLayer(org.getPosLayer("Intro1")).setStr(12, 18 + ii, String.valueOf(thisIsYou.charAt(ii)));
                 }
 
@@ -91,9 +98,9 @@ public class Start {
                 Layer lay2Title = new Layer(new String[3][46], "Intro2Title", 30, 0);
                 org.addLayer(lay2Title);
 
-                org.setCam(0,10);
+                org.setCam(0, 10);
                 String explain = "Times were simple a couple weeks ago.";
-                for (int ii = 0; ii < explain.length(); ii++){
+                for (int ii = 0; ii < explain.length(); ii++) {
                     int pos = org.getPosLayer("Intro2Title");
                     org.getLayer(pos).setStr(1, 3 + ii, String.valueOf(explain.charAt(ii)));
                 }
@@ -103,7 +110,7 @@ public class Start {
                 Thread.sleep(5000);
 
                 String explainMore = "@'s were people, #'s were walls & terrain";
-                for (int ii = 0; ii < explainMore.length(); ii++){
+                for (int ii = 0; ii < explainMore.length(); ii++) {
                     int pos = org.getPosLayer("Intro2Title");
                     org.getLayer(pos).setStr(2, 3 + ii, String.valueOf(explainMore.charAt(ii)));
                 }
@@ -113,7 +120,7 @@ public class Start {
 
                 Thread.sleep(4000);
 
-                for (int pan = 0; pan < 13 ; pan++){
+                for (int pan = 0; pan < 13; pan++) {
                     org.moveCam(0, -1);
                     org.compileImage();
                     Thread.sleep(250);
@@ -128,16 +135,16 @@ public class Start {
                 lay3.setStr(10, 22, "@");
 
                 org.addLayer(lay3);
-                org.setCam(0,0);
+                org.setCam(0, 0);
 
                 org.compileImage();
 
                 Thread.sleep(1500);
 
 
-                game.txtArea.setForeground(Color.RED);
+                game.txtArea.setForeground(new Color(189, 83, 89, 255));
                 String villainIntro = "This is someone else.";
-                for (int ii = 0; ii < villainIntro.length(); ii++){
+                for (int ii = 0; ii < villainIntro.length(); ii++) {
                     org.getLayer(org.getPosLayer("Intro3")).setStr(7, 12 + ii, String.valueOf(villainIntro.charAt(ii)));
                 }
 
@@ -146,7 +153,7 @@ public class Start {
                 Thread.sleep(4500);
 
                 String goodExcuse = "(To be fair, everyone DOES look identical)";
-                for (int ii = 0; ii < goodExcuse.length(); ii++){
+                for (int ii = 0; ii < goodExcuse.length(); ii++) {
                     org.getLayer(org.getPosLayer("Intro3")).setStr(8, 2 + ii, String.valueOf(goodExcuse.charAt(ii)));
                 }
 
@@ -155,7 +162,7 @@ public class Start {
                 Thread.sleep(5000);
 
                 String goodFollowUp = "He despised that fact. He desired complexity";
-                for (int ii = 0; ii < goodFollowUp.length(); ii++){
+                for (int ii = 0; ii < goodFollowUp.length(); ii++) {
                     org.getLayer(org.getPosLayer("Intro3")).setStr(12, 1 + ii, String.valueOf(goodFollowUp.charAt(ii)));
                 }
 
@@ -164,7 +171,7 @@ public class Start {
                 Thread.sleep(3000);
 
                 String resolution = "And so, he journeyed to The Source";
-                for (int ii = 0; ii < resolution.length(); ii++){
+                for (int ii = 0; ii < resolution.length(); ii++) {
                     org.getLayer(org.getPosLayer("Intro3")).setStr(13, 6 + ii, String.valueOf(resolution.charAt(ii)));
                 }
 
@@ -193,24 +200,80 @@ public class Start {
                 introText(" to survive exiting the universe", 1, line + 8);
                 Thread.sleep(4000);
 
-                introText("He traveled to the distant island where", 1, line + 10);
-                introText(" The Source resides....", 1, line + 11);
-                introText(" The crossroads of myth and fact....", 1, line + 12);
+                introText("He traveled down into The Source", 1, line + 10);
+                introText(" ..and found the world's declaration...", 1, line + 11);
                 Thread.sleep(4000);
 
                 lay3.clear();
+                org.removeLayer("Intro3");
 
-                String[][] code = art.strToArray(arty.intro1);
-                lay3 = new Layer(town, "Intro4");
+                String[][] code = art.strToArray(arty.intro2);
+                lay3 = new Layer(code, "Intro4");
+                org.addLayer(lay3);
+                org.setCam(0, 18);
+                org.compileImage();
 
+                Thread.sleep(5000);
+
+                for (int ii = 0; ii < 18; ii++) {
+                    org.moveCam(0, -1);
+                    org.compileImage();
+                    Thread.sleep(100);
+                }
+
+                Thread.sleep(1500);
+
+                for (int ii = 0; ii < 6; ii++) {
+                    org.getLayer(org.getPosLayer("Intro4")).setStr(18, 34 - ii, " ");
+                    org.compileImage();
+                    Thread.sleep(100);
+                }
+
+                Thread.sleep(500);
+
+                String TRUE = "TRUE;";
+                for (int ii = 0; ii < TRUE.length(); ii++) {
+                    org.getLayer(org.getPosLayer("Intro4")).setStr(18, 29 + ii, String.valueOf(TRUE.charAt(ii)));
+                    org.compileImage();
+                    Thread.sleep(400);
+                }
+
+                Thread.sleep(5000);
+
+                lay3.clear();
+
+                String result = "...And that changed EVERYTHING";
+                for (int ii = 0; ii < result.length(); ii++) {
+                    org.getLayer(org.getPosLayer("Intro4")).setStr(11, 7 + ii, String.valueOf(result.charAt(ii)));
+                }
+
+                org.compileImage();
+
+                Thread.sleep(3000);
+
+                for (int eff = 39; eff < 255; eff += 2) {
+                    game.txtArea.setBackground(new Color(eff, eff, eff, 255));
+                    Thread.sleep(50);
+                }
+
+                lay3.clear();
+                org.compileImage();
+
+                for (int eff = 255; eff >= 0; eff -= 5) {
+                    game.txtArea.setBackground(new Color(eff, eff, eff, 255));
+                    Thread.sleep(50);
+                }
+
+                game.txtArea.setBackground(Color.BLACK);
             }
-
 
             Player player = new Player(org);
             TutorialBasement forest = new TutorialBasement(org, player);
             prepLevel(org, game, player, forest, 0);
             forest.startup();
             forest.enter();
+
+
             /*
             Mountains mtns = new Mountains(org, player);
             prepLevel(org, game, player, mtns, 0);
@@ -250,7 +313,6 @@ public class Start {
        for (int ii = 0; ii < text.length(); ii++){
             org.getLayer(org.getPosLayer("Intro3")).setStr(line, ii + offset, String.valueOf(text.charAt(ii)));
         }
-
         org.compileImage();
     }
 
