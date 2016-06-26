@@ -3,9 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="2135375f-4dfd-4c17-b9a7-4b7586bd0b6e" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SourceryTextb1/GameObjects/Inventory.java" afterPath="$PROJECT_DIR$/SourceryTextb1/GameObjects/Inventory.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SourceryTextb1/Start.java" afterPath="$PROJECT_DIR$/SourceryTextb1/Start.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SourceryTextb1/art.java" afterPath="$PROJECT_DIR$/SourceryTextb1/art.java" />
     </list>
     <list id="42bd900a-8252-44a2-a35b-c4ae87b3831d" name="New changelist" comment="" />
     <list id="3449204e-476b-4d2f-bdfd-58dfe96dd1ac" name="New changelist " comment="" />
@@ -127,8 +124,8 @@
       <file leaf-file-name="Start.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/SourceryTextb1/Start.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
-              <caret line="38" column="0" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
+            <state relative-caret-position="306">
+              <caret line="31" column="32" selection-start-line="31" selection-start-column="32" selection-end-line="31" selection-end-column="32" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -895,7 +892,14 @@
       <option name="project" value="LOCAL" />
       <updated>1466945930604</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <task id="LOCAL-00040" summary="THE INTRO IS COMPLETE!&#10;&#10;feel free to watch it. It's good. I rate 2 out of 2 stars.">
+      <created>1466954177774</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1466954177774</updated>
+    </task>
+    <option name="localTasksCounter" value="41" />
     <servers />
   </component>
   <component name="TodoView">
@@ -985,7 +989,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Change all the inventory stuff to be in Inventory.java, improved on spell setting and storage.&#10;" />
     <MESSAGE value="Redo how getSelectedItem in inventory is called, add javadocs" />
     <MESSAGE value="Rename Enemy to Mortal, made Player a Mortal" />
     <MESSAGE value="Fix spellcasting (Inventory.getSelectedName stuff was getting description instead, getSelectedDescription getting name)" />
@@ -1010,7 +1013,8 @@
     <MESSAGE value="Make red-text-when-Player-Hurt better, and generally quiet sout.&#10;I did stuff." />
     <MESSAGE value="The humble beginnings of a truly user-friendly menu. Push Q to experience the New Menu Beta™&#10;&#10;The A button is used to confirm options, rather than ENTER." />
     <MESSAGE value="I'm on vacation, but there is also internet here too! Testing GitHub on my laptop.&#10;&#10;I also added a new window in the Spells equipment page. It now shows what you have currently equipped.&#10;Even though you can already figure it out beforehand...." />
-    <option name="LAST_COMMIT_MESSAGE" value="I'm on vacation, but there is also internet here too! Testing GitHub on my laptop.&#10;&#10;I also added a new window in the Spells equipment page. It now shows what you have currently equipped.&#10;Even though you can already figure it out beforehand...." />
+    <MESSAGE value="THE INTRO IS COMPLETE!&#10;&#10;feel free to watch it. It's good. I rate 2 out of 2 stars." />
+    <option name="LAST_COMMIT_MESSAGE" value="THE INTRO IS COMPLETE!&#10;&#10;feel free to watch it. It's good. I rate 2 out of 2 stars." />
     <option name="PRESELECT_EXISTING_CHANGELIST" value="false" />
   </component>
   <component name="XDebuggerManager">
@@ -1425,8 +1429,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/SourceryTextb1/Start.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="38" column="0" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
+        <state relative-caret-position="306">
+          <caret line="31" column="32" selection-start-line="31" selection-start-column="32" selection-end-line="31" selection-end-column="32" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
