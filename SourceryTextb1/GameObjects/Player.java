@@ -37,7 +37,7 @@ public class Player extends Mortal {
     private GameObject closestFood = null;
     private Inventory inv;
     private int celeCount = 0;
-    private boolean s1 = true; //toggler for celeb anim
+    private boolean s1 = false; //toggler for celeb anim
     private String state1 = "+";
     private String state2 = "X";
     private boolean autonomous = false;
@@ -73,12 +73,23 @@ public class Player extends Mortal {
     public int manaWaitStat = 2000; //Waiting before restoring mana
     public int manaWait = 0;
 
+    public int allSpellBoost = 1;
+    public int arcSpellBoost = 1;
+    public int fireSpellBoost = 2;
+    public int iceSpellBoost = 3;
+    public int darkSpellBoost = 4;
+    public int healBoost, durBoost, rangeBoost = 0;
+
     //NO MORE STATS
 
     public boolean dead = false;
     private int technicolorIndex = 0;
     private String primarySpell = "Book";
     private String secondarySpell = "None";
+
+    public Item spell1 = new Item ("None", "", this);
+    public Item spell2 = new Item("None", "", this);
+
     private int hurtColor = 0;
 
     /**Initialize a whole lotta variables.
@@ -416,20 +427,18 @@ public class Player extends Mortal {
             case '\'':
                 shouldPause = true;
                 break;
-            case 's':
-                castSpell(getPrimarySpell());
-                break;
-            case 'd':
-                castSpell(getSecondarySpell());
-                break;
             case 'a':
                 orientationLocked = !orientationLocked;
                 break;
-            case 'w':
-                shouldInventory = true;
+            case 's':
+                newCastSpell(spell1);
                 break;
-            case 'q':
+            case 'd':
+                newCastSpell(spell2);
+                break;
+            case 'w':
                 shouldNewInv = true;
+                break;
             default:
                 System.out.print(key);
         }
@@ -439,12 +448,12 @@ public class Player extends Mortal {
 
 
     private void castSpell(String spellName){
-        if (mana > 1) {
+        if (mana >= 1) {
             if (mana >= 1 && spellName.equals("Book") && inv.hasItem("Book")) {
                 room.addObject(new Spell(orgo, room, castingLayer, x, y, orientation, "Book"));
                 inv.subtractItem("Book");
             }
-            if (mana >= 1 && spellName.equals("Spark") && inv.hasItem("Spark")) {
+            if (mana >= 2 && spellName.equals("Spark") && inv.hasItem("Spark")) {
                 room.addObject(new Spell(orgo, room, castingLayer, x, y, orientation, "Spark"));
                 manaWait = manaWaitStat;
                 mana -= 2;
@@ -477,6 +486,16 @@ public class Player extends Mortal {
         else{
             System.out.println("You don't have any mana!");
         }
+    }
+
+    private void newCastSpell(Item spell){
+        if (spell.isDmgSpell){
+            looseCastDmgSpell(spell.damage, spell.range, spell.cost, spell.animation1, spell.animation2);
+        }
+    }
+
+    private void looseCastDmgSpell(int dmg, int rng, int cost, String anim1, String anim2){
+        room.addObject(new Spell(orgo, room, castingLayer, x, y, orientation, dmg, rng, anim1, anim2));
     }
     /**
      * @param newColor a new Color for the player to perceive as the proper one for a background to be
@@ -586,7 +605,7 @@ public class Player extends Mortal {
     }
 
     public String getPrimarySpell() {
-        return primarySpell;
+        return spell1.getIcon();
     }
 
     public void addItem(String itemName) {
@@ -594,7 +613,7 @@ public class Player extends Mortal {
     }
 
     public String getSecondarySpell() {
-        return secondarySpell;
+        return spell2.getIcon();
     }
 }
 

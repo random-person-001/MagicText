@@ -46,12 +46,28 @@ public class HUD extends GameObject{
         }
         return returny;
     }
+
+    private String [] convertIcon(String icon){
+        String[] result = new String[6];
+        int cut = icon.length();
+        if (cut > 5) cut = 5;
+        for (int ic = 0; ic < cut; ic++){
+            char c = icon.charAt(ic);
+            result[ic] = String.valueOf(c);
+        }
+        return result;
+    }
     
     @Override
     public void update(){  // Edit layer acts after stuff.
+        /*
         spell1Name = bufferWithSpaces(room.getPlayer().getPrimarySpell());
         spell2Name = bufferWithSpaces(room.getPlayer().getSecondarySpell());
-        
+        */
+
+        spell1Name = convertIcon(room.getPlayer().getPrimarySpell());
+        spell2Name = convertIcon(room.getPlayer().getSecondarySpell());
+
         loc = orgo.getPosLayer(layerName);
         orgo.getLayer(loc).clear();
         x = 0;

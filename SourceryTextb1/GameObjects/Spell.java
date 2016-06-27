@@ -53,6 +53,23 @@ public class Spell extends GameObject{
             System.out.println(name + " spell cast!");
     }
 
+    public Spell (ImageOrg org, Room theRoom, Layer place, int setX, int setY, int setOr, int setDmg, int setRng, String set1, String set2){
+        strClass = "Spell";
+        orgo = org;
+        room = theRoom;
+        layerName = place.getName();
+
+        x = setX;
+        y = setY;
+
+        orientation = setOr;
+
+        define(setDmg, setRng, set1, set2);
+
+        if (orgo.getDebug())
+            System.out.println(name + " spell cast!");
+    }
+
     public void setName(String newName){
         name = newName;
         switch (name){
@@ -96,6 +113,15 @@ public class Spell extends GameObject{
                 System.out.println("No default set for spells of name " + name);
         }
     }
+
+    public void define(int damage, int range, String charOne, String charTwo){
+        setKillMessage("You died!");
+        setDamage(damage);
+        setRange(range);
+        setChar1(charOne);
+        setChar2(charTwo);
+    }
+
     public void setChar1(String newChar1){
         char1 = newChar1;
     }

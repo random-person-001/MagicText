@@ -60,46 +60,39 @@ class Inventory {
         inventory.put("SmallHealth", 1);
         inventory.put("HugeHealth", 1);
 
-        spells.add(new Item("Item 1","1st Entry"));
-        spells.get(0).setDmg(4);
-        spells.get(0).setRng(8);
-        spells.get(0).setDescMode("damage");
-        spells.add(new Item("Item 2","2nd Entry"));
-        spells.get(1).setHeal(7);
-        spells.get(1).setDescMode("healing");
-        spells.add(new Item("Item 3","3rd Entry"));
-        spells.get(2).setDur(3);
-        spells.get(2).setDescMode("buff");
-        spells.add(new Item("Item 4","4th Entry\n\nNothing special about this\n one"));
-        spells.add(new Item("Item 5","5th Entry"));
-        spells.add(new Item("Item 6","6th Entry"));
-        spells.add(new Item("Item 7","7th Entry"));
-        spells.add(new Item("Item 8","8th Entry"));
-        spells.add(new Item("Item 9","9th Entry"));
-        spells.add(new Item("Item 10","10th Entry"));
-        spells.add(new Item("Item 11","11th Entry"));
-        spells.add(new Item("Item 12","12th Entry"));
-        spells.add(new Item("Item 13","13th Entry"));
-        spells.add(new Item("Item 14","14th Entry"));
-        spells.add(new Item("Item 15","15th Entry"));
-        spells.add(new Item("Item 16","16th Entry"));
-        spells.add(new Item("Item 17","17th Entry"));
-        spells.add(new Item("Item 18","18th Entry"));
-        spells.add(new Item("Item 19","19th Entry"));
+        spells.add(new Item("Spark","Arcane Spell;\nFires a spark of energy.\n\n\"All great fires start\n with small sparks\"", "Spark", player));
+        spells.get(0).setDmgRngCost (3, 8, 2);
+        spells.get(0).setAnim("+","x");
+        spells.get(0).setDescMode("arcane");
+        spells.add(new Item("Fireball","Fire Spell;\nUse your imagination", "FrBll", player));
+        spells.get(1).setDmgRngCost (5, 6, 3);
+        spells.get(1).setAnim("6","9");
+        spells.get(1).setDescMode("fire");
+        spells.add(new Item("Frostbite","Ice Spell;\nFreezes an enemy right\n in front of you.", "FrstB", player));
+        spells.get(2).setDmgRngCost (4, 2, 5);
+        spells.get(2).setAnim("X","x");
+        spells.get(2).setDescMode("ice");
+        spells.add(new Item("Shadow Knife","Dark Spell;\nThrows a blade made of\n forbidden magic.\n\nThe dart seems to have a \n soul that refuses to die," +
+                "\n and thus travels very far.", "ShKnf", player));
+        spells.get(3).setDmgRngCost (2, 15, 4);
+        spells.get(3).setAnim("/","\\");
+        spells.get(3).setDescMode("dark");
 
         for (int spam = 0; spam < 20; spam++){
-            items.add(new Item("Postcard","Has not utility, but still\n costs $10\n\nDirectly sourced from\n The Mines of Mementos"));
+            items.add(new Item("Postcard","Has not utility, but still\n costs $10\n\nDirectly sourced from\n The Mines of Mementos", player));
         }
 
         for (int spam = 0; spam < 35; spam++){
-            items.add(new Item("Key Chain","A new chain to put your\n other pointless gifts on!\n\nLinking key chains together\n may generate lackluster\n results\n\nDirectly Sourced from\n The Mines of Mementos"));
+            items.add(new Item("Key Chain","A new chain to put your\n other pointless gifts on!\n\nLinking key chains together\n may generate lackluster" +
+                    "\n results\n\nDirectly Sourced from\n The Mines of Mementos", player));
         }
 
-        equip.add(new Item("Pyro Glove","A glove that's on fire!\n\nIncreases the damage of\n fire spells by 1\n\n+1 (All) Spell Damage"));
+        equip.add(new Item("Pyro Glove","A glove that's on fire!\n\nPyromancers are quite the\n adventurous people, and so\n these gloves became very\n commonplace" +
+                "\n\n+2 Fire Spell Damage", player));
         equip.add(new Item("Broken Staff","A staff crafted by a\n dirt-poor student of\n The Magic Academy.\n\nMade of spare wood\n" +
-                " and animal bones, it's\n no surprise that it\n already snapped in two\n\n+1 (All) Spell Damage"));
+                " and frayed ropes, it's\n no surprise that it\n already snapped in two\n\n+1 (All) Spell Damage", player));
 
-        //putPrimary(arty.oldBook);  // Wouldn't work, not sure whyy
+        //putPrimary(arty.oldBook);  // Wouldn't work, not sure why
     }
 
     /**
@@ -266,6 +259,8 @@ class Inventory {
     //BECAUSE SCOPE
     private int menuID = 0;
     public boolean pressedA = false;
+    public boolean pressedS = false;
+    public boolean pressedD = false;
 
     private Layer topMenuLayer = new Layer(art.strToArray(new art().topMenu), "top", 1, 27, false, true);
     private Layer quitMenuLayer = new Layer(art.strToArray(new art().quitMenu), "quit", 1, 27, false, true);
@@ -391,6 +386,9 @@ class Inventory {
         }
 
         pressedA = false;
+        pressedS = false;
+        pressedD = false;
+
         int indexY = newSelectY;
         org.editLayer(">", "selector", indexY, indexX);
 
@@ -419,7 +417,7 @@ class Inventory {
                     newSelectY = 3;
                     break;
                 case 5:
-                    jumpToNewMenu(quitMenuLayer, QUIT, "quit");
+                    jumpToNewMenu(quitMenuLayer, QUIT, "top");
                     newSelectY = 4;
                     break;
                 case 6:
@@ -451,6 +449,15 @@ class Inventory {
 
         genericItemListing(spells);
 
+        char[] chars = player.spell1.getName().toCharArray();
+        for (int ii = 0; ii < chars.length ; ii ++){
+            selectorLayer.setStr(16, 15 + ii, String.valueOf(chars[ii]));
+        }
+        chars = player.spell2.getName().toCharArray();
+        for (int ii = 0; ii < chars.length ; ii ++){
+            selectorLayer.setStr(17, 15 + ii, String.valueOf(chars[ii]));
+        }
+
         indexX = 31;
         if (pressedA) {
             if (newSelectY == 21){
@@ -460,6 +467,19 @@ class Inventory {
             }
             if (newSelectY == 20){
                 page++;
+            }
+        }
+        int index = newSelectY - 3 + ((page - 1) * 16);
+        if (index < spells.size() && newSelectY < 19) {
+            if (pressedS) {
+                player.spell1 = spells.get(index);
+                putPrimary(spells.get(index).getIcon());
+                System.out.println("PRIMARY SET TO: " + spells.get(index).getName());
+            }
+            if (pressedD) {
+                player.spell2 = spells.get(index);
+                putSecondary(spells.get(index).getIcon());
+                System.out.println("SECONDARY SET TO: " + spells.get(index).getName());
             }
         }
     }
@@ -889,49 +909,14 @@ class Navigator extends KeyAdapter {
         if (key == 'A') {
             inv.pressedA = true;
         }
+        if (key == 'S') {
+            inv.pressedS = true;
+        }
+        if (key == 'D') {
+            inv.pressedD = true;
+        }
         if (key == KeyEvent.VK_ESCAPE || key == KeyEvent.VK_ENTER || event.getKeyChar() == 'w') {
             resume = true;
-        }
-    }
-}
-
-class Item{
-
-    private String displayMode = "blank";
-
-    private String name = "";
-    private String description = "";
-
-    private int damage, range, healing, duration;
-
-    public Item(String theName, String theDesc){
-        name = theName;
-        description = theDesc;
-    }
-
-    public void setDescMode(String mode){
-        displayMode = mode;
-    }
-
-    public void setDmg(int to) { damage = to; }
-    public void setRng(int to) { range = to; }
-    public void setHeal(int to) { healing = to; }
-    public void setDur(int to) { duration = to; }
-
-    public String getName() { return name; }
-
-    public String getDesc() {
-        switch (displayMode.toLowerCase()) {
-            case "blank":
-                return description;
-            case "damage":
-                return description + "\n\nDamage: " + String.valueOf(damage) + "\nRange : " + String.valueOf(range);
-            case "healing":
-                return description + "\n\nRestores " + String.valueOf(healing) + " Health";
-            case "buff":
-                return description + "\n\nDuration: " + String.valueOf(duration);
-            default:
-                return description + "\n\nINVALID DISPLAY MODE: \n  \"" + displayMode + "\"";
         }
     }
 }
