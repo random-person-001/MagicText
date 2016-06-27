@@ -831,6 +831,15 @@ public class art {
                     "|  EXIT MENU      |\n" +
                     "+-----------------+\n";
 
+    public String quitMenu =
+                    "+-QUIT------------+\n" +
+                    "| Stop Playing?   |\n" +
+                    "|                 |\n" +
+                    "|  YES            |\n" +
+                    "|  NO             |\n" +
+                    "|                 |\n" +
+                    "+-----------------+\n";
+
     public String itemsMenu =
                     "+Info-----------------------+ +Items---------+\n" +
                     "|                           | |===PAGE  / ===|\n" +

@@ -268,6 +268,7 @@ class Inventory {
     public boolean pressedA = false;
 
     private Layer topMenuLayer = new Layer(art.strToArray(new art().topMenu), "top", 1, 27, false, true);
+    private Layer quitMenuLayer = new Layer(art.strToArray(new art().quitMenu), "quit", 1, 27, false, true);
     private Layer itemsMenuLayer = new Layer(art.strToArray(new art().itemsMenu), "items", 1, 0, false, true);
     private Layer spellsMenuLayer = new Layer(art.strToArray(new art().spellsMenu), "spells", 1, 0, false, true);
     private Layer equipMenuLayer = new Layer(art.strToArray(new art().equipMenu), "equip", 1, 0, false, true);
@@ -384,6 +385,9 @@ class Inventory {
             case EQUIP:
                 operateEquipMenu();
                 break;
+            case QUIT:
+                operateQuitMenu();
+                break;
         }
 
         pressedA = false;
@@ -415,7 +419,8 @@ class Inventory {
                     newSelectY = 3;
                     break;
                 case 5:
-                    System.exit(0);
+                    jumpToNewMenu(quitMenuLayer, QUIT, "quit");
+                    newSelectY = 4;
                     break;
                 case 6:
                     org.removeLayer("top");
@@ -444,25 +449,7 @@ class Inventory {
             newSelectY = 3;
         }
 
-        double pageReq = Math.ceil((double)spells.size() / 16);
-
-        if (pageReq == 0){
-            pageReq = 1;
-        }
-
-        if (page > pageReq){
-            page = 1;
-        }
-
-        org.editLayer(String.valueOf((int)pageReq), "selector", 2, 41);
-        org.editLayer(String.valueOf(page), "selector", 2, 39);
-
-        fillItemNames(spells, 33, 3, page);
-
-        int index = newSelectY - 3 + ((page - 1) * 16);
-        if (index < spells.size() && newSelectY < 19){
-            fillInfoText(spells.get(index).getDesc(), 1, 1);
-        }
+        genericItemListing(spells);
 
         indexX = 31;
         if (pressedA) {
@@ -485,25 +472,7 @@ class Inventory {
             newSelectY = 3;
         }
 
-        double pageReq = Math.ceil((double)items.size() / 16);
-
-        if (pageReq == 0){
-            pageReq = 1;
-        }
-
-        if (page > pageReq){
-            page = 1;
-        }
-
-        org.editLayer(String.valueOf((int)pageReq), "selector", 2, 41);
-        org.editLayer(String.valueOf(page), "selector", 2, 39);
-
-        fillItemNames(items, 33, 3, page);
-
-        int index = newSelectY - 3 + ((page - 1) * 16);
-        if (index < items.size() && newSelectY < 19){
-            fillInfoText(items.get(index).getDesc(), 1, 1);
-        }
+        genericItemListing(items);
 
         indexX = 31;
         if (pressedA) {
@@ -526,7 +495,44 @@ class Inventory {
             newSelectY = 3;
         }
 
-        double pageReq = Math.ceil((double)equip.size() / 16);
+        genericItemListing(equip);
+
+        indexX = 31;
+        if (pressedA) {
+            if (newSelectY == 21){
+                jumpToNewMenu(topMenuLayer, TOP, "equip");
+                indexX = 28;
+                newSelectY = 2;
+            }
+            if (newSelectY == 20){
+                page++;
+            }
+        }
+    }
+
+    private void operateQuitMenu(){
+        if (newSelectY <= 3) {
+            newSelectY = 5;
+        }
+        if (newSelectY >= 6) {
+            newSelectY = 4;
+        }
+
+        indexX = 28;
+        if (pressedA) {
+            if (newSelectY == 5){
+                jumpToNewMenu(topMenuLayer, TOP, "quit");
+                indexX = 28;
+                newSelectY = 2;
+            }
+            if (newSelectY == 4){
+                System.exit(0);
+            }
+        }
+    }
+
+    private void genericItemListing(ArrayList<Item> items){
+        double pageReq = Math.ceil((double)items.size() / 16);
 
         if (pageReq == 0){
             pageReq = 1;
@@ -539,23 +545,11 @@ class Inventory {
         org.editLayer(String.valueOf((int)pageReq), "selector", 2, 41);
         org.editLayer(String.valueOf(page), "selector", 2, 39);
 
-        fillItemNames(equip, 33, 3, page);
+        fillItemNames(items, 33, 3, page);
 
         int index = newSelectY - 3 + ((page - 1) * 16);
-        if (index < equip.size() && newSelectY < 19){
-            fillInfoText(equip.get(index).getDesc(), 1, 1);
-        }
-
-        indexX = 31;
-        if (pressedA) {
-            if (newSelectY == 21){
-                jumpToNewMenu(topMenuLayer, TOP, "equip");
-                indexX = 28;
-                newSelectY = 2;
-            }
-            if (newSelectY == 20){
-                page++;
-            }
+        if (index < items.size() && newSelectY < 19){
+            fillInfoText(items.get(index).getDesc(), 1, 1);
         }
     }
 
