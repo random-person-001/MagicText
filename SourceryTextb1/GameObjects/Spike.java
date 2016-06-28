@@ -72,6 +72,8 @@ public class Spike extends Mortal{
             room.addObject(new Spell(orgo, room, room.playo.castingLayer, x, y, r(3), "Spark"));
         }
 
+        checkDeath();
+
         if (abs(room.playo.y - y) <= 2 && abs(room.playo.x - x) <= 2) {
             if (room.storedStuff.get("Spiked") == null && room.index == 3){  // Legacy
                 room.infoMessage(orgo, "Have you considered that stepping on a spike, as you just did, is detrimental?");
@@ -80,11 +82,7 @@ public class Spike extends Mortal{
             room.foodEaten -= 5;
             room.playo.hurt(3, "You know, maybe you should have listened \n when your mother told you not to \n step on spikes.");
         }
-        if (checkDeath()){
-            System.out.println("AAAAAaaaack, a spike died.");
-            DroppedItem flameSpell = new DroppedItem(room, orgo, "You got a new spell: Flame!", "Flame", "DropFlameLayer", "!",x,y);
-            room.addObject(flameSpell);
-        }
+
     }
 
     static int r(int max) {

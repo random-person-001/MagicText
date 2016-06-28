@@ -134,9 +134,9 @@ public class DockAndShip extends Room {
     }
 
     private void makePiranahAt(int x, int y){
-        SmallPiranha p = new SmallPiranha(org, this, x, y, new DroppedItem(this, org, "None", "PiranhaDrop", "droppedPiranhaStuff", " ", x, y));
-        p.setMoveFrq(0);
-        addMortal(p);
+        //SmallPiranha p = new SmallPiranha(org, this, x, y);
+        //p.setMoveFrq(0);
+        //addMortal(p);
     }
 
 

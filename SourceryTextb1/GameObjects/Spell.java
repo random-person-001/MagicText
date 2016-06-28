@@ -138,8 +138,13 @@ public class Spell extends GameObject{
         killMessage = newKillMessage;
     }
 
+    @Override
     public void update(){
         orgo.editLayer(" ", layerName, y, x);
+
+        if (orientation >= 0 && orientation <= 3){
+            //System.out.println("A spell is traveling normally... (" + x + "," + y + ")");
+        }
 
         switch(orientation){
             case 0:

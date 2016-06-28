@@ -23,6 +23,8 @@ public class Mortal extends GameObject {
         health -= amountLost;
         if (strClass.equals("Player")){
             room.playo.hurt(message);
+        } else {
+            System.out.println("My health is now " + getHealth());
         }
     }
     public void subtractHealth(int amountLost){
@@ -44,7 +46,6 @@ public class Mortal extends GameObject {
 
     protected boolean checkDeath() {
         if (getHealth() <= 0){
-            room.playo.addItem(super.strClass);
             room.removeMortal(this);
             try {
                 orgo.editLayer(" ", layerName, y, x);

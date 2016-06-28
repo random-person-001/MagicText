@@ -15,30 +15,33 @@ public class DroppedItem extends GameObject{
     private String char1;
     private String layerName;
 
-    public DroppedItem(Room roomy, ImageOrg org, String messageOnPickup, String callMyself, String layername, String displayChar, int setx, int sety){
+    private Item me;
+
+    public DroppedItem(Room roomy, ImageOrg org, String messageOnPickup, Item dropped, String layername, int setx, int sety){
         strClass = "DroppedItem";
         room = roomy;
         player = room.playo;
         orgo = org;
         pickUpMessage = messageOnPickup;
-        itemName = callMyself;
-        char1 = displayChar;
+        me = dropped;
+        char1 = "!";
         layerName = layername;
         x = setx;
         y = sety;
         Layer thisLayer = new Layer(new String[1][1], layerName, y, x);
         orgo.addLayer(thisLayer);
+
+        System.out.println("\n\n" + me.getName() + " JUST DROPPED ON THE GROUND! (" + x + "," + y + ")\n\n");
     }
 
     @Override
     public void update(){
         orgo.editLayer(char1, layerName, 0, 0);
         if (x == player.getX() && y == player.getY()){
-            System.out.println("You found a " + itemName);
             room.removeObject(this);
             orgo.editLayer(" ", layerName, 0, 0);
             orgo.removeLayer(layerName);
-            player.addItem(itemName);
+            player.addItem(me);
             if (!pickUpMessage.equals("None")) {
                 room.compactTextBox(orgo, pickUpMessage, "", false);
             }

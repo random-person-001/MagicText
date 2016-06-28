@@ -67,17 +67,17 @@ public class Player extends Mortal {
 
     public int maxMana = 20;
     public int mana = maxMana;
-    public int manaRegen = 10; //Mana per second
+    public int manaRegen = 30; //Mana per second
     private int manaRegenClock = 0;
     //private int manaWaitClock = 0;
     public int manaWaitStat = 2000; //Waiting before restoring mana
     public int manaWait = 0;
 
-    public int allSpellBoost = 1;
-    public int arcSpellBoost = 1;
-    public int fireSpellBoost = 2;
-    public int iceSpellBoost = 3;
-    public int darkSpellBoost = 4;
+    public int allSpellBoost = 0;
+    public int arcSpellBoost = 0;
+    public int fireSpellBoost = 0;
+    public int iceSpellBoost = 0;
+    public int darkSpellBoost = 0;
     public int healBoost, durBoost, rangeBoost = 0;
 
     //NO MORE STATS
@@ -177,12 +177,12 @@ public class Player extends Mortal {
         }
 
         manaRegenClock += getTime();
-            //manaWaitClock += getTime();
 
         if (manaWait > 0) {
             manaWait -= getTime();
+            System.out.println("Mana Wait Clock: " + manaWait);
             manaRegenClock = 0;
-        } else if (manaRegenClock >= (1000 / manaRegen) && mana < maxMana) {
+        } else if (manaRegenClock >= (1000 / maxMana) && mana < maxMana) {
             mana++;
             manaRegenClock = 0;
         }
@@ -191,15 +191,10 @@ public class Player extends Mortal {
 
         resetTime();
 
-        if (celeCount > 0) { // Celebrate
-            celeCount--;
-            s1 = !s1;
-            orgo.editLayer((s1) ? state1 : state2, layerName, y, x);
-        } else {
-            graphicUpdate();
-            aimDispUpdate();
-            //reportPos();
-        }
+        graphicUpdate();
+        aimDispUpdate();
+        //reportPos();
+
         if (autonomous) {
             closestFood = getClosestVisibleFood();
             if (closestFood != null) {
@@ -343,7 +338,6 @@ public class Player extends Mortal {
      * Start a celebration, now that a food has been eaten
      */
     public void celebrate() {
-        inv.addItem("food");
         celeCount = 5;
     }
 
@@ -491,11 +485,17 @@ public class Player extends Mortal {
     private void newCastSpell(Item spell){
         if (spell.isDmgSpell){
             looseCastDmgSpell(spell.damage, spell.range, spell.cost, spell.animation1, spell.animation2);
+            System.out.println("Pew! I just fired " + spell.getName());
         }
     }
 
     private void looseCastDmgSpell(int dmg, int rng, int cost, String anim1, String anim2){
-        room.addObject(new Spell(orgo, room, castingLayer, x, y, orientation, dmg, rng, anim1, anim2));
+        if (mana >= cost){
+            room.addObject(new Spell(orgo, room, castingLayer, x, y, orientation, dmg, rng, anim1, anim2));
+            mana -= cost;
+            manaWait = manaWaitStat;
+            System.out.println("The damage spell fired!");
+        }
     }
     /**
      * @param newColor a new Color for the player to perceive as the proper one for a background to be
@@ -540,14 +540,14 @@ public class Player extends Mortal {
      * @param c character that was pressed
      */
     private void checkCheatProgress(char c){
-        System.out.println(superCheatProgress);
+        //System.out.println(superCheatProgress);
         if (superCheatProgress > 9) {
             // Yay!
             room.foodEaten += 42;
             technicolorIndex = 16;
             superCheatProgress = 0;
         }
-        System.out.println(c);
+        //System.out.println(c);
         switch (superCheatProgress){
             case 0:
                 if (c == '©'){ superCheatProgress++; return; }
@@ -580,7 +580,7 @@ public class Player extends Mortal {
                 if (c == 'a'){ superCheatProgress++; return; }
                 break;
         }
-        System.out.println("No!  You messed up.");
+        //System.out.println("No!  You messed up.");
         superCheatProgress = 0;
     }
 
@@ -608,8 +608,10 @@ public class Player extends Mortal {
         return spell1.getIcon();
     }
 
-    public void addItem(String itemName) {
-        inv.addItem(itemName);
+    public void addItem(Item input) {
+        if (input.itemType == 1){
+            inv.addItem(input);
+        }
     }
 
     public String getSecondarySpell() {

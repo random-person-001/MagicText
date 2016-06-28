@@ -59,38 +59,30 @@ class Inventory {
         inventory.put("Wanderer", 1);
         inventory.put("SmallHealth", 1);
         inventory.put("HugeHealth", 1);
-
-        spells.add(new Item("Spark","Arcane Spell;\nFires a spark of energy.\n\n\"All great fires start\n with small sparks\"", "Spark", player));
+        /*
+        spells.add(new Item("Spark","Arcane Spell;\nFires a spark of energy.\n\n\"All great fires start\n with small sparks\"", "Spark", player, "spell"));
         spells.get(0).setDmgRngCost (3, 8, 2);
         spells.get(0).setAnim("+","x");
         spells.get(0).setDescMode("arcane");
-        spells.add(new Item("Fireball","Fire Spell;\nUse your imagination", "FrBll", player));
+        spells.add(new Item("Fireball","Fire Spell;\nUse your imagination", "FrBll", player, "spell"));
         spells.get(1).setDmgRngCost (5, 6, 3);
         spells.get(1).setAnim("6","9");
         spells.get(1).setDescMode("fire");
-        spells.add(new Item("Frostbite","Ice Spell;\nFreezes an enemy right\n in front of you.", "FrstB", player));
+        spells.add(new Item("Frostbite","Ice Spell;\nFreezes an enemy right\n in front of you.", "FrstB", player, "spell"));
         spells.get(2).setDmgRngCost (4, 2, 5);
         spells.get(2).setAnim("X","x");
         spells.get(2).setDescMode("ice");
         spells.add(new Item("Shadow Knife","Dark Spell;\nThrows a blade made of\n forbidden magic.\n\nThe dart seems to have a \n soul that refuses to die," +
-                "\n and thus travels very far.", "ShKnf", player));
+                "\n and thus travels very far.", "ShKnf", player, "spell"));
         spells.get(3).setDmgRngCost (2, 15, 4);
         spells.get(3).setAnim("/","\\");
         spells.get(3).setDescMode("dark");
 
-        for (int spam = 0; spam < 20; spam++){
-            items.add(new Item("Postcard","Has not utility, but still\n costs $10\n\nDirectly sourced from\n The Mines of Mementos", player));
-        }
-
-        for (int spam = 0; spam < 35; spam++){
-            items.add(new Item("Key Chain","A new chain to put your\n other pointless gifts on!\n\nLinking key chains together\n may generate lackluster" +
-                    "\n results\n\nDirectly Sourced from\n The Mines of Mementos", player));
-        }
-
+        */
         equip.add(new Item("Pyro Glove","A glove that's on fire!\n\nPyromancers are quite the\n adventurous people, and so\n these gloves became very\n commonplace" +
-                "\n\n+2 Fire Spell Damage", player));
+                "\n\n+2 Fire Spell Damage", player, "equip"));
         equip.add(new Item("Broken Staff","A staff crafted by a\n dirt-poor student of\n The Magic Academy.\n\nMade of spare wood\n" +
-                " and frayed ropes, it's\n no surprise that it\n already snapped in two\n\n+1 (All) Spell Damage", player));
+                " and frayed ropes, it's\n no surprise that it\n already snapped in two\n\n+1 (All) Spell Damage", player, "equip"));
 
         //putPrimary(arty.oldBook);  // Wouldn't work, not sure why
     }
@@ -98,14 +90,19 @@ class Inventory {
     /**
      * Add another of an item in the inventory
      *
-     * @param itemName which one?
+     * @param input the Item you are placing into the inventory. Doesn't matter which type.
      */
-    public void addItem(String itemName) {
-        if (inventory.containsKey(itemName)) {
-            int n = inventory.get(itemName);
-            inventory.put(itemName, n + 1);
-        } else {
-            inventory.put(itemName, 1);
+    public void addItem(Item input) {
+        switch(input.itemType){
+            case 1:
+                spells.add(input);
+                break;
+            case 2:
+                items.add(input);
+                break;
+            case 3:
+                equip.add(input);
+                break;
         }
     }
 
@@ -335,7 +332,7 @@ class Inventory {
     }
 
     private void updateSelector() {
-        System.out.println(scrollTimer);
+        //System.out.println(scrollTimer);
         int indexY = 2 * selectY;
         int indexX = 2;
         System.out.println("X: " + selectX + "     Y:" + selectY);

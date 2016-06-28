@@ -70,21 +70,25 @@ public class Mountains extends Room {
         baseLayer = new Layer(base, "backgronud");
         org.addLayer(baseLayer);
 
+        /*
         makeTrollAt(58, 7);
         makeTrollAt(56, 7);
         makeTrollAt(36, 15);
         makeTrollAt(62, 7);
         makeTrollAt(70, 4);
         makeTrollAt(72, 4);
+        */
 
         genericInitialize();
         playo.goTo(9, 6);
     }
 
+    /*
     private void makeTrollAt(int x, int y){
         DroppedItem d = new DroppedItem(this, org, "None", "TrollDrop", "droppedTrollStuff", " ", x, y);
         addMortal(new Troll(org, this, x, y, d));
     }
+    */
 
 
     /**

@@ -5,9 +5,7 @@
  */
 package SourceryTextb1.Rooms.TheSource;
 
-import SourceryTextb1.GameObjects.Player;
-import SourceryTextb1.GameObjects.PotOfPetunias;
-import SourceryTextb1.GameObjects.Spike;
+import SourceryTextb1.GameObjects.*;
 import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
@@ -49,6 +47,11 @@ public class TutorialBasement extends Room {
     private void loop(){
         int exitCode = 0;
         int count = 0;
+        boolean foundSpell1 = false;
+        boolean foundSpell2 = false;
+        boolean inMaze = false;
+        boolean leavingEarly = false;
+
         while (exitCode == 0){
             try {
                 Thread.sleep(20);
@@ -59,37 +62,64 @@ public class TutorialBasement extends Room {
                     compactTextBox(org, "You should explore the basement!\nUse the arrow keys to navigate the place.", "", false);
                     count++;
                 }
-                if (count == 1 && getPlayer().getX() == 16 && getPlayer().getY() == 10){
-                    compactTextBox(org, "The world is now filled with dangers!\n Use the 'A' key to lock your aim\n Use the 'S' key to fire a spell!", "", false);
-                    compactTextBox(org, "The bar on the top-right is your mana bar.\n Casting spells costs mana.\nLuckily, your mana refills after a bit.", "", false);
+                if (count == 1 && getPlayer().getX() == 5 && getPlayer().getY() == 23){
+                    compactTextBox(org, "Ahead of you is a pot of petunias. \nPretty, isn't it?\nHowever, it's in the way...", "", false);
+                    compactTextBox(org, "You begin to remember your brief training\nat The Magic Academy, a school of prestige.\nPerhaps a spell will clear the way?", "", false);
+                    compactTextBox(org, "Your memory clears up a little more;\nAs it turns out, your training was so short,\n you don't know any spells!", "", false);
                     count++;
                 }
-                if (count == 2 && getPlayer().getX() == 24 && getPlayer().getY() == 3){
-                    compactTextBox(org, "One such grave danger awaits you nearby.\n None other than a Pot of Petunias is ahead.\n You have but a book to kill it with.","",false);
-                    compactTextBox(org, "Use the 'A' key to lock your aim\n Use the 'S' key to fire!", "", false);
+                if (getPlayer().getX() == 87 && getPlayer().getY() == 35){
+                    foundSpell1 = true;
+                    System.out.println("ASTRAL DART FOUND");
+                }
+                if (getPlayer().getX() == 80 && getPlayer().getY() == 29){
+                    foundSpell2 = true;
+                }
+                if (getPlayer().getX() == 67 && getPlayer().getY() == 32){
+                    if(inMaze == false){
+                        compactTextBox(org, "Wow, there's a lot of junk here!\nDoes the owner of this basement\n realize there are other rooms...", "", false);
+                        compactTextBox(org, "...in this basement that he can also\n put stuff in?\nSeriously, you woke up in an empty room.", "", false);
+                    }
+                    inMaze = true;
+                    System.out.println("IN THE MAZE....");
+                }
+                if (count == 2 && getPlayer().getX() > 14 && getPlayer().getX() < 20 && getPlayer().getY() == 22 && (foundSpell1 || foundSpell2)){
+                    compactTextBox(org, "Now that you are armed with\n some magic scrolls, you can\n defeat the pot of petunias!", "", false);
+                    compactTextBox(org, "Push 'W' to open the menu.\nPush 'A' to confirm an option that\n the cursor is selecting", "", false);
+                    compactTextBox(org, "Go to 'Spells' and Push either 'S' or 'D'\n to bind a spell to to keys 'S' and 'D'", "", false);
                     count++;
                 }
-                if (count == 3 && getCountOf("PotOfPetunias") == 0){
-                    compactTextBox(org, "You managed to destroy the flowers!\n \"It would probably behoove you to place \n that into your inventory, such ...", "", false);
-                    compactTextBox(org, "... that you are more civilized than\n tossing blunt objects, and can cast spells\n like a decent member of our society.", "",false);
-                    compactTextBox(org, "Oh no, not again.", "Petunias", false);
+                if (inMaze && (!foundSpell1 ^ !foundSpell2) && !leavingEarly && getPlayer().getX() == 66 && getPlayer().getY() == 32){
+                    compactTextBox(org, "There are other spells hidden in the maze.\n You may want to head back.", "", false);
+                    leavingEarly = true;
+                }
+                if (inMaze && !(foundSpell1 || foundSpell2) && !leavingEarly && getPlayer().getX() == 66 && getPlayer().getY() == 32){
+                    compactTextBox(org, "There are some spells hidden in the maze.\n You may want to head back.", "", false);
+                    leavingEarly = true;
+                }
+                if (count == 3 && getPlayer().getX() == 5 && getPlayer().getY() == 22){
+                    compactTextBox(org, "Casting spells is simple:\nPush the 'S' and 'D' key to cast the\n spell bound to its respective key", "", false);
                     count++;
                 }
-                if (count == 4 && getPlayer().getX() == 28 && getPlayer().getY() == 3){
-                    compactTextBox(org, "Press w to open your inventory.\n Press 1 to set primary spell. \n Press 2 to set secondary spell.", "A Voice From The Heavens", false);
+                if (count == 4 && getPlayer().getX() == 5 && getPlayer().getY() == 14){
+                    compactTextBox(org, "You've managed to defeat\n The Pot of Petunias!\nCongratulations!", "", false);
+                    compactTextBox(org, "As you may have noticed, the bar on the\n top right had depleted a little.\nThat is your mana bar.", "", false);
+                    compactTextBox(org, "Casting spells cost mana. You can't cast\n any spells if you run out.", "", false);
+                    compactTextBox(org, "Fortunately, your mana bar quickly refills\n after not casting spells for 2 seconds", "", false);
                     count++;
                 }
-                if (count == 5 && ((getPlayer().getX() == 39 && getPlayer().getY() == 8) || (getPlayer().getX() == 38 && getPlayer().getY() == 7))){
-                    compactTextBox(org, "You may ask what that ^ is over yonder.\n I fear that is a Spike.","Narrator",false);
+                if (count == 5 && ((getPlayer().getX() == 5 && getPlayer().getY() == 6) || (getPlayer().getX() == 38 && getPlayer().getY() == 7))){
+                    compactTextBox(org, "The next room is full of spikes.\n They look like ^","",false);
+                    compactTextBox(org, "For some reason the spikes are\n able to shoot magic everywhere.", "", false);
                     count++;
                 }
                 if (getPlayer().getX() > 73){
-                    exitCode = 4;
+                    //exitCode = 4;
                 }
                 if (super.playo.dead){
                     exitCode = 1;
                 }
-                super.playo.reportPos();
+                //super.playo.reportPos();
                 org.compileImage();
 
             } catch (InterruptedException ignored) {}
@@ -99,24 +129,40 @@ public class TutorialBasement extends Room {
     public void startup(){
         ititHitMesh();
 
-        super.playo.goTo(7,20);
-
+        super.playo.goTo(20,29);
 
         emptyHitMesh();
         art arty = new art();
         String[][] base = art.strToArray(arty.tutForest);
-        String[] solids = {"|","-","0"};
+        String[] solids = {"|","-","0","/",",","#","%","$","'"};
         addToBaseHitMesh(base, solids);
         Layer lay1 = new Layer(base, "Test");
         org.addLayer(lay1);
 
 
-        PotOfPetunias flowers = new PotOfPetunias(org, this, 27, 3);
+        Item dartSpell = new Item ("Astral Dart", "Arcane Spell;\nFires a small bolt of\n pure stardust.", "AstDt", playo, "spell");
+        dartSpell.dmgSpellDefine(2, 9, 2, "arcane", "%", "%");
+        DroppedItem gSpark =  new DroppedItem(this, org, "You found a spell: Astral Dart!", dartSpell, "drops", 87, 35);
+        super.addObject(gSpark);
+
+        Item fireSpell = new Item ("Fireball", "Fire Spell;\nUse your imagination.", "FrBll", playo, "spell");
+        fireSpell.dmgSpellDefine(5, 7, 4, "fire", "6", "9");
+        DroppedItem gFire =  new DroppedItem(this, org, "You found a spell: Fireball!", fireSpell, "drops2", 80, 29);
+        super.addObject(gFire);
+
+
+        PotOfPetunias flowers = new PotOfPetunias(org, this, 5, 19);
         addMortal(flowers);
 
-        Spike spike = new Spike(org, this, 46, 8);
-        spike.setMoveFrq(10);
-        addMortal(spike);
+
+        int[][] locs = {{33, 36, 42, 47, 49, 53},{10, 9, 2, 6, 10, 9}};
+        for (int ii = 0; ii < 6 ; ii++) {
+            Spike spike = new Spike(org, this, locs[0][ii], locs[1][ii]);
+            spike.setMoveFrq(10);
+            addMortal(spike);
+        }
+
+
 
         genericInitialize();
     }

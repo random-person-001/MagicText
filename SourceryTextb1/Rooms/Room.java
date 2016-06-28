@@ -75,18 +75,39 @@ public class Room {
     /**
      * Loop through all objects that are in the room and tell them to update. (call obj.update() on each)
      */
-    protected void updateObjs(int timeElapsed) {
+
+    protected void updateObjs(int timeElapsed){
+        updateObjs(timeElapsed, 0);
+    }
+
+    protected void updateObjs(int timeElapsed, int startPos) {
+        long startTime = System.nanoTime();
+        String objList = "";
+        int successes = 0;
+        int currPos = startPos;
         try {
-            for (GameObject obj : objs) {
+            while (currPos < objs.size()) {
+                GameObject obj = objs.get(currPos);
+                objList += obj.strClass + ", ";
+                long nanos = System.nanoTime();
                 obj.update();
                 obj.addTime(timeElapsed);
+                System.out.println("Time to update " + obj.strClass + ": " + ((System.nanoTime() - nanos) / 1000));
+                successes++;
+                currPos++;
             }
         } catch (ConcurrentModificationException ignore) { // Happens normally when an object is removed or added to the room
-            //System.out.println("Whoops, something weird! [Room.java: updateObjs(): caught a ConcurrentModificationException]");
+            System.out.println("Whoops, something weird! [Room.java: updateObjs(): caught a ConcurrentModificationException]");
+            currPos++;
+            updateObjs(timeElapsed, currPos);
         } catch (NullPointerException e) {
             System.out.println("[Room.java: updateObjs(): caught nullpointer!  Probably Not Good!");
             System.out.println(e);
+            currPos++;
+            updateObjs(timeElapsed, currPos);
         }
+        System.out.println("\nUPDATED OBJS: " + objList + "(" + (successes) + "/" + objs.size() + ")\n");
+        System.out.println("TOTAL UPDATE TIME: " + ((System.nanoTime() - startTime) / 1000) + "\n\n\n\n\n\n\n\nNEW UPDATE\n");
     }
 
     public void addObject(GameObject theObj) {

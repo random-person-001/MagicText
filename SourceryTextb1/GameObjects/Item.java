@@ -21,19 +21,50 @@ public class Item{
         description = theDesc;
         player = play;
     }
-    public Item(String theName, String theDesc, String theIcon, Player play){
+    public Item(String theName, String theDesc, Player play, String type){
+        name = theName;
+        description = theDesc;
+        player = play;
+        switch(type){
+            case "spell": itemType = 1;
+                break;
+            case "item": itemType = 2;
+                break;
+            case "equipment": itemType = 3;
+                break;
+        }
+    }
+
+    public Item(String theName, String theDesc, String theIcon, Player play, String type){
         name = theName;
         description = theDesc;
         player = play;
         icon = theIcon;
+        switch(type){
+            case "spell": itemType = 1;
+                break;
+            case "item": itemType = 2;
+                break;
+
+            case "equipment": itemType = 3;
+                break;
+        }
     }
 
+    public int itemType;
 
     public void setIcon(String set){
         icon = set;
     }
 
     public String getIcon() { return icon; }
+
+    public void dmgSpellDefine(int toD, int toR, int toC, String dMode, String s1, String s2){
+        setDmgRngCost(toD, toR, toC);
+        setDescMode(dMode);
+        setAnim(s1, s2);
+        System.out.println("Am I a damage spell?: " + isDmgSpell);
+    }
 
     public void setAnim(String s1, String s2){
         animation1 = s1;
