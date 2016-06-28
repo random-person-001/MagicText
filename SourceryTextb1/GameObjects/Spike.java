@@ -74,6 +74,7 @@ public class Spike extends Mortal{
 
         checkDeath();
 
+        /*
         if (abs(room.playo.y - y) <= 2 && abs(room.playo.x - x) <= 2) {
             if (room.storedStuff.get("Spiked") == null && room.index == 3){  // Legacy
                 room.infoMessage(orgo, "Have you considered that stepping on a spike, as you just did, is detrimental?");
@@ -82,6 +83,7 @@ public class Spike extends Mortal{
             room.foodEaten -= 5;
             room.playo.hurt(3, "You know, maybe you should have listened \n when your mother told you not to \n step on spikes.");
         }
+        */
 
     }
 

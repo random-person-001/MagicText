@@ -9,6 +9,7 @@ import static java.lang.StrictMath.abs;
 public class Mortal extends GameObject {
     protected String layerName;
     private int health = 10;
+    public int maxHealth = 50;
     private int attack = 0;
     private String deathMessage = "Unknown";
     private boolean isGoodGuy = false;
@@ -33,6 +34,13 @@ public class Mortal extends GameObject {
 
     public void setHealth(int newHealth){
         health = newHealth;
+    }
+
+    public void restoreHealth (int addHP) {
+        health += addHP;
+        if (health > maxHealth){
+            health = maxHealth;
+        }
     }
 
     public int getAttack(){

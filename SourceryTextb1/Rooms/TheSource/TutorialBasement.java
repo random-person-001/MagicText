@@ -150,6 +150,12 @@ public class TutorialBasement extends Room {
         DroppedItem gFire =  new DroppedItem(this, org, "You found a spell: Fireball!", fireSpell, "drops2", 80, 29);
         super.addObject(gFire);
 
+        Item healSpell = new Item ("Heal", "Simple healing spell.", "Heal ", playo, "spell");
+        healSpell.altSpellDefine(12, "healing");
+        healSpell.setHeal(8);
+        DroppedItem gHeal =  new DroppedItem(this, org, "You found a spell: Heal!", healSpell, "drops3", 65, 9);
+        super.addObject(gHeal);
+
 
         PotOfPetunias flowers = new PotOfPetunias(org, this, 5, 19);
         addMortal(flowers);

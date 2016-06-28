@@ -21,6 +21,7 @@ public class Item{
         description = theDesc;
         player = play;
     }
+
     public Item(String theName, String theDesc, Player play, String type){
         name = theName;
         description = theDesc;
@@ -66,6 +67,11 @@ public class Item{
         System.out.println("Am I a damage spell?: " + isDmgSpell);
     }
 
+    public void altSpellDefine(int toCost, String dMode){
+        setDescMode(dMode);
+        cost = toCost;
+    }
+
     public void setAnim(String s1, String s2){
         animation1 = s1;
         animation2 = s2;
@@ -108,9 +114,9 @@ public class Item{
                 return description + "\n\nDamage: " + String.valueOf(damage) + " (+" + (player.allSpellBoost + player.darkSpellBoost)
                         + ")\nRange : " + String.valueOf(range) + "\nCost  : " + String.valueOf(cost);
             case "healing":
-                return description + "\n\nRestores " + String.valueOf(healing) + " Health";
+                return description + "\n\nRestores " + String.valueOf(healing) + " Health\nCost: " + String.valueOf(cost);
             case "buff":
-                return description + "\n\nDuration: " + String.valueOf(duration);
+                return description + "\n\nDuration: " + String.valueOf(duration) + " Health\nCost: " + String.valueOf(cost);
             default:
                 return description + "\n\nINVALID DISPLAY MODE: \n  \"" + displayMode + "\"";
         }

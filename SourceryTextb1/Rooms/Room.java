@@ -114,14 +114,14 @@ public class Room {
                 currPos++;
                 updateObjs(timeElapsed, currPos);
             }
-            System.out.println("\nUPDATED OBJS: " + objList + "\n(" + (startPos) + "-" + (currPos) + " of " + objs.size() + ")\n");
+            //System.out.println("\nUPDATED OBJS: " + objList + "\n(" + (startPos) + "-" + (currPos) + " of " + objs.size() + ")\n");
             if (startPos == 0 && currPos == objs.size()) {
-                System.out.println("ALL OBJS UPDATED SUCCESSFULLY");
+                //System.out.println("ALL OBJS UPDATED SUCCESSFULLY");
             }
-            System.out.println("\nAdded Objects : " + addList.size() + "\nRemoved Objects: " + removeList.size());
-            System.out.println("\nTOTAL UPDATE TIME: " + ((System.nanoTime() - startTime) / 1000) + "\n\n\n\n\n\n\n\nNEW UPDATE\n");
-
-            }
+            //System.out.println("\nAdded Objects : " + addList.size() + "\nRemoved Objects: " + removeList.size());
+            //System.out.println("\nTOTAL UPDATE TIME: " + ((System.nanoTime() - startTime) / 1000) + "\n\n\n\n\n\n\n\nNEW UPDATE\n");
+            playo.reportPos();
+        }
     }
 
     public void addObject(GameObject theObj) { addList.add(theObj); }

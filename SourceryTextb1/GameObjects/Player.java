@@ -63,7 +63,7 @@ public class Player extends Mortal {
     private Color restingBackground = Color.black;
 
     //STATS
-    public int maxHP = 100;//10;
+    public int maxHP = super.maxHealth;
 
     public int maxMana = 20;
     public int mana = maxMana;
@@ -485,8 +485,22 @@ public class Player extends Mortal {
     private void newCastSpell(Item spell){
         if (spell.isDmgSpell){
             looseCastDmgSpell(spell.damage, spell.range, spell.cost, spell.animation1, spell.animation2);
-            System.out.println("Pew! I just fired " + spell.getName());
+            //System.out.println("Pew! I just fired " + spell.getName());
+        } else {
+            switch (spell.getName()){
+                case "Heal":
+                    if (mana >= spell.cost) {
+                        restoreHealth(8);
+                        spendMana(spell.cost);
+                    }
+                    break;
+            }
         }
+    }
+
+    private void spendMana(int cost){
+        mana -= cost;
+        manaWait = manaWaitStat;
     }
 
     private void looseCastDmgSpell(int dmg, int rng, int cost, String anim1, String anim2){
@@ -494,7 +508,7 @@ public class Player extends Mortal {
             room.addObject(new Spell(orgo, room, castingLayer, x, y, orientation, dmg, rng, anim1, anim2));
             mana -= cost;
             manaWait = manaWaitStat;
-            System.out.println("The damage spell fired!");
+            //System.out.println("The damage spell fired!");
         }
     }
     /**
