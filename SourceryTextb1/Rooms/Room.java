@@ -29,6 +29,8 @@ public class Room {
     public ImageOrg org;
     protected art arty = new art();
     public List<GameObject> objs = new ArrayList<>();
+    public List<GameObject> addList = new ArrayList<>();
+    public List<GameObject> removeList = new ArrayList<>();
     public List<Mortal> enemies = new ArrayList<>();
     public HashMap storedStuff = new HashMap<String, Integer>();
     boolean[][] objHitMesh;
@@ -83,36 +85,46 @@ public class Room {
     protected void updateObjs(int timeElapsed, int startPos) {
         long startTime = System.nanoTime();
         String objList = "";
-        int successes = 0;
         int currPos = startPos;
-        try {
-            while (currPos < objs.size()) {
-                GameObject obj = objs.get(currPos);
+        for (GameObject obj : addList) {
+            objs.add(obj);
+        }
+        for (GameObject obj : removeList) {
+            objs.remove(obj);
+        }
+        int added = addList.size();
+        int removed = removeList.size();
+        addList.clear();
+        removeList.clear();
+        for (GameObject obj : objs) {
+            try {
                 objList += obj.strClass + ", ";
                 long nanos = System.nanoTime();
                 obj.update();
                 obj.addTime(timeElapsed);
-                System.out.println("Time to update " + obj.strClass + ": " + ((System.nanoTime() - nanos) / 1000));
-                successes++;
                 currPos++;
+                if (currPos % 20 == 19) objList += "\n";
+            } catch (ConcurrentModificationException ignore) { // Happens normally when an object is removed or added to the room
+                System.out.println("Whoops, something weird! [Room.java: updateObjs(): caught a ConcurrentModificationException]");
+                currPos++;
+                updateObjs(timeElapsed, currPos);
+            } catch (NullPointerException e) {
+                System.out.println("[Room.java: updateObjs(): caught nullpointer!  Probably Not Good!");
+                System.out.println(e);
+                currPos++;
+                updateObjs(timeElapsed, currPos);
             }
-        } catch (ConcurrentModificationException ignore) { // Happens normally when an object is removed or added to the room
-            System.out.println("Whoops, something weird! [Room.java: updateObjs(): caught a ConcurrentModificationException]");
-            currPos++;
-            updateObjs(timeElapsed, currPos);
-        } catch (NullPointerException e) {
-            System.out.println("[Room.java: updateObjs(): caught nullpointer!  Probably Not Good!");
-            System.out.println(e);
-            currPos++;
-            updateObjs(timeElapsed, currPos);
-        }
-        System.out.println("\nUPDATED OBJS: " + objList + "(" + (successes) + "/" + objs.size() + ")\n");
-        System.out.println("TOTAL UPDATE TIME: " + ((System.nanoTime() - startTime) / 1000) + "\n\n\n\n\n\n\n\nNEW UPDATE\n");
+            System.out.println("\nUPDATED OBJS: " + objList + "\n(" + (startPos) + "-" + (currPos) + " of " + objs.size() + ")\n");
+            if (startPos == 0 && currPos == objs.size()) {
+                System.out.println("ALL OBJS UPDATED SUCCESSFULLY");
+            }
+            System.out.println("\nAdded Objects : " + addList.size() + "\nRemoved Objects: " + removeList.size());
+            System.out.println("\nTOTAL UPDATE TIME: " + ((System.nanoTime() - startTime) / 1000) + "\n\n\n\n\n\n\n\nNEW UPDATE\n");
+
+            }
     }
 
-    public void addObject(GameObject theObj) {
-        objs.add(theObj);
-    }
+    public void addObject(GameObject theObj) { addList.add(theObj); }
 
     protected void cleanLayersForExit(ImageOrg org) {
         org.removeAllButPlayer(); //Cleanup, happens when loop is done.
@@ -120,9 +132,7 @@ public class Room {
         org.getWindow().clearImage();
     }
 
-    public void removeObject(GameObject obj) {
-        objs.remove(obj);
-    }
+    public void removeObject(GameObject obj) { removeList.add(obj); }
 
     /*public boolean isPlaceSolid(int x, int y){ //Useful when defining walls of rooms
         if (x < -1 || x > hitMesh[0].length || y < -1 || y > hitMesh.length){
