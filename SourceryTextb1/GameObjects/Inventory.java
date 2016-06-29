@@ -20,12 +20,6 @@ class Inventory {
     private ArrayList<Item> spells = new ArrayList<>();
     private ArrayList<Item> items = new ArrayList<>();
     private ArrayList<Item> equip = new ArrayList<>();
-    private ArrayList<Item> equipped = new ArrayList<>();
-    /*"equip" and "equipped" are different. "equip" is possible equipment that you have stockpiled up.
-        In other words, all the gloves, staffs, and armor that you picked up along your journey.
-      "equipped" contains the armor you have equipped, and also the spells you have equipped too.
-        the first two elements in "equipped" are the two spells, and the third and fourth elements are weapon and armor respectively
-    */
 
     private Player player;
     private ImageOrg org;
@@ -79,10 +73,12 @@ class Inventory {
         spells.get(3).setDescMode("dark");
 
         */
-        equip.add(new Item("Pyro Glove","A glove that's on fire!\n\nPyromancers are quite the\n adventurous people, and so\n these gloves became very\n commonplace" +
-                "\n\n+2 Fire Spell Damage", player, "equip"));
-        equip.add(new Item("Broken Staff","A staff crafted by a\n dirt-poor student of\n The Magic Academy.\n\nMade of spare wood\n" +
-                " and frayed ropes, it's\n no surprise that it\n already snapped in two\n\n+1 (All) Spell Damage", player, "equip"));
+        equip.add(new Item("Dusty Robe","Dust is baked into this\n old robe.\n\nThe newest students at\n The Magic Academy get\n only hand-me-downs. As a" +
+                "\n result, they are usually\n really, really old.\n\n+2 Defense", player, "equip"));
+        equip.get(0).setEquipvals(2, 0, 0, 0, 0, 0, 0, "armor");
+
+        player.armor = equip.get(0);
+        player.defineStats();
 
         //putPrimary(arty.oldBook);  // Wouldn't work, not sure why
     }
@@ -514,8 +510,22 @@ class Inventory {
 
         genericItemListing(equip);
 
+        dispInt(player.defense, 12, 17, true);
+        dispInt(player.allSpellBoost, 25, 18, true);
+        dispInt(player.arcSpellBoost, 15, 19, false);
+        dispInt(player.darkSpellBoost, 15, 20, false);
+        dispInt(player.fireSpellBoost, 25, 19, false);
+        dispInt(player.iceSpellBoost, 25, 20, false);
+
+        putText(player.weapon.getName(), 9, 16);
+        putText(player.armor.getName(), 9, 17);
+
         indexX = 31;
         if (pressedA) {
+            int index = newSelectY - 3 + ((page - 1) * 16);
+            if (index < equip.size() && newSelectY < 19) {
+                player.equip(equip.get(index));
+            }
             if (newSelectY == 21){
                 jumpToNewMenu(topMenuLayer, TOP, "equip");
                 indexX = 28;
@@ -545,6 +555,18 @@ class Inventory {
             if (newSelectY == 4){
                 System.exit(0);
             }
+        }
+    }
+
+    private void dispInt (int value, int x, int y, boolean includeZero){
+        String disp = String.valueOf(value);
+        if (!disp.equals("0") || includeZero){
+            org.editLayer(String.valueOf(disp.charAt(0)), "equip", y, x);
+        } else {
+            org.editLayer(" ", "equip", y, x);
+        }
+        if (disp.length() > 1) {
+            org.editLayer(String.valueOf(disp.charAt(1)), "equip", y, x+1);
         }
     }
 
@@ -590,9 +612,13 @@ class Inventory {
 
         for (int ii = 0; ii < pageSize; ii++) {
             String itemName = items.get(ii + pageOffset).getName();
-            for (int iii = 0; iii < itemName.length(); iii++) {
-                selectorLayer.setStr(startY + ii, startX + iii, String.valueOf(itemName.charAt(iii)));
-            }
+            putText(itemName, startX, startY + ii);
+        }
+    }
+
+    private void putText(String text, int X, int Y){
+        for (int iii = 0; iii < text.length(); iii++) {
+            selectorLayer.setStr(Y, X + iii, String.valueOf(text.charAt(iii)));
         }
     }
 

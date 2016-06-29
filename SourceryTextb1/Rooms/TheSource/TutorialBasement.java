@@ -65,7 +65,7 @@ public class TutorialBasement extends Room {
                 if (count == 1 && getPlayer().getX() == 5 && getPlayer().getY() == 23){
                     compactTextBox(org, "Ahead of you is a pot of petunias. \nPretty, isn't it?\nHowever, it's in the way...", "", false);
                     compactTextBox(org, "You begin to remember your brief training\nat The Magic Academy, a school of prestige.\nPerhaps a spell will clear the way?", "", false);
-                    compactTextBox(org, "Your memory clears up a little more;\nAs it turns out, your training was so short,\n you don't know any spells!", "", false);
+                    compactTextBox(org, "Your memory clears up a little more;\nYour training was too brief for you\n to learn anything useful or meaningful", "", false);
                     count++;
                 }
                 if (getPlayer().getX() == 87 && getPlayer().getY() == 35){
@@ -108,9 +108,18 @@ public class TutorialBasement extends Room {
                     compactTextBox(org, "Fortunately, your mana bar quickly refills\n after not casting spells for 2 seconds", "", false);
                     count++;
                 }
-                if (count == 5 && ((getPlayer().getX() == 5 && getPlayer().getY() == 6) || (getPlayer().getX() == 38 && getPlayer().getY() == 7))){
+                if (count == 5 && ((getPlayer().getX() == 5 && getPlayer().getY() == 6))){
                     compactTextBox(org, "The next room is full of spikes.\n They look like ^","",false);
                     compactTextBox(org, "For some reason the spikes are\n able to shoot magic everywhere.", "", false);
+                    compactTextBox(org, "Pushing the 'A' key locks your aim,\n allowing you to comfortably strafe\n while casting spells, dodging their magic", "", false);
+                    count++;
+                }
+                if (count == 6 && (getPlayer().getX() >= 84 && getPlayer().getY() == 16 && getPlayer().getX() <= 91)){
+                    count++;
+                }
+                if (count == 7 && getPlayer().getY() >= 17){
+                    compactTextBox(org, "You have probably stumbled upon\n some weapons. You should go to\n the 'Equipment' menu.", "", false);
+                    compactTextBox(org, "Use the 'A' key to equip a weapon.", "", false);
                     count++;
                 }
                 if (getPlayer().getX() > 73){
@@ -146,7 +155,7 @@ public class TutorialBasement extends Room {
         super.addObject(gSpark);
 
         Item fireSpell = new Item ("Fireball", "Fire Spell;\nUse your imagination.", "FrBll", playo, "spell");
-        fireSpell.dmgSpellDefine(5, 7, 4, "fire", "6", "9");
+        fireSpell.dmgSpellDefine(4, 7, 5, "fire", "6", "9");
         DroppedItem gFire =  new DroppedItem(this, org, "You found a spell: Fireball!", fireSpell, "drops2", 80, 29);
         super.addObject(gFire);
 
@@ -156,6 +165,17 @@ public class TutorialBasement extends Room {
         DroppedItem gHeal =  new DroppedItem(this, org, "You found a spell: Heal!", healSpell, "drops3", 65, 9);
         super.addObject(gHeal);
 
+        Item fireGlove = new Item ("Pyro Glove", "A glove that's on fire!\n\nPyromancers are quite the\n adventurous people, and so" +
+                "\n these gloves became very\n commonplace\n\n+2 Fire Spell Damage", playo, "equipment");
+        fireGlove.setEquipvals(0, 0, 0, 0, 2, 0 ,0, "weapon");
+        DroppedItem gGlove =  new DroppedItem(this, org, "You found a weapon: Pyro Glove!", fireGlove, "drops4", 85, 15);
+        super.addObject(gGlove);
+
+        Item brokenStaff = new Item ("Broken Staff","A staff crafted by a\n dirt-poor student of\n The Magic Academy.\n\nMade of spare wood\n" +
+                " and frayed ropes, it's\n no surprise that it\n already snapped in two\n\n+1 (All) Spell Damage", playo, "equipment");
+        brokenStaff.setEquipvals(0, 0, 1, 0, 0, 0 ,0, "weapon");
+        DroppedItem gStaff =  new DroppedItem(this, org, "You found a weapon: Broken Staff!", brokenStaff, "drops5", 90, 15);
+        super.addObject(gStaff);
 
         PotOfPetunias flowers = new PotOfPetunias(org, this, 5, 19);
         addMortal(flowers);

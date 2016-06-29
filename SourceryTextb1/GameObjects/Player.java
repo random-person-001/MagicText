@@ -63,7 +63,7 @@ public class Player extends Mortal {
     private Color restingBackground = Color.black;
 
     //STATS
-    public int maxHP = super.maxHealth;
+    public int maxHP = 20;
 
     public int maxMana = 20;
     public int mana = maxMana;
@@ -73,12 +73,15 @@ public class Player extends Mortal {
     public int manaWaitStat = 2000; //Waiting before restoring mana
     public int manaWait = 0;
 
+    public int defense = 0;
+    //Note for the future: Damage can't be reduced below 1 damage. Swords and explosions don't heal people.
+
     public int allSpellBoost = 0;
     public int arcSpellBoost = 0;
     public int fireSpellBoost = 0;
     public int iceSpellBoost = 0;
     public int darkSpellBoost = 0;
-    public int healBoost, durBoost, rangeBoost = 0;
+    public int healBoost, durBoost, rangeBoost, armorHealthBoost = 0;
 
     //NO MORE STATS
 
@@ -88,7 +91,10 @@ public class Player extends Mortal {
     private String secondarySpell = "None";
 
     public Item spell1 = new Item ("None", "", this);
-    public Item spell2 = new Item("None", "", this);
+    public Item spell2 = new Item ("None", "", this);
+
+    public Item weapon = new Item ("None", "", this);
+    public Item armor  = new Item ("None", "", this);
 
     private int hurtColor = 0;
 
@@ -97,13 +103,15 @@ public class Player extends Mortal {
      */
     public Player(ImageOrg theOrg) {
         setHealth(maxHP);
-        makeGoodGuy(); // Set good-guy-ness to true
+        makeGoodGuy(); // Set good-guy-ness to true.
         super.strClass = "Player";
         orgo = theOrg;
         layerName = "playerLayer";
         Layer playerLayer = new Layer(new String[orgo.getWindow().maxH()][orgo.getWindow().maxW()], layerName);
         setupForNewRoom();
         orgo.addLayer(playerLayer);
+
+        super.maxHealth = maxHP + armorHealthBoost;
 
         Window window = orgo.getWindow();
         window.txtArea.addKeyListener(playerKeyListener); // Add key listeners.
@@ -180,7 +188,7 @@ public class Player extends Mortal {
 
         if (manaWait > 0) {
             manaWait -= getTime();
-            System.out.println("Mana Wait Clock: " + manaWait);
+            //System.out.println("Mana Wait Clock: " + manaWait);
             manaRegenClock = 0;
         } else if (manaRegenClock >= (1000 / maxMana) && mana < maxMana) {
             mana++;
@@ -249,7 +257,7 @@ public class Player extends Mortal {
         }
     }
 
-    private void reoprtPos(){
+    public void reportPos(){
         System.out.println("Player X: " + x + "\nPlayer Y: " + y + "\n");
     }
 
@@ -392,6 +400,31 @@ public class Player extends Mortal {
         graphicUpdate();
     }
 
+    public void equip(Item toEquip){
+        if (toEquip.getEquipType().toLowerCase().equals("weapon")){
+            weapon = toEquip;
+            defineStats();
+        } else if (toEquip.getEquipType().toLowerCase().equals("armor")){
+            armor = toEquip;
+            defineStats();
+        } else {
+            System.out.println("You can't wear that!");
+        }
+    }
+
+    public void defineStats(){
+        defense = armor.getEquipVals()[0];
+        armorHealthBoost = armor.getEquipVals()[1];
+        allSpellBoost = weapon.getEquipVals()[2];
+        arcSpellBoost = weapon.getEquipVals()[3];
+        fireSpellBoost = weapon.getEquipVals()[4];
+        iceSpellBoost = weapon.getEquipVals()[5];
+        darkSpellBoost = weapon.getEquipVals()[6];
+
+        System.out.println("DEF: " + defense + " HpB: " + armorHealthBoost + " AllB: " + allSpellBoost + "\nArcB: " + arcSpellBoost + " FireB: " + fireSpellBoost +
+                " IceB: " + iceSpellBoost + " DarkB: " + darkSpellBoost);
+    }
+
     /**
      * Handler for keypresses, and delegates appropriate actions based off them.  Note that this does not necessarily
      * align with the game clock, or Update() method.
@@ -484,7 +517,22 @@ public class Player extends Mortal {
 
     private void newCastSpell(Item spell){
         if (spell.isDmgSpell){
-            looseCastDmgSpell(spell.damage, spell.range, spell.cost, spell.animation1, spell.animation2);
+            int damage = spell.damage + allSpellBoost;
+            switch(spell.getDescMode()){
+                case "arcane":
+                    damage += arcSpellBoost;
+                    break;
+                case "fire":
+                    damage += fireSpellBoost;
+                    break;
+                case "ice":
+                    damage += iceSpellBoost;
+                    break;
+                case "dark":
+                    damage += darkSpellBoost;
+                    break;
+            }
+            looseCastDmgSpell(damage, spell.range, spell.cost, spell.animation1, spell.animation2);
             //System.out.println("Pew! I just fired " + spell.getName());
         } else {
             switch (spell.getName()){
@@ -598,10 +646,6 @@ public class Player extends Mortal {
         superCheatProgress = 0;
     }
 
-    public void reportPos() {
-        System.out.println("X: " + x + "  Y: " + y);
-    }
-
     private void shiftCamRight() {
         orgo.moveCam(1, 0);
     }
@@ -623,9 +667,7 @@ public class Player extends Mortal {
     }
 
     public void addItem(Item input) {
-        if (input.itemType == 1){
-            inv.addItem(input);
-        }
+       inv.addItem(input);
     }
 
     public String getSecondarySpell() {
