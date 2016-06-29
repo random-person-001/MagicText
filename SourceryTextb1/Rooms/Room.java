@@ -120,7 +120,7 @@ public class Room {
             }
             //System.out.println("\nAdded Objects : " + addList.size() + "\nRemoved Objects: " + removeList.size());
             //System.out.println("\nTOTAL UPDATE TIME: " + ((System.nanoTime() - startTime) / 1000) + "\n\n\n\n\n\n\n\nNEW UPDATE\n");
-            playo.reportPos();
+            //playo.reportPos();
         }
     }
 

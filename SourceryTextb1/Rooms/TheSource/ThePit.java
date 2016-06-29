@@ -21,28 +21,38 @@ import SourceryTextb1.art;
  *  > That's it
  *
  * What Generally Happens Here:
- *
- *      > The player familiarizes with the player-controlled character and learns how to navigate a text-based environment
- *      (Hence the pile of junk)
- *      >
+ *  > You become familiar with moving around the character and the format of the world
+ *  > You're informed of how to lock orientation and attack
+ *       "If you want to lock your orientation, you can press A to toggle a Locked Orientation, indicated with a "+".
+ *       Go ahead, try it out!  Just don't press S until you're ready, or you will have a sad day."
+ *       "Press S to use whatever is selected as your weapon.  In this case, all you have is an old, musty spellbook to
+ *       throw.  You probably should not miss, as you don't have multiple copies."
+ *  > You kill a small enemy by throwing [whatever you have] at them,
+ *       "It appears you have come across an enemy.  It is suggested that you chose to be the survivor in this
+ *       encounter.  Remember, A is lock orientation and S is fire.  Good luck."
+ *  > Loot: what's needed to cast normal spells (for the next level) [Spark spell]
+ *  > You're informed of how to equip that into your inventory
+ *       "It would probably behoove you to place that into your inventory, such that you are more civilized than tossing
+ *       blunt objects, and can cast spells like a decent member of our society.  Press enter to learn how."
+ *  > Then you move on to the next level!
  */
 
 
-public class TutorialBasement extends Room {
+public class ThePit extends Room {
 
     private ImageOrg org;
     private int maxH;
     private int maxW;
 
-    private String loop(){
-        String exitCode = "";
+    private void loop(){
+        int exitCode = 0;
         int count = 0;
         boolean foundSpell1 = false;
         boolean foundSpell2 = false;
         boolean inMaze = false;
         boolean leavingEarly = false;
 
-        while (exitCode == ""){
+        while (exitCode == 0){
             try {
                 Thread.sleep(20);
                 //System.out.println("I'm not dead yet! " + ii);
@@ -112,19 +122,17 @@ public class TutorialBasement extends Room {
                     compactTextBox(org, "Use the 'A' key to equip a weapon.", "", false);
                     count++;
                 }
-                if (getPlayer().getX() > 102){
-                    exitCode = "SourcePit";
+                if (getPlayer().getX() > 73){
+                    //exitCode = 4;
                 }
-                if (getPlayer().getHealth() <= 0){
-                    exitCode = "die";
+                if (super.playo.dead){
+                    exitCode = 1;
                 }
-
                 //super.playo.reportPos();
                 org.compileImage();
 
             } catch (InterruptedException ignored) {}
         }
-        return "";
     }
 
     public void startup(){
@@ -188,16 +196,15 @@ public class TutorialBasement extends Room {
     /**
      * Enter the room. IE, start loops and stuff now.
      */
-    public String enter(){
+    public void enter(){
         org.compileImage();
         super.playo.frozen = false;
-        String output = loop();
+        loop();
         super.playo.frozen = true;
         super.cleanLayersForExit(org);
-        return output;
     }
 
-    public TutorialBasement(ImageOrg orgo, Player player){
+    public ThePit(ImageOrg orgo, Player player){
         super.playo = player;
         super.org = orgo;
         org = orgo;

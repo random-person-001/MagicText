@@ -82,7 +82,7 @@ public class Spell extends GameObject{
                 break;
             case "Spark":
                 setKillMessage("You were electrocuted by a spark spell. \n Honestly, try harder next time.");
-                setDamage(2);
+                setDamage(4);
                 setRange(6);
                 setChar1("X");
                 setChar2("+");

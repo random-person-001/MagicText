@@ -21,11 +21,12 @@ public class Mortal extends GameObject {
         return health;
     }
     public void subtractHealth(int amountLost, String message){
-        health -= amountLost;
         if (strClass.equals("Player")){
             room.playo.hurt(message);
+            health -= (amountLost - room.playo.defense);
         } else {
             System.out.println("My health is now " + getHealth());
+            health -= amountLost;
         }
     }
     public void subtractHealth(int amountLost){
@@ -49,6 +50,7 @@ public class Mortal extends GameObject {
     public void setAttack(int newAttack){
         attack = newAttack;
     }
+
     public boolean isGoodGuy(){ return isGoodGuy; }
     public void makeGoodGuy(){ isGoodGuy = true; }
 

@@ -190,7 +190,7 @@ public class Player extends Mortal {
             manaWait -= getTime();
             //System.out.println("Mana Wait Clock: " + manaWait);
             manaRegenClock = 0;
-        } else if (manaRegenClock >= (1000 / maxMana) && mana < maxMana) {
+        } else if (manaRegenClock >= (500 / maxMana) && mana < maxMana) {
             mana++;
             manaRegenClock = 0;
         }
@@ -548,14 +548,15 @@ public class Player extends Mortal {
 
     private void spendMana(int cost){
         mana -= cost;
-        manaWait = manaWaitStat;
+        int wait = 2000 - (int)(1750 * ((float)mana / (float)maxMana));
+        System.out.println("Waiting before mana refresh (ms): " + wait + " (" + ((float)mana / (float)maxMana) + ")");
+        manaWait = wait;
     }
 
     private void looseCastDmgSpell(int dmg, int rng, int cost, String anim1, String anim2){
         if (mana >= cost){
             room.addObject(new Spell(orgo, room, castingLayer, x, y, orientation, dmg, rng, anim1, anim2));
-            mana -= cost;
-            manaWait = manaWaitStat;
+            spendMana(cost);
             //System.out.println("The damage spell fired!");
         }
     }
