@@ -3,12 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="2135375f-4dfd-4c17-b9a7-4b7586bd0b6e" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SourceryTextb1/GameObjects/Item.java" afterPath="$PROJECT_DIR$/SourceryTextb1/GameObjects/Item.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SourceryTextb1/GameObjects/Mortal.java" afterPath="$PROJECT_DIR$/SourceryTextb1/GameObjects/Mortal.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SourceryTextb1/GameObjects/Player.java" afterPath="$PROJECT_DIR$/SourceryTextb1/GameObjects/Player.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SourceryTextb1/GameObjects/Spell.java" afterPath="$PROJECT_DIR$/SourceryTextb1/GameObjects/Spell.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SourceryTextb1/Rooms/TheSource/TutorialBasement.java" afterPath="$PROJECT_DIR$/SourceryTextb1/Rooms/TheSource/TutorialBasement.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SourceryTextb1/art.java" afterPath="$PROJECT_DIR$/SourceryTextb1/art.java" />
     </list>
     <list id="42bd900a-8252-44a2-a35b-c4ae87b3831d" name="New changelist" comment="New changelist" />
     <list id="3449204e-476b-4d2f-bdfd-58dfe96dd1ac" name="New changelist " comment="" />
@@ -103,8 +98,8 @@
       <file leaf-file-name="TutorialBasement.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/SourceryTextb1/Rooms/TheSource/TutorialBasement.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="150" column="137" selection-start-line="150" selection-start-column="137" selection-end-line="150" selection-end-column="137" />
+            <state relative-caret-position="901">
+              <caret line="124" column="22" selection-start-line="124" selection-start-column="22" selection-end-line="124" selection-end-column="22" />
               <folding />
             </state>
           </provider>
@@ -717,13 +712,6 @@
       <option name="presentableId" value="Default" />
       <updated>1465100929766</updated>
     </task>
-    <task id="LOCAL-00002" summary="Added a staff you need to make magic">
-      <created>1465700536567</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1465700536567</updated>
-    </task>
     <task id="LOCAL-00003" summary="Make begginningRoom one space longer for asthetics">
       <created>1465701025795</created>
       <option name="number" value="00003" />
@@ -1060,7 +1048,14 @@
       <option name="project" value="LOCAL" />
       <updated>1467244712395</updated>
     </task>
-    <option name="localTasksCounter" value="51" />
+    <task id="LOCAL-00051" summary="Added a new display mode for spells: Orientation-reliant.&#10;&#10;Using the new feature, I have remade the visuals of Astral Dart.&#10;It now looks more pathetic.&#10;&#10;PROGRESS.">
+      <created>1467254921178</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1467254921178</updated>
+    </task>
+    <option name="localTasksCounter" value="52" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1088,7 +1083,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32949308" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3336887" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21002132" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22228146" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24983345" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -1119,7 +1114,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Some cleanup of Room.java (needs more on naming of hitmesh methods)" />
     <MESSAGE value="You are now given a personalized message from your killer upon your death." />
     <MESSAGE value="Spike suicides upon hopeless situations (like moved out of world with dock)" />
     <MESSAGE value="Add a mountain trail setting, where you can fall off the edge." />
@@ -1144,7 +1138,8 @@
     <MESSAGE value="Added a Heal spell. Spells that aren't damaging ARE possible.&#10;&#10;Use the Heal spell as an example for adding new non-offensive spells." />
     <MESSAGE value="New Tutorial Complete. Yeah.&#10;&#10;I already know that you are just going to try out the newest version. So what's the point?&#10;But I know I must commit and push.....&#10;Every day, every hour....." />
     <MESSAGE value="The waiting period after casting spells now depends on how much mana was spent.&#10;&#10;The more you spend, the longer you wait. Now there are two stats for consider when choosing spells:&#10;Damage / Mana Consumed Efficiency, and&#10;Mana Consumption&#10;They ARE different. Heavy-hitting spells take longer to recover than lighter-weight ones. &#10;&#10;The player must choose between high damage or high fire rate.&#10;&#10;Min time: .25 seconds&#10;Max time: 2 seconds.&#10;" />
-    <option name="LAST_COMMIT_MESSAGE" value="The waiting period after casting spells now depends on how much mana was spent.&#10;&#10;The more you spend, the longer you wait. Now there are two stats for consider when choosing spells:&#10;Damage / Mana Consumed Efficiency, and&#10;Mana Consumption&#10;They ARE different. Heavy-hitting spells take longer to recover than lighter-weight ones. &#10;&#10;The player must choose between high damage or high fire rate.&#10;&#10;Min time: .25 seconds&#10;Max time: 2 seconds.&#10;" />
+    <MESSAGE value="Added a new display mode for spells: Orientation-reliant.&#10;&#10;Using the new feature, I have remade the visuals of Astral Dart.&#10;It now looks more pathetic.&#10;&#10;PROGRESS." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added a new display mode for spells: Orientation-reliant.&#10;&#10;Using the new feature, I have remade the visuals of Astral Dart.&#10;It now looks more pathetic.&#10;&#10;PROGRESS." />
     <option name="PRESELECT_EXISTING_CHANGELIST" value="false" />
   </component>
   <component name="XDebuggerManager">
@@ -1611,8 +1606,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/SourceryTextb1/Rooms/TheSource/TutorialBasement.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="150" column="137" selection-start-line="150" selection-start-column="137" selection-end-line="150" selection-end-column="137" />
+        <state relative-caret-position="901">
+          <caret line="124" column="22" selection-start-line="124" selection-start-column="22" selection-end-line="124" selection-end-column="22" />
           <folding />
         </state>
       </provider>

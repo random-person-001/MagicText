@@ -56,8 +56,10 @@ public class TutorialBasement extends Room {
                 }
                 if (count == 1 && getPlayer().getX() == 5 && getPlayer().getY() == 23){
                     compactTextBox(org, "Ahead of you is a pot of petunias. \nPretty, isn't it?\nHowever, it's in the way...", "", false);
-                    compactTextBox(org, "You begin to remember your brief training\nat The Magic Academy, a school of prestige.\nPerhaps a spell will clear the way?", "", false);
-                    compactTextBox(org, "Your memory clears up a little more;\nYour training was too brief for you\n to learn anything useful or meaningful", "", false);
+                    compactTextBox(org, "Luckily, you were a student at\n The Magic Academy, so you must know\n plenty of spells to help you, right?", "", false);
+                    compactTextBox(org, "WRONG. You dropped out of magic school.\nYou know absolutely nothing. Nothing.\nYou have no memory of how to cast any spell", "", false);
+                    compactTextBox(org, "Most spells ARE written down, so if you\n stumble upon some spare magic literature,\n you can just follow the instructions.", "", false);
+                    compactTextBox(org, "Unfortunately, your coat pockets\n are empty. Or in this case, robe pockets.\n", "", false);
                     count++;
                 }
                 if (!holdDownReminder && getPlayer().getX() > 14 && getPlayer().getX() < 20 && getPlayer().getY() == 22){
@@ -119,8 +121,8 @@ public class TutorialBasement extends Room {
                     compactTextBox(org, "Use the 'A' key to equip a weapon.", "", false);
                     count++;
                 }
-                if (getPlayer().getX() > 102){
-                    exitCode = "SourcePit";
+                if (getPlayer().getX() > 112){
+                    //exitCode = "SourcePit";
                 }
                 if (getPlayer().getHealth() <= 0){
                     exitCode = "die";
