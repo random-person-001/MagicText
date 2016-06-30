@@ -15,6 +15,7 @@ import java.util.ArrayList;
 public class ImageOrg {
     private Window window;
     private ArrayList<Layer> layers = new ArrayList<>();
+    private ArrayList<Layer> toAdd = new ArrayList<>();
     private int camX = 0;
     private int camY = 0;
     private boolean debugGame = false;
@@ -28,7 +29,14 @@ public class ImageOrg {
      */
     public void addLayer(Layer lay){
         layers.add(lay);
+        //toAdd.add(lay);
         //updateOrder();  //Uncomment this when it starts working.
+    }
+
+    public void addTheLayers () {
+        for (int ii = 0; ii < toAdd.size() ; ii++){
+            layers.add(toAdd.get(ii));
+        }
     }
 
     public boolean getDebug(){
@@ -180,18 +188,41 @@ public class ImageOrg {
      * Remove all layers from existence except for the one named "playerLayer"
      */
     public void removeAllButPlayer(){
-        for (int id = 0; id < layers.size() ; id++){
+        String isPlayerList = "";
+        String remainingList = "";
+        String beginList = "";
+        System.out.println("STARTING NEW CLEANUP....");
+        int initSize = layers.size();
+        for (int id = 0; id < layers.size() ; id++){ //Gets all current layers before operating
             Layer get = layers.get(id);
+            beginList += (get.getName() + ", ");
+        }
+        System.out.println("Layers Before Clear: " + beginList + "(" + initSize + ")\n");
+        for (int id = 0; id < layers.size() ; id++){ //Main block of logic. Does the operation and outputs as it does so.
+            Layer get = layers.get(id);
+            System.out.println(get.getName() + " : playerLayer (" + !get.nameMatches("playerLayer") + ")");
             if (!get.nameMatches("playerLayer")){
-                layers.remove(id);
+                layers.remove(get);
+            } else {
+                isPlayerList += (get.getName() + ", ");
             }
         }
+
+        System.out.println("Layers Marked as playerLayer: " + isPlayerList);
+
+        for (int id = 0; id < layers.size() ; id++){ //Gets all layers after operating
+            Layer get = layers.get(id);
+            remainingList += (get.getName() + ", ");
+        }
+
+        System.out.println("Layers Remaining: " + remainingList);
     }
 
     /**
      * Assemble all the layers together, and place it on the screen.
      */
     public void compileImage(){
+        //addTheLayers();
         window.clearImage();
         for (Layer get : layers) {
             if (get.getCamOb()) {

@@ -121,8 +121,8 @@ public class TutorialBasement extends Room {
                     compactTextBox(org, "Use the 'A' key to equip a weapon.", "", false);
                     count++;
                 }
-                if (getPlayer().getX() > 112){
-                    //exitCode = "SourcePit";
+                if (getPlayer().getX() > 132){
+                    exitCode = "SourcePit";
                 }
                 if (getPlayer().getHealth() <= 0){
                     exitCode = "die";
@@ -133,13 +133,14 @@ public class TutorialBasement extends Room {
 
             } catch (InterruptedException ignored) {}
         }
-        return "";
+        return exitCode
+                ;
     }
 
     public void startup(){
         ititHitMesh();
 
-        super.playo.goTo(20,29);
+        super.playo.goTo(130,10);
 
         emptyHitMesh();
         art arty = new art();
@@ -203,6 +204,7 @@ public class TutorialBasement extends Room {
         String output = loop();
         super.playo.frozen = true;
         super.cleanLayersForExit(org);
+        objs.clear();
         return output;
     }
 

@@ -199,7 +199,8 @@ public class Layer {
      * @return true iff the Strings are the same and keyExists (whatever that is)
      */
     public boolean nameMatches (String input) {
-        return keyExists && input.equals(name);
+        return keyExists && input.equals(getName()
+        );
     }
 
     /**

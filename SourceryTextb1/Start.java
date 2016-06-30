@@ -10,6 +10,7 @@ import SourceryTextb1.Rooms.BeginningRoom;
 import SourceryTextb1.Rooms.Room;
 import SourceryTextb1.Rooms.RoomThree;
 import SourceryTextb1.Rooms.RoomTwo;
+import SourceryTextb1.Rooms.TheSource.ThePit;
 import SourceryTextb1.Rooms.TheSource.TutorialBasement;
 import SourceryTextb1.Rooms.TestRoom;
 
@@ -77,6 +78,15 @@ public class Start {
                         prepLevel(org, game, player, forest, 0);
                         forest.startup();
                         roomID = forest.enter();
+                        System.out.println("Exiting tutorial... going to: " + roomID);
+                        break;
+                    case "SourcePit":
+                        System.out.println("Going to The Pit");
+                        ThePit pit = new ThePit(org, player);
+                        prepLevel(org, game, player, pit, 0);
+                        pit.startup();
+                        roomID = pit.enter();
+                        break;
                 }
             }
 
