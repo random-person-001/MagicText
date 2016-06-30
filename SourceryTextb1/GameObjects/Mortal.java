@@ -25,7 +25,7 @@ public class Mortal extends GameObject {
             room.playo.hurt(message);
             health -= (amountLost - room.playo.defense);
         } else {
-            System.out.println("My health is now " + getHealth());
+            //System.out.println("My health is now " + getHealth());
             health -= amountLost;
         }
     }

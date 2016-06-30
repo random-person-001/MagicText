@@ -42,6 +42,8 @@ public class TutorialBasement extends Room {
         boolean inMaze = false;
         boolean leavingEarly = false;
 
+        boolean holdDownReminder = false;
+
         while (exitCode == ""){
             try {
                 Thread.sleep(20);
@@ -57,6 +59,10 @@ public class TutorialBasement extends Room {
                     compactTextBox(org, "You begin to remember your brief training\nat The Magic Academy, a school of prestige.\nPerhaps a spell will clear the way?", "", false);
                     compactTextBox(org, "Your memory clears up a little more;\nYour training was too brief for you\n to learn anything useful or meaningful", "", false);
                     count++;
+                }
+                if (!holdDownReminder && getPlayer().getX() > 14 && getPlayer().getX() < 20 && getPlayer().getY() == 22){
+                    compactTextBox(org, "You can hold down the arrow keys\n to move very quickly", "", false);
+                    holdDownReminder = true;
                 }
                 if (getPlayer().getX() == 87 && getPlayer().getY() == 35){
                     foundSpell1 = true;
@@ -80,7 +86,7 @@ public class TutorialBasement extends Room {
                     count++;
                 }
                 if (inMaze && (!foundSpell1 ^ !foundSpell2) && !leavingEarly && getPlayer().getX() == 66 && getPlayer().getY() == 32){
-                    compactTextBox(org, "There are other spells hidden in the maze.\n You may want to head back.", "", false);
+                    compactTextBox(org, "There may be other spells hidden in the maze.\n You may want to head back.", "", false);
                     leavingEarly = true;
                 }
                 if (inMaze && !(foundSpell1 || foundSpell2) && !leavingEarly && getPlayer().getX() == 66 && getPlayer().getY() == 32){
@@ -95,7 +101,8 @@ public class TutorialBasement extends Room {
                     compactTextBox(org, "You've managed to defeat\n The Pot of Petunias!\nCongratulations!", "", false);
                     compactTextBox(org, "As you may have noticed, the bar on the\n top right had depleted a little.\nThat is your mana bar.", "", false);
                     compactTextBox(org, "Casting spells cost mana. You can't cast\n any spells if you run out.", "", false);
-                    compactTextBox(org, "Fortunately, your mana bar quickly refills\n after not casting spells for 2 seconds", "", false);
+                    compactTextBox(org, "Fortunately, your mana regenerates\n shortly after not casting spells\n for a bit.", "", false);
+                    compactTextBox(org, "Note: The less mana you spend,\n the less you have to wait before\n your mana refills.", "", false);
                     count++;
                 }
                 if (count == 5 && ((getPlayer().getX() == 5 && getPlayer().getY() == 6))){
@@ -141,12 +148,12 @@ public class TutorialBasement extends Room {
         org.addLayer(lay1);
 
 
-        Item dartSpell = new Item ("Astral Dart", "Arcane Spell;\nFires a small bolt of\n pure stardust.", "AstDt", playo, "spell");
-        dartSpell.dmgSpellDefine(2, 9, 2, "arcane", "%", "%");
+        Item dartSpell = new Item ("Astral Dart", "Arcane Spell;\nFires a small bolt of\n pure stardust.", "AstDt", playo, "spell", false);
+        dartSpell.dmgSpellDefine(2, 9, 2, "arcane", "|", "-");
         DroppedItem gSpark =  new DroppedItem(this, org, "You found a spell: Astral Dart!", dartSpell, "drops", 87, 35);
         super.addObject(gSpark);
 
-        Item fireSpell = new Item ("Fireball", "Fire Spell;\nUse your imagination.", "FrBll", playo, "spell");
+        Item fireSpell = new Item ("Fireball", "Fire Spell;\nUse your imagination.", "FrBll", playo, "spell", true);
         fireSpell.dmgSpellDefine(4, 7, 5, "fire", "6", "9");
         DroppedItem gFire =  new DroppedItem(this, org, "You found a spell: Fireball!", fireSpell, "drops2", 80, 29);
         super.addObject(gFire);

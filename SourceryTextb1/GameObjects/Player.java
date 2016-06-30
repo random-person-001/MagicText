@@ -532,7 +532,7 @@ public class Player extends Mortal {
                     damage += darkSpellBoost;
                     break;
             }
-            looseCastDmgSpell(damage, spell.range, spell.cost, spell.animation1, spell.animation2);
+            looseCastDmgSpell(damage, spell.range, spell.cost, spell.animation1, spell.animation2, spell.getAlting());
             //System.out.println("Pew! I just fired " + spell.getName());
         } else {
             switch (spell.getName()){
@@ -549,13 +549,13 @@ public class Player extends Mortal {
     private void spendMana(int cost){
         mana -= cost;
         int wait = 2000 - (int)(1750 * ((float)mana / (float)maxMana));
-        System.out.println("Waiting before mana refresh (ms): " + wait + " (" + ((float)mana / (float)maxMana) + ")");
+        //System.out.println("Waiting before mana refresh (ms): " + wait + " (" + ((float)mana / (float)maxMana) + ")");
         manaWait = wait;
     }
 
-    private void looseCastDmgSpell(int dmg, int rng, int cost, String anim1, String anim2){
+    private void looseCastDmgSpell(int dmg, int rng, int cost, String anim1, String anim2, boolean alt){
         if (mana >= cost){
-            room.addObject(new Spell(orgo, room, castingLayer, x, y, orientation, dmg, rng, anim1, anim2));
+            room.addObject(new Spell(orgo, room, castingLayer, x, y, orientation, dmg, rng, anim1, anim2, alt));
             spendMana(cost);
             //System.out.println("The damage spell fired!");
         }

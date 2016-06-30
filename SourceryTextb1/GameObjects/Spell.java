@@ -21,6 +21,7 @@ public class Spell extends GameObject{
 
     private String layerName;
     private int orientation = 0;
+    private boolean dispAlting = false;
 
     /**
      * You can name and customize different spells.  Some presets are:
@@ -53,7 +54,7 @@ public class Spell extends GameObject{
             System.out.println(name + " spell cast!");
     }
 
-    public Spell (ImageOrg org, Room theRoom, Layer place, int setX, int setY, int setOr, int setDmg, int setRng, String set1, String set2){
+    public Spell (ImageOrg org, Room theRoom, Layer place, int setX, int setY, int setOr, int setDmg, int setRng, String set1, String set2, boolean alting){
         strClass = "Spell";
         orgo = org;
         room = theRoom;
@@ -65,6 +66,7 @@ public class Spell extends GameObject{
         orientation = setOr;
 
         define(setDmg, setRng, set1, set2);
+        dispAlting = alting;
 
         if (orgo.getDebug())
             System.out.println(name + " spell cast!");
@@ -82,7 +84,7 @@ public class Spell extends GameObject{
                 break;
             case "Spark":
                 setKillMessage("You were electrocuted by a spark spell. \n Honestly, try harder next time.");
-                setDamage(4);
+                setDamage(3);
                 setRange(6);
                 setChar1("X");
                 setChar2("+");
@@ -167,10 +169,18 @@ public class Spell extends GameObject{
                 break;
         }
 
-        if (x%2 == 0 ^ y%2 == 0) { //A really clever way to alternate between two characters ('^' means XOR)
-            orgo.editLayer(char1, layerName, y, x);
+        if (dispAlting) {
+            if (x % 2 == 0 ^ y % 2 == 0) { //A really clever way to alternate between two characters ('^' means XOR)
+                orgo.editLayer(char1, layerName, y, x);
+            } else {
+                orgo.editLayer(char2, layerName, y, x);
+            }
         } else {
-            orgo.editLayer(char2, layerName, y, x);
+            if (orientation <= 1) { //Orientation-sensitive display
+                orgo.editLayer(char1, layerName, y, x);
+            } else {
+                orgo.editLayer(char2, layerName, y, x);
+            }
         }
 
         boolean hitSomeOne = room.hurtSomethingAt(x, y, damage, killMessage);
@@ -181,5 +191,9 @@ public class Spell extends GameObject{
         if (range > 0){
             range --;
         }
+    }
+
+    public void setAlting(boolean setTo) {
+        dispAlting = setTo;
     }
 }

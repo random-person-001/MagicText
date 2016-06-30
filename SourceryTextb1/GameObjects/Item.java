@@ -13,6 +13,7 @@ public class Item{
 
     public int damage, range, healing, duration, cost = 0;
     private int armor, hpBoost, allBoost, arcBoost, fireBoost, iceBoost, darkBoost = 0;
+    private boolean alting;
     private Player player;
 
     public boolean isDmgSpell = false;
@@ -52,6 +53,22 @@ public class Item{
         }
     }
 
+    public Item(String theName, String theDesc, String theIcon, Player play, String type, boolean isAlting){
+        name = theName;
+        description = theDesc;
+        player = play;
+        icon = theIcon;
+        switch(type.toLowerCase()){
+            case "spell": itemType = 1;
+                break;
+            case "item": itemType = 2;
+                break;
+            case "equipment": itemType = 3;
+                break;
+        }
+        alting = isAlting;
+    }
+
     public int itemType;
 
     public void setIcon(String set){
@@ -70,6 +87,10 @@ public class Item{
     public void altSpellDefine(int toCost, String dMode){
         setDescMode(dMode);
         cost = toCost;
+    }
+
+    public boolean getAlting(){
+        return alting;
     }
 
     public void setAnim(String s1, String s2){
