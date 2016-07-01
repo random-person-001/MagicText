@@ -198,17 +198,23 @@ public class ImageOrg {
             beginList += (get.getName() + ", ");
         }
         System.out.println("Layers Before Clear: " + beginList + "(" + initSize + ")\n");
+        int count = 0;
+        ArrayList<Layer> remove = new ArrayList<>();
         for (int id = 0; id < layers.size() ; id++){ //Main block of logic. Does the operation and outputs as it does so.
             Layer get = layers.get(id);
-            System.out.println(get.getName() + " : playerLayer (" + !get.nameMatches("playerLayer") + ")");
+            count++;
+            System.out.println(get.getName() + " : playerLayer (" + !get.nameMatches("playerLayer") + ", " + count + " of " + layers.size() + ")");
             if (!get.nameMatches("playerLayer")){
-                layers.remove(get);
+                remove.add(get);
             } else {
                 isPlayerList += (get.getName() + ", ");
             }
         }
+        for (Layer get : remove){
+            layers.remove(get);
+        }
 
-        System.out.println("Layers Marked as playerLayer: " + isPlayerList);
+        System.out.println("\nLayers Marked as playerLayer: " + isPlayerList + "(Amount processed: " + count + ")");
 
         for (int id = 0; id < layers.size() ; id++){ //Gets all layers after operating
             Layer get = layers.get(id);

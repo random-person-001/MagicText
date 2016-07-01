@@ -105,11 +105,14 @@ public class Player extends Mortal {
         setHealth(maxHP);
         makeGoodGuy(); // Set good-guy-ness to true.
         super.strClass = "Player";
+        System.out.println("\nNEW PLAYER\n");
+
         orgo = theOrg;
         layerName = "playerLayer";
+
         Layer playerLayer = new Layer(new String[orgo.getWindow().maxH()][orgo.getWindow().maxW()], layerName);
-        setupForNewRoom();
         orgo.addLayer(playerLayer);
+        setupForNewRoom();
 
         super.maxHealth = maxHP + armorHealthBoost;
 

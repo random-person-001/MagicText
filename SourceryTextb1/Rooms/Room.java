@@ -281,8 +281,6 @@ public class Room {
         playo.castingLayer = spells;
         playo.setupForNewRoom();
 
-        Layer playerLayer = org.getLayer(org.getPosLayer(playo.getLayerName()));
-        org.addLayer(playerLayer);
         addMortal(playo);
 
         addHUD(org);

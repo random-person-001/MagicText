@@ -140,7 +140,7 @@ public class TutorialBasement extends Room {
     public void startup(){
         ititHitMesh();
 
-        super.playo.goTo(130,10);
+        super.playo.goTo(20,29);
 
         emptyHitMesh();
         art arty = new art();
