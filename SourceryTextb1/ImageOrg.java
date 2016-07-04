@@ -188,9 +188,13 @@ public class ImageOrg {
      * Remove all layers from existence except for the one named "playerLayer"
      */
     public void removeAllButPlayer(){
-        String isPlayerList = "";
-        String remainingList = "";
-        String beginList = "";
+        //String isPlayerList = "";
+        //String remainingList = "";
+        //String beginList = "";
+        /*
+
+        //EVERYTHING DISPLAY RELATED HAS BEEN COMMENTED OUT.
+
         System.out.println("STARTING NEW CLEANUP....");
         int initSize = layers.size();
         for (int id = 0; id < layers.size() ; id++){ //Gets all current layers before operating
@@ -198,22 +202,23 @@ public class ImageOrg {
             beginList += (get.getName() + ", ");
         }
         System.out.println("Layers Before Clear: " + beginList + "(" + initSize + ")\n");
+        */
         int count = 0;
         ArrayList<Layer> remove = new ArrayList<>();
         for (int id = 0; id < layers.size() ; id++){ //Main block of logic. Does the operation and outputs as it does so.
             Layer get = layers.get(id);
             count++;
-            System.out.println(get.getName() + " : playerLayer (" + !get.nameMatches("playerLayer") + ", " + count + " of " + layers.size() + ")");
+            //System.out.println(get.getName() + " : playerLayer (" + !get.nameMatches("playerLayer") + ", " + count + " of " + layers.size() + ")");
             if (!get.nameMatches("playerLayer")){
                 remove.add(get);
             } else {
-                isPlayerList += (get.getName() + ", ");
+                //isPlayerList += (get.getName() + ", ");
             }
         }
         for (Layer get : remove){
             layers.remove(get);
         }
-
+        /*
         System.out.println("\nLayers Marked as playerLayer: " + isPlayerList + "(Amount processed: " + count + ")");
 
         for (int id = 0; id < layers.size() ; id++){ //Gets all layers after operating
@@ -221,7 +226,9 @@ public class ImageOrg {
             remainingList += (get.getName() + ", ");
         }
 
+
         System.out.println("Layers Remaining: " + remainingList);
+        */
     }
 
     /**

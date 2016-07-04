@@ -23,6 +23,8 @@ import java.awt.Color;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 import static java.lang.Math.abs;
@@ -32,7 +34,7 @@ import static java.lang.Math.abs;
  *
  * @author Riley
  */
-public class Player extends Mortal {
+public class Player extends Mortal{
     private MKeyListener playerKeyListener = new MKeyListener(this);
     private GameObject closestFood = null;
     private Inventory inv;
@@ -120,6 +122,13 @@ public class Player extends Mortal {
         window.txtArea.addKeyListener(playerKeyListener); // Add key listeners.
 
         inv = new Inventory(orgo, this);
+
+        /*
+        Timer tima = new Timer("tima");
+
+        tima.scheduleAtFixedRate(new PlayerTimerTask(), 20, 20);
+        */
+        setupTimer(20);
     }
 
     public void setPrimarySpell (String spell){
@@ -164,6 +173,7 @@ public class Player extends Mortal {
      */
     @Override
     public void update(){
+
         if (shouldPause) {
             System.out.println("Pausing.");
             room.pause(orgo);
@@ -677,6 +687,14 @@ public class Player extends Mortal {
     public String getSecondarySpell() {
         return spell2.getIcon();
     }
+
+    class PlayerTimerTask extends TimerTask{
+
+        @Override
+        public void run() {
+            update();
+        }
+    }
 }
 
 /**
@@ -720,3 +738,5 @@ class MKeyListener extends KeyAdapter {
         }
     }
 }
+
+

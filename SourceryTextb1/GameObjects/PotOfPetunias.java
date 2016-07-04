@@ -23,6 +23,8 @@ public class PotOfPetunias extends Mortal {
         y = setY;
         setHealth(1);
         //orgo.editLayer("V", layerName, y, x);
+
+        setupTimer(100);
     }
 
     public void update(){

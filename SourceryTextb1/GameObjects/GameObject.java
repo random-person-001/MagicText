@@ -18,9 +18,12 @@ import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
 
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 
-/**
+ /**
  *
  * @author 119184
  */
@@ -31,6 +34,8 @@ public class GameObject {
     
     protected int x;
     protected int y;
+
+    protected AtomicBoolean paused = new AtomicBoolean(false);
 
     int time; //May be useful when trying to do something asynchronous with room update timings
 
@@ -56,10 +61,6 @@ public class GameObject {
         return time;
     }
 
-    public void applyVelocity(){
-
-    }
-
     /**
      * Override this method with custom updates.  Usually for display updating
      */
@@ -72,5 +73,29 @@ public class GameObject {
 
     public int getY() {
         return y;
+    }
+
+    public void setupTimer(int frequency){
+        Timer timer = new Timer();
+        timer.scheduleAtFixedRate(new updateTimer(frequency), frequency, frequency);
+    }
+
+    public void setPause(boolean set){
+        paused.set(set);
+    }
+
+    class updateTimer extends TimerTask {
+        int freq;
+
+        public updateTimer(int frequency){
+            freq = frequency;
+        }
+
+        public void run(){
+            if (!paused.get()) {
+                update();
+                addTime(freq);
+            }
+        }
     }
 }

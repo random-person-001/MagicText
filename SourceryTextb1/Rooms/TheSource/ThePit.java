@@ -75,12 +75,12 @@ public class ThePit extends Room {
     public void startup(){
         ititHitMesh();
 
-        super.playo.goTo(40,8);
+        super.playo.goTo(109,10);
 
         emptyHitMesh();
         art arty = new art();
         String[][] base = art.strToArray(arty.sourcePit);
-        String[] solids = {".",",",":",";","^"};
+        String[] solids = {".",",",":",";","^","_","#","'"};
         addToBaseHitMesh(base, solids);
         Layer lay1 = new Layer(base, "Test");
         org.addLayer(lay1);

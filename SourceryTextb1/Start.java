@@ -71,7 +71,7 @@ public class Start {
             Player player = new Player(org);
             String roomID = "Tutorial";
 
-            while(roomID != "die") {
+            while(roomID != "die") { //Java 8 ONLY
                 switch (roomID) {
                     case "Tutorial":
                         TutorialBasement forest = new TutorialBasement(org, player);

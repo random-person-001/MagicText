@@ -26,6 +26,8 @@ public class HUD extends GameObject{
         orgo = org;
         room = theRoom;
         layerName = place.getName();
+
+        setupTimer(100);
     }
 
     /** Take a string, and convert the first six characters in it to an array, filling with spaces when necessary

@@ -120,9 +120,38 @@ public class Room {
             }
             //System.out.println("\nAdded Objects : " + addList.size() + "\nRemoved Objects: " + removeList.size());
             //System.out.println("\nTOTAL UPDATE TIME: " + ((System.nanoTime() - startTime) / 1000) + "\n\n\n\n\n\n\n\nNEW UPDATE\n");
+            playo.reportPos();
+        }
+    }
+
+    protected void pauseObjs(boolean set) {
+        for (GameObject obj : addList) {
+            objs.add(obj);
+        }
+        for (GameObject obj : removeList) {
+            objs.remove(obj);
+        }
+        int added = addList.size();
+        int removed = removeList.size();
+        addList.clear();
+        removeList.clear();
+        for (GameObject obj : objs) {
+            try {
+                obj.setPause(set);
+            } catch (ConcurrentModificationException ignore) { // Happens normally when an object is removed or added to the room
+                System.out.println("Whoops, something weird! [Room.java: updateObjs(): caught a ConcurrentModificationException]");
+            } catch (NullPointerException e) {
+                System.out.println("[Room.java: updateObjs(): caught nullpointer!  Probably Not Good!");
+                System.out.println(e);
+            }
+            //System.out.println("\nUPDATED OBJS: " + objList + "\n(" + (startPos) + "-" + (currPos) + " of " + objs.size() + ")\n");
+            //System.out.println("ALL OBJS UPDATED SUCCESSFULLY");
+            //System.out.println("\nAdded Objects : " + addList.size() + "\nRemoved Objects: " + removeList.size());
+            //System.out.println("\nTOTAL UPDATE TIME: " + ((System.nanoTime() - startTime) / 1000) + "\n\n\n\n\n\n\n\nNEW UPDATE\n");
             //playo.reportPos();
         }
     }
+
 
     public void addObject(GameObject theObj) { addList.add(theObj); }
 
@@ -171,7 +200,7 @@ public class Room {
     }
 
     public boolean isPlaceSolid(int x, int y) { //Useful when defining walls of rooms
-        if ((x > 0 && x < objHitMesh[0].length - 1) && (y > 0 && y < objHitMesh.length - 1)) { // Buffer of 1 for room walls
+        if ((x >= 0 && x <= objHitMesh[0].length - 1) && (y >= 0 && y <= objHitMesh.length - 1)) { // Buffer of 1 for room walls
             return objHitMesh[y][x] || baseHitMesh[y][x];
             //return false;
         } else { // Outside wall
@@ -380,6 +409,7 @@ public class Room {
             }
         }
 
+        pauseObjs(true);
         org.addLayer(txtBox);
         org.compileImage();
 
@@ -391,6 +421,8 @@ public class Room {
                 Thread.sleep(300);
             } catch (InterruptedException ignored) {}
         }
+
+        pauseObjs(false);
         org.removeLayer("Dialog");
         window.txtArea.removeKeyListener(keyListener);
     }
