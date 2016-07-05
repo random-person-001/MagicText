@@ -10,6 +10,8 @@ import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
 import SourceryTextb1.art;
 
+import java.lang.reflect.Array;
+
 /**
  *
  * @author 119184
@@ -37,7 +39,7 @@ public class TestRoom extends Room {
                 }
                 //play.reportPos();
                 org.compileImage();
-                if (getCountOf("Food") == 0){
+                if (getFoodCount() == 0){
                    exitCode = 1;
                 }
             } catch (InterruptedException ex) {}
@@ -52,7 +54,7 @@ public class TestRoom extends Room {
         player.castingLayer = spells;
         super.baseHitMesh = new boolean[super.roomHeight][super.roomWidth];
         super.objHitMesh = new boolean[super.roomHeight][super.roomWidth];
-        emptyAllHitMeshes();
+        emptyHitMesh();
         art arty = new art();
         String[][] base = art.strToArray(arty.hand1);
         String[] solids = {"P", "8", "'", ",", "a","b","d","I","f","_","\"",".","`",")","Y","#"};

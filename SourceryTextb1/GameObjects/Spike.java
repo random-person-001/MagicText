@@ -47,7 +47,7 @@ public class Spike extends Mortal{
     public void update(){  // Moves a bit when it feels the urge.
         if (r(moveFrq) < 1) {
             orgo.editLayer(" ", layerName, y, x);
-            room.removeFromObjHitMesh(x,y);
+            room.makePlaceNotSolid(x,y);
             boolean goodPlace = false;
             int rationality = 40000;
             while (!goodPlace){
@@ -64,7 +64,7 @@ public class Spike extends Mortal{
                 }
             }
             orgo.editLayer("^", layerName, y, x);
-            room.addToObjHitMesh(x,y);
+            room.makePlaceSolid(x,y);
         }else{
             orgo.editLayer("^", layerName, y, x);
         }

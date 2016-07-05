@@ -1,7 +1,9 @@
 package SourceryTextb1.Rooms.SeaOfSurprise;
 
+import SourceryTextb1.GameObjects.DroppedItem;
 import SourceryTextb1.GameObjects.Mortal;
 import SourceryTextb1.GameObjects.Player;
+import SourceryTextb1.GameObjects.SeaOfSurprise.SmallPiranha;
 import SourceryTextb1.GameObjects.Spike;
 import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
@@ -92,7 +94,7 @@ public class DockAndShip extends Room {
     }
 
     public void startup(){
-        ititHitMeshes();
+        ititHitMesh();
         playo.goTo(72,51);
         String[][] base = art.strToArray(arty.largeBoat);
         String[] solids = {"|","-","\\", "/","_","="};
@@ -107,7 +109,7 @@ public class DockAndShip extends Room {
         org.addLayer(docklayer);
 
         for (int i = 43; i<46; i++){
-            removeFromObjHitMesh(42, i);
+            makePlaceNotSolid(42, i);
             removeFromBaseHitMesh(42, i);
             org.editLayer("X", "Boat", i, 42);
         }
@@ -122,7 +124,7 @@ public class DockAndShip extends Room {
         makePiranahAt(24, 23);
         makePiranahAt(28, 24);
 
-        genericRoomInitialize();
+        genericInitialize();
     }
 
     private void makeSpikeAt(int x, int y){

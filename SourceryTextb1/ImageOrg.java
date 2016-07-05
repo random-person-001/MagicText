@@ -6,7 +6,6 @@
 package SourceryTextb1;
 
 import java.util.ArrayList;
-import java.util.ConcurrentModificationException;
 
 /**
  * An intermediate between the countless Layers and the Window, to organise and keep all the Layers in line.
@@ -238,17 +237,6 @@ public class ImageOrg {
     public void compileImage(){
         //addTheLayers();
         window.clearImage();
-        try{
-            imageThing();
-        }catch (ConcurrentModificationException ignore) {
-            System.out.println("Concurrent exception");
-            try {
-                Thread.sleep(5); // Wait a little, then try again
-            } catch (InterruptedException ignored) {}
-            imageThing();
-        }
-    }
-    private void imageThing() throws ConcurrentModificationException{
         for (Layer get : layers) {
             if (get.getCamOb()) {
                 window.placeLayer(get, camX, camY);

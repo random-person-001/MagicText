@@ -64,11 +64,6 @@ public class Room {
         return false;
     }
 
-    /**
-     * A convenience method for discovering the number of a class are left
-     * @param className the String by which the class identifies (GameObject.strClass)
-     * @return how many there are in the room's list
-     */
     protected int getCountOf(String className){
         int count = 0;
         for (GameObject o : objs) {
@@ -81,22 +76,34 @@ public class Room {
 
     /**
      * Loop through all objects that are in the room and tell them to update. (call obj.update() on each)
-     * @param timeElapsed ms of time since the last one.  Jared knows more about this than Riley.
      */
+
     protected void updateObjs(int timeElapsed){
         updateObjs(timeElapsed, 0);
     }
 
     protected void updateObjs(int timeElapsed, int startPos) {
         long startTime = System.nanoTime();
+        String objList = "";
         int currPos = startPos;
-        flushObjListChanges();
+        for (GameObject obj : addList) {
+            objs.add(obj);
+        }
+        for (GameObject obj : removeList) {
+            objs.remove(obj);
+        }
+        int added = addList.size();
+        int removed = removeList.size();
+        addList.clear();
+        removeList.clear();
         for (GameObject obj : objs) {
             try {
+                objList += obj.strClass + ", ";
                 long nanos = System.nanoTime();
                 obj.update();
                 obj.addTime(timeElapsed);
                 currPos++;
+                if (currPos % 20 == 19) objList += "\n";
             } catch (ConcurrentModificationException ignore) { // Happens normally when an object is removed or added to the room
                 System.out.println("Whoops, something weird! [Room.java: updateObjs(): caught a ConcurrentModificationException]");
                 currPos++;
@@ -107,60 +114,47 @@ public class Room {
                 currPos++;
                 updateObjs(timeElapsed, currPos);
             }
+            //System.out.println("\nUPDATED OBJS: " + objList + "\n(" + (startPos) + "-" + (currPos) + " of " + objs.size() + ")\n");
             if (startPos == 0 && currPos == objs.size()) {
                 //System.out.println("ALL OBJS UPDATED SUCCESSFULLY");
             }
+            //System.out.println("\nAdded Objects : " + addList.size() + "\nRemoved Objects: " + removeList.size());
+            //System.out.println("\nTOTAL UPDATE TIME: " + ((System.nanoTime() - startTime) / 1000) + "\n\n\n\n\n\n\n\nNEW UPDATE\n");
             playo.reportPos();
         }
     }
 
-    /**
-     * Flush the buffers of things to be added and removed from the list of objects in the world.
-     */
-    private void flushObjListChanges(){
-        try {
-            for (GameObject obj : addList) {
-                objs.add(obj);
-            }
-            for (GameObject obj : removeList) {
-                objs.remove(obj);
-            }
-            int added = addList.size();
-            int removed = removeList.size();
-            addList.clear();
-            removeList.clear();
+    protected void pauseObjs(boolean set) {
+        for (GameObject obj : addList) {
+            objs.add(obj);
         }
-        catch (ConcurrentModificationException ignore){
-            flushObjListChanges(); // Try again
-            System.out.println("ConcurrentModExc in Room.java:flushObjListChanges() ; trying again");
+        for (GameObject obj : removeList) {
+            objs.remove(obj);
         }
-    }
-
-    /** Pause or unpause every object in the room
-     * @param set whether to pause (true) or unpause (false)
-     */
-    protected void setObjsPause(boolean set) {
-        flushObjListChanges();
+        int added = addList.size();
+        int removed = removeList.size();
+        addList.clear();
+        removeList.clear();
         for (GameObject obj : objs) {
             try {
                 obj.setPause(set);
-            } catch (ConcurrentModificationException ignore) {
-                System.out.println("Room.java: setObjsPause(): caught a ConcurrentModificationException]");
-                setObjsPause(set); // Sorry, this might be dangerous, but I think it'll mostly be fine.  --Riley
+            } catch (ConcurrentModificationException ignore) { // Happens normally when an object is removed or added to the room
+                System.out.println("Whoops, something weird! [Room.java: updateObjs(): caught a ConcurrentModificationException]");
             } catch (NullPointerException e) {
-                System.out.println("[Room.java: setObjsPause(): caught nullpointer!  Probably Not Good!");
+                System.out.println("[Room.java: updateObjs(): caught nullpointer!  Probably Not Good!");
                 System.out.println(e);
             }
+            //System.out.println("\nUPDATED OBJS: " + objList + "\n(" + (startPos) + "-" + (currPos) + " of " + objs.size() + ")\n");
+            //System.out.println("ALL OBJS UPDATED SUCCESSFULLY");
+            //System.out.println("\nAdded Objects : " + addList.size() + "\nRemoved Objects: " + removeList.size());
+            //System.out.println("\nTOTAL UPDATE TIME: " + ((System.nanoTime() - startTime) / 1000) + "\n\n\n\n\n\n\n\nNEW UPDATE\n");
+            //playo.reportPos();
         }
     }
 
 
     public void addObject(GameObject theObj) { addList.add(theObj); }
 
-    /**
-     * Don't want all that gunk of layering to clog up the next level!
-     * @param org imageOrg
-     */
     protected void cleanLayersForExit(ImageOrg org) {
         org.removeAllButPlayer(); //Cleanup, happens when loop is done.
         org.compileImage();
@@ -169,11 +163,13 @@ public class Room {
 
     public void removeObject(GameObject obj) { removeList.add(obj); }
 
-    /**
-     * Make a HUD and its layer and plop them on.  You probably want to look in to using
-     * <code>genericRoomInitialize()</code> instead.
-     * @param org the ImageOrg
-     */
+    /*public boolean isPlaceSolid(int x, int y){ //Useful when defining walls of rooms
+        if (x < -1 || x > hitMesh[0].length || y < -1 || y > hitMesh.length){
+            return hitMesh[y][x] || baseHitMesh[y][x];
+        } else {
+            return false;
+        }
+    }*/
     void addHUD(ImageOrg org){  //Fixes redundancy;
         Layer HUDd = new Layer(new String[1][70], "HUD", false, true);
         org.addLayer(HUDd);
@@ -190,7 +186,7 @@ public class Room {
     protected void addMortal(Mortal newMortal) {
         addObject(newMortal);
         enemies.add(newMortal);
-        addToObjHitMesh(newMortal.getX(), newMortal.getY());
+        makePlaceSolid(newMortal.getX(), newMortal.getY());
     }
 
 
@@ -200,17 +196,13 @@ public class Room {
     public void removeMortal(Mortal m) {
         removeObject(m);
         enemies.remove(m);
-        removeFromObjHitMesh(m.getX(), m.getY());
+        makePlaceNotSolid(m.getX(), m.getY());
     }
 
-    /**Is it a wall I walk into?  Find out!
-     * @param x a specified X coord
-     * @param y a particular Y coord
-     * @return whether either an object is sitting there OR a wall is there; ie if that place is solid
-     */
-    public boolean isPlaceSolid(int x, int y) {
+    public boolean isPlaceSolid(int x, int y) { //Useful when defining walls of rooms
         if ((x >= 0 && x <= objHitMesh[0].length - 1) && (y >= 0 && y <= objHitMesh.length - 1)) { // Buffer of 1 for room walls
             return objHitMesh[y][x] || baseHitMesh[y][x];
+            //return false;
         } else { // Outside wall
             return true;
         }
@@ -218,27 +210,27 @@ public class Room {
 
     /**
      * Tell the room that somewhere in the hit mesh of objects, there is a solid place.  Useful for making enemies not
-     * able to walk through later
+     * able to walk through
      * @param x x coord in room
      * @param y y coord in room
      */
-    public void addToObjHitMesh(int x, int y) {
+    public void makePlaceSolid(int x, int y) {
         if ((x > 0 && x < objHitMesh[0].length - 1) && (y > 0 && y < objHitMesh.length - 1)) { // Buffer of 1 for room walls
             objHitMesh[y][x] = true;
+        }
+    }
+    protected void addToObjHitMesh(String[][] picture, String[] solidChars, int x, int y) {
+        for (String solid : solidChars){
+            addToObjHitMesh(picture, solid, x ,y);
         }
     }
     public void addToObjHitMesh(String[][] picture, String solidChar, int x, int y) {
         for (int i = 0; i < picture.length; i++) {
             for (int j = 0; j < picture[0].length; j++) {
                 if (picture[i][j].equals(solidChar)) {
-                    addToObjHitMesh(j+x, i+y);
+                    makePlaceSolid(j+x, i+y);
                 }
             }
-        }
-    }
-    protected void addToObjHitMesh(String[][] picture, String[] solidChars, int x, int y) {
-        for (String solid : solidChars){
-            addToObjHitMesh(picture, solid, x ,y);
         }
     }
 
@@ -256,7 +248,7 @@ public class Room {
      * @param x x coord in room
      * @param y y coord in room
      */
-    public void removeFromObjHitMesh(int x, int y) {
+    public void makePlaceNotSolid(int x, int y) {
         if ((x > 0 && x < objHitMesh[0].length - 1) && (y > 0 && y < objHitMesh.length - 1)) { // Buffer of 1 for room walls
             objHitMesh[y][x] = false;
         }
@@ -292,7 +284,7 @@ public class Room {
         }
     }
 
-    protected void emptyAllHitMeshes() {
+    protected void emptyHitMesh() {
         for (int i = 0; i < baseHitMesh.length; i++) {
             for (int j = 0; j < baseHitMesh[0].length; j++) {
                 baseHitMesh[i][j] = false;
@@ -305,21 +297,13 @@ public class Room {
         }
     }
 
-    /**
-     * Initialize the hit meshes of the room.  Generally call this at the beginning of setting up a room, lest objects
-     * try to define their location as solid before the arrays for solid things are set up (which is what this does).
-     */
-    protected void ititHitMeshes(){
+    protected void ititHitMesh(){
         baseHitMesh = new boolean[roomHeight][roomWidth];
         objHitMesh = new boolean[roomHeight][roomWidth];
-        emptyAllHitMeshes();
+        emptyHitMesh();
     }
 
-    /**
-     * Initialize some universal layers and stuff.  Generally call this at the end of setting up a room, lest the
-     * spells, player, and HUD layers be placed below others.
-     */
-    protected void genericRoomInitialize() {
+    protected void genericInitialize() {
         Layer spells = new Layer(new String[roomHeight][roomWidth], "Spellz", true);
         org.addLayer(spells);
 
@@ -335,8 +319,40 @@ public class Room {
         return playo;
     }
 
+    private String[][] makeABox(int width, int height) {  //Makes a box that looks like the one in the test room
+        String[][] output = new String[height][width];
+        for (int ii = 0; ii < height; ii++) {
+            for (int iii = 0; iii < width; iii++) {
+                if (ii == 0 || ii == height - 1) {
+                    if (iii == 0 || iii == width - 1) {
+                        output[ii][iii] = "O";
+                    } else {
+                        output[ii][iii] = "-";
+                    }
+                } else {
+                    if (iii == 0 || iii == width - 1) {
+                        output[ii][iii] = "|";
+                    } else if (ii % 3 == 0 && iii % 6 == 0) {
+                        output[ii][iii] = ".";
+                    } else {
+                        output[ii][iii] = " ";
+                    }
+                }
+            }
+        }
+        return output;
+    }
 
-    @Deprecated // Use CompactTextBox instead
+    int getFoodCount() {
+        int count = 0;
+        for (GameObject o : objs) {
+            if (o.strClass.equals("Food")) {
+                count++;
+            }
+        }
+        return count;
+    }
+
     public void infoMessage(ImageOrg org, String usefulTip) {
         art arty = new art();
         Layer bkgd = new Layer(art.strToArray(arty.usefulTipBkgd), "tip", 5, 5, false, true);
@@ -367,12 +383,6 @@ public class Room {
         window.txtArea.removeKeyListener(keyListener);
     }
 
-    /**Draw a smallish text box at the bottom of the screen, waiting for enter to be pressed to dismiss it.
-     * @param org image organizer
-     * @param text a string, with appropriate newlines, to show
-     * @param speaker Who said it?  Do tell!
-     * @param helpful whether the box ought to give instructions on its own dismissal
-     */
     public void compactTextBox(ImageOrg org, String text, String speaker, boolean helpful){
         art artsedo = new art();
         Layer txtBox;
@@ -399,7 +409,7 @@ public class Room {
             }
         }
 
-        setObjsPause(true);
+        pauseObjs(true);
         org.addLayer(txtBox);
         org.compileImage();
 
@@ -412,14 +422,11 @@ public class Room {
             } catch (InterruptedException ignored) {}
         }
 
-        setObjsPause(false);
+        pauseObjs(false);
         org.removeLayer("Dialog");
         window.txtArea.removeKeyListener(keyListener);
     }
 
-    /**An oldish, kinda messy method for pausing the game
-     * @param org the image organizer
-     */
     public void pause(ImageOrg org) {
         art arty = new art();
         int camStartX = org.getCamX();
@@ -457,9 +464,6 @@ public class Room {
         window.txtArea.removeKeyListener(keyListener);
     }
 
-    /**An oldish, kinda messy method for the options screen in the oldish game pause thing
-     * @param org the image organizer
-     */
     private void options(ImageOrg org) {
         art arty = new art();
         int camStartX = org.getCamX();
@@ -498,9 +502,6 @@ public class Room {
 }
 
 
-/**
- * A selector thing for listening to and selecting one of the few options on the top level of the oldish pause screen
- */
 class PauseSelector extends KeyAdapter {
     private ImageOrg org;
     private int x = 14;
@@ -550,9 +551,6 @@ class PauseSelector extends KeyAdapter {
     }
 }
 
-/**
- * A selector thing for listening to and selecting one of the few options on the Options menu of the oldish pause screen
- */
 class OptionsSelector extends KeyAdapter {
     private ImageOrg org;
     boolean resume = false;
@@ -615,10 +613,6 @@ class OptionsSelector extends KeyAdapter {
     }
 }
 
-/**
- * A little key listener that will tell you when you press ESCAPE or ENTER, by setting its <code>pause</code> boolean
- * to true
- */
 class Dismissal extends KeyAdapter {
     boolean resume = false;
 

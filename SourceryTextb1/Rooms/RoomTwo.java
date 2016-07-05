@@ -31,7 +31,7 @@ public class RoomTwo extends Room {
                 play.update();//Update player
                 //play.reportPos();
                 org.compileImage();
-                if (getCountOf("Food") == 0){
+                if (getFoodCount() == 0){
                     return;
                 }
             } catch (InterruptedException ex) {}
@@ -46,7 +46,7 @@ public class RoomTwo extends Room {
         player.castingLayer = spells;
         super.baseHitMesh = new boolean[super.roomHeight][super.roomWidth];
         super.objHitMesh = new boolean[super.roomHeight][super.roomWidth];
-        emptyAllHitMeshes();
+        emptyHitMesh();
         art arty = new art();
         String[][] roomArr = art.strToArray(arty.dualRoom);
         addToBaseHitMesh(roomArr, "#");
