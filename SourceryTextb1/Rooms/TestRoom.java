@@ -52,7 +52,7 @@ public class TestRoom extends Room {
         player.castingLayer = spells;
         super.baseHitMesh = new boolean[super.roomHeight][super.roomWidth];
         super.objHitMesh = new boolean[super.roomHeight][super.roomWidth];
-        emptyAllHitMeshes();
+        //emptyAllHitMeshes();
         art arty = new art();
         String[][] base = art.strToArray(arty.hand1);
         String[] solids = {"P", "8", "'", ",", "a","b","d","I","f","_","\"",".","`",")","Y","#"};

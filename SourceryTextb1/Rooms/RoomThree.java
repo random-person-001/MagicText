@@ -43,14 +43,14 @@ public class RoomThree extends Room {
         player.castingLayer = spells;
         super.baseHitMesh = new boolean[super.roomHeight][super.roomWidth];
         super.objHitMesh = new boolean[super.roomHeight][super.roomWidth];
-        emptyAllHitMeshes();
+        //emptyAllHitMeshes();
         String[][] test = makeABox(maxW,maxH);
         Layer lay1 = new Layer(test, "Test");
         org.addLayer(lay1);
 
         art arty = new art();
         String[][] castle = arty.strToArray(arty.castle1);
-        emptyAllHitMeshes();
+        //emptyAllHitMeshes();
         addToBaseHitMesh(castle, "#");
         Layer castleLayer = new Layer(castle, "castle");
         org.addLayer(castleLayer);

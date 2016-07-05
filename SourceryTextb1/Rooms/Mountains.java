@@ -63,7 +63,7 @@ public class Mountains extends Room {
     }
 
     public void startup() {
-        ititHitMeshes();
+        ititHitMesh();
         String[][] base = art.strToArray(arty.mountainPlace);
         String[] solids = {":", "^", "#"};
         addToBaseHitMesh(base, solids);
@@ -79,7 +79,7 @@ public class Mountains extends Room {
         makeTrollAt(72, 4);
         */
 
-        genericRoomInitialize();
+        genericInitialize();
         playo.goTo(9, 6);
     }
 

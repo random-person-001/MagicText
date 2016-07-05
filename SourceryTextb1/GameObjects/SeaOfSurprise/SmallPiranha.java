@@ -41,7 +41,7 @@ public class SmallPiranha extends Mortal{
     public void update() {
         // Try to move
         orgo.editLayer(" ", layerName, y, x);
-        room.removeFromObjHitMesh(x, y);
+        room.removeMortal(this);
         boolean goodPlace = false;
         int rationality = 40000;
         while (!goodPlace) {
@@ -88,7 +88,7 @@ public class SmallPiranha extends Mortal{
             }
         }
         orgo.editLayer("p", layerName, y, x);
-        room.addToObjHitMesh(x, y);
+        room.addMortal(this);
 
         if (abs(room.playo.getY() - y) <= 3 && abs(room.playo.getX() - x) <= 3) {
             room.playo.hurt(3, "You know, maybe you should have listened \n when your mother told you not to \n play with piranhas.");

@@ -182,7 +182,7 @@ public class Room {
      * reflect that.
      * @param newMortal a new Mortal
      */
-    protected void addMortal(Mortal newMortal) {
+    public void addMortal(Mortal newMortal) {
         addObject(newMortal);
         enemies.add(newMortal);
         makePlaceSolid(newMortal.getX(), newMortal.getY());
@@ -263,7 +263,7 @@ public class Room {
             addToBaseHitMesh(picture, solid, x ,y);
         }
     }
-    protected void removeFromBaseHitMesh(int x, int y) {
+    public void removeFromBaseHitMesh(int x, int y) {
         baseHitMesh[y][x] = false;
     }
     protected void addToBaseHitMesh(int x, int y) {

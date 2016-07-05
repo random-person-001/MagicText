@@ -49,7 +49,7 @@ public class ProcedurallyGeneratedDungeon extends Room{
 
 
     public void startup(){
-        ititHitMeshes();
+        ititHitMesh();
         playo.goTo(5,5);
         //String[][] base = art.strToArray(arty.largeBoat);
         //String[] solids = {"|","-","\\", "/","_","="};
@@ -57,7 +57,7 @@ public class ProcedurallyGeneratedDungeon extends Room{
         //Layer lay1 = new Layer(base, "Boat");
         //org.addLayer(lay1);
 
-        genericRoomInitialize();
+        genericInitialize();
     }
 
     /**
