@@ -73,11 +73,11 @@ public class ThePit extends Room {
     }
 
     public void startup(){
-        ititHitMesh();
+        ititHitMeshes();
 
         super.playo.goTo(109,10);
 
-        emptyHitMesh();
+        emptyAllHitMeshes();
         art arty = new art();
         String[][] base = art.strToArray(arty.sourcePit);
         String[] solids = {".",",",":",";","^","_","#","'"};
@@ -85,7 +85,7 @@ public class ThePit extends Room {
         Layer lay1 = new Layer(base, "Test");
         org.addLayer(lay1);
 
-        genericInitialize();
+        genericRoomInitialize();
     }
 
     /**

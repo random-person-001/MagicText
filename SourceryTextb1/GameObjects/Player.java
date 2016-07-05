@@ -23,7 +23,6 @@ import java.awt.Color;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Random;
-import java.util.Timer;
 import java.util.TimerTask;
 
 
@@ -377,7 +376,7 @@ public class Player extends Mortal{
     private void move(int direction) {
         try {
             orgo.editLayer(" ", layerName, y, x);
-            room.makePlaceNotSolid(x,y);
+            room.removeFromObjHitMesh(x,y);
         } catch (IndexOutOfBoundsException e) {
             return;
         }
@@ -409,7 +408,7 @@ public class Player extends Mortal{
             default:
                 System.out.println("Bro, you're using Player.move wrong.");
         }
-        room.makePlaceSolid(x,y);
+        room.addToObjHitMesh(x,y);
         graphicUpdate();
     }
 
