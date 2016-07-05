@@ -73,7 +73,7 @@ public class BeginningRoom extends Room {
         player.castingLayer = spells;
         super.baseHitMesh = new boolean[super.roomHeight][super.roomWidth];
         super.objHitMesh = new boolean[super.roomHeight][super.roomWidth];
-        emptyHitMesh();
+        emptyAllHitMeshes();
         art arty = new art();
         String[] solids = {"╔","╗","═","╚","╝","║"};
         String[][] roomArr = art.strToArray(arty.smallRoom);

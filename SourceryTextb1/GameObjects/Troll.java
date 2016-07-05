@@ -41,7 +41,7 @@ public class Troll extends Mortal {
     public void update() {
         // Try to move
         orgo.editLayer(" ", layerName, y, x);
-        room.makePlaceNotSolid(x, y);
+        room.removeFromObjHitMesh(x, y);
         boolean goodPlace = false;
         int rationality = 40000;
         while (!goodPlace) {
@@ -75,7 +75,7 @@ public class Troll extends Mortal {
             }
         }
         orgo.editLayer("T", layerName, y, x);
-        room.makePlaceSolid(x, y);
+        room.addToObjHitMesh(x, y);
 
         if (abs(room.playo.y - y) <= 3 && abs(room.playo.x - x) <= 3) {
             room.playo.hurt(3, "You know, maybe you should have listened \n when your mother told you not to \n play with trolls.");
