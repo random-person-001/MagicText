@@ -28,7 +28,7 @@ public class RoomThree extends Room {
                 play.update();//Update player
                 //play.reportPos();
                 org.compileImage();
-                if (getFoodCount() == 0){
+                if (getCountOf("Food") == 0){
                     exitCode = 1;
                 }
             } catch (InterruptedException ex) {}
@@ -43,14 +43,14 @@ public class RoomThree extends Room {
         player.castingLayer = spells;
         super.baseHitMesh = new boolean[super.roomHeight][super.roomWidth];
         super.objHitMesh = new boolean[super.roomHeight][super.roomWidth];
-        emptyHitMesh();
+        emptyAllHitMeshes();
         String[][] test = makeABox(maxW,maxH);
         Layer lay1 = new Layer(test, "Test");
         org.addLayer(lay1);
 
         art arty = new art();
         String[][] castle = arty.strToArray(arty.castle1);
-        emptyHitMesh();
+        emptyAllHitMeshes();
         addToBaseHitMesh(castle, "#");
         Layer castleLayer = new Layer(castle, "castle");
         org.addLayer(castleLayer);

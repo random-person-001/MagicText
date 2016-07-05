@@ -938,7 +938,7 @@ class Navigator extends KeyAdapter {
         if (key == 'D') {
             inv.pressedD = true;
         }
-        if (key == KeyEvent.VK_ESCAPE || key == KeyEvent.VK_ENTER || event.getKeyChar() == 'w') {
+        if (key == KeyEvent.VK_ESCAPE || event.getKeyChar() == 'w') {
             resume = true;
         }
     }

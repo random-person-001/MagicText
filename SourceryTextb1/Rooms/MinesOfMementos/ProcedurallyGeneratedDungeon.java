@@ -2,9 +2,7 @@ package SourceryTextb1.Rooms.MinesOfMementos;
 
 import SourceryTextb1.GameObjects.Player;
 import SourceryTextb1.ImageOrg;
-import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
-import SourceryTextb1.art;
 
 
 /**
@@ -51,7 +49,7 @@ public class ProcedurallyGeneratedDungeon extends Room{
 
 
     public void startup(){
-        ititHitMesh();
+        ititHitMeshes();
         playo.goTo(5,5);
         //String[][] base = art.strToArray(arty.largeBoat);
         //String[] solids = {"|","-","\\", "/","_","="};
@@ -59,7 +57,7 @@ public class ProcedurallyGeneratedDungeon extends Room{
         //Layer lay1 = new Layer(base, "Boat");
         //org.addLayer(lay1);
 
-        genericInitialize();
+        genericRoomInitialize();
     }
 
     /**
