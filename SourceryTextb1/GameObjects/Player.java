@@ -375,42 +375,44 @@ public class Player extends Mortal{
     }
 
     private void move(int direction) {
-        try {
-            orgo.editLayer(" ", layerName, y, x);
-            room.makePlaceNotSolid(x,y);
-        } catch (IndexOutOfBoundsException e) {
-            return;
+        if (!paused.get()) {
+            try {
+                orgo.editLayer(" ", layerName, y, x);
+                room.makePlaceNotSolid(x, y);
+            } catch (IndexOutOfBoundsException e) {
+                return;
+            }
+            switch (direction) {
+                case UP:
+                    if (!room.isPlaceSolid(x, y - 1))
+                        y--;
+                    if (!orientationLocked)
+                        orientation = UP;
+                    break;
+                case DOWN:
+                    if (!room.isPlaceSolid(x, y + 1))
+                        y++;
+                    if (!orientationLocked)
+                        orientation = DOWN;
+                    break;
+                case LEFT:
+                    if (!room.isPlaceSolid(x - 1, y))
+                        x--;
+                    if (!orientationLocked)
+                        orientation = LEFT;
+                    break;
+                case RIGHT:
+                    if (!room.isPlaceSolid(x + 1, y))
+                        x++;
+                    if (!orientationLocked)
+                        orientation = RIGHT;
+                    break;
+                default:
+                    System.out.println("Bro, you're using Player.move wrong.");
+            }
+            room.makePlaceSolid(x, y);
+            graphicUpdate();
         }
-        switch (direction) {
-            case UP:
-                if (!room.isPlaceSolid(x, y - 1))
-                    y--;
-                if (!orientationLocked)
-                    orientation = UP;
-                break;
-            case DOWN:
-                if (!room.isPlaceSolid(x, y + 1))
-                    y++;
-                if (!orientationLocked)
-                    orientation = DOWN;
-                break;
-            case LEFT:
-                if (!room.isPlaceSolid(x - 1, y))
-                    x--;
-                if (!orientationLocked)
-                    orientation = LEFT;
-                break;
-            case RIGHT:
-                if (!room.isPlaceSolid(x + 1, y))
-                    x++;
-                if (!orientationLocked)
-                    orientation = RIGHT;
-                break;
-            default:
-                System.out.println("Bro, you're using Player.move wrong.");
-        }
-        room.makePlaceSolid(x,y);
-        graphicUpdate();
     }
 
     public void equip(Item toEquip){
@@ -478,6 +480,10 @@ public class Player extends Mortal{
                 break;
             case 'w':
                 shouldNewInv = true;
+                break;
+            case 'q':
+                System.out.println("Za, man. Ima pausing the game, yo. I'm ze player talkin'");
+                room.compactTextBox(orgo, "Testing compactTextBox.", "", false);
                 break;
             default:
                 System.out.print(key);

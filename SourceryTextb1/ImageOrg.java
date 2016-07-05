@@ -5,7 +5,11 @@
  */
 package SourceryTextb1;
 
+import SourceryTextb1.GameObjects.GameObject;
+
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * An intermediate between the countless Layers and the Window, to organise and keep all the Layers in line.
@@ -16,11 +20,14 @@ public class ImageOrg {
     private Window window;
     private ArrayList<Layer> layers = new ArrayList<>();
     private ArrayList<Layer> toAdd = new ArrayList<>();
+    private ArrayList<Layer> toRemove = new ArrayList<>();
     private int camX = 0;
     private int camY = 0;
     private boolean debugGame = false;
     
     public ImageOrg(Window game){
+        Timer timer = new Timer();
+        timer.scheduleAtFixedRate(new frameTimer(), 0, 100);
         window = game;
     }
 
@@ -28,15 +35,23 @@ public class ImageOrg {
      * @param lay a Layer to be known about by everything
      */
     public void addLayer(Layer lay){
-        layers.add(lay);
-        //toAdd.add(lay);
+        //layers.add(lay);
+        toAdd.add(lay);
         //updateOrder();  //Uncomment this when it starts working.
     }
 
     public void addTheLayers () {
-        for (int ii = 0; ii < toAdd.size() ; ii++){
-            layers.add(toAdd.get(ii));
+        for (Layer lay : toAdd){
+            layers.add(lay);
         }
+        toAdd.clear();
+    }
+
+    public void removeTheLayers () {
+        for (Layer lay : toRemove){
+            layers.remove(lay);
+        }
+        toRemove.clear();
     }
 
     public boolean getDebug(){
@@ -87,7 +102,7 @@ public class ImageOrg {
      */
     public Layer getLayer(int go){
         if (go == -1){
-            return null;
+            return new Layer(new String[1][1]);
         } else {
             return layers.get(go);
         }
@@ -100,7 +115,7 @@ public class ImageOrg {
         for (int id = 0; id < layers.size() ; id++){
             Layer get = layers.get(id);
             if (get.nameMatches(layerName)){
-                layers.remove(id);
+                toRemove.add(get);
             }
         }
     }
@@ -234,8 +249,26 @@ public class ImageOrg {
     /**
      * Assemble all the layers together, and place it on the screen.
      */
+
+
     public void compileImage(){
-        //addTheLayers();
+        /*
+        addTheLayers();
+        removeTheLayers();
+        window.clearImage();
+        for (Layer get : layers) {
+            if (get.getCamOb()) {
+                window.placeLayer(get, camX, camY);
+            } else {
+                window.setLayer(get);
+            }
+        }
+        */
+    }
+
+    public void sendImage(){
+        addTheLayers();
+        removeTheLayers();
         window.clearImage();
         for (Layer get : layers) {
             if (get.getCamOb()) {
@@ -260,6 +293,12 @@ public class ImageOrg {
      */
     public void clearLayer(String layName) {
         int loc = getPosLayer(layName);
-        layers.get(loc).clear();
+        getLayer(loc).clear();
+    }
+
+    public class frameTimer extends TimerTask {
+        public void run(){
+            sendImage();
+        }
     }
 }

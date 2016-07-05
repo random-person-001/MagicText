@@ -15,6 +15,8 @@ public class DroppedItem extends GameObject{
     private String char1;
     private String layerName;
 
+    private boolean pickedUp = false;
+
     private Item me;
 
     public DroppedItem(Room roomy, ImageOrg org, String messageOnPickup, Item dropped, String layername, int setx, int sety){
@@ -39,13 +41,16 @@ public class DroppedItem extends GameObject{
     @Override
     public void update(){
         orgo.editLayer(char1, layerName, 0, 0);
-        if (x == player.getX() && y == player.getY()){
+        if (x == player.getX() && y == player.getY() && !pickedUp){
+            pickedUp = true;
             room.removeObject(this);
             orgo.editLayer(" ", layerName, 0, 0);
             orgo.removeLayer(layerName);
             player.addItem(me);
             if (!pickUpMessage.equals("None")) {
+                System.out.println("Picking up: " + me.getName());
                 room.compactTextBox(orgo, pickUpMessage, "", false);
+
             }
         }
     }

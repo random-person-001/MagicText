@@ -153,7 +153,7 @@ public class TutorialBasement extends Room {
 
         Item dartSpell = new Item ("Astral Dart", "Arcane Spell;\nFires a small bolt of\n pure stardust.", "AstDt", playo, "spell", false);
         dartSpell.dmgSpellDefine(2, 9, 2, "arcane", "|", "-");
-        DroppedItem gSpark =  new DroppedItem(this, org, "You found a spell: Astral Dart!", dartSpell, "drops", 87, 35);
+        DroppedItem gSpark =  new DroppedItem(this, org, "You found a spell: Astral Dart!", dartSpell, "drops", 18, 29);
         super.addObject(gSpark);
 
         Item fireSpell = new Item ("Fireball", "Fire Spell;\nUse your imagination.", "FrBll", playo, "spell", true);
@@ -183,8 +183,8 @@ public class TutorialBasement extends Room {
         addMortal(flowers);
 
 
-        int[][] locs = {{33, 36, 42, 47, 49, 53},{10, 9, 2, 6, 10, 9}};
-        for (int ii = 0; ii < 6 ; ii++) {
+        int[][] locs = {{33, 36, 42, 47, 49, 53, 20},{10, 9, 2, 6, 10, 9, 30}};
+        for (int ii = 0; ii < locs.length ; ii++) {
             Spike spike = new Spike(org, this, locs[0][ii], locs[1][ii]);
             spike.setMoveFrq(10);
             addMortal(spike);

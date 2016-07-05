@@ -125,6 +125,8 @@ public class Room {
     }
 
     protected void pauseObjs(boolean set) {
+        playo.setPause(set);
+        String objManifest = "";
         for (GameObject obj : addList) {
             objs.add(obj);
         }
@@ -138,17 +140,14 @@ public class Room {
         for (GameObject obj : objs) {
             try {
                 obj.setPause(set);
+                objManifest += obj.strClass + ", ";
             } catch (ConcurrentModificationException ignore) { // Happens normally when an object is removed or added to the room
                 System.out.println("Whoops, something weird! [Room.java: updateObjs(): caught a ConcurrentModificationException]");
             } catch (NullPointerException e) {
                 System.out.println("[Room.java: updateObjs(): caught nullpointer!  Probably Not Good!");
                 System.out.println(e);
             }
-            //System.out.println("\nUPDATED OBJS: " + objList + "\n(" + (startPos) + "-" + (currPos) + " of " + objs.size() + ")\n");
-            //System.out.println("ALL OBJS UPDATED SUCCESSFULLY");
-            //System.out.println("\nAdded Objects : " + addList.size() + "\nRemoved Objects: " + removeList.size());
-            //System.out.println("\nTOTAL UPDATE TIME: " + ((System.nanoTime() - startTime) / 1000) + "\n\n\n\n\n\n\n\nNEW UPDATE\n");
-            //playo.reportPos();
+            //System.out.println("OBJS PAUSED: " + objManifest + "\n");
         }
     }
 
@@ -384,6 +383,7 @@ public class Room {
     }
 
     public void compactTextBox(ImageOrg org, String text, String speaker, boolean helpful){
+
         art artsedo = new art();
         Layer txtBox;
         if (helpful) {
@@ -416,15 +416,21 @@ public class Room {
         Window window = org.getWindow();
         Dismissal keyListener = new Dismissal();
         window.txtArea.addKeyListener(keyListener); // Add key listeners.
+
         while (!keyListener.resume){
             try {
                 Thread.sleep(300);
             } catch (InterruptedException ignored) {}
         }
 
+
+
         pauseObjs(false);
+        System.out.println("-~-~-~-~\nUNPAUSING\n-~-~-~-~\n");
+
         org.removeLayer("Dialog");
         window.txtArea.removeKeyListener(keyListener);
+        /**/
     }
 
     public void pause(ImageOrg org) {

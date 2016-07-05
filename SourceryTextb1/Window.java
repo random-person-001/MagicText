@@ -59,6 +59,7 @@ public class Window extends JFrame{
                 fullImage.setStr(row,col," ");
             }
         }
+        //System.out.println("Image cleaned!");
     }
 
     /**
