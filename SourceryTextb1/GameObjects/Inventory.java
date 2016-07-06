@@ -13,7 +13,7 @@ import java.util.HashMap;
 
 /**
  * A class to select something in your inventory
- * Created by riley on 12-Jun-2016.
+ * Created by riley on 12-Jun-2016, mostly redone by Jared around 5 July 2016
  */
 class Inventory {
     private HashMap<String, Integer> inventory;
@@ -39,6 +39,10 @@ class Inventory {
     private final int EQUIP = 4;
     private final int EXIT = 5;
     private final int QUIT = 6;
+
+    int getY(){
+        return selectY;
+    }
 
     public Inventory(ImageOrg orgo, Player p) {
         org = orgo;
@@ -156,33 +160,6 @@ class Inventory {
         return getSelected(2);
     }
 
-//    For reference.  This actually doesn't do anything here
-//
-//                    ///.........  I N V E N T O R Y  ..........\\\
-//                    .      ..      ..      ..      ..      ..    .
-//                    .      ..      ..      ..      ..      ..    .
-//                    .      ..      ..      ..      ..      ..    .
-//                    .........................................    .
-//                    .      ..      ..      ..      ..      ..    .
-//                    .      ..      ..      ..      ..      ..    .
-//                    .      ..      ..      ..      ..      ..    .
-//                    .........................................    .
-//                    .      ..      ..      ..      ..      ..    .
-//                    .      ..      ..      ..      ..      ..    .
-//                    .      ..      ..      ..      ..      ..    .
-//                    .........................................    .
-//                    .      ..      ..      ..      ..      ..    .
-//                    .      ..      ..      ..      ..      ..    .
-//                    .      ..      ..      ..      ..      ..    .
-//                    ..............................................
-//                    .      ..      ..      ...|..EQUIPPED SPELLS..
-//                    .      ..      ..      ...|....1st......2nd...
-//                    .      ..      ..      ...|...      ..      ..
-//                    ..........................|...      ..      ..
-//                    ..........................|...      ..      ..
-//                    \\\........................................///
-
-
     /**
      * Press a key?  Call this to do stuff!
      *
@@ -203,57 +180,18 @@ class Inventory {
                 newSelectY ++;
                 scrollTimer = 0;
                 break;
-            case '1': // Set primary
-                putPrimary(getSelectedName());
-                player.setPrimarySpell(getSelectedName());
-                break;
-            case '2': // Set secondary
-                putSecondary(getSelectedName());
-                player.setSecondarySpell(getSelectedName());
-                break;
             default:
                 break;
         }
     }
 
-    /**
-     * Bring up the inventory for the player to do stuff with.
-     */
-    public void show() {
-        player.frozen = true;
-        invBkgdLayer = new Layer(art.strToArray(new art().inventoryBkgd), layerName, 0, 0, false, true);
-        org.addLayer(invBkgdLayer); // Background grid
-        itemsLayer = populateItems();
-        org.addLayer(itemsLayer);
-        org.addLayer(selectedSpellsLayer);
-        Layer selector = new Layer(new String[22][46], "selector", false, false);
-        org.addLayer(selector); // Foreground stuff
-
-        Window window = org.getWindow();
-        Navigator keyListener = new Navigator(this);
-        window.txtArea.addKeyListener(keyListener); // Add key listeners.
-        while (!keyListener.resume) {
-            try {
-                updateSelector();
-                org.compileImage();
-                Thread.sleep(50);
-            } catch (InterruptedException e) {
-                System.exit(0);
-            }
-        }
-        org.removeLayer("selector");
-        org.removeLayer(selectedSpellsLayer.name);
-        org.removeLayer("invItems");
-        org.removeLayer(layerName);
-        window.txtArea.removeKeyListener(keyListener);
-        player.frozen = false;
-    }
 
     //BECAUSE SCOPE
     private int menuID = 0;
-    public boolean pressedA = false;
-    public boolean pressedS = false;
-    public boolean pressedD = false;
+    boolean pressedA = false;
+    boolean pressedS = false;
+    boolean pressedD = false;
+    private int page = 1;
 
     private Layer topMenuLayer = new Layer(art.strToArray(new art().topMenu), "top", 1, 27, false, true);
     private Layer quitMenuLayer = new Layer(art.strToArray(new art().quitMenu), "quit", 1, 27, false, true);
@@ -282,77 +220,11 @@ class Inventory {
                 System.exit(0);
             }
         }
-
+        // Now we're done.
         org.removeLayer("selector");
         org.removeLayer("top");
         window.txtArea.removeKeyListener(keyListener);
         player.frozen = false;
-    }
-
-    private Layer populateItems() {
-        Layer itemsLayer = new Layer(new String[22][47], "invItems", false, false);
-        if (hasItem("Book")) {
-            putItem(itemsLayer, "Book", 1);
-        }
-        if (hasItem("Spark")) {
-            putItem(itemsLayer, "Spark", 2);
-        }
-        if (hasItem("Flame")) {
-            putItem(itemsLayer, "Flame", 3);
-        }
-        if (hasItem("Wanderer")) {
-            putItem(itemsLayer, "Wanderer", 4);
-        }
-        if (hasItem("SmallHealth")) {
-            putItem(itemsLayer, "Small Health", 5);
-        }
-        if (hasItem("HugeHealth")) {
-            putItem(itemsLayer, "Huge Health", 6);
-        }
-        return itemsLayer;
-    }
-
-    private void putItem(Layer lay, String name, int indexY) {
-        int yCoord = 2 * indexY;
-        int xCoord = 4;
-        char[] arrThing = name.toCharArray(); // Add name
-        for (int i = 0; i < arrThing.length; i++) {
-            lay.setStr(yCoord, i + xCoord, String.valueOf(arrThing[i]));
-        }
-        xCoord = 15;
-        String desrciption = getInfo(2, indexY); // Add description
-        arrThing = desrciption.toCharArray();
-        for (int i = 0; i < arrThing.length; i++) {
-            lay.setStr(yCoord, i + xCoord, String.valueOf(arrThing[i]));
-        }
-    }
-
-    private void updateSelector() {
-        //System.out.println(scrollTimer);
-        int indexY = 2 * selectY;
-        int indexX = 2;
-        System.out.println("X: " + selectX + "     Y:" + selectY);
-        org.clearLayer("selector");
-        org.editLayer("@", "selector", indexY, indexX);
-
-        //Scroll description sideways
-        int xCoord = 15;
-        int yCoord = indexY;
-        String desrciption = getInfo(2, selectY); // Add description
-        char[] arrThing = (" "+desrciption).toCharArray();
-        scrollTimer ++;
-        if (scrollTimer > arrThing.length){
-            scrollTimer = 0;
-        }
-        Layer lay = org.getLayer(org.getPosLayer("invItems"));
-        for (int i = 0; i < arrThing.length; i++) {
-            int x = i + xCoord - scrollTimer;
-            if (x >= 15) {
-                lay.setStr(yCoord, x, String.valueOf(arrThing[i]));
-            }
-        }
-
-        org.compileImage();
     }
 
     int indexX = 0;
@@ -362,7 +234,6 @@ class Inventory {
         switch(menuType) {
             case TOP:
                 operateTopMenu();
-                indexX = 28;
                 break;
             case SPELLS:
                 operateSpellsMenu();
@@ -389,12 +260,8 @@ class Inventory {
     }
 
     private void operateTopMenu(){
-        if (newSelectY <= 1) {
-            newSelectY = 6;
-        }
-        if (newSelectY >= 7) {
-            newSelectY = 2;
-        }
+        loopAtMenuEnd(2, 6);
+        indexX = 28;
         if (pressedA) {
             switch (newSelectY){
                 case 2:
@@ -422,8 +289,6 @@ class Inventory {
         }
     }
 
-    private int page = 1;
-
     private void jumpToNewMenu(Layer goTo, int newID, String from){
         org.removeLayer(from);
         org.removeLayer("selector");
@@ -433,14 +298,9 @@ class Inventory {
     }
 
     private void operateSpellsMenu(){
-        if (newSelectY <= 2) {
-            newSelectY = 21;
-        }
-        if (newSelectY >= 22) {
-            newSelectY = 3;
-        }
-
+        loopAtMenuEnd();
         genericItemListing(spells);
+        indexX = 31;
 
         char[] chars = player.spell1.getName().toCharArray();
         for (int ii = 0; ii < chars.length ; ii ++){
@@ -451,17 +311,10 @@ class Inventory {
             selectorLayer.setStr(17, 15 + ii, String.valueOf(chars[ii]));
         }
 
-        indexX = 31;
-        if (pressedA) {
-            if (newSelectY == 21){
+        if (pressedA && newSelectY == 21) {
                 jumpToNewMenu(topMenuLayer, TOP, "spells");
-                indexX = 28;
-                newSelectY = 2;
-            }
-            if (newSelectY == 20){
-                page++;
-            }
         }
+        checkNewPage();
         int index = newSelectY - 3 + ((page - 1) * 16);
         if (index < spells.size() && newSelectY < 19) {
             if (pressedS) {
@@ -478,37 +331,40 @@ class Inventory {
     }
 
     private void operateItemsMenu(){
-        if (newSelectY <= 2) {
-            newSelectY = 21;
-        }
-        if (newSelectY >= 22) {
-            newSelectY = 3;
-        }
-
+        loopAtMenuEnd();
         genericItemListing(items);
 
         indexX = 31;
         if (pressedA) {
             if (newSelectY == 21){
                 jumpToNewMenu(topMenuLayer, TOP, "items");
-                indexX = 28;
-                newSelectY = 2;
             }
-            if (newSelectY == 20){
-                page++;
-            }
+        }
+        checkNewPage();
+    }
+
+    private void checkNewPage(){
+        if (newSelectY == 20 && pressedA){
+            page++;
         }
     }
 
-    private void operateEquipMenu(){
-        if (newSelectY <= 2) {
-            newSelectY = 21;
+    private void loopAtMenuEnd(int minAllowedYCoord, int maxAllowedYCoord) {
+        if (newSelectY <= minAllowedYCoord-1) {
+            newSelectY = maxAllowedYCoord;
         }
-        if (newSelectY >= 22) {
-            newSelectY = 3;
+        if (newSelectY >= maxAllowedYCoord+1) {
+            newSelectY = minAllowedYCoord;
         }
+    }
+    private void loopAtMenuEnd() {
+        loopAtMenuEnd(3, 21);
+    }
 
+    private void operateEquipMenu(){
+        loopAtMenuEnd();
         genericItemListing(equip);
+        indexX = 31;
 
         dispInt(player.defense, 12, 17, true);
         dispInt(player.allSpellBoost, 25, 18, true);
@@ -520,7 +376,6 @@ class Inventory {
         putText(player.weapon.getName(), 9, 16);
         putText(player.armor.getName(), 9, 17);
 
-        indexX = 31;
         if (pressedA) {
             int index = newSelectY - 3 + ((page - 1) * 16);
             if (index < equip.size() && newSelectY < 19) {
@@ -528,29 +383,18 @@ class Inventory {
             }
             if (newSelectY == 21){
                 jumpToNewMenu(topMenuLayer, TOP, "equip");
-                indexX = 28;
-                newSelectY = 2;
-            }
-            if (newSelectY == 20){
-                page++;
             }
         }
+        checkNewPage();
     }
 
     private void operateQuitMenu(){
-        if (newSelectY <= 3) {
-            newSelectY = 5;
-        }
-        if (newSelectY >= 6) {
-            newSelectY = 4;
-        }
-
+        loopAtMenuEnd(4,5);
         indexX = 28;
+
         if (pressedA) {
             if (newSelectY == 5){
                 jumpToNewMenu(topMenuLayer, TOP, "quit");
-                indexX = 28;
-                newSelectY = 2;
             }
             if (newSelectY == 4){
                 System.exit(0);
@@ -715,187 +559,6 @@ class Inventory {
     }
 
 
-    /// OLD INVENTORY
-
-
-    /*
-    /**
-     * Bring up the inventory for the player to do stuff with.
-     *
-    public void show() {
-        player.frozen = true;
-        invBkgdLayer = new Layer(art.strToArray(new art().inventoryBkgd), layerName, false, true);
-        org.addLayer(invBkgdLayer); // Background grid
-        itemsLayer = populateItems();
-        org.addLayer(itemsLayer);
-        org.addLayer(selectedSpellsLayer);
-        Layer selector = new Layer(new String[22][46], "selector", false, false);
-        org.addLayer(selector); // Foreground stuff
-
-        Window window = org.getWindow();
-        Navigator keyListener = new Navigator(this);
-        window.txtArea.addKeyListener(keyListener); // Add key listeners.
-        while (!keyListener.resume){
-            try {
-                updateSelector();
-                org.compileImage();
-                Thread.sleep(50);
-            } catch (InterruptedException e) {
-                System.exit(0);
-            }
-        }
-        org.removeLayer("selector");
-        org.removeLayer(selectedSpellsLayer.name);
-        org.removeLayer("invItems");
-        org.removeLayer(layerName);
-        window.txtArea.removeKeyListener(keyListener);
-        player.frozen = false;
-    }
-
-    private Layer populateItems(){
-        Layer itemsLayer = new Layer(new String[22][47], "invItems", false, false);
-        if (hasItem("Book")){
-            putItem(itemsLayer, arty.oldBook, 1, 1);
-        }
-        if (hasItem("Spark")){
-            putItem(itemsLayer, arty.spark, 2, 1);
-        }
-        if (hasItem("Flame")){
-            putItem(itemsLayer, arty.flame, 3, 1);
-        }
-        if (hasItem("Wanderer")){
-            putItem(itemsLayer, arty.wanderer, 4, 1);
-        }
-        if (hasItem("SmallHealth")){
-            putItem(itemsLayer, arty.smallHealth, 5, 1);
-        }
-        if (hasItem("HugeHealth")){
-            putItem(itemsLayer, arty.hugeHealth, 1, 2);
-        }
-        return itemsLayer;
-    }
-
-    private void updateSelector(){
-        int indexY = 4*(selectY-1) + 1;
-        int indexX = 8*(selectX-1);
-        System.out.println("X: " + selectX + "     Y:" + selectY);
-        org.clearLayer("selector");
-        org.editLayer("|", "selector", indexY, indexX);
-        org.editLayer("|", "selector", indexY+1, indexX);
-        org.editLayer("|", "selector", indexY+2, indexX);
-        org.editLayer("|", "selector", indexY, indexX+7);
-        org.editLayer("|", "selector", indexY+1, indexX+7);
-        org.editLayer("|", "selector", indexY+2, indexX+7);
-        String discription = getSelectedDescription(); // TODO Put item descriptions somewhere
-        System.out.println(discription);
-        org.compileImage();
-    }
-
-    /**
-     * @return the art (String, not String[][]) of the item currently selected
-     *
-    private String getSelectedArt(){
-        return getSelected(3);
-    }
-
-    /** Fetch-all method to get random stuff from what's selected currently.  Consider using the more intuitively
-     * named getSelectedArt(), getSelectedName(), or getSelectedDescription().
-     * @param what a magical integer that specifies which kind of thing to fetch
-     * @return a String thing corresponding to what you asked for.
-     *
-    private String getSelected(int what) {
-        if (selectX == 1 && selectY == 1 && hasItem("Book")) {
-            if (what == 1) {
-                return "Book";
-            }else if (what == 2){
-                return "This is an old book you found in your pocket.  You can't read it, so it's probably worth more as a weapon.";
-            }
-            return arty.oldBook;
-        } else if (selectX == 2 && selectY == 1 && hasItem("Spark")) {
-            if (what == 1) {
-                return "Spark";
-            }else if (what == 2){
-                return "A small spell you found after killing a pot of petunias";
-            }
-            return arty.spark;
-        } else if (selectX == 3 && selectY == 1 && hasItem("Flame")) {
-            if (what == 1) {
-                return "Flame";
-            }else if (what == 2){
-                return "A little spell that helps along the spontaneous reaction of an enemy with oxygen to form CO2 and H2O.";
-            }
-            return arty.flame;
-        } else if (selectX == 4 && selectY == 1 && hasItem("Wanderer")) {
-            if (what == 1) {
-                return "Wanderer";
-            }else if (what == 2){
-                return "A respectable spell that wanders around and inflicts decent damage.  Not aimable, may hit you.";
-            }
-            return arty.wanderer;
-        } else if (selectX == 5 && selectY == 1 && hasItem("SmallHealth")) {
-            if (what == 1) {
-                return "SmallHealth";
-            }else if (what == 2){
-                return "You can regenerate a little health with this.";
-            }
-            return arty.smallHealth;
-        } else if (selectX == 1 && selectY == 2 && hasItem("HugeHealth")) {
-            if (what == 1) {
-                return "HugeHealth";
-            }else if (what == 2){
-                return "A huge boost to your health at a huge mana cost";
-            }
-            return arty.hugeHealth;
-        } else {
-            if (what == 1) {
-                return "None";
-            }else if (what == 2){
-                return "";
-            }
-            return arty.emptyItem;
-        }
-    }
-
-    private void putItem (Layer lay, String thing, int indexX, int indexY){
-        indexY = 4*(indexY-1) + 1;
-        indexX = 8*(indexX-1) + 1;
-        String[][] arrThing = art.strToArray(thing);
-        System.out.println(Arrays.deepToString(arrThing));
-        for (int i = 0; i<arrThing.length; i++){
-            for (int j = 0; j<arrThing[0].length; j++){
-                lay.setStr(i+indexY, j+indexX, arrThing[i][j]);
-            }
-        }
-    }
-
-    /**
-     * Put a new item art in the Primary Spell place
-     * @param thing a String (not String[][], this does that!).
-     *
-    private void putPrimary (String thing){
-        int y = 19;
-        int x = 30;
-        String[][] arrThing = art.strToArray(thing);
-        for (int i = 0; i<arrThing.length; i++){
-            for (int j = 0; j<arrThing[0].length; j++){
-                org.editLayer(arrThing[i][j], selectedSpellsLayer.name, i+y, j+x);
-            }
-        }
-    }
-    /**
-     * Put a new item art in the Secondary Spell place
-     * @param thing a String (not String[][], this does that!).
-     *
-    private void putSecondary (String thing){
-        int y = 19;
-        int x = 38;
-        String[][] arrThing = art.strToArray(thing);
-        for (int i = 0; i<arrThing.length; i++){
-            for (int j = 0; j<arrThing[0].length; j++){
-                org.editLayer(arrThing[i][j], selectedSpellsLayer.name, i+y, j+x);
-            }
-        }
-    }*/
 
 }
 
@@ -937,6 +600,9 @@ class Navigator extends KeyAdapter {
         }
         if (key == 'D') {
             inv.pressedD = true;
+        }
+        if (key == '\\'){
+            System.out.println(inv.getY());
         }
         if (key == KeyEvent.VK_ESCAPE || event.getKeyChar() == 'w') {
             resume = true;
