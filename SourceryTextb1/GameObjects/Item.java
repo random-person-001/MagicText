@@ -1,12 +1,37 @@
 package SourceryTextb1.GameObjects;
 
+
+/**
+ * Catch-all class that can go into your inventory.  Includes equipment, spells, and more!
+ */
 public class Item{
 
+    /**
+     * A string telling the world the type of spell it is.
+     * Options include: damage, arcane, dark, ice, fire, buff, heal, blank
+     */
     private String displayMode = "blank";
-
+    /**
+     * The full, unabridged, readable, whitespace-including name for the item.
+     */
     private String name = "";
+    /**
+     * A five character representation of the spell name, for use in the HUD when the spell is equipped
+     */
     private String icon = "";
+    /**
+     * A bunch of text describing this item.  Generally will not include things like discussing the data pertaining to it.
+     * Newlines put at most 26 characters apart.
+     */
     private String description = "";
+
+    /**
+     * A magic number, specifying the type of Item this is
+     * 1: spell
+     * 2: normal item
+     * 3: equipment
+     */
+    public int itemType;
 
     public String animation1 = "%";
     public String animation2 = "Q";
@@ -25,9 +50,7 @@ public class Item{
     }
 
     public Item(String theName, String theDesc, Player play, String type){
-        name = theName;
-        description = theDesc;
-        player = play;
+        this(theName, theDesc, play);
         switch(type){
             case "spell": itemType = 1;
                 break;
@@ -39,37 +62,14 @@ public class Item{
     }
 
     public Item(String theName, String theDesc, String theIcon, Player play, String type){
-        name = theName;
-        description = theDesc;
-        player = play;
+        this(theName, theDesc, play, type);
         icon = theIcon;
-        switch(type.toLowerCase()){
-            case "spell": itemType = 1;
-                break;
-            case "item": itemType = 2;
-                break;
-            case "equipment": itemType = 3;
-                break;
-        }
     }
 
     public Item(String theName, String theDesc, String theIcon, Player play, String type, boolean isAlting){
-        name = theName;
-        description = theDesc;
-        player = play;
-        icon = theIcon;
-        switch(type.toLowerCase()){
-            case "spell": itemType = 1;
-                break;
-            case "item": itemType = 2;
-                break;
-            case "equipment": itemType = 3;
-                break;
-        }
+        this(theName, theDesc, theIcon, play, type);
         alting = isAlting;
     }
-
-    public int itemType;
 
     public void setIcon(String set){
         icon = set;
@@ -77,6 +77,15 @@ public class Item{
 
     public String getIcon() { return icon; }
 
+    /**
+     * Define a whole bunch of parameters for a damage spell
+     * @param toD damage
+     * @param toR range
+     * @param toC cost
+     * @param dMode display mode
+     * @param s1 state one (animation)
+     * @param s2 state two (animation)
+     */
     public void dmgSpellDefine(int toD, int toR, int toC, String dMode, String s1, String s2){
         setDmgRngCost(toD, toR, toC);
         setDescMode(dMode);
@@ -84,6 +93,10 @@ public class Item{
         System.out.println("Am I a damage spell?: " + isDmgSpell);
     }
 
+    /** Define a whole bunch of parameters for an alternating? spell
+     * @param toCost cost
+     * @param dMode display mode
+     */
     public void altSpellDefine(int toCost, String dMode){
         setDescMode(dMode);
         cost = toCost;
@@ -107,6 +120,12 @@ public class Item{
     public void setDmg(int to) { damage = to; }
     public void setRng(int to) { range = to; }
     public void setCost(int to) { cost = to; }
+
+    /** Set the damage range cost.  Also makes sure it's a damage spell.
+     * @param toD new damage
+     * @param toR new range
+     * @param toC new cost
+     */
     public void setDmgRngCost (int toD, int toR, int toC) {
         damage = toD;
         range = toR;
@@ -114,6 +133,10 @@ public class Item{
         isDmgSpell = true;
     }
 
+    /**
+     * An array of equipment datas.
+     * @return {armor, hpBoost, allBoost, arcBoost, fireBoost, iceBoost, darkBoost};
+     */
     public int[] getEquipVals(){
         int[] result = {armor, hpBoost, allBoost, arcBoost, fireBoost, iceBoost, darkBoost};
         return result;
@@ -137,7 +160,7 @@ public class Item{
     }
 
     public void setHeal(int to) { healing = to; }
-    public void setDur(int to) { duration = to; }
+    public void setDuration(int to) { duration = to; }
 
     public String getName() { return name; }
 
