@@ -129,6 +129,8 @@ public class Window extends JFrame{
         }
     }
 
+    public Layer getFullImage (){ return fullImage; }
+
     /** Place the temporary idea of what should be on the screen (fullImage) onto the actual display
      * Usually takes 40-70ms. (at least, with an 80x150 fullImage size)
      */

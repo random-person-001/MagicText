@@ -146,7 +146,35 @@ public class ImageOrg {
             if (!(r > get.getRows() || r < 0 || c > get.getColumns() || c < 0)){
                 get.setStr(r, c, input);
             }
+            //smartImageMod(input, loc, r, c);
         }catch (ArrayIndexOutOfBoundsException e){System.out.println("No such layer!" + e);}
+    }
+
+    /**
+     * smartImageMod was an attempt to make the game more efficient.
+     * What it does is instead of re-building the whole game image, it only updates the specific spots that are editted.
+     *
+     * We might want to get back to this if we want the program to be even more lightweight.
+     */
+
+    private void smartImageMod (String input, int loc, int r, int c){
+        if (notEmpty(input)){
+            boolean spaceOpen = true;
+            for (int ii = loc; ii < layers.size(); ii++){
+                Layer get = getLayer(ii);
+                if (!notEmpty(get.getStr(r, c))){
+                    spaceOpen = false;
+                    break;
+                }
+            }
+            if (spaceOpen){
+                window.getFullImage().setStr(r, c, input);
+            }
+        }
+    }
+
+    private boolean notEmpty (String input){
+        return (!input.equals("") || !input.equals(" ") || !input.equals(null));
     }
 
     /** Change the camera's relative position
