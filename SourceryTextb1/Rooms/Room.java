@@ -149,7 +149,7 @@ public class Room {
      *
      * @param set whether to pause (true) or unpause (false)
      */
-    protected void setObjsPause(boolean set) {
+    public void setObjsPause(boolean set) {
         flushObjListChanges();
         for (GameObject obj : objs) {
             try {
@@ -275,7 +275,7 @@ public class Room {
     }
 
     /**
-     * Unset a location in the hit mesh of objects  Useful for making Player able to walk through where an enemy hath
+     * Unset a location in the hit mesh of objects.  Useful for making Player able to walk through where an enemy hath
      * tread.
      *
      * @param x x coord in room

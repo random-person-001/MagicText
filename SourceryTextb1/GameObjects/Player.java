@@ -169,19 +169,11 @@ public class Player extends Mortal{
      */
     @Override
     public void update(){
-
-        if (shouldPause) {
-            System.out.println("Pausing.");
-            room.pause(orgo);
-            shouldPause = false;
-        } else if (shouldInventory){
+        if (shouldNewInv || shouldPause){
+            System.out.println("GAME PAUSED\n " + inv.pressedA);
             //orgo.getWindow().removeKeyListener(playerKeyListener);
             inv.newShow();
             //orgo.getWindow().addKeyListener(playerKeyListener);
-            shouldInventory = false;
-        } else if (shouldNewInv){
-            System.out.println("GAME PAUSED\n " + inv.pressedA);
-            inv.newShow();
             shouldNewInv = false;
             System.out.println("GAME UNPAUSED");
         }

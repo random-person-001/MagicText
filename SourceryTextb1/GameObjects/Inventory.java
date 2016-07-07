@@ -184,7 +184,8 @@ class Inventory {
      */
     public void newShow() {
         player.frozen = true;
-        player.room.pause(org); // Pause everything in room
+        player.room.setObjsPause(true);
+
         menuID = TOP;
         newSelectY = 2;
 
