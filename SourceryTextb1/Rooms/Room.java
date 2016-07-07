@@ -125,8 +125,19 @@ public class Room {
 
     /**
      * Flush the buffers of things to be added and removed from the list of objects in the world.
+     * Defaults to trying 20 times before giving up.  (Once when Riley was running it, it recursed 1019 times, causing
+     * a StackOverflowError)
      */
     private void flushObjListChanges() {
+        flushObjListChanges(20);
+    }
+    private void flushObjListChanges(int triesLeftBeforeGivingUp){
+        if (triesLeftBeforeGivingUp <= 0){
+            return;
+        }
+        else{
+            triesLeftBeforeGivingUp--;
+        }
         try {
             for (GameObject obj : addList) {
                 objs.add(obj);
@@ -139,7 +150,7 @@ public class Room {
             addList.clear();
             removeList.clear();
         } catch (ConcurrentModificationException ignore) {
-            flushObjListChanges(); // Try again
+            flushObjListChanges(triesLeftBeforeGivingUp); // Try again
             System.out.println("ConcurrentModExc in Room.java:flushObjListChanges() ; trying again");
         }
     }
@@ -183,6 +194,7 @@ public class Room {
 
     public void removeObject(GameObject obj) {
         removeList.add(obj);
+        obj.cancelTimer();
     }
 
     /**

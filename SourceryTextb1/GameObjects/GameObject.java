@@ -31,6 +31,7 @@ public class GameObject {
     public String strClass = "None";
     protected ImageOrg orgo;
     protected Room room;
+    Timer timer = new Timer();
     
     protected int x;
     protected int y;
@@ -76,8 +77,12 @@ public class GameObject {
     }
 
     public void setupTimer(int frequency){
-        Timer timer = new Timer();
         timer.scheduleAtFixedRate(new updateTimer(frequency), frequency, frequency);
+    }
+
+    public void cancelTimer(){
+        timer.cancel();
+        timer.purge();
     }
 
     public void setPause(boolean set){
