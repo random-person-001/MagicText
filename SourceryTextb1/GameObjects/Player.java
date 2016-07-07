@@ -119,11 +119,6 @@ public class Player extends Mortal{
 
         inv = new Inventory(orgo, this);
 
-        /*
-        Timer tima = new Timer("tima");
-
-        tima.scheduleAtFixedRate(new PlayerTimerTask(), 20, 20);
-        */
         setupTimer(20);
     }
 
@@ -460,7 +455,7 @@ public class Player extends Mortal{
                 autonomous = !autonomous;
                 break;
             case '\'':
-                shouldPause = true;
+                reportPos();
                 break;
             case 'a':
                 orientationLocked = !orientationLocked;

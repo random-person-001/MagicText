@@ -574,7 +574,7 @@ class Navigator extends KeyAdapter {
         if (key == '2') {
             inv.keyPressed('2');
         }
-        if (key == 'A') {
+        if (key == 'A' || key == KeyEvent.VK_ENTER) {
             inv.pressedA = true;
         }
         if (key == 'S') {
