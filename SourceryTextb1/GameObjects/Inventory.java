@@ -209,6 +209,7 @@ class Inventory {
         org.removeLayer("top");
         window.txtArea.removeKeyListener(keyListener);
         player.frozen = false;
+        player.room.setObjsPause(false);
     }
 
     /**
