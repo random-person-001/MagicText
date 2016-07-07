@@ -138,11 +138,10 @@ public class TutorialBasement extends Room {
     }
 
     public void startup(){
-        ititHitMesh();
+        ititHitMeshes();
 
         super.playo.goTo(20,29);
 
-        emptyHitMesh();
         art arty = new art();
         String[][] base = art.strToArray(arty.tutForest);
         String[] solids = {"|","-","0","/",",","#","%","$","'"};
@@ -192,7 +191,7 @@ public class TutorialBasement extends Room {
 
 
 
-        genericInitialize();
+        genericRoomInitialize();
     }
 
     /**

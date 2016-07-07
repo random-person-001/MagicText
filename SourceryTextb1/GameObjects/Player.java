@@ -372,7 +372,7 @@ public class Player extends Mortal{
         if (!paused.get()) {
             try {
                 orgo.editLayer(" ", layerName, y, x);
-                room.makePlaceNotSolid(x, y);
+                room.removeFromObjHitMesh(x, y);
             } catch (IndexOutOfBoundsException e) {
                 return;
             }
@@ -404,7 +404,7 @@ public class Player extends Mortal{
                 default:
                     System.out.println("Bro, you're using Player.move wrong.");
             }
-            room.makePlaceSolid(x, y);
+            room.addToObjHitMesh(x, y);
             graphicUpdate();
         }
     }
