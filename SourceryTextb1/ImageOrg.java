@@ -147,7 +147,7 @@ public class ImageOrg {
                 get.setStr(r, c, input);
             }
             //smartImageMod(input, loc, r, c);
-        }catch (ArrayIndexOutOfBoundsException e){System.out.println("No such layer!" + e);}
+        } catch (ArrayIndexOutOfBoundsException e){System.out.println("No such layer! " + e);}
     }
 
     /**
@@ -294,7 +294,8 @@ public class ImageOrg {
         */
     }
 
-    public void sendImage(){
+    public int sendImage(){
+        long nanoTime = System.nanoTime();
         addTheLayers();
         removeTheLayers();
         window.clearImage();
@@ -306,6 +307,9 @@ public class ImageOrg {
             }
         }
         window.build();
+        int elapsedMs = (int)((System.nanoTime() - nanoTime) / 1000000);
+        //System.out.println("NEW Longest update time: " + elapsedMs + "ms");
+        return elapsedMs;
     }
 
     /**
@@ -325,8 +329,25 @@ public class ImageOrg {
     }
 
     public class frameTimer extends TimerTask {
-        public void run(){
-            sendImage();
+
+        long lastRunNano = 0;
+
+        public frameTimer(){
+            lastRunNano = System.nanoTime();
         }
+
+        public void run(){
+            int elapsedMs = (int)((System.nanoTime() - lastRunNano) / 1000000);
+            int sendTime = sendImage();
+            if (elapsedMs > sendTime) {
+                System.out.println("TIme since last sendImage(): " + elapsedMs + " > " + sendTime + " GOOD");
+            } else if (elapsedMs < sendTime){
+                System.out.println("TIme since last sendImage(): " + elapsedMs + " < " + sendTime + " BAD");
+            } else {
+                System.out.println("TIme since last sendImage(): " + elapsedMs + " < " + sendTime + " even");
+            }
+            lastRunNano = System.nanoTime();
+        }
+
     }
 }
