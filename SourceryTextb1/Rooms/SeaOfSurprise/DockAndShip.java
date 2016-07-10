@@ -108,7 +108,6 @@ public class DockAndShip extends Room {
 
         for (int i = 43; i<46; i++){
             removeFromObjHitMesh(42, i);
-            removeFromBaseHitMesh(42, i);
             org.editLayer("X", "Boat", i, 42);
         }
 

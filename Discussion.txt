@@ -12,7 +12,6 @@ This project is tracked on GitHub: https://github.com/random-person-001/MagicTex
     Enter your login credentials
     In the box, paste:  https://github.com/random-person-001/MagicText.git
     Say yes to it being a new .idea project, accepting its numerous defaults
-TODO sorry, I just said todo because it makes the colors different.  Anyway
     When there're new changes on github, you can make them be on your computer too, by using VCS > Git > Fetch.
     When committing changes, most of the time you probably want to hover over the actual button to commit, and then select
     "commit and push"
@@ -83,10 +82,6 @@ What do you think, Jared?
 TODO> Make the window the same size (or contain the same amount of text) across different OSs
   * I actually would like to see if we could make it a bit bigger, for a more immersive experience than just a sixth
         of the screen
-TODO> Make opaque spaces [see line 38 of this file]
-TODO> Do you have to validate the window or something after changing the background color, or is 90ms just too short to
- TODO  wait? (as seen in the Player cheating method)
-TODO>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                               G E N E R A L L Y   R E L E V A N T   W O R D S

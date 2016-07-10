@@ -46,7 +46,7 @@ public class RoomTwo extends Room {
         player.castingLayer = spells;
         super.baseHitMesh = new boolean[super.roomHeight][super.roomWidth];
         super.objHitMesh = new boolean[super.roomHeight][super.roomWidth];
-        emptyAllHitMeshes();
+        //emptyAllHitMeshes();
         art arty = new art();
         String[][] roomArr = art.strToArray(arty.dualRoom);
         addToBaseHitMesh(roomArr, "#");

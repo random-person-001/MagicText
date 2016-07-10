@@ -24,7 +24,8 @@ import SourceryTextb1.art;
  *
  *      > The player familiarizes with the player-controlled character and learns how to navigate a text-based environment
  *      (Hence the pile of junk)
- *      >
+ *      > An innocent pot of petunias is murdered by you, only because the developers felt like playing a cruel god
+ *      > Some starter spells are aquired
  */
 
 
@@ -47,8 +48,7 @@ public class TutorialBasement extends Room {
         while (exitCode == ""){
             try {
                 Thread.sleep(20);
-                //System.out.println("I'm not dead yet! " + ii);
-                //updateObjs(20);
+                updateObjs(20);
                 if (count == 0){
                     compactTextBox(org, "You've woken up in a basement somewhere.\nWoah, there's now lots of text everywhere!", "", true);
                     compactTextBox(org, "You should explore the basement!\nUse the arrow keys to navigate the place.", "", false);
@@ -74,7 +74,7 @@ public class TutorialBasement extends Room {
                     foundSpell2 = true;
                 }
                 if (getPlayer().getX() == 67 && getPlayer().getY() == 32){
-                    if(inMaze == false){
+                    if(!inMaze){
                         compactTextBox(org, "Wow, there's a lot of junk here!\nDoes the owner of this basement\n realize there are other rooms...", "", false);
                         compactTextBox(org, "...in this basement that he can also\n put stuff in?\nSeriously, you woke up in an empty room.", "", false);
                     }
@@ -128,13 +128,11 @@ public class TutorialBasement extends Room {
                     exitCode = "die";
                 }
 
-                //super.playo.reportPos();
                 org.compileImage();
 
             } catch (InterruptedException ignored) {}
         }
-        return exitCode
-                ;
+        return exitCode;
     }
 
     public void startup(){
@@ -142,7 +140,6 @@ public class TutorialBasement extends Room {
 
         super.playo.goTo(20,29);
 
-        emptyAllHitMeshes();
         art arty = new art();
         String[][] base = art.strToArray(arty.tutForest);
         String[] solids = {"|","-","0","/",",","#","%","$","'"};
@@ -153,7 +150,7 @@ public class TutorialBasement extends Room {
 
         Item dartSpell = new Item ("Astral Dart", "Arcane Spell;\nFires a small bolt of\n pure stardust.", "AstDt", playo, "spell", false);
         dartSpell.dmgSpellDefine(2, 9, 2, "arcane", "|", "-");
-        DroppedItem gSpark =  new DroppedItem(this, org, "You found a spell: Astral Dart!", dartSpell, "drops", 87, 35);
+        DroppedItem gSpark =  new DroppedItem(this, org, "You found a spell: Astral Dart!", dartSpell, "drops", 18, 29);
         super.addObject(gSpark);
 
         Item fireSpell = new Item ("Fireball", "Fire Spell;\nUse your imagination.", "FrBll", playo, "spell", true);
@@ -183,14 +180,12 @@ public class TutorialBasement extends Room {
         addMortal(flowers);
 
 
-        int[][] locs = {{33, 36, 42, 47, 49, 53},{10, 9, 2, 6, 10, 9}};
-        for (int ii = 0; ii < 6 ; ii++) {
+        int[][] locs = {{33, 36, 42, 47, 49, 53, 20},{10, 9, 2, 6, 10, 9, 30}};
+        for (int ii = 0; ii < locs.length ; ii++) {
             Spike spike = new Spike(org, this, locs[0][ii], locs[1][ii]);
-            spike.setMoveFrq(10);
+            spike.setMoveFrq(1);
             addMortal(spike);
         }
-
-
 
         genericRoomInitialize();
     }
@@ -203,8 +198,7 @@ public class TutorialBasement extends Room {
         super.playo.frozen = false;
         String output = loop();
         super.playo.frozen = true;
-        super.cleanLayersForExit(org);
-        objs.clear();
+        removeAllObjectsAndLayersButPlayer();
         return output;
     }
 

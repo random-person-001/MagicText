@@ -66,14 +66,12 @@ public class BeginningRoom extends Room {
     }
 
     public void startup(Player player){
+        ititHitMeshes();
         Layer spells = new Layer(new String[maxH][maxW], "Spellz", true);
         org.addLayer(spells);
 
         super.playo = player;
         player.castingLayer = spells;
-        super.baseHitMesh = new boolean[super.roomHeight][super.roomWidth];
-        super.objHitMesh = new boolean[super.roomHeight][super.roomWidth];
-        emptyAllHitMeshes();
         art arty = new art();
         String[] solids = {"╔","╗","═","╚","╝","║"};
         String[][] roomArr = art.strToArray(arty.smallRoom);
@@ -91,10 +89,7 @@ public class BeginningRoom extends Room {
         org.addLayer(playerLayer);
         player.goTo(6, 2);
 
-        Layer HUDd = new Layer(new String[maxH][maxW], "HUD", false);
-        org.addLayer(HUDd);
-        HUD hud = new HUD(org, this, HUDd);
-        addObject(hud);
+        genericRoomInitialize();
     }
 
     /**

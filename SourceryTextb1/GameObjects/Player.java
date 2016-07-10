@@ -23,6 +23,7 @@ import java.awt.Color;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Random;
+import java.util.Timer;
 import java.util.TimerTask;
 
 
@@ -34,7 +35,7 @@ import static java.lang.Math.abs;
  * @author Riley
  */
 public class Player extends Mortal{
-    private MKeyListener playerKeyListener = new MKeyListener(this);
+    private KeypressListener playerKeyListener = new KeypressListener(this);
     private GameObject closestFood = null;
     private Inventory inv;
     private int celeCount = 0;
@@ -42,7 +43,7 @@ public class Player extends Mortal{
     private String state1 = "+";
     private String state2 = "X";
     private boolean autonomous = false;
-    public boolean shouldPause = false;
+    boolean shouldPause = false;
     private boolean shouldInventory = false;
     private boolean shouldNewInv = false;
     public boolean frozen = true; //This gets changed by a room upon beginning the level
@@ -64,25 +65,21 @@ public class Player extends Mortal{
     private Color restingBackground = Color.black;
 
     //STATS
-    public int maxHP = 20;
-
-    public int maxMana = 20;
-    public int mana = maxMana;
-    public int manaRegen = 30; //Mana per second
+    int maxHP = 20;
+    int maxMana = 20;
+    int mana = maxMana;
     private int manaRegenClock = 0;
-    //private int manaWaitClock = 0;
-    public int manaWaitStat = 2000; //Waiting before restoring mana
-    public int manaWait = 0;
-
-    public int defense = 0;
+    private int manaWaitStat = 2000; //Waiting before restoring mana
+    private int manaWait = 0;
+    int defense = 0;
     //Note for the future: Damage can't be reduced below 1 damage. Swords and explosions don't heal people.
 
-    public int allSpellBoost = 0;
-    public int arcSpellBoost = 0;
-    public int fireSpellBoost = 0;
-    public int iceSpellBoost = 0;
-    public int darkSpellBoost = 0;
-    public int healBoost, durBoost, rangeBoost, armorHealthBoost = 0;
+    int allSpellBoost = 0;
+    int arcSpellBoost = 0;
+    int fireSpellBoost = 0;
+    int iceSpellBoost = 0;
+    int darkSpellBoost = 0;
+    int healBoost, durBoost, rangeBoost, armorHealthBoost = 0;
 
     //NO MORE STATS
 
@@ -122,11 +119,6 @@ public class Player extends Mortal{
 
         inv = new Inventory(orgo, this);
 
-        /*
-        Timer tima = new Timer("tima");
-
-        tima.scheduleAtFixedRate(new PlayerTimerTask(), 20, 20);
-        */
         setupTimer(20);
     }
 
@@ -143,7 +135,7 @@ public class Player extends Mortal{
         orgo.addLayer(aimDispLayer);
     }
 
-    public void centerCamera(){
+    private void centerCamera(){
         orgo.setCam(x - 22, y - 8);
     }
 
@@ -172,19 +164,11 @@ public class Player extends Mortal{
      */
     @Override
     public void update(){
-
-        if (shouldPause) {
-            System.out.println("Pausing.");
-            room.pause(orgo);
-            shouldPause = false;
-        } else if (shouldInventory){
-            //orgo.getWindow().removeKeyListener(playerKeyListener);
-            inv.show();
-            //orgo.getWindow().addKeyListener(playerKeyListener);
-            shouldInventory = false;
-        } else if (shouldNewInv){
+        if (shouldNewInv || shouldPause){
             System.out.println("GAME PAUSED\n " + inv.pressedA);
+            //orgo.getWindow().removeKeyListener(playerKeyListener);
             inv.newShow();
+            //orgo.getWindow().addKeyListener(playerKeyListener);
             shouldNewInv = false;
             System.out.println("GAME UNPAUSED");
         }
@@ -207,13 +191,11 @@ public class Player extends Mortal{
             manaRegenClock = 0;
         }
 
-        //System.out.println(getTime());
 
         resetTime();
 
         graphicUpdate();
         aimDispUpdate();
-        //reportPos();
 
         if (autonomous) {
             closestFood = getClosestVisibleFood();
@@ -374,44 +356,51 @@ public class Player extends Mortal{
     }
 
     private void move(int direction) {
-        try {
-            orgo.editLayer(" ", layerName, y, x);
-            room.removeFromObjHitMesh(x,y);
-        } catch (IndexOutOfBoundsException e) {
-            return;
+        if (!paused.get()) {
+            try {
+                orgo.editLayer(" ", layerName, y, x);
+                room.removeFromObjHitMesh(x, y);
+            } catch (IndexOutOfBoundsException e) {
+                return;
+            }
+            switch (direction) {
+                case UP:
+                    if (!room.isPlaceSolid(x, y - 1))
+                        y--;
+                    if (!orientationLocked)
+                        orientation = UP;
+                    break;
+                case DOWN:
+                    if (!room.isPlaceSolid(x, y + 1))
+                        y++;
+                    if (!orientationLocked)
+                        orientation = DOWN;
+                    break;
+                case LEFT:
+                    if (!room.isPlaceSolid(x - 1, y))
+                        x--;
+                    if (!orientationLocked)
+                        orientation = LEFT;
+                    break;
+                case RIGHT:
+                    if (!room.isPlaceSolid(x + 1, y))
+                        x++;
+                    if (!orientationLocked)
+                        orientation = RIGHT;
+                    break;
+                default:
+                    System.out.println("Bro, you're using Player.move wrong.");
+            }
+            room.addToObjHitMesh(x, y);
+            graphicUpdate();
         }
-        switch (direction) {
-            case UP:
-                if (!room.isPlaceSolid(x, y - 1))
-                    y--;
-                if (!orientationLocked)
-                    orientation = UP;
-                break;
-            case DOWN:
-                if (!room.isPlaceSolid(x, y + 1))
-                    y++;
-                if (!orientationLocked)
-                    orientation = DOWN;
-                break;
-            case LEFT:
-                if (!room.isPlaceSolid(x - 1, y))
-                    x--;
-                if (!orientationLocked)
-                    orientation = LEFT;
-                break;
-            case RIGHT:
-                if (!room.isPlaceSolid(x + 1, y))
-                    x++;
-                if (!orientationLocked)
-                    orientation = RIGHT;
-                break;
-            default:
-                System.out.println("Bro, you're using Player.move wrong.");
-        }
-        room.addToObjHitMesh(x,y);
-        graphicUpdate();
     }
 
+    /**
+     * Set the Player's weapon or armor, either one.  The new item will fill the player's only armor or weapon slot,
+     * according to its type.
+     * @param toEquip an Item that should be equipped now
+     */
     public void equip(Item toEquip){
         if (toEquip.getEquipType().toLowerCase().equals("weapon")){
             weapon = toEquip;
@@ -424,6 +413,8 @@ public class Player extends Mortal{
         }
     }
 
+    @Deprecated // This should be done dynamically.
+    //   Where the spell boost variables are used, the corresponding expression should be used instead. --Riley
     public void defineStats(){
         defense = armor.getEquipVals()[0];
         armorHealthBoost = armor.getEquipVals()[1];
@@ -464,7 +455,7 @@ public class Player extends Mortal{
                 autonomous = !autonomous;
                 break;
             case '\'':
-                shouldPause = true;
+                reportPos();
                 break;
             case 'a':
                 orientationLocked = !orientationLocked;
@@ -477,6 +468,10 @@ public class Player extends Mortal{
                 break;
             case 'w':
                 shouldNewInv = true;
+                break;
+            case 'q':
+                System.out.println("Za, man. Ima pausing the game, yo. I'm ze player talkin'");
+                room.compactTextBox(orgo, "Testing compactTextBox.", "", false);
                 break;
             default:
                 System.out.print(key);
@@ -544,7 +539,7 @@ public class Player extends Mortal{
                     damage += darkSpellBoost;
                     break;
             }
-            looseCastDmgSpell(damage, spell.range, spell.cost, spell.animation1, spell.animation2, spell.getAlting());
+            looseCastDmgSpell(damage, spell);
             //System.out.println("Pew! I just fired " + spell.getName());
         } else {
             switch (spell.getName()){
@@ -558,11 +553,16 @@ public class Player extends Mortal{
         }
     }
 
+
     private void spendMana(int cost){
         mana -= cost;
         int wait = 2000 - (int)(1750 * ((float)mana / (float)maxMana));
         //System.out.println("Waiting before mana refresh (ms): " + wait + " (" + ((float)mana / (float)maxMana) + ")");
         manaWait = wait;
+    }
+
+    private void looseCastDmgSpell(int damage, Item spell) {
+        looseCastDmgSpell(damage, spell.range, spell.cost, spell.animation1, spell.animation2, spell.getAlting());
     }
 
     private void looseCastDmgSpell(int dmg, int rng, int cost, String anim1, String anim2, boolean alt){
@@ -699,10 +699,10 @@ public class Player extends Mortal{
 /**
  * A listener class for keypresses, tailored to the Player.
  */
-class MKeyListener extends KeyAdapter {
+class KeypressListener extends KeyAdapter {
     private Player player;
 
-    MKeyListener(Player p) {
+    KeypressListener(Player p) {
         player = p;
     }
 
