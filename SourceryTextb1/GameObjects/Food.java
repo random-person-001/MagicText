@@ -56,7 +56,7 @@ public class Food extends GameObject {
         if (playo.y == getY() && playo.x == getX()) {
             die();
             room.removeObject(this);
-            playo.celebrate();
+            //playo.celebrate();
             if (room.storedStuff.get("Fooded") == null && room.index == 1){
                 room.infoMessage(org, "Those are food.  Eating more of them is generally considered good.");
                 room.storedStuff.put("Fooded", 1);

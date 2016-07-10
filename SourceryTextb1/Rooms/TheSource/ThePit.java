@@ -12,17 +12,16 @@ import SourceryTextb1.Rooms.Room;
 import SourceryTextb1.art;
 
 /**
- * A place to begin a tutorial, guiding you through stuff.
+ * The initial view of the Source Pit.
  * @author 119184
- *
  *
  * So Far:
  *  > You have been introduced to the backstory
  *  > You've mastered the Tutorial Basement
  *
  * What Generally Happens Here:
- *  > ?
- *  > Then you move on to the next level!
+ *  > The owner of the house is sitting at the edge of the hole. He convinces you to put the world back in order.
+ *  > Then you move on to the next level, where a cloned witch has an identity crisis!
  */
 
 
@@ -40,7 +39,7 @@ public class ThePit extends Room {
             try {
                 Thread.sleep(20);
                 //updateObjs(20);
-                if (getPlayer().getX() > 73){
+                if (getPlayer().getY() <= 1){
                     //exitCode = 4;
                 }
                 if (super.playo.dead){

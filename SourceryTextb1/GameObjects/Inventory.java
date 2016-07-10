@@ -24,7 +24,6 @@ class Inventory {
     private Player player;
     private ImageOrg org;
     private Layer selectedSpellsLayer;
-    private int selectY = 1;
     private int newSelectY = 2;
     private int scrollTimer = 0;
 
@@ -52,7 +51,7 @@ class Inventory {
 
 
     int getY() {
-        return selectY;
+        return newSelectY;
     }
 
     public Inventory(ImageOrg orgo, Player p) {
@@ -163,14 +162,10 @@ class Inventory {
         System.out.println(c);
         switch (c) {
             case '©': // Up
-                if (selectY > 1)
-                    selectY--;
                 newSelectY--;
                 scrollTimer = 0;
                 break;
             case '®': // Down
-                if (selectY < 8)
-                    selectY++;
                 newSelectY++;
                 scrollTimer = 0;
                 break;

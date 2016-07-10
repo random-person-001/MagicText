@@ -6,24 +6,16 @@
 package SourceryTextb1;
 
 import SourceryTextb1.GameObjects.Player;
-import SourceryTextb1.Rooms.BeginningRoom;
-import SourceryTextb1.Rooms.Room;
-import SourceryTextb1.Rooms.RoomThree;
-import SourceryTextb1.Rooms.RoomTwo;
+import SourceryTextb1.Rooms.*;
 import SourceryTextb1.Rooms.TheSource.ThePit;
 import SourceryTextb1.Rooms.TheSource.TutorialBasement;
-import SourceryTextb1.Rooms.TestRoom;
 
 import java.awt.Color;
 
 /**
- * Main class of MagicText.
+ * Main class of MagicText, where everything starts.
  *
  * @author 119184, and a bit of 104410
- *
- *
- * Hey Jared, where should we discuss things?  Email?  Slack?  Dropbox comments?  Github comments?  Google Chats?
- *
  */
 public class Start {
     private static boolean doDemo = false;
@@ -74,18 +66,31 @@ public class Start {
             while(roomID != "die") { //Java 8 ONLY
                 switch (roomID) {
                     case "Tutorial":
+                        System.out.println("Beginning tutorial!");
                         TutorialBasement forest = new TutorialBasement(org, player);
                         prepLevel(org, game, player, forest, 0);
                         forest.startup();
                         roomID = forest.enter();
-                        System.out.println("Exiting tutorial... going to: " + roomID);
+                        System.out.println("Exiting tutorial.  Going to: " + roomID);
                         break;
                     case "SourcePit":
-                        System.out.println("Going to The Pit");
+                        System.out.println("Entering The Pit");
                         ThePit pit = new ThePit(org, player);
                         prepLevel(org, game, player, pit, 0);
                         pit.startup();
                         roomID = pit.enter();
+                        break;
+                    case "Mountains":
+                        System.out.println("Entering the Mountains");
+                        Mountains mtns = new Mountains(org, player);
+                        prepLevel(org, game, player, mtns, 0);
+                        mtns.startup();
+                        //roomID = mtns.enter();
+                        break;
+                    default:
+                        System.out.println("You were directed to a world which is not yet registered in Start.java." +
+                                "Please add it there.  (roomID = " + roomID + ").  Meanwhile, I'll just kill you to ease the pain.");
+                        roomID = "die";
                         break;
                 }
             }
