@@ -453,6 +453,9 @@ public class Player extends Mortal {
             case 'w':
                 shouldNewInv = true;
                 break;
+            case 'q':
+                reportPos();
+                break;
             default:
                 System.out.print(key);
         }

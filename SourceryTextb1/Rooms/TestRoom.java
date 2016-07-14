@@ -27,7 +27,7 @@ public class TestRoom extends Room {
             try {
                 Thread.sleep(20);
                 //System.out.println("I'm not dead yet! " + ii);
-                updateObjs(20);
+
                 play.addTime(20);
                 play.update();//Update player
                 count++;

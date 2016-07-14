@@ -27,7 +27,7 @@ public class ImageOrg {
     
     public ImageOrg(Window game){
         Timer timer = new Timer();
-        timer.scheduleAtFixedRate(new frameTimer(), 0, 100);
+        timer.scheduleAtFixedRate(new frameTimer(), 0, 50);
         window = game;
     }
 
@@ -340,17 +340,7 @@ public class ImageOrg {
         }
 
         public void run(){
-            int elapsedMs = (int)((System.nanoTime() - lastRunNano) / 1000000);
-            int sendTime = sendImage();
-            if (elapsedMs > sendTime) {
-                System.out.println("TIme since last sendImage(): " + elapsedMs + " > " + sendTime + " GOOD");
-            } else if (elapsedMs < sendTime){
-                System.out.println("TIme since last sendImage(): " + elapsedMs + " < " + sendTime + " BAD");
-            } else {
-                System.out.println("TIme since last sendImage(): " + elapsedMs + " < " + sendTime + " even");
-            }
-            lastRunNano = System.nanoTime();
+            sendImage();
         }
-
     }
 }

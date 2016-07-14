@@ -26,7 +26,7 @@ public class DockAndShip extends Room {
             try {
                 Thread.sleep(20);
                 //System.out.println("I'm not dead yet! " + ii);
-                updateObjs(20);
+
                 playo.update();
                 playo.addTime(20);
                 if (count == 0){

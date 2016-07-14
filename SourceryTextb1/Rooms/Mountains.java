@@ -23,7 +23,7 @@ public class Mountains extends Room {
                 org.compileImage();
                 Thread.sleep(20);
                 //System.out.println("I'm not dead yet! " + ii);
-                updateObjs(20);
+
                 playo.update();
                 playo.reportPos();
                 playo.addTime(20);
