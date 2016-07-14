@@ -131,6 +131,9 @@ public class ImageOrg {
         if (loc != -1) {
             editLayer(input, loc, y, x);
         }
+        else{
+            System.out.println("No layer with the name " + layerName);
+        }
     }
 
     /** Edit a single element of a Layer's array of strings.  Don't get X and Y mixed up.  Note that you can instead

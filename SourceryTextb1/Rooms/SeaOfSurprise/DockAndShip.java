@@ -92,7 +92,7 @@ public class DockAndShip extends Room {
     }
 
     public void startup(){
-        ititHitMesh();
+        ititHitMeshes();
         playo.goTo(72,51);
         String[][] base = art.strToArray(arty.largeBoat);
         String[] solids = {"|","-","\\", "/","_","="};
@@ -107,7 +107,7 @@ public class DockAndShip extends Room {
         org.addLayer(docklayer);
 
         for (int i = 43; i<46; i++){
-            makePlaceNotSolid(42, i);
+            removeFromObjHitMesh(42, i);
             org.editLayer("X", "Boat", i, 42);
         }
 
@@ -121,7 +121,7 @@ public class DockAndShip extends Room {
         makePiranahAt(24, 23);
         makePiranahAt(28, 24);
 
-        genericInitialize();
+        genericRoomInitialize();
     }
 
     private void makeSpikeAt(int x, int y){

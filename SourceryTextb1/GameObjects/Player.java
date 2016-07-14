@@ -23,7 +23,6 @@ import java.awt.Color;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Random;
-import java.util.Timer;
 import java.util.TimerTask;
 
 
@@ -34,17 +33,12 @@ import static java.lang.Math.abs;
  *
  * @author Riley
  */
-public class Player extends Mortal{
-    private MKeyListener playerKeyListener = new MKeyListener(this);
+public class Player extends Mortal {
+    private KeypressListener playerKeyListener = new KeypressListener(this);
     private GameObject closestFood = null;
     private Inventory inv;
-    private int celeCount = 0;
-    private boolean s1 = false; //toggler for celeb anim
-    private String state1 = "+";
-    private String state2 = "X";
     private boolean autonomous = false;
-    public boolean shouldPause = false;
-    private boolean shouldInventory = false;
+    boolean shouldPause = false;
     private boolean shouldNewInv = false;
     public boolean frozen = true; //This gets changed by a room upon beginning the level
 
@@ -56,107 +50,88 @@ public class Player extends Mortal{
 
     private int orientation = UP;
     boolean orientationLocked = false;
-
     private String aimDispName = "aimDisp";
-
     public Layer castingLayer;
 
     private int superCheatProgress = 0;
     private Color restingBackground = Color.black;
 
     //STATS
-    public int maxHP = 20;
-
-    public int maxMana = 20;
-    public int mana = maxMana;
-    public int manaRegen = 30; //Mana per second
+    int maxHP = 20;
+    int maxMana = 20;
+    int mana = maxMana;
     private int manaRegenClock = 0;
-    //private int manaWaitClock = 0;
-    public int manaWaitStat = 2000; //Waiting before restoring mana
-    public int manaWait = 0;
-
-    public int defense = 0;
+    private int manaWaitStat = 2000; //Waiting before restoring mana
+    private int manaWait = 0;
+    int defense = 0;
     //Note for the future: Damage can't be reduced below 1 damage. Swords and explosions don't heal people.
 
-    public int allSpellBoost = 0;
-    public int arcSpellBoost = 0;
-    public int fireSpellBoost = 0;
-    public int iceSpellBoost = 0;
-    public int darkSpellBoost = 0;
-    public int healBoost, durBoost, rangeBoost, armorHealthBoost = 0;
+    int allSpellBoost = 0;
+    int arcSpellBoost = 0;
+    int fireSpellBoost = 0;
+    int iceSpellBoost = 0;
+    int darkSpellBoost = 0;
+    int healBoost, durBoost, rangeBoost, armorHealthBoost = 0;
 
     //NO MORE STATS
 
     public boolean dead = false;
     private int technicolorIndex = 0;
-    private String primarySpell = "Book";
-    private String secondarySpell = "None";
-
-    public Item spell1 = new Item ("None", "", this);
-    public Item spell2 = new Item ("None", "", this);
-
-    public Item weapon = new Item ("None", "", this);
-    public Item armor  = new Item ("None", "", this);
-
     private int hurtColor = 0;
 
-    /**Initialize a whole lotta variables.
+    public Item spell1 = new Item("None", "", this);
+    public Item spell2 = new Item("None", "", this);
+    public Item weapon = new Item("None", "", this);
+    public Item armor = new Item("None", "", this);
+
+
+    /**
+     * Initialize a whole lotta variables.
+     *
      * @param theOrg the ImageOrg(anizer)
      */
     public Player(ImageOrg theOrg) {
         setHealth(maxHP);
         makeGoodGuy(); // Set good-guy-ness to true.
+        super.maxHealth = maxHP + armorHealthBoost;
         super.strClass = "Player";
         System.out.println("\nNEW PLAYER\n");
 
         orgo = theOrg;
         layerName = "playerLayer";
-
         Layer playerLayer = new Layer(new String[orgo.getWindow().maxH()][orgo.getWindow().maxW()], layerName);
         orgo.addLayer(playerLayer);
         setupForNewRoom();
 
-        super.maxHealth = maxHP + armorHealthBoost;
-
         Window window = orgo.getWindow();
         window.txtArea.addKeyListener(playerKeyListener); // Add key listeners.
-
         inv = new Inventory(orgo, this);
 
-        /*
-        Timer tima = new Timer("tima");
-
-        tima.scheduleAtFixedRate(new PlayerTimerTask(), 20, 20);
-        */
         setupTimer(20);
     }
 
-    public void setPrimarySpell (String spell){
-        primarySpell = spell;
-    }
-    public void setSecondarySpell (String spell){
-        secondarySpell = spell;
-    }
-
-    public void setupForNewRoom(){
+    public void setupForNewRoom() {
         Layer aimDispLayer = new Layer(new String[orgo.getWindow().maxH()][orgo.getWindow().maxW()], aimDispName);
         orgo.setCam(x - 22, y - 8);
         orgo.addLayer(aimDispLayer);
     }
 
-    public void centerCamera(){
+    private void centerCamera() {
         orgo.setCam(x - 22, y - 8);
     }
 
-    /**Change the Player's perception of which room it is in.  As a bonus, celebrate a bit.
+    /**
+     * Change the Player's perception of which room it is in.  As a bonus, celebrate a bit.
+     *
      * @param newRoom a Room that Player should consider itself in
      */
     public void setRoom(Room newRoom) {
-        celeCount = 12;
         room = newRoom;
     }
 
-    /**Set x and y coordinates directly.
+    /**
+     * Set x and y coordinates directly.
+     *
      * @param newX
      * @param newY
      */
@@ -172,29 +147,22 @@ public class Player extends Mortal{
      * Perform a general update of the player.
      */
     @Override
-    public void update(){
-
-        if (shouldPause) {
-            System.out.println("Pausing.");
-            room.pause(orgo);
-            shouldPause = false;
-        } else if (shouldInventory){
-            //orgo.getWindow().removeKeyListener(playerKeyListener);
-            inv.show();
-            //orgo.getWindow().addKeyListener(playerKeyListener);
-            shouldInventory = false;
-        } else if (shouldNewInv){
-            System.out.println("GAME PAUSED\n " + inv.pressedA);
-            inv.newShow();
-            shouldNewInv = false;
-            System.out.println("GAME UNPAUSED");
-        }
-        if (frozen) {
+    public void update() {
+        if (frozen) { // Should be first, so other things don't try to happen first
             try {
                 orgo.editLayer(" ", layerName, y, x);
             } catch (IndexOutOfBoundsException ignored) {
             }
             return;
+        }
+        if (shouldNewInv || shouldPause) {
+            System.out.println("GAME PAUSED\n " + inv.pressedA);
+            //orgo.getWindow().removeKeyListener(playerKeyListener);
+            inv.newShow();
+            //orgo.getWindow().addKeyListener(playerKeyListener);
+            shouldNewInv = false;
+            shouldPause = false;
+            System.out.println("GAME UNPAUSED");
         }
 
         manaRegenClock += getTime();
@@ -208,13 +176,11 @@ public class Player extends Mortal{
             manaRegenClock = 0;
         }
 
-        //System.out.println(getTime());
 
         resetTime();
 
         graphicUpdate();
         aimDispUpdate();
-        //reportPos();
 
         if (autonomous) {
             closestFood = getClosestVisibleFood();
@@ -238,14 +204,14 @@ public class Player extends Mortal{
         } else { // Unset
             closestFood = null;
         }
-        if (dead){
+        if (dead) {
             System.out.println("Apparently you died.");
             System.exit(0);
         }
         updateBackground();
     }
 
-    private void aimDispUpdate(){
+    private void aimDispUpdate() {
         int editAt = orgo.getPosLayer(aimDispName);
         if (editAt > -1) {  //Basically, if aimDispLayer != null
             orgo.getLayer(editAt).clear();
@@ -270,18 +236,21 @@ public class Player extends Mortal{
         }
     }
 
-    public void reportPos(){
+    public void reportPos() {
         System.out.println("Player X: " + x + "\nPlayer Y: " + y + "\n");
     }
 
 
-    /**Generate a random int between 0 and max, inclusive.
+    /**
+     * Generate a random int between 0 and max, inclusive.
+     *
      * @param max the largest number that amy be returned
      * @return a random int
      */
     private int r(int max) {
         return r(max, 0);
     }
+
     private int r(int max, int min) {
         Random rand = new Random();
         // nextInt is normally exclusive of the top value,
@@ -332,11 +301,12 @@ public class Player extends Mortal{
     /**
      * Hurt the player by a specified amount of health.  This will make the game freeze a little, the player flicker,
      * and the text on the screen to flicker between red and white.
+     *
      * @param damage how much health to take away
      */
-    public void hurt(int damage, String deathMessage){
+    public void hurt(int damage, String deathMessage) {
         subtractHealth(damage, deathMessage);
-        hurtColor += damage/3;
+        hurtColor += damage / 3;
         //hurt(); subtractHealth does that
     }
 
@@ -347,19 +317,12 @@ public class Player extends Mortal{
     public void hurt(String deathMessage) {
         orgo.editLayer(" ", layerName, y, x);
         orgo.compileImage();
-        if (checkDeath()){
+        if (checkDeath()) {
             orgo.getWindow().txtArea.setForeground(Color.RED);
             room.compactTextBox(orgo, deathMessage, "An ominous voice from above", false);
             dead = true;
         }
         hurtColor += 3;
-    }
-
-    /**
-     * Start a celebration, now that a food has been eaten
-     */
-    public void celebrate() {
-        celeCount = 5;
     }
 
     private String smallChar = "x";
@@ -378,7 +341,7 @@ public class Player extends Mortal{
         if (!paused.get()) {
             try {
                 orgo.editLayer(" ", layerName, y, x);
-                room.makePlaceNotSolid(x, y);
+                room.removeFromObjHitMesh(x, y);
             } catch (IndexOutOfBoundsException e) {
                 return;
             }
@@ -410,16 +373,22 @@ public class Player extends Mortal{
                 default:
                     System.out.println("Bro, you're using Player.move wrong.");
             }
-            room.makePlaceSolid(x, y);
+            room.addToObjHitMesh(x, y);
             graphicUpdate();
         }
     }
 
-    public void equip(Item toEquip){
-        if (toEquip.getEquipType().toLowerCase().equals("weapon")){
+    /**
+     * Set the Player's weapon or armor, either one.  The new item will fill the player's only armor or weapon slot,
+     * according to its type.
+     *
+     * @param toEquip an Item that should be equipped now
+     */
+    public void equip(Item toEquip) {
+        if (toEquip.getEquipType().toLowerCase().equals("weapon")) {
             weapon = toEquip;
             defineStats();
-        } else if (toEquip.getEquipType().toLowerCase().equals("armor")){
+        } else if (toEquip.getEquipType().toLowerCase().equals("armor")) {
             armor = toEquip;
             defineStats();
         } else {
@@ -427,7 +396,9 @@ public class Player extends Mortal{
         }
     }
 
-    public void defineStats(){
+    @Deprecated // This should be done dynamically.
+    //   Where the spell boost variables are used, the corresponding expression should be used instead. --Riley
+    public void defineStats() {
         defense = armor.getEquipVals()[0];
         armorHealthBoost = armor.getEquipVals()[1];
         allSpellBoost = weapon.getEquipVals()[2];
@@ -466,8 +437,9 @@ public class Player extends Mortal{
             case 'b':
                 autonomous = !autonomous;
                 break;
-            case '\'':
-                shouldPause = true;
+            case '\'': // ESC right now, subject to change
+                shouldNewInv = true;
+                reportPos();
                 break;
             case 'a':
                 orientationLocked = !orientationLocked;
@@ -489,7 +461,7 @@ public class Player extends Mortal{
     }
 
 
-    private void castSpell(String spellName){
+    private void castSpell(String spellName) {
         if (mana >= 1) {
             if (mana >= 1 && spellName.equals("Book") && inv.hasItem("Book")) {
                 room.addObject(new Spell(orgo, room, castingLayer, x, y, orientation, "Book"));
@@ -506,12 +478,12 @@ public class Player extends Mortal{
                 mana -= 3;
             }
             if (mana >= 3 && spellName.equals("SmallHealth") && inv.hasItem("SmallHealth")) {
-                setHealth(getHealth()+10);
+                setHealth(getHealth() + 10);
                 manaWait = manaWaitStat;
                 mana -= 3;
             }
             if (mana >= 20 && spellName.equals("HugeHealth") && inv.hasItem("HugeHealth")) {
-                setHealth(getHealth()+40);
+                setHealth(getHealth() + 40);
                 manaWait = manaWaitStat;
                 mana -= 20;
             }
@@ -523,17 +495,16 @@ public class Player extends Mortal{
             if (spellName.equals("None")) {
                 System.out.println("No spell equipped.");
             }
-            System.out.println("Unrecognised spell ("+spellName+") or it isn't in your inventory or not enough mana.");
-        }
-        else{
+            System.out.println("Unrecognised spell (" + spellName + ") or it isn't in your inventory or not enough mana.");
+        } else {
             System.out.println("You don't have any mana!");
         }
     }
 
-    private void newCastSpell(Item spell){
-        if (spell.isDmgSpell){
+    private void newCastSpell(Item spell) {
+        if (spell.isDmgSpell) {
             int damage = spell.damage + allSpellBoost;
-            switch(spell.getDescMode()){
+            switch (spell.getDescMode()) {
                 case "arcane":
                     damage += arcSpellBoost;
                     break;
@@ -547,10 +518,10 @@ public class Player extends Mortal{
                     damage += darkSpellBoost;
                     break;
             }
-            looseCastDmgSpell(damage, spell.range, spell.cost, spell.animation1, spell.animation2, spell.getAlting());
+            looseCastDmgSpell(damage, spell);
             //System.out.println("Pew! I just fired " + spell.getName());
         } else {
-            switch (spell.getName()){
+            switch (spell.getName()) {
                 case "Heal":
                     if (mana >= spell.cost) {
                         restoreHealth(8);
@@ -561,63 +532,72 @@ public class Player extends Mortal{
         }
     }
 
-    private void spendMana(int cost){
+
+    private void spendMana(int cost) {
         mana -= cost;
-        int wait = 2000 - (int)(1750 * ((float)mana / (float)maxMana));
+        int wait = 2000 - (int) (1750 * ((float) mana / (float) maxMana));
         //System.out.println("Waiting before mana refresh (ms): " + wait + " (" + ((float)mana / (float)maxMana) + ")");
         manaWait = wait;
     }
 
-    private void looseCastDmgSpell(int dmg, int rng, int cost, String anim1, String anim2, boolean alt){
-        if (mana >= cost){
+    private void looseCastDmgSpell(int damage, Item spell) {
+        looseCastDmgSpell(damage, spell.range, spell.cost, spell.animation1, spell.animation2, spell.getAlting());
+    }
+
+    private void looseCastDmgSpell(int dmg, int rng, int cost, String anim1, String anim2, boolean alt) {
+        if (mana >= cost) {
             room.addObject(new Spell(orgo, room, castingLayer, x, y, orientation, dmg, rng, anim1, anim2, alt));
             spendMana(cost);
             //System.out.println("The damage spell fired!");
         }
     }
+
     /**
      * @param newColor a new Color for the player to perceive as the proper one for a background to be
      */
-    public void setBackgroundColor(Color newColor){
+    public void setBackgroundColor(Color newColor) {
         restingBackground = newColor;
     }
 
-    private void updateBackground(){ // Max is about 15 or 16
+    private void updateBackground() { // Max is about 15 or 16
         if (technicolorIndex > 0) { // Update the background color, if you did the supercheat.
-            float r,g,b;
-            r = 0; b = 0; g = 0;
+            float r, g, b;
+            r = 0;
+            b = 0;
+            g = 0;
             // RGB:  001 010 011 100 101 110 111
             //         1   2   3   4   5   6   7
-            if ((technicolorIndex/4) % 2 > 0.){
+            if ((technicolorIndex / 4) % 2 > 0.) {
                 r = .5f;
             }
-            if ((technicolorIndex/2) % 2 > 0){ // Uh
+            if ((technicolorIndex / 2) % 2 > 0) { // Uh
                 g = .5f;
             }
-            if (technicolorIndex % 2 > 0){ // On odds
+            if (technicolorIndex % 2 > 0) { // On odds
                 b = .5f;
             }
             technicolorIndex--;
-            orgo.getWindow().txtArea.setBackground(new Color(r,g,b));
-        }else if (hurtColor > 1){  // update the redness of the screen; more red = more recently hurt more
+            orgo.getWindow().txtArea.setBackground(new Color(r, g, b));
+        } else if (hurtColor > 1) {  // update the redness of the screen; more red = more recently hurt more
             int top = 5;
-            if (hurtColor > top){
+            if (hurtColor > top) {
                 hurtColor = top;
             }
-            float eh = (float)(hurtColor-1)/top;
-            Color c = new Color(1f - eh/2, 1f - eh, 1f - eh);
+            float eh = (float) (hurtColor - 1) / top;
+            Color c = new Color(1f - eh / 2, 1f - eh, 1f - eh);
             orgo.getWindow().txtArea.setForeground(c);
             hurtColor--;
-        }
-        else {
+        } else {
             orgo.getWindow().txtArea.setBackground(restingBackground);
         }
     }
+
     /**
      * Tracker for Up up down down left right left right b a [whatever] cheat.
+     *
      * @param c character that was pressed
      */
-    private void checkCheatProgress(char c){
+    private void checkCheatProgress(char c) {
         //System.out.println(superCheatProgress);
         if (superCheatProgress > 9) {
             // Yay!
@@ -626,36 +606,66 @@ public class Player extends Mortal{
             superCheatProgress = 0;
         }
         //System.out.println(c);
-        switch (superCheatProgress){
+        switch (superCheatProgress) {
             case 0:
-                if (c == '©'){ superCheatProgress++; return; }
+                if (c == '©') {
+                    superCheatProgress++;
+                    return;
+                }
                 break;
             case 1:
-                if (c == '©'){ superCheatProgress++; return; }
+                if (c == '©') {
+                    superCheatProgress++;
+                    return;
+                }
                 break;
             case 2:
-                if (c == '®'){ superCheatProgress++; return; }
+                if (c == '®') {
+                    superCheatProgress++;
+                    return;
+                }
                 break;
             case 3:
-                if (c == '®'){ superCheatProgress++; return; }
+                if (c == '®') {
+                    superCheatProgress++;
+                    return;
+                }
                 break;
             case 4:
-                if (c == 'µ'){ superCheatProgress++; return; }
+                if (c == 'µ') {
+                    superCheatProgress++;
+                    return;
+                }
                 break;
             case 5:
-                if (c == 'æ'){ superCheatProgress++; return; }
+                if (c == 'æ') {
+                    superCheatProgress++;
+                    return;
+                }
                 break;
             case 6:
-                if (c == 'µ'){ superCheatProgress++; return; }
+                if (c == 'µ') {
+                    superCheatProgress++;
+                    return;
+                }
                 break;
             case 7:
-                if (c == 'æ'){ superCheatProgress++; return; }
+                if (c == 'æ') {
+                    superCheatProgress++;
+                    return;
+                }
                 break;
             case 8:
-                if (c == 'b'){ superCheatProgress++; return; }
+                if (c == 'b') {
+                    superCheatProgress++;
+                    return;
+                }
                 break;
             case 9:
-                if (c == 'a'){ superCheatProgress++; return; }
+                if (c == 'a') {
+                    superCheatProgress++;
+                    return;
+                }
                 break;
         }
         //System.out.println("No!  You messed up.");
@@ -683,14 +693,14 @@ public class Player extends Mortal{
     }
 
     public void addItem(Item input) {
-       inv.addItem(input);
+        inv.addItem(input);
     }
 
     public String getSecondarySpell() {
         return spell2.getIcon();
     }
 
-    class PlayerTimerTask extends TimerTask{
+    class PlayerTimerTask extends TimerTask {
 
         @Override
         public void run() {
@@ -702,10 +712,10 @@ public class Player extends Mortal{
 /**
  * A listener class for keypresses, tailored to the Player.
  */
-class MKeyListener extends KeyAdapter {
+class KeypressListener extends KeyAdapter {
     private Player player;
 
-    MKeyListener(Player p) {
+    KeypressListener(Player p) {
         player = p;
     }
 
@@ -735,7 +745,8 @@ class MKeyListener extends KeyAdapter {
                 player.keyPressed('\'');
 
             }
-        }if (player.dead){
+        }
+        if (player.dead) {
             System.out.println("No, stop.  You're dead.");
         }
     }

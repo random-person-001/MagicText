@@ -32,7 +32,6 @@ public class Staff extends GameObject{
             room.infoMessage(orgo, "It would probably behoove you to place that into your inventory, such that you are more civilized than tossing "
                             +       "blunt objects, and can cast spells like a decent member of our society.  Press enter to learn how.");
             orgo.editLayer(" ", layerName, y, x);
-            room.playo.setPrimarySpell("Spark");  //Set primary spell for the player.
             orgo.removeLayer(layerName);
             room.removeObject(this);
         }
