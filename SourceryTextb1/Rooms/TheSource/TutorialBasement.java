@@ -183,8 +183,8 @@ public class TutorialBasement extends Room {
         int[][] locs = {{33, 36, 42, 47, 49, 53, 20},{10, 9, 2, 6, 10, 9, 30}};
         for (int ii = 0; ii < locs.length ; ii++) {
             Spike spike = new Spike(org, this, locs[0][ii], locs[1][ii]);
-            spike.setMoveFrq(100);
-            spike.setDamage(2);
+            spike.setMoveFrq(100000);
+            spike.setAttack(2);
             addMortal(spike);
         }
 

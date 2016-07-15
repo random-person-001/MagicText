@@ -10,8 +10,6 @@ import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
 import java.util.Random;
 
-import static java.lang.Math.abs;
-
 /**
  * A dangerous class, to say the least!
  * @author riley-ubuntu
@@ -21,7 +19,6 @@ public class Spike extends Mortal{
     private int xvariance = 1;
     private int yvariance = 1;
     private int moveFrq = 60; //Higher is slower
-    private int damage = 3;
 
     public Spike(ImageOrg orga, Room theRoom, int xStart, int yStart){
         super.strClass = "Spike";
@@ -40,10 +37,6 @@ public class Spike extends Mortal{
 
     public void setMoveFrq(int newfrq){
         moveFrq = newfrq;
-    }
-
-    public void setDamage(int newDamage) {
-        damage = newDamage;
     }
 
     @Override
@@ -66,15 +59,13 @@ public class Spike extends Mortal{
                     return;
                 }
             }
-            orgo.editLayer("^", layerName, y, x);
             room.addToObjHitMesh(x,y);
-        }else{
-            orgo.editLayer("^", layerName, y, x);
         }
         if (r(moveFrq/2) < 1) { // Cast a spell randomly!  Dangerous, eh?
             room.addObject(new Spell(orgo, room, room.playo.castingLayer, x, y, r(3), "Spark"));
         }
 
+        orgo.editLayer("^", layerName, y, x);
         checkDeath();
 
         if (distanceTo(room.playo) < 3) {
@@ -85,7 +76,7 @@ public class Spike extends Mortal{
             }
             room.foodEaten -= 5;
             */
-            room.playo.hurt(damage, "You know, maybe you should have listened \n when your mother told you not to \n step on spikes.");
+            room.playo.subtractHealth(attack, "You know, maybe you should have listened \n when your mother told you not to \n step on spikes.");
         }
 
     }

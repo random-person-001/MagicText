@@ -10,7 +10,7 @@ public class Mortal extends GameObject {
     protected String layerName;
     private int health = 10;
     public int maxHealth = 50;
-    private int attack = 0;
+    int attack = 0;
     private String deathMessage = "Unknown";
     private boolean isGoodGuy = false;
 
@@ -23,15 +23,18 @@ public class Mortal extends GameObject {
 
     public void subtractHealth(int amountLost, String message){
         if (strClass.equals("Player")){
-            room.playo.hurt(message);
             int damage = (amountLost - room.playo.defense);
-            if (damage < 1) damage = 1;
+            if (damage < 1) {
+                damage = 1;
+            }
             health -= damage;
+            room.playo.showPain(message);
         } else {
             //System.out.println("My health is now " + getHealth());
             health -= amountLost;
         }
     }
+
     public void subtractHealth(int amountLost){
         subtractHealth(amountLost, "Your killer is unknown.");
     }
