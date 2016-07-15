@@ -20,10 +20,13 @@ public class Mortal extends GameObject {
     public int getHealth(){
         return health;
     }
+
     public void subtractHealth(int amountLost, String message){
         if (strClass.equals("Player")){
             room.playo.hurt(message);
-            health -= (amountLost - room.playo.defense);
+            int damage = (amountLost - room.playo.defense);
+            if (damage < 1) damage = 1;
+            health -= damage;
         } else {
             //System.out.println("My health is now " + getHealth());
             health -= amountLost;

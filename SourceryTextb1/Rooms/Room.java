@@ -82,58 +82,6 @@ public class Room {
     }
 
     /**
-     * Loop through all objects that are in the room and tell them to update. (call obj.update() on each)
-     *
-     * @param timeElapsed ms of time since the last one.  Jared knows more about this than Riley.
-     */
-    protected void updateObjs(int timeElapsed) {
-        updateObjs(timeElapsed, 0);
-    }
-
-    protected void updateObjs(int timeElapsed, int startPos) {
-        long startTime = System.nanoTime();
-        String objList = "";
-        int currPos = startPos;
-        flushObjListChanges();
-        try {
-            for (GameObject obj : objs) {
-                try {
-                    objList += obj.strClass + ", ";
-                    long nanos = System.nanoTime();
-                    obj.update();
-                    obj.addTime(timeElapsed);
-                    currPos++;
-                    if (currPos % 20 == 19) objList += "\n";
-                } catch (ConcurrentModificationException ignore) { // Happens normally when an object is removed or added to the room
-                    System.out.println("Whoops, something weird! [Room.java: updateObjs(): caught a ConcurrentModificationException]");
-                    currPos++;
-                    updateObjs(timeElapsed, currPos);
-                } catch (NullPointerException e) {
-                    System.out.println("[Room.java: updateObjs(): caught nullpointer!  Probably Not Good!");
-                    System.out.println(e);
-                    currPos++;
-                    updateObjs(timeElapsed, currPos);
-                }
-                //System.out.println("\nUPDATED OBJS: " + objList + "\n(" + (startPos) + "-" + (currPos) + " of " + objs.size() + ")\n");
-                if (startPos == 0 && currPos == objs.size()) {
-                    //System.out.println("ALL OBJS UPDATED SUCCESSFULLY");
-                }
-                //System.out.println("\nAdded Objects : " + addList.size() + "\nRemoved Objects: " + removeList.size());
-                //System.out.println("\nTOTAL UPDATE TIME: " + ((System.nanoTime() - startTime) / 1000) + "\n\n\n\n\n\n\n\nNEW UPDATE\n");
-                
-            }
-        }
-        catch (ConcurrentModificationException e){
-            System.out.println("Concurrent exception on the loopy for thing of updating stuff");
-            try {
-                Thread.sleep((long) 20.86968463445556834);
-            } catch (InterruptedException ignore) {
-            }
-            updateObjs(timeElapsed, currPos);
-        }
-    }
-
-    /**
      * General work to be done at the end of a level.  Cleans layers for exit, cancels the timers of everything but the
      * Player, and clears the list of objects.
      */

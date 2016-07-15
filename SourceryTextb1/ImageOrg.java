@@ -27,7 +27,7 @@ public class ImageOrg {
     
     public ImageOrg(Window game){
         Timer timer = new Timer();
-        timer.scheduleAtFixedRate(new frameTimer(), 0, 100);
+        timer.scheduleAtFixedRate(new frameTimer(), 0, 50);
         window = game;
     }
 
@@ -150,7 +150,7 @@ public class ImageOrg {
                 get.setStr(r, c, input);
             }
             //smartImageMod(input, loc, r, c);
-        }catch (ArrayIndexOutOfBoundsException e){System.out.println("No such layer!" + e);}
+        } catch (ArrayIndexOutOfBoundsException e){System.out.println("No such layer! " + e);}
     }
 
     /**
@@ -297,7 +297,8 @@ public class ImageOrg {
         */
     }
 
-    public void sendImage(){
+    public int sendImage(){
+        long nanoTime = System.nanoTime();
         addTheLayers();
         removeTheLayers();
         window.clearImage();
@@ -309,6 +310,9 @@ public class ImageOrg {
             }
         }
         window.build();
+        int elapsedMs = (int)((System.nanoTime() - nanoTime) / 1000000);
+        //System.out.println("NEW Longest update time: " + elapsedMs + "ms");
+        return elapsedMs;
     }
 
     /**
@@ -328,6 +332,13 @@ public class ImageOrg {
     }
 
     public class frameTimer extends TimerTask {
+
+        long lastRunNano = 0;
+
+        public frameTimer(){
+            lastRunNano = System.nanoTime();
+        }
+
         public void run(){
             sendImage();
         }

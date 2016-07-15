@@ -454,8 +454,7 @@ public class Player extends Mortal {
                 shouldNewInv = true;
                 break;
             case 'q':
-                System.out.println("Za, man. Ima pausing the game, yo. I'm ze player talkin'");
-                room.compactTextBox(orgo, "Testing compactTextBox.", "", false);
+                reportPos();
                 break;
             default:
                 System.out.print(key);

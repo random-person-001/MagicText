@@ -23,8 +23,7 @@ public class RoomThree extends Room {
         while(exitCode == 0){
             try {
                 Thread.sleep(75);
-                //System.out.println("I'm not dead yet! " + ii);
-                updateObjs(75);
+                //System.out.println
                 play.update();//Update player
                 //play.reportPos();
                 org.compileImage();
