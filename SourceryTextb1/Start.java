@@ -85,7 +85,7 @@ public class Start {
                         Mountains mtns = new Mountains(org, player);
                         prepLevel(org, game, player, mtns, 0);
                         mtns.startup();
-                        //roomID = mtns.enter();
+                        roomID = mtns.enter();
                         break;
                     default:
                         System.out.println("You were directed to a world which is not yet registered in Start.java." +

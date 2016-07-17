@@ -40,7 +40,12 @@ public class ThePit extends Room {
                 Thread.sleep(20);
                 //updateObjs(20);
                 if (getPlayer().getY() <= 1){
-                    //exitCode = 4;
+                    exitCode = "Mountains";
+                }
+                if (getPlayer().getX() == 87 && getPlayer().getY() == 6){
+                    System.out.println("Nooo!  You're escaping!");
+                    compactTextBox(org, "Hey!  You're escaping!\n Don't you know you shouldn't\n do that?","THE CODE",false);
+
                 }
                 if (super.playo.dead){
                     exitCode = "die";

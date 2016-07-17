@@ -301,22 +301,12 @@ public class Player extends Mortal {
     }
 
     /**
-     * Hurt the player by a specified amount of health.  This will make the game freeze a little, the player flicker,
-     * and the text on the screen to flicker between red and white.
+     * Show the player was damaged.  This will make the player flicker and the text on
+     * the screen to flicker between to be more red than white.  Probably only called after subtractHealth in Mortal.
      *
-     * @param damage how much health to take away
+     * @param deathMessage a final string to show lest you have died
      */
-    public void hurt(int damage, String deathMessage) {
-        subtractHealth(damage, deathMessage);
-        hurtColor += damage / 3;
-        //hurt(); subtractHealth does that
-    }
-
-    /**
-     * Hurt the player without damage.  This will make the game freeze a little, the player flicker, and the text on
-     * the screen to flicker between red and white.
-     */
-    public void hurt(String deathMessage) {
+    public void showPain(String deathMessage) {
         orgo.editLayer(" ", layerName, y, x);
         orgo.compileImage();
         if (checkDeath()) {

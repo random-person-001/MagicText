@@ -47,13 +47,13 @@ public class Room {
     public int index;
 
     /**
-     * Try to hurt a mortal at a specified location
+     * Try to subtractHealth a mortal at a specified location
      *
      * @param x           the X coord of the possible mortal
      * @param y           the Y coord of the possible mortal
-     * @param damage      how much to hurt any mortals if they're there
+     * @param damage      how much to subtractHealth any mortals if they're there
      * @param killMessage if you are hurting a player, what do you want to be said upon their death?
-     * @return whether there was an mortals there, and thus whether they got hurt
+     * @return whether there was an mortals there, and thus whether they got subtractHealth
      */
     public boolean hurtSomethingAt(int x, int y, int damage, String killMessage) {
         for (Mortal e : enemies) {

@@ -14,11 +14,11 @@ public class Mountains extends Room {
     private int maxW;
 
 
-    private void loop() {
-        int exitCode = 0;
+    private String loop() {
+        String exitid = "";
         int count = 0;
         boolean warnedOfEdge = false;
-        while (exitCode == 0) {
+        while (exitid.equals("")) {
             try {
                 org.compileImage();
                 Thread.sleep(20);
@@ -32,7 +32,7 @@ public class Mountains extends Room {
                     count++;
                 }
                 if (baseLayer.getStr(playo.getY(), playo.getX()).equals(".")){ // Walking the critical edge
-                    playo.hurt(1, "Do.  Not.  Walk.  The critical edge.");
+                    playo.subtractHealth(1, "Do.  Not.  Walk.  The critical edge.");
                     if (!warnedOfEdge) {
                         compactTextBox(org, "Don't walk the critical edge!", "", false);
                         warnedOfEdge = true;
@@ -41,11 +41,12 @@ public class Mountains extends Room {
                 enemies.forEach(this::checkMortalBelowEdge); // OK, intelliJ.  Sure.
 
                 if (playo.getX() == 91 && playo.getY() == 44){
-                    exitCode = 1;
+                    exitid = "die";
                 }
             } catch (InterruptedException ignored) {
             }
         }
+        return exitid;
     }
 
     private void checkMortalBelowEdge(Mortal m){
@@ -94,12 +95,13 @@ public class Mountains extends Room {
     /**
      * Enter the room. IE, start loops and stuff now.
      */
-    public void enter() {
+    public String enter() {
         org.compileImage();
         playo.frozen = false;
-        loop();
+        String toReturn = loop();
         playo.frozen = true;
         super.cleanLayersForExit(org);
+        return toReturn;
     }
 
     public Mountains(ImageOrg orgo, Player player) {

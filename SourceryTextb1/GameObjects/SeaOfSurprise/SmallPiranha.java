@@ -90,8 +90,8 @@ public class SmallPiranha extends Mortal{
         orgo.editLayer("p", layerName, y, x);
         room.addMortal(this);
 
-        if (abs(room.playo.getY() - y) <= 3 && abs(room.playo.getX() - x) <= 3) {
-            room.playo.hurt(3, "You know, maybe you should have listened \n when your mother told you not to \n play with piranhas.");
+        if (distanceTo(room.playo) <= 3) {
+            room.playo.subtractHealth(3, "You know, maybe you should have listened \n when your mother told you not to \n play with piranhas.");
         }
         if (checkDeath()) {
             if (orgo.getDebug())
