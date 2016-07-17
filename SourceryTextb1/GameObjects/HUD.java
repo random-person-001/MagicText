@@ -93,12 +93,16 @@ public class HUD extends GameObject{
 
         putChar("[");
 
-        // Food count
-        putChar(Integer.toString(abs(room.playo.getHealth() / 10)));
-        putChar(Integer.toString(abs(room.playo.getHealth() / 1 - 10*(room.playo.getHealth() / 10))));
+        // Your health
+        String healthValue = String.valueOf(room.playo.getHealth());
+        putChar(String.valueOf(healthValue.charAt(0)));
+        putChar(String.valueOf(healthValue.charAt(1)));
         for (int ii = 0; ii < 10 ; ii++){
-            if (ii < (((float)room.playo.getHealth() / (float)room.playo.maxHP) * 10)){
+            int fillPoint = (int)Math.ceil(((float)room.playo.getHealth() / (float)room.playo.maxHP) * 10);
+            if (fillPoint > 10 && ii < fillPoint - 10){
                 putChar("#");
+            } else if (ii < fillPoint){
+                putChar("+");
             } else {
                 putChar("_");
             }
@@ -129,10 +133,13 @@ public class HUD extends GameObject{
 
         // Mana bar
         for (int ii = 0; ii < 10 ; ii++){
-            if (ii < (((float)room.playo.mana / (float)room.playo.maxMana) * 10)){
+            int fillPoint = (int)Math.ceil(((float)room.playo.mana / (float)room.playo.maxMana) * 10);
+            if (ii < fillPoint){
                 putChar("=");
-            } else {
+            } else if (ii < (int)Math.ceil(((float)(2000 - room.playo.manaWait) / 2000.0f) * 10)){
                 putChar("_");
+            } else {
+                putChar(" ");
             }
         }
         putChar("}");

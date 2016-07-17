@@ -62,7 +62,7 @@ public class Player extends Mortal {
     int mana = maxMana;
     private int manaRegenClock = 0;
     private int manaWaitStat = 2000; //Waiting before restoring mana
-    private int manaWait = 0;
+    protected int manaWait = 0;
     int defense = 0;
     //Note for the future: Damage can't be reduced below 1 damage. Swords and explosions don't heal people.
 
@@ -96,6 +96,8 @@ public class Player extends Mortal {
         super.maxHealth = maxHP + armorHealthBoost;
         super.strClass = "Player";
         System.out.println("\nNEW PLAYER\n");
+
+        setHealth(21);
 
         orgo = theOrg;
         layerName = "playerLayer";
@@ -418,7 +420,7 @@ public class Player extends Mortal {
      * @param key a character that was pressed on the leopard
      */
     void keyPressed(char key) {
-        switch (key) {
+        switch (Character.toLowerCase(key)) {
             case '©':
                 move(UP);
                 break;
@@ -456,11 +458,31 @@ public class Player extends Mortal {
             case 'q':
                 reportPos();
                 break;
+            case 'f':
+                textBoxQuery();
+                break;
             default:
                 System.out.print(key);
         }
         graphicUpdate();
         checkCheatProgress(key);
+    }
+
+    private void textBoxQuery(){
+        switch(orientation){
+            case UP:
+                room.queryForText(getX(), getY() - 1);
+                break;
+            case DOWN:
+                room.queryForText(getX(), getY() + 1);
+                break;
+            case RIGHT:
+                room.queryForText(getX() + 1, getY());
+                break;
+            case LEFT:
+                room.queryForText(getX() - 1, getY());
+                break;
+        }
     }
 
 

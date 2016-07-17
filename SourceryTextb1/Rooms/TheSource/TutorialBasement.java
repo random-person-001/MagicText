@@ -50,20 +50,20 @@ public class TutorialBasement extends Room {
                 Thread.sleep(20);
 
                 if (count == 0){
-                    compactTextBox(org, "You've woken up in a basement somewhere.\nWoah, there's now lots of text everywhere!", "", true);
-                    compactTextBox(org, "You should explore the basement!\nUse the arrow keys to navigate the place.", "", false);
+                    textBox(new FlavorText("You've woken up in a basement somewhere.\nWoah, there's now lots of text everywhere!", "", true));
+                    textBox(new FlavorText("You should explore the basement!\nUse the arrow keys to navigate the place.", ""));
                     count++;
                 }
                 if (count == 1 && getPlayer().getX() == 5 && getPlayer().getY() == 23){
-                    compactTextBox(org, "Ahead of you is a pot of petunias. \nPretty, isn't it?\nHowever, it's in the way...", "", false);
-                    compactTextBox(org, "Luckily, you were a student at\n The Magic Academy, so you must know\n plenty of spells to help you, right?", "", false);
-                    compactTextBox(org, "WRONG. You dropped out of magic school.\nYou know absolutely nothing. Nothing.\nYou have no memory of how to cast any spell", "", false);
-                    compactTextBox(org, "Most spells ARE written down, so if you\n stumble upon some spare magic literature,\n you can just follow the instructions.", "", false);
-                    compactTextBox(org, "Unfortunately, your coat pockets\n are empty. Or in this case, robe pockets.\n", "", false);
+                    textBox(new FlavorText("Ahead of you is a pot of petunias. \nPretty, isn't it?\nHowever, it's in the way...", ""));
+                    textBox(new FlavorText("Luckily, you were a student at\n The Magic Academy, so you must know\n plenty of spells to help you, right?", ""));
+                    textBox(new FlavorText("WRONG. You dropped out of magic school.\nYou know absolutely nothing. Nothing.\nYou have no memory of how to cast any spell", ""));
+                    textBox(new FlavorText("Most spells ARE written down, so if you\n stumble upon some spare magic literature,\n you can just follow the instructions.", ""));
+                    textBox(new FlavorText("Unfortunately, your coat pockets\n are empty. Or in this case, robe pockets.\n", ""));
                     count++;
                 }
                 if (!holdDownReminder && getPlayer().getX() > 14 && getPlayer().getX() < 20 && getPlayer().getY() == 22){
-                    compactTextBox(org, "You can hold down the arrow keys\n to move very quickly", "", false);
+                    textBox(new FlavorText("You can hold down the arrow keys\n to move very quickly.", ""));
                     holdDownReminder = true;
                 }
                 if (getPlayer().getX() == 87 && getPlayer().getY() == 35){
@@ -75,50 +75,51 @@ public class TutorialBasement extends Room {
                 }
                 if (getPlayer().getX() == 67 && getPlayer().getY() == 32){
                     if(!inMaze){
-                        compactTextBox(org, "Wow, there's a lot of junk here!\nDoes the owner of this basement\n realize there are other rooms...", "", false);
-                        compactTextBox(org, "...in this basement that he can also\n put stuff in?\nSeriously, you woke up in an empty room.", "", false);
+                        textBox(new FlavorText("Wow, there's a lot of junk here!\nDoes the owner of this basement\n realize there are other rooms...", ""));
+                        textBox(new FlavorText("...in this basement that he can also\n put stuff in?\nSeriously, you woke up in an empty room.", ""));
                     }
                     inMaze = true;
                     System.out.println("IN THE MAZE....");
                 }
                 if (count == 2 && getPlayer().getX() > 14 && getPlayer().getX() < 20 && getPlayer().getY() == 22 && (foundSpell1 || foundSpell2)){
-                    compactTextBox(org, "Now that you are armed with\n some magic scrolls, you can\n defeat the pot of petunias!", "", false);
-                    compactTextBox(org, "Push 'W' to open the menu.\nPush 'A' to confirm an option that\n the cursor is selecting", "", false);
-                    compactTextBox(org, "Go to 'Spells' and Push either 'S' or 'D'\n to bind a spell to to keys 'S' and 'D'", "", false);
+                    textBox(new FlavorText("Now that you are armed with\n some magic scrolls, you can\n defeat the pot of petunias!", ""));
+                    textBox(new FlavorText("Push 'W' to open the menu.\nPush 'A' to confirm an option that\n the cursor is selecting", ""));
+                    textBox(new FlavorText("Go to 'Spells' and Push either 'S' or 'D'\n to bind a spell to to keys 'S' and 'D'", ""));
                     count++;
                 }
                 if (inMaze && (!foundSpell1 ^ !foundSpell2) && !leavingEarly && getPlayer().getX() == 66 && getPlayer().getY() == 32){
-                    compactTextBox(org, "There may be other spells hidden in the maze.\n You may want to head back.", "", false);
+                    textBox(new FlavorText("There may be other spells hidden in the maze.\n You may want to head back.", ""));
                     leavingEarly = true;
                 }
                 if (inMaze && !(foundSpell1 || foundSpell2) && !leavingEarly && getPlayer().getX() == 66 && getPlayer().getY() == 32){
-                    compactTextBox(org, "There are some spells hidden in the maze.\n You may want to head back.", "", false);
+                    textBox(new FlavorText("There are some spells hidden in the maze.\n You may want to head back.", ""));
                     leavingEarly = true;
                 }
                 if (count == 3 && getPlayer().getX() == 5 && getPlayer().getY() == 22){
-                    compactTextBox(org, "Casting spells is simple:\nPush the 'S' and 'D' key to cast the\n spell bound to its respective key", "", false);
+                    textBox(new FlavorText("Casting spells is simple:\nPush the 'S' and 'D' key to cast the\n spell bound to its respective key", ""));
                     count++;
                 }
                 if (count == 4 && getPlayer().getX() == 5 && getPlayer().getY() == 14){
-                    compactTextBox(org, "You've managed to defeat\n The Pot of Petunias!\nCongratulations!", "", false);
-                    compactTextBox(org, "As you may have noticed, the bar on the\n top right had depleted a little.\nThat is your mana bar.", "", false);
-                    compactTextBox(org, "Casting spells cost mana. You can't cast\n any spells if you run out.", "", false);
-                    compactTextBox(org, "Fortunately, your mana regenerates\n shortly after not casting spells\n for a bit.", "", false);
-                    compactTextBox(org, "Note: The less mana you spend,\n the less you have to wait before\n your mana refills.", "", false);
+                    textBox(new FlavorText("You've managed to defeat\n The Pot of Petunias!\nCongratulations!", ""));
+                    textBox(new FlavorText("As you may have noticed, the bar on the\n top right had depleted a little.\nThat is your mana bar.", ""));
+                    textBox(new FlavorText("Casting spells cost mana. You can't cast\n any spells if you run out.", ""));
+                    textBox(new FlavorText("", ""));
+                    textBox(new FlavorText("Fortunately, your mana regenerates\n shortly after not casting spells\n for a bit.", "", false));
+                    textBox(new FlavorText("Note: The less mana you spend,\n the less you have to wait before\n your mana refills.", "", false));
                     count++;
                 }
                 if (count == 5 && ((getPlayer().getX() == 5 && getPlayer().getY() == 6))){
-                    compactTextBox(org, "The next room is full of spikes.\n They look like ^","",false);
-                    compactTextBox(org, "For some reason the spikes are\n able to shoot magic everywhere.", "", false);
-                    compactTextBox(org, "Pushing the 'A' key locks your aim,\n allowing you to comfortably strafe\n while casting spells, dodging their magic", "", false);
+                    textBox(new FlavorText("The next room is full of spikes.\n They look like ^","",false));
+                    textBox(new FlavorText("For some reason the spikes are\n able to shoot magic everywhere.", "", false));
+                    textBox(new FlavorText("Pushing the 'A' key locks your aim,\n allowing you to comfortably strafe\n while casting spells, dodging their magic", "", false));
                     count++;
                 }
                 if (count == 6 && (getPlayer().getX() >= 84 && getPlayer().getY() == 16 && getPlayer().getX() <= 91)){
                     count++;
                 }
                 if (count == 7 && getPlayer().getY() >= 17){
-                    compactTextBox(org, "You have probably stumbled upon\n some weapons. You should go to\n the 'Equipment' menu.", "", false);
-                    compactTextBox(org, "Use the 'A' key to equip a weapon.", "", false);
+                    textBox(new FlavorText("You have probably stumbled upon\n some weapons. You should go to\n the 'Equipment' menu.", "", false));
+                    textBox(new FlavorText("Use the 'A' key to equip a weapon.", "", false));
                     count++;
                 }
                 if (getPlayer().getX() > 132){
@@ -140,6 +141,9 @@ public class TutorialBasement extends Room {
 
         super.playo.goTo(20,29);
 
+        FlavorText playerStart = new FlavorText(20, 29, "You start here!", "");
+        addMessage(playerStart);
+
         art arty = new art();
         String[][] base = art.strToArray(arty.tutForest);
         String[] solids = {"|","-","0","/",",","#","%","$","'"};
@@ -150,7 +154,7 @@ public class TutorialBasement extends Room {
 
         Item dartSpell = new Item ("Astral Dart", "Arcane Spell;\nFires a small bolt of\n pure stardust.", "AstDt", playo, "spell", false);
         dartSpell.dmgSpellDefine(2, 9, 2, "arcane", "|", "-");
-        DroppedItem gSpark =  new DroppedItem(this, org, "You found a spell: Astral Dart!", dartSpell, "drops", 18, 29);
+        DroppedItem gSpark =  new DroppedItem(this, org, "You found a spell: Astral Dart!", dartSpell, "drops", 87, 35);
         super.addObject(gSpark);
 
         Item fireSpell = new Item ("Fireball", "Fire Spell;\nUse your imagination.", "FrBll", playo, "spell", true);

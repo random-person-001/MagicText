@@ -17,6 +17,7 @@ public class Mortal extends GameObject {
     public String getLayerName(){
         return layerName;
     }
+
     public int getHealth(){
         return health;
     }
@@ -40,10 +41,18 @@ public class Mortal extends GameObject {
         health = newHealth;
     }
 
-    public void restoreHealth (int addHP) {
+    public void restoreHealth( int addHP){
+        restoreHealth(addHP, 0);
+    }
+
+    public void restoreHealth (int addHP, int maxOverHeal) {
         health += addHP;
-        if (health > maxHealth){
-            health = maxHealth;
+        int newMax = maxHealth + maxOverHeal;
+        if (newMax > maxHealth * 2){
+            newMax = maxHealth * 2;
+        }
+        if (health > newMax){
+            health = newMax;
         }
     }
 

@@ -8,8 +8,7 @@ package SourceryTextb1.Rooms;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
 
 import SourceryTextb1.GameObjects.*;
@@ -17,8 +16,6 @@ import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
 import SourceryTextb1.Window;
 import SourceryTextb1.art;
-
-import java.util.ConcurrentModificationException;
 
 import static java.awt.Color.*;
 
@@ -35,6 +32,9 @@ public class Room {
     public HashMap storedStuff = new HashMap<String, Integer>();
     boolean[][] objHitMesh;
     boolean[][] baseHitMesh;
+
+    public List<FlavorText> flavorTexts = new ArrayList<>();
+    public List<FlavorText> messageQueue = new ArrayList<>();
 
     public Player playo;
 
@@ -139,9 +139,9 @@ public class Room {
                 obj.setPause(set);
                 //objManifest += obj.strClass + ", ";
             } catch (ConcurrentModificationException ignore) { // Happens normally when an object is removed or added to the room
-                System.out.println("Whoops, something weird! [Room.java: updateObjs(): caught a ConcurrentModificationException]");
+                System.out.println("Whoops, something weird! [Room.java: setObjsPuase(): caught a ConcurrentModificationException]");
             } catch (NullPointerException e) {
-                System.out.println("[Room.java: updateObjs(): caught nullpointer!  Probably Not Good!");
+                System.out.println("[Room.java: setObjsPause(): caught nullpointer!  Probably Not Good!");
                 System.out.println(e);
             }
             //System.out.println("OBJS PAUSED: " + objManifest + "\n");
@@ -151,6 +151,14 @@ public class Room {
 
     public void addObject(GameObject theObj) {
         addList.add(theObj);
+    }
+
+    public void addMessage(FlavorText thing){ flavorTexts.add(thing); }
+
+    public void queryForText(int testX, int testY){
+        for (FlavorText text : flavorTexts){
+            text.textIfCorrectSpot(testX, testY);
+        }
     }
 
     /**
@@ -381,6 +389,15 @@ public class Room {
         window.txtArea.removeKeyListener(keyListener);
     }
 
+    public void textBox(FlavorText message){
+        messageQueue.add(message);
+        //System.out.println("TOTAL QUEUED MESSAGES: " + messageQueue.size());
+        if (messageQueue.size() == 1){
+            //System.out.println("NOW PRINTING");
+            messageQueue.get(0).doMessage();
+        }
+    }
+
     /**
      * Draw a smallish text box at the bottom of the screen, waiting for enter to be pressed to dismiss it.
      *
@@ -421,63 +438,18 @@ public class Room {
         org.addLayer(txtBox);
         org.compileImage();
 
+        System.out.println(text);
+
         Window window = org.getWindow();
         Dismissal keyListener = new Dismissal();
         window.txtArea.addKeyListener(keyListener); // Add key listeners.
-        while (!keyListener.resume) {
-            try {
-                Thread.sleep(300);
-            } catch (InterruptedException ignored) {
-            }
-        }
+        keyListener.resume = false;
 
-        setObjsPause(false);
-        org.removeLayer("Dialog");
-        window.txtArea.removeKeyListener(keyListener);
+        Timer listenTick = new Timer();
+        TextBoxListener listen = new TextBoxListener(keyListener, window);
+        listenTick.scheduleAtFixedRate(listen, 100, 100);
+
         /**/
-    }
-
-    /**
-     * An oldish, kinda messy method for pausing the game
-     *
-     * @param org the image organizer
-     */
-    public void pause(ImageOrg org) {
-        art arty = new art();
-        int camStartX = org.getCamX();
-        Layer bkgd = new Layer(art.strToArray(arty.pauseBkgd), "pause", false, true);
-        org.addLayer(bkgd);
-        String[][] textArr = art.strToArray(arty.pausedText);
-        Layer texty = new Layer(textArr, "texty", org.getCamY() + 1, org.getCamX());
-        org.addLayer(texty);
-
-        Window window = org.getWindow();
-        PauseSelector keyListener = new PauseSelector(org);
-        window.txtArea.addKeyListener(keyListener); // Add key listeners.
-        while (!keyListener.resume) {
-            try {
-                int newX;
-                if (org.getCamX() < -1 * textArr[0].length - 6) {
-                    newX = textArr[0].length;
-                } else {
-                    newX = org.getCamX() - 1;
-                }
-                org.setCam(newX, org.getCamY());
-                org.compileImage();
-                if (keyListener.options) {
-                    window.txtArea.removeKeyListener(keyListener);
-                    options(org);
-                    window.txtArea.addKeyListener(keyListener); // Add key listeners.
-                    keyListener.options = false;
-                }
-                Thread.sleep(70);
-            } catch (InterruptedException ignored) {
-            }
-        }
-        org.setCam(camStartX, org.getCamY());
-        org.removeLayer("pause");
-        org.removeLayer("texty");
-        window.txtArea.removeKeyListener(keyListener);
     }
 
     /**
@@ -520,6 +492,98 @@ public class Room {
         org.removeLayer("opts");
         org.removeLayer("texty");
         window.txtArea.removeKeyListener(keyListener);
+    }
+
+    public class FlavorText {
+
+        String[] messages = {""};
+        String speaker =  "";
+        int x;
+        int y;
+
+        public boolean isHelpful = false;
+
+        public FlavorText(int xLoc, int yLoc, String[] theMessage, String theSpeaker){
+            x = xLoc;
+            y = yLoc;
+            messages = theMessage;
+            speaker = theSpeaker;
+        }
+
+        public FlavorText(int xLoc, int yLoc, String theMessage, String theSpeaker){
+            x = xLoc;
+            y = yLoc;
+            String[] messageArray = new String[1];
+            messageArray[0] = theMessage;
+            messages = messageArray;
+            speaker = theSpeaker;
+        }
+
+        public FlavorText(String theMessage, String theSpeaker, boolean helpful){
+            x = 0;
+            y = 0;
+            String[] messageArray = new String[1];
+            messageArray[0] = theMessage;
+            messages = messageArray;
+            speaker = theSpeaker;
+            isHelpful = helpful;
+        }
+
+        public FlavorText(String theMessage, String theSpeaker){
+            x = 0;
+            y = 0;
+            String[] messageArray = new String[1];
+            messageArray[0] = theMessage;
+            messages = messageArray;
+            speaker = theSpeaker;
+        }
+
+        public int getX(){
+            return x;
+        }
+
+        public int getY(){
+            return y;
+        }
+
+        public void textIfCorrectSpot (int testX, int testY){
+            if (x == testX && y == testY){
+                doMessage();
+            }
+        }
+
+        public void doMessage(){
+            for (String message : messages) {
+                compactTextBox(org, message, speaker, isHelpful);
+            }
+        }
+
+    }
+
+    class TextBoxListener extends TimerTask {
+
+        Dismissal listener;
+        Window window;
+
+        protected TextBoxListener(Dismissal dismiss, Window windouw){
+            listener = dismiss;
+            window = windouw;
+        }
+
+        public void run(){
+            if (listener.resume){
+                setObjsPause(false);
+                org.removeLayer("Dialog");
+                window.txtArea.removeKeyListener(listener);
+                cancel();
+                if (messageQueue.size() > 0){
+                    messageQueue.remove(messageQueue.get(0));
+                }
+                if (messageQueue.size() >= 1){
+                    messageQueue.get(0).doMessage();
+                }
+            }
+        }
     }
 
 
@@ -647,7 +711,7 @@ class OptionsSelector extends KeyAdapter {
  * to true
  */
 class Dismissal extends KeyAdapter {
-    boolean resume = false;
+    public boolean resume = false;
 
     @Override
     public void keyPressed(KeyEvent event) {
