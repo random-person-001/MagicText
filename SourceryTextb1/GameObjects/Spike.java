@@ -41,26 +41,7 @@ public class Spike extends Mortal{
 
     @Override
     public void update(){  // Moves a bit when it feels the urge.
-        if (r(moveFrq) < 1) {
-            orgo.editLayer(" ", layerName, y, x);
-            room.removeFromObjHitMesh(x,y);
-            boolean goodPlace = false;
-            int rationality = 40000;
-            while (!goodPlace){
-                int newX = x + r(2 * xvariance) - xvariance;
-                int newY = y + r(2 * yvariance) - yvariance;
-                if (!room.isPlaceSolid(newX, newY)){
-                    goodPlace = true;
-                }
-                rationality --;
-                if (rationality < 0){ // We're stuck in a really bad spot.  Suicide is painless, so they say...
-                    room.removeMortal(this);
-                    System.out.println("Spike at x=" + x + " y=" + y + " committing suicide cuz there's a very low chance it's not stuck");
-                    return;
-                }
-            }
-            room.addToObjHitMesh(x,y);
-        }
+
         if (r(moveFrq/2) < 1) { // Cast a spell randomly!  Dangerous, eh?
             room.addObject(new Spell(orgo, room, room.playo.castingLayer, x, y, r(3), "Spark"));
         }

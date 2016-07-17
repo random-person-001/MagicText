@@ -391,10 +391,9 @@ public class Room {
 
     public void textBox(FlavorText message){
         messageQueue.add(message);
-        //System.out.println("TOTAL QUEUED MESSAGES: " + messageQueue.size());
+        System.out.println("MESSAGE STACK SIZE: " + messageQueue.size());
         if (messageQueue.size() == 1){
-            //System.out.println("NOW PRINTING");
-            messageQueue.get(0).doMessage();
+            messageQueue.get(0).output();
         }
     }
 
@@ -438,12 +437,12 @@ public class Room {
         org.addLayer(txtBox);
         org.compileImage();
 
-        System.out.println(text);
-
         Window window = org.getWindow();
         Dismissal keyListener = new Dismissal();
         window.txtArea.addKeyListener(keyListener); // Add key listeners.
         keyListener.resume = false;
+
+        //System.out.println(text);
 
         Timer listenTick = new Timer();
         TextBoxListener listen = new TextBoxListener(keyListener, window);
@@ -554,8 +553,14 @@ public class Room {
 
         public void doMessage(){
             for (String message : messages) {
-                compactTextBox(org, message, speaker, isHelpful);
+                //System.out.println("STACKING FOLLOWING MESSAGE:\n " + message);
+                FlavorText panel = new FlavorText(x, y, message, speaker);
+                textBox(panel);
             }
+        }
+
+        public void output(){
+            compactTextBox(org, messages[0], speaker, isHelpful);
         }
 
     }
@@ -580,7 +585,7 @@ public class Room {
                     messageQueue.remove(messageQueue.get(0));
                 }
                 if (messageQueue.size() >= 1){
-                    messageQueue.get(0).doMessage();
+                    messageQueue.get(0).output();
                 }
             }
         }

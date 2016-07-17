@@ -97,8 +97,6 @@ public class Player extends Mortal {
         super.strClass = "Player";
         System.out.println("\nNEW PLAYER\n");
 
-        setHealth(21);
-
         orgo = theOrg;
         layerName = "playerLayer";
         Layer playerLayer = new Layer(new String[orgo.getWindow().maxH()][orgo.getWindow().maxW()], layerName);

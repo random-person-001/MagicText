@@ -103,7 +103,6 @@ public class TutorialBasement extends Room {
                     textBox(new FlavorText("You've managed to defeat\n The Pot of Petunias!\nCongratulations!", ""));
                     textBox(new FlavorText("As you may have noticed, the bar on the\n top right had depleted a little.\nThat is your mana bar.", ""));
                     textBox(new FlavorText("Casting spells cost mana. You can't cast\n any spells if you run out.", ""));
-                    textBox(new FlavorText("", ""));
                     textBox(new FlavorText("Fortunately, your mana regenerates\n shortly after not casting spells\n for a bit.", "", false));
                     textBox(new FlavorText("Note: The less mana you spend,\n the less you have to wait before\n your mana refills.", "", false));
                     count++;
@@ -179,6 +178,12 @@ public class TutorialBasement extends Room {
         brokenStaff.setEquipvals(0, 0, 1, 0, 0, 0 ,0, "weapon");
         DroppedItem gStaff =  new DroppedItem(this, org, "You found a weapon: Broken Staff!", brokenStaff, "drops5", 90, 15);
         super.addObject(gStaff);
+
+        /*
+        Item magicTater = new Item ("Magic Potato","How lucky! This eccentric\n potato can permanently\n increase either your\n Max HP or Max Mana.\n\nNOTE: it's permanent.", playo, "item");
+        DroppedItem gTater =  new DroppedItem(this, org, "You found a magic potato!", magicTater, "drops6", 20, 31);
+        super.addObject(gTater);
+        */
 
         PotOfPetunias flowers = new PotOfPetunias(org, this, 5, 19);
         addMortal(flowers);

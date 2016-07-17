@@ -39,13 +39,21 @@ public class ThePit extends Room {
             try {
                 Thread.sleep(20);
                 //updateObjs(20);
-                if (getPlayer().getY() <= 1){
+                if (getPlayer().getY() > 43){
                     exitCode = "Mountains";
                 }
+                if (count == 0){
+                    textBox(new FlavorText("Welcome to the rest of the world!",""));
+                    textBox(new FlavorText("There are many things to find and explore!\nUse the 'F' key to inspect things.",""));
+                    textBox(new FlavorText("Most capital letters (ex: A, B, C..) out in\n the world have flavor text \n accessible through the 'F' key",""));
+                    textBox(new FlavorText("Note:\nYou've gotta be facing towards the\n object you're trying to inspect",""));
+                    textBox(new FlavorText("Locking your aim can help you see\nwhich direction you're facing in.",""));
+                    textBox(new FlavorText("Note #2:\nCapital letters that are MOVING\n are usually hostile!",""));
+                    count++;
+                }
+
                 if (getPlayer().getX() == 87 && getPlayer().getY() == 6){
                     System.out.println("Nooo!  You're escaping!");
-                    compactTextBox(org, "Hey!  You're escaping!\n Don't you know you shouldn't\n do that?","THE CODE",false);
-
                 }
                 if (super.playo.dead){
                     exitCode = "die";
@@ -62,9 +70,20 @@ public class ThePit extends Room {
 
         super.playo.goTo(109,10);
 
+        String[] dennisWords = {"Hey! Ya woke up!\nHow are ya?","Welcome to The Source!\nI'm Dennis, the owner of the house\n that ya woke up in.","Someone no-name guy went in this big hole" +
+                "\n and completely overthrew the order\n of this world.","Then there was this super bright flash,\n and out goes the lights!","Ya've been in a coma for about\n two weeks now;" +
+                "\nYa're latest I've seen to wake up!","Anyway, I decided to haul ya into my\n basement so that the local wolves\n don't make dinner out of ya.","I see you've grabbed a couple things" +
+                "\n on the way out;\nYa can have them if you want to.","Ya'll probably be fighting wolves\n and bandits on the way out\n of these mountains anyway!",".....","Hey, can ya do me a favor?" +
+                "\nI hate all of this text everywhere!\nI hate all of it!","Ya've probably got nothing else to do,\n right?","Can ya go fetch me one of those magic\n ropes that can go down into" +
+                "\n The Source and change things back?","I think ya liked how it was before, right?\nWell, so do I!","Yar way out is that trail down\n over there, past The Source.","See ya later!"};
+        addMessage(new FlavorText(93, 12, dennisWords , "Dennis"));
+
+        String[] doorLocked = {"The door seems to have locked behind you.","The owner must have installed\n an auto-lock on the door."};
+        addMessage(new FlavorText(109, 9, doorLocked , ""));
+
         art arty = new art();
         String[][] base = art.strToArray(arty.sourcePit);
-        String[] solids = {".",",",":",";","^","_","#","'"};
+        String[] solids = {".",",",":",";","^","_","#","'","D","X"};
         addToBaseHitMesh(base, solids);
         Layer lay1 = new Layer(base, "Test");
         org.addLayer(lay1);
