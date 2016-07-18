@@ -11,6 +11,7 @@ package SourceryTextb1;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Font;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
@@ -26,7 +27,7 @@ public class Window extends JFrame{
     public JTextArea txtArea = new JTextArea();
     private Container c = getContentPane();
     
-    private Layer fullImage = new Layer(new String[maxH()][maxW()]);
+    private Layer fullImage = new Layer(new String[screenH()][screenW()]);
 
     /**
      * @return the maximum allowable height in the game
@@ -39,6 +40,9 @@ public class Window extends JFrame{
      * @return the maximum allowable width in the game
      */
     public int maxW(){ return 150; }
+
+    public int screenH(){ return 23; }
+    public int screenW(){ return 46; }
 
     /**
      * Directly set the textArea contents to just an empty string
@@ -88,15 +92,6 @@ public class Window extends JFrame{
     public void placeLayer(Layer layer, int camX, int camY){ //Layers place on top of each other
         for (int row = 0; row < layer.getRows() ; row++){
             for (int col = 0; col < layer.getColumns(); col++){ //This stuff is complicated!!!!
-                /*
-                if (!" ".equals(layer.getStr(row,col))){
-                    if ("".equals(layer.getStr(row, col)) || layer.getStr(row, col) == null || layer.getStr(row, col).equals(OPAQUE_SPACE)){
-                        fullImage.placeStr(row + layer.getX() - camX,col + layer.getY() - camY," ");
-                    } else {
-                        fullImage.setStr(row + layer.getX() - camX, col + layer.getY() - camY, layer.getStr(row,col));
-                    }
-                }
-                */
                 if (!" ".equals(layer.getStr(row, col))){
                     if  ("".equals(layer.getStr(row, col)) || layer.getStr(row, col) == null){
                         fullImage.placeStr(row + layer.getX() - camX,col + layer.getY() - camY, " ");
@@ -131,12 +126,47 @@ public class Window extends JFrame{
 
     public Layer getFullImage (){ return fullImage; }
 
+    private boolean notEmpty (String input){
+        return !("".equals(input) || " ".equals(input) || input == null);
+    }
+
+    public void topDownBuild(List<Layer> layers, int camX, int camY){
+        int maxH = screenH(); //Equals 23
+        int maxW = screenW(); //Equals 46
+        //System.out.println("Layers: " + layers.size());
+        for (int row = 0; row < maxH; row++){
+            for (int col = 0; col < maxW; col++){
+                for (int ii = layers.size()  ; ii > 0 ; ii--){
+                    Layer layer = layers.get(ii - 1);
+                    int xPos;
+                    int yPos;
+                    if (layer.getCamOb()) {
+                        xPos = row + camX + layer.getX();
+                        yPos = col + camY + layer.getY();
+                    } else {
+                        xPos = row - layer.getX();
+                        yPos = col - layer.getY();
+                    }
+                    String input = layer.getStr(xPos, yPos);
+                    if (notEmpty(input)){
+                        if ("ñ".equals(input)){
+                            fullImage.setStr(row, col, " ");
+                        } else {
+                            fullImage.setStr(row, col, layer.getStr(xPos, yPos));
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
     /** Place the temporary idea of what should be on the screen (fullImage) onto the actual display
      * Usually takes 40-70ms. (at least, with an 80x150 fullImage size)
      */
     public void build(){
-        int maxH = maxH();
-        int maxW = maxW();
+        int maxH = screenH();
+        int maxW = screenW();
         String build = "";
         for (int row = 0; row < maxH; row++){// Used to be 20
             for (int col = 0; col < maxW; col++){ // Used to be 50

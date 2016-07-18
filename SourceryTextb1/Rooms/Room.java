@@ -185,6 +185,7 @@ public class Room {
      */
     void addHUD(ImageOrg org) {  //Fixes redundancy;
         Layer HUDd = new Layer(new String[1][70], "HUD", false, true);
+        HUDd.setImportance(true);
         org.addLayer(HUDd);
         HUD hud = new HUD(org, this, HUDd);
         addObject(hud);

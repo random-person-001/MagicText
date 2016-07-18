@@ -18,16 +18,18 @@ import java.util.TimerTask;
  */
 public class ImageOrg {
     private Window window;
-    private ArrayList<Layer> layers = new ArrayList<>();
+    public ArrayList<Layer> layers = new ArrayList<>();
     private ArrayList<Layer> toAdd = new ArrayList<>();
     private ArrayList<Layer> toRemove = new ArrayList<>();
     private int camX = 0;
     private int camY = 0;
     private boolean debugGame = false;
+
+    private boolean somethingChanged = true;
     
     public ImageOrg(Window game){
         Timer timer = new Timer();
-        timer.scheduleAtFixedRate(new frameTimer(), 0, 50);
+        timer.scheduleAtFixedRate(new frameTimer(), 0, 50); //20 fps lock
         window = game;
     }
 
@@ -35,14 +37,14 @@ public class ImageOrg {
      * @param lay a Layer to be known about by everything
      */
     public void addLayer(Layer lay){
-        //layers.add(lay);
         toAdd.add(lay);
-        //updateOrder();  //Uncomment this when it starts working.
+        somethingChanged = true;
     }
 
     public void addTheLayers () {
         for (Layer lay : toAdd){
             layers.add(lay);
+            System.out.println("Adding: " + lay.getName());
         }
         toAdd.clear();
     }
@@ -63,16 +65,11 @@ public class ImageOrg {
      */
     private void updateOrder() {
         //throw new OperationNotSupportedException
-        boolean swapped = true;
-        while (swapped) {
-            swapped = false;
-            for (int i = 0; i < layers.size(); i++) {
-                if (layers.get(i-1).getImportance() > layers.get(i).getImportance()){
-                    Layer temp = layers.get(i-1);
-                    layers.remove(i-1);
-                    layers.add(i, temp);
-                }
-
+        for (Layer get : layers) {
+            if (get.getImportance()){
+                //System.out.println("Moving: " + get.getName() + " (from " + layers.indexOf(get) + " of " + layers.size() + ")");
+                removeLayer(get.getName());
+                addLayer(get);
             }
         }
     }
@@ -118,6 +115,7 @@ public class ImageOrg {
                 toRemove.add(get);
             }
         }
+        somethingChanged = true;
     }
 
     /** Edit a single element of a Layer's array of strings.  Don't get X and Y mixed up.
@@ -130,6 +128,7 @@ public class ImageOrg {
         int loc = getPosLayer(layerName);
         if (loc != -1) {
             editLayer(input, loc, y, x);
+            somethingChanged = true;
         }
         else{
             System.out.println("No layer with the name " + layerName);
@@ -148,6 +147,7 @@ public class ImageOrg {
             Layer get = layers.get(loc);
             if (!(r > get.getRows() || r < 0 || c > get.getColumns() || c < 0)){
                 get.setStr(r, c, input);
+                somethingChanged = true;
             }
             //smartImageMod(input, loc, r, c);
         } catch (ArrayIndexOutOfBoundsException e){System.out.println("No such layer! " + e);}
@@ -177,7 +177,7 @@ public class ImageOrg {
     }
 
     private boolean notEmpty (String input){
-        return (!input.equals("") || !input.equals(" ") || !input.equals(null));
+        return (!(input.equals("") || input.equals(" ") || input.equals(null)));
     }
 
     /** Change the camera's relative position
@@ -187,6 +187,7 @@ public class ImageOrg {
     public void moveCam(int x, int y){
         camX += y;
         camY += x;
+        somethingChanged = true;
     }
 
     /** Change the camera's absolute position
@@ -196,6 +197,7 @@ public class ImageOrg {
     public void setCam(int x, int y){
         camX = y; //This is totally intentional.  We really ought to do something about that.
         camY = x;
+        somethingChanged = true;
     }
     
     public int getCamX(){
@@ -264,6 +266,7 @@ public class ImageOrg {
         for (Layer get : remove){
             layers.remove(get);
         }
+        somethingChanged = true;
         /*
         System.out.println("\nLayers Marked as playerLayer: " + isPlayerList + "(Amount processed: " + count + ")");
 
@@ -311,8 +314,22 @@ public class ImageOrg {
         }
         window.build();
         int elapsedMs = (int)((System.nanoTime() - nanoTime) / 1000000);
-        //System.out.println("NEW Longest update time: " + elapsedMs + "ms");
+        System.out.println("Update time: " + elapsedMs + "ms");
         return elapsedMs;
+    }
+
+    public void newSendImage(){
+        if (somethingChanged) {
+            long nanoTime = System.nanoTime();
+            addTheLayers();
+            removeTheLayers();
+            window.clearImage();
+            window.topDownBuild(layers, camX, camY);
+            window.build();
+            int elapsedMs = (int) ((System.nanoTime() - nanoTime) / 1000000);
+            System.out.println("Update time: " + elapsedMs + "ms");
+        }
+        somethingChanged = false;
     }
 
     /**
@@ -340,7 +357,7 @@ public class ImageOrg {
         }
 
         public void run(){
-            sendImage();
+            newSendImage();
         }
     }
 }

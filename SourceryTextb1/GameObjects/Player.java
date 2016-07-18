@@ -100,6 +100,7 @@ public class Player extends Mortal {
         orgo = theOrg;
         layerName = "playerLayer";
         Layer playerLayer = new Layer(new String[orgo.getWindow().maxH()][orgo.getWindow().maxW()], layerName);
+        playerLayer.setImportance(true);
         orgo.addLayer(playerLayer);
         setupForNewRoom();
 
@@ -237,7 +238,7 @@ public class Player extends Mortal {
     }
 
     public void reportPos() {
-        System.out.println("Player X: " + x + "\nPlayer Y: " + y + "\n");
+        System.out.println("\nPlayer X: " + x + "\nPlayer Y: " + y + "\nPaused?: " + paused + "\n");
     }
 
 
@@ -449,6 +450,9 @@ public class Player extends Mortal {
             case 'f':
                 textBoxQuery();
                 break;
+            case 'l':
+                orgo.removeLayer(orgo.layers.get(orgo.layers.size()-1).getName()); //DEBUG ONLY
+                //This command strips away the layers in the game for display debug reasons.
             default:
                 System.out.print(key);
         }

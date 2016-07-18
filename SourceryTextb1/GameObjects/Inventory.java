@@ -9,6 +9,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 /**
@@ -35,7 +37,7 @@ class Inventory {
     private final int QUIT = 6;
 
     //BECAUSE SCOPE
-    private int menuID = 0;
+    public int menuID = 0;
     boolean pressedA = false;
     boolean pressedS = false;
     boolean pressedD = false;
@@ -189,22 +191,11 @@ class Inventory {
 
         Window window = org.getWindow();
         Navigator keyListener = new Navigator(this);
+
         window.txtArea.addKeyListener(keyListener); // Add key listeners.
-        while (menuID != EXIT) {
-            try {
-                newUpdateSelector(menuID);
-                org.compileImage();
-                Thread.sleep(50);
-            } catch (InterruptedException e) {
-                System.exit(0);
-            }
-        }
-        // Now we're done.
-        org.removeLayer("selector");
-        org.removeLayer("top");
-        window.txtArea.removeKeyListener(keyListener);
-        player.frozen = false;
-        player.room.setObjsPause(false);
+
+        Timer timer = new Timer();
+        timer.scheduleAtFixedRate(new MenuTimer(window, keyListener), 10 , 100);
     }
 
     /**
@@ -536,7 +527,27 @@ class Inventory {
         }
     }
 
+    protected class MenuTimer extends TimerTask{
+        Window window;
+        Navigator keyListener;
 
+        protected MenuTimer(Window windouw, Navigator navi){
+            window = windouw;
+            keyListener = navi;
+        }
+
+        public void run(){
+            if (menuID == EXIT){
+                org.removeLayer("selector");
+                org.removeLayer("top");
+                window.txtArea.removeKeyListener(keyListener);
+                player.frozen = false;
+                player.room.setObjsPause(false);
+            } else {
+                newUpdateSelector(menuID);
+            }
+        }
+    }
 }
 
 

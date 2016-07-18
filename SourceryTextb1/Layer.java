@@ -24,7 +24,7 @@ public class Layer {
      * -1 is no preference to layer order,  100 is the Player's layer, 101 is the HUD, and anything higher than that
      * will display above those
      */
-    private int importance = -1;
+    private boolean importance = false;
     
     /*
     Note to future self:
@@ -105,6 +105,18 @@ public class Layer {
         xPos = xSet;
         yPos = ySet;
     }
+
+    public Layer(String[][] assign, String inkey, int xSet, int ySet, boolean camOb, boolean opacity, boolean important){
+        self = assign;
+        name = inkey;
+        keyExists = true;
+        cameraObedient = camOb;
+        opaque = opacity;
+        importance = important;
+
+        xPos = xSet;
+        yPos = ySet;
+    }
     
     public void setCamOb(boolean set){  // JARED, I'M WORKING ON THIS
         cameraObedient = set;
@@ -173,7 +185,7 @@ public class Layer {
     public void placeStr(int r, int c, String str){
         if (!(r < 0 || r >= getRows() || c < 0 || c >= getColumns()) &&
          !("".equals(self[r][c]) || " ".equals(self[r][c]) || (self[r][c]) != null)){
-            setStr(r,c,str);
+            self[r][c] = str;
         }
     }
 
@@ -194,6 +206,10 @@ public class Layer {
         }
     }
 
+    public boolean withinBounds(int r, int c){
+        return (!(r < 0 || r >= getRows() || c < 0 || c >= getColumns()));
+    }
+
     /**
      * @param input a string that may be the name of the layer
      * @return true iff the Strings are the same and keyExists (whatever that is)
@@ -210,7 +226,7 @@ public class Layer {
      * will display above those
      * @return what it is for this Layer
      */
-    public int getImportance(){
+    public boolean getImportance(){
         return importance;
     }
     /**
@@ -220,7 +236,7 @@ public class Layer {
      * will display above those
      * @param newImportance what it should be set to now
      */
-    public void setImportance(int newImportance){
+    public void setImportance(boolean newImportance){
         importance = newImportance;
     }
 

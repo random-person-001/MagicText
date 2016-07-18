@@ -40,7 +40,7 @@ public class DroppedItem extends GameObject{
 
     @Override
     public void update(){
-        orgo.editLayer(char1, layerName, 0, 0);
+        orgo.editLayer("!", layerName, 0, 0);
         if (x == player.getX() && y == player.getY() && !pickedUp){
             pickedUp = true;
             room.removeObject(this);
@@ -50,7 +50,6 @@ public class DroppedItem extends GameObject{
             if (!pickUpMessage.equals("None")) {
                 System.out.println("Picking up: " + me.getName());
                 room.compactTextBox(orgo, pickUpMessage, "", false);
-
             }
         }
     }
