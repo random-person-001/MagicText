@@ -133,32 +133,32 @@ public class Window extends JFrame{
     public void topDownBuild(List<Layer> layers, int camX, int camY){
         int maxH = screenH(); //Equals 23
         int maxW = screenW(); //Equals 46
-        //System.out.println("Layers: " + layers.size());
         for (int row = 0; row < maxH; row++){
             for (int col = 0; col < maxW; col++){
-                for (int ii = layers.size()  ; ii > 0 ; ii--){
+                for (int ii = layers.size(); ii > 0 ; ii--){
                     Layer layer = layers.get(ii - 1);
                     int xPos;
                     int yPos;
                     if (layer.getCamOb()) {
-                        xPos = row + camX + layer.getX();
-                        yPos = col + camY + layer.getY();
+                        xPos = row + camX - layer.getX();
+                        yPos = col + camY - layer.getY();
                     } else {
                         xPos = row - layer.getX();
                         yPos = col - layer.getY();
                     }
                     String input = layer.getStr(xPos, yPos);
                     if (notEmpty(input)){
-                        if ("ñ".equals(input)){
+                       if ("ñ".equals(input)){
                             fullImage.setStr(row, col, " ");
                         } else {
                             fullImage.setStr(row, col, layer.getStr(xPos, yPos));
                         }
-                        break;
+                        ii = 0;
                     }
                 }
             }
         }
+        //System.out.println("Drawn bounding box:\n X: " + (camY) + " to " + (camY + maxH - 1) + "\n Y: " + (camX) + " to " + (camX + maxW - 1));
     }
 
     /** Place the temporary idea of what should be on the screen (fullImage) onto the actual display

@@ -30,7 +30,8 @@ public class DroppedItem extends GameObject{
         layerName = layername;
         x = setx;
         y = sety;
-        Layer thisLayer = new Layer(new String[1][1], layerName, y, x);
+        Layer thisLayer = new Layer(new String[1][1], layerName, y, x, true, true, true);
+        thisLayer.setStr(0,0, "!");
         orgo.addLayer(thisLayer);
 
         System.out.println("\n\n" + me.getName() + " JUST DROPPED ON THE GROUND! (" + x + "," + y + ")\n\n");

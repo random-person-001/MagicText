@@ -147,7 +147,7 @@ public class TutorialBasement extends Room {
         String[][] base = art.strToArray(arty.tutForest);
         String[] solids = {"|","-","0","/",",","#","%","$","'"};
         addToBaseHitMesh(base, solids);
-        Layer lay1 = new Layer(base, "Test");
+        Layer lay1 = new Layer(base, "Test", 0, 0, true, false, false);
         org.addLayer(lay1);
 
 
@@ -179,11 +179,10 @@ public class TutorialBasement extends Room {
         DroppedItem gStaff =  new DroppedItem(this, org, "You found a weapon: Broken Staff!", brokenStaff, "drops5", 90, 15);
         super.addObject(gStaff);
 
-        /*
-        Item magicTater = new Item ("Magic Potato","How lucky! This eccentric\n potato can permanently\n increase either your\n Max HP or Max Mana.\n\nNOTE: it's permanent.", playo, "item");
-        DroppedItem gTater =  new DroppedItem(this, org, "You found a magic potato!", magicTater, "drops6", 20, 31);
-        super.addObject(gTater);
-        */
+
+        //Item magicTater = new Item ("Magic Potato","How lucky! This eccentric\n potato can permanently\n increase either your\n Max HP or Max Mana.\n\nNOTE: it's permanent.", playo, "item");
+        //DroppedItem gTater =  new DroppedItem(this, org, "You found a magic potato!", magicTater, "drops6", 20, 31);
+        //super.addObject(gTater);
 
         PotOfPetunias flowers = new PotOfPetunias(org, this, 5, 19);
         addMortal(flowers);

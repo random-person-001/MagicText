@@ -56,6 +56,8 @@ public class Player extends Mortal {
     private int superCheatProgress = 0;
     private Color restingBackground = Color.black;
 
+    private boolean isGhost = true; //For debug reasons
+
     //STATS
     int maxHP = 20;
     int maxMana = 20;
@@ -338,25 +340,25 @@ public class Player extends Mortal {
             }
             switch (direction) {
                 case UP:
-                    if (!room.isPlaceSolid(x, y - 1))
+                    if (!room.isPlaceSolid(x, y - 1) || isGhost)
                         y--;
                     if (!orientationLocked)
                         orientation = UP;
                     break;
                 case DOWN:
-                    if (!room.isPlaceSolid(x, y + 1))
+                    if (!room.isPlaceSolid(x, y + 1) || isGhost)
                         y++;
                     if (!orientationLocked)
                         orientation = DOWN;
                     break;
                 case LEFT:
-                    if (!room.isPlaceSolid(x - 1, y))
+                    if (!room.isPlaceSolid(x - 1, y) || isGhost)
                         x--;
                     if (!orientationLocked)
                         orientation = LEFT;
                     break;
                 case RIGHT:
-                    if (!room.isPlaceSolid(x + 1, y))
+                    if (!room.isPlaceSolid(x + 1, y) || isGhost)
                         x++;
                     if (!orientationLocked)
                         orientation = RIGHT;
@@ -451,6 +453,7 @@ public class Player extends Mortal {
                 textBoxQuery();
                 break;
             case 'l':
+                System.out.println("Striping away " + orgo.layers.get(orgo.layers.size()-1).getName());
                 orgo.removeLayer(orgo.layers.get(orgo.layers.size()-1).getName()); //DEBUG ONLY
                 //This command strips away the layers in the game for display debug reasons.
             default:

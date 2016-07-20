@@ -129,6 +129,7 @@ public class ImageOrg {
         if (loc != -1) {
             editLayer(input, loc, y, x);
             somethingChanged = true;
+
         }
         else{
             System.out.println("No layer with the name " + layerName);
@@ -327,7 +328,7 @@ public class ImageOrg {
             window.topDownBuild(layers, camX, camY);
             window.build();
             int elapsedMs = (int) ((System.nanoTime() - nanoTime) / 1000000);
-            System.out.println("Update time: " + elapsedMs + "ms");
+            //System.out.println("Update time: " + elapsedMs + "ms");
         }
         somethingChanged = false;
     }
