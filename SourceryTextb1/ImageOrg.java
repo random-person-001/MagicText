@@ -129,7 +129,6 @@ public class ImageOrg {
         if (loc != -1) {
             editLayer(input, loc, y, x);
             somethingChanged = true;
-
         }
         else{
             System.out.println("No layer with the name " + layerName);
@@ -149,36 +148,43 @@ public class ImageOrg {
             if (!(r > get.getRows() || r < 0 || c > get.getColumns() || c < 0)){
                 get.setStr(r, c, input);
                 somethingChanged = true;
+            } else {
+                partialRender(get, input, loc, r, c);
             }
-            //smartImageMod(input, loc, r, c);
         } catch (ArrayIndexOutOfBoundsException e){System.out.println("No such layer! " + e);}
     }
 
+
     /**
      * smartImageMod was an attempt to make the game more efficient.
-     * What it does is instead of re-building the whole game image, it only updates the specific spots that are editted.
+     * What it does is instead of re-building the whole game image, it only updates the specific spots that are edited.
      *
      * We might want to get back to this if we want the program to be even more lightweight.
      */
 
-    private void smartImageMod (String input, int loc, int r, int c){
+    private void partialRender (Layer lay, String input, int loc, int r, int c){
+        System.out.println("Partial rendering...");
         if (notEmpty(input)){
+            int x = r + lay.getX();
+            int y = c + lay.getY();
             boolean spaceOpen = true;
             for (int ii = loc; ii < layers.size(); ii++){
                 Layer get = getLayer(ii);
-                if (!notEmpty(get.getStr(r, c))){
-                    spaceOpen = false;
+                if (!notEmpty(get.getStr(x - get.getX(), y - get.getY()))){
+                    //spaceOpen = false;
                     break;
                 }
             }
             if (spaceOpen){
-                window.getFullImage().setStr(r, c, input);
+                System.out.println("Part. render SUCCESS");
+                window.getFullImage().setStr(x + camX, y + camY, input);
             }
         }
+        window.build();
     }
 
     private boolean notEmpty (String input){
-        return (!(input.equals("") || input.equals(" ") || input.equals(null)));
+        return !("".equals(input) || " ".equals(input) || input == null);
     }
 
     /** Change the camera's relative position

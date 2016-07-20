@@ -56,7 +56,7 @@ public class Player extends Mortal {
     private int superCheatProgress = 0;
     private Color restingBackground = Color.black;
 
-    private boolean isGhost = true; //For debug reasons
+    private boolean isGhost = false; //For debug reasons
 
     //STATS
     int maxHP = 20;
