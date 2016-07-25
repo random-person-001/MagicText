@@ -7,6 +7,7 @@ package SourceryTextb1;
 
 import SourceryTextb1.GameObjects.Player;
 import SourceryTextb1.Rooms.*;
+import SourceryTextb1.Rooms.TheSource.Mountains;
 import SourceryTextb1.Rooms.TheSource.ThePit;
 import SourceryTextb1.Rooms.TheSource.TutorialBasement;
 
@@ -18,7 +19,7 @@ import java.awt.Color;
  * @author 119184, and a bit of 104410
  */
 public class Start {
-    private static boolean doDemo = false;
+    private static boolean doDemo = true;
     private static boolean doIntro = false;
 
     private static Window game;
@@ -31,27 +32,11 @@ public class Start {
         org.addLayer(base);
 
         if (doDemo) {
-            TestRoom roomOne = new TestRoom(org);
             Player player = new Player(org);
-            player.setRoom(roomOne);
-            levelAnimation(org, 1, 2);
-            roomOne.startup(org, player);
-            roomOne.enter(player);
-
-            BeginningRoom broom = new BeginningRoom(org);
-            prepLevel(org, game, player, broom, 1);
-            broom.startup(player);
-            broom.enter();
-
-            RoomTwo roomTwo = new RoomTwo(org);
-            prepLevel(org, game, player, roomTwo, 2);
-            roomTwo.startup(org, player);
-            roomTwo.enter(player);
-
-            RoomThree roomThree = new RoomThree(org);
-            prepLevel(org, game, player, roomThree, 3);
-            roomThree.startup(org, player);
-            roomThree.enter(player);
+            NewTestRoom rooma = new NewTestRoom(org, player);
+            prepLevel(org, game, player, rooma, 0);
+            rooma.startup();
+            rooma.enter();
         } else {
             WindowConfig wincnfg = new WindowConfig(game, org);
             wincnfg.config();

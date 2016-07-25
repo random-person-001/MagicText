@@ -1,8 +1,9 @@
-package SourceryTextb1.Rooms;
+package SourceryTextb1.Rooms.TheSource;
 
 import SourceryTextb1.GameObjects.*;
 import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
+import SourceryTextb1.Rooms.Room;
 import SourceryTextb1.art;
 
 /**
@@ -81,7 +82,7 @@ public class Mountains extends Room {
         */
 
         genericRoomInitialize();
-        playo.goTo(9, 6);
+        playo.goTo(11, 1);
     }
 
     /*

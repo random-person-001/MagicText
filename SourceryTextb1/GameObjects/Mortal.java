@@ -1,5 +1,7 @@
 package SourceryTextb1.GameObjects;
 
+import java.util.ArrayList;
+
 import static java.lang.StrictMath.abs;
 
 /**
@@ -103,5 +105,76 @@ public class Mortal extends GameObject {
             }
         }
         return closestM;
+    }
+
+    /**
+     * createPathTo, spreadPathPts, and withinDist are all methods used in a path-finding algorithm I found on the
+     *  internet.
+     *
+     * Follow this link:
+     *  https://en.wikipedia.org/wiki/Pathfinding
+     *
+     *  and go to "Sample Algorithm"
+     *  It explains how it should work.
+     */
+    public ArrayList<PathPoint> pathPts = new ArrayList<>();
+    protected void createPathTo(int goalX, int goalY, int maxDist){
+        pathPts.clear();
+        pathPts.add(new PathPoint(goalX, goalY, 0));
+        boolean pathSuccess = false;
+        for (int ii = 0; ii < maxDist; ii++){
+            for (PathPoint pt : pathPts){
+                if (spreadPathPts(pt.getX(), pt.getY(), x, y, ii)){
+                    ii = maxDist;
+                    pathSuccess = true;
+                    break;
+                }
+            }
+        }
+        if (!pathSuccess){
+            pathPts.clear();
+        }
+    }
+
+    protected boolean spreadPathPts(int pX, int pY, int sX, int sY, int counter){
+        boolean stop = false;
+        if (room.isPlaceSolid(pX - 1, pY)){
+            pathPts.add(new PathPoint(pX - 1, pY, counter));
+        }
+        if (room.isPlaceSolid(pX + 1, pY)){
+            pathPts.add(new PathPoint(pX + 1, pY, counter));
+        }
+        if (room.isPlaceSolid(pX, pY - 1)){
+            pathPts.add(new PathPoint(pX, pY - 1, counter));
+        }
+        if (room.isPlaceSolid(pX, pY + 1)){
+            pathPts.add(new PathPoint(pX, pY + 1, counter));
+        }
+        if ((pX - 1 == sX && pY == sY) || (pX + 1 == sX && pY == sY)
+                || (pX == sX && pY - 1 == sY) || (pX == sX && pY + 1 == sY)){
+            stop = true;
+        }
+        return stop;
+    }
+
+    protected boolean withinDist(int x1, int y1, int x2, int y2, int range){
+        return (Math.sqrt(Math.pow((x1 - x2), 2) + Math.pow((y1 - y2), 2)) < range);
+    }
+
+    protected class PathPoint{
+        private int x;
+        private int y;
+        private int counter;
+        protected PathPoint(int theX, int theY, int theCounter){
+            x = theX;
+            y = theY;
+            counter = theCounter;
+        }
+
+        protected int getX(){ return x; }
+
+        protected int getY(){ return y; }
+
+        protected int getCntr(){ return counter; }
     }
 }

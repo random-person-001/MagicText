@@ -151,7 +151,7 @@ public class ImageOrg {
             } else {
                 partialRender(get, input, loc, r, c);
             }
-        } catch (ArrayIndexOutOfBoundsException e){System.out.println("No such layer! " + e);}
+        } catch (ArrayIndexOutOfBoundsException e){System.out.println("No such layer (" + loc + ")! " + e);}
     }
 
 

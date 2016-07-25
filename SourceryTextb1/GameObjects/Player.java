@@ -156,62 +156,62 @@ public class Player extends Mortal {
                 orgo.editLayer(" ", layerName, y, x);
             } catch (IndexOutOfBoundsException ignored) {
             }
-            return;
-        }
-        if (shouldNewInv || shouldPause) {
-            System.out.println("GAME PAUSED\n " + inv.pressedA);
-            //orgo.getWindow().removeKeyListener(playerKeyListener);
-            inv.newShow();
-            //orgo.getWindow().addKeyListener(playerKeyListener);
-            shouldNewInv = false;
-            shouldPause = false;
-            System.out.println("GAME UNPAUSED");
-        }
-
-        manaRegenClock += getTime();
-
-        if (manaWait > 0) {
-            manaWait -= getTime();
-            //System.out.println("Mana Wait Clock: " + manaWait);
-            manaRegenClock = 0;
-        } else if (manaRegenClock >= (500 / maxMana) && mana < maxMana) {
-            mana++;
-            manaRegenClock = 0;
-        }
-
-
-        resetTime();
-
-        graphicUpdate();
-        aimDispUpdate();
-
-        if (autonomous) {
-            closestFood = getClosestVisibleFood();
-            if (closestFood != null) {
-                if (x > closestFood.x) {
-                    move(LEFT);
-                } else if (x < closestFood.x) {
-                    move(RIGHT);
-                } else if (y > closestFood.y) {
-                    move(UP);
-                } else if (y < closestFood.y) {
-                    move(DOWN);
-                } else {
-                    room.objs.remove(closestFood);
-                    closestFood = null;
-                    move(r(3));
-                }
-            } else { // Just finished a level / no visible food left
-                //move(r(3));  //Move randomly
+        } else {
+            if (shouldNewInv || shouldPause) {
+                System.out.println("GAME PAUSED\n " + inv.pressedA);
+                //orgo.getWindow().removeKeyListener(playerKeyListener);
+                inv.newShow();
+                //orgo.getWindow().addKeyListener(playerKeyListener);
+                shouldNewInv = false;
+                shouldPause = false;
+                System.out.println("GAME UNPAUSED");
             }
-        } else { // Unset
-            closestFood = null;
+
+            manaRegenClock += getTime();
+
+            if (manaWait > 0) {
+                manaWait -= getTime();
+                //System.out.println("Mana Wait Clock: " + manaWait);
+                manaRegenClock = 0;
+            } else if (manaRegenClock >= (500 / maxMana) && mana < maxMana) {
+                mana++;
+                manaRegenClock = 0;
+            }
+
+
+            resetTime();
+
+            graphicUpdate();
+            aimDispUpdate();
+
+            if (autonomous) {
+                closestFood = getClosestVisibleFood();
+                if (closestFood != null) {
+                    if (x > closestFood.x) {
+                        move(LEFT);
+                    } else if (x < closestFood.x) {
+                        move(RIGHT);
+                    } else if (y > closestFood.y) {
+                        move(UP);
+                    } else if (y < closestFood.y) {
+                        move(DOWN);
+                    } else {
+                        room.objs.remove(closestFood);
+                        closestFood = null;
+                        move(r(3));
+                    }
+                } else { // Just finished a level / no visible food left
+                    //move(r(3));  //Move randomly
+                }
+            } else { // Unset
+                closestFood = null;
+            }
+            if (dead) {
+                System.out.println("Apparently you died.");
+                System.exit(0);
+            }
+            updateBackground();
         }
-        if (dead) {
-            System.out.println("Apparently you died.");
-            System.exit(0);
-        }
-        updateBackground();
     }
 
     private void aimDispUpdate() {
@@ -461,6 +461,35 @@ public class Player extends Mortal {
         }
         graphicUpdate();
         checkCheatProgress(key);
+        debugGhostProgress(key);
+    }
+
+    private int debugGhostProg = 0;
+
+    private void debugGhostProgress(char c){ //Type in d, b, and then g to activate.
+        switch(debugGhostProg){
+            case 0:
+                if (c == 'd'){
+                    debugGhostProg = 1;
+                } else {
+                    debugGhostProg = 0;
+                }
+                break;
+            case 1:
+                if (c == 'b'){
+                    debugGhostProg = 2;
+                } else {
+                    debugGhostProg = 0;
+                }
+                break;
+            case 2:
+                if (c == 'g') {
+                    isGhost = !isGhost;
+                    System.out.println("Player now a ghost? " + isGhost);
+                }
+                debugGhostProg = 0;
+                break;
+        }
     }
 
     private void textBoxQuery(){
