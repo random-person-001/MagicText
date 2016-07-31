@@ -43,8 +43,6 @@ public class NewTestRoom extends Room {
                 if (getPlayer().getHealth() <= 0){
                     exitCode = "die";
                 }
-                org.compileImage();
-
             } catch (InterruptedException ignored) {}
         }
         return exitCode;
@@ -55,8 +53,9 @@ public class NewTestRoom extends Room {
 
         super.playo.goTo(4,4);
 
-        String[][] base = makeABox(60, 20);
-        String[] solids = {"|","-","0"};
+        art arty = new art();
+        String[][] base = art.strToArray(arty.testRoom);
+        String[] solids = {"|","-","0","#"};
         addToBaseHitMesh(base, solids);
         Layer lay1 = new Layer(base, "Test", 0, 0, true, false, false);
         org.addLayer(lay1);

@@ -1174,7 +1174,18 @@ ooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
         "                      |_____________||\n";
 
 
-
+public String testRoom =
+        "O---------------------------O\n" +
+        "|                           |\n" +
+        "|                           |\n" +
+        "|                #          |\n" +
+        "|                           |\n" +
+        "|              ' #  '       |\n" +
+        "|             ####          |\n" +
+        "|                           |\n" +
+        "|                           |\n" +
+        "|                           |\n" +
+        "O---------------------------O\n";
 
     /*Dry docks:
                                           .^.

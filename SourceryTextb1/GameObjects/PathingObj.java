@@ -27,7 +27,9 @@ public class PathingObj extends Mortal {
         x = xStart;
         y = yStart;
         setHealth(20);
-        orgo.addLayer(new Layer(new String[1][1], layerName));
+        orgo.addLayer(new Layer(new String[1][1], layerName, y, x));
+
+        setupTimer(30);
     }
 
     public void setMoveFrq(int newfrq) {

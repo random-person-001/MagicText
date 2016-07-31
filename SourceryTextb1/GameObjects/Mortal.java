@@ -118,47 +118,45 @@ public class Mortal extends GameObject {
      *  It explains how it should work.
      */
     public ArrayList<PathPoint> pathPts = new ArrayList<>();
+    public ArrayList<PathPoint> newPts = new ArrayList<>();
     protected void createPathTo(int goalX, int goalY, int maxDist){
         pathPts.clear();
         pathPts.add(new PathPoint(goalX, goalY, 0));
-        boolean pathSuccess = false;
-        for (int ii = 0; ii < maxDist; ii++){
+        for (int ii = 1; ii <= maxDist; ii++){
+            newPts.clear();
             for (PathPoint pt : pathPts){
-                if (spreadPathPts(pt.getX(), pt.getY(), x, y, ii)){
-                    ii = maxDist;
-                    pathSuccess = true;
-                    break;
+                if (pt.getCntr() == ii - 1) {
+                    spreadPathPts(pt.getX(), pt.getY(), x, y, ii);
+                    orgo.editLayer(String.valueOf(pt.getCntr()), "Test", pt.getY(), pt.getX());
                 }
             }
-        }
-        if (!pathSuccess){
-            pathPts.clear();
+            pathPts.addAll(newPts);
         }
     }
 
-    protected boolean spreadPathPts(int pX, int pY, int sX, int sY, int counter){
-        boolean stop = false;
-        if (room.isPlaceSolid(pX - 1, pY)){
-            pathPts.add(new PathPoint(pX - 1, pY, counter));
+    protected void spreadPathPts(int pX, int pY, int sX, int sY, int counter){
+        attemptPoint(pX - 1, pY, counter);
+        attemptPoint(pX + 1, pY, counter);
+        attemptPoint(pX, pY - 1, counter);
+        attemptPoint(pX, pY + 1, counter);
+    }
+
+    private void attemptPoint(int x, int y, int counter){
+        boolean yes = true;
+        for (PathPoint pt : pathPts){
+            if (pt.getX() == x && pt.getY() == y){
+                yes = false;
+            }
         }
-        if (room.isPlaceSolid(pX + 1, pY)){
-            pathPts.add(new PathPoint(pX + 1, pY, counter));
+        if (yes && (!room.isPlaceSolid(x, y))){ //This line of code is very close to being grammatically correct
+            newPts.add(new PathPoint(x, y, counter));
         }
-        if (room.isPlaceSolid(pX, pY - 1)){
-            pathPts.add(new PathPoint(pX, pY - 1, counter));
-        }
-        if (room.isPlaceSolid(pX, pY + 1)){
-            pathPts.add(new PathPoint(pX, pY + 1, counter));
-        }
-        if ((pX - 1 == sX && pY == sY) || (pX + 1 == sX && pY == sY)
-                || (pX == sX && pY - 1 == sY) || (pX == sX && pY + 1 == sY)){
-            stop = true;
-        }
-        return stop;
     }
 
     protected boolean withinDist(int x1, int y1, int x2, int y2, int range){
-        return (Math.sqrt(Math.pow((x1 - x2), 2) + Math.pow((y1 - y2), 2)) < range);
+        double number = Math.sqrt(Math.pow((x1 - x2), 2) + Math.pow((y1 - y2), 2));
+        //System.out.println(number);
+        return (number < range);
     }
 
     protected class PathPoint{

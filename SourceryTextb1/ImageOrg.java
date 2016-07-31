@@ -163,7 +163,7 @@ public class ImageOrg {
      */
 
     private void partialRender (Layer lay, String input, int loc, int r, int c){
-        System.out.println("Partial rendering...");
+        //System.out.println("Partial rendering...");
         if (notEmpty(input)){
             int x = r + lay.getX();
             int y = c + lay.getY();
@@ -176,7 +176,7 @@ public class ImageOrg {
                 }
             }
             if (spaceOpen){
-                System.out.println("Part. render SUCCESS");
+                //System.out.println("Part. render SUCCESS");
                 window.getFullImage().setStr(x + camX, y + camY, input);
             }
         }
