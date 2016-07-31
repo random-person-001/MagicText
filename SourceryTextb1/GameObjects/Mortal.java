@@ -119,26 +119,27 @@ public class Mortal extends GameObject {
      */
     public ArrayList<PathPoint> pathPts = new ArrayList<>();
     public ArrayList<PathPoint> newPts = new ArrayList<>();
-    protected void createPathTo(int goalX, int goalY, int maxDist){
+    protected int createPathTo(int goalX, int goalY, int maxDist){
         pathPts.clear();
         pathPts.add(new PathPoint(goalX, goalY, 0));
         for (int ii = 1; ii <= maxDist; ii++){
             newPts.clear();
             for (PathPoint pt : pathPts){
-                if (pt.getCntr() == ii - 1) {
-                    spreadPathPts(pt.getX(), pt.getY(), x, y, ii);
-                    orgo.editLayer(String.valueOf(pt.getCntr()), "Test", pt.getY(), pt.getX());
+                if (pt.getCntr() == ii - 1 && spreadPathPts(pt.getX(), pt.getY(), x, y, ii)) {
+                    return ii;
                 }
             }
             pathPts.addAll(newPts);
         }
+        return 60;
     }
 
-    protected void spreadPathPts(int pX, int pY, int sX, int sY, int counter){
+    protected boolean spreadPathPts(int pX, int pY, int sX, int sY, int counter){
         attemptPoint(pX - 1, pY, counter);
         attemptPoint(pX + 1, pY, counter);
         attemptPoint(pX, pY - 1, counter);
         attemptPoint(pX, pY + 1, counter);
+        return (pX - 1 == sX && pY == sY) || (pX + 1 == sX && pY == sY) || (pX == sX && pY - 1 == sY) || (pX == sX && pY + 1 == sY);
     }
 
     private void attemptPoint(int x, int y, int counter){

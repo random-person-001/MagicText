@@ -17,7 +17,7 @@ public class PathingObj extends Mortal {
     private static Random rand = new Random();
     private int moveFrq = 20; //Higher is slower
 
-    int followDist = 6;
+    int followDist = 20;
 
     public PathingObj(ImageOrg orga, Room theRoom, int xStart, int yStart) {
         super.strClass = "PathingObj";
@@ -29,7 +29,7 @@ public class PathingObj extends Mortal {
         setHealth(20);
         orgo.addLayer(new Layer(new String[1][1], layerName, y, x));
 
-        setupTimer(30);
+        setupTimer(500);
     }
 
     public void setMoveFrq(int newfrq) {
@@ -39,13 +39,16 @@ public class PathingObj extends Mortal {
     @Override
     public void update() {
         // Try to move
-        //orgo.editLayer(" ", layerName, y, x);
+        orgo.editLayer("O", layerName, 0, 0);
         if (withinDist(room.playo.getX(), room.playo.getY(), x, y, followDist)){
-            createPathTo(room.playo.getX(), room.playo.getY(), followDist);
+            int stepsNeeded = createPathTo(room.playo.getX(), room.playo.getY(), followDist);
+            System.out.println(stepsNeeded);
             for (PathPoint pt : pathPts){
-                if (pt.getCntr() == followDist - 1){
+                if (pt.getCntr() == stepsNeeded-1 && pt.getCntr() != 0 && abs(pt.getX() - x) <= 1 && abs(pt.getY() - y) <= 1){
                     x = pt.getX();
                     y = pt.getY();
+                    orgo.getLayer(orgo.getPosLayer(layerName)).setPos(y,x);
+                    break;
                 }
             }
         }
