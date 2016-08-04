@@ -1,6 +1,8 @@
 package SourceryTextb1.GameObjects;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import static java.lang.StrictMath.abs;
 
@@ -117,16 +119,20 @@ public class Mortal extends GameObject {
      *  and go to "Sample Algorithm"
      *  It explains how it should work.
      */
-    public ArrayList<PathPoint> pathPts = new ArrayList<>();
+    public Set<PathPoint> pathPts = new HashSet<>();
     public ArrayList<PathPoint> newPts = new ArrayList<>();
+    protected int[][] ptMatrix;
     protected int createPathTo(int goalX, int goalY, int maxDist){
         pathPts.clear();
         pathPts.add(new PathPoint(goalX, goalY, 0));
+        ptMatrix = new int[(maxDist*2) - 1][(maxDist*2) - 1];
         for (int ii = 1; ii <= maxDist; ii++){
             newPts.clear();
             for (PathPoint pt : pathPts){
-                if (pt.getCntr() == ii - 1 && spreadPathPts(pt.getX(), pt.getY(), x, y, ii)) {
+                if (pt.getCntr() == ii - 1 && spreadPathPts(pt.getX(), pt.getY(), x, y, goalX, goalY, ii)) {
                     return ii;
+                } else {
+                    //orgo.editLayer(String.valueOf(pt.getCntr()).substring(0,1), "Test", pt.getY(), pt.getX());
                 }
             }
             pathPts.addAll(newPts);
@@ -134,22 +140,51 @@ public class Mortal extends GameObject {
         return 60;
     }
 
-    protected boolean spreadPathPts(int pX, int pY, int sX, int sY, int counter){
-        attemptPoint(pX - 1, pY, counter);
-        attemptPoint(pX + 1, pY, counter);
-        attemptPoint(pX, pY - 1, counter);
-        attemptPoint(pX, pY + 1, counter);
+    protected void setPtMatrix (int x, int y, int counter, int matrixSize){
+        int matrixAdjust = matrixSize;
+    }
+
+    /*
+        if ((pX == gX && pY == gY) || (pX == gX && pY > gY) || (pX < gX && pY == gY) || (pX < gX && pY > gY)){
+            attemptPoint(pX - 1, pY, counter);
+        }
+        if ((pX == gX && pY == gY) || (pX == gX && pY < gY) || (pX > gX && pY == gY) || (pX > gX && pY < gY)){
+            attemptPoint(pX + 1, pY, counter);
+        }
+        if ((pX == gX && pY == gY) || (pX == gX && pY < gY) || (pX < gX && pY == gY) || (pX < gX && pY < gY)){
+            attemptPoint(pX, pY - 1, counter);
+        }
+        if ((pX == gX && pY == gY) || (pX > gX && pY == gY) || (pX == gX && pY > gY) || (pX > gX && pY > gY)){
+            attemptPoint(pX, pY + 1, counter);
+        }
+     */
+
+    protected boolean spreadPathPts(int pX, int pY, int sX, int sY, int gX, int gY, int counter){
+        //if ((pX == gX && pY == gY) || (pX == gX && pY > gY) || (pX < gX && pY == gY) || (pX < gX && pY > gY)){
+            attemptPoint(pX - 1, pY, counter);
+        //}
+        //if ((pX == gX && pY == gY) || (pX == gX && pY < gY) || (pX > gX && pY == gY) || (pX > gX && pY < gY)){
+            attemptPoint(pX + 1, pY, counter);
+        //}
+        //if ((pX == gX && pY == gY) || (pX == gX && pY < gY) || (pX < gX && pY == gY) || (pX < gX && pY < gY)){
+            attemptPoint(pX, pY - 1, counter);
+        //}
+        //if ((pX == gX && pY == gY) || (pX > gX && pY == gY) || (pX == gX && pY > gY) || (pX > gX && pY > gY)){
+            attemptPoint(pX, pY + 1, counter);
+        //}
         return (pX - 1 == sX && pY == sY) || (pX + 1 == sX && pY == sY) || (pX == sX && pY - 1 == sY) || (pX == sX && pY + 1 == sY);
     }
 
     private void attemptPoint(int x, int y, int counter){
         boolean yes = true;
+        /*
         for (PathPoint pt : pathPts){
             if (pt.getX() == x && pt.getY() == y){
                 yes = false;
             }
         }
-        if (yes && (!room.isPlaceSolid(x, y))){ //This line of code is very close to being grammatically correct
+        */
+        if (yes && (!room.isPlaceSolid(x, y))){
             newPts.add(new PathPoint(x, y, counter));
         }
     }
@@ -164,10 +199,32 @@ public class Mortal extends GameObject {
         private int x;
         private int y;
         private int counter;
+
         protected PathPoint(int theX, int theY, int theCounter){
             x = theX;
             y = theY;
             counter = theCounter;
+        }
+
+        @Override
+        public boolean equals(Object obj){
+            if (obj == this) {
+                return true;
+            }
+            if (!(obj instanceof PathPoint)) {
+                return false;
+            }
+            PathPoint other = (PathPoint)obj;
+            return (x == other.getX() && y == other.getY());
+        }
+
+        //Extremely simple hash. Numbers 47 and 29 can be replaced by any prime #, but must exist in this pattern/format
+        @Override
+        public int hashCode() {
+            int hash = 47;
+            hash = hash*29 + Integer.hashCode(x);
+            hash = hash*29 + Integer.hashCode(y);
+            return hash;
         }
 
         protected int getX(){ return x; }

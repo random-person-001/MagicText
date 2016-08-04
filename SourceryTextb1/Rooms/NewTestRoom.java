@@ -51,7 +51,7 @@ public class NewTestRoom extends Room {
     public void startup(){
         ititHitMeshes();
 
-        super.playo.goTo(4,4);
+        super.playo.goTo(7,5);
 
         art arty = new art();
         String[][] base = art.strToArray(arty.testRoom);

@@ -17,7 +17,7 @@ public class PathingObj extends Mortal {
     private static Random rand = new Random();
     private int moveFrq = 20; //Higher is slower
 
-    int followDist = 20;
+    int followDist = 30;
 
     public PathingObj(ImageOrg orga, Room theRoom, int xStart, int yStart) {
         super.strClass = "PathingObj";
@@ -29,7 +29,7 @@ public class PathingObj extends Mortal {
         setHealth(20);
         orgo.addLayer(new Layer(new String[1][1], layerName, y, x));
 
-        setupTimer(500);
+        setupTimer(750);
     }
 
     public void setMoveFrq(int newfrq) {
@@ -40,18 +40,20 @@ public class PathingObj extends Mortal {
     public void update() {
         // Try to move
         orgo.editLayer("O", layerName, 0, 0);
-        if (withinDist(room.playo.getX(), room.playo.getY(), x, y, followDist)){
+        long nanoLast = System.nanoTime();
+        if (withinDist(room.playo.getX(), room.playo.getY(), x, y, followDist * 20)) {
             int stepsNeeded = createPathTo(room.playo.getX(), room.playo.getY(), followDist);
-            System.out.println(stepsNeeded);
-            for (PathPoint pt : pathPts){
-                if (pt.getCntr() == stepsNeeded-1 && pt.getCntr() != 0 && abs(pt.getX() - x) <= 1 && abs(pt.getY() - y) <= 1){
+            //System.out.println(stepsNeeded);
+            for (PathPoint pt : pathPts) {
+                if (pt.getCntr() == stepsNeeded - 1 && pt.getCntr() != 0 && abs(pt.getX() - x) <= 1 && abs(pt.getY() - y) <= 1) {
                     x = pt.getX();
                     y = pt.getY();
-                    orgo.getLayer(orgo.getPosLayer(layerName)).setPos(y,x);
+                    orgo.getLayer(orgo.getPosLayer(layerName)).setPos(y, x);
                     break;
                 }
             }
         }
+        System.out.println(String.format("Time to complete: %1$d ms", (System.nanoTime() - nanoLast) / 1000000));
 
         orgo.editLayer("O", layerName, 0, 0);
     }
