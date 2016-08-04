@@ -40,8 +40,8 @@ public class PathingObj extends Mortal {
     public void update() {
         // Try to move
         orgo.editLayer("O", layerName, 0, 0);
-        long nanoLast = System.nanoTime();
-        if (withinDist(room.playo.getX(), room.playo.getY(), x, y, followDist * 20)) {
+        //long nanoLast = System.nanoTime();
+        if (withinDist(room.playo.getX(), room.playo.getY(), x, y, followDist)) {
             int stepsNeeded = createPathTo(room.playo.getX(), room.playo.getY(), followDist);
             //System.out.println(stepsNeeded);
             for (PathPoint pt : pathPts) {
@@ -53,7 +53,7 @@ public class PathingObj extends Mortal {
                 }
             }
         }
-        System.out.println(String.format("Time to complete: %1$d ms", (System.nanoTime() - nanoLast) / 1000000));
+        //System.out.println(String.format("Time to complete: %1$d ms", (System.nanoTime() - nanoLast) / 1000000));
 
         orgo.editLayer("O", layerName, 0, 0);
     }

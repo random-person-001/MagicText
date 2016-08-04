@@ -12,6 +12,8 @@ import SourceryTextb1.Rooms.TheSource.ThePit;
 import SourceryTextb1.Rooms.TheSource.TutorialBasement;
 
 import java.awt.Color;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Main class of MagicText, where everything starts.
@@ -19,7 +21,7 @@ import java.awt.Color;
  * @author 119184, and a bit of 104410
  */
 public class Start {
-    private static boolean doDemo = true;
+    private static boolean doDemo = false;
     private static boolean doIntro = false;
 
     private static Window game;
@@ -38,62 +40,12 @@ public class Start {
             rooma.startup();
             rooma.enter();
         } else {
+
             WindowConfig wincnfg = new WindowConfig(game, org);
             wincnfg.config();
 
-            if (doIntro) {
-                intro();
-            }
-
-            Player player = new Player(org);
-            String roomID = "Tutorial";
-
-            while(roomID != "die") { //Java 8 ONLY
-                switch (roomID) {
-                    case "Tutorial":
-                        System.out.println("Beginning tutorial!");
-                        TutorialBasement forest = new TutorialBasement(org, player);
-                        prepLevel(org, game, player, forest, 0);
-                        forest.startup();
-                        roomID = forest.enter();
-                        System.out.println("Exiting tutorial.  Going to: " + roomID);
-                        break;
-                    case "SourcePit":
-                        System.out.println("Entering The Pit");
-                        ThePit pit = new ThePit(org, player);
-                        prepLevel(org, game, player, pit, 0);
-                        pit.startup();
-                        roomID = pit.enter();
-                        break;
-                    case "Mountains":
-                        System.out.println("Entering the Mountains");
-                        Mountains mtns = new Mountains(org, player);
-                        prepLevel(org, game, player, mtns, 0);
-                        mtns.startup();
-                        roomID = mtns.enter();
-                        break;
-                    default:
-                        System.out.println("You were directed to a world which is not yet registered in Start.java." +
-                                "Please add it there.  (roomID = " + roomID + ").  Meanwhile, I'll just kill you to ease the pain.");
-                        roomID = "die";
-                        break;
-                }
-            }
-
-
-            /*
-            Mountains mtns = new Mountains(org, player);
-            prepLevel(org, game, player, mtns, 0);
-            mtns.startup();
-            mtns.enter();*/
-
-            /*
-            DockAndShip boat = new DockAndShip(org, player);
-            prepLevel(org, game, player, boat, 0);
-            boat.startup();
-            boat.enter();
-            */
-
+            Timer time = new Timer();
+            time.schedule(new StartCheck(wincnfg), 50, 100);
         }
 
 
@@ -104,6 +56,51 @@ public class Start {
 
 
         // Just end.
+    }
+
+    private static void runGame(){
+        if (doIntro) {
+            try {
+                intro();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        Player player = new Player(org);
+        String roomID = "Tutorial";
+
+        while (roomID != "die") { //Java 8 ONLY
+            switch (roomID) {
+                case "Tutorial":
+                    System.out.println("Beginning tutorial!");
+                    TutorialBasement forest = new TutorialBasement(org, player);
+                    prepLevel(org, game, player, forest, 0);
+                    forest.startup();
+                    roomID = forest.enter();
+                    System.out.println("Exiting tutorial.  Going to: " + roomID);
+                    break;
+                case "SourcePit":
+                    System.out.println("Entering The Pit");
+                    ThePit pit = new ThePit(org, player);
+                    prepLevel(org, game, player, pit, 0);
+                    pit.startup();
+                    roomID = pit.enter();
+                    break;
+                case "Mountains":
+                    System.out.println("Entering the Mountains");
+                    Mountains mtns = new Mountains(org, player);
+                    prepLevel(org, game, player, mtns, 0);
+                    mtns.startup();
+                    roomID = mtns.enter();
+                    break;
+                default:
+                    System.out.println("You were directed to a world which is not yet registered in Start.java." +
+                            "Please add it there.  (roomID = " + roomID + ").  Meanwhile, I'll just kill you to ease the pain.");
+                    roomID = "die";
+                    break;
+            }
+        }
     }
 
     private static void prepLevel(ImageOrg org, Window game, Player player, Room newRoom, int levelNum){
@@ -466,4 +463,20 @@ public class Start {
 
         game.txtArea.setBackground(Color.BLACK);
     }
+    protected static class StartCheck extends TimerTask {
+        WindowConfig lock;
+
+        protected StartCheck(WindowConfig toCheck){
+            lock = toCheck;
+        }
+
+        public void run(){
+            if (lock.doContinue){
+                runGame();
+            } else {
+                //System.out.println("Game hasn't started yet!");
+            }
+        }
+    }
+
 }

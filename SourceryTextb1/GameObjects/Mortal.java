@@ -110,7 +110,7 @@ public class Mortal extends GameObject {
     }
 
     /**
-     * createPathTo, spreadPathPts, and withinDist are all methods used in a path-finding algorithm I found on the
+     * pathToPos, createPathTo, spreadPathPts, attemptPoint, and withinDist are all methods used in a path-finding algorithm I found on the
      *  internet.
      *
      * Follow this link:
@@ -119,6 +119,21 @@ public class Mortal extends GameObject {
      *  and go to "Sample Algorithm"
      *  It explains how it should work.
      */
+    protected void pathToPos(int followDist, int gotoX, int gotoY) {
+        if (withinDist(gotoX, gotoY, x, y, followDist)) {
+            int stepsNeeded = createPathTo(gotoX, gotoY, followDist);
+            //System.out.println(stepsNeeded);
+            for (PathPoint pt : pathPts) {
+                if (pt.getCntr() == stepsNeeded - 1 && pt.getCntr() != 0 && abs(pt.getX() - x) <= 1 && abs(pt.getY() - y) <= 1) {
+                    x = pt.getX();
+                    y = pt.getY();
+                    orgo.getLayer(orgo.getPosLayer(layerName)).setPos(y, x);
+                    break;
+                }
+            }
+        }
+    }
+
     public Set<PathPoint> pathPts = new HashSet<>();
     public ArrayList<PathPoint> newPts = new ArrayList<>();
     protected int[][] ptMatrix;

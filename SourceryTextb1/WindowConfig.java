@@ -2,6 +2,8 @@ package SourceryTextb1;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * A class to select something in your inventory
@@ -11,6 +13,8 @@ class WindowConfig {
 
     private Window window;
     public ImageOrg org;
+
+    public boolean doContinue = false;
 
     private int windowHeight = 408;
     private int windowWidth =  412;
@@ -26,8 +30,7 @@ class WindowConfig {
      * Bring up the inventory for the player to do stuff with.
      */
     void config() {
-        Navigator keyListener = new Navigator(this);
-        window.txtArea.addKeyListener(keyListener); // Add key listeners.
+        System.out.println("WinCnfg: Start of config");
 
         setSize(windowWidth, windowHeight);
 
@@ -36,14 +39,7 @@ class WindowConfig {
         Layer lay = new Layer(base, "helpful");
         org.addLayer(lay);
 
-        // Because this is not creepy at all.
-        String greeting = "Welcome, " + System.getProperty("user.name") + ", to Sourcery Text.";
-        char[] user = greeting.toCharArray();
-        for (int i=0; i<user.length; i++){
-            org.editLayer(String.valueOf(user[i]), "helpful", 15, i+2);
-        }
-
-        org.compileImage();
+        System.out.println("WinCnfg: layer added");
 
         if (OS.contains("nix") || OS.contains("nux")){
             keyPressed('2');
@@ -52,18 +48,16 @@ class WindowConfig {
         } else if (OS.contains("mac")){
             System.out.println("Hello Mac user.");
         }
-        System.out.println("Your home folder is " + System.getProperty("user.home") + ".  Say please if you want me not to trash it.");
 
-        while (!keyListener.resume){
-            try {
-                Thread.sleep(50);
-            } catch (InterruptedException e) {
-                System.exit(0);
-            }
-        }
+        Navigator keyListener = new Navigator(this);
+        window.txtArea.addKeyListener(keyListener); // Add key listeners.
 
-        org.removeLayer("helpful");
-        window.txtArea.removeKeyListener(keyListener);
+        System.out.println("WinCnfg: keyListener created");
+
+        Timer update = new Timer();
+        update.schedule(new StopListener(keyListener), 0, 100);
+
+        System.out.println("WinCnfg: End of config");
     }
 
 
@@ -96,7 +90,7 @@ class WindowConfig {
                 setSize(1312, 786);
                 break;
             default:
-                System.out.println(windowHeight + " h  x  w " + windowWidth);
+                //System.out.println(windowHeight + " h  x  w " + windowWidth);
                 break;
         }
     }
@@ -105,6 +99,24 @@ class WindowConfig {
         windowWidth = width;
         windowHeight = height;
         window.setSize(width, height);
+    }
+
+    private class StopListener extends TimerTask {
+        Navigator listen;
+
+        private StopListener(Navigator navi){
+            listen = navi;
+        }
+
+        public void run(){
+            if (listen.resume){
+
+                org.removeLayer("helpful");
+                window.txtArea.removeKeyListener(listen);
+
+                doContinue = true;
+            }
+        }
     }
 
 }

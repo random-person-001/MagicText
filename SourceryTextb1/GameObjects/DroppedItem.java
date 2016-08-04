@@ -34,7 +34,7 @@ public class DroppedItem extends GameObject{
         thisLayer.setStr(0,0, "!");
         orgo.addLayer(thisLayer);
 
-        System.out.println("\n\n" + me.getName() + " JUST DROPPED ON THE GROUND! (" + x + "," + y + ")\n\n");
+        //System.out.println("\n\n" + me.getName() + " JUST DROPPED ON THE GROUND! (" + x + "," + y + ")\n\n");
 
         setupTimer(100);
     }

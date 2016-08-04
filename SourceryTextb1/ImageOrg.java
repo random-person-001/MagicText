@@ -38,6 +38,7 @@ public class ImageOrg {
      */
     public void addLayer(Layer lay){
         toAdd.add(lay);
+        System.out.println(String.format("Layer Given: %1$s (%2$b)", lay.getName(), somethingChanged));
         somethingChanged = true;
     }
 
@@ -294,16 +295,9 @@ public class ImageOrg {
 
     public void compileImage(){
         /*
-        addTheLayers();
-        removeTheLayers();
-        window.clearImage();
-        for (Layer get : layers) {
-            if (get.getCamOb()) {
-                window.placeLayer(get, camX, camY);
-            } else {
-                window.setLayer(get);
-            }
-        }
+        This should do nothing.
+        It's just here to make the game compile.
+        That is all.
         */
     }
 
@@ -327,6 +321,7 @@ public class ImageOrg {
 
     public void newSendImage(){
         if (somethingChanged) {
+            //System.out.println("New Frame...");
             long nanoTime = System.nanoTime();
             addTheLayers();
             removeTheLayers();
