@@ -62,7 +62,7 @@ class WindowConfig {
 
 
     void keyPressed(char c){
-        System.out.println(c);
+        //System.out.println(c);
         switch (c){
             case '©': // Up
                 windowHeight -= 21;

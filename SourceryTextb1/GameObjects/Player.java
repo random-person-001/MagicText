@@ -56,7 +56,7 @@ public class Player extends Mortal {
     private int superCheatProgress = 0;
     private Color restingBackground = Color.black;
 
-    private boolean isGhost = false; //For debug reasons
+    public boolean isGhost = false; //For debug reasons
 
     //STATS
     int maxHP = 20;
@@ -452,45 +452,14 @@ public class Player extends Mortal {
             case 'f':
                 textBoxQuery();
                 break;
-            case 'l':
-                System.out.println("Striping away " + orgo.layers.get(orgo.layers.size()-1).getName());
-                orgo.removeLayer(orgo.layers.get(orgo.layers.size()-1).getName()); //DEBUG ONLY
-                //This command strips away the layers in the game for display debug reasons.
             default:
                 System.out.print(key);
         }
         graphicUpdate();
         checkCheatProgress(key);
-        debugGhostProgress(key);
     }
 
     private int debugGhostProg = 0;
-
-    private void debugGhostProgress(char c){ //Type in d, b, and then g to activate.
-        switch(debugGhostProg){
-            case 0:
-                if (c == 'd'){
-                    debugGhostProg = 1;
-                } else {
-                    debugGhostProg = 0;
-                }
-                break;
-            case 1:
-                if (c == 'b'){
-                    debugGhostProg = 2;
-                } else {
-                    debugGhostProg = 0;
-                }
-                break;
-            case 2:
-                if (c == 'g') {
-                    isGhost = !isGhost;
-                    System.out.println("Player now a ghost? " + isGhost);
-                }
-                debugGhostProg = 0;
-                break;
-        }
-    }
 
     private void textBoxQuery(){
         switch(orientation){
