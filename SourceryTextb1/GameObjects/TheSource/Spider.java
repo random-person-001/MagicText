@@ -1,32 +1,31 @@
-package SourceryTextb1.GameObjects;
+package SourceryTextb1.GameObjects.TheSource;
 
+import SourceryTextb1.GameObjects.Mortal;
 import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
 
 import java.util.Random;
 
-import static java.lang.StrictMath.abs;
-
 
 /**
  * A dangerous troll (not the internet kind)
  * Created by riley on 16-Jun-2016.
  */
-public class PathingObj extends Mortal {
+public class Spider extends Mortal {
     private static Random rand = new Random();
     private int moveFrq = 20; //Higher is slower
 
-    int followDist = 30;
+    int followDist = 20;
 
-    public PathingObj(ImageOrg orga, Room theRoom, int xStart, int yStart) {
-        super.strClass = "PathingObj";
-        layerName = "pathLayer";
+    public Spider(ImageOrg orga, Room theRoom, int xStart, int yStart) {
+        super.strClass = "Spider";
+        layerName = "spiderLayer";
         orgo = orga;
         room = theRoom;
         x = xStart;
         y = yStart;
-        setHealth(20);
+        setHealth(8);
         orgo.addLayer(new Layer(new String[1][1], layerName, y, x));
 
         setupTimer(750);
@@ -39,12 +38,19 @@ public class PathingObj extends Mortal {
     @Override
     public void update() {
         // Try to move
-        orgo.editLayer("O", layerName, 0, 0);
+        orgo.editLayer("S", layerName, 0, 0);
         //long nanoLast = System.nanoTime();
+        if (Math.abs(x - room.playo.getX()) <= 1 && Math.abs(y - room.playo.getY()) <= 1){
+            room.playo.subtractHealth(2);
+        }
         pathToPos(followDist, room.playo.getX(), room.playo.getY());
+
+        if (checkDeath()){
+            orgo.removeLayer(layerName);
+        }
         //System.out.println(String.format("Time to complete: %1$d ms", (System.nanoTime() - nanoLast) / 1000000));
 
-        orgo.editLayer("O", layerName, 0, 0);
+        orgo.editLayer("S", layerName, 0, 0);
     }
 
     static int r(int max) {

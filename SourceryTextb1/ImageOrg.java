@@ -144,15 +144,20 @@ public class ImageOrg {
      * @param c the column (X coordinate) which you want to change something at
      */
     public void editLayer (String input, int loc, int r, int c){
+        Layer get;
         try {
-            Layer get = layers.get(loc);
-            if (!(r > get.getRows() || r < 0 || c > get.getColumns() || c < 0)){
-                get.setStr(r, c, input);
-                somethingChanged = true;
-            } else {
-                partialRender(get, input, loc, r, c);
-            }
-        } catch (ArrayIndexOutOfBoundsException e){System.out.println("No such layer (" + loc + ")! " + e);}
+            get = layers.get(loc);
+
+        } catch (ArrayIndexOutOfBoundsException e){
+            System.out.println("No such layer (" + loc + ")! " + e);
+            return;
+        }
+        if (!(r > get.getRows() || r < 0 || c > get.getColumns() || c < 0)){
+            get.setStr(r, c, input);
+            somethingChanged = true;
+        } else {
+            partialRender(get, input, loc, r, c);
+        }
     }
 
 

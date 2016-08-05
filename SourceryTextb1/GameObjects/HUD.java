@@ -179,19 +179,31 @@ public class HUD extends GameObject{
             } else {
                 consoleEntryProg = 0;
             }
-        } else {
+        } else if (Character.isLetterOrDigit(key) || key == ' ') {
             command += key;
-            System.out.println("Current Command: \"" + command + "\"");
         }
     }
 
     private void processCommand(){
-        if (command.equals("unfreeze")){
-            room.playo.frozen = false;
-        } else if (command.equals("ghost")){
-            room.playo.isGhost = !room.playo.isGhost;
-        } else if (command.contains("addhp ") && command.length() > 6){
-            room.playo.restoreHealth(Integer.valueOf(command.substring(6)), 50);
+        Player player = room.playo;
+        switch (command){
+            case "unfreeze":
+                player.frozen = false;
+                System.out.println("##[] Console []##\nPlayer unfrozen!\n");
+                break;
+            case "ghost":
+                player.isGhost = true;
+                System.out.println("##[] Console []##\nPlayer is now a ghost!\n");
+                break;
+            case "unghost":
+                player.isGhost = false;
+                System.out.println("##[] Console []##\nPlayer now obeys walls again!\n");
+                break;
+        }
+        if (command.contains("addhp ") && command.length() > 6){
+            int amountToHeal = Integer.valueOf(command.substring(6));
+            room.playo.restoreHealth(amountToHeal, 50);
+            System.out.println(String.format("##[] Console []##\nRestoring %1$d health to player\n", amountToHeal));
         }
         command = "";
         consoleEntryProg = 0;

@@ -216,7 +216,23 @@ public class Room {
     }
 
     /**
-     * Is it a wall I walk into?  Find out!
+     * Makes a unique name for an object to use when making a new Layer.
+     *
+     * Uses both time and random numbers to create a string that is very likely to be unique.
+     * (0.000001% collision chance per object)
+     */
+
+    public String makeUniqueLayerName(String strClass){
+        String output = strClass;
+        output += ":";
+        output += String.valueOf(Math.round(Math.random() * 1000));
+        output += "-";
+        output += String.valueOf(System.nanoTime() % 1000);
+        return output;
+    }
+
+    /**
+     * Is it a wall I walk into?  Find out now!
      *
      * @param x a specified X coord
      * @param y a particular Y coord

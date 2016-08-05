@@ -6,6 +6,7 @@
 package SourceryTextb1.Rooms.TheSource;
 
 import SourceryTextb1.GameObjects.*;
+import SourceryTextb1.GameObjects.TheSource.Spider;
 import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
@@ -108,9 +109,10 @@ public class TutorialBasement extends Room {
                     count++;
                 }
                 if (count == 5 && ((getPlayer().getX() == 5 && getPlayer().getY() == 6))){
-                    textBox(new FlavorText("The next room is full of spikes.\n They look like ^","",false));
-                    textBox(new FlavorText("For some reason the spikes are\n able to shoot magic everywhere.", "", false));
-                    textBox(new FlavorText("Pushing the 'A' key locks your aim,\n allowing you to comfortably strafe\n while casting spells, dodging their magic", "", false));
+                    textBox(new FlavorText("It seems there is a rather large\n spider in the next room.","",false));
+                    textBox(new FlavorText("Luckily, it doesn't know any magic,\n is very slow moving,\n and it doesn't have that much health", "", false));
+                    textBox(new FlavorText("Pushing the 'A' key locks your aim,\n allowing you to comfortably strafe\n while casting spells", "", false));
+                    textBox(new FlavorText("Use this technique to effortlessly\n dispatch the spider.", "", false));
                     count++;
                 }
                 if (count == 6 && (getPlayer().getX() >= 84 && getPlayer().getY() == 16 && getPlayer().getX() <= 91)){
@@ -188,13 +190,8 @@ public class TutorialBasement extends Room {
         addMortal(flowers);
 
 
-        int[][] locs = {{33, 36, 42, 47, 49, 53, 20},{10, 9, 2, 6, 10, 9, 30}};
-        for (int ii = 0; ii < locs.length ; ii++) {
-            Spike spike = new Spike(org, this, locs[0][ii], locs[1][ii]);
-            spike.setMoveFrq(100000);
-            spike.setAttack(2);
-            addMortal(spike);
-        }
+        Spider spoidur = new Spider(org, this, 39, 7);
+        addMortal(spoidur);
 
         genericRoomInitialize();
     }

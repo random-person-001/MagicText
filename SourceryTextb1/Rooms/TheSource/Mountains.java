@@ -1,6 +1,7 @@
 package SourceryTextb1.Rooms.TheSource;
 
 import SourceryTextb1.GameObjects.*;
+import SourceryTextb1.GameObjects.TheSource.Wolf;
 import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
@@ -25,9 +26,6 @@ public class Mountains extends Room {
                 Thread.sleep(20);
                 //System.out.println("I'm not dead yet! " + ii);
 
-                playo.update();
-                playo.reportPos();
-                playo.addTime(20);
                 if (count == 0) {
                     compactTextBox(org, "Welcome outside!  Breathe a breath of \n fresh air, and don't fall.", "A Sign", false);
                     count++;
@@ -67,19 +65,16 @@ public class Mountains extends Room {
     public void startup() {
         ititHitMeshes();
         String[][] base = art.strToArray(arty.mountainPlace);
-        String[] solids = {":", "^", "#"};
+        String[] solids = {":", "^", "#",".","0","o"};
         addToBaseHitMesh(base, solids);
         baseLayer = new Layer(base, "backgronud");
         org.addLayer(baseLayer);
 
-        /*
-        makeTrollAt(58, 7);
-        makeTrollAt(56, 7);
-        makeTrollAt(36, 15);
-        makeTrollAt(62, 7);
-        makeTrollAt(70, 4);
-        makeTrollAt(72, 4);
-        */
+        int[][] locs = {{106, 115},{14, 17}};
+        for (int ii = 0 ; ii < locs[0].length ; ii++){
+            Wolf wolf = new Wolf(org, this, locs[0][ii], locs[1][ii]);
+            addMortal(wolf);
+        }
 
         genericRoomInitialize();
         playo.goTo(11, 1);

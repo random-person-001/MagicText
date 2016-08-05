@@ -121,6 +121,7 @@ public class Mortal extends GameObject {
      */
     protected void pathToPos(int followDist, int gotoX, int gotoY) {
         if (withinDist(gotoX, gotoY, x, y, followDist)) {
+            room.removeFromObjHitMesh(x, y);
             int stepsNeeded = createPathTo(gotoX, gotoY, followDist);
             //System.out.println(stepsNeeded);
             for (PathPoint pt : pathPts) {
@@ -131,6 +132,7 @@ public class Mortal extends GameObject {
                     break;
                 }
             }
+            room.addToObjHitMesh(x, y);
         }
     }
 
