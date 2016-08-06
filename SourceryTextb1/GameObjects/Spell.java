@@ -53,7 +53,7 @@ public class Spell extends GameObject{
         if (orgo.getDebug())
             System.out.println(name + " spell cast!");
 
-        setupTimer(20);
+        setupTimer(30);
     }
 
     public Spell (ImageOrg org, Room theRoom, Layer place, int setX, int setY, int setOr, int setDmg, int setRng, String set1, String set2, boolean alting){
@@ -73,7 +73,7 @@ public class Spell extends GameObject{
         if (orgo.getDebug())
             System.out.println(name + " spell cast!");
 
-        setupTimer(20);
+        setupTimer(30);
     }
 
     public void setName(String newName){

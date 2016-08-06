@@ -205,6 +205,11 @@ public class HUD extends GameObject{
             room.playo.restoreHealth(amountToHeal, 50);
             System.out.println(String.format("##[] Console []##\nRestoring %1$d health to player\n", amountToHeal));
         }
+        if (command.contains("addtater ") && command.length() > 9){
+            int amountToGive = Integer.valueOf(command.substring(9));
+            player.addPotato(amountToGive);
+            System.out.println(String.format("##[] Console []##\nGiving the player %1$d potato(es)\n", amountToGive));
+        }
         command = "";
         consoleEntryProg = 0;
     }

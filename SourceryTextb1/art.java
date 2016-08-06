@@ -903,6 +903,17 @@ public class art {
                     "|                 |\n" +
                     "+-----------------+\n";
 
+    public String taterMenu =
+                    "+-MAGIC POTATO----+\n" +
+                    "| UPGRADE?        |\n" +
+                    "|                 |\n" +
+                    "|  +5 Max Health  |\n" +
+                    "|  +5 Max Mana    |\n" +
+                    "|  BACK           |\n" +
+                    "|                 |\n" +
+                    "+-----------------+\n";
+
+
     public String itemsMenu =
                     "+Info-----------------------+ +Items---------+\n" +
                     "|                           | |===PAGE  / ===|\n" +

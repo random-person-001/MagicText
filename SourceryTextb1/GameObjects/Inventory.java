@@ -35,6 +35,7 @@ class Inventory {
     private final int EQUIP = 4;
     private final int EXIT = 5;
     private final int QUIT = 6;
+    private final int UPGRADE = 7;
 
     //BECAUSE SCOPE
     public int menuID = 0;
@@ -49,6 +50,7 @@ class Inventory {
     private Layer itemsMenuLayer = new Layer(art.strToArray(new art().itemsMenu), "items", 1, 0, false, true);
     private Layer spellsMenuLayer = new Layer(art.strToArray(new art().spellsMenu), "spells", 1, 0, false, true);
     private Layer equipMenuLayer = new Layer(art.strToArray(new art().equipMenu), "equip", 1, 0, false, true);
+    private Layer taterMenuLayer = new Layer(art.strToArray(new art().taterMenu), "tater", 1, 27, false, true);
     private Layer selectorLayer = new Layer(new String[22][46], "selector", 0, 0, false, false);
 
 
@@ -92,6 +94,8 @@ class Inventory {
         equip.add(new Item("Dusty Robe", "Dust is baked into this\n old robe.\n\nThe newest students at\n The Magic Academy get\n only hand-me-downs. As a" +
                 "\n result, they are usually\n really, really old.\n\n+2 Defense", player, "equip"));
         equip.get(0).setEquipvals(2, 0, 0, 0, 0, 0, 0, "armor");
+
+        items.add(new Item("Magic Potato","A magically enhanced potato\n\nCan be used to either\n permanently increase\n your max health or\n max mana by 5.", player, "item"));
 
         player.armor = equip.get(0);
         player.defineStats();
@@ -209,6 +213,7 @@ class Inventory {
         org.removeLayer("spells");
         org.removeLayer("equip");
         org.removeLayer("selector");
+        org.removeLayer("tater");
         menuID = EXIT;
     }
 
@@ -235,6 +240,9 @@ class Inventory {
                 break;
             case QUIT:
                 operateQuitMenu();
+                break;
+            case UPGRADE:
+                operateUpgradeMenu();
                 break;
         }
         pressedA = false;
@@ -288,6 +296,7 @@ class Inventory {
      * @param from  the string name of the layer you came from (so it can be removed)
      */
     private void jumpToNewMenu(Layer goTo, int newID, String from) {
+        selectorLayer.clear();
         org.removeLayer(from);
         org.removeLayer("selector");
         org.addLayer(goTo);
@@ -343,8 +352,45 @@ class Inventory {
             if (newSelectY == 21) {
                 jumpToNewMenu(topMenuLayer, TOP, "items");
             }
+
         }
         checkNewPage();
+        int index = newSelectY - 3 + ((page - 1) * 16);
+        if (index < items.size() && newSelectY < 19) {
+            if (pressedA) {
+                Item thing = items.get(index);
+                if (thing.getName().equals("Magic Potato")){
+                    jumpToNewMenu(taterMenuLayer, UPGRADE, "items");
+                    potatoIndex = index;
+                }
+            }
+        }
+    }
+
+    int potatoIndex = 0;
+
+    /**
+     * THe submenu that deals with upgrades from Magic Potatoes
+     */
+
+    private void operateUpgradeMenu() {
+        loopAtMenuEnd(4, 6);
+        indexX = 28;
+
+        if (pressedA) {
+            switch (newSelectY){
+                case 4:
+                    player.maxHP += 5;
+                    player.setHealth(player.maxHP);
+                    items.remove(potatoIndex);
+                    break;
+                case 5:
+                    player.maxMana += 5;
+                    items.remove(potatoIndex);
+                    break;
+            }
+            jumpToNewMenu(topMenuLayer, TOP, "tater");
+        }
     }
 
     /**

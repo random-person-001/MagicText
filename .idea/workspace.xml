@@ -6,17 +6,12 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2135375f-4dfd-4c17-b9a7-4b7586bd0b6e" name="Default" comment="Added new Wolf and Spider Objects using the new pahfinding algorithm.&#10;&#10;I also changed somne">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SourceryTextb1/GameObjects/TheSource/Spider.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SourceryTextb1/GameObjects/TheSource/Wolf.java" />
+    <list default="true" id="2135375f-4dfd-4c17-b9a7-4b7586bd0b6e" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SourceryTextb1/GameObjects/HUD.java" afterPath="$PROJECT_DIR$/SourceryTextb1/GameObjects/HUD.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SourceryTextb1/GameObjects/Mortal.java" afterPath="$PROJECT_DIR$/SourceryTextb1/GameObjects/Mortal.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SourceryTextb1/GameObjects/PathingObj.java" afterPath="$PROJECT_DIR$/SourceryTextb1/GameObjects/PathingObj.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SourceryTextb1/ImageOrg.java" afterPath="$PROJECT_DIR$/SourceryTextb1/ImageOrg.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SourceryTextb1/Rooms/Room.java" afterPath="$PROJECT_DIR$/SourceryTextb1/Rooms/Room.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SourceryTextb1/Rooms/TheSource/Mountains.java" afterPath="$PROJECT_DIR$/SourceryTextb1/Rooms/TheSource/Mountains.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SourceryTextb1/Rooms/TheSource/TutorialBasement.java" afterPath="$PROJECT_DIR$/SourceryTextb1/Rooms/TheSource/TutorialBasement.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SourceryTextb1/GameObjects/Inventory.java" afterPath="$PROJECT_DIR$/SourceryTextb1/GameObjects/Inventory.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SourceryTextb1/GameObjects/Player.java" afterPath="$PROJECT_DIR$/SourceryTextb1/GameObjects/Player.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SourceryTextb1/GameObjects/Spell.java" afterPath="$PROJECT_DIR$/SourceryTextb1/GameObjects/Spell.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SourceryTextb1/art.java" afterPath="$PROJECT_DIR$/SourceryTextb1/art.java" />
     </list>
     <list id="42bd900a-8252-44a2-a35b-c4ae87b3831d" name="New changelist" comment="New changelist" />
@@ -31,7 +26,6 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -44,8 +38,41 @@
       <file leaf-file-name="HUD.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/SourceryTextb1/GameObjects/HUD.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="607">
-              <caret line="204" column="55" selection-start-line="204" selection-start-column="55" selection-end-line="204" selection-end-column="55" />
+            <state relative-caret-position="274">
+              <caret line="209" column="43" selection-start-line="209" selection-start-column="43" selection-end-line="209" selection-end-column="43" />
+              <folding>
+                <element signature="e#7084#7085#0" expanded="true" />
+                <element signature="e#7123#7124#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="art.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/SourceryTextb1/art.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="376">
+              <caret line="909" column="23" selection-start-line="909" selection-start-column="23" selection-end-line="909" selection-end-column="23" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Inventory.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/SourceryTextb1/GameObjects/Inventory.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="204">
+              <caret line="101" column="5" selection-start-line="101" selection-start-column="5" selection-end-line="101" selection-end-column="5" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Spell.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/SourceryTextb1/GameObjects/Spell.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="204">
+              <caret line="73" column="39" selection-start-line="73" selection-start-column="39" selection-end-line="73" selection-end-column="39" />
               <folding />
             </state>
           </provider>
@@ -54,8 +81,8 @@
       <file leaf-file-name="Player.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/SourceryTextb1/GameObjects/Player.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5066">
-              <caret line="329" column="23" selection-start-line="329" selection-start-column="23" selection-end-line="329" selection-end-column="23" />
+            <state relative-caret-position="476">
+              <caret line="727" column="89" selection-start-line="727" selection-start-column="89" selection-end-line="727" selection-end-column="89" />
               <folding />
             </state>
           </provider>
@@ -64,53 +91,9 @@
       <file leaf-file-name="Mortal.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/SourceryTextb1/GameObjects/Mortal.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3706">
-              <caret line="240" column="26" selection-start-line="240" selection-start-column="26" selection-end-line="240" selection-end-column="26" />
-              <folding>
-                <marker date="1470426380353" expanded="true" signature="2762:3822" ph="/**...*/" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Room.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/SourceryTextb1/Rooms/Room.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3417">
-              <caret line="221" column="45" selection-start-line="221" selection-start-column="45" selection-end-line="221" selection-end-column="45" />
+            <state relative-caret-position="3740">
+              <caret line="242" column="26" selection-start-line="242" selection-start-column="26" selection-end-line="242" selection-end-column="26" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Spider.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/SourceryTextb1/GameObjects/TheSource/Spider.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="21" column="32" selection-start-line="21" selection-start-column="32" selection-end-line="21" selection-end-column="32" />
-              <folding>
-                <element signature="imports" expanded="false" />
-                <element signature="e#852#853#0" expanded="false" />
-                <element signature="e#884#885#0" expanded="false" />
-                <element signature="e#1529#1530#0" expanded="false" />
-                <element signature="e#1561#1562#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Wolf.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/SourceryTextb1/GameObjects/TheSource/Wolf.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="442">
-              <caret line="31" column="20" selection-start-line="31" selection-start-column="20" selection-end-line="31" selection-end-column="20" />
-              <folding>
-                <element signature="imports" expanded="false" />
-                <element signature="e#875#876#0" expanded="false" />
-                <element signature="e#907#908#0" expanded="false" />
-                <element signature="e#1552#1553#0" expanded="false" />
-                <element signature="e#1584#1585#0" expanded="false" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -118,8 +101,8 @@
       <file leaf-file-name="ImageOrg.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/SourceryTextb1/ImageOrg.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="182">
-              <caret line="147" column="13" selection-start-line="147" selection-start-column="13" selection-end-line="147" selection-end-column="13" />
+            <state relative-caret-position="2414">
+              <caret line="152" column="13" selection-start-line="152" selection-start-column="13" selection-end-line="152" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -128,7 +111,7 @@
       <file leaf-file-name="Start.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/SourceryTextb1/Start.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1377">
+            <state relative-caret-position="835">
               <caret line="93" column="0" selection-start-line="93" selection-start-column="0" selection-end-line="93" selection-end-column="0" />
               <folding />
             </state>
@@ -148,8 +131,8 @@
       <file leaf-file-name="Mountains.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/SourceryTextb1/Rooms/TheSource/Mountains.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1173">
-              <caret line="74" column="0" selection-start-line="74" selection-start-column="0" selection-end-line="74" selection-end-column="0" />
+            <state relative-caret-position="1207">
+              <caret line="72" column="0" selection-start-line="72" selection-start-column="0" selection-end-line="72" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -206,17 +189,13 @@
         <option value="$PROJECT_DIR$/SourceryTextb1/GameObjects/SeaOfSurprise/SmallPiranha.java" />
         <option value="$PROJECT_DIR$/SourceryTextb1/GameObjects/Spike.java" />
         <option value="$PROJECT_DIR$/SourceryTextb1/Rooms/TheSource/ThePit.java" />
-        <option value="$PROJECT_DIR$/SourceryTextb1/GameObjects/Inventory.java" />
         <option value="$PROJECT_DIR$/SourceryTextb1/Layer.java" />
         <option value="$PROJECT_DIR$/SourceryTextb1/Window.java" />
-        <option value="$PROJECT_DIR$/SourceryTextb1/GameObjects/Spell.java" />
         <option value="$PROJECT_DIR$/SourceryTextb1/Rooms/TestRoom.java" />
         <option value="$PROJECT_DIR$/SourceryTextb1/Rooms/NewTestRoom.java" />
         <option value="$PROJECT_DIR$/SourceryTextb1/GameObjects/DroppedItem.java" />
-        <option value="$PROJECT_DIR$/SourceryTextb1/GameObjects/Player.java" />
         <option value="$PROJECT_DIR$/SourceryTextb1/WindowConfig.java" />
         <option value="$PROJECT_DIR$/SourceryTextb1/Start.java" />
-        <option value="$PROJECT_DIR$/SourceryTextb1/art.java" />
         <option value="$PROJECT_DIR$/SourceryTextb1/GameObjects/PathingObj.java" />
         <option value="$PROJECT_DIR$/SourceryTextb1/Rooms/TheSource/TutorialBasement.java" />
         <option value="$PROJECT_DIR$/SourceryTextb1/GameObjects/Mortal.java" />
@@ -225,6 +204,10 @@
         <option value="$PROJECT_DIR$/SourceryTextb1/Rooms/Room.java" />
         <option value="$PROJECT_DIR$/SourceryTextb1/GameObjects/TheSource/Wolf.java" />
         <option value="$PROJECT_DIR$/SourceryTextb1/ImageOrg.java" />
+        <option value="$PROJECT_DIR$/SourceryTextb1/art.java" />
+        <option value="$PROJECT_DIR$/SourceryTextb1/GameObjects/Spell.java" />
+        <option value="$PROJECT_DIR$/SourceryTextb1/GameObjects/Inventory.java" />
+        <option value="$PROJECT_DIR$/SourceryTextb1/GameObjects/Player.java" />
         <option value="$PROJECT_DIR$/SourceryTextb1/GameObjects/HUD.java" />
       </list>
     </option>
@@ -271,7 +254,6 @@
     </navigator>
     <panes>
       <pane id="PackagesPane" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -366,17 +348,58 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MagicText" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MagicText" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SourceryTextb1" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="GameObjects" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MagicText" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MagicText" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SourceryTextb1" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="GameObjects" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Inventory.java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.ClassesTreeStructureProvider$PsiClassOwnerTreeNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
       <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="E:" />
+    <property name="last_opened_file_path" value="$USER_HOME$/AppData/Local/GitHub/PortableGit_624c8416ee51e205b3f892d1d904e06e6f3c57c8/cmd/git.exe" />
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
+    <property name="settings.editor.selected.configurable" value="vcs.Git" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="panda.monitored.classes" value="SourceryTextb1.Window" />
     <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://E:/MagicText/SourceryTextb1/art.java" />
@@ -433,8 +456,13 @@
       <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
       <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
       <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="DEBUGGER_TYPE" value="Java" />
       <option name="USE_LAST_SELECTED_DEVICE" value="false" />
       <option name="PREFERRED_AVD" value="" />
+      <Java />
+      <Profilers>
+        <option name="GAPID_DISABLE_PCS" value="false" />
+      </Profilers>
       <option name="DEEP_LINK" value="" />
       <option name="ACTIVITY_CLASS" value="" />
       <method />
@@ -453,8 +481,13 @@
       <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
       <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
       <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="DEBUGGER_TYPE" value="Java" />
       <option name="USE_LAST_SELECTED_DEVICE" value="false" />
       <option name="PREFERRED_AVD" value="" />
+      <Java />
+      <Profilers>
+        <option name="GAPID_DISABLE_PCS" value="false" />
+      </Profilers>
       <method />
     </configuration>
     <configuration default="true" type="Applet" factoryName="Applet">
@@ -722,13 +755,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1465100929766</updated>
-    </task>
-    <task id="LOCAL-00029" summary="Spike suicides upon hopeless situations (like moved out of world with dock)">
-      <created>1466023152101</created>
-      <option name="number" value="00029" />
-      <option name="presentableId" value="LOCAL-00029" />
-      <option name="project" value="LOCAL" />
-      <updated>1466023152101</updated>
     </task>
     <task id="LOCAL-00030" summary="Add a mountain trail setting, where you can fall off the edge.">
       <created>1466032297382</created>
@@ -1066,7 +1092,14 @@
       <option name="project" value="LOCAL" />
       <updated>1470350486250</updated>
     </task>
-    <option name="localTasksCounter" value="78" />
+    <task id="LOCAL-00078" summary="Added new Wolf and Spider Objects using the new pahfinding algorithm.&#10;&#10;I also changed the console more. It now outputs via System.out.println() to send back feedback.&#10;Additionally, 'ghost' now only switches on, and toggling off requires you to type in 'unghost'">
+      <created>1470432534606</created>
+      <option name="number" value="00078" />
+      <option name="presentableId" value="LOCAL-00078" />
+      <option name="project" value="LOCAL" />
+      <updated>1470432534606</updated>
+    </task>
+    <option name="localTasksCounter" value="79" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1089,8 +1122,8 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32799014" sideWeight="0.5023318" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32942432" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3261105" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.30552545" sideWeight="0.4976682" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3261105" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32827735" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -1098,8 +1131,8 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22228146" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24983345" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5281385" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -1125,7 +1158,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fix a hole in the wall (in the art of the Source hole)" />
     <MESSAGE value="Apparently all the rooms were broken when you (Riley) changed the method names of numerous Room methods.&#10;&#10;" />
     <MESSAGE value="Apparently all the rooms were broken when you (Riley) changed the method names of numerous Room methods.&#10;&#10;You can say thank you." />
     <MESSAGE value="Some behind-the-scenes cleanup of the inventory menu." />
@@ -1150,7 +1182,8 @@
     <MESSAGE value="Window config now displays again" />
     <MESSAGE value="Added a new debug console to our game. Push 'C' 3 times to activate.&#10;&#10;Push ENTER to exit console/run command&#10;Push BACKSPACE to clear the command&#10;&#10;The following commands exist in the game:&#10;&gt;unfreeze                  : unfreezes player if somehow frozen by accident&#10;&gt;ghost                       : toggles players ignoring room hitmesh&#10;&gt;addhp &lt;amount&gt; : restores health; overheals to 50 (Not recommended to go above 2*maxHP)&#10;&#10;Feel free to some of your own :)" />
     <MESSAGE value="Added a new debug console to our game. Push 'C' 3 times to activate.&#10;&#10;Push ENTER to exit console/run command&#10;Push BACKSPACE to clear the command&#10;&#10;The following commands exist in the game:&#10;&gt;unfreeze                  : unfreezes player if somehow frozen by accident&#10;&gt;ghost                       : toggles players ignoring room hitmesh&#10;&gt;addhp &lt;amount&gt; : restores health; overheals to 50 (Not recommended to go above 2*maxHP)&#10;&#10;Feel free to add some of your own :)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added a new debug console to our game. Push 'C' 3 times to activate.&#10;&#10;Push ENTER to exit console/run command&#10;Push BACKSPACE to clear the command&#10;&#10;The following commands exist in the game:&#10;&gt;unfreeze                  : unfreezes player if somehow frozen by accident&#10;&gt;ghost                       : toggles players ignoring room hitmesh&#10;&gt;addhp &lt;amount&gt; : restores health; overheals to 50 (Not recommended to go above 2*maxHP)&#10;&#10;Feel free to add some of your own :)" />
+    <MESSAGE value="Added new Wolf and Spider Objects using the new pahfinding algorithm.&#10;&#10;I also changed the console more. It now outputs via System.out.println() to send back feedback.&#10;Additionally, 'ghost' now only switches on, and toggling off requires you to type in 'unghost'" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added new Wolf and Spider Objects using the new pahfinding algorithm.&#10;&#10;I also changed the console more. It now outputs via System.out.println() to send back feedback.&#10;Additionally, 'ghost' now only switches on, and toggling off requires you to type in 'unghost'" />
     <option name="PRESELECT_EXISTING_CHANGELIST" value="false" />
   </component>
   <component name="XDebuggerManager">
@@ -1164,304 +1197,14 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/SourceryTextb1/Rooms/TheSource/TutorialBasement.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1972">
-          <caret line="124" column="22" selection-start-line="124" selection-start-column="22" selection-end-line="124" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SourceryTextb1/Start.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1054">
-          <caret line="74" column="13" selection-start-line="74" selection-start-column="13" selection-end-line="74" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SourceryTextb1/GameObjects/Mortal.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="27" column="14" selection-start-line="27" selection-start-column="14" selection-end-line="27" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SourceryTextb1/Rooms/TheSource/ThePit.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="21" column="2" selection-start-line="21" selection-start-column="2" selection-end-line="21" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SourceryTextb1/GameObjects/Player.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7140">
-          <caret line="456" column="21" selection-start-line="456" selection-start-column="21" selection-end-line="456" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SourceryTextb1/Rooms/Room.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1717">
-          <caret line="122" column="14" selection-start-line="122" selection-start-column="14" selection-end-line="122" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SourceryTextb1/GameObjects/Spell.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="578">
-          <caret line="38" column="36" selection-start-line="38" selection-start-column="36" selection-end-line="38" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SourceryTextb1/GameObjects/Item.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1547">
-          <caret line="95" column="0" selection-start-line="95" selection-start-column="0" selection-end-line="95" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SourceryTextb1/art.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="8993">
-          <caret line="542" column="26" selection-start-line="542" selection-start-column="26" selection-end-line="542" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SourceryTextb1/GameObjects/Spike.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="799">
-          <caret line="60" column="44" selection-start-line="60" selection-start-column="44" selection-end-line="60" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SourceryTextb1/Rooms/TheSource/TutorialBasement.java">
+    <entry file="file://$PROJECT_DIR$/SourceryTextb1/GameObjects/HUD.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SourceryTextb1/Start.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1054">
-          <caret line="74" column="13" selection-start-line="74" selection-start-column="13" selection-end-line="74" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SourceryTextb1/GameObjects/Mortal.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="27" column="14" selection-start-line="27" selection-start-column="14" selection-end-line="27" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SourceryTextb1/Rooms/TheSource/ThePit.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="21" column="2" selection-start-line="21" selection-start-column="2" selection-end-line="21" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SourceryTextb1/Rooms/TheSource/Kevin.java" />
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_65/src.zip!/java/awt/event/KeyEvent.java" />
-    <entry file="file://$PROJECT_DIR$/SourceryTextb1/Rooms/RoomTwo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="23" column="4" selection-start-line="23" selection-start-column="4" selection-end-line="23" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SourceryTextb1/Rooms/RoomThree.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="782">
-          <caret line="52" column="10" selection-start-line="52" selection-start-column="10" selection-end-line="52" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SourceryTextb1/GameObjects/Troll.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1242">
-          <caret line="77" column="32" selection-start-line="77" selection-start-column="32" selection-end-line="77" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SourceryTextb1/GameObjects/Item.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="542">
-          <caret line="132" column="0" selection-start-line="132" selection-start-column="0" selection-end-line="132" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SourceryTextb1/Rooms/MinesOfMementos/ProcedurallyGeneratedDungeon.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="414">
-          <caret line="61" column="0" selection-start-line="61" selection-start-column="0" selection-end-line="61" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SourceryTextb1/Rooms/BeginningRoom.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="414">
-          <caret line="91" column="32" selection-start-line="91" selection-start-column="32" selection-end-line="91" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SourceryTextb1/Rooms/SeaOfSurprise/DockAndShip.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="230">
-          <caret line="114" column="28" selection-start-line="114" selection-start-column="28" selection-end-line="114" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Discussion.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="13" column="76" selection-start-line="13" selection-start-column="76" selection-end-line="13" selection-end-column="76" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SourceryTextb1/GameObjects/Food.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="810">
-          <caret line="54" column="29" selection-start-line="54" selection-start-column="29" selection-end-line="54" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SourceryTextb1/GameObjects/Staff.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="558">
-          <caret line="33" column="49" selection-start-line="33" selection-start-column="49" selection-end-line="33" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SourceryTextb1/GameObjects/SeaOfSurprise/SmallPiranha.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1462">
-          <caret line="96" column="31" selection-start-line="96" selection-start-column="31" selection-end-line="96" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SourceryTextb1/GameObjects/Spike.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="629">
-          <caret line="46" column="9" selection-start-line="46" selection-start-column="9" selection-end-line="46" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SourceryTextb1/GameObjects/PotOfPetunias.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="26" column="24" selection-start-line="26" selection-start-column="24" selection-end-line="26" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SourceryTextb1/Layer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2771">
-          <caret line="185" column="71" selection-start-line="185" selection-start-column="71" selection-end-line="185" selection-end-column="71" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SourceryTextb1/Rooms/TestRoom.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1037">
-          <caret line="68" column="5" selection-start-line="68" selection-start-column="5" selection-end-line="68" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SourceryTextb1/GameObjects/GameObject.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="969">
-          <caret line="84" column="22" selection-start-line="84" selection-start-column="22" selection-end-line="84" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SourceryTextb1/Rooms/NewTestRoom.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1428">
-          <caret line="91" column="24" selection-start-line="91" selection-start-column="24" selection-end-line="91" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SourceryTextb1/Window.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3995">
-          <caret line="255" column="26" selection-start-line="255" selection-start-column="26" selection-end-line="255" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SourceryTextb1/WindowConfig.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="935">
-          <caret line="58" column="0" selection-start-line="58" selection-start-column="0" selection-end-line="58" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SourceryTextb1/GameObjects/Spell.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2907">
-          <caret line="185" column="53" selection-start-line="185" selection-start-column="53" selection-end-line="185" selection-end-column="53" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SourceryTextb1/GameObjects/Inventory.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="9129">
-          <caret line="553" column="6" selection-start-line="553" selection-start-column="6" selection-end-line="553" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SourceryTextb1/GameObjects/DroppedItem.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="935">
-          <caret line="57" column="0" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SourceryTextb1/art.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="16660">
-          <caret line="993" column="145" selection-start-line="993" selection-start-column="145" selection-end-line="993" selection-end-column="145" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SourceryTextb1/GameObjects/PathingObj.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="595">
-          <caret line="43" column="68" selection-start-line="43" selection-start-column="68" selection-end-line="43" selection-end-column="68" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SourceryTextb1/Rooms/TheSource/TutorialBasement.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3111">
-          <caret line="192" column="52" selection-start-line="192" selection-start-column="52" selection-end-line="192" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SourceryTextb1/GameObjects/TheSource/Spider.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="21" column="32" selection-start-line="21" selection-start-column="32" selection-end-line="21" selection-end-column="32" />
           <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#852#853#0" expanded="false" />
-            <element signature="e#884#885#0" expanded="false" />
-            <element signature="e#1529#1530#0" expanded="false" />
-            <element signature="e#1561#1562#0" expanded="false" />
+            <element signature="e#7084#7085#0" expanded="true" />
+            <element signature="e#7123#7124#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SourceryTextb1/Rooms/TheSource/ThePit.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1173">
-          <caret line="77" column="195" selection-start-line="77" selection-start-column="195" selection-end-line="77" selection-end-column="195" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1477,16 +1220,22 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3706">
           <caret line="240" column="26" selection-start-line="240" selection-start-column="26" selection-end-line="240" selection-end-column="26" />
-          <folding>
-            <marker date="1470426380353" expanded="true" signature="2762:3822" ph="/**...*/" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/SourceryTextb1/Rooms/Room.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3417">
-          <caret line="221" column="45" selection-start-line="221" selection-start-column="45" selection-end-line="221" selection-end-column="45" />
+          <caret line="221" column="36" selection-start-line="221" selection-start-column="36" selection-end-line="221" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SourceryTextb1/ImageOrg.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2329">
+          <caret line="147" column="13" selection-start-line="147" selection-start-column="13" selection-end-line="147" selection-end-column="13" />
           <folding />
         </state>
       </provider>
@@ -1499,41 +1248,112 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/SourceryTextb1/Rooms/TheSource/Mountains.java">
+    <entry file="file://$PROJECT_DIR$/SourceryTextb1/Rooms/TheSource/ThePit.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1173">
+          <caret line="77" column="195" selection-start-line="77" selection-start-column="195" selection-end-line="77" selection-end-column="195" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SourceryTextb1/Rooms/TheSource/Mountains.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1190">
           <caret line="74" column="0" selection-start-line="74" selection-start-column="0" selection-end-line="74" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/SourceryTextb1/GameObjects/TheSource/Wolf.java">
+    <entry file="file://$PROJECT_DIR$/SourceryTextb1/Rooms/Room.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="31" column="20" selection-start-line="31" selection-start-column="20" selection-end-line="31" selection-end-column="20" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#875#876#0" expanded="false" />
-            <element signature="e#907#908#0" expanded="false" />
-            <element signature="e#1552#1553#0" expanded="false" />
-            <element signature="e#1584#1585#0" expanded="false" />
-          </folding>
+        <state relative-caret-position="3417">
+          <caret line="237" column="36" selection-start-line="237" selection-start-column="36" selection-end-line="237" selection-end-column="36" />
+          <folding />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/SourceryTextb1/GameObjects/TheSource/Spider.java" />
+    <entry file="file://$PROJECT_DIR$/SourceryTextb1/GameObjects/TheSource/Wolf.java" />
     <entry file="file://$PROJECT_DIR$/SourceryTextb1/ImageOrg.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="182">
-          <caret line="147" column="13" selection-start-line="147" selection-start-column="13" selection-end-line="147" selection-end-column="13" />
+        <state relative-caret-position="2414">
+          <caret line="152" column="13" selection-start-line="152" selection-start-column="13" selection-end-line="152" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SourceryTextb1/Rooms/TheSource/ThePit.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1173">
+          <caret line="77" column="195" selection-start-line="77" selection-start-column="195" selection-end-line="77" selection-end-column="195" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SourceryTextb1/Rooms/TheSource/Mountains.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1207">
+          <caret line="72" column="0" selection-start-line="72" selection-start-column="0" selection-end-line="72" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SourceryTextb1/Start.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="835">
+          <caret line="93" column="0" selection-start-line="93" selection-start-column="0" selection-end-line="93" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SourceryTextb1/art.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="376">
+          <caret line="909" column="23" selection-start-line="909" selection-start-column="23" selection-end-line="909" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SourceryTextb1/GameObjects/Mortal.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3740">
+          <caret line="242" column="26" selection-start-line="242" selection-start-column="26" selection-end-line="242" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SourceryTextb1/GameObjects/Spell.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="73" column="39" selection-start-line="73" selection-start-column="39" selection-end-line="73" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SourceryTextb1/GameObjects/Inventory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="101" column="5" selection-start-line="101" selection-start-column="5" selection-end-line="101" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SourceryTextb1/GameObjects/Player.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="476">
+          <caret line="727" column="89" selection-start-line="727" selection-start-column="89" selection-end-line="727" selection-end-column="89" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/SourceryTextb1/GameObjects/HUD.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="607">
-          <caret line="204" column="55" selection-start-line="204" selection-start-column="55" selection-end-line="204" selection-end-column="55" />
-          <folding />
+        <state relative-caret-position="274">
+          <caret line="209" column="43" selection-start-line="209" selection-start-column="43" selection-end-line="209" selection-end-column="43" />
+          <folding>
+            <element signature="e#7084#7085#0" expanded="true" />
+            <element signature="e#7123#7124#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

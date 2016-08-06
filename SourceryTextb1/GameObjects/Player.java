@@ -718,6 +718,17 @@ public class Player extends Mortal {
         return spell2.getIcon();
     }
 
+    /**
+     * Adds a potato to the player's inventory. For debug console.
+     */
+
+    public void addPotato(int amount){
+        for (int ii = 0; ii < amount; ii++) {
+            inv.addItem(new Item("Magic Potato", "A magically enhanced potato\n\nCan be used to either" +
+                    "\n permanently increase\n your max health or\n max mana by 5.", this, "item"));
+        }
+    }
+
     class PlayerTimerTask extends TimerTask {
 
         @Override
