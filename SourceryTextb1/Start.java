@@ -12,6 +12,7 @@ import SourceryTextb1.Rooms.TheSource.ThePit;
 import SourceryTextb1.Rooms.TheSource.TutorialBasement;
 
 import java.awt.Color;
+import java.lang.reflect.Field;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -28,6 +29,11 @@ public class Start {
     private static ImageOrg org;
 
     public static void main(String[] args) throws InterruptedException {
+        try {
+            devilSpawn();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         game = new Window();
         Layer base = new Layer(new String[game.maxH()][game.maxW()], "base");
         org = new ImageOrg(game);
@@ -56,6 +62,19 @@ public class Start {
 
 
         // Just end.
+    }
+
+    // See http://codegolf.stackexchange.com/questions/28786/write-a-program-that-makes-2-2-5/28850
+    public static void devilSpawn () throws Exception {
+        Class cache = Integer.class.getDeclaredClasses()[0];
+        Field c = cache.getDeclaredField("cache");
+        c.setAccessible(true);
+        Integer[] array = (Integer[]) c.get(cache);
+        for (int i = 0; i<array.length-1; i++){
+            array[i] = array[i+1];
+        }
+        System.out.printf("%d", 2 + 2);
+        System.out.println();
     }
 
     private static void runGame(){
