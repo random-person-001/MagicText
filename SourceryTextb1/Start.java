@@ -30,7 +30,7 @@ public class Start {
 
     public static void main(String[] args) throws InterruptedException {
         try {
-            devilSpawn();
+            summonDevil();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -64,8 +64,13 @@ public class Start {
         // Just end.
     }
 
+    /**
+     * Deep within the Integer class is a Flyweight of Integers. This is an array of Integers from −128 to +127.
+     * This changes the entries, causing deep, deep troubles.
+     * @throws Exception, but usually not.
+     */
     // See http://codegolf.stackexchange.com/questions/28786/write-a-program-that-makes-2-2-5/28850
-    public static void devilSpawn () throws Exception {
+    public static void summonDevil() throws Exception {
         Class cache = Integer.class.getDeclaredClasses()[0];
         Field c = cache.getDeclaredField("cache");
         c.setAccessible(true);
@@ -73,7 +78,10 @@ public class Start {
         for (int i = 0; i<array.length-1; i++){
             array[i] = array[i+1];
         }
-        System.out.printf("%d", 2 + 2);
+        array[255] = 900000001; // nine hundred million and one
+        System.out.printf("%d", 2 + 2); // 5
+        System.out.printf("%d", 3 + 3); // 7
+        System.out.printf("%d", 4 + 4); // 4 -> 5; 5 + 5 = 10; 10 -> 9
         System.out.println();
     }
 
