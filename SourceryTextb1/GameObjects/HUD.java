@@ -24,6 +24,9 @@ public class HUD extends GameObject{
     private String[] spell1Name = new String[6];
     private String[] spell2Name = new String[6];
     private int loc;
+    private int cursorBlinkTimer = 0;
+    private String command = "";
+    private int consoleEntryProg = 0;
 
     public HUD (ImageOrg org, Room theRoom, Layer place){
         super.strClass = "HUD";
@@ -162,15 +165,21 @@ public class HUD extends GameObject{
             }
             */
         } else {
-            putChar(">");
+            putChar("»");
+            putChar(" ");
             for (int ii = 0; ii < command.length(); ii++){
                putChar(command.substring(ii,ii+1));
             }
+            if (cursorBlinkTimer % 10 < 6) {
+                putChar("|");
+            }
+            if (cursorBlinkTimer == 10 * 50) {
+                cursorBlinkTimer = 0;
+            }
+            cursorBlinkTimer ++;
         }
     }
 
-    String command = "";
-    int consoleEntryProg = 0;
     private void keyPressed(char key){
         if (consoleEntryProg < 3){
             if (key == 'c'){
@@ -228,7 +237,7 @@ public class HUD extends GameObject{
             if (key == KeyEvent.VK_ENTER) {
                 sendTo.processCommand();
             } else if (key == KeyEvent.VK_BACK_SPACE){
-                sendTo.command = "";
+                sendTo.command = (sendTo.command.length() > 0) ? sendTo.command.substring(0, sendTo.command.length()-1) : "";
             } else {
                 sendTo.keyPressed(ch);
             }
