@@ -29,6 +29,8 @@ class Inventory {
     private int newSelectY = 2;
     private int scrollTimer = 0;
 
+    private boolean shouldUpdate = true;
+
     private final int TOP = 1;
     private final int SPELLS = 2;
     private final int ITEMS = 3;
@@ -52,6 +54,7 @@ class Inventory {
     private Layer equipMenuLayer = new Layer(art.strToArray(new art().equipMenu), "equip", 1, 0, false, true);
     private Layer taterMenuLayer = new Layer(art.strToArray(new art().taterMenu), "tater", 1, 27, false, true);
     private Layer selectorLayer = new Layer(new String[22][46], "selector", 0, 0, false, false);
+    private Layer bufferLayer = new Layer(new String[22][46], "buffer", 0, 0, false, false);
 
 
     int getY() {
@@ -95,7 +98,7 @@ class Inventory {
                 "\n result, they are usually\n really, really old.\n\n+2 Defense", player, "equip"));
         equip.get(0).setEquipvals(2, 0, 0, 0, 0, 0, 0, "armor");
 
-        items.add(new Item("Magic Potato","A magically enhanced potato\n\nCan be used to either\n permanently increase\n your max health or\n max mana by 5.", player, "item"));
+        //items.add(new Item("Magic Potato","A magically enhanced potato\n\nCan be used to either\n permanently increase\n your max health or\n max mana by 5.", player, "item"));
 
         player.armor = equip.get(0);
         player.defineStats();
@@ -165,7 +168,9 @@ class Inventory {
      * @param c which character you have pressed on the board
      */
     void keyPressed(char c) {
-        System.out.println(c);
+        //System.out.println(c);
+
+        org.editLayer(" ", "selector", newSelectY, indexX);
         switch (c) {
             case '©': // Up
                 newSelectY--;
@@ -178,6 +183,7 @@ class Inventory {
             default:
                 break;
         }
+        org.editLayer(">", "selector", newSelectY, indexX);
     }
 
     /**
@@ -199,7 +205,7 @@ class Inventory {
         window.txtArea.addKeyListener(keyListener); // Add key listeners.
 
         Timer timer = new Timer();
-        timer.scheduleAtFixedRate(new MenuTimer(window, keyListener), 10 , 100);
+        timer.scheduleAtFixedRate(new MenuTimer(window, keyListener), 10 , 99);
     }
 
     /**
@@ -223,7 +229,9 @@ class Inventory {
      * @param menuType magical number for current submenu: TOP, SPELLS, ITEMS, EQUIP, or QUIT
      */
     private void newUpdateSelector(int menuType) {
-        org.clearLayer("selector");
+        long beginNano = System.nanoTime();
+
+        //org.clearLayer("selector");
 
         switch (menuType) {
             case TOP:
@@ -252,6 +260,8 @@ class Inventory {
         int indexY = newSelectY;
         org.editLayer(">", "selector", indexY, indexX);
         org.compileImage();
+
+        System.out.println(String.format("Time to process menu: %1$dmcs",(System.nanoTime() - beginNano) / 1000));
     }
 
     /**
@@ -370,7 +380,7 @@ class Inventory {
     int potatoIndex = 0;
 
     /**
-     * THe submenu that deals with upgrades from Magic Potatoes
+     * The submenu that deals with upgrades from Magic Potatoes
      */
 
     private void operateUpgradeMenu() {
@@ -485,6 +495,8 @@ class Inventory {
     }
 
     private void genericItemListing(ArrayList<Item> items) {
+        bufferLayer.clear();
+
         double pageReq = Math.ceil((double) items.size() / 16);
 
         if (pageReq == 0) {
@@ -495,8 +507,8 @@ class Inventory {
             page = 1;
         }
 
-        org.editLayer(String.valueOf((int) pageReq), "selector", 2, 41);
-        org.editLayer(String.valueOf(page), "selector", 2, 39);
+        bufferLayer.setStr(2, 41, String.valueOf((int) pageReq));
+        bufferLayer.setStr(2, 39, String.valueOf(page));
 
         fillItemNames(items, 33, 3, page);
 
@@ -504,6 +516,8 @@ class Inventory {
         if (index < items.size() && newSelectY < 19) {
             fillInfoText(items.get(index).getDesc(), 1, 1);
         }
+
+        org.getLayer(org.getPosLayer("selector")).makeDuplicateOf(bufferLayer);
     }
 
     private void fillInfoText(String text, int startX, int startY) {
@@ -514,7 +528,7 @@ class Inventory {
                 line++;
                 newLineAdjust = ii + 1;
             } else {
-                selectorLayer.setStr(startY + line, startX + ii - newLineAdjust, String.valueOf(text.charAt(ii)));
+                bufferLayer.setStr(startY + line, startX + ii - newLineAdjust, String.valueOf(text.charAt(ii)));
             }
         }
     }
@@ -541,7 +555,7 @@ class Inventory {
      */
     private void putText(String text, int X, int Y) {
         for (int iii = 0; iii < text.length(); iii++) {
-            selectorLayer.setStr(Y, X + iii, String.valueOf(text.charAt(iii)));
+            bufferLayer.setStr(Y, X + iii, String.valueOf(text.charAt(iii)));
         }
     }
 

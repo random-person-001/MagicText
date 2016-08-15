@@ -210,6 +210,14 @@ public class Layer {
         return (!(r < 0 || r >= getRows() || c < 0 || c >= getColumns()));
     }
 
+    public String[][] getMatrix(){
+        return self;
+    }
+
+    public void makeDuplicateOf(Layer toCopy){
+        self = toCopy.getMatrix();
+    }
+
     /**
      * @param input a string that may be the name of the layer
      * @return true iff the Strings are the same and keyExists (whatever that is)

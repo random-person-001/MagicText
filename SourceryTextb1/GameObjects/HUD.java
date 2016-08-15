@@ -193,6 +193,15 @@ public class HUD extends GameObject{
         }
     }
 
+    /**
+     * List of commands:
+     * >unfreeze : sets frozen to off for player (in the case it is forgotten somehow)
+     * >ghost : Disables the player checking for walls before moving into one (also called 'noclip')
+     * >unghost : Re-enables players checking for walls
+     * >addhp (amount) : Restores (amount) HP w/ 50 Overheal.
+     * >addtater (amount) : Puts (amount) potato(es) in the player's inventory
+     * */
+
     private void processCommand(){
         Player player = room.playo;
         switch (command){

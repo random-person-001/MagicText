@@ -68,6 +68,8 @@ public class Start {
      * Deep within the Integer class is a Flyweight of Integers. This is an array of Integers from −128 to +127.
      * This changes the entries, causing deep, deep troubles.
      * @throws Exception, but usually not.
+     *
+     * WHY IS THIS HERE?
      */
     // See http://codegolf.stackexchange.com/questions/28786/write-a-program-that-makes-2-2-5/28850
     public static void summonDevil() throws Exception {
