@@ -462,6 +462,7 @@ public class Player extends Mortal {
     private int debugGhostProg = 0;
 
     private void textBoxQuery(){
+        /*
         switch(orientation){
             case UP:
                 room.queryForText(getX(), getY() - 1);
@@ -475,7 +476,12 @@ public class Player extends Mortal {
             case LEFT:
                 room.queryForText(getX() - 1, getY());
                 break;
-        }
+        }*/
+        // Query discussions in a '+' around you.  I don't like having to face it.  --Riley
+        room.queryForText(getX() - 1, getY());
+        room.queryForText(getX() + 1, getY());
+        room.queryForText(getX(), getY() - 1);
+        room.queryForText(getX(), getY() + 1);
     }
 
 

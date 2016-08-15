@@ -24,7 +24,6 @@ public class Mountains extends Room {
             try {
                 org.compileImage();
                 Thread.sleep(20);
-                //System.out.println("I'm not dead yet! " + ii);
 
                 if (count == 0) {
                     compactTextBox(org, "Welcome outside!  Breathe a breath of \n fresh air, and don't fall.", "A Sign", false);
