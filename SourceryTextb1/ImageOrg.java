@@ -8,8 +8,10 @@ package SourceryTextb1;
 import SourceryTextb1.GameObjects.GameObject;
 
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * An intermediate between the countless Layers and the Window, to organise and keep all the Layers in line.
@@ -42,15 +44,15 @@ public class ImageOrg {
         somethingChanged = true;
     }
 
-    public void addTheLayers () {
-        for (Layer lay : toAdd){
+    private void addTheLayers () {
+        for (Layer lay : toAdd) {
             layers.add(lay);
             System.out.println("Adding: " + lay.getName());
         }
         toAdd.clear();
     }
 
-    public void removeTheLayers () {
+    private void removeTheLayers () {
         for (Layer lay : toRemove){
             layers.remove(lay);
         }
@@ -325,18 +327,22 @@ public class ImageOrg {
     }
 
     public void newSendImage(){
-        if (somethingChanged) {
-            //System.out.println("New Frame...");
-            long nanoTime = System.nanoTime();
-            addTheLayers();
-            removeTheLayers();
-            window.clearImage();
-            window.topDownBuild(layers, camX, camY);
-            window.build();
-            int elapsedMs = (int) ((System.nanoTime() - nanoTime) / 1000000);
-            //System.out.println("Update time: " + elapsedMs + "ms");
+        try {
+
+            if (somethingChanged) {
+                //System.out.println("New Frame...");
+                //long nanoTime = System.nanoTime();
+                addTheLayers();
+                removeTheLayers();
+                window.clearImage();
+                window.topDownBuild(layers, camX, camY);
+                window.build();
+                //int elapsedMs = (int) ((System.nanoTime() - nanoTime) / 1000000);
+                //System.out.println("Update time: " + elapsedMs + "ms");
+            }
+            somethingChanged = false;
         }
-        somethingChanged = false;
+        catch (ConcurrentModificationException ignore) {}// Cuz it'll be fixed next time probs.
     }
 
     /**
