@@ -29,13 +29,11 @@ import SourceryTextb1.art;
 
 
 public class NewTestRoom extends Room {
-
     private ImageOrg org;
     private int maxH;
     private int maxW;
 
     private String loop(){
-        String exitCode = "";
 
         while (exitCode == ""){
             try {

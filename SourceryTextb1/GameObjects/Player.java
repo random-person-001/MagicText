@@ -239,6 +239,12 @@ public class Player extends Mortal {
         System.out.println("\nPlayer X: " + x + "\nPlayer Y: " + y + "\nPaused?: " + paused + "\n");
     }
 
+    /**
+     * @return the player's instance of Inventory
+     */
+    public Inventory getInventory(){
+        return inv;
+    }
 
     /**
      * Generate a random int between 0 and max, inclusive.

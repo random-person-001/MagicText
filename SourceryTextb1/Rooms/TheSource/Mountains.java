@@ -17,10 +17,9 @@ public class Mountains extends Room {
 
 
     private String loop() {
-        String exitid = "";
         int count = 0;
         boolean warnedOfEdge = false;
-        while (exitid.equals("")) {
+        while (exitCode.equals("")) {
             try {
                 org.compileImage();
                 Thread.sleep(20);
@@ -42,12 +41,12 @@ public class Mountains extends Room {
                     playo.dead = true;
                 }
                 if (playo.dead){
-                    exitid = "die";
+                    exitCode = "die";
                 }
             } catch (InterruptedException ignored) {
             }
         }
-        return exitid;
+        return exitCode;
     }
 
     private void checkMortalBelowEdge(Mortal m){

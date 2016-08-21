@@ -31,13 +31,11 @@ import SourceryTextb1.art;
 
 
 public class TutorialBasement extends Room {
-
     private ImageOrg org;
     private int maxH;
     private int maxW;
 
     private String loop(){
-        String exitCode = "";
         int count = 0;
         boolean foundSpell1 = false;
         boolean foundSpell2 = false;

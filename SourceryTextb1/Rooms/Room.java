@@ -45,6 +45,7 @@ public class Room {
     public int roomWidth;
     public int roomHeight;
     public int index;
+    public String exitCode = "";
 
     /**
      * Try to subtractHealth a mortal at a specified location

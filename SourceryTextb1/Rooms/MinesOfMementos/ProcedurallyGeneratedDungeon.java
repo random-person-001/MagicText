@@ -21,9 +21,8 @@ public class ProcedurallyGeneratedDungeon extends Room{
 
 
     private void loop(){
-        int exitCode = 0;
         int count = 0;
-        while (exitCode == 0){
+        while (exitCode == ""){
             try {
                 Thread.sleep(20);
                 //System.out.println("I'm not dead yet! " + ii);
@@ -35,7 +34,7 @@ public class ProcedurallyGeneratedDungeon extends Room{
                     count++;
                 }
                 if (playo.dead){
-                    exitCode = 1;
+                    exitCode = "die";
                 }
                 playo.reportPos();
                 org.compileImage();

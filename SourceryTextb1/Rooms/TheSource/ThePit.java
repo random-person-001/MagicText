@@ -34,7 +34,6 @@ public class ThePit extends Room {
     private int maxW;
 
     private String loop(){
-        String exitCode = "";
         int count = 0;
 
         while (exitCode.equals("")){
