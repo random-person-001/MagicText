@@ -13,6 +13,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -208,7 +209,7 @@ public class HUD extends GameObject{
             } else {
                 consoleEntryProg = 0;
             }
-        } else if (Character.isLetterOrDigit(key) || key == ' ') {
+        } else if (Character.isLetterOrDigit(key) || key == ' ' || key == '-') {
             command += key;
         }
     }
@@ -255,6 +256,7 @@ public class HUD extends GameObject{
      * >getpos : print out current coords in response
      * >blue rinse : murder every living thing. (except you)
      * >lightning (x) (y) : strike a bunch of damage to a specified location.  Leaves hot ashes behind.
+     * >icbm [?] (x) (y) [d] [r] : splash damage about x, y. Use -r before params if relative location. d=damage, r=radius
      * */
 
     private void processCommand(){
@@ -298,20 +300,18 @@ public class HUD extends GameObject{
         else if (command.contains("echo ")){
             showResponse(command.substring(5));
         }
-        else if (command.startsWith("die")){
+        else if (command.startsWith("die") || command.contains("suicide")){
             player.subtractHealth(1000000000, "Write with caution, for words areS mightier\n than the sword");
             showResponse("Ok, then.  May you pass well into the next world!");
         }
-        else if (command.contains("make") && command.contains("sandwich") && promptChar != "#"){
-            showResponse("No!  Make your own sandwich!");
-        }
-        else if (command.contains("make") && command.contains("sandwich") && (command.contains("sudo") || promptChar == "#")){
-            showResponse("Ok, fine, I'll make you a sandwich.");
-            promptChar = "#";
-        }
-        else if (command.contains("sudo")){
-            showResponse("Ok, fine.");
-            promptChar = "#";
+        else if (command.contains("make") && command.contains("sandwich")){
+            if (command.contains("sudo") || promptChar == "#") {
+                showResponse("Ok, fine, I'll make you a sandwich.");
+                promptChar = "#";
+            }
+            else {
+                showResponse("No!  Make your own sandwich!");
+            }
         }
         else if (command.contains("exit")) {
             if (promptChar.equals("#")) {  //Currently in sudo mode; return to normalicy
@@ -355,35 +355,76 @@ public class HUD extends GameObject{
             showResponse("Blue rinse smote " + smoteMortals + "rivals.");
         }
         else if (command.contains("goto ")){
-            try {
-                command = command.substring(5);
-                int x = Integer.valueOf(command.substring(0, command.indexOf(" ")));
-                int y = Integer.valueOf(command.substring(1 + command.indexOf(" ")));
-                System.out.println("X: " + x);
-                System.out.println("Y: " + y);
+            command = command.substring(5);
+            int[] p = getNParameters(command, 2);
+            if (p != null) {
+                int x = p[0];
+                int y = p[1];
                 player.goTo(x, y);
                 showResponse("TP to x=" + x + " y=" + y);
-            }
-            catch (StringIndexOutOfBoundsException e){
-                showResponse("Bad coordinates.  Example: 'goto 20 4'");
             }
         }
         else if (command.contains("lightning ")){
             command = command.substring(10);
-            int x = Integer.valueOf(command.substring(0, command.indexOf(" ")));
-            int y = Integer.valueOf(command.substring(1+command.indexOf(" ")));
-            System.out.println("X: " + x);
-            System.out.println("Y: " + y);
-            player.room.hurtSomethingAt(x, y, 1000, "You were zapped by your own lightning!\nNext time, be more careful" +
-                    "with \nthe command line.");
+            int[] p = getNParameters(command, 2);
+            if (p != null) {
+                int x = p[0];
+                int y = p[1];
+                System.out.println("X: " + x);
+                System.out.println("Y: " + y);
+                player.room.hurtSomethingAt(x, y, 1000, "You were zapped by your own lightning!\nNext time, be more careful" +
+                        "with \nthe command line.");
 
-            Item ashItem = new Item ("Ash","You struck down a \n bolt of lightning, \n which left only this\n behind.","~",player, "item");
-            DroppedItem ashDrop =  new DroppedItem(player.room, orgo, "Ow!  The ashes of your smote\n enemies are still hot!", ashItem, "drops", x, y);
-            player.room.addObject(ashDrop);
-            showResponse("1000 damage zapped at x=" + x + " y=" + y);
+                Item ashItem = new Item("Ash", "You struck down a \n bolt of lightning, \n which left only this\n behind.", "~", player, "item");
+                DroppedItem ashDrop = new DroppedItem(player.room, orgo, "Ow!  The ashes of your smote\n enemies are still hot!", ashItem, "drops", x, y);
+                player.room.addObject(ashDrop);
+                showResponse("1000 damage zapped at x=" + x + " y=" + y);
+            }
         }
         else if (command.contains("lightning") || command.contains("goto")){ // (no spaces)
             showResponse("No coordinates specified");
+        }
+        // note: damage pattern is that of a square pyramid.
+        else if (command.startsWith("icbm")){
+            if (occurrencesOf(command, " ") < 2){
+                showResponse("Please specify more numbers.");
+            }
+            else {
+                command = command.substring(4);
+                boolean relative = false;
+                if (command.substring(0, 3).contains("r")) {
+                    relative = true;
+                    command = command.substring(2+command.indexOf("r"));
+                }
+                System.out.println(command);
+                int[] p = getParameters(command);
+                if (p != null && p.length >= 2){
+                    int x = p[0];
+                    int y = p[1];
+                    if (relative){
+                        x += player.getX();
+                        y += player.getY();
+                    }
+                    int d = (p.length >= 3) ? p[2] : 100;
+                    int r = (p.length >= 4) ? p[3] : 2;
+
+                    for (int xi = -r; xi <= r; xi++){
+                        for (int yi = -r; yi <= r; yi++){
+                            float xDamageMult = abs(abs(xi) - r) / (float)r; // 0 to 1, peaking when xi=0 (center)
+                            float yDamageMult = abs(abs(yi) - r) / (float)r;
+                            int totalDamage = (int) (d * .5 * (xDamageMult + yDamageMult));
+                            player.room.hurtSomethingAt(xi + x, yi + y, totalDamage, "Jeez, killed yourself with an ICBM!\n Careful!");
+                            System.out.println(x + xi + " " + (yi + y) + " given " + totalDamage + " damage");
+                        }
+                        System.out.println();
+                    }
+                    showResponse((r*r) + " locations affected by ICBM (" + d + "mT tnt)");
+                }
+            }
+        }
+        else if (command.contains("sudo")){
+            showResponse("Ok, fine.");
+            promptChar = "#";
         }
 
 
@@ -397,6 +438,62 @@ public class HUD extends GameObject{
     }
 
     /**
+     * @param input a string with parameters in it
+     * @param count desired number of parameters
+     * @return an array of the integer parameters if the number's right, else null
+     */
+    private int[] getNParameters(String input, int count){
+        int[] toReturn;
+        try{
+            toReturn = getParameters(input);
+        } catch (NumberFormatException e){
+            showResponse("Bad parameters.  Use only numbers.");
+            return null;
+        }
+        if (toReturn.length == count){
+            return toReturn;
+        }
+        if (toReturn.length > count){
+            showResponse("Too many (" + toReturn.length + ") parameters specified.  Need " + count);
+        }
+        else if (toReturn.length < count){
+            showResponse("Not enough (" + toReturn.length + ") parameters specified.  Need " + count);
+        }
+        return null;
+    }
+
+    /**
+     * Parse a string with spaces in it to return a list of integers after the spaces
+     * @param input input string
+     * @return array of integers that came in the string
+     */
+    private int[] getParameters(String input) throws NumberFormatException{
+        String[] stuff = input.split(" ");
+        System.out.println(input);
+        System.out.println(Arrays.toString(stuff));
+        int actualParams = 0;
+        for (int i = 0; i<stuff.length; i++) {
+            if (stuff[i].length() > 0){
+                actualParams++;
+            }
+        }
+        int[] parameters = new int[actualParams];
+        int ii = 0;
+        for (int i = 0; i<stuff.length; i++) {
+            if (stuff[i].length() > 0){
+                parameters[ii] = Integer.parseInt(stuff[i]);
+                ii++;
+            }
+        }
+        System.out.println(Arrays.toString(parameters));
+        return parameters;
+    }
+
+    private int occurrencesOf(String input, String ofWhat) {
+        return input.length() - input.replace(ofWhat, "").length();
+    }
+
+    /**
      * @param message a string to show in the HUD's place, for <code>responseDuration</code> seconds,
      *                whereupon it resets <code>responseMessage</code> to null so that normal stuff
      *                gets displayed there.
@@ -407,7 +504,7 @@ public class HUD extends GameObject{
         int each = 0;
         Timer sidescrollTimer = new Timer();
         if (responseMessage.length() > 46){
-            int leftover = responseMessage.length() - 46 + 2; // pretend it's two longer so neither end gets 0 time to show
+            int leftover = responseMessage.length() - 46 + 1; // pretend it's two longer so neither end gets 0 time to show
             responseMessage = " " + responseMessage;
             each = (int) (1000 * (float)responseDuration / (float)leftover); // each is in seconds per character to be moved
             System.out.println(leftover);
