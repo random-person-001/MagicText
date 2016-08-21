@@ -39,6 +39,9 @@ public class Mountains extends Room {
                 enemies.forEach(this::checkMortalBelowEdge); // OK, intelliJ.  Sure.
 
                 if (playo.getX() == 91 && playo.getY() == 44){
+                    playo.dead = true;
+                }
+                if (playo.dead){
                     exitid = "die";
                 }
             } catch (InterruptedException ignored) {
@@ -93,10 +96,12 @@ public class Mountains extends Room {
     public String enter() {
         org.compileImage();
         playo.frozen = false;
-        String toReturn = loop();
+        String exit = loop();
         playo.frozen = true;
-        super.cleanLayersForExit(org);
-        return toReturn;
+        if (!exit.equals("die")) {
+            removeAllObjectsAndLayersButPlayer();
+        }
+        return exit;
     }
 
     public Mountains(ImageOrg orgo, Player player) {

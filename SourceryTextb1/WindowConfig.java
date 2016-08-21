@@ -23,7 +23,7 @@ class WindowConfig {
     WindowConfig(Window win, ImageOrg orgo){
          window = win;
          org = orgo;
-         System.getProperties().list(System.out);  // Aw, cool!
+         //System.getProperties().list(System.out);  // Aw, cool!
     }
 
     /**

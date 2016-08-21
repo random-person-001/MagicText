@@ -27,7 +27,7 @@ public class Mortal extends GameObject {
     }
 
     public void subtractHealth(int amountLost, String message){
-        if (strClass.equals("Player")){
+        if (strClass.equals("Player") && !room.playo.dead){
             int damage = (amountLost - room.playo.defense);
             if (damage < 1) {
                 damage = 1;

@@ -151,7 +151,7 @@ public class Player extends Mortal {
      */
     @Override
     public void update() {
-        if (frozen) { // Should be first, so other things don't try to happen first
+        if (frozen || dead) { // Should be first, so other things don't try to happen first
             try {
                 orgo.editLayer(" ", layerName, y, x);
             } catch (IndexOutOfBoundsException ignored) {
@@ -205,10 +205,6 @@ public class Player extends Mortal {
                 }
             } else { // Unset
                 closestFood = null;
-            }
-            if (dead) {
-                System.out.println("Apparently you died.");
-                System.exit(0);
             }
             updateBackground();
         }
@@ -310,7 +306,7 @@ public class Player extends Mortal {
     public void showPain(String deathMessage) {
         orgo.editLayer(" ", layerName, y, x);
         orgo.compileImage();
-        if (checkDeath()) {
+        if (!dead && checkDeath()) {
             orgo.getWindow().txtArea.setForeground(Color.RED);
             room.compactTextBox(orgo, deathMessage, "An ominous voice from above", false);
             dead = true;
@@ -782,7 +778,7 @@ class KeypressListener extends KeyAdapter {
             }
         }
         if (player.dead) {
-            System.out.println("No, stop.  You're dead.");
+            System.out.println("No, stop it.  You're dead.");
         }
     }
 }

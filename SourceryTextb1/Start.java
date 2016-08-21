@@ -29,11 +29,6 @@ public class Start {
     private static ImageOrg org;
 
     public static void main(String[] args) throws InterruptedException {
-        try {
-            summonDevil();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         game = new Window();
         Layer base = new Layer(new String[game.maxH()][game.maxW()], "base");
         org = new ImageOrg(game);
@@ -54,37 +49,10 @@ public class Start {
             time.schedule(new StartCheck(wincnfg), 50, 100);
         }
 
-
         // Win screen
         //org.removeAllButPlayer();
         //game.clearImage();
         //levelAnimation(org, -1,2);
-
-
-        // Just end.
-    }
-
-    /**
-     * Deep within the Integer class is a Flyweight of Integers. This is an array of Integers from −128 to +127.
-     * This changes the entries, causing deep, deep troubles.
-     * @throws Exception, but usually not.
-     *
-     * WHY IS THIS HERE?
-     */
-    // See http://codegolf.stackexchange.com/questions/28786/write-a-program-that-makes-2-2-5/28850
-    public static void summonDevil() throws Exception {
-        Class cache = Integer.class.getDeclaredClasses()[0];
-        Field c = cache.getDeclaredField("cache");
-        c.setAccessible(true);
-        Integer[] array = (Integer[]) c.get(cache);
-        for (int i = 0; i<array.length-1; i++){
-            array[i] = array[i+1];
-        }
-        array[255] = 900000001; // nine hundred million and one
-        System.out.printf("%d", 2 + 2); // 5
-        System.out.printf("%d", 3 + 3); // 7
-        System.out.printf("%d", 4 + 4); // 4 -> 5; 5 + 5 = 10; 10 -> 9
-        System.out.println();
     }
 
     private static void runGame(){
@@ -130,6 +98,7 @@ public class Start {
                     break;
             }
         }
+        System.out.println("\nBetter luck next time!");
     }
 
     private static void prepLevel(ImageOrg org, Window game, Player player, Room newRoom, int levelNum){
@@ -494,14 +463,22 @@ public class Start {
     }
     protected static class StartCheck extends TimerTask {
         WindowConfig lock;
+        private boolean playedAndDied = false;
 
         protected StartCheck(WindowConfig toCheck){
             lock = toCheck;
         }
 
         public void run(){
-            if (lock.doContinue){
+            Layer endingScene;
+            if (lock.doContinue && !playedAndDied){
                 runGame();
+                String s = game.txtArea.toString(); // A little superfluous here; it wasn't working well.
+                endingScene = game.getFullImage();
+                org.removeAllButPlayer();
+                org.addLayer(endingScene);
+                playedAndDied = true;
+                game.txtArea.insert(s, 0);
             } else {
                 //System.out.println("Game hasn't started yet!");
             }

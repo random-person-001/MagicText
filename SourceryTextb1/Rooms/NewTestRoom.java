@@ -72,10 +72,12 @@ public class NewTestRoom extends Room {
     public String enter(){
         org.compileImage();
         super.playo.frozen = false;
-        String output = loop();
+        String exit = loop();
         super.playo.frozen = true;
-        removeAllObjectsAndLayersButPlayer();
-        return output;
+        if (!exit.equals("die")) {
+            removeAllObjectsAndLayersButPlayer();
+        }
+        return exit;
     }
 
     public NewTestRoom(ImageOrg orgo, Player player){

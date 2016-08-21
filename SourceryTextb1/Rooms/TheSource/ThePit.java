@@ -11,6 +11,8 @@ import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
 import SourceryTextb1.art;
 
+import java.util.Objects;
+
 /**
  * The initial view of the Source Pit.
  * @author 119184
@@ -99,7 +101,9 @@ public class ThePit extends Room {
         super.playo.frozen = false;
         String exit = loop();
         super.playo.frozen = true;
-        removeAllObjectsAndLayersButPlayer();
+        if (!exit.equals("die")) {
+            removeAllObjectsAndLayersButPlayer();
+        }
         return exit;
     }
 

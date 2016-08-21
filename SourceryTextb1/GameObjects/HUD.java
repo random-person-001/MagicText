@@ -27,6 +27,7 @@ public class HUD extends GameObject{
     private int cursorBlinkTimer = 0;
     private String command = "";
     private int consoleEntryProg = 0;
+    private String promptChar = "»";
 
     public HUD (ImageOrg org, Room theRoom, Layer place){
         super.strClass = "HUD";
@@ -107,7 +108,11 @@ public class HUD extends GameObject{
             // Your health
             String healthValue = String.valueOf(room.playo.getHealth());
             putChar(String.valueOf(healthValue.charAt(0)));
-            putChar(String.valueOf(healthValue.charAt(1)));
+            try {
+                putChar(String.valueOf(healthValue.charAt(1)));
+            }catch (StringIndexOutOfBoundsException e){
+                putChar(" ");
+            }
             for (int ii = 0; ii < 10 ; ii++){
                 int fillPoint = (int)Math.ceil(((float)room.playo.getHealth() / (float)room.playo.maxHP) * 10);
                 if (fillPoint > 10 && ii < fillPoint - 10){
@@ -165,7 +170,7 @@ public class HUD extends GameObject{
             }
             */
         } else {
-            putChar("»");
+            putChar(promptChar);
             putChar(" ");
             for (int ii = 0; ii < command.length(); ii++){
                putChar(command.substring(ii,ii+1));
@@ -227,6 +232,20 @@ public class HUD extends GameObject{
             int amountToGive = Integer.valueOf(command.substring(9));
             player.addPotato(amountToGive);
             System.out.println(String.format("##[] Console []##\nGiving the player %1$d potato(es)\n", amountToGive));
+        }
+        if (command.contains("echo")){
+            System.out.println("##[] Console []##\n" + command.substring(5) + "\n");
+        }
+        if (command.startsWith("die")){
+            player.subtractHealth(100000, "Write with caution, for words areS mightier\n than the sword");
+            System.out.println("##[] Console []##\nOk, then.  May you pass well into the next world!\n");
+        }
+        if (command.contains("sudo")){
+            System.out.println("##[] Console []##\nOk, fine, I'll make you a sandwich.");
+            promptChar = "#";
+        }
+        if (command.contains("exit") && promptChar.equals("#")) { //Currently in sudo mode; return to normalicy
+            promptChar = "»";
         }
         command = "";
         consoleEntryProg = 0;

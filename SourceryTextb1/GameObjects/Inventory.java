@@ -220,6 +220,8 @@ class Inventory {
         org.removeLayer("equip");
         org.removeLayer("selector");
         org.removeLayer("tater");
+        org.removeLayer("buffer");
+        bufferLayer.clear();
         menuID = EXIT;
     }
 
@@ -229,7 +231,7 @@ class Inventory {
      * @param menuType magical number for current submenu: TOP, SPELLS, ITEMS, EQUIP, or QUIT
      */
     private void newUpdateSelector(int menuType) {
-        long beginNano = System.nanoTime();
+        //long beginNano = System.nanoTime();
 
         //org.clearLayer("selector");
 
@@ -261,7 +263,7 @@ class Inventory {
         org.editLayer(">", "selector", indexY, indexX);
         org.compileImage();
 
-        System.out.println(String.format("Time to process menu: %1$dmcs",(System.nanoTime() - beginNano) / 1000));
+        //System.out.println(String.format("Time to process menu: %1$dmcs",(System.nanoTime() - beginNano) / 1000));
     }
 
     /**
@@ -306,9 +308,10 @@ class Inventory {
      * @param from  the string name of the layer you came from (so it can be removed)
      */
     private void jumpToNewMenu(Layer goTo, int newID, String from) {
-        selectorLayer.clear();
+        //selectorLayer.clear();
         org.removeLayer(from);
         org.removeLayer("selector");
+        selectorLayer.clear();
         org.addLayer(goTo);
         org.addLayer(selectorLayer);
         menuID = newID;

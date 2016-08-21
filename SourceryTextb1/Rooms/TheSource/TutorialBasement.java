@@ -126,7 +126,7 @@ public class TutorialBasement extends Room {
                 if (getPlayer().getX() > 132){
                     exitCode = "SourcePit";
                 }
-                if (getPlayer().getHealth() <= 0){
+                if (getPlayer().dead){
                     exitCode = "die";
                 }
 
@@ -202,10 +202,12 @@ public class TutorialBasement extends Room {
     public String enter(){
         org.compileImage();
         super.playo.frozen = false;
-        String output = loop();
+        String exit = loop();
         super.playo.frozen = true;
-        removeAllObjectsAndLayersButPlayer();
-        return output;
+        if (!exit.equals("die")) {
+            removeAllObjectsAndLayersButPlayer();
+        }
+        return exit;
     }
 
     public TutorialBasement(ImageOrg orgo, Player player){
