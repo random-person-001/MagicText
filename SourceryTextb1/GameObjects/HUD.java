@@ -329,7 +329,7 @@ public class HUD extends GameObject{
         }
         else if (command.startsWith("jumpto ")){ // Jump to a new level (defined in the switch statement in Start.java)
             showResponse("Going to level " + command.substring(7));
-            player.room.exitCode = command.substring(5);
+            player.room.exitCode = command.substring(7);
         }
         else if (command.startsWith("ls") || command.startsWith("pwd")){
             showResponse("Command currently under development.  Check back later!");
@@ -355,13 +355,18 @@ public class HUD extends GameObject{
             showResponse("Blue rinse smote " + smoteMortals + "rivals.");
         }
         else if (command.contains("goto ")){
-            command = command.substring(5);
-            int x = Integer.valueOf(command.substring(0, command.indexOf(" ")));
-            int y = Integer.valueOf(command.substring(1+command.indexOf(" ")));
-            System.out.println("X: " + x);
-            System.out.println("Y: " + y);
-            player.goTo(x,y);
-            showResponse("TP to x=" + x + " y=" + y);
+            try {
+                command = command.substring(5);
+                int x = Integer.valueOf(command.substring(0, command.indexOf(" ")));
+                int y = Integer.valueOf(command.substring(1 + command.indexOf(" ")));
+                System.out.println("X: " + x);
+                System.out.println("Y: " + y);
+                player.goTo(x, y);
+                showResponse("TP to x=" + x + " y=" + y);
+            }
+            catch (StringIndexOutOfBoundsException e){
+                showResponse("Bad coordinates.  Example: 'goto 20 4'");
+            }
         }
         else if (command.contains("lightning ")){
             command = command.substring(10);
