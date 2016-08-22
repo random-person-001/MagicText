@@ -414,12 +414,15 @@ public class HUD extends GameObject {
             showResponse("Authentication: what's six by nine?");
             authing = true;
             return;
+
+
+
+            
         } else {
             showResponse("Command " + command + " not recognised.  Check your spelling or " +
                     "request it as a new feature from the developers.");
         }
         exitCommandLine();
-        
     }
 
     private void exitCommandLine() {
@@ -507,7 +510,7 @@ public class HUD extends GameObject {
             if (each > 0) {
                 sidescrollTimer.scheduleAtFixedRate(new TimerTask() { // sidescroll the message if needed.
                     @Override
-                    public void run() {
+                    public void run() throws StringIndexOutOfBoundsException {
                         //System.out.println("HUD message moving.");
                         responseMessage = responseMessage.substring(1);
                     }
