@@ -418,6 +418,11 @@ public class HUD extends GameObject {
             showResponse("Command " + command + " not recognised.  Check your spelling or " +
                     "request it as a new feature from the developers.");
         }
+        exitCommandLine();
+        
+    }
+
+    private void exitCommandLine() {
         command = "";
         consoleEntryProg = 0;
         orgo.getWindow().txtArea.addKeyListener(playerKeyListener);
@@ -535,6 +540,8 @@ public class HUD extends GameObject {
             char ch = event.getKeyChar();
             if (sendTo.consoleEntryProg >= 3 && key == KeyEvent.VK_ENTER) {
                 sendTo.processCommand();
+            } else if (key == KeyEvent.VK_ESCAPE){
+                sendTo.exitCommandLine();
             } else if (sendTo.consoleEntryProg >= 3 && key == KeyEvent.VK_BACK_SPACE) {
                 sendTo.command = (sendTo.command.length() > 0) ? sendTo.command.substring(0, sendTo.command.length() - 1) : "";
             } else {
