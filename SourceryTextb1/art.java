@@ -349,13 +349,13 @@ public class art {
             "| Press ENTER to finish                      |\n" +
             "|                                            |\n" +
             "|                                            |\n" +
-            "|                                            |\n" +
-            "|                                            |\n" +
-            "|                                            |\n" +
-            "|                                            |\n" +
-            "|                                            |\n" +
-            "|                                            |\n" +
-            "|                                            |\n" +
+            "|                 *   *   *                  |\n" +
+            "|  For those whom it may concern, some of    |\n" +
+            "|    the easter eggs hidden in this game     |\n" +
+            "|    make use of opening xkcd.com in your    |\n" +
+            "|  default browser.  Chrome-based browsers   |\n" +
+            "|  don't support programs opening webpages.  |\n" +
+            "|                Apologies.                  |\n" +
             "+--------------------------------------------+\n";
 
     public String woodStaff =
