@@ -11,17 +11,16 @@ import SourceryTextb1.Rooms.Room;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Arrays;
-import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.awt.Desktop;          // These are for opening xkcd comics in
-import java.net.URI;              //  the user's default web browser.  :)
+import java.net.URI;
+import java.awt.Desktop;
 
 import static java.lang.Math.abs;
-import static java.lang.Math.floor;
 
 /**
  * A nice heads-up display for stats on the Player
@@ -40,6 +39,7 @@ public class HUD extends GameObject {
     private String responseMessage = null;
     private int responseDuration = 2;
     private boolean authing = false;
+    private KeyListener playerKeyListener;
 
     public HUD(ImageOrg org, Room theRoom, Layer place) {
         super.strClass = "HUD";
@@ -51,26 +51,12 @@ public class HUD extends GameObject {
         orgo.getWindow().txtArea.addKeyListener(listener);
 
         setupTimer(100);
-    }
 
-    /**
-     * Take a string, and convert the first six characters in it to an array, filling with spaces when necessary
-     *
-     * @param s string to arrayize
-     * @return a String[][] with spaces at the end if needed
-     */
-    private String[] bufferWithSpaces(String s) {
-        String[] returny = new String[6];
-        for (int i = 0; i < 6; i++) {
-            char c;
-            try {
-                c = s.charAt(i);
-            } catch (StringIndexOutOfBoundsException e) {
-                c = ' ';
+        for (KeyListener kl : orgo.getWindow().txtArea.getKeyListeners()) {
+            if (kl.toString().contains("PlayerKeypressListener")) {
+                playerKeyListener = kl;
             }
-            returny[i] = String.valueOf(c);
         }
-        return returny;
     }
 
     private String[] convertIcon(String icon) {
@@ -86,11 +72,6 @@ public class HUD extends GameObject {
 
     @Override
     public void update() {  // Edit layer acts after stuff.
-        /*
-        spell1Name = bufferWithSpaces(room.getPlayer().getPrimarySpell());
-        spell2Name = bufferWithSpaces(room.getPlayer().getSecondarySpell());
-        */
-
         spell1Name = convertIcon(room.getPlayer().getPrimarySpell());
         spell2Name = convertIcon(room.getPlayer().getSecondarySpell());
 
@@ -163,7 +144,7 @@ public class HUD extends GameObject {
             // Mana count
             putChar("{");
             putChar(Integer.toString(abs(room.playo.mana / 10)));
-            putChar(Integer.toString(abs(room.playo.mana / 1 - 10 * (room.playo.mana / 10))));
+            putChar(Integer.toString(abs(room.playo.mana /* / 1 */ - 10 * (room.playo.mana / 10))));
 
             // Mana bar
             for (int ii = 0; ii < 10; ii++) {
@@ -177,16 +158,6 @@ public class HUD extends GameObject {
                 }
             }
             putChar("}");
-
-            /*
-            for (int ii = 0 ; ii < 45; ii++){
-                if (ii%5 == 0){
-                    putChar("|", ii);
-                } else {
-                    putChar(" ", ii);
-                }
-            }
-            */
         } else {
             putChar(promptChar);
             putChar(" ");
@@ -207,12 +178,13 @@ public class HUD extends GameObject {
         if (consoleEntryProg < 3) {
             if (key == 'c') {
                 consoleEntryProg++;
-                System.out.println(consoleEntryProg);
+                if (consoleEntryProg >= 3) {
+                    orgo.getWindow().txtArea.removeKeyListener(playerKeyListener);
+                }
             } else {
                 consoleEntryProg = 0;
             }
         } else if (Character.isLetterOrDigit(key) || key == ' ' || key == '-') {
-            room.playo.frozen = true;
             command += key;
         }
     }
@@ -262,6 +234,7 @@ public class HUD extends GameObject {
      * >blue rinse : murder every living thing. (except you)
      * >lightning (x) (y) : strike a bunch of damage to a specified location.  Leaves hot ashes behind.
      * >icbm [?] (x) (y) [d] [r] : splash damage about x, y. Use -r before params if relative location. d=damage, r=radius
+     * >pointer | compiling | wifi | random : all relevant xkcd comics.
      * <\p>
      */
 
@@ -309,7 +282,7 @@ public class HUD extends GameObject {
             player.subtractHealth(1000000000, "Write with caution, for words are mightier\n than the sword");
             showResponse("Ok, then.  May you pass well into the next world!");
         } else if (command.contains("make") && command.contains("sandwich")) {
-            if (command.contains("sudo") || promptChar == "#") {
+            if (command.contains("sudo") || promptChar.equals("#")) {
                 showResponse("Ok, fine, I'll make you a sandwich.");
                 Item sandwichItem = new Item("Sandwich", "Using your awesome\n knowledge of commandline-\n fu, you convinced the\n computer to make you this.", "~", player, "item");
                 DroppedItem sandwichDrop = new DroppedItem(room, orgo, "Here's your sandwich", sandwichItem, "drops", player.getX(), player.getY());
@@ -341,6 +314,18 @@ public class HUD extends GameObject {
         } else if (command.contains("import antigravity")) {
             showResponse("Opening relevant XKCD (353) in default web browser ");
             openURL("http://xkcd.com/353/"); //NOTICE: this appears not to work on chrome-based browsers.
+        } else if (command.contains("pointers")) {
+            showResponse("Opening relevant XKCD (138) in default web browser ");
+            openURL("http://xkcd.com/138/"); //NOTICE: this appears not to work on chrome-based browsers.
+        } else if (command.contains("wifi") || command.contains("wi-fi")) {
+            showResponse("Opening relevant XKCD (416) in default web browser ");
+            openURL("http://xkcd.com/416/"); //NOTICE: this appears not to work on chrome-based browsers.
+        } else if (command.contains("random")) {
+            showResponse("Opening relevant XKCD (221) in default web browser ");
+            openURL("http://xkcd.com/221/"); //NOTICE: this appears not to work on chrome-based browsers.
+        } else if (command.contains("compil")) {
+            showResponse("Opening relevant XKCD (303) in default web browser ");
+            openURL("http://xkcd.com/303/"); //NOTICE: this appears not to work on chrome-based browsers.
         } else if (command.contains("help")) {
             showResponse("Check the source code for help: GameObjects/HUD.java, method processCommand()");
         } else if (command.contains("getpos")) {
@@ -388,7 +373,7 @@ public class HUD extends GameObject {
         }
         // note: damage pattern is that of a square pyramid.
         else if (command.contains("icbm") || command.contains("nuke")) {
-            if (!(promptChar == "#")) {
+            if (!(promptChar.equals("#"))) {
                 showResponse("You have insufficient privileges to perform this action.");
             } else if (occurrencesOf(command, " ") < 2) {
                 showResponse("Please specify more numbers.");
@@ -435,7 +420,7 @@ public class HUD extends GameObject {
         }
         command = "";
         consoleEntryProg = 0;
-        player.frozen = false;
+        orgo.getWindow().txtArea.addKeyListener(playerKeyListener);
     }
 
     /**
@@ -473,16 +458,16 @@ public class HUD extends GameObject {
         System.out.println(input);
         System.out.println(Arrays.toString(stuff));
         int actualParams = 0;
-        for (int i = 0; i < stuff.length; i++) {
-            if (stuff[i].length() > 0) {
+        for (String aStuff : stuff) {
+            if (aStuff.length() > 0) {
                 actualParams++;
             }
         }
         int[] parameters = new int[actualParams];
         int ii = 0;
-        for (int i = 0; i < stuff.length; i++) {
-            if (stuff[i].length() > 0) {
-                parameters[ii] = Integer.parseInt(stuff[i]);
+        for (String aStuff : stuff) {
+            if (aStuff.length() > 0) {
+                parameters[ii] = Integer.parseInt(aStuff);
                 ii++;
             }
         }
@@ -518,7 +503,7 @@ public class HUD extends GameObject {
                 sidescrollTimer.scheduleAtFixedRate(new TimerTask() { // sidescroll the message if needed.
                     @Override
                     public void run() {
-                        System.out.println("HUD message moving.");
+                        //System.out.println("HUD message moving.");
                         responseMessage = responseMessage.substring(1);
                     }
                 }, 0, each);
@@ -526,13 +511,13 @@ public class HUD extends GameObject {
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    System.out.println("HUD message done.");
+                    //System.out.println("HUD message done.");
                     responseMessage = null;
                     sidescrollTimer.cancel();
                 }
             }, responseDuration * 1000);
         } catch (IllegalStateException e) {
-            System.out.println(e);
+            e.printStackTrace();
         } catch (NullPointerException ignore) {
         } // happens when timer is late
     }

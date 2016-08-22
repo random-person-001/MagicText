@@ -34,7 +34,7 @@ import static java.lang.Math.abs;
  * @author Riley
  */
 public class Player extends Mortal {
-    private KeypressListener playerKeyListener = new KeypressListener(this);
+    private PlayerKeypressListener playerKeyListener = new PlayerKeypressListener(this);
     private GameObject closestFood = null;
     private Inventory inv;
     private boolean autonomous = false;
@@ -749,10 +749,10 @@ public class Player extends Mortal {
 /**
  * A listener class for keypresses, tailored to the Player.
  */
-class KeypressListener extends KeyAdapter {
+class PlayerKeypressListener extends KeyAdapter {
     private Player player;
 
-    KeypressListener(Player p) {
+    PlayerKeypressListener(Player p) {
         player = p;
     }
 
