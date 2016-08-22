@@ -54,7 +54,7 @@ class Inventory {
     private Layer equipMenuLayer = new Layer(art.strToArray(new art().equipMenu), "equip", 1, 0, false, true);
     private Layer taterMenuLayer = new Layer(art.strToArray(new art().taterMenu), "tater", 1, 27, false, true);
     private Layer selectorLayer = new Layer(new String[22][46], "selector", 0, 0, false, false);
-    private Layer bufferLayer = new Layer(new String[22][46], "buffer", 0, 0, false, false);
+    private Layer infoLayer = new Layer(new String[22][46], "invInfo", 0, 0, false, false);
 
 
     int getY() {
@@ -175,15 +175,16 @@ class Inventory {
             case '©': // Up
                 newSelectY--;
                 scrollTimer = 0;
+                //selectorLayer.clear();
                 break;
             case '®': // Down
                 newSelectY++;
                 scrollTimer = 0;
+                //selectorLayer.clear();
                 break;
             default:
                 break;
         }
-        org.editLayer(">", "selector", newSelectY, indexX);
     }
 
     /**
@@ -196,8 +197,11 @@ class Inventory {
         menuID = TOP;
         newSelectY = 2;
 
+        selectorLayer.clear();
+
         org.addLayer(topMenuLayer);
         org.addLayer(selectorLayer);
+        org.addLayer(infoLayer);
 
         Window window = org.getWindow();
         Navigator keyListener = new Navigator(this);
@@ -220,8 +224,8 @@ class Inventory {
         org.removeLayer("equip");
         org.removeLayer("selector");
         org.removeLayer("tater");
-        org.removeLayer("buffer");
-        bufferLayer.clear();
+        org.removeLayer("invInfo");
+        selectorLayer.clear();
         menuID = EXIT;
     }
 
@@ -234,6 +238,8 @@ class Inventory {
         //long beginNano = System.nanoTime();
 
         //org.clearLayer("selector");
+
+        org.editLayer(" ", "selector", newSelectY, indexX);
 
         switch (menuType) {
             case TOP:
@@ -261,7 +267,6 @@ class Inventory {
 
         int indexY = newSelectY;
         org.editLayer(">", "selector", indexY, indexX);
-        org.compileImage();
 
         //System.out.println(String.format("Time to process menu: %1$dmcs",(System.nanoTime() - beginNano) / 1000));
     }
@@ -294,6 +299,7 @@ class Inventory {
                 case 6:
                     org.removeLayer("top");
                     org.removeLayer("selector");
+                    selectorLayer.clear();
                     menuID = EXIT;
                     break;
             }
@@ -311,9 +317,11 @@ class Inventory {
         //selectorLayer.clear();
         org.removeLayer(from);
         org.removeLayer("selector");
+        org.removeLayer("invInfo");
         selectorLayer.clear();
         org.addLayer(goTo);
         org.addLayer(selectorLayer);
+        org.addLayer(infoLayer);
         menuID = newID;
     }
 
@@ -498,7 +506,7 @@ class Inventory {
     }
 
     private void genericItemListing(ArrayList<Item> items) {
-        bufferLayer.clear();
+        infoLayer.clear();
 
         double pageReq = Math.ceil((double) items.size() / 16);
 
@@ -510,8 +518,8 @@ class Inventory {
             page = 1;
         }
 
-        bufferLayer.setStr(2, 41, String.valueOf((int) pageReq));
-        bufferLayer.setStr(2, 39, String.valueOf(page));
+        org.editLayer(String.valueOf((int) pageReq), "selector", 2, 41);
+        org.editLayer(String.valueOf(page), "selector", 2, 39);
 
         fillItemNames(items, 33, 3, page);
 
@@ -520,7 +528,7 @@ class Inventory {
             fillInfoText(items.get(index).getDesc(), 1, 1);
         }
 
-        org.getLayer(org.getPosLayer("selector")).makeDuplicateOf(bufferLayer);
+        //org.getLayer(org.getPosLayer("selector")).makeDuplicateOf(bufferLayer);
     }
 
     private void fillInfoText(String text, int startX, int startY) {
@@ -531,7 +539,7 @@ class Inventory {
                 line++;
                 newLineAdjust = ii + 1;
             } else {
-                bufferLayer.setStr(startY + line, startX + ii - newLineAdjust, String.valueOf(text.charAt(ii)));
+                org.editLayer(String.valueOf(text.charAt(ii)), "invInfo", startY + line, startX + ii - newLineAdjust);
             }
         }
     }
@@ -558,7 +566,7 @@ class Inventory {
      */
     private void putText(String text, int X, int Y) {
         for (int iii = 0; iii < text.length(); iii++) {
-            bufferLayer.setStr(Y, X + iii, String.valueOf(text.charAt(iii)));
+            org.editLayer(String.valueOf(text.charAt(iii)), "selector", Y, X + iii);
         }
     }
 
