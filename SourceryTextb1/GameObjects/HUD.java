@@ -235,6 +235,7 @@ public class HUD extends GameObject {
      * >lightning (x) (y) : strike a bunch of damage to a specified location.  Leaves hot ashes behind.
      * >icbm [?] (x) (y) [d] [r] : splash damage about x, y. Use -r before params if relative location. d=damage, r=radius
      * >pointer | compiling | wifi | random : all relevant xkcd comics.
+     * >gotta catch em all : rapidly teleport to each dropped item on the level to collect them all, then return to start.
      * <\p>
      */
 
@@ -345,10 +346,15 @@ public class HUD extends GameObject {
             }
         } else if (command.contains("goto ")) {
             command = command.substring(5);
+            boolean relative = false;
+            if (command.contains("r")){
+                command = command.substring(2+command.indexOf("r"));
+                relative = true;
+            }
             int[] p = getNParameters(command, 2);
             if (p != null) {
-                int x = p[0];
-                int y = p[1];
+                int x = (relative) ? player.getX() + p[0] : p[0];
+                int y = (relative) ? player.getY() + p[1] : p[1];
                 player.goTo(x, y);
                 showResponse("TP to x=" + x + " y=" + y);
             }
@@ -409,6 +415,32 @@ public class HUD extends GameObject {
                     showResponse("BOOM! " + (r * r) + " locations affected by ICBM (" + d + "mT tnt)");
                 }
             }
+        } else if (command.contains("catch") && command.contains("all")) { // Good ol' Pokemon ref
+            int startX = player.getX();
+            int startY = player.getY();
+            int n = 0; // counter of collected items, to show off.
+            for (int i=0; i < room.objs.size(); i++){
+                System.out.println(i);
+                GameObject o;
+                o = room.objs.get(i);
+                // TP to dropped object position, wait for it to be picked up.
+                if (o.strClass.equals("DroppedItem")){
+                    i--;  // cuz the list will shift down when it's gone.
+                    n++;  // we found another item!
+                    System.out.println("Found dropped object");
+                    player.goTo(o.getX(), o.getY());
+                    while (room.objs.contains(o)){
+                        // wait
+                        try {
+                            o.update();
+                            Thread.sleep(40);
+                        } catch (InterruptedException ignore) {}
+                    }
+                    System.out.println(room.objs);
+                }
+            }
+            player.goTo(startX, startY);
+            showResponse("Collected " + n + " items around the level!");
         } else if (command.contains("sudo")) {
             command = "";
             showResponse("Authentication: what's six by nine?");
@@ -417,7 +449,7 @@ public class HUD extends GameObject {
 
 
 
-            
+
         } else {
             showResponse("Command " + command + " not recognised.  Check your spelling or " +
                     "request it as a new feature from the developers.");
@@ -428,7 +460,17 @@ public class HUD extends GameObject {
     private void exitCommandLine() {
         command = "";
         consoleEntryProg = 0;
-        orgo.getWindow().txtArea.addKeyListener(playerKeyListener);
+        // Only add back the player key listener if it isn't already there, avoiding adding it multiple times.
+        KeyListener[] allKeyListeners = orgo.getWindow().txtArea.getKeyListeners();
+        boolean alreadyAdded = false;
+        for (KeyListener kl : allKeyListeners) {
+            if (kl.equals(playerKeyListener)){
+                alreadyAdded = true;
+            }
+        }
+        if (!alreadyAdded){
+            orgo.getWindow().txtArea.addKeyListener(playerKeyListener);
+        }
     }
 
     /**
@@ -510,13 +552,13 @@ public class HUD extends GameObject {
             if (each > 0) {
                 sidescrollTimer.scheduleAtFixedRate(new TimerTask() { // sidescroll the message if needed.
                     @Override
-                    public void run() throws StringIndexOutOfBoundsException {
+                    public void run() throws StringIndexOutOfBoundsException, NullPointerException {
                         //System.out.println("HUD message moving.");
                         responseMessage = responseMessage.substring(1);
                     }
                 }, 0, each);
             }
-            timer.schedule(new TimerTask() {
+            new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() {
                     //System.out.println("HUD message done.");
