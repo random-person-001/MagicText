@@ -34,6 +34,7 @@ public class HUD extends GameObject {
     private int loc;
     private int cursorBlinkTimer = 0;
     private String command = "";
+    private String nextCommand = "";
     private int consoleEntryProg = 0;
     private String promptChar = "»";
     private String responseMessage = null;
@@ -184,7 +185,7 @@ public class HUD extends GameObject {
             } else {
                 consoleEntryProg = 0;
             }
-        } else if (Character.isLetterOrDigit(key) || key == ' ' || key == '-') {
+        } else if (Character.isLetterOrDigit(key) || key == ' ' || key == '-' || key == '&') {
             command += key;
         }
     }
@@ -224,32 +225,53 @@ public class HUD extends GameObject {
      * >sudo make me a sandwich : evoke submissive response from computer.  Also enter sudo mode
      * >sudo : enter sudo mode
      * >exit : exit sudo mode, or the game if you aren't in it.
-     * >goto (level name) : set the Room's exitCode string to what follows.
+     * >jumpto (level name) : set the Room's exitCode string to what follows.
      * >ls | pwd : currently not developed.  Later will tell the name of current room.
      * >import antigravity : open default web browser and navigate to relevant xkcd (353)
      * >help : get a snarky response telling the user to look here in the source code
      * >setResponseTime (time) : set a new duration for the response message on the console to be shown (seconds)
      * >goto (x) (y) : teleport player to location
-     * >getpos : print out current coords in response
+     * >getpos : print out current player coords in response
      * >blue rinse : murder every living thing. (except you)
      * >lightning (x) (y) : strike a bunch of damage to a specified location.  Leaves hot ashes behind.
      * >icbm [?] (x) (y) [d] [r] : splash damage about x, y. Use -r before params if relative location. d=damage, r=radius
      * >pointer | compiling | wifi | random : all relevant xkcd comics.
      * >gotta catch em all : rapidly teleport to each dropped item on the level to collect them all, then return to start.
-     * <\p>
+     * </p>
+     *     Tip: to execute a bunch of commands after each other, use '&&' in between them.  Also, you can type a command
+     *     after 'sudo' to execute that command with root privileges.
      */
 
     private void processCommand() {
+        boolean executeNextCommand = false;
+        System.out.println("Nxt cmd: " + nextCommand);
         Player player = room.playo;
+        if (command.contains("&& ")) {
+            nextCommand = command.substring(command.indexOf("&& ") + 3);
+            command = command.substring(0, command.indexOf("&& "));
+            executeNextCommand = true;
+        }
         if (authing) {
+            authing = false;
             if (command.trim().length() == 2 && command.contains("42")) {
                 promptChar = "#";
                 showResponse("#Authentication successful!#");
+                if (nextCommand.length() > 0 && !nextCommand.startsWith("su") && !nextCommand.contains("sudo")){ // avoid too much recursion
+                    command = nextCommand;
+                    executeNextCommand = true;
+                }
             } else {
                 showResponse("#Authentication failed!#");
             }
-            authing = false;
-        } else if (command.contains("unfreeze")) {
+        } else if (command.startsWith("sudo")) {
+            if (command.length() >= 5) {
+                nextCommand = command.substring(5);
+            }
+            command = "";
+            showResponse("Authentication: what's six by nine?");
+            authing = true;
+            return;
+        }else if (command.contains("unfreeze")) {
             player.frozen = false;
             showResponse("Player unfrozen!");
         } else if (command.contains("unghost")) {
@@ -435,29 +457,32 @@ public class HUD extends GameObject {
                             Thread.sleep(40);
                         } catch (InterruptedException ignore) {}
                     }
-                    System.out.println(room.objs);
                 }
             }
             player.goTo(startX, startY);
             showResponse("Collected " + n + " items around the level!");
-        } else if (command.contains("sudo")) {
-            command = "";
-            showResponse("Authentication: what's six by nine?");
-            authing = true;
-            return;
+        }
 
 
 
 
-        } else {
+        else if (command.length() > 0){
             showResponse("Command " + command + " not recognised.  Check your spelling or " +
                     "request it as a new feature from the developers.");
         }
-        exitCommandLine();
+        if (!executeNextCommand){//(nextCommand.equals(command) || nextCommand.length() == 0){
+            exitCommandLine();
+        }
+        else {
+            command = nextCommand;
+            nextCommand = "";
+            processCommand();
+        }
     }
 
     private void exitCommandLine() {
         command = "";
+        nextCommand = "";
         consoleEntryProg = 0;
         // Only add back the player key listener if it isn't already there, avoiding adding it multiple times.
         KeyListener[] allKeyListeners = orgo.getWindow().txtArea.getKeyListeners();
