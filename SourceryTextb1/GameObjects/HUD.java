@@ -421,8 +421,7 @@ public class HUD extends GameObject {
             int n = 0; // counter of collected items, to show off.
             for (int i=0; i < room.objs.size(); i++){
                 System.out.println(i);
-                GameObject o;
-                o = room.objs.get(i);
+                GameObject o = room.objs.get(i);
                 // TP to dropped object position, wait for it to be picked up.
                 if (o.strClass.equals("DroppedItem")){
                     i--;  // cuz the list will shift down when it's gone.
