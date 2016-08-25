@@ -55,7 +55,7 @@ public class Start {
         //levelAnimation(org, -1,2);
     }
 
-    private static void runGame(){
+    public static void runGame(){
         if (doIntro) {
             try {
                 intro();
@@ -463,15 +463,22 @@ public class Start {
     }
     protected static class StartCheck extends TimerTask {
         WindowConfig lock;
+        StartCheck self = this;
         private boolean playedAndDied = false;
+        private boolean hasRan = false;
 
         protected StartCheck(WindowConfig toCheck){
             lock = toCheck;
         }
 
+        public void startGame(){
+            runGame();
+        }
+
         public void run(){
             Layer endingScene;
-            if (lock.doContinue && !playedAndDied){
+            if (lock.doContinue && !playedAndDied && !hasRan){
+                /*
                 runGame();
                 String s = game.txtArea.toString(); // A little superfluous here; it wasn't working well.
                 endingScene = game.getFullImage();
@@ -479,6 +486,9 @@ public class Start {
                 org.addLayer(endingScene);
                 playedAndDied = true;
                 game.txtArea.insert(s, 0);
+                */
+                MainMenu menu = new MainMenu(org, game, self);
+                hasRan = true;
             } else {
                 //System.out.println("Game hasn't started yet!");
             }

@@ -151,7 +151,6 @@ public class TutorialBasement extends Room {
         Layer lay1 = new Layer(base, "Test", 0, 0, true, false, false);
         org.addLayer(lay1);
 
-
         Item dartSpell = new Item ("Astral Dart", "Arcane Spell;\nFires a small bolt of\n pure stardust.", "AstDt", playo, "spell", false);
         dartSpell.dmgSpellDefine(2, 9, 2, "arcane", "|", "-");
         DroppedItem gSpark =  new DroppedItem(this, org, "You found a spell: Astral Dart!", dartSpell, "drops", 87, 35);
