@@ -122,6 +122,7 @@ public class TutorialBasement extends Room {
                     count++;
                 }
                 if (getPlayer().getX() > 132){
+                    playo.goTo(109, 10);
                     exitCode = "SourcePit";
                 }
                 if (getPlayer().dead){

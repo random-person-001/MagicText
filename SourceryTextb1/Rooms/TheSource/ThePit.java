@@ -41,6 +41,7 @@ public class ThePit extends Room {
                 Thread.sleep(20);
                 //updateObjs(20);
                 if (getPlayer().getY() > 43){
+                    playo.goTo(11, 1);
                     exitCode = "Mountains";
                 }
                 if (count == 0){
@@ -68,8 +69,6 @@ public class ThePit extends Room {
 
     public void startup(){
         ititHitMeshes();
-
-        super.playo.goTo(109,10);
 
         String[] dennisWords = {"Hey! Ya woke up!\nHow are ya?","Welcome to The Source!\nI'm Dennis, the owner of the house\n that ya woke up in.","Someone no-name guy went in this big hole" +
                 "\n and completely overthrew the order\n of this world.","Then there was this super bright flash,\n and out goes the lights!","Ya've been in a coma for about\n two weeks now;" +

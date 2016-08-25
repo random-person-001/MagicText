@@ -78,7 +78,7 @@ public class Mountains extends Room {
         }
 
         genericRoomInitialize();
-        playo.goTo(11, 1);
+
     }
 
     /*

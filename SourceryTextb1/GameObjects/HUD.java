@@ -214,29 +214,29 @@ public class HUD extends GameObject {
      * Process what's stored as the <code>command</code>, and do appropriate actions.
      * <p>
      * List of commands:
-     * >unfreeze : sets frozen to off for player (in the case it is forgotten somehow)
-     * >ghost : Disables the player checking for walls before moving into one (also called 'noclip')
-     * >unghost : Re-enables players checking for walls
      * >addhp (amount) : Restores (amount) HP w/ 50 Overheal.
      * >addtater (amount) : Puts (amount) potato(es) in the player's inventory
-     * >echo (message) : print message out to standard out
-     * >die : subtract a fatal amount of health
-     * >make me a sandwich : evoke snarky response
-     * >sudo make me a sandwich : evoke submissive response from computer.  Also enter sudo mode
-     * >sudo : enter sudo mode
-     * >exit : exit sudo mode, or the game if you aren't in it.
-     * >jumpto (level name) : set the Room's exitCode string to what follows.
-     * >ls | pwd : currently not developed.  Later will tell the name of current room.
-     * >import antigravity : open default web browser and navigate to relevant xkcd (353)
-     * >help : get a snarky response telling the user to look here in the source code
-     * >setResponseTime (time) : set a new duration for the response message on the console to be shown (seconds)
-     * >goto (x) (y) : teleport player to location
-     * >getpos : print out current player coords in response
      * >blue rinse : murder every living thing. (except you)
-     * >lightning (x) (y) : strike a bunch of damage to a specified location.  Leaves hot ashes behind.
-     * >icbm [?] (x) (y) [d] [r] : splash damage about x, y. Use -r before params if relative location. d=damage, r=radius
-     * >pointer | compiling | wifi | random : all relevant xkcd comics.
+     * >die : subtract a fatal amount of health
+     * >echo (message) : print message out to standard out
+     * >exit : exit sudo mode, or the game if you aren't in it.
+     * >getpos : print out current player coords in response
+     * >ghost : Disables the player checking for walls before moving into one (also called 'noclip')
+     * >goto (x) (y) : teleport player to location
      * >gotta catch em all : rapidly teleport to each dropped item on the level to collect them all, then return to start.
+     * >help : get a snarky response telling the user to look here in the source code
+     * >icbm [?] (x) (y) [d] [r] : splash damage about x, y. Use -r before params if relative location. d=damage, r=radius
+     * >import antigravity : open default web browser and navigate to relevant xkcd (353)
+     * >jumpto (level name) : set the Room's exitCode string to what follows.
+     * >lightning (x) (y) : strike a bunch of damage to a specified location.  Leaves hot ashes behind.
+     * >ls | pwd : currently not developed.  Later will tell the name of current room.
+     * >make me a sandwich : evoke snarky response
+     * >pointer | compiling | wifi | random : all relevant xkcd comics.
+     * >setResponseTime (time) : set a new duration for the response message on the console to be shown (seconds)
+     * >sudo : enter sudo mode
+     * >sudo make me a sandwich : evoke submissive response from computer.  Also enter sudo mode
+     * >unfreeze : sets frozen to off for player (in the case it is forgotten somehow)     *
+     * >unghost : Re-enables players checking for walls
      * </p>
      *     Tip: to execute a bunch of commands after each other, use '&&' in between them.  Also, you can type a command
      *     after 'sudo' to execute that command with root privileges.
