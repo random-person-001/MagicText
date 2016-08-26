@@ -25,7 +25,10 @@ public class Mountains extends Room {
                 Thread.sleep(20);
 
                 if (count == 0) {
-                    compactTextBox(org, "Welcome outside!  Breathe a breath of \n fresh air, and don't fall.", "A Sign", false);
+                    textBox(new FlavorText("Ah, the air is nice and fresh\n outside.", ""));
+                    textBox(new FlavorText("Endless rows of trees covered in sunset\n sitting beyond your view distance....", ""));
+                    textBox(new FlavorText("A picture taken here on this cliff\n would definitely make a great postcard.", ""));
+                    // ^ This should be an item in The Mines of Mementos
                     count++;
                 }
                 if (baseLayer.getStr(playo.getY(), playo.getX()).equals(".")){ // Walking the critical edge
@@ -42,6 +45,9 @@ public class Mountains extends Room {
                 }
                 if (playo.dead){
                     exitCode = "die";
+                }
+                if (playo.getY() < 0){
+                    setNewRoom("SourcePit",57,42);
                 }
             } catch (InterruptedException ignored) {
             }

@@ -47,6 +47,11 @@ public class Room {
     public int index;
     public String exitCode = "";
 
+    public void setNewRoom(String newID, int playerX, int playerY){
+        exitCode = newID;
+        playo.goTo(playerX, playerY);
+    }
+
     /**
      * Try to subtractHealth a mortal at a specified location
      *

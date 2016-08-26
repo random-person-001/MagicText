@@ -107,7 +107,7 @@ public class Start {
         if (levelNum != 0) {
             levelAnimation(org, levelNum, 2);
         }
-        player.goTo(6,6);
+        //player.goTo(6,6);
         player.setRoom(newRoom);
     }
 

@@ -122,8 +122,7 @@ public class TutorialBasement extends Room {
                     count++;
                 }
                 if (getPlayer().getX() > 132){
-                    playo.goTo(109, 10);
-                    exitCode = "SourcePit";
+                    setNewRoom("SourcePit",109 , 10);
                 }
                 if (getPlayer().dead){
                     exitCode = "die";
@@ -140,6 +139,7 @@ public class TutorialBasement extends Room {
         ititHitMeshes();
 
         super.playo.goTo(20,29);
+        super.playo.roomName = "Tutorial";
 
         FlavorText playerStart = new FlavorText(20, 29, "You start here!", "");
         addMessage(playerStart);

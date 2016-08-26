@@ -37,6 +37,9 @@ public class Player extends Mortal {
     private PlayerKeypressListener playerKeyListener = new PlayerKeypressListener(this);
     private GameObject closestFood = null;
     private Inventory inv;
+
+    public String roomName = ""; //Extremely important when we implement saving.
+
     private boolean autonomous = false;
     boolean shouldPause = false;
     private boolean shouldNewInv = false;
