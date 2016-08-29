@@ -67,7 +67,7 @@ public class TutorialBasement extends Room {
                 }
                 if (getPlayer().getX() == 87 && getPlayer().getY() == 35){
                     foundSpell1 = true;
-                    System.out.println("ASTRAL DART FOUND");
+                    //System.out.println("ASTRAL DART FOUND");
                 }
                 if (getPlayer().getX() == 80 && getPlayer().getY() == 29){
                     foundSpell2 = true;
@@ -78,7 +78,7 @@ public class TutorialBasement extends Room {
                         textBox(new FlavorText("...in this basement that he can also\n put stuff in?\nSeriously, you woke up in an empty room.", ""));
                     }
                     inMaze = true;
-                    System.out.println("IN THE MAZE....");
+                    //System.out.println("IN THE MAZE....");
                 }
                 if (count == 2 && getPlayer().getX() > 14 && getPlayer().getX() < 20 && getPlayer().getY() == 22 && (foundSpell1 || foundSpell2)){
                     textBox(new FlavorText("Now that you are armed with\n some magic scrolls, you can\n defeat the pot of petunias!", ""));

@@ -185,12 +185,25 @@ class Inventory {
             default:
                 break;
         }
+        if (Character.isDigit(c) && (menuID == SPELLS || menuID == ITEMS || menuID == EQUIP)){
+            int number = Integer.valueOf(String.valueOf(c));
+            if (number != 0){
+                newSelectY = 2*(number-1) + 3;
+            } else {
+                newSelectY = 21;
+            }
+            System.out.println(c);
+
+        }
+        org.editLayer(">", "selector", newSelectY, indexX);
     }
 
     /**
      * Bring up the menus (meanwhile pausing everything else)
      */
     public void newShow() {
+        System.out.println("Bringing up menu...");
+
         player.frozen = true;
         player.room.setObjsPause(true);
 
@@ -299,6 +312,7 @@ class Inventory {
                 case 6:
                     org.removeLayer("top");
                     org.removeLayer("selector");
+                    org.removeLayer("invInfo");
                     selectorLayer.clear();
                     menuID = EXIT;
                     break;
@@ -319,6 +333,7 @@ class Inventory {
         org.removeLayer("selector");
         org.removeLayer("invInfo");
         selectorLayer.clear();
+        infoLayer.clear();
         org.addLayer(goTo);
         org.addLayer(selectorLayer);
         org.addLayer(infoLayer);
@@ -505,8 +520,9 @@ class Inventory {
         }
     }
 
+    int prevIndex = 0;
     private void genericItemListing(ArrayList<Item> items) {
-        infoLayer.clear();
+        //infoLayer.clear();
 
         double pageReq = Math.ceil((double) items.size() / 16);
 
@@ -524,10 +540,15 @@ class Inventory {
         fillItemNames(items, 33, 3, page);
 
         int index = newSelectY - 3 + ((page - 1) * 16);
+        if (index != prevIndex){
+            org.getLayer("invInfo").clear();
+            System.out.println(String.format("Prev Index: %d vs. %d", prevIndex, index));
+        }
+        prevIndex = index;
+
         if (index < items.size() && newSelectY < 19) {
             fillInfoText(items.get(index).getDesc(), 1, 1);
         }
-
         //org.getLayer(org.getPosLayer("selector")).makeDuplicateOf(bufferLayer);
     }
 
@@ -645,11 +666,8 @@ class Navigator extends KeyAdapter {
         if (key == KeyEvent.VK_RIGHT) {
             inv.keyPressed('æ');
         }
-        if (key == '1') {
-            inv.keyPressed('1');
-        }
-        if (key == '2') {
-            inv.keyPressed('2');
+        if (Character.isDigit(event.getKeyChar())) {
+            inv.keyPressed(event.getKeyChar());
         }
         if (key == 'A' || key == KeyEvent.VK_ENTER) {
             inv.pressedA = true;

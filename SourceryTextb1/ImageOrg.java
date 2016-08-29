@@ -108,6 +108,15 @@ public class ImageOrg {
         }
     }
 
+    /** Return the Layer specified by its name
+     * @param layerName the Layer's name
+     * @return that Layer
+     */
+    public Layer getLayer(String layerName){
+        int go = getPosLayer(layerName);
+        return getLayer(go);
+    }
+
     /** Remove a layer by its String name.
      * @param layerName what the Layer's name is
      */
@@ -157,14 +166,12 @@ public class ImageOrg {
         if (!(r > get.getRows() || r < 0 || c > get.getColumns() || c < 0)){
             get.setStr(r, c, input);
             somethingChanged = true;
-        } else {
-            partialRender(get, input, loc, r, c);
         }
     }
 
 
     /**
-     * smartImageMod was an attempt to make the game more efficient.
+     * partialRender was an attempt to make the game more efficient.
      * What it does is instead of re-building the whole game image, it only updates the specific spots that are edited.
      *
      * We might want to get back to this if we want the program to be even more lightweight.

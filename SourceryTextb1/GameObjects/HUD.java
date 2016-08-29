@@ -42,6 +42,8 @@ public class HUD extends GameObject {
     private boolean authing = false;
     private KeyListener playerKeyListener;
 
+    private boolean inCmd = false;
+
     public HUD(ImageOrg org, Room theRoom, Layer place) {
         super.strClass = "HUD";
         orgo = org;
@@ -77,7 +79,7 @@ public class HUD extends GameObject {
         spell2Name = convertIcon(room.getPlayer().getSecondarySpell());
 
         loc = orgo.getPosLayer(layerName);
-        orgo.getLayer(loc).clear();
+        //orgo.getLayer(loc).clear();
         x = 0;
         drawLayer();
     }
@@ -101,6 +103,11 @@ public class HUD extends GameObject {
                 putChar(responseMessage.substring(ii, ii + 1));
             }
         } else if (consoleEntryProg < 3) {
+            if (inCmd){
+                orgo.getLayer(loc).clear();
+                inCmd = false;
+            }
+
             loc = orgo.getPosLayer(layerName);
 
             putChar("[");
@@ -160,6 +167,11 @@ public class HUD extends GameObject {
             }
             putChar("}");
         } else {
+            if (!inCmd){
+                orgo.getLayer(loc).clear();
+                inCmd = true;
+            }
+
             putChar(promptChar);
             putChar(" ");
             for (int ii = 0; ii < command.length(); ii++) {
@@ -167,6 +179,8 @@ public class HUD extends GameObject {
             }
             if (cursorBlinkTimer % 10 < 6) {
                 putChar("|");
+            } else {
+                putChar(" ");
             }
             if (cursorBlinkTimer == 10 * 50) {
                 cursorBlinkTimer = 0;
@@ -612,6 +626,7 @@ public class HUD extends GameObject {
             } else if (key == KeyEvent.VK_ESCAPE){
                 sendTo.exitCommandLine();
             } else if (sendTo.consoleEntryProg >= 3 && key == KeyEvent.VK_BACK_SPACE) {
+                orgo.editLayer(" ", layerName, 0, sendTo.command.length() + 3);
                 sendTo.command = (sendTo.command.length() > 0) ? sendTo.command.substring(0, sendTo.command.length() - 1) : "";
             } else {
                 sendTo.keyPressed(ch);
