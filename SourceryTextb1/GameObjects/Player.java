@@ -41,7 +41,6 @@ public class Player extends Mortal {
     public String roomName = ""; //Extremely important when we implement saving.
 
     private boolean autonomous = false;
-    boolean shouldPause = false;
     private boolean shouldNewInv = false;
     public boolean frozen = true; //This gets changed by a room upon beginning the level
 
@@ -160,14 +159,10 @@ public class Player extends Mortal {
             } catch (IndexOutOfBoundsException ignored) {
             }
         } else {
-            if (shouldNewInv || shouldPause) {
-                System.out.println("GAME PAUSED\n " + inv.pressedA);
-                //orgo.getWindow().removeKeyListener(playerKeyListener);
+            if (shouldNewInv) {
+                System.out.println("Opening inventory");
                 inv.newShow();
-                //orgo.getWindow().addKeyListener(playerKeyListener);
                 shouldNewInv = false;
-                shouldPause = false;
-                System.out.println("GAME UNPAUSED");
             }
 
             manaRegenClock += getTime();
@@ -761,7 +756,7 @@ class PlayerKeypressListener extends KeyAdapter {
 
     @Override
     public void keyPressed(KeyEvent event) {
-        if (!player.frozen && !player.shouldPause && !player.dead) {
+        if (!player.frozen && !player.dead) {
             char ch = event.getKeyChar();
             player.keyPressed(ch);
             if (event.getKeyCode() == KeyEvent.VK_UP) {

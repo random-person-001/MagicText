@@ -205,6 +205,7 @@ class Inventory {
         System.out.println("Bringing up menu...");
 
         player.frozen = true;
+        org.getLayer(player.layerName).setImportance(false);
         player.room.setObjsPause(true);
 
         menuID = TOP;
@@ -635,6 +636,7 @@ class Inventory {
                 org.removeLayer("top");
                 window.txtArea.removeKeyListener(keyListener);
                 player.frozen = false;
+                org.getLayer(player.layerName).setImportance(true);
                 player.room.setObjsPause(false);
             } else {
                 newUpdateSelector(menuID);
