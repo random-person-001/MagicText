@@ -237,6 +237,7 @@ class Inventory {
         org.removeLayer("equip");
         org.removeLayer("selector");
         org.removeLayer("tater");
+        org.clearLayer("invInfo");
         org.removeLayer("invInfo");
         selectorLayer.clear();
         menuID = EXIT;

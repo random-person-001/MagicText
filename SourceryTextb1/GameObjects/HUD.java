@@ -230,7 +230,7 @@ public class HUD extends GameObject {
      * List of commands:
      * >addhp (amount) : Restores (amount) HP w/ 50 Overheal.
      * >addtater (amount) : Puts (amount) potato(es) in the player's inventory
-     * >blue rinse : murder every living thing. (except you)
+     * >blue rinse | defoliator : murder every living thing. (except you)
      * >die : subtract a fatal amount of health
      * >echo (message) : print message out to standard out
      * >exit : exit sudo mode, or the game if you aren't in it.
@@ -363,7 +363,8 @@ public class HUD extends GameObject {
             showResponse("Seek GameObjects/HUD.java, method processCommand()");
         } else if (command.contains("getpos")) {
             showResponse("Currently at x=" + player.getX() + " y=" + player.getY());
-        } else if (command.contains("blue") && command.contains("rinse")) {
+        } else if ((command.contains("blue") && command.contains("rinse")) || command.contains("defoliator")) {
+            // Artimis Fowl and Star Wars references, respectively.
             int smoteMortals = 0;
             for (Mortal e : room.enemies) {
                 if (!e.strClass.equals("Player")) {
