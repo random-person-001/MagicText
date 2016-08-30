@@ -253,7 +253,7 @@ public class HUD extends GameObject {
      * >unghost : Re-enables players checking for walls
      * </p>
      *     Tip: to execute a bunch of commands after each other, use '&&' in between them.  Also, you can type a command
-     *     after 'sudo' to execute that command with root privileges.
+     *     after 'sudo' to execute that command with root privileges, however there isn't much difference anymore :(
      */
 
     private void processCommand() {
@@ -340,18 +340,14 @@ public class HUD extends GameObject {
                 inv.pressedA = true; // navigate to the quit game menu programmatically
             }
         } else if (command.startsWith("jumpto ")) { // Jump to a new level (defined in the switch statement in Start.java)
-            if (promptChar.equals("#")) {
-                showResponse("Going to level " + command.substring(7));
-                room.exitCode = command.substring(7);
-            } else {
-                showResponse("You have insufficient privileges to perform this action.");
-            }
+            showResponse("Going to level " + command.substring(7));
+            room.exitCode = command.substring(7);
         } else if (command.startsWith("ls") || command.startsWith("pwd")) {
             showResponse("Command currently under development.  Check back later!");
         } else if (command.contains("import antigravity")) {
             showResponse("Opening relevant XKCD (353) in default web browser ");
             openURL("http://xkcd.com/353/"); //NOTICE: this appears not to work on chrome-based browsers.
-        } else if (command.contains("pointers")) {
+        } else if (command.contains("pointers") || command.contains("tip")) {
             showResponse("Opening relevant XKCD (138) in default web browser ");
             openURL("http://xkcd.com/138/"); //NOTICE: this appears not to work on chrome-based browsers.
         } else if (command.contains("wifi") || command.contains("wi-fi")) {
@@ -364,22 +360,18 @@ public class HUD extends GameObject {
             showResponse("Opening relevant XKCD (303) in default web browser ");
             openURL("http://xkcd.com/303/"); //NOTICE: this appears not to work on chrome-based browsers.
         } else if (command.contains("help")) {
-            showResponse("Check the source code for help: GameObjects/HUD.java, method processCommand()");
+            showResponse("Seek GameObjects/HUD.java, method processCommand()");
         } else if (command.contains("getpos")) {
             showResponse("Currently at x=" + player.getX() + " y=" + player.getY());
         } else if (command.contains("blue") && command.contains("rinse")) {
-            if (promptChar.equals("#")) {
-                int smoteMortals = 0;
-                for (Mortal e : room.enemies) {
-                    if (!e.strClass.equals("Player")) {
-                        e.subtractHealth(e.getHealth() + 1);
-                        smoteMortals++;
-                    }
+            int smoteMortals = 0;
+            for (Mortal e : room.enemies) {
+                if (!e.strClass.equals("Player")) {
+                    e.subtractHealth(e.getHealth() + 1);
+                    smoteMortals++;
                 }
-                showResponse("Blue rinse smote " + smoteMortals + " rivals.");
-            } else {
-                showResponse("You have insufficient privileges to perform this action.");
             }
+            showResponse("Blue rinse smote " + smoteMortals + " rivals.");
         } else if (command.contains("goto ")) {
             command = command.substring(5);
             boolean relative = false;
@@ -415,9 +407,7 @@ public class HUD extends GameObject {
         }
         // note: damage pattern is that of a square pyramid.
         else if (command.contains("icbm") || command.contains("nuke")) {
-            if (!(promptChar.equals("#"))) {
-                showResponse("You have insufficient privileges to perform this action.");
-            } else if (occurrencesOf(command, " ") < 2) {
+            if (occurrencesOf(command, " ") < 2) {
                 showResponse("Please specify more numbers.");
             } else {
                 command = command.substring(4);
@@ -481,10 +471,10 @@ public class HUD extends GameObject {
 
 
         else if (command.length() > 0){
-            showResponse("Command " + command + " not recognised.  Check your spelling or " +
-                    "request it as a new feature from the developers.");
+            showResponse("Command '" + command + "' not recognised.  Check your spelling or " +
+                    "request it as a new feature.");
         }
-        if (!executeNextCommand){//(nextCommand.equals(command) || nextCommand.length() == 0){
+        if (!executeNextCommand){
             exitCommandLine();
         }
         else {
