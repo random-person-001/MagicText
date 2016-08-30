@@ -12,7 +12,6 @@ import SourceryTextb1.Rooms.TheSource.ThePit;
 import SourceryTextb1.Rooms.TheSource.TutorialBasement;
 
 import java.awt.Color;
-import java.lang.reflect.Field;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -23,7 +22,6 @@ import java.util.TimerTask;
  */
 public class Start {
     private static boolean doDemo = false;
-    private static boolean doIntro = false;
 
     private static Window game;
     private static ImageOrg org;
@@ -42,8 +40,8 @@ public class Start {
             rooma.enter();
         } else {
 
-            WindowConfig wincnfg = new WindowConfig(game, org);
-            wincnfg.config();
+            WindowConfig wincnfg = new WindowConfig(org);
+            wincnfg.config(false);
 
             Timer time = new Timer();
             time.schedule(new StartCheck(wincnfg), 50, 100);
@@ -56,6 +54,7 @@ public class Start {
     }
 
     public static void runGame(){
+        /*
         if (doIntro) {
             try {
                 intro();
@@ -63,6 +62,7 @@ public class Start {
                 e.printStackTrace();
             }
         }
+        */
 
         Player player = new Player(org);
         String roomID = "Tutorial";
@@ -261,7 +261,6 @@ public class Start {
         Layer lay1 = new Layer(new String[23][46], "Intro1");
         lay1.setStr(10, 23, "@");
         org.addLayer(lay1);
-        org.compileImage();
 
         Thread.sleep(750);
 
@@ -274,10 +273,8 @@ public class Start {
 
         String thisIsYou = "This is you.";
         for (int ii = 0; ii < thisIsYou.length(); ii++) {
-            org.getLayer(org.getPosLayer("Intro1")).setStr(12, 18 + ii, String.valueOf(thisIsYou.charAt(ii)));
+            org.editLayer(String.valueOf(thisIsYou.charAt(ii)), "Intro1", 12, 18 + ii);
         }
-
-        org.compileImage();
 
         Thread.sleep(5000);
 
@@ -294,8 +291,7 @@ public class Start {
         org.setCam(0, 10);
         String explain = "Times were simple a couple weeks ago.";
         for (int ii = 0; ii < explain.length(); ii++) {
-            int pos = org.getPosLayer("Intro2Title");
-            org.getLayer(pos).setStr(1, 3 + ii, String.valueOf(explain.charAt(ii)));
+            org.editLayer(String.valueOf(explain.charAt(ii)), "Intro2Title", 1, 3 + ii);
         }
 
         org.compileImage();
@@ -304,8 +300,7 @@ public class Start {
 
         String explainMore = "@'s were people, #'s were walls & terrain";
         for (int ii = 0; ii < explainMore.length(); ii++) {
-            int pos = org.getPosLayer("Intro2Title");
-            org.getLayer(pos).setStr(2, 3 + ii, String.valueOf(explainMore.charAt(ii)));
+            org.editLayer(String.valueOf(explainMore.charAt(ii)), "Intro2Title", 2, 3 + ii);
         }
 
 
@@ -338,7 +333,7 @@ public class Start {
         game.txtArea.setForeground(new Color(189, 83, 89, 255));
         String villainIntro = "This is someone else.";
         for (int ii = 0; ii < villainIntro.length(); ii++) {
-            org.getLayer(org.getPosLayer("Intro3")).setStr(7, 12 + ii, String.valueOf(villainIntro.charAt(ii)));
+            org.editLayer(String.valueOf(villainIntro.charAt(ii)), "Intro3", 7, 12 + ii);
         }
 
         org.compileImage();
@@ -347,7 +342,7 @@ public class Start {
 
         String goodExcuse = "(To be fair, everyone DOES look identical)";
         for (int ii = 0; ii < goodExcuse.length(); ii++) {
-            org.getLayer(org.getPosLayer("Intro3")).setStr(8, 2 + ii, String.valueOf(goodExcuse.charAt(ii)));
+            org.editLayer(String.valueOf(goodExcuse.charAt(ii)), "Intro3", 8, 2 + ii);
         }
 
         org.compileImage();
@@ -356,7 +351,7 @@ public class Start {
 
         String goodFollowUp = "He despised that fact. He desired complexity";
         for (int ii = 0; ii < goodFollowUp.length(); ii++) {
-            org.getLayer(org.getPosLayer("Intro3")).setStr(12, 1 + ii, String.valueOf(goodFollowUp.charAt(ii)));
+            org.editLayer(String.valueOf(goodFollowUp.charAt(ii)), "Intro3", 12, 1 + ii);
         }
 
         org.compileImage();
@@ -365,7 +360,7 @@ public class Start {
 
         String resolution = "And so, he journeyed to The Source";
         for (int ii = 0; ii < resolution.length(); ii++) {
-            org.getLayer(org.getPosLayer("Intro3")).setStr(13, 6 + ii, String.valueOf(resolution.charAt(ii)));
+            org.editLayer(String.valueOf(resolution.charAt(ii)), "Intro3", 13, 6 + ii);
         }
 
         org.compileImage();
@@ -417,7 +412,7 @@ public class Start {
         Thread.sleep(1500);
 
         for (int ii = 0; ii < 6; ii++) {
-            org.getLayer(org.getPosLayer("Intro4")).setStr(18, 34 - ii, " ");
+            org.editLayer(" ", "Intro4", 18, 34 - ii);
             org.compileImage();
             Thread.sleep(100);
         }
@@ -426,7 +421,7 @@ public class Start {
 
         String TRUE = "TRUE;";
         for (int ii = 0; ii < TRUE.length(); ii++) {
-            org.getLayer(org.getPosLayer("Intro4")).setStr(18, 29 + ii, String.valueOf(TRUE.charAt(ii)));
+            org.editLayer(String.valueOf(TRUE.charAt(ii)), "Intro4", 18, 29 + ii);
             org.compileImage();
             Thread.sleep(400);
         }
@@ -437,7 +432,7 @@ public class Start {
 
         String result = "...And that changed EVERYTHING";
         for (int ii = 0; ii < result.length(); ii++) {
-            org.getLayer(org.getPosLayer("Intro4")).setStr(11, 7 + ii, String.valueOf(result.charAt(ii)));
+            org.editLayer(String.valueOf(result.charAt(ii)), "Intro4", 11, 7 + ii);
         }
 
         org.compileImage();
@@ -461,6 +456,7 @@ public class Start {
 
         game.txtArea.setBackground(Color.BLACK);
     }
+
     protected static class StartCheck extends TimerTask {
         WindowConfig lock;
         StartCheck self = this;
@@ -478,19 +474,18 @@ public class Start {
         public void run(){
             Layer endingScene;
             if (lock.doContinue && !playedAndDied && !hasRan){
-                /*
-                runGame();
-                String s = game.txtArea.toString(); // A little superfluous here; it wasn't working well.
-                endingScene = game.getFullImage();
-                org.removeAllButPlayer();
-                org.addLayer(endingScene);
-                playedAndDied = true;
-                game.txtArea.insert(s, 0);
-                */
-                MainMenu menu = new MainMenu(org, game, self);
+                new MainMenu(org, game, self); // TODO make this entry point less obscure
                 hasRan = true;
             } else {
                 //System.out.println("Game hasn't started yet!");
+            }
+        }
+
+        public void doIntro(){
+            try {
+                intro();
+            } catch (InterruptedException e) {
+                System.out.println("Intro interrupted.");
             }
         }
     }

@@ -9,33 +9,36 @@ import java.util.TimerTask;
 
 /**
  * Created by Jared on 25-Aug-16.
- *
+ * It's the place you first come to in the game, giving options to do the demo, start a new game, and maybe even load one.
  */
 
 public class MainMenu {
     private ImageOrg org;
     private Window window;
     private Start.StartCheck starter;
-    protected int keyCode = 0;
+    WindowConfig wincnfg;
+    private KeyInput keyInputter;
+    private int keyCode = 0;
     final int UP = 1;
     final int DOWN = 2;
     final int ENTER = 3;
 
-    protected int clock = 0;
-    protected int cursorY = 9;
+    private int clock = 0;
+    private int cursorY = 9;
 
     public MainMenu(ImageOrg orgo, Window theWindow, Start.StartCheck start){
         org = orgo;
         window = theWindow;
         starter = start;
+        wincnfg = new WindowConfig(orgo);
         Timer time = new Timer();
         time.scheduleAtFixedRate(new MenuTimer(), 0, 100);
 
-        KeyInput check = new KeyInput(this);
-        window.txtArea.addKeyListener(check);
+        keyInputter = new KeyInput(this);
+        window.txtArea.addKeyListener(keyInputter);
 
         art artida = new art();
-        Layer menuLayer = new Layer(artida.strToArray(artida.mainMenu),"MAIN_MENU");
+        Layer menuLayer = new Layer(art.strToArray(artida.mainMenu),"MAIN_MENU");
         org.addLayer(menuLayer);
     }
 
@@ -50,23 +53,49 @@ public class MainMenu {
                 cursorY++;
                 break;
             case ENTER:
+                window.txtArea.removeKeyListener(keyInputter);
+                Layer orig = org.getLayer("MAIN_MENU"); // to add back later
+                org.removeLayer("MAIN_MENU");
+
+                if (cursorY == 8){
+                    starter.doIntro();
+                }
                 if (cursorY == 9){
                     starter.startGame();
                 }
+                if (cursorY == 11){
+                    // Do window size adjustment, interactively
+                    wincnfg.config(true);
+
+                    while (!wincnfg.doContinue){
+                        // wait.
+                        try {
+                            Thread.sleep(100);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                if (cursorY == 12){
+                    System.exit(0);
+                }
+                org.addLayer(orig);
+                window.txtArea.addKeyListener(keyInputter);
+                keyCode = 0;
         }
         keyCode = 0;
 
-        if (cursorY == 8){
-            cursorY = 11;
+        if (cursorY <= 7){
+            cursorY = 12;
         }
-        if (cursorY == 12){
-            cursorY = 9;
+        if (cursorY >= 13){
+            cursorY = 8;
         }
 
         org.editLayer("*","MAIN_MENU",cursorY,24);
     }
 
-    class MenuTimer extends TimerTask{
+    private class MenuTimer extends TimerTask{
         @Override
         public void run(){
             clock++;
@@ -74,10 +103,10 @@ public class MainMenu {
         }
     }
 
-    class KeyInput extends KeyAdapter {
+    private class KeyInput extends KeyAdapter {
         MainMenu owner;
 
-        protected KeyInput(MainMenu creator){
+        KeyInput(MainMenu creator){
             owner = creator;
         }
 

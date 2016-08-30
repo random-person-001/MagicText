@@ -15,49 +15,62 @@ class WindowConfig {
     public ImageOrg org;
 
     public boolean doContinue = false;
+    boolean resume = false;
+    boolean firstTime = true;
 
     private int windowHeight = 408;
     private int windowWidth =  412;
     private String OS = System.getProperty("os.name").toLowerCase();
 
-    WindowConfig(Window win, ImageOrg orgo){
-         window = win;
+    WindowConfig(ImageOrg orgo){
+         window = orgo.getWindow();
          org = orgo;
          //System.getProperties().list(System.out);  // Aw, cool!
     }
 
     /**
      * Bring up the inventory for the player to do stuff with.
+     * @param interactable whether to wait for the user to press buttons or just do what we think is best and quit
      */
-    void config() {
+    void config(boolean interactable) {
         System.out.println("WinCnfg: Start of config");
 
+        resume = false;
+        doContinue = false;
         setSize(windowWidth, windowHeight);
 
-        art arty = new art();
-        String[][] base = art.strToArray(arty.configBox);
-        Layer lay = new Layer(base, "helpful");
-        org.addLayer(lay);
-
-        System.out.println("WinCnfg: layer added");
-
-        if (OS.contains("nix") || OS.contains("nux")){
-            keyPressed('2');
-        } else if (OS.contains("win")){
-            keyPressed('1');
-        } else if (OS.contains("mac")){
-            System.out.println("Hello Mac user.");
+        if (firstTime) {
+            if (OS.contains("nix") || OS.contains("nux")) {
+                keyPressed('2');
+            } else if (OS.contains("win")) {
+                keyPressed('1');
+            } else if (OS.contains("mac")) {
+                System.out.println("Hello Mac user.");
+            }
+            firstTime = false;
         }
 
-        Navigator keyListener = new Navigator(this);
-        window.txtArea.addKeyListener(keyListener); // Add key listeners.
+        if (interactable) {
+            art arty = new art();
+            String[][] base = art.strToArray(arty.configBox);
+            Layer lay = new Layer(base, "helpful");
+            org.addLayer(lay);
 
-        System.out.println("WinCnfg: keyListener created");
+            System.out.println("WinCnfg: layer added");
 
-        Timer update = new Timer();
-        update.schedule(new StopListener(keyListener), 0, 100);
+            Navigator keyListener = new Navigator(this);
+            window.txtArea.addKeyListener(keyListener); // Add key listeners.
 
-        System.out.println("WinCnfg: End of config");
+            System.out.println("WinCnfg: keyListener created");
+
+            Timer update = new Timer();
+            update.schedule(new StopListener(keyListener), 0, 100);
+        }
+        else{
+            exit();
+        }
+
+        System.out.println("WinCnfg: End of config\n");
     }
 
 
@@ -101,6 +114,11 @@ class WindowConfig {
         window.setSize(width, height);
     }
 
+    private void exit(){
+        org.removeLayer("helpful");
+        doContinue = true;
+    }
+
     private class StopListener extends TimerTask {
         Navigator listen;
 
@@ -109,12 +127,9 @@ class WindowConfig {
         }
 
         public void run(){
-            if (listen.resume){
-
-                org.removeLayer("helpful");
+            if (resume){
                 window.txtArea.removeKeyListener(listen);
-
-                doContinue = true;
+                exit();
             }
         }
     }
@@ -124,7 +139,6 @@ class WindowConfig {
 
 class Navigator extends KeyAdapter {
     private WindowConfig cnfg;
-    boolean resume = false;
 
     Navigator(WindowConfig inventory) {
         cnfg = inventory;
@@ -148,7 +162,7 @@ class Navigator extends KeyAdapter {
             cnfg.keyPressed('æ');
         }
         if (key == KeyEvent.VK_ESCAPE || key == KeyEvent.VK_ENTER) {
-            resume = true;
+            cnfg.resume = true;
         }
     }
 }
