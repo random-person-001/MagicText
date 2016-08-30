@@ -6,27 +6,26 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 
-
 /**
  * Created by Jared on 25-Aug-16.
  * It's the place you first come to in the game, giving options to do the demo, start a new game, and maybe even load one.
  */
 
-public class MainMenu {
+class MainMenu {
     private ImageOrg org;
     private Window window;
     private Start.StartCheck starter;
-    WindowConfig wincnfg;
+    private WindowConfig wincnfg;
     private KeyInput keyInputter;
     private int keyCode = 0;
-    final int UP = 1;
-    final int DOWN = 2;
-    final int ENTER = 3;
+    private final int UP = 1;
+    private final int DOWN = 2;
+    private final int ENTER = 3;
 
     private int clock = 0;
     private int cursorY = 9;
 
-    public MainMenu(ImageOrg orgo, Window theWindow, Start.StartCheck start){
+    MainMenu(ImageOrg orgo, Window theWindow, Start.StartCheck start) {
         org = orgo;
         window = theWindow;
         starter = start;
@@ -38,14 +37,14 @@ public class MainMenu {
         window.txtArea.addKeyListener(keyInputter);
 
         art artida = new art();
-        Layer menuLayer = new Layer(art.strToArray(artida.mainMenu),"MAIN_MENU");
+        Layer menuLayer = new Layer(art.strToArray(artida.mainMenu), "MAIN_MENU");
         org.addLayer(menuLayer);
     }
 
     protected void loop() {
-        org.editLayer(" ","MAIN_MENU",cursorY,24);
+        org.editLayer(" ", "MAIN_MENU", cursorY, 24);
 
-        switch (keyCode){
+        switch (keyCode) {
             case UP:
                 cursorY--;
                 break;
@@ -53,22 +52,21 @@ public class MainMenu {
                 cursorY++;
                 break;
             case ENTER:
+                System.out.println(clock);
                 window.txtArea.removeKeyListener(keyInputter);
                 Layer orig = org.getLayer("MAIN_MENU"); // to add back later
                 org.removeLayer("MAIN_MENU");
 
-                if (cursorY == 8){
+                if (cursorY == 8) {
                     starter.doIntro();
                 }
-                if (cursorY == 9){
+                if (cursorY == 9) {
                     starter.startGame();
                 }
-                if (cursorY == 11){
-                    // Do window size adjustment, interactively
+                if (cursorY == 11) {
+                    // Do window size adjustment, interactively, and wait until it is done
                     wincnfg.config(true);
-
-                    while (!wincnfg.doContinue){
-                        // wait.
+                    while (!wincnfg.doContinue) {
                         try {
                             Thread.sleep(100);
                         } catch (InterruptedException e) {
@@ -76,7 +74,7 @@ public class MainMenu {
                         }
                     }
                 }
-                if (cursorY == 12){
+                if (cursorY == 12) {
                     System.exit(0);
                 }
                 org.addLayer(orig);
@@ -85,19 +83,19 @@ public class MainMenu {
         }
         keyCode = 0;
 
-        if (cursorY <= 7){
+        if (cursorY <= 7) {
             cursorY = 12;
         }
-        if (cursorY >= 13){
+        if (cursorY >= 13) {
             cursorY = 8;
         }
 
-        org.editLayer("*","MAIN_MENU",cursorY,24);
+        org.editLayer("*", "MAIN_MENU", cursorY, 24);
     }
 
-    private class MenuTimer extends TimerTask{
+    private class MenuTimer extends TimerTask {
         @Override
-        public void run(){
+        public void run() {
             clock++;
             loop();
         }
@@ -106,7 +104,7 @@ public class MainMenu {
     private class KeyInput extends KeyAdapter {
         MainMenu owner;
 
-        KeyInput(MainMenu creator){
+        KeyInput(MainMenu creator) {
             owner = creator;
         }
 
@@ -114,7 +112,7 @@ public class MainMenu {
         public void keyPressed(KeyEvent e) {
             int input = e.getKeyCode();
             //System.out.println("input");
-            switch (input){
+            switch (input) {
                 case KeyEvent.VK_UP:
                     owner.keyCode = UP;
                     break;

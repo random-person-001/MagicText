@@ -622,11 +622,13 @@ public class HUD extends GameObject {
             int key = event.getKeyCode();
             char ch = event.getKeyChar();
             if (sendTo.consoleEntryProg >= 3 && key == KeyEvent.VK_ENTER) {
+                orgo.clearLayer(layerName);
                 sendTo.processCommand();
             } else if (key == KeyEvent.VK_ESCAPE){
                 sendTo.exitCommandLine();
             } else if (sendTo.consoleEntryProg >= 3 && key == KeyEvent.VK_BACK_SPACE) {
                 orgo.editLayer(" ", layerName, 0, sendTo.command.length() + 3);
+                orgo.editLayer(" ", layerName, 0, sendTo.command.length() + 2);  // eliminate double cursor
                 sendTo.command = (sendTo.command.length() > 0) ? sendTo.command.substring(0, sendTo.command.length() - 1) : "";
             } else {
                 sendTo.keyPressed(ch);
