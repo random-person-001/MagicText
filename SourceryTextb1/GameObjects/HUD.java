@@ -602,6 +602,7 @@ public class HUD extends GameObject {
                     //System.out.println("HUD message done.");
                     responseMessage = null;
                     sidescrollTimer.cancel();
+                    orgo.clearLayer(layerName);
                 }
             }, responseDuration * 1000);
         } catch (IllegalStateException e) {
