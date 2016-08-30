@@ -137,21 +137,18 @@ public class Window extends JFrame{
             for (int col = 0; col < maxW; col++){
                 for (int ii = layers.size(); ii > 0 ; ii--){
                     Layer layer = layers.get(ii - 1);
-                    int xPos;
-                    int yPos;
+                    int xPos = row - layer.getX();
+                    int yPos = col - layer.getY();
                     if (layer.getCamOb()) {
-                        xPos = row + camX - layer.getX();
-                        yPos = col + camY - layer.getY();
-                    } else {
-                        xPos = row - layer.getX();
-                        yPos = col - layer.getY();
+                        xPos += camX;
+                        yPos += camY;
                     }
                     String input = layer.getStr(xPos, yPos);
                     if (notEmpty(input)){
                        if ("ñ".equals(input)){
                             fullImage.setStr(row, col, " ");
                         } else {
-                            fullImage.setStr(row, col, layer.getStr(xPos, yPos));
+                            fullImage.setStr(row, col, input);
                         }
                         ii = 0;
                     }

@@ -44,10 +44,33 @@ public class ImageOrg {
         somethingChanged = true;
     }
 
+    private void moveImportantLayersUp(){
+        ArrayList<Layer> importants = new ArrayList<>();
+        for (Layer l : layers){
+            if (l.getImportance()){
+                importants.add(l);
+            }
+        }
+        for (Layer l : importants){
+            removeLayer(l.getName());
+        }
+        removeTheLayers();
+        for (Layer l : importants){
+            addLayer(l);
+        }
+        addTheLayers(false);
+    }
+
     private void addTheLayers () {
+        addTheLayers(true);
+    }
+    private void addTheLayers (boolean reorderImportant) {
         for (Layer lay : toAdd) {
             layers.add(lay);
             System.out.println("Adding: " + lay.getName());
+        }
+        if (reorderImportant && !toAdd.isEmpty()){
+            moveImportantLayersUp();
         }
         toAdd.clear();
     }

@@ -25,7 +25,7 @@ public class Layer {
      * will display above those
      */
     private boolean importance = false;
-    
+
     /*
     Note to future self:
     In a given layer, rows = layer[0].length
