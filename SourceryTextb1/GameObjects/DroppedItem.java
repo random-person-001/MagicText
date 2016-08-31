@@ -30,7 +30,7 @@ public class DroppedItem extends GameObject{
         layerName = layername;
         x = setx;
         y = sety;
-        Layer thisLayer = new Layer(new String[1][1], layerName, y, x, true, true, true);
+        Layer thisLayer = new Layer(new String[1][1], layerName, y, x, true, true, false);
         thisLayer.setStr(0,0, "!");
         orgo.addLayer(thisLayer);
 

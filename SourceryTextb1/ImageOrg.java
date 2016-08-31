@@ -63,7 +63,7 @@ public class ImageOrg implements java.io.Serializable {
     }
 
     private void addTheLayers () {
-        addTheLayers(false);
+        addTheLayers(true);
     }
 
     private void addTheLayers (boolean reorderImportant) {
