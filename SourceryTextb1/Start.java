@@ -26,6 +26,9 @@ public class Start {
     private static Window game;
     private static ImageOrg org;
 
+    protected static Player player;
+    protected static String roomID;
+
     public static void main(String[] args) throws InterruptedException {
         game = new Window();
         Layer base = new Layer(new String[game.maxH()][game.maxW()], "base");
@@ -63,9 +66,6 @@ public class Start {
             }
         }
         */
-
-        Player player = new Player(org);
-        String roomID = "Tutorial";
 
         while (roomID != "die") { //Java 8 ONLY
             switch (roomID) {
@@ -474,7 +474,17 @@ public class Start {
         }
 
         public void startGame(){
+            player = new Player(org);
+            roomID = "Tutorial";
             runGame();
+        }
+
+        public void buildGame(Player imported){
+            Start.roomID = imported.roomName;
+            Start.player = imported;
+            ImageOrg test = imported.orgo;
+            test.printLayers();
+            //runGame();
         }
 
         public void run(){

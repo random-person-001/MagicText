@@ -607,9 +607,10 @@ public class HUD extends GameObject {
     }
 
     /**
-     * Writes a .txt file to C:\test.txt
+     * Writes a .txt file to a user-defined directory
      */
     private void serTest(){
+        System.out.println("Running serialization test...");
         String path = "";
         JFileChooser chooser = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter(
@@ -617,7 +618,7 @@ public class HUD extends GameObject {
         chooser.setFileFilter(filter);
         int returnVal = chooser.showSaveDialog(new Component(){});
         if(returnVal == JFileChooser.APPROVE_OPTION) {
-            System.out.println("You chose to open this file: " +
+            System.out.println("You chose to save this file to: " +
                     chooser.getSelectedFile().getPath());
             path = chooser.getSelectedFile().getPath();
         }

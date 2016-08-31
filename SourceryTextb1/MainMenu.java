@@ -1,7 +1,13 @@
 package SourceryTextb1;
 
+import SourceryTextb1.GameObjects.Player;
+
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.*;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -63,6 +69,9 @@ class MainMenu {
                 if (cursorY == 9) {
                     starter.startGame();
                 }
+                if (cursorY == 10){
+                    loadGame();
+                }
                 if (cursorY == 11) {
                     // Do window size adjustment, interactively, and wait until it is done
                     wincnfg.config(true);
@@ -91,6 +100,34 @@ class MainMenu {
         }
 
         org.editLayer("*", "MAIN_MENU", cursorY, 24);
+    }
+
+    private void loadGame(){
+        File save;
+        JFileChooser chooser = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(
+                "Sourcery Text Saves", "sav");
+        chooser.setFileFilter(filter);
+        int returnVal = chooser.showOpenDialog(new Component(){});
+        if(returnVal == JFileChooser.APPROVE_OPTION) {
+            System.out.println("You chose to open this file: " +
+                    chooser.getSelectedFile().getName());
+            save = chooser.getSelectedFile();
+        } else return;
+
+        try {
+            FileInputStream fileIn = new FileInputStream(save);
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            Player loadedPlayer = (Player)in.readObject();
+            starter.buildGame(loadedPlayer);
+            in.close();
+            fileIn.close();
+        } catch (IOException e){
+            e.printStackTrace();
+        } catch (ClassNotFoundException e){
+            e.printStackTrace();
+        }
+
     }
 
     private class MenuTimer extends TimerTask {

@@ -30,7 +30,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class GameObject {
     updateTimer updateTimerInstance;
     public String strClass = "None";
-    protected ImageOrg orgo;
+    public ImageOrg orgo;
     protected Room room;
     Timer timer = new Timer();
     
