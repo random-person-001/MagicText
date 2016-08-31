@@ -340,24 +340,6 @@ public class ImageOrg implements java.io.Serializable {
         */
     }
 
-    public int sendImage(){
-        long nanoTime = System.nanoTime();
-        addTheLayers();
-        removeTheLayers();
-        window.clearImage();
-        for (Layer get : layers) {
-            if (get.getCamOb()) {
-                window.placeLayer(get, camX, camY);
-            } else {
-                window.setLayer(get);
-            }
-        }
-        window.build();
-        int elapsedMs = (int)((System.nanoTime() - nanoTime) / 1000000);
-        System.out.println("Update time: " + elapsedMs + "ms");
-        return elapsedMs;
-    }
-
     public void newSendImage(){
         try {
             if (somethingChanged) {
@@ -382,6 +364,13 @@ public class ImageOrg implements java.io.Serializable {
      */
     public Window getWindow(){
         return window;
+    }
+
+    /**
+     * For resuming saves, set the Window to a legit, existent one.
+     */
+    public void setWindow(Window newWindow){
+        window = newWindow;
     }
 
     /** Wipe a layer clean

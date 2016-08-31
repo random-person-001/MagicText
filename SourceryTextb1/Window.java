@@ -66,44 +66,6 @@ public class Window extends JFrame{
         //System.out.println("Image cleaned!");
     }
 
-    /**
-     * Clear out a rectangle in the compiled layers to be spacey quotes.  Note that this will be overwritten/ignored
-     * next time org.compileImage() is called
-     * @param rStart starting row
-     * @param rEnd ending row
-     * @param cStart starting column
-     * @param cEnd ending column
-     */
-    public void clearArea(int rStart, int rEnd, int cStart, int cEnd){
-        rEnd = (rEnd < fullImage.getRows()) ? fullImage.getRows() : rEnd;
-        cEnd = (cEnd < fullImage.getColumns()) ? fullImage.getColumns() : cEnd;
-        for (int row = rStart; row < rEnd ; row++){
-            for (int col = cStart; col < cEnd; col++){
-                fullImage.setStr(row,col," ");
-            }
-        }
-    }
-
-    /** Perform some sort of magic.   I quote from the function, "This stuff is complicated!!!!"
-     * @param layer a new Layer to be placed
-     * @param camX camera X coord
-     * @param camY camera Y coord
-     */
-    public void placeLayer(Layer layer, int camX, int camY){ //Layers place on top of each other
-        for (int row = 0; row < layer.getRows() ; row++){
-            for (int col = 0; col < layer.getColumns(); col++){ //This stuff is complicated!!!!
-                if (!" ".equals(layer.getStr(row, col))){
-                    if  ("".equals(layer.getStr(row, col)) || layer.getStr(row, col) == null){
-                        fullImage.placeStr(row + layer.getX() - camX,col + layer.getY() - camY, " ");
-                    } else if (layer.getStr(row, col).equals(OPAQUE_SPACE)){
-                        fullImage.setStr(row + layer.getX() - camX, col + layer.getY() - camY, " ");
-                    } else {
-                        fullImage.setStr(row + layer.getX() - camX, col + layer.getY() - camY, layer.getStr(row,col));
-                    }
-                }
-            }
-        }
-    }
 
     /** Much like placeLayer, but ignores camera.
      * @param layer a layer to place on top of fullImage
@@ -187,7 +149,7 @@ public class Window extends JFrame{
         txtArea.setText(txtArea.getText() + str);
     }
     
-    public Window() throws InterruptedException{
+    public Window() {
         setBounds(100, 100, 412, 412);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Sourcery Text  -  an alphanumeric misadventure");
@@ -207,49 +169,5 @@ public class Window extends JFrame{
         setVisible(true);
         txtArea.requestFocusInWindow();
     }
-    
-    private void test() throws InterruptedException{
-        String[][] test = {{"H","e","l","l","o","."}};
-        Layer lay1 = new Layer(test);
-        boolean testBool = (txtArea != null);
-        //System.out.println(testBool);
-        boolean testBool2 = (c != null);
-        //System.out.println(testBool2);
-        //System.out.println(true);
-        
-        //c.remove(txtArea);
-        //System.out.println(secureValidate());
-        //c.validate();
-        
-        clearImage();
-        //placeLayer(lay1, 0, 0);
-        build();
-        
-        c.add(txtArea);
-        c.validate();
-    }
 
-    public void validateContainer(){
-        c.validate();
-    }
-
-    /**
-     * Perform some sort of magic, of questionable usefulness.
-     */
-    private void init(){
-        clearImage();
-        build();
-        
-        c.add(txtArea);
-        c.validate();
-        txtArea.requestFocusInWindow();
-    }
-    
-
-    private boolean secureValidate(){
-        AtomicBoolean bool = new AtomicBoolean(false);
-        c.validate();
-        bool.lazySet(true);
-        return bool.get();
-    }
 }

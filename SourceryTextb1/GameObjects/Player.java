@@ -109,10 +109,16 @@ public class Player extends Mortal implements java.io.Serializable {
         orgo.addLayer(playerLayer);
         setupForNewRoom();
 
-        Window window = orgo.getWindow();
-        window.txtArea.addKeyListener(playerKeyListener); // Add key listeners.
         inv = new Inventory(orgo, this);
 
+        resumeFromSave();
+    }
+
+    /**
+     * Set things up that don't get carried between saves, ex timers and ?keylisteners?
+     */
+    public void resumeFromSave(){
+        orgo.getWindow().txtArea.addKeyListener(playerKeyListener); // Add key listeners.
         setupTimer(20);
     }
 

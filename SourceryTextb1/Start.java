@@ -483,9 +483,10 @@ public class Start {
             Start.roomID = imported.roomName;
             System.out.println(Start.roomID);
             Start.player = imported;
-            ImageOrg test = imported.orgo;
-            test.printLayers();
-            player.setupTimer(20);
+            imported.orgo.setWindow(Start.game); // hopefully doesn't kill anything
+            org = imported.orgo;
+            org.printLayers();
+            player.resumeFromSave();
             runGame();
 
             // Using the debug functionality is nice.  Look at my comment on your last commit,

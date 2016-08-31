@@ -257,6 +257,7 @@ public class HUD extends GameObject {
      * >sudo make me a sandwich : evoke submissive response from computer.  Also enter sudo mode
      * >unfreeze : sets frozen to off for player (in the case it is forgotten somehow)     *
      * >unghost : Re-enables players checking for walls
+     * >unpause : set Player's paused to false
      * </p>
      *     Tip: to execute a bunch of commands after each other, use '&&' in between them.  Also, you can type a command
      *     after 'sudo' to execute that command with root privileges, however there isn't much difference anymore :(
@@ -294,7 +295,10 @@ public class HUD extends GameObject {
         }else if (command.contains("unfreeze")) {
             player.frozen = false;
             showResponse("Player unfrozen!");
-        } else if (command.contains("unghost")) {
+        }else if (command.contains("unpause")) {
+            player.setPause(false);
+            showResponse("Player upaused!");
+        }else if (command.contains("unghost")) {
             player.isGhost = false;
             showResponse("Player now obeys walls again!");
         } else if (command.contains("ghost")) {
