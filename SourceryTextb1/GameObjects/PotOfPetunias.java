@@ -29,7 +29,6 @@ public class PotOfPetunias extends Mortal {
 
     public void update(){
         orgo.editLayer("V", layerName, y, x);
-        checkDeath();
 //  if (room.playo.x + 3 == x && room.playo.y == y && !sentMessageBefore) {
 //            room.infoMessage(orgo, "It appears you have come across an enemy.  It is suggested that you chose to be " +
 //                    "the survivor in this encounter.  Remember, A is lock orientation and S is fire.  Good luck.");

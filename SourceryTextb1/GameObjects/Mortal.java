@@ -3,6 +3,7 @@ package SourceryTextb1.GameObjects;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TimerTask;
 
 import static java.lang.StrictMath.abs;
 
@@ -17,6 +18,16 @@ public class Mortal extends GameObject {
     int attack = 0;
     private String deathMessage = "Unknown";
     private boolean isGoodGuy = false;
+
+    /**
+     * Mortal-specific stuff for updates.  Checks death and runs onDeath() when appropriate
+     */
+    @Override
+    public void backgroundUpdate(){
+        if (checkDeath()){
+            onDeath();
+        }
+    }
 
     public String getLayerName(){
         return layerName;
@@ -73,15 +84,23 @@ public class Mortal extends GameObject {
     public boolean isGoodGuy(){ return isGoodGuy; }
     public void makeGoodGuy(){ isGoodGuy = true; }
 
-    protected boolean checkDeath() {
+    private boolean checkDeath() {
         if (getHealth() <= 0){
             room.removeMortal(this);
+            updateTimerInstance.cancel();
             try {
                 orgo.editLayer(" ", layerName, y, x);
             }catch (NullPointerException ignore){}
             return true;
         }
         return false;
+    }
+
+    /**
+     * Override this method to put fun stuff (like drops) to happen once you die.  Timer cancelling and putting
+     * a space where the Mortal used to be and removing it from room is already taken care of; don't worry be happy
+     */
+    protected void onDeath(){
     }
 
     public void goTo(int newX, int newY) {

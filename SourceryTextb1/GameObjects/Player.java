@@ -59,6 +59,7 @@ public class Player extends Mortal implements java.io.Serializable {
     private Color restingBackground = Color.black;
 
     public boolean isGhost = false; //For debug reasons
+    private String lastPainMessage = "None";
 
     //STATS
     int maxHP = 20;
@@ -117,7 +118,7 @@ public class Player extends Mortal implements java.io.Serializable {
 
     public void setupForNewRoom() {
         Layer aimDispLayer = new Layer(new String[orgo.getWindow().maxH()][orgo.getWindow().maxW()], aimDispName);
-        orgo.setCam(x - 22, y - 8);
+        centerCamera();
         orgo.addLayer(aimDispLayer);
     }
 
@@ -309,13 +310,15 @@ public class Player extends Mortal implements java.io.Serializable {
      */
     public void showPain(String deathMessage) {
         orgo.editLayer(" ", layerName, y, x);
-        orgo.compileImage();
-        if (!dead && checkDeath()) {
-            orgo.getWindow().txtArea.setForeground(Color.RED);
-            room.compactTextBox(orgo, deathMessage, "An ominous voice from above", false);
-            dead = true;
-        }
         hurtColor += 3;
+        lastPainMessage = deathMessage;
+    }
+
+    @Override
+    protected void onDeath(){
+        orgo.getWindow().txtArea.setForeground(Color.RED);
+        room.compactTextBox(orgo, lastPainMessage, "An ominous voice from above", false);
+        dead = true;
     }
 
     private String smallChar = "x";
@@ -459,8 +462,6 @@ public class Player extends Mortal implements java.io.Serializable {
         checkCheatProgress(key);
     }
 
-    private int debugGhostProg = 0;
-
     private void textBoxQuery(){
         /*
         switch(orientation){
@@ -482,47 +483,6 @@ public class Player extends Mortal implements java.io.Serializable {
         room.queryForText(getX() + 1, getY());
         room.queryForText(getX(), getY() - 1);
         room.queryForText(getX(), getY() + 1);
-    }
-
-
-    private void castSpell(String spellName) {
-        if (mana >= 1) {
-            if (mana >= 1 && spellName.equals("Book") && inv.hasItem("Book")) {
-                room.addObject(new Spell(orgo, room, castingLayer, x, y, orientation, "Book"));
-                inv.subtractItem("Book");
-            }
-            if (mana >= 2 && spellName.equals("Spark") && inv.hasItem("Spark")) {
-                room.addObject(new Spell(orgo, room, castingLayer, x, y, orientation, "Spark"));
-                manaWait = manaWaitStat;
-                mana -= 2;
-            }
-            if (mana >= 3 && spellName.equals("Flame") && inv.hasItem("Flame")) {
-                room.addObject(new Spell(orgo, room, castingLayer, x, y, orientation, "Flame"));
-                manaWait = manaWaitStat;
-                mana -= 3;
-            }
-            if (mana >= 3 && spellName.equals("SmallHealth") && inv.hasItem("SmallHealth")) {
-                setHealth(getHealth() + 10);
-                manaWait = manaWaitStat;
-                mana -= 3;
-            }
-            if (mana >= 20 && spellName.equals("HugeHealth") && inv.hasItem("HugeHealth")) {
-                setHealth(getHealth() + 40);
-                manaWait = manaWaitStat;
-                mana -= 20;
-            }
-            if (mana >= 2 && spellName.equals("Wanderer") && inv.hasItem("Wanderer")) {
-                room.addObject(new Spell(orgo, room, castingLayer, x, y, orientation, "Wanderer"));
-                manaWait = manaWaitStat;
-                mana -= 2;
-            }
-            if (spellName.equals("None")) {
-                System.out.println("No spell equipped.");
-            }
-            System.out.println("Unrecognised spell (" + spellName + ") or it isn't in your inventory or not enough mana.");
-        } else {
-            System.out.println("You don't have any mana!");
-        }
     }
 
     private void newCastSpell(Item spell) {
@@ -732,14 +692,6 @@ public class Player extends Mortal implements java.io.Serializable {
         for (int ii = 0; ii < amount; ii++) {
             inv.addItem(new Item("Magic Potato", "A magically enhanced potato\n\nCan be used to either" +
                     "\n permanently increase\n your max health or\n max mana by 5.", this, "item"));
-        }
-    }
-
-    class PlayerTimerTask extends TimerTask {
-
-        @Override
-        public void run() {
-            update();
         }
     }
 }

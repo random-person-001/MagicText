@@ -47,7 +47,6 @@ public class Spike extends Mortal{
         }
 
         orgo.editLayer("^", layerName, y, x);
-        checkDeath();
 
         if (distanceTo(room.playo) < 3) {
             /*
