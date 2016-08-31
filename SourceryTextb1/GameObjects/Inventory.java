@@ -17,7 +17,7 @@ import java.util.TimerTask;
  * A class to select something in your inventory
  * Created by riley on 12-Jun-2016, mostly redone by Jared around 5 July 2016
  */
-class Inventory {
+class Inventory implements java.io.Serializable {
     private HashMap<String, Integer> inventory;
     private ArrayList<Item> spells = new ArrayList<>();
     private ArrayList<Item> items = new ArrayList<>();

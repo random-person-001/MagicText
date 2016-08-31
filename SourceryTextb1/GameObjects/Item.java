@@ -4,7 +4,7 @@ package SourceryTextb1.GameObjects;
 /**
  * Catch-all class that can go into your inventory.  Includes equipment, spells, and more!
  */
-public class Item {
+public class Item implements java.io.Serializable {
 
     /**
      * A string telling the world the type of spell it is.

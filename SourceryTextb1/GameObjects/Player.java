@@ -33,7 +33,7 @@ import static java.lang.Math.abs;
  *
  * @author Riley
  */
-public class Player extends Mortal {
+public class Player extends Mortal implements java.io.Serializable {
     private PlayerKeypressListener playerKeyListener = new PlayerKeypressListener(this);
     private GameObject closestFood = null;
     private Inventory inv;
@@ -747,7 +747,7 @@ public class Player extends Mortal {
 /**
  * A listener class for keypresses, tailored to the Player.
  */
-class PlayerKeypressListener extends KeyAdapter {
+class PlayerKeypressListener extends KeyAdapter implements java.io.Serializable {
     private Player player;
 
     PlayerKeypressListener(Player p) {

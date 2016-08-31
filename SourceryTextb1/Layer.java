@@ -9,7 +9,7 @@ package SourceryTextb1;
  *
  * @author 119184
  */
-public class Layer {
+public class Layer implements java.io.Serializable{
     public String[][] self;
     
     public String name = "";

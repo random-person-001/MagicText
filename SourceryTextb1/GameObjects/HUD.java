@@ -9,16 +9,21 @@ import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
 
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.net.URI;
-import java.awt.Desktop;
 
 import static java.lang.Math.abs;
 
@@ -246,6 +251,7 @@ public class HUD extends GameObject {
      * >ls | pwd : currently not developed.  Later will tell the name of current room.
      * >make me a sandwich : evoke snarky response
      * >pointer | compiling | wifi | random : all relevant xkcd comics.
+     * >ser test : Test serializing the player to a .sav file
      * >setResponseTime (time) : set a new duration for the response message on the console to be shown (seconds)
      * >sudo : enter sudo mode
      * >sudo make me a sandwich : evoke submissive response from computer.  Also enter sudo mode
@@ -466,11 +472,9 @@ public class HUD extends GameObject {
             }
             player.goTo(startX, startY);
             showResponse("Collected " + n + " items around the level!");
+        } else if (command.equals("ser test")){
+            serTest();
         }
-
-
-
-
         else if (command.length() > 0){
             showResponse("Command '" + command + "' not recognised.  Check your spelling or " +
                     "request it as a new feature.");
@@ -600,6 +604,37 @@ public class HUD extends GameObject {
             e.printStackTrace();
         } catch (NullPointerException ignore) {
         } // happens when timer is late
+    }
+
+    /**
+     * Writes a .txt file to C:\test.txt
+     */
+    private void serTest(){
+        String path = "";
+        JFileChooser chooser = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(
+                "Sourcery Text Saves", "sav");
+        chooser.setFileFilter(filter);
+        int returnVal = chooser.showSaveDialog(new Component(){});
+        if(returnVal == JFileChooser.APPROVE_OPTION) {
+            System.out.println("You chose to open this file: " +
+                    chooser.getSelectedFile().getPath());
+            path = chooser.getSelectedFile().getPath();
+        }
+
+        try
+        {
+            FileOutputStream fileOut =
+                    new FileOutputStream(path);
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(room.playo);
+            out.close();
+            fileOut.close();
+            System.out.printf("Serialized data is saved in " + path);
+        }catch(IOException i)
+        {
+            i.printStackTrace();
+        }
     }
 
     private class ConsoleKeyListener extends KeyAdapter {

@@ -22,7 +22,7 @@ import static java.awt.Color.*;
 /**
  * @author Jared  CHECK YOUR EMAIL, JARED
  */
-public class Room {
+public class Room implements java.io.Serializable{
     public ImageOrg org;
     protected art arty = new art();
     public List<GameObject> objs = new ArrayList<>();
@@ -621,7 +621,7 @@ public class Room {
 /**
  * A selector thing for listening to and selecting one of the few options on the top level of the oldish pause screen
  */
-class PauseSelector extends KeyAdapter {
+class PauseSelector extends KeyAdapter implements java.io.Serializable {
     private ImageOrg org;
     private int x = 14;
     private int y = 15;
@@ -674,7 +674,7 @@ class PauseSelector extends KeyAdapter {
 /**
  * A selector thing for listening to and selecting one of the few options on the Options menu of the oldish pause screen
  */
-class OptionsSelector extends KeyAdapter {
+class OptionsSelector extends KeyAdapter implements java.io.Serializable {
     private ImageOrg org;
     boolean resume = false;
     private int ii = 0;
@@ -738,7 +738,7 @@ class OptionsSelector extends KeyAdapter {
  * A little key listener that will tell you when you press ESCAPE or ENTER, by setting its <code>pause</code> boolean
  * to true
  */
-class Dismissal extends KeyAdapter {
+class Dismissal extends KeyAdapter implements java.io.Serializable {
     public boolean resume = false;
 
     @Override

@@ -18,7 +18,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * There is probably only one of these.
  * @author 119184
  */
-public class ImageOrg {
+public class ImageOrg implements java.io.Serializable {
     private Window window;
     public ArrayList<Layer> layers = new ArrayList<>();
     private ArrayList<Layer> toAdd = new ArrayList<>();
@@ -63,7 +63,7 @@ public class ImageOrg {
     }
 
     private void addTheLayers () {
-        addTheLayers(true);
+        addTheLayers(false);
     }
 
     private void addTheLayers (boolean reorderImportant) {
@@ -74,6 +74,7 @@ public class ImageOrg {
         if (reorderImportant && !toAdd.isEmpty()){
             moveImportantLayersUp();
         }
+        toAdd.clear();
     }
 
     private void removeTheLayers () {
