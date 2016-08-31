@@ -231,7 +231,7 @@ public class Mortal extends GameObject implements java.io.Serializable{
         return (number < range);
     }
 
-    protected class PathPoint{
+    protected class PathPoint implements java.io.Serializable {
         private int x;
         private int y;
         private int counter;

@@ -33,6 +33,7 @@ public class GameObject implements java.io.Serializable{
     public ImageOrg orgo;
     protected Room room;
     transient Timer timer;
+    int frequency;
     
     protected int x;
     protected int y;
@@ -84,15 +85,20 @@ public class GameObject implements java.io.Serializable{
         return y;
     }
 
-    public void setupTimer(int frequency){
+    public void setupTimer(int theFrequency){
+        cancelTimer();
+        frequency = theFrequency;
         timer = new Timer();
         updateTimerInstance = new updateTimer(frequency);
         timer.scheduleAtFixedRate(updateTimerInstance, frequency, frequency);
     }
 
     public void cancelTimer(){
-        timer.cancel();
-        timer.purge();
+        try {
+            timer.cancel();
+            timer.purge();
+        }
+        catch (NullPointerException ignore){}
     }
 
     public void setPause(boolean set){

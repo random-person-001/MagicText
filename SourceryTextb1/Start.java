@@ -485,7 +485,8 @@ public class Start {
             Start.player = imported;
             ImageOrg test = imported.orgo;
             test.printLayers();
-            //runGame();
+            player.setupTimer(20);
+            runGame();
 
             // Using the debug functionality is nice.  Look at my comment on your last commit,
             // https://github.com/random-person-001/MagicText/commit/df04f925295d70f17c57a91640f9bc98d27a645b

@@ -20,7 +20,7 @@ import SourceryTextb1.art;
 import static java.awt.Color.*;
 
 /**
- * @author Jared  CHECK YOUR EMAIL, JARED
+ * @author Jared
  */
 public class Room implements java.io.Serializable{
     public ImageOrg org;

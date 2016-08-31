@@ -76,6 +76,7 @@ public class Mountains extends Room {
         addToBaseHitMesh(base, solids);
         baseLayer = new Layer(base, "backgronud");
         org.addLayer(baseLayer);
+        playo.roomName = "Mountains";
 
         int[][] locs = {{106, 115},{14, 17}};
         for (int ii = 0 ; ii < locs[0].length ; ii++){
