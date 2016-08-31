@@ -80,11 +80,12 @@ public class Troll extends Mortal {
         if (abs(room.playo.y - y) <= 3 && abs(room.playo.x - x) <= 3) {
             room.playo.subtractHealth(3, "You know, maybe you should have listened \n when your mother told you not to \n play with trolls.");
         }
-        if (checkDeath()) {
-            System.out.println("AAAAAaaaack, a troll died.");
-            //
-            // room.addObject(itemOnDrop);
-        }
+    }
+
+    @Override
+    protected void onDeath(){
+        System.out.println("AAAAAaaaack, a troll died.");
+        //room.addObject(itemOnDrop);
     }
 
     static int r(int max) {

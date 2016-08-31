@@ -93,11 +93,14 @@ public class SmallPiranha extends Mortal{
         if (distanceTo(room.playo) <= 3) {
             room.playo.subtractHealth(3, "You know, maybe you should have listened \n when your mother told you not to \n play with piranhas.");
         }
-        if (checkDeath()) {
-            if (orgo.getDebug())
-                System.out.println("AAAAAaaaack, a piranha died.");
-            room.addObject(itemOnDrop);
+    }
+
+    @Override
+    protected void onDeath(){
+        if (orgo.getDebug()) {
+            System.out.println("AAAAAaaaack, a piranha died.");
         }
+        room.addObject(itemOnDrop);
     }
 
 

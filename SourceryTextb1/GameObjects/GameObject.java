@@ -28,6 +28,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * @author 119184
  */
 public class GameObject {
+    updateTimer updateTimerInstance;
     public String strClass = "None";
     protected ImageOrg orgo;
     protected Room room;
@@ -68,6 +69,13 @@ public class GameObject {
     public void update(){
     }
 
+    /**
+    * * Override this method with custom updates, like in Mortal.java to check if it's dead.
+    * I couldn't think of a good name for it.
+    */
+    public void backgroundUpdate(){
+    }
+
     public int getX() {
         return x;
     }
@@ -77,7 +85,8 @@ public class GameObject {
     }
 
     public void setupTimer(int frequency){
-        timer.scheduleAtFixedRate(new updateTimer(frequency), frequency, frequency);
+        updateTimerInstance = new updateTimer(frequency);
+        timer.scheduleAtFixedRate(updateTimerInstance, frequency, frequency);
     }
 
     public void cancelTimer(){
@@ -99,6 +108,7 @@ public class GameObject {
         public void run(){
             if (!paused.get()) {
                 update();
+                backgroundUpdate();
                 addTime(freq);
             }
         }

@@ -37,20 +37,20 @@ public class Spider extends Mortal {
 
     @Override
     public void update() {
-        // Try to move
         orgo.editLayer("S", layerName, 0, 0);
-        //long nanoLast = System.nanoTime();
         if (Math.abs(x - room.playo.getX()) <= 1 && Math.abs(y - room.playo.getY()) <= 1){
             room.playo.subtractHealth(2);
         }
+        // Try to move
         pathToPos(followDist, room.playo.getX(), room.playo.getY());
 
-        if (checkDeath()){
-            orgo.removeLayer(layerName);
-        }
-        //System.out.println(String.format("Time to complete: %1$d ms", (System.nanoTime() - nanoLast) / 1000000));
 
         orgo.editLayer("S", layerName, 0, 0);
+    }
+
+    @Override
+    protected void onDeath(){
+        orgo.removeLayer(layerName);
     }
 
     static int r(int max) {
