@@ -481,10 +481,14 @@ public class Start {
 
         public void buildGame(Player imported){
             Start.roomID = imported.roomName;
+            System.out.println(Start.roomID);
             Start.player = imported;
             ImageOrg test = imported.orgo;
             test.printLayers();
             //runGame();
+
+            // Using the debug functionality is nice.  Look at my comment on your last commit,
+            // https://github.com/random-person-001/MagicText/commit/df04f925295d70f17c57a91640f9bc98d27a645b
         }
 
         public void run(){
