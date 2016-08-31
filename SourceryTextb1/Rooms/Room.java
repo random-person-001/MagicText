@@ -77,7 +77,7 @@ public class Room implements java.io.Serializable{
      * @param className the String by which the class identifies (GameObject.strClass)
      * @return how many there are in the room's list
      */
-    protected int getCountOf(String className) {
+    public int getCountOf(String className) {
         int count = 0;
         for (GameObject o : objs) {
             if (o.strClass.equals(className)) {

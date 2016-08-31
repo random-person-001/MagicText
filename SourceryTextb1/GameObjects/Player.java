@@ -463,6 +463,8 @@ public class Player extends Mortal implements java.io.Serializable {
             case 'f':
                 textBoxQuery();
                 break;
+            case 'h':
+                System.out.println(room.getCountOf("HUD"));
             default:
                 System.out.print(key);
         }
