@@ -119,7 +119,9 @@ public class Player extends Mortal implements java.io.Serializable {
      */
     public void resumeFromSave(){
         orgo.getWindow().txtArea.addKeyListener(playerKeyListener); // Add key listeners.
+        setupForNewRoom();
         setupTimer(20);
+        orgo.restartClock();
     }
 
     public void setupForNewRoom() {
@@ -241,7 +243,7 @@ public class Player extends Mortal implements java.io.Serializable {
     }
 
     public void reportPos() {
-        System.out.println("\nPlayer X: " + x + "\nPlayer Y: " + y + "\nPaused?: " + paused + "\n");
+        System.out.println("\nPlayer X: " + x + "(" + orgo.getCamX() + ")" + "\nPlayer Y: " + y + "(" + orgo.getCamY() + ")" + "\nPaused?: " + paused + "\n");
     }
 
     /**

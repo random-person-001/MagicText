@@ -28,11 +28,16 @@ public class ImageOrg implements java.io.Serializable {
     private boolean debugGame = false;
 
     private boolean somethingChanged = true;
-    
+
     public ImageOrg(Window game){
         Timer timer = new Timer();
         timer.scheduleAtFixedRate(new frameTimer(), 0, 50); //20 fps lock
         window = game;
+    }
+
+    public void restartClock(){
+        Timer timer = new Timer();
+        timer.scheduleAtFixedRate(new frameTimer(), 0, 50); //20 fps lock
     }
 
     /** Add a layer onto the top, or somewhere near it if there's more important things
