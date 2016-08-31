@@ -27,12 +27,12 @@ import java.util.concurrent.atomic.AtomicBoolean;
  *
  * @author 119184
  */
-public class GameObject {
+public class GameObject implements java.io.Serializable{
     updateTimer updateTimerInstance;
     public String strClass = "None";
     public ImageOrg orgo;
     protected Room room;
-    Timer timer = new Timer();
+    transient Timer timer;
     
     protected int x;
     protected int y;
@@ -85,6 +85,7 @@ public class GameObject {
     }
 
     public void setupTimer(int frequency){
+        timer = new Timer();
         updateTimerInstance = new updateTimer(frequency);
         timer.scheduleAtFixedRate(updateTimerInstance, frequency, frequency);
     }
@@ -98,7 +99,7 @@ public class GameObject {
         paused.set(set);
     }
 
-    class updateTimer extends TimerTask {
+    class updateTimer extends TimerTask implements java.io.Serializable {
         int freq;
 
         public updateTimer(int frequency){

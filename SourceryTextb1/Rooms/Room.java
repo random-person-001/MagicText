@@ -516,7 +516,7 @@ public class Room implements java.io.Serializable{
         window.txtArea.removeKeyListener(keyListener);
     }
 
-    public class FlavorText {
+    public class FlavorText implements java.io.Serializable {
 
         String[] messages = {""};
         String speaker =  "";

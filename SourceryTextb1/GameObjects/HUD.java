@@ -473,6 +473,7 @@ public class HUD extends GameObject {
             player.goTo(startX, startY);
             showResponse("Collected " + n + " items around the level!");
         } else if (command.equals("ser test")){
+            showResponse("Se");
             serTest();
         }
         else if (command.length() > 0){

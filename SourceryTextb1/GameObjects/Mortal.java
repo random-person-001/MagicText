@@ -11,7 +11,7 @@ import static java.lang.StrictMath.abs;
  * Base object (to extend) for Enemies
  * Created by riley on 12-Jun-2016.
  */
-public class Mortal extends GameObject {
+public class Mortal extends GameObject implements java.io.Serializable{
     protected String layerName;
     private int health = 10;
     public int maxHealth = 50;

@@ -116,15 +116,17 @@ class MainMenu {
         } else return;
 
         try {
+            System.out.println("Attempting to open");
             FileInputStream fileIn = new FileInputStream(save);
             ObjectInputStream in = new ObjectInputStream(fileIn);
             Player loadedPlayer = (Player)in.readObject();
+            System.out.println("Player read");
             starter.buildGame(loadedPlayer);
+            System.out.println("Game built");
             in.close();
             fileIn.close();
-        } catch (IOException e){
-            e.printStackTrace();
-        } catch (ClassNotFoundException e){
+        } catch (IOException | ClassNotFoundException | java.lang.Error e){
+            System.out.println("Something went wrong :(");
             e.printStackTrace();
         }
 
