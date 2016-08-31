@@ -842,7 +842,7 @@ public class art {
             "      setOrbit(star, velMultip, false);       \n" +
             "   }                                          \n" +
             "                                              \n" +
-            "   String useAllCharacters = false;           \n" +
+            "   boolean useAllCharacters = false;          \n" +
             "                                              \n" +
             "   public void getUsage(){                    \n" +
             "      return useAllCharacters;                \n" +

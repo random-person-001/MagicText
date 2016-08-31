@@ -51,6 +51,7 @@ public class ImageOrg {
                 importants.add(l);
             }
         }
+        toAdd.clear();
         for (Layer l : importants){
             removeLayer(l.getName());
         }
@@ -64,6 +65,7 @@ public class ImageOrg {
     private void addTheLayers () {
         addTheLayers(true);
     }
+
     private void addTheLayers (boolean reorderImportant) {
         for (Layer lay : toAdd) {
             layers.add(lay);
@@ -72,7 +74,6 @@ public class ImageOrg {
         if (reorderImportant && !toAdd.isEmpty()){
             moveImportantLayersUp();
         }
-        toAdd.clear();
     }
 
     private void removeTheLayers () {
@@ -358,7 +359,6 @@ public class ImageOrg {
 
     public void newSendImage(){
         try {
-
             if (somethingChanged) {
                 //System.out.println("New Frame...");
                 //long nanoTime = System.nanoTime();
@@ -389,6 +389,19 @@ public class ImageOrg {
     public void clearLayer(String layName) {
         int loc = getPosLayer(layName);
         getLayer(loc).clear();
+        System.out.println("Clearing " + getLayer(loc).getName());
+    }
+
+    public void printLayers(){
+        System.out.print("Current layers: ");
+        for (int ii = 0; ii < layers.size(); ii++){
+            System.out.print(layers.get(ii).getName());
+            if (ii != layers.size() - 1){
+                System.out.print(", ");
+            } else {
+                System.out.print("\n");
+            }
+        }
     }
 
     public class frameTimer extends TimerTask {
