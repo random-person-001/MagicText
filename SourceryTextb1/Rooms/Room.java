@@ -96,6 +96,7 @@ public class Room implements java.io.Serializable{
         for (GameObject o : objs){
             if (!o.strClass.equals("Player")) {
                 o.cancelTimer();
+                o.selfCleanup();
             }
         }
         objs.clear();
@@ -181,6 +182,7 @@ public class Room implements java.io.Serializable{
     public void removeObject(GameObject obj) {
         removeList.add(obj);
         obj.cancelTimer();
+        obj.selfCleanup();
     }
 
     /**

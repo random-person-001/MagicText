@@ -28,6 +28,8 @@ class MainMenu {
     private final int DOWN = 2;
     private final int ENTER = 3;
 
+    private boolean finished = false;
+
     private int clock = 0;
     private int cursorY = 9;
 
@@ -48,61 +50,66 @@ class MainMenu {
     }
 
     protected void loop() {
-        org.editLayer(" ", "MAIN_MENU", cursorY, 24);
+        if (!finished) {
+            org.editLayer(" ", "MAIN_MENU", cursorY, 24);
 
-        switch (keyCode) {
-            case UP:
-                cursorY--;
-                break;
-            case DOWN:
-                cursorY++;
-                break;
-            case ENTER:
-                System.out.println(clock);
-                window.txtArea.removeKeyListener(keyInputter);
-                Layer orig = org.getLayer("MAIN_MENU"); // to add back later
-                org.removeLayer("MAIN_MENU");
+            switch (keyCode) {
+                case UP:
+                    cursorY--;
+                    break;
+                case DOWN:
+                    cursorY++;
+                    break;
+                case ENTER:
+                    System.out.println(clock);
+                    window.txtArea.removeKeyListener(keyInputter);
+                    Layer orig = org.getLayer("MAIN_MENU"); // to add back later
+                    org.removeLayer("MAIN_MENU");
 
-                if (cursorY == 8) {
-                    starter.doIntro();
-                }
-                if (cursorY == 9) {
-                    starter.startGame();
-                }
-                if (cursorY == 10){
-                    loadGame();
-                }
-                if (cursorY == 11) {
-                    // Do window size adjustment, interactively, and wait until it is done
-                    wincnfg.config(true);
-                    while (!wincnfg.doContinue) {
-                        try {
-                            Thread.sleep(100);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
+                    if (cursorY == 8) {
+                        starter.doIntro();
+                    }
+                    if (cursorY == 9) {
+                        starter.startGame();
+                        finished = true;
+                    }
+                    if (cursorY == 10 && loadGame()) {
+                        finished = true;
+                    }
+                    if (cursorY == 11) {
+                        // Do window size adjustment, interactively, and wait until it is done
+                        wincnfg.config(true);
+                        while (!wincnfg.doContinue) {
+                            try {
+                                Thread.sleep(100);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
-                }
-                if (cursorY == 12) {
-                    System.exit(0);
-                }
-                org.addLayer(orig);
-                window.txtArea.addKeyListener(keyInputter);
-                keyCode = 0;
-        }
-        keyCode = 0;
+                    if (cursorY == 12) {
+                        System.exit(0);
+                    }
+                    if (!finished) {
+                        org.addLayer(orig);
+                        window.txtArea.addKeyListener(keyInputter);
+                    }
+                    keyCode = 0;
+            }
+            keyCode = 0;
 
-        if (cursorY <= 7) {
-            cursorY = 12;
-        }
-        if (cursorY >= 13) {
-            cursorY = 8;
-        }
+            if (cursorY <= 7) {
+                cursorY = 12;
+            }
+            if (cursorY >= 13) {
+                cursorY = 8;
+            }
 
-        org.editLayer("*", "MAIN_MENU", cursorY, 24);
+            org.editLayer("*", "MAIN_MENU", cursorY, 24);
+        }
     }
 
-    private void loadGame(){
+    private boolean loadGame(){
         File save;
         JFileChooser chooser = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter(
@@ -113,7 +120,7 @@ class MainMenu {
             System.out.println("You chose to open this file: " +
                     chooser.getSelectedFile().getName());
             save = chooser.getSelectedFile();
-        } else return;
+        } else return false;
 
         try {
             System.out.println("Attempting to open");
@@ -128,7 +135,9 @@ class MainMenu {
         } catch (IOException | ClassNotFoundException | java.lang.Error e){
             System.out.println("Something went wrong :(");
             e.printStackTrace();
+            return false;
         }
+        return true;
 
     }
 

@@ -88,6 +88,15 @@ public class HUD extends GameObject {
         drawLayer();
     }
 
+    @Override
+    public void selfCleanup(){
+        for (KeyListener kl : orgo.getWindow().txtArea.getKeyListeners()) {
+            if (kl.toString().contains("ConsoleKeyListener")) {
+                orgo.getWindow().txtArea.removeKeyListener(kl);
+            }
+        }
+    }
+
     /**
      * Place a character on the layer, one over from where the last one was placed. (a fairly specialized fn)
      *
@@ -666,6 +675,7 @@ public class HUD extends GameObject {
             char ch = event.getKeyChar();
             if (sendTo.consoleEntryProg >= 3 && key == KeyEvent.VK_ENTER) {
                 orgo.clearLayer(layerName);
+                System.out.println("Proc cmd..");
                 sendTo.processCommand();
             } else if (key == KeyEvent.VK_ESCAPE){
                 sendTo.exitCommandLine();

@@ -70,6 +70,12 @@ public class GameObject implements java.io.Serializable{
     public void update(){
     }
 
+     /**
+      * Override this method with code that will run before it is removed.
+      */
+    public void selfCleanup(){
+    }
+
     /**
     * * Override this method with custom updates, like in Mortal.java to check if it's dead.
     * I couldn't think of a good name for it.
