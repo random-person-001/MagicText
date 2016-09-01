@@ -7,6 +7,7 @@ package SourceryTextb1.Rooms.TheSource;
 
 import SourceryTextb1.GameObjects.*;
 import SourceryTextb1.GameObjects.TheSource.Spider;
+import SourceryTextb1.GameObjects.TheSource.WeakTower;
 import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;

@@ -11,10 +11,10 @@ import SourceryTextb1.Rooms.Room;
  * Created by riley on 31-Aug-2016
  */
 public class Bandit extends Mortal {
-    private int followDist = 25;
+    private int followDist = 6;
 
     public Bandit(ImageOrg orga, Room theRoom, int xStart, int yStart) {
-        super.strClass = "Wolf";
+        super.strClass = "Bandit";
         orgo = orga;
         room = theRoom;
         layerName = room.makeUniqueLayerName(super.strClass);
@@ -31,7 +31,7 @@ public class Bandit extends Mortal {
     @Override
     public void update() {
         if (Math.abs(x - room.playo.getX()) <= 2 && Math.abs(y - room.playo.getY()) <= 2){
-            room.playo.subtractHealth(5);
+            room.playo.subtractHealth(2);
         }
         if (room.playo.getX() == getX() || room.playo.getY() == getY()){ // sprint when straight line to player
             pathToPos(followDist, room.playo.getX(), room.playo.getY());

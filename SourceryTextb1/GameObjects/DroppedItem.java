@@ -22,13 +22,15 @@ public class DroppedItem extends GameObject{
         orgo = org;
         pickUpMessage = messageOnPickup;
         me = dropped;
-        layerName = room.makeUniqueLayerName(super.strClass);
         x = setx;
         y = sety;
-        Layer thisLayer = new Layer(new String[1][1], layerName, y, x, true, true, false);
-        thisLayer.setStr(0,0, "!");
-        orgo.addLayer(thisLayer);
-        setupTimer(100);
+        if (me.getName().length() > 0) { // Don't even set up timer if item name is an empty string (for dummy item)
+            layerName = room.makeUniqueLayerName(super.strClass);
+            Layer thisLayer = new Layer(new String[1][1], layerName, y, x, true, true, false);
+            thisLayer.setStr(0, 0, "!");
+            orgo.addLayer(thisLayer);
+            setupTimer(100);
+        }
     }
 
     @Override
@@ -39,9 +41,7 @@ public class DroppedItem extends GameObject{
             room.removeObject(this);
             orgo.editLayer(" ", layerName, 0, 0);
             orgo.removeLayer(layerName);
-            if (me.getName().length() > 0) {
-                player.addItem(me);
-            }
+            player.addItem(me);
             if (!pickUpMessage.equals("None") || pickUpMessage == "") {
                 System.out.println("Picking up: " + me.getName());
                 room.compactTextBox(orgo, pickUpMessage, "", false);

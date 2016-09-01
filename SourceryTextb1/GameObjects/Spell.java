@@ -55,12 +55,17 @@ public class Spell extends GameObject{
 
         setupTimer(30);
     }
-
+    public Spell (ImageOrg org, Room theRoom, int setX, int setY, int setOr, int setDmg, int setRng, String set1, String set2, boolean alting){
+        this(org, theRoom, "Spellz", setX, setY, setOr, setDmg, setRng, set1, set2, alting);
+    }
     public Spell (ImageOrg org, Room theRoom, Layer place, int setX, int setY, int setOr, int setDmg, int setRng, String set1, String set2, boolean alting){
+        this(org, theRoom, place.getName(), setX, setY, setOr, setDmg, setRng, set1, set2, alting);
+    }
+    public Spell (ImageOrg org, Room theRoom, String setLayerName, int setX, int setY, int setOr, int setDmg, int setRng, String set1, String set2, boolean alting){
         strClass = "Spell";
         orgo = org;
         room = theRoom;
-        layerName = place.getName();
+        layerName = setLayerName;
 
         x = setX;
         y = setY;

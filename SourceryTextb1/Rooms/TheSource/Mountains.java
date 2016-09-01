@@ -3,6 +3,7 @@ package SourceryTextb1.Rooms.TheSource;
 import SourceryTextb1.GameObjects.*;
 import SourceryTextb1.GameObjects.TheSource.Bandit;
 import SourceryTextb1.GameObjects.TheSource.Spider;
+import SourceryTextb1.GameObjects.TheSource.WeakTower;
 import SourceryTextb1.GameObjects.TheSource.Wolf;
 import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
@@ -93,6 +94,12 @@ public class Mountains extends Room {
         addMortal(john);
         Bandit jack = new Bandit(org, this, 135, 13);
         addMortal(jack);
+
+        int[][] towerLocs = {{124, 14}, {130, 18}, {130, 8}, {140, 16}};
+        for (int ii = 0 ; ii < towerLocs.length ; ii++){
+            WeakTower t = new WeakTower(org, this, towerLocs[ii][0], towerLocs[ii][1]);
+            addMortal(t);
+        }
 
         genericRoomInitialize();
     }
