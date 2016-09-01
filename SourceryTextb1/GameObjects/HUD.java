@@ -16,7 +16,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.URISyntaxException;
@@ -206,6 +205,8 @@ public class HUD extends GameObject {
             }
         } else if (Character.isLetterOrDigit(key) || key == ' ' || key == '-' || key == '&') {
             command += key;
+        } else if (key == '~'){
+            command = "catch all && goto 0 0 && jumpto Mountains";
         }
     }
 
@@ -476,9 +477,13 @@ public class HUD extends GameObject {
             }
             player.goTo(startX, startY);
             showResponse("Collected " + n + " items around the level!");
-        } else if (command.equals("ser test")){
-            showResponse("Se");
-            serTest();
+        } else if (command.equals("ser test") || command.contains("save")){
+            showResponse("Running save dialog");
+            if (saveGame()) { // returns true on success
+                showResponse("Saved!");
+            }else{
+                showResponse("There was a problem saving.");
+            }
         }
         else if (command.length() > 0){
             showResponse("Command '" + command + "' not recognised.  Check your spelling or " +
@@ -612,21 +617,24 @@ public class HUD extends GameObject {
     }
 
     /**
-     * Writes a .txt file to a user-defined directory
+     * Writes a .sav file (of the serialized Player) to a user-defined directory
+     * @return whether the saving was successful
      */
-    private void serTest(){
+    private boolean saveGame(){
         System.out.println("Running serialization test...");
-        String path = "";
+        String path;
         JFileChooser chooser = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter(
                 "Sourcery Text Saves", "sav");
         chooser.setFileFilter(filter);
         int returnVal = chooser.showSaveDialog(new Component(){});
-        if(returnVal == JFileChooser.APPROVE_OPTION) {
-            System.out.println("You chose to save this file to: " +
-                    chooser.getSelectedFile().getPath());
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
             path = chooser.getSelectedFile().getPath();
-        }
+            if (!path.endsWith(".sav")){ // Add .sav to file if user didn't.
+                path += ".sav";
+            }
+            System.out.println("You chose to save the file to: " + path);
+        } else return false;
 
         try
         {
@@ -636,10 +644,12 @@ public class HUD extends GameObject {
             out.writeObject(room.playo);
             out.close();
             fileOut.close();
-            System.out.printf("Serialized data is saved in " + path);
+            System.out.printf("Serialized Player data is saved in " + path);
+            return true;
         }catch(IOException i)
         {
             i.printStackTrace();
+            return false;
         }
     }
 
