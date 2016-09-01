@@ -7,13 +7,13 @@ import SourceryTextb1.Rooms.Room;
 
 
 /**
- * A dangerous troll (not the internet kind)
- * Created by riley on 16-Jun-2016.
+ * A dangerous bandit!
+ * Created by riley on 31-Aug-2016
  */
-public class Wolf extends Mortal {
-    private int followDist = 20;
+public class Bandit extends Mortal {
+    private int followDist = 25;
 
-    public Wolf(ImageOrg orga, Room theRoom, int xStart, int yStart) {
+    public Bandit(ImageOrg orga, Room theRoom, int xStart, int yStart) {
         super.strClass = "Wolf";
         orgo = orga;
         room = theRoom;
@@ -21,20 +21,23 @@ public class Wolf extends Mortal {
 
         x = xStart;
         y = yStart;
-        setHealth(10);
+        setHealth(15);
         orgo.addLayer(new Layer(new String[1][1], layerName, y, x));
 
-        setupTimer(550);
+        setupTimer(600); // Maybe the player should check this instead
     }
 
 
     @Override
     public void update() {
-        if (Math.abs(x - room.playo.getX()) <= 1 && Math.abs(y - room.playo.getY()) <= 1){
-            room.playo.subtractHealth(3);
+        if (Math.abs(x - room.playo.getX()) <= 2 && Math.abs(y - room.playo.getY()) <= 2){
+            room.playo.subtractHealth(5);
+        }
+        if (room.playo.getX() == getX() || room.playo.getY() == getY()){ // sprint when straight line to player
+            pathToPos(followDist, room.playo.getX(), room.playo.getY());
         }
         pathToPos(followDist, room.playo.getX(), room.playo.getY());
-        orgo.editLayer("W", layerName, 0, 0);
+        orgo.editLayer("B", layerName, 0, 0);
     }
 
     @Override

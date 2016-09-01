@@ -1,6 +1,7 @@
 package SourceryTextb1.Rooms.TheSource;
 
 import SourceryTextb1.GameObjects.*;
+import SourceryTextb1.GameObjects.TheSource.Bandit;
 import SourceryTextb1.GameObjects.TheSource.Spider;
 import SourceryTextb1.GameObjects.TheSource.Wolf;
 import SourceryTextb1.ImageOrg;
@@ -88,15 +89,13 @@ public class Mountains extends Room {
         Spider hiddenMenace = new Spider(org, this, 56, 7);
         addMortal(hiddenMenace);
 
+        Bandit john = new Bandit(org, this, 132, 11);
+        addMortal(john);
+        Bandit jack = new Bandit(org, this, 135, 13);
+        addMortal(jack);
+
         genericRoomInitialize();
     }
-
-    /*
-    private void makeTrollAt(int x, int y){
-        DroppedItem d = new DroppedItem(this, org, "None", "TrollDrop", "droppedTrollStuff", " ", x, y);
-        addMortal(new Troll(org, this, x, y, d));
-    }
-    */
 
 
     /**

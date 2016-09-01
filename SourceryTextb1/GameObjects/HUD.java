@@ -206,7 +206,7 @@ public class HUD extends GameObject {
         } else if (Character.isLetterOrDigit(key) || key == ' ' || key == '-' || key == '&') {
             command += key;
         } else if (key == '~'){
-            command = "catch all && goto 0 0 && jumpto Mountains";
+            command = "ghost && catch all && goto 73 0 && jumpto Mountains";
         }
     }
 
@@ -333,7 +333,7 @@ public class HUD extends GameObject {
             if (command.contains("sudo") || promptChar.equals("#")) {
                 showResponse("Ok, fine, I'll make you a sandwich.");
                 Item sandwichItem = new Item("Sandwich", "Using your awesome\n knowledge of commandline-\n fu, you convinced the\n computer to make you this.", "~", player, "item");
-                DroppedItem sandwichDrop = new DroppedItem(room, orgo, "Here's your sandwich", sandwichItem, "drops", player.getX(), player.getY());
+                DroppedItem sandwichDrop = new DroppedItem(room, orgo, "Here's your sandwich", sandwichItem, player.getX(), player.getY());
                 room.addObject(sandwichDrop);
             } else {
                 showResponse("No!  Make your own sandwich!");
@@ -410,7 +410,7 @@ public class HUD extends GameObject {
                         "with \nthe command line.");
 
                 Item ashItem = new Item("Ash", "You struck down a \n bolt of lightning, \n which left only this\n behind.", "~", player, "item");
-                DroppedItem ashDrop = new DroppedItem(room, orgo, "Ow!  The ashes of your smote\n enemies are still hot!", ashItem, "drops", x, y);
+                DroppedItem ashDrop = new DroppedItem(room, orgo, "Ow!  The ashes of your smote\n enemies are still hot!", ashItem, x, y);
                 room.addObject(ashDrop);
                 showResponse("1000 damage zapped at x=" + x + " y=" + y);
             }
