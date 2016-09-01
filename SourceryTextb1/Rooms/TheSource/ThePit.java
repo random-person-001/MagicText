@@ -6,6 +6,7 @@
 package SourceryTextb1.Rooms.TheSource;
 
 import SourceryTextb1.GameObjects.*;
+import SourceryTextb1.GameObjects.TheSource.Spider;
 import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
@@ -89,6 +90,9 @@ public class ThePit extends Room {
         addToBaseHitMesh(base, solids);
         Layer lay1 = new Layer(base, "Test");
         org.addLayer(lay1);
+
+        Spider itsyBitsy = new Spider(org, this, 57, 42); // blocks way out.
+        addMortal(itsyBitsy);
 
         genericRoomInitialize();
     }

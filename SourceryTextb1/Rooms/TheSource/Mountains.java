@@ -1,6 +1,7 @@
 package SourceryTextb1.Rooms.TheSource;
 
 import SourceryTextb1.GameObjects.*;
+import SourceryTextb1.GameObjects.TheSource.Spider;
 import SourceryTextb1.GameObjects.TheSource.Wolf;
 import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
@@ -78,14 +79,16 @@ public class Mountains extends Room {
         org.addLayer(baseLayer);
         playo.roomName = "Mountains";
 
-        int[][] locs = {{106, 115},{14, 17}};
+        int[][] locs = {{106, 115}, {14, 17}};
         for (int ii = 0 ; ii < locs[0].length ; ii++){
             Wolf wolf = new Wolf(org, this, locs[0][ii], locs[1][ii]);
             addMortal(wolf);
         }
 
-        genericRoomInitialize();
+        Spider hiddenMenace = new Spider(org, this, 56, 7);
+        addMortal(hiddenMenace);
 
+        genericRoomInitialize();
     }
 
     /*
