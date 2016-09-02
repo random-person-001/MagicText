@@ -14,20 +14,17 @@ import java.util.ConcurrentModificationException;
  * Created by riley on 14-Jun-2016.
  */
 public class DockAndShip extends Room {
-    private int maxH;
+    String[][] dock;
+    Layer docky;
     private int maxW;
-
-
-    private void loop(){
+    private int maxH;
+    @Override
+    protected String loop(){
         int count = 0;
         int timer = 0;
         while (exitCode == ""){
             try {
                 Thread.sleep(20);
-                //System.out.println("I'm not dead yet! " + ii);
-
-                playo.update();
-                playo.addTime(20);
                 if (count == 0){
                     compactTextBox(org, "You should probs get on the ship!", "A Passerby", false);
                     count++;
@@ -39,8 +36,6 @@ public class DockAndShip extends Room {
                 if (playo.dead){
                     exitCode = "die";
                 }
-                //playo.reportPos();
-                org.compileImage();
                 timer++;
                 if (timer > 200 && timer < 1000 && timer % 10 == 0){
                     System.out.println("Moving one");
@@ -76,17 +71,12 @@ public class DockAndShip extends Room {
 
             } catch (InterruptedException ignored) {}
         }
+        return exitCode;
     }
 
     private void dockUpdate(){
-        art arty = new art();
-        String[][] dock = art.strToArray(arty.dock);
-        String[] docksolids = {"|","-","_"};
-
-        int loc = org.getPosLayer("Dock");
-        Layer docky = org.getLayer(loc);
-
         clearObjHitMesh();
+        String[] docksolids = {"|","-","_"};
         addToObjHitMesh(dock, docksolids, docky.getY(), docky.getX());
     }
 
@@ -99,11 +89,11 @@ public class DockAndShip extends Room {
         Layer lay1 = new Layer(base, "Boat");
         org.addLayer(lay1);
 
-        String[][] dock = art.strToArray(arty.dock);
+        dock = art.strToArray(arty.dock);
         String[] docksolids = {"|","-","_"};
         addToObjHitMesh(dock, docksolids, 40, 27);
-        Layer docklayer = new Layer(dock, "Dock", 27, 40);
-        org.addLayer(docklayer);
+        docky = new Layer(dock, "Dock", 27, 40);
+        org.addLayer(docky);
 
         for (int i = 43; i<46; i++){
             removeFromObjHitMesh(42, i);
@@ -135,25 +125,10 @@ public class DockAndShip extends Room {
         //addMortal(p);
     }
 
-
-    /**
-     * Enter the room. IE, start loops and stuff now.
-     */
-    public void enter(){
-        org.compileImage();
-        playo.frozen = false;
-        loop();
-        playo.frozen = true;
-        super.cleanLayersForExit(org);
-    }
-
-    public DockAndShip(ImageOrg orgo, Player player){
-        playo = player;
-        org = orgo;
+    public DockAndShip(Player player){
+        constructor(player);
+        org = player.orgo;
         maxH = org.getWindow().maxH();
         maxW = org.getWindow().maxW();
-        super.roomHeight = maxH;
-        super.roomWidth = maxW;
-        super.index = 4;
     }
 }

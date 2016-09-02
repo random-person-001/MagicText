@@ -15,11 +15,8 @@ import SourceryTextb1.art;
  */
 public class Mountains extends Room {
     Layer baseLayer;
-    private int maxH;
-    private int maxW;
 
-
-    private String loop() {
+    protected String loop() {
         int count = 0;
         boolean warnedOfEdge = false;
         while (exitCode.equals("")) {
@@ -104,29 +101,8 @@ public class Mountains extends Room {
         genericRoomInitialize();
     }
 
-
-    /**
-     * Enter the room. IE, start loops and stuff now.
-     */
-    public String enter() {
-        org.compileImage();
-        playo.frozen = false;
-        String exit = loop();
-        playo.frozen = true;
-        if (!exit.equals("die")) {
-            removeAllObjectsAndLayersButPlayer();
-        }
-        return exit;
-    }
-
-    public Mountains(ImageOrg orgo, Player player) {
-        playo = player;
-        org = orgo;
-        super.org = orgo;
-        maxH = org.getWindow().maxH();
-        maxW = org.getWindow().maxW();
-        super.roomHeight = maxH;
-        super.roomWidth = maxW;
-        super.index = 5;
+    public Mountains(Player player) {
+        constructor(player);
+        org = player.orgo;
     }
 }

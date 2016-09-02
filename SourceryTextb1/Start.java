@@ -37,7 +37,7 @@ public class Start {
 
         if (doDemo) {
             Player player = new Player(org);
-            NewTestRoom rooma = new NewTestRoom(org, player);
+            NewTestRoom rooma = new NewTestRoom(player);
             prepLevel(org, game, player, rooma, 0);
             rooma.startup();
             rooma.enter();
@@ -71,7 +71,7 @@ public class Start {
             switch (roomID) {
                 case "Tutorial":
                     System.out.println("Beginning tutorial!");
-                    TutorialBasement forest = new TutorialBasement(org, player);
+                    TutorialBasement forest = new TutorialBasement(player);
                     prepLevel(org, game, player, forest, 0);
                     forest.startup();
                     roomID = forest.enter();
@@ -79,14 +79,14 @@ public class Start {
                     break;
                 case "SourcePit":
                     System.out.println("Entering The Pit");
-                    ThePit pit = new ThePit(org, player);
+                    ThePit pit = new ThePit(player);
                     prepLevel(org, game, player, pit, 0);
                     pit.startup();
                     roomID = pit.enter();
                     break;
                 case "Mountains":
                     System.out.println("Entering the Mountains");
-                    Mountains mtns = new Mountains(org, player);
+                    Mountains mtns = new Mountains(player);
                     prepLevel(org, game, player, mtns, 0);
                     mtns.startup();
                     roomID = mtns.enter();

@@ -47,6 +47,42 @@ public class Room implements java.io.Serializable{
     public int index;
     public String exitCode = "";
 
+
+    /**
+     * OVERRIDE THIS
+     * Run a loop, doing things, until the player should go to a new room.
+     * @return the room name to go to next
+     */
+    protected String loop (){
+        return "You were supposed to override this, dummy.";
+    }
+
+    /**
+     * Enter the room. IE, start loops and stuff now.
+     */
+    public String enter(){
+        playo.frozen = false;
+        String exit = loop();
+        playo.frozen = true;
+        if (!exit.equals("die")) {
+            removeAllObjectsAndLayersButPlayer();
+        }
+        return exit;
+    }
+
+    /**
+     * Set room variables and stuff.  @HazilTheNut: Todo: can you make this a legit constructor?
+     * @param player
+     */
+    protected void constructor(Player player){
+        playo = player;
+        org = player.orgo;
+        roomHeight = org.getWindow().maxH();
+        roomWidth = org.getWindow().maxW();
+        index = 1;
+    }
+
+
     public void setNewRoom(String newID, int playerX, int playerY){
         exitCode = newID;
         playo.goTo(playerX, playerY);

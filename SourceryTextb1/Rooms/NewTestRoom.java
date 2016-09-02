@@ -33,7 +33,7 @@ public class NewTestRoom extends Room {
     private int maxH;
     private int maxW;
 
-    private String loop(){
+    protected String loop(){
 
         while (exitCode == ""){
             try {
@@ -48,7 +48,6 @@ public class NewTestRoom extends Room {
 
     public void startup(){
         ititHitMeshes();
-
         super.playo.goTo(7,5);
 
         art arty = new art();
@@ -64,53 +63,8 @@ public class NewTestRoom extends Room {
         genericRoomInitialize();
     }
 
-    /**
-     * Enter the room. IE, start loops and stuff now.
-     */
-    public String enter(){
-        org.compileImage();
-        super.playo.frozen = false;
-        String exit = loop();
-        super.playo.frozen = true;
-        if (!exit.equals("die")) {
-            removeAllObjectsAndLayersButPlayer();
-        }
-        return exit;
+    public NewTestRoom(Player player){
+        constructor(player);
+        org = player.orgo;
     }
-
-    public NewTestRoom(ImageOrg orgo, Player player){
-        super.playo = player;
-        super.org = orgo;
-        org = orgo;
-        maxH = org.getWindow().maxH();
-        maxW = org.getWindow().maxW();
-        super.roomHeight = maxH;
-        super.roomWidth = maxW;
-        super.index = 1;
-    }
-
-    private String[][] makeABox(int width, int height){
-        String[][] output = new String[height][width];
-        for(int ii = 0; ii < height; ii++){
-            for (int iii = 0 ; iii < width; iii++){
-                if (ii == 0 || ii == height - 1){
-                    if (iii == 0 || iii == width - 1){
-                        output[ii][iii] = "O";
-                    } else {
-                        output[ii][iii] = "-";
-                    }
-                } else {
-                    if (iii == 0 || iii == width - 1){
-                        output[ii][iii] = "|";
-                    } else if (ii % 3 == 0 && iii % 6 == 0){
-                        output[ii][iii] = ".";
-                    } else {
-                        output[ii][iii] = " ";
-                    }
-                }
-            }
-        }
-        return output;
-    }
-
 }

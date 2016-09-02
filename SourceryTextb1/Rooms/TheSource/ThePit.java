@@ -29,12 +29,9 @@ import java.util.Objects;
 
 
 public class ThePit extends Room {
-
     private ImageOrg org;
-    private int maxH;
-    private int maxW;
 
-    private String loop(){
+    protected String loop(){
         int count = 0;
 
         while (exitCode.equals("")){
@@ -97,29 +94,9 @@ public class ThePit extends Room {
         genericRoomInitialize();
     }
 
-    /**
-     * Enter the room. IE, start loops and stuff now.
-     */
-    public String enter(){
-        org.compileImage();
-        super.playo.frozen = false;
-        String exit = loop();
-        super.playo.frozen = true;
-        if (!exit.equals("die")) {
-            removeAllObjectsAndLayersButPlayer();
-        }
-        return exit;
-    }
-
-    public ThePit(ImageOrg orgo, Player player){
-        super.playo = player;
-        super.org = orgo;
-        org = orgo;
-        maxH = org.getWindow().maxH();
-        maxW = org.getWindow().maxW();
-        super.roomHeight = maxH;
-        super.roomWidth = maxW;
+    public ThePit(Player player){
+        constructor(player);
+        org = player.orgo;
         super.index = 1;
     }
-
-}
+    }

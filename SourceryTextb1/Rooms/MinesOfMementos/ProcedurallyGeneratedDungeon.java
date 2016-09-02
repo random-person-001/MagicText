@@ -20,7 +20,7 @@ public class ProcedurallyGeneratedDungeon extends Room{
     private int maxW;
 
 
-    private void loop(){
+    protected String loop(){
         int count = 0;
         while (exitCode == ""){
             try {
@@ -41,6 +41,7 @@ public class ProcedurallyGeneratedDungeon extends Room{
 
             } catch (InterruptedException ignored) {}
         }
+        return exitCode;
     }
 
     // Some sort of 2d array to keep track of things here?
@@ -57,17 +58,6 @@ public class ProcedurallyGeneratedDungeon extends Room{
         //org.addLayer(lay1);
 
         genericRoomInitialize();
-    }
-
-    /**
-     * Enter the room. IE, start loops and stuff now.
-     */
-    public void enter(){
-        org.compileImage();
-        playo.frozen = false;
-        loop();
-        playo.frozen = true;
-        super.cleanLayersForExit(org);
     }
 
     public ProcedurallyGeneratedDungeon(ImageOrg orgo, Player player){

@@ -33,10 +33,9 @@ import SourceryTextb1.art;
 
 public class TutorialBasement extends Room {
     private ImageOrg org;
-    private int maxH;
-    private int maxW;
 
-    private String loop(){
+    @Override
+    protected String loop(){
         int count = 0;
         boolean foundSpell1 = false;
         boolean foundSpell2 = false;
@@ -195,29 +194,10 @@ public class TutorialBasement extends Room {
         genericRoomInitialize();
     }
 
-    /**
-     * Enter the room. IE, start loops and stuff now.
-     */
-    public String enter(){
-        org.compileImage();
-        super.playo.frozen = false;
-        String exit = loop();
-        super.playo.frozen = true;
-        if (!exit.equals("die")) {
-            removeAllObjectsAndLayersButPlayer();
-        }
-        return exit;
-    }
 
-    public TutorialBasement(ImageOrg orgo, Player player){
-        super.playo = player;
-        super.org = orgo;
-        org = orgo;
-        maxH = org.getWindow().maxH();
-        maxW = org.getWindow().maxW();
-        super.roomHeight = maxH;
-        super.roomWidth = maxW;
-        super.index = 1;
+    public TutorialBasement(Player player){
+        constructor(player);
+        org = player.orgo;
     }
 
 }
