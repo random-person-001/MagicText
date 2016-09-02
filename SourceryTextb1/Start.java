@@ -6,14 +6,16 @@
 package SourceryTextb1;
 
 import SourceryTextb1.GameObjects.Player;
-import SourceryTextb1.Rooms.*;
+import SourceryTextb1.Rooms.TheSource.TutorialBasement;
+import SourceryTextb1.Rooms.TheSource.BanditFortress;
 import SourceryTextb1.Rooms.TheSource.Mountains;
 import SourceryTextb1.Rooms.TheSource.ThePit;
-import SourceryTextb1.Rooms.TheSource.TutorialBasement;
+import SourceryTextb1.Rooms.NewTestRoom;
+import SourceryTextb1.Rooms.Room;
 
-import java.awt.Color;
-import java.util.Timer;
 import java.util.TimerTask;
+import java.util.Timer;
+import java.awt.Color;
 
 /**
  * Main class of MagicText, where everything starts.
@@ -49,24 +51,9 @@ public class Start {
             Timer time = new Timer();
             time.schedule(new StartCheck(wincnfg), 50, 100);
         }
-
-        // Win screen
-        //org.removeAllButPlayer();
-        //game.clearImage();
-        //levelAnimation(org, -1,2);
     }
 
     public static void runGame(){
-        /*
-        if (doIntro) {
-            try {
-                intro();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        */
-
         while (roomID != "die") { //Java 8 ONLY
             switch (roomID) {
                 case "Tutorial":
@@ -91,6 +78,13 @@ public class Start {
                     mtns.startup();
                     roomID = mtns.enter();
                     break;
+                case "BanditFortress":
+                    System.out.println("Entering the Mountains");
+                    BanditFortress bf = new BanditFortress(player);
+                    prepLevel(org, game, player, bf, 0);
+                    bf.startup();
+                    roomID = bf.enter();
+                    break;
                 default:
                     System.out.println("You were directed to a world which is not yet registered in Start.java." +
                             "Please add it there.  (roomID = " + roomID + ").  Meanwhile, I'll just kill you to ease the pain.");
@@ -102,12 +96,11 @@ public class Start {
     }
 
     private static void prepLevel(ImageOrg org, Window game, Player player, Room newRoom, int levelNum){
-        org.removeAllButPlayer(); //Cleanup, happens when loop is done.
+        org.removeAllButPlayer();
         game.clearImage();
         if (levelNum != 0) {
             levelAnimation(org, levelNum, 2);
         }
-        //player.goTo(6,6);
         player.setRoom(newRoom);
     }
 
@@ -117,10 +110,6 @@ public class Start {
             org.getLayer("Intro3").setStr(line, ii + offset, String.valueOf(text.charAt(ii)));
         }
         
-    }
-
-    private static void levelAnimation(ImageOrg org, int levelNum) {
-        levelAnimation(org, levelNum, 1);
     }
 
     /**Run an animation with ascii art text for a new level.
@@ -262,122 +251,85 @@ public class Start {
         Layer lay1 = new Layer(new String[23][46], "Intro1");
         lay1.setStr(10, 23, "@");
         org.addLayer(lay1);
-
         Thread.sleep(750);
 
         for (int eff = 0; eff < 40; eff++) {
             game.txtArea.setBackground(new Color(eff, eff, eff, 255));
             Thread.sleep(50);
         }
-
         Thread.sleep(2000);
 
         String thisIsYou = "This is you.";
         for (int ii = 0; ii < thisIsYou.length(); ii++) {
             org.editLayer(String.valueOf(thisIsYou.charAt(ii)), "Intro1", 12, 18 + ii);
         }
-
         Thread.sleep(5000);
 
         org.removeLayer("Intro1");
-
         art arty = new art();
         String[][] town = art.strToArray(arty.intro1);
         Layer lay = new Layer(town, "Intro2");
         org.addLayer(lay);
-
         Layer lay2Title = new Layer(new String[3][46], "Intro2Title", 30, 0);
         org.addLayer(lay2Title);
-
         org.setCam(0, 10);
-
         Thread.sleep(500);
 
         String explain = "Times were simple a couple weeks ago.";
         for (int ii = 0; ii < explain.length(); ii++) {
             org.editLayer(String.valueOf(explain.charAt(ii)), "Intro2Title", 1, 3 + ii);
         }
-
-        
-
         Thread.sleep(5000);
 
         String explainMore = "@'s were people, #'s were walls & terrain";
         for (int ii = 0; ii < explainMore.length(); ii++) {
             org.editLayer(String.valueOf(explainMore.charAt(ii)), "Intro2Title", 2, 3 + ii);
         }
-
-
-
-        
-
         Thread.sleep(4000);
 
         for (int pan = 0; pan < 13; pan++) {
             org.moveCam(0, -1);
-            
             Thread.sleep(250);
         }
-
         Thread.sleep(2000);
 
         org.removeLayer("Intro2");
         org.removeLayer("Intro2Title");
-
         Layer lay3 = new Layer(new String[23][46], "Intro3");
         lay3.setStr(10, 22, "@");
-
         org.addLayer(lay3);
         org.setCam(0, 0);
-
-        
-
         Thread.sleep(1500);
-
 
         game.txtArea.setForeground(new Color(189, 83, 89, 255));
         String villainIntro = "This is someone else.";
         for (int ii = 0; ii < villainIntro.length(); ii++) {
             org.editLayer(String.valueOf(villainIntro.charAt(ii)), "Intro3", 7, 12 + ii);
         }
-
-        
-
         Thread.sleep(4500);
 
         String goodExcuse = "(To be fair, everyone DOES look identical)";
         for (int ii = 0; ii < goodExcuse.length(); ii++) {
             org.editLayer(String.valueOf(goodExcuse.charAt(ii)), "Intro3", 8, 2 + ii);
         }
-
-        
-
         Thread.sleep(5000);
 
         String goodFollowUp = "He despised that fact. He desired complexity";
         for (int ii = 0; ii < goodFollowUp.length(); ii++) {
             org.editLayer(String.valueOf(goodFollowUp.charAt(ii)), "Intro3", 12, 1 + ii);
         }
-
-        
-
         Thread.sleep(3000);
 
         String resolution = "And so, he journeyed to The Source";
         for (int ii = 0; ii < resolution.length(); ii++) {
             org.editLayer(String.valueOf(resolution.charAt(ii)), "Intro3", 13, 6 + ii);
         }
-
-        
-
         Thread.sleep(1500);
 
-        org.printLayers();
         org.clearLayer("Intro3");
-
         Thread.sleep(1500);
-        game.txtArea.setForeground(Color.white);
 
+        game.txtArea.setForeground(Color.white);
         int line = 4;
         introText("The Source is a gaping hole in the world.", 1, line);
         Thread.sleep(3000);
@@ -400,56 +352,42 @@ public class Start {
 
         lay3.clear();
         org.removeLayer("Intro3");
-
         String[][] code = art.strToArray(arty.intro2);
         lay3 = new Layer(code, "Intro4");
         org.addLayer(lay3);
         org.setCam(0, 18);
-        
-
         Thread.sleep(5000);
 
         for (int ii = 0; ii < 18; ii++) {
             org.moveCam(0, -1);
-            
             Thread.sleep(100);
         }
-
         Thread.sleep(1500);
 
         for (int ii = 0; ii < 6; ii++) {
             org.editLayer(" ", "Intro4", 18, 35 - ii);
-            
             Thread.sleep(100);
         }
-
         Thread.sleep(500);
 
         String TRUE = "TRUE;";
         for (int ii = 0; ii < TRUE.length(); ii++) {
             org.editLayer(String.valueOf(TRUE.charAt(ii)), "Intro4", 18, 30 + ii);
-            
             Thread.sleep(400);
         }
-
         Thread.sleep(5000);
 
         lay3.clear();
-
         String result = "...And that changed EVERYTHING";
         for (int ii = 0; ii < result.length(); ii++) {
             org.editLayer(String.valueOf(result.charAt(ii)), "Intro4", 11, 7 + ii);
         }
-
-        
-
         Thread.sleep(3000);
 
         for (int eff = 39; eff < 255; eff += 2) {
             game.txtArea.setBackground(new Color(eff, eff, eff, 255));
             Thread.sleep(50);
         }
-
         lay3.clear();
         
 
@@ -466,7 +404,6 @@ public class Start {
     protected static class StartCheck extends TimerTask {
         WindowConfig lock;
         StartCheck self = this;
-        private boolean playedAndDied = false;
         private boolean hasRan = false;
 
         protected StartCheck(WindowConfig toCheck){
@@ -495,7 +432,7 @@ public class Start {
 
         public void run(){
             Layer endingScene;
-            if (lock.doContinue && !playedAndDied && !hasRan){
+            if (lock.doContinue && !hasRan){
                 new MainMenu(org, game, self); // TODO make this entry point less obscure
                 hasRan = true;
             } else {

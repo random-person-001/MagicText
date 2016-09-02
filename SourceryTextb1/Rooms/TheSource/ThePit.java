@@ -31,6 +31,7 @@ import java.util.Objects;
 public class ThePit extends Room {
     private ImageOrg org;
 
+    @Override
     protected String loop(){
         int count = 0;
 
@@ -56,10 +57,6 @@ public class ThePit extends Room {
                 if (getPlayer().getX() == 87 && getPlayer().getY() == 6){
                     System.out.println("Nooo!  You're escaping!");
                 }
-                if (super.playo.dead){
-                    exitCode = "die";
-                }
-                org.compileImage();
 
             } catch (InterruptedException ignored) {}
         }
@@ -99,4 +96,4 @@ public class ThePit extends Room {
         org = player.orgo;
         super.index = 1;
     }
-    }
+}

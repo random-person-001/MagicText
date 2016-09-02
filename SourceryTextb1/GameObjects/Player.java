@@ -165,6 +165,9 @@ public class Player extends Mortal implements java.io.Serializable {
         if (frozen || dead) { // Should be first, so other things don't try to happen first
             try {
                 orgo.editLayer(" ", layerName, y, x);
+                if (dead){
+                    room.exitCode = "die";
+                }
             } catch (IndexOutOfBoundsException ignored) {
             }
         } else {
@@ -175,7 +178,6 @@ public class Player extends Mortal implements java.io.Serializable {
             }
 
             manaRegenClock += getTime();
-
             if (manaWait > 0) {
                 manaWait -= getTime();
                 //System.out.println("Mana Wait Clock: " + manaWait);
@@ -185,34 +187,9 @@ public class Player extends Mortal implements java.io.Serializable {
                 manaRegenClock = 0;
             }
 
-
             resetTime();
-
             graphicUpdate();
             aimDispUpdate();
-
-            if (autonomous) {
-                closestFood = getClosestVisibleFood();
-                if (closestFood != null) {
-                    if (x > closestFood.x) {
-                        move(LEFT);
-                    } else if (x < closestFood.x) {
-                        move(RIGHT);
-                    } else if (y > closestFood.y) {
-                        move(UP);
-                    } else if (y < closestFood.y) {
-                        move(DOWN);
-                    } else {
-                        room.objs.remove(closestFood);
-                        closestFood = null;
-                        move(r(3));
-                    }
-                } else { // Just finished a level / no visible food left
-                    //move(r(3));  //Move randomly
-                }
-            } else { // Unset
-                closestFood = null;
-            }
             updateBackground();
         }
     }

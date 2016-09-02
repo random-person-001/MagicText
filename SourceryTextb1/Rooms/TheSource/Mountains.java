@@ -43,9 +43,6 @@ public class Mountains extends Room {
                 if (playo.getX() == 91 && playo.getY() == 44){
                     playo.dead = true;
                 }
-                if (playo.dead){
-                    exitCode = "die";
-                }
                 if (playo.getY() < 0){
                     setNewRoom("SourcePit",57,42);
                 }

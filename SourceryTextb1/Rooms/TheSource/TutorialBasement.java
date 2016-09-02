@@ -124,11 +124,6 @@ public class TutorialBasement extends Room {
                 if (getPlayer().getX() > 132){
                     setNewRoom("SourcePit",109 , 10);
                 }
-                if (getPlayer().dead){
-                    exitCode = "die";
-                }
-
-                org.compileImage();
 
             } catch (InterruptedException ignored) {}
         }

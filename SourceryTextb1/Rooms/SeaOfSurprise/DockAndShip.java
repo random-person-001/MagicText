@@ -33,9 +33,6 @@ public class DockAndShip extends Room {
                     compactTextBox(org, "Ahoy!  This is the front of the ship. \n ", "Seagull", false);
                     count++;
                 }
-                if (playo.dead){
-                    exitCode = "die";
-                }
                 timer++;
                 if (timer > 200 && timer < 1000 && timer % 10 == 0){
                     System.out.println("Moving one");
