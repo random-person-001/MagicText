@@ -71,7 +71,7 @@ public class Room implements java.io.Serializable{
     }
 
     /**
-     * Set room variables and stuff.  @HazilTheNut: Todo: can you make this a legit constructor?
+     * Set room variables and stuff.
      * @param player
      */
     protected void constructor(Player player){

@@ -43,7 +43,7 @@ public class Wolf extends Mortal {
         if (room.getCountOf("Wolf") == 0){
             Room.FlavorText ft = null;
             //ft = new Room.FlavorText("Fhweh!  Those wolves were mean!\nHeal yourself, and brace for the bandits ahead.", "God");
-            // TODO : JARED, can you figure out how to make that work?
+
             room.textBox(ft);
         }
     }

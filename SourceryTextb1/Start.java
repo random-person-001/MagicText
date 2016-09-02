@@ -425,15 +425,12 @@ public class Start {
             org.printLayers();
             player.resumeFromSave();
             runGame();
-
-            // Using the debug functionality is nice.  Look at my comment on your last commit,
-            // https://github.com/random-person-001/MagicText/commit/df04f925295d70f17c57a91640f9bc98d27a645b
         }
 
         public void run(){
             Layer endingScene;
             if (lock.doContinue && !hasRan){
-                new MainMenu(org, game, self); // TODO make this entry point less obscure
+                new MainMenu(org, game, self);
                 hasRan = true;
             } else {
                 //System.out.println("Game hasn't started yet!");

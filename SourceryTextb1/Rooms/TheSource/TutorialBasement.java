@@ -5,9 +5,11 @@
  */
 package SourceryTextb1.Rooms.TheSource;
 
-import SourceryTextb1.GameObjects.*;
+import SourceryTextb1.GameObjects.DroppedItem;
+import SourceryTextb1.GameObjects.Item;
+import SourceryTextb1.GameObjects.Player;
+import SourceryTextb1.GameObjects.PotOfPetunias;
 import SourceryTextb1.GameObjects.TheSource.Spider;
-import SourceryTextb1.GameObjects.TheSource.WeakTower;
 import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
@@ -162,7 +164,7 @@ public class TutorialBasement extends Room {
         DroppedItem gHeal =  new DroppedItem(this, org, "You found a spell: Heal!", healSpell, 65, 9);
         super.addObject(gHeal);
 
-        Item fireGlove = new Item ("Pyro Glove", "A glove that's on fire!\n\nPyromancers are quite the\n adventurous people, and so" +
+        Item fireGlove = new Item("Pyro Glove", "A glove that's on fire!\n\nPyromancers are quite the\n adventurous people, and so" +
                 "\n these gloves became very\n commonplace\n\n+2 Fire Spell Damage", playo, "equipment");
         fireGlove.setEquipvals(0, 0, 0, 0, 2, 0 ,0, "weapon");
         DroppedItem gGlove =  new DroppedItem(this, org, "You found a weapon: Pyro Glove!", fireGlove, 85, 15);
