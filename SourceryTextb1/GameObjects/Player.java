@@ -17,16 +17,10 @@ package SourceryTextb1.GameObjects;
 import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
-import SourceryTextb1.Window;
 
 import java.awt.Color;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.Random;
-import java.util.TimerTask;
-
-
-import static java.lang.Math.abs;
 
 /**
  * Player-controlled protagonist
@@ -35,9 +29,7 @@ import static java.lang.Math.abs;
  */
 public class Player extends Mortal implements java.io.Serializable {
     private PlayerKeypressListener playerKeyListener = new PlayerKeypressListener(this);
-    private GameObject closestFood = null;
     private Inventory inv;
-
     public String roomName = ""; //Extremely important when we implement saving.
 
     private boolean autonomous = false;
@@ -57,7 +49,6 @@ public class Player extends Mortal implements java.io.Serializable {
 
     private int superCheatProgress = 0;
     private Color restingBackground = Color.black;
-
     public boolean isGhost = false; //For debug reasons
     private String lastPainMessage = "None";
 
@@ -66,7 +57,6 @@ public class Player extends Mortal implements java.io.Serializable {
     int maxMana = 20;
     int mana = maxMana;
     private int manaRegenClock = 0;
-    private int manaWaitStat = 2000; //Waiting before restoring mana
     protected int manaWait = 0;
     int defense = 0;
     //Note for the future: Damage can't be reduced below 1 damage. Swords and explosions don't heal people.
@@ -77,7 +67,6 @@ public class Player extends Mortal implements java.io.Serializable {
     int iceSpellBoost = 0;
     int darkSpellBoost = 0;
     int healBoost, durBoost, rangeBoost, armorHealthBoost = 0;
-
     //NO MORE STATS
 
     public boolean dead = false;
@@ -117,7 +106,7 @@ public class Player extends Mortal implements java.io.Serializable {
     /**
      * Set things up that don't get carried between saves, ex timers and ?keylisteners?
      */
-    public void resumeFromSave(){
+    public void resumeFromSave() {
         orgo.getWindow().txtArea.addKeyListener(playerKeyListener); // Add key listeners.
         setupForNewRoom();
         setupTimer(20);
@@ -165,7 +154,7 @@ public class Player extends Mortal implements java.io.Serializable {
         if (frozen || dead) { // Should be first, so other things don't try to happen first
             try {
                 orgo.editLayer(" ", layerName, y, x);
-                if (dead){
+                if (dead) {
                     room.exitCode = "die";
                 }
             } catch (IndexOutOfBoundsException ignored) {
@@ -180,7 +169,6 @@ public class Player extends Mortal implements java.io.Serializable {
             manaRegenClock += getTime();
             if (manaWait > 0) {
                 manaWait -= getTime();
-                //System.out.println("Mana Wait Clock: " + manaWait);
                 manaRegenClock = 0;
             } else if (manaRegenClock >= (500 / maxMana) && mana < maxMana) {
                 mana++;
@@ -226,65 +214,8 @@ public class Player extends Mortal implements java.io.Serializable {
     /**
      * @return the player's instance of Inventory
      */
-    public Inventory getInventory(){
+    public Inventory getInventory() {
         return inv;
-    }
-
-    /**
-     * Generate a random int between 0 and max, inclusive.
-     *
-     * @param max the largest number that amy be returned
-     * @return a random int
-     */
-    private int r(int max) {
-        return r(max, 0);
-    }
-
-    private int r(int max, int min) {
-        Random rand = new Random();
-        // nextInt is normally exclusive of the top value,
-        // so add 1 to make it inclusive
-        return rand.nextInt((max - min) + 1) + min;
-    }
-
-    private GameObject getClosestVisibleFood() {
-        int minDist = 500000;
-        if (!room.objs.contains(closestFood)) {
-            for (GameObject o : room.objs) {
-                if (o.strClass.contains("Food")) { //Found a food!
-                    // check x
-                    boolean obscured = false;
-                    if (x < o.x) {
-                        for (int i = x; i < o.x; i++) {
-                            obscured |= room.isPlaceSolid(i, y);
-                        }
-                    } else {
-                        for (int i = x; i > o.x; i--) {
-                            obscured |= room.isPlaceSolid(i, y);
-                        }
-                    }// check y
-                    if (y < o.y) {
-                        for (int i = y; i < o.y; i++) {
-                            obscured |= room.isPlaceSolid(o.x, i);
-                        }
-                    } else {
-                        for (int i = y; i > o.y; i--) {
-                            obscured |= room.isPlaceSolid(o.x, i);
-                        }
-                    }
-                    //System.out.println(obscured);
-                    if (!obscured) {
-                        System.out.println("Found a visible food. dx: " + (x - o.x) + "  dy: " + (y - o.y));
-                        int dist = abs(o.y - y) + abs(o.x - x);
-                        if (dist < minDist) {
-                            minDist = dist;
-                            closestFood = o;
-                        }
-                    }
-                }
-            }
-        }
-        return closestFood;
     }
 
     /**
@@ -300,21 +231,18 @@ public class Player extends Mortal implements java.io.Serializable {
     }
 
     @Override
-    protected void onDeath(){
+    protected void onDeath() {
         orgo.getWindow().txtArea.setForeground(Color.RED);
+        orgo.getWindow().txtArea.removeKeyListener(playerKeyListener);
         room.compactTextBox(orgo, lastPainMessage, "An ominous voice from above", false);
         dead = true;
     }
-
-    private String smallChar = "x";
-    private String largeChar = "@";
-    private boolean big = false;
 
     /**
      * Update the Player symbol
      */
     public void graphicUpdate() {
-        orgo.editLayer((big) ? smallChar : largeChar, layerName, y, x);
+        orgo.editLayer("@", layerName, y, x);
         centerCamera();
     }
 
@@ -412,14 +340,10 @@ public class Player extends Mortal implements java.io.Serializable {
             case 'æ':
                 move(RIGHT);
                 break;
-            case ' ':
-                big = !big;
-                break;
             case 'b':
                 autonomous = !autonomous;
                 break;
             case '\'': // ESC right now, subject to change
-                shouldNewInv = true;
                 reportPos();
                 break;
             case 'a':
@@ -449,7 +373,7 @@ public class Player extends Mortal implements java.io.Serializable {
         checkCheatProgress(key);
     }
 
-    private void textBoxQuery(){
+    private void textBoxQuery() {
         /*
         switch(orientation){
             case UP:
@@ -490,7 +414,6 @@ public class Player extends Mortal implements java.io.Serializable {
                     break;
             }
             looseCastDmgSpell(damage, spell);
-            //System.out.println("Pew! I just fired " + spell.getName());
         } else {
             switch (spell.getName()) {
                 case "Heal":
@@ -507,7 +430,6 @@ public class Player extends Mortal implements java.io.Serializable {
     private void spendMana(int cost) {
         mana -= cost;
         int wait = 2000 - (int) (1750 * ((float) mana / (float) maxMana));
-        //System.out.println("Waiting before mana refresh (ms): " + wait + " (" + ((float)mana / (float)maxMana) + ")");
         manaWait = wait;
     }
 
@@ -549,7 +471,7 @@ public class Player extends Mortal implements java.io.Serializable {
             }
             technicolorIndex--;
             orgo.getWindow().txtArea.setBackground(new Color(r, g, b));
-        } else if (hurtColor > 1) {  // update the redness of the screen; more red = more recently hurt more
+        } else if (hurtColor >= 1) {  // update the redness of the screen; more red = more recently hurt more
             int top = 5;
             if (hurtColor > top) {
                 hurtColor = top;
@@ -643,22 +565,6 @@ public class Player extends Mortal implements java.io.Serializable {
         superCheatProgress = 0;
     }
 
-    private void shiftCamRight() {
-        orgo.moveCam(1, 0);
-    }
-
-    private void shiftCamLeft() {
-        orgo.moveCam(-1, 0);
-    }
-
-    private void shiftCamDown() {
-        orgo.moveCam(0, 1);
-    }
-
-    private void shiftCamUp() {
-        orgo.moveCam(0, -1);
-    }
-
     public String getPrimarySpell() {
         return spell1.getIcon();
     }
@@ -675,7 +581,7 @@ public class Player extends Mortal implements java.io.Serializable {
      * Adds a potato to the player's inventory. For debug console.
      */
 
-    public void addPotato(int amount){
+    public void addPotato(int amount) {
         for (int ii = 0; ii < amount; ii++) {
             inv.addItem(new Item("Magic Potato", "A magically enhanced potato\n\nCan be used to either" +
                     "\n permanently increase\n your max health or\n max mana by 5.", this, "item"));
@@ -699,23 +605,18 @@ class PlayerKeypressListener extends KeyAdapter implements java.io.Serializable 
             char ch = event.getKeyChar();
             player.keyPressed(ch);
             if (event.getKeyCode() == KeyEvent.VK_UP) {
-                //System.out.println("UP! Key codes: " + event.getKeyCode());
                 player.keyPressed('©');
             }
             if (event.getKeyCode() == KeyEvent.VK_DOWN) {
-                //System.out.println("DOWN! Key codes: " + event.getKeyCode());
                 player.keyPressed('®');
             }
             if (event.getKeyCode() == KeyEvent.VK_LEFT) {
-                //System.out.println("LEFT! Key codes: " + event.getKeyCode());
                 player.keyPressed('µ');
             }
             if (event.getKeyCode() == KeyEvent.VK_RIGHT) {
-                //System.out.println("RIGHT! Key codes: " + event.getKeyCode());
                 player.keyPressed('æ');
             }
             if (event.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                //System.out.println("RIGHT! Key codes: " + event.getKeyCode());
                 player.keyPressed('\'');
 
             }
