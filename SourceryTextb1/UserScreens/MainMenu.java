@@ -1,5 +1,6 @@
-package SourceryTextb1;
+package SourceryTextb1.UserScreens;
 
+import SourceryTextb1.*;
 import SourceryTextb1.GameObjects.Player;
 
 import javax.swing.*;
@@ -19,7 +20,7 @@ import java.util.TimerTask;
 
 class MainMenu {
     private ImageOrg org;
-    private Window window;
+    private SourceryTextb1.Window window;
     private Start.StartCheck starter;
     private WindowConfig wincnfg;
     private KeyInput keyInputter;
@@ -33,7 +34,7 @@ class MainMenu {
     private int clock = 0;
     private int cursorY = 9;
 
-    MainMenu(ImageOrg orgo, Window theWindow, Start.StartCheck start) {
+    MainMenu(ImageOrg orgo, SourceryTextb1.Window theWindow, Start.StartCheck start) {
         org = orgo;
         window = theWindow;
         starter = start;

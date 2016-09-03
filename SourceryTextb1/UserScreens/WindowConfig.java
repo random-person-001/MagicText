@@ -1,4 +1,9 @@
-package SourceryTextb1;
+package SourceryTextb1.UserScreens;
+
+import SourceryTextb1.ImageOrg;
+import SourceryTextb1.Layer;
+import SourceryTextb1.Window;
+import SourceryTextb1.art;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;

@@ -3,15 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package SourceryTextb1;
+package SourceryTextb1.UserScreens;
 
 import SourceryTextb1.GameObjects.Player;
+import SourceryTextb1.ImageOrg;
+import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.TheSource.TutorialBasement;
 import SourceryTextb1.Rooms.TheSource.BanditFortress;
 import SourceryTextb1.Rooms.TheSource.Mountains;
 import SourceryTextb1.Rooms.TheSource.ThePit;
 import SourceryTextb1.Rooms.NewTestRoom;
 import SourceryTextb1.Rooms.Room;
+import SourceryTextb1.Window;
+import SourceryTextb1.art;
 
 import java.util.TimerTask;
 import java.util.Timer;
@@ -40,7 +44,7 @@ public class Start {
         if (doDemo) {
             Player player = new Player(org);
             NewTestRoom rooma = new NewTestRoom(player);
-            prepLevel(org, game, player, rooma, 0);
+            prepLevel(org, game, player, rooma);
             rooma.startup();
             rooma.enter();
         } else {
@@ -59,7 +63,7 @@ public class Start {
                 case "Tutorial":
                     System.out.println("Beginning tutorial!");
                     TutorialBasement forest = new TutorialBasement(player);
-                    prepLevel(org, game, player, forest, 0);
+                    prepLevel(org, game, player, forest);
                     forest.startup();
                     roomID = forest.enter();
                     System.out.println("Exiting tutorial.  Going to: " + roomID);
@@ -67,21 +71,21 @@ public class Start {
                 case "SourcePit":
                     System.out.println("Entering The Pit");
                     ThePit pit = new ThePit(player);
-                    prepLevel(org, game, player, pit, 0);
+                    prepLevel(org, game, player, pit);
                     pit.startup();
                     roomID = pit.enter();
                     break;
                 case "Mountains":
                     System.out.println("Entering the Mountains");
                     Mountains mtns = new Mountains(player);
-                    prepLevel(org, game, player, mtns, 0);
+                    prepLevel(org, game, player, mtns);
                     mtns.startup();
                     roomID = mtns.enter();
                     break;
                 case "BanditFortress":
                     System.out.println("Entering the Mountains");
                     BanditFortress bf = new BanditFortress(player);
-                    prepLevel(org, game, player, bf, 0);
+                    prepLevel(org, game, player, bf);
                     bf.startup();
                     roomID = bf.enter();
                     break;
@@ -95,12 +99,9 @@ public class Start {
         System.out.println("\nBetter luck next time!");
     }
 
-    private static void prepLevel(ImageOrg org, Window game, Player player, Room newRoom, int levelNum){
+    private static void prepLevel(ImageOrg org, Window game, Player player, Room newRoom){
         org.removeAllButPlayer();
         game.clearImage();
-        if (levelNum != 0) {
-            levelAnimation(org, levelNum, 2);
-        }
         player.setRoom(newRoom);
     }
 
@@ -109,54 +110,6 @@ public class Start {
         for (int ii = 0; ii < text.length(); ii++){
             org.getLayer("Intro3").setStr(line, ii + offset, String.valueOf(text.charAt(ii)));
         }
-        
-    }
-
-    /**Run an animation with ascii art text for a new level.
-     * @param org ImageOrg(aniser)
-     * @param levelNum Which level, you say?  -1 is "You Won!"
-     * @param style 1 corresponds to dot matrix font; 2 corresponds to a slanted 3d one.
-     */
-    private static void levelAnimation(ImageOrg org, int levelNum, int style) {
-        art art = new art();
-        String[][] levelText = new String[1][1];
-        String linearText = "";
-        // Maybe there's a better way to do this.  Oh well.
-        if (style == 1) {
-            if (levelNum == 1) {
-                linearText = art.levelOne1;
-            } else if (levelNum == 2) {
-                linearText = art.levelTwo1;
-            } else if (levelNum == 3) {
-                linearText = art.levelThree1;
-            } else if (levelNum == -1) {
-                linearText = art.youWon1;
-            }
-        }
-        if (style == 2) {
-            if (levelNum == 1) {
-                linearText = art.levelOne2;
-            } else if (levelNum == 2) {
-                linearText = art.levelTwo2;
-            } else if (levelNum == 3) {
-                linearText = art.levelThree2;
-            } else if (levelNum == -1) {
-                linearText = art.youWon2;
-            }
-        }
-        levelText = art.strToArray(linearText);
-        Layer anima = new Layer(levelText, "Animation");
-        org.addLayer(anima);
-        org.setCam(-5, -4);
-        for (int i=0; i<levelText[0].length + 3; i++){
-            org.moveCam(2,0);
-            
-            try {
-                Thread.sleep(20);
-            } catch (InterruptedException e) {}
-        }
-        org.setCam(0,0);
-        org.removeLayer("Animation");
     }
 
     /** Turn a rectangular String with newlines into a String[][] array, without debug info.
