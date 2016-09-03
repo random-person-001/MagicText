@@ -196,14 +196,6 @@ public class Room implements java.io.Serializable{
         addList.add(theObj);
     }
 
-    public void addMessage(FlavorText thing){ flavorTexts.add(thing); }
-
-    public void queryForText(int testX, int testY){
-        for (FlavorText text : flavorTexts){
-            text.textIfCorrectSpot(testX, testY);
-        }
-    }
-
     /**
      * Don't want all that gunk of layering to clog up the next level!
      *
@@ -417,44 +409,19 @@ public class Room implements java.io.Serializable{
         return playo;
     }
 
-
-    @Deprecated // Use CompactTextBox instead
-    public void infoMessage(ImageOrg org, String usefulTip) {
-        art arty = new art();
-        Layer bkgd = new Layer(art.strToArray(arty.usefulTipBkgd), "tip", 5, 5, false, true);
-        char[] tipArr = usefulTip.toCharArray();
-        String[] strArr = new String[tipArr.length];
-        for (int i = 0; i < tipArr.length; i++) {
-            strArr[i] = String.valueOf(tipArr[i]);
-        }
-        int n = 3;
-        for (int i = 0; i < strArr.length; i++) {
-            bkgd.self[n][i % 28 + 5] = strArr[i];
-            if (i % 28 == 27) {
-                n++;
-            }
-        }
-        org.addLayer(bkgd);
-        org.compileImage();
-
-        Window window = org.getWindow();
-        Dismissal keyListener = new Dismissal();
-        window.txtArea.addKeyListener(keyListener); // Add key listeners.
-        while (!keyListener.resume) {
-            try {
-                Thread.sleep(300);
-            } catch (InterruptedException ignored) {
-            }
-        }
-        org.removeLayer("tip");
-        window.txtArea.removeKeyListener(keyListener);
-    }
-
-    public void textBox(FlavorText message){
+    public void queueMessage(FlavorText message){
         messageQueue.add(message);
         System.out.println("MESSAGE STACK SIZE: " + messageQueue.size());
         if (messageQueue.size() == 1){
             messageQueue.get(0).output();
+        }
+    }
+
+    public void plantText(FlavorText thing){ flavorTexts.add(thing); }
+
+    public void queryForText(int testX, int testY){
+        for (FlavorText text : flavorTexts){
+            text.textIfCorrectSpot(testX, testY);
         }
     }
 
@@ -496,12 +463,11 @@ public class Room implements java.io.Serializable{
 
         setObjsPause(true);
         org.addLayer(txtBox);
-        org.compileImage();
 
         Window window = org.getWindow();
         Dismissal keyListener = new Dismissal();
-        window.txtArea.addKeyListener(keyListener); // Add key listeners.
         keyListener.resume = false;
+        window.txtArea.addKeyListener(keyListener); // Add key listeners.
 
         //System.out.println(text);
 
@@ -517,49 +483,7 @@ public class Room implements java.io.Serializable{
      */
 
     public void splashMessage(String message, String speaker){
-        addMessage(new FlavorText(message, speaker));
-    }
-
-    /**
-     * An oldish, kinda messy method for the options screen in the oldish game pause thing
-     *
-     * @param org the image organizer
-     */
-    private void options(ImageOrg org) {
-        art arty = new art();
-        int camStartX = org.getCamX();
-        Layer bkgd = new Layer(art.strToArray(arty.optionsbkgd), "opts", false, true);
-        org.addLayer(bkgd);
-        String[][] textArry = art.strToArray(arty.optionsText);
-        Layer texty = new Layer(textArry, "texty", org.getCamY() + 1, org.getCamX());
-        org.addLayer(texty);
-
-        Window window = org.getWindow();
-        OptionsSelector keyListener = new OptionsSelector(org);
-        window.txtArea.addKeyListener(keyListener); // Add key listeners.
-        while (!keyListener.resume) {
-            try {
-                int newX;
-                if (org.getCamX() < -1 * textArry[0].length - 6) {
-                    newX = textArry[0].length;
-                } else {
-                    newX = org.getCamX() - 1;
-                }
-                org.setCam(newX, org.getCamY());
-                org.compileImage();
-                Thread.sleep(70);
-            } catch (InterruptedException ignored) {
-            }
-        }
-        try {
-            playo.setBackgroundColor(window.txtArea.getBackground());
-        } catch (NullPointerException e) {
-            System.out.println(e);
-        }
-        org.setCam(camStartX, org.getCamY());
-        org.removeLayer("opts");
-        org.removeLayer("texty");
-        window.txtArea.removeKeyListener(keyListener);
+        plantText(new FlavorText(message, speaker));
     }
 
     public class FlavorText implements java.io.Serializable {
@@ -624,7 +548,7 @@ public class Room implements java.io.Serializable{
             for (String message : messages) {
                 //System.out.println("STACKING FOLLOWING MESSAGE:\n " + message);
                 FlavorText panel = new FlavorText(x, y, message, speaker);
-                textBox(panel);
+                queueMessage(panel);
             }
         }
 

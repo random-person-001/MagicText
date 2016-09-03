@@ -24,9 +24,9 @@ public class Mountains extends Room {
                 Thread.sleep(20);
 
                 if (count == 0) {
-                    textBox(new FlavorText("Ah, the air is nice and fresh\n outside.", ""));
-                    textBox(new FlavorText("Endless rows of trees covered in sunset\n sitting beyond your view distance....", ""));
-                    textBox(new FlavorText("A picture taken here on this cliff\n would definitely make a great postcard.", ""));
+                    queueMessage(new FlavorText("Ah, the air is nice and fresh\n outside.", ""));
+                    queueMessage(new FlavorText("Endless rows of trees covered in sunset\n sitting beyond your view distance....", ""));
+                    queueMessage(new FlavorText("A picture taken here on this cliff\n would definitely make a great postcard.", ""));
                     // ^ This should be an item in The Mines of Mementos
                     count++;
                 }

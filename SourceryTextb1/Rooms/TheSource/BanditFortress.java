@@ -26,7 +26,7 @@ public class BanditFortress extends Room{
                 }
                 if (count == 0){
                     if (playo.getX() == 109 && playo.getY() == 10) {
-                        textBox(new Room.FlavorText("Most capital letters (ex: A, B, C..) out in\n the world have flavor text \n accessible through the 'F' key", ""));
+                        queueMessage(new Room.FlavorText("Most capital letters (ex: A, B, C..) out in\n the world have flavor text \n accessible through the 'F' key", ""));
                     }
                     count++;
                 }
@@ -41,7 +41,7 @@ public class BanditFortress extends Room{
         super.playo.roomName = "ThePit";
 
         String[] doorLocked = {"The door seems to have locked behind you.","The owner must have installed\n an auto-lock on the door."};
-        addMessage(new Room.FlavorText(109, 9, doorLocked , ""));
+        plantText(new Room.FlavorText(109, 9, doorLocked , ""));
 
         art arty = new art();
         String[][] base = art.strToArray(arty.sourcePit);
