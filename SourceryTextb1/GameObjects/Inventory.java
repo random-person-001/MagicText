@@ -1,16 +1,15 @@
 package SourceryTextb1.GameObjects;
 
 import SourceryTextb1.ImageOrg;
-import SourceryTextb1.Layer;
 import SourceryTextb1.Window;
+import SourceryTextb1.Layer;
 import SourceryTextb1.art;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Timer;
 import java.util.TimerTask;
+import java.util.Timer;
 
 
 /**
@@ -18,7 +17,6 @@ import java.util.TimerTask;
  * Created by riley on 12-Jun-2016, mostly redone by Jared around 5 July 2016
  */
 class Inventory implements java.io.Serializable {
-    private HashMap<String, Integer> inventory;
     private ArrayList<Item> spells = new ArrayList<>();
     private ArrayList<Item> items = new ArrayList<>();
     private ArrayList<Item> equip = new ArrayList<>();
@@ -27,9 +25,8 @@ class Inventory implements java.io.Serializable {
     private ImageOrg org;
     private Layer selectedSpellsLayer;
     private int newSelectY = 2;
-    private int scrollTimer = 0;
-
-    private boolean shouldUpdate = true;
+    private int prevIndex = 0;
+    private int potatoIndex = 0;
 
     private final int TOP = 1;
     private final int SPELLS = 2;
@@ -40,12 +37,12 @@ class Inventory implements java.io.Serializable {
     private final int UPGRADE = 7;
 
     //BECAUSE SCOPE
-    public int menuID = 0;
+    private int menuID = 0;
     boolean pressedA = false;
     boolean pressedS = false;
     boolean pressedD = false;
     private int page = 1;
-    int indexX = 0;
+    private int indexX = 0;
 
     private Layer topMenuLayer = new Layer(art.strToArray(new art().topMenu), "top", 1, 27, false, true);
     private Layer quitMenuLayer = new Layer(art.strToArray(new art().quitMenu), "quit", 1, 27, false, true);
@@ -61,38 +58,17 @@ class Inventory implements java.io.Serializable {
         return newSelectY;
     }
 
-    public Inventory(ImageOrg orgo, Player p) {
+    Inventory(ImageOrg orgo, Player p) {
         org = orgo;
         player = p;
-        inventory = new HashMap<>(); // I have no idea why this can't go at a class-level with the declaration.
         selectedSpellsLayer = new Layer(new String[22][47], "selectedSpells", false);
 
-        inventory.put("WoodStaff", 0);
-        inventory.put("Book", 1);
-        inventory.put("Flame", 1);
-        inventory.put("Spark", 0);
-        inventory.put("Wanderer", 1);
-        inventory.put("SmallHealth", 1);
-        inventory.put("HugeHealth", 1);
         /*
         spells.add(new Item("Spark","Arcane Spell;\nFires a spark of energy.\n\n\"All great fires start\n with small sparks\"", "Spark", player, "spell"));
-        spells.get(0).setDmgRngCost (3, 8, 2);
-        spells.get(0).setAnim("+","x");
-        spells.get(0).setDescMode("arcane");
         spells.add(new Item("Fireball","Fire Spell;\nUse your imagination", "FrBll", player, "spell"));
-        spells.get(1).setDmgRngCost (5, 6, 3);
-        spells.get(1).setAnim("6","9");
-        spells.get(1).setDescMode("fire");
         spells.add(new Item("Frostbite","Ice Spell;\nFreezes an enemy right\n in front of you.", "FrstB", player, "spell"));
-        spells.get(2).setDmgRngCost (4, 2, 5);
-        spells.get(2).setAnim("X","x");
-        spells.get(2).setDescMode("ice");
         spells.add(new Item("Shadow Knife","Dark Spell;\nThrows a blade made of\n forbidden magic.\n\nThe dart seems to have a \n soul that refuses to die," +
                 "\n and thus travels very far.", "ShKnf", player, "spell"));
-        spells.get(3).setDmgRngCost (2, 15, 4);
-        spells.get(3).setAnim("/","\\");
-        spells.get(3).setDescMode("dark");
-
         */
         equip.add(new Item("Dusty Robe", "Dust is baked into this\n old robe.\n\nThe newest students at\n The Magic Academy get\n only hand-me-downs. As a" +
                 "\n result, they are usually\n really, really old.\n\n+2 Defense", player, "equip"));
@@ -109,7 +85,7 @@ class Inventory implements java.io.Serializable {
      *
      * @param input the Item you are placing into the inventory. Doesn't matter which type.
      */
-    public void addItem(Item input) {
+    void addItem(Item input) {
         switch (input.itemType) {
             case 1:
                 spells.add(input);
@@ -124,63 +100,18 @@ class Inventory implements java.io.Serializable {
     }
 
     /**
-     * Make there be one less item in the player's inventory
-     *
-     * @param itemName which to have less of
-     */
-    public void subtractItem(String itemName) {
-        if (inventory.containsKey(itemName)) {
-            int n = inventory.get(itemName);
-            inventory.put(itemName, n - 1);
-        } else {
-            inventory.put(itemName, 0);
-        }
-    }
-
-    /**
-     * How many of <X> do I have in my inventory?  Find out!
-     *
-     * @param itemName which item
-     * @return how many of itemName s there are
-     */
-    public int getItem(String itemName) {
-        if (inventory.containsKey(itemName)) {
-            return inventory.get(itemName);
-        } else {
-            inventory.put(itemName, 0);
-            return 0;
-        }
-    }
-
-    /**
-     * Do I have <X> in my inventory?  Find out!
-     *
-     * @param itemName which item
-     * @return whether there are more than 0
-     */
-    public boolean hasItem(String itemName) {
-        return getItem(itemName) > 0;
-    }
-
-    /**
      * Press a key?  Call this to do stuff!
      *
      * @param c which character you have pressed on the board
      */
     void keyPressed(char c) {
-        //System.out.println(c);
-
         org.editLayer(" ", "selector", newSelectY, indexX);
         switch (c) {
             case '©': // Up
                 newSelectY--;
-                scrollTimer = 0;
-                //selectorLayer.clear();
                 break;
             case '®': // Down
                 newSelectY++;
-                scrollTimer = 0;
-                //selectorLayer.clear();
                 break;
             default:
                 break;
@@ -193,7 +124,6 @@ class Inventory implements java.io.Serializable {
                 newSelectY = 21;
             }
             System.out.println(c);
-
         }
         org.editLayer(">", "selector", newSelectY, indexX);
     }
@@ -201,9 +131,8 @@ class Inventory implements java.io.Serializable {
     /**
      * Bring up the menus (meanwhile pausing everything else)
      */
-    public void newShow() {
+    void newShow() {
         System.out.println("Bringing up menu...");
-
         player.frozen = true;
         org.getLayer(player.layerName).setImportance(false);
         player.room.setObjsPause(true);
@@ -212,14 +141,12 @@ class Inventory implements java.io.Serializable {
         newSelectY = 2;
 
         selectorLayer.clear();
-
         org.addLayer(topMenuLayer);
         org.addLayer(selectorLayer);
         org.addLayer(infoLayer);
 
         Window window = org.getWindow();
         Navigator keyListener = new Navigator(this);
-
         window.txtArea.addKeyListener(keyListener); // Add key listeners.
 
         Timer timer = new Timer();
@@ -251,9 +178,6 @@ class Inventory implements java.io.Serializable {
      */
     private void newUpdateSelector(int menuType) {
         //long beginNano = System.nanoTime();
-
-        //org.clearLayer("selector");
-
         org.editLayer(" ", "selector", newSelectY, indexX);
 
         switch (menuType) {
@@ -282,7 +206,6 @@ class Inventory implements java.io.Serializable {
 
         int indexY = newSelectY;
         org.editLayer(">", "selector", indexY, indexX);
-
         //System.out.println(String.format("Time to process menu: %1$dmcs",(System.nanoTime() - beginNano) / 1000));
     }
 
@@ -405,8 +328,6 @@ class Inventory implements java.io.Serializable {
         }
     }
 
-    int potatoIndex = 0;
-
     /**
      * The submenu that deals with upgrades from Magic Potatoes
      */
@@ -522,26 +443,26 @@ class Inventory implements java.io.Serializable {
         }
     }
 
-    int prevIndex = 0;
+    /**
+     * Show the listing for all the item-item-items (like, Item.java that aren't spells or equipment)
+     * @param items dem array-list of you-know-what!
+     */
     private void genericItemListing(ArrayList<Item> items) {
-        //infoLayer.clear();
-
         double pageReq = Math.ceil((double) items.size() / 16);
 
         if (pageReq == 0) {
             pageReq = 1;
         }
-
         if (page > pageReq) {
             page = 1;
         }
 
         org.editLayer(String.valueOf((int) pageReq), "selector", 2, 41);
         org.editLayer(String.valueOf(page), "selector", 2, 39);
-
         fillItemNames(items, 33, 3, page);
 
         int index = newSelectY - 3 + ((page - 1) * 16);
+
         if (index != prevIndex){
             org.getLayer("invInfo").clear();
             System.out.println(String.format("Prev Index: %d vs. %d", prevIndex, index));
@@ -551,7 +472,6 @@ class Inventory implements java.io.Serializable {
         if (index < items.size() && newSelectY < 19) {
             fillInfoText(items.get(index).getDesc(), 1, 1);
         }
-        //org.getLayer(org.getPosLayer("selector")).makeDuplicateOf(bufferLayer);
     }
 
     private void fillInfoText(String text, int startX, int startY) {
@@ -573,7 +493,6 @@ class Inventory implements java.io.Serializable {
         if (pageSize > 16) {
             pageSize = 16;
         }
-
         for (int ii = 0; ii < pageSize; ii++) {
             String itemName = items.get(ii + pageOffset).getName();
             putText(itemName, startX, startY + ii);
@@ -582,14 +501,13 @@ class Inventory implements java.io.Serializable {
 
     /**
      * In the selector layer, incrementally place a text starting at an X,Y coordinate
-     *
-     * @param text a string to be displayed
-     * @param X    starting X coordinate
-     * @param Y    Y coordinate
+     *  @param text a string to be displayed
+     * @param xStart    starting X coordinate
+     * @param yStart    Y coordinate
      */
-    private void putText(String text, int X, int Y) {
+    private void putText(String text, int xStart, int yStart) {
         for (int iii = 0; iii < text.length(); iii++) {
-            org.editLayer(String.valueOf(text.charAt(iii)), "selector", Y, X + iii);
+            org.editLayer(String.valueOf(text.charAt(iii)), "selector", yStart, xStart + iii);
         }
     }
 
@@ -621,11 +539,11 @@ class Inventory implements java.io.Serializable {
         }
     }
 
-    protected class MenuTimer extends TimerTask{
+    private class MenuTimer extends TimerTask{
         Window window;
         Navigator keyListener;
 
-        protected MenuTimer(Window windouw, Navigator navi){
+        MenuTimer(Window windouw, Navigator navi){
             window = windouw;
             keyListener = navi;
         }
@@ -648,7 +566,6 @@ class Inventory implements java.io.Serializable {
 
 class Navigator extends KeyAdapter {
     private Inventory inv;
-    boolean resume = false;
 
     Navigator(Inventory inventory) {
         inv = inventory;
@@ -686,7 +603,6 @@ class Navigator extends KeyAdapter {
         }
         if (key == KeyEvent.VK_ESCAPE || event.getKeyChar() == 'w') {
             inv.exitAllMenus();
-            resume = true;
         }
     }
 }
