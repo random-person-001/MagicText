@@ -2,8 +2,7 @@ package SourceryTextb1.Rooms.SeaOfSurprise;
 
 import SourceryTextb1.GameObjects.Mortal;
 import SourceryTextb1.GameObjects.Player;
-import SourceryTextb1.GameObjects.Spike;
-import SourceryTextb1.ImageOrg;
+import SourceryTextb1.GameObjects.TheSource.Spider;
 import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
 import SourceryTextb1.art;
@@ -97,11 +96,11 @@ public class DockAndShip extends Room {
             org.editLayer("X", "Boat", i, 42);
         }
 
-        makeSpikeAt(26, 20); // Around front of boat
-        makeSpikeAt(36, 25);
+        makeSpiderAt(26, 20); // Around front of boat
+        makeSpiderAt(36, 25);
 
-        makeSpikeAt(51, 43);
-        makeSpikeAt(52, 45);
+        makeSpiderAt(51, 43);
+        makeSpiderAt(52, 45);
 
         makePiranahAt(20, 22);
         makePiranahAt(24, 23);
@@ -110,10 +109,9 @@ public class DockAndShip extends Room {
         genericRoomInitialize();
     }
 
-    private void makeSpikeAt(int x, int y){
-        Spike spike = new Spike(org, this, x, y);
-        spike.setMoveFrq(15);
-        addMortal(spike);
+    private void makeSpiderAt(int x, int y){
+        Spider spidey = new Spider(this, x, y);
+        addMortal(spidey);
     }
 
     private void makePiranahAt(int x, int y){

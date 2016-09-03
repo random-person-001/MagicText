@@ -12,8 +12,6 @@ import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
 import SourceryTextb1.art;
 
-import java.util.Objects;
-
 /**
  * The initial view of the Source Pit.
  * @author 119184
@@ -85,7 +83,7 @@ public class ThePit extends Room {
         Layer lay1 = new Layer(base, "Test");
         org.addLayer(lay1);
 
-        Spider itsyBitsy = new Spider(org, this, 57, 42); // blocks way out.
+        Spider itsyBitsy = new Spider(this, 57, 42); // blocks way out.
         addMortal(itsyBitsy);
 
         genericRoomInitialize();

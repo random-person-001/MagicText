@@ -50,7 +50,7 @@ public class BanditFortress extends Room{
         Layer lay1 = new Layer(base, "Base");
         org.addLayer(lay1);
 
-        Spider itsyBitsy = new Spider(org, this, 57, 42);
+        Spider itsyBitsy = new Spider(this, 57, 42);
         addMortal(itsyBitsy);
 
         genericRoomInitialize();

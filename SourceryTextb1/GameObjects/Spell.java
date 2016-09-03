@@ -4,14 +4,14 @@ import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
 
-import static SourceryTextb1.GameObjects.Spike.r;
+import java.util.Random;
 
 /**
  * Create a new spell.  Attributes such as its character representation, damage, and range can be customized.
  * Created by riley on 13-Jun-2016.
  */
 public class Spell extends GameObject{
-
+    private Random rand = new Random();
     private String name = "Generic";
     private int range = -1;
     private String char1 = "X";
@@ -204,5 +204,12 @@ public class Spell extends GameObject{
 
     public void setAlting(boolean setTo) {
         dispAlting = setTo;
+    }
+
+    int r(int max) {
+        return r(max, 0);
+    }
+    int r(int max, int min) {
+        return rand.nextInt((max - min) + 1) + min;
     }
 }

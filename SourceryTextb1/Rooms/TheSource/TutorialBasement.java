@@ -185,7 +185,7 @@ public class TutorialBasement extends Room {
         addMortal(flowers);
 
 
-        Spider spoidur = new Spider(org, this, 39, 7);
+        Spider spoidur = new Spider(this, 39, 7);
         addMortal(spoidur);
 
         genericRoomInitialize();

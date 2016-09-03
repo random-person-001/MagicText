@@ -5,7 +5,6 @@ import SourceryTextb1.GameObjects.TheSource.Bandit;
 import SourceryTextb1.GameObjects.TheSource.Spider;
 import SourceryTextb1.GameObjects.TheSource.WeakTower;
 import SourceryTextb1.GameObjects.TheSource.Wolf;
-import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
 import SourceryTextb1.art;
@@ -81,7 +80,7 @@ public class Mountains extends Room {
             addMortal(wolf);
         }
 
-        Spider hiddenMenace = new Spider(org, this, 56, 7);
+        Spider hiddenMenace = new Spider(this, 56, 7);
         addMortal(hiddenMenace);
 
         Bandit john = new Bandit(org, this, 132, 11);
