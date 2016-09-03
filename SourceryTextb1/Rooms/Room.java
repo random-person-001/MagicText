@@ -513,6 +513,14 @@ public class Room implements java.io.Serializable{
     }
 
     /**
+     *
+     */
+
+    public void splashMessage(String message, String speaker){
+        addMessage(new FlavorText(message, speaker));
+    }
+
+    /**
      * An oldish, kinda messy method for the options screen in the oldish game pause thing
      *
      * @param org the image organizer

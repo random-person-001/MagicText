@@ -262,6 +262,7 @@ public class HUD extends GameObject {
      * >make me a sandwich : evoke snarky response
      * >pointer | compiling | wifi | random : all relevant xkcd comics.
      * >ser test : Test serializing the player to a .sav file
+     * >set red (amount) : reds up the screen like the player took damage
      * >setResponseTime (time) : set a new duration for the response message on the console to be shown (seconds)
      * >sudo : enter sudo mode
      * >sudo make me a sandwich : evoke submissive response from computer.  Also enter sudo mode
@@ -322,6 +323,10 @@ public class HUD extends GameObject {
             int amountToGive = Integer.valueOf(command.substring(9));
             player.addPotato(amountToGive);
             showResponse(String.format("Giving the player %1$d potato(es)", amountToGive));
+        } else if (command.contains("set red ") && command.length() > 8) {
+            int amountToSet = Integer.valueOf(command.substring(8));
+            room.playo.screenRedness = amountToSet;
+            showResponse(String.format("Setting the screen redness"));
         } else if (command.contains("setResponseTime ")) {
             System.out.println(command.substring(16));
             int newTime = Integer.valueOf(command.substring(16));
@@ -384,7 +389,7 @@ public class HUD extends GameObject {
         } else if (command.contains("getpos")) {
             showResponse("Currently at x=" + player.getX() + " y=" + player.getY());
         } else if ((command.contains("blue") && command.contains("rinse")) || command.contains("defoliator")) {
-            // Artimis Fowl and Star Wars references, respectively.
+            // Artemis Fowl and Star Wars references, respectively.
             int smoteMortals = 0;
             for (Mortal e : room.enemies) {
                 if (!e.strClass.equals("Player")) {

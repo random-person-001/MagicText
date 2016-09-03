@@ -79,6 +79,7 @@ public class Player extends Mortal implements java.io.Serializable {
     public Item armor = new Item("None", "", this);
 
 
+    int screenRedness = 0;
     /**
      * Initialize a whole lotta variables.
      *
@@ -93,10 +94,13 @@ public class Player extends Mortal implements java.io.Serializable {
 
         orgo = theOrg;
         layerName = "playerLayer";
-        Layer playerLayer = new Layer(new String[orgo.getWindow().maxH()][orgo.getWindow().maxW()], layerName);
+        Layer playerLayer = new Layer(new String[1][1], layerName);
+        playerLayer.setStr(1,1,"@");
         playerLayer.setImportance(true);
+
         orgo.addLayer(playerLayer);
-        setupForNewRoom();
+
+        //setupForNewRoom();
 
         inv = new Inventory(orgo, this);
 
@@ -140,7 +144,7 @@ public class Player extends Mortal implements java.io.Serializable {
      */
     @Override
     public void goTo(int newX, int newY) {
-        orgo.editLayer(" ", layerName, y, x);
+        //orgo.editLayer(" ", layerName, y, x);
         x = newX;
         y = newY;
         centerCamera();
@@ -153,7 +157,7 @@ public class Player extends Mortal implements java.io.Serializable {
     public void update() {
         if (frozen || dead) { // Should be first, so other things don't try to happen first
             try {
-                orgo.editLayer(" ", layerName, y, x);
+                //orgo.editLayer(" ", layerName, y, x);
                 if (dead) {
                     room.exitCode = "die";
                 }
@@ -173,6 +177,19 @@ public class Player extends Mortal implements java.io.Serializable {
             } else if (manaRegenClock >= (500 / maxMana) && mana < maxMana) {
                 mana++;
                 manaRegenClock = 0;
+            }
+
+            if (screenRedness > 0){
+                screenRedness --;
+                if (screenRedness > 200){ //This means that higher levels of redness depletes faster
+                    screenRedness--;
+                }
+                if (screenRedness > 100){
+                    screenRedness--;
+                }
+                //System.out.print("The screen is red! | ");
+                int opposite = 255 - screenRedness;
+                orgo.getWindow().txtArea.setForeground(new Color (255, opposite, opposite));
             }
 
             resetTime();
@@ -225,7 +242,7 @@ public class Player extends Mortal implements java.io.Serializable {
      * @param deathMessage a final string to show lest you have died
      */
     public void showPain(String deathMessage) {
-        orgo.editLayer(" ", layerName, y, x);
+        orgo.editLayer(" ", layerName, 0, 0);
         hurtColor += 3;
         lastPainMessage = deathMessage;
     }
@@ -242,14 +259,15 @@ public class Player extends Mortal implements java.io.Serializable {
      * Update the Player symbol
      */
     public void graphicUpdate() {
-        orgo.editLayer("@", layerName, y, x);
+        orgo.editLayer("@", layerName, 0, 0);
+        orgo.getLayer(layerName).setPos(y,x);
         centerCamera();
     }
 
     private void move(int direction) {
         if (!paused.get()) {
             try {
-                orgo.editLayer(" ", layerName, y, x);
+                //orgo.editLayer(" ", layerName, y, x);
                 room.removeFromObjHitMesh(x, y);
             } catch (IndexOutOfBoundsException e) {
                 return;
