@@ -1,5 +1,7 @@
-package SourceryTextb1.GameObjects;
+package SourceryTextb1.GameObjects.TheSource;
 
+import SourceryTextb1.GameObjects.DroppedItem;
+import SourceryTextb1.GameObjects.Mortal;
 import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
@@ -14,23 +16,19 @@ import static java.lang.StrictMath.abs;
  * Created by riley on 16-Jun-2016.
  */
 public class Troll extends Mortal {
-    private static Random rand = new Random();
     private int moveFrq = 20; //Higher is slower
     private DroppedItem itemOnDrop;
 
     public Troll(ImageOrg orga, Room theRoom, int xStart, int yStart, DroppedItem itemToDrop) {
         super.strClass = "Troll";
-        layerName = "trollLayer";
         orgo = orga;
         room = theRoom;
         itemOnDrop = itemToDrop;
+        layerName = room.makeUniqueLayerName(super.strClass);
         x = xStart;
         y = yStart;
         setHealth(20);
-        if (-1 == orgo.getPosLayer(layerName)) {// Layer doesn't exist yet; add it
-            System.out.println("troll layer doesn't yet exist");
-            orgo.addLayer(new Layer(new String[room.roomHeight][room.roomWidth], layerName));
-        }
+        orgo.addLayer(new Layer(new String[1][1], layerName));
     }
 
     public void setMoveFrq(int newfrq) {
@@ -40,7 +38,6 @@ public class Troll extends Mortal {
     @Override
     public void update() {
         // Try to move
-        orgo.editLayer(" ", layerName, y, x);
         room.removeMortal(this);
         boolean goodPlace = false;
         int rationality = 40000;
@@ -74,29 +71,18 @@ public class Troll extends Mortal {
                 return;
             }
         }
-        orgo.editLayer("T", layerName, y, x);
+        orgo.editLayer("T", layerName, 0, 0);
         room.removeMortal(this);
 
-        if (abs(room.playo.y - y) <= 3 && abs(room.playo.x - x) <= 3) {
+        if (abs(room.playo.getY() - y) <= 3 && abs(room.playo.getX() - x) <= 3) {
             room.playo.subtractHealth(3, "You know, maybe you should have listened \n when your mother told you not to \n play with trolls.");
         }
     }
 
     @Override
     protected void onDeath(){
+        orgo.removeLayer(layerName);
         System.out.println("AAAAAaaaack, a troll died.");
         //room.addObject(itemOnDrop);
     }
-
-    static int r(int max) {
-        return r(max, 0);
-    }
-
-    static int r(int max, int min) {
-        // nextInt is normally exclusive of the top value,
-        // so add 1 to make it inclusive
-        int randomNum = rand.nextInt((max - min) + 1) + min;
-        return randomNum;
-    }
-
 }

@@ -1,5 +1,6 @@
-package SourceryTextb1.GameObjects;
+package SourceryTextb1.GameObjects.TheSource;
 
+import SourceryTextb1.GameObjects.Mortal;
 import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;

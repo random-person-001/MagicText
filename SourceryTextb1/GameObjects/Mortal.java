@@ -3,7 +3,7 @@ package SourceryTextb1.GameObjects;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.TimerTask;
+import java.util.Random;
 
 import static java.lang.StrictMath.abs;
 
@@ -14,10 +14,19 @@ import static java.lang.StrictMath.abs;
 public class Mortal extends GameObject implements java.io.Serializable{
     protected String layerName;
     private int health = 10;
-    public int maxHealth = 50;
-    int attack = 0;
+    int maxHealth = 50;
+    private int attack = 0;
     private String deathMessage = "Unknown";
     private boolean isGoodGuy = false;
+    private Random rand = new Random();
+
+    protected int r(int max) {
+        return r(max, 0);
+    }
+    protected int r(int max, int min) {
+        return rand.nextInt((max - min) + 1) + min;
+    }
+
 
     /**
      * Mortal-specific stuff for updates.  Checks death and runs onDeath() when appropriate
@@ -115,7 +124,6 @@ public class Mortal extends GameObject implements java.io.Serializable{
         return abs(x-m.getX()) + abs(y-m.getY());
     }
 
-
     protected Mortal getClosestGoodGuy(){
         int closest = 50000000;
         Mortal closestM = null;
@@ -131,8 +139,8 @@ public class Mortal extends GameObject implements java.io.Serializable{
     }
 
     /**
-     * pathToPos, createPathTo, spreadPathPts, attemptPoint, and withinDist are all methods used in a path-finding algorithm I found on the
-     *  internet.
+     * pathToPos, createPathTo, spreadPathPts, attemptPoint, and withinDist are all methods used in a path-finding
+     * algorithm I found on the internet.
      *
      * Follow this link:
      *  https://en.wikipedia.org/wiki/Pathfinding
