@@ -94,8 +94,8 @@ public class Player extends Mortal implements java.io.Serializable {
 
         orgo = theOrg;
         layerName = "playerLayer";
-        Layer playerLayer = new Layer(new String[1][1], layerName);
-        playerLayer.setStr(1,1,"@");
+        Layer playerLayer = new Layer(new String[3][3], layerName);
+        playerLayer.setStr(1, 1, "@");
         playerLayer.setImportance(true);
 
         orgo.addLayer(playerLayer);
@@ -118,7 +118,7 @@ public class Player extends Mortal implements java.io.Serializable {
     }
 
     public void setupForNewRoom() {
-        Layer aimDispLayer = new Layer(new String[orgo.getWindow().maxH()][orgo.getWindow().maxW()], aimDispName);
+        Layer aimDispLayer = new Layer(new String[1][1], aimDispName);
         centerCamera();
         orgo.addLayer(aimDispLayer);
     }
@@ -199,28 +199,30 @@ public class Player extends Mortal implements java.io.Serializable {
         }
     }
 
+    boolean hadLocked = false;
     private void aimDispUpdate() {
-        int editAt = orgo.getPosLayer(aimDispName);
-        if (editAt > -1) {  //Basically, if aimDispLayer != null
-            orgo.getLayer(editAt).clear();
-            if (orientationLocked) {
-                switch (orientation) {
-                    case UP:
-                        orgo.editLayer("+", editAt, y - 1, x);
-                        break;
-                    case DOWN:
-                        orgo.editLayer("+", editAt, y + 1, x);
-                        break;
-                    case LEFT:
-                        orgo.editLayer("+", editAt, y, x - 1);
-                        break;
-                    case RIGHT:
-                        orgo.editLayer("+", editAt, y, x + 1);
-                        break;
-                    default:
-                        System.out.println("No valid orientation? IMPOSSIBLE");
-                }
+        if (orientationLocked && !hadLocked){
+            switch (orientation){
+                case UP:
+                    orgo.editLayer("+", layerName, 0, 1);
+                    break;
+                case DOWN:
+                    orgo.editLayer("+", layerName, 2, 1);
+                    break;
+                case LEFT:
+                    orgo.editLayer("+", layerName, 1, 0);
+                    break;
+                case RIGHT:
+                    orgo.editLayer("+", layerName, 1, 2);
+                    break;
             }
+            hadLocked = true;
+        } else if (!orientationLocked && hadLocked){
+            orgo.editLayer(" ", layerName, 1, 0);
+            orgo.editLayer(" ", layerName, 0, 1);
+            orgo.editLayer(" ", layerName, 1, 2);
+            orgo.editLayer(" ", layerName, 2, 1);
+            hadLocked = false;
         }
     }
 
@@ -242,7 +244,7 @@ public class Player extends Mortal implements java.io.Serializable {
      * @param deathMessage a final string to show lest you have died
      */
     public void showPain(String deathMessage) {
-        orgo.editLayer(" ", layerName, 0, 0);
+        //orgo.editLayer(" ", layerName, 0, 0);
         hurtColor += 3;
         lastPainMessage = deathMessage;
     }
@@ -259,8 +261,8 @@ public class Player extends Mortal implements java.io.Serializable {
      * Update the Player symbol
      */
     public void graphicUpdate() {
-        orgo.editLayer("@", layerName, 0, 0);
-        orgo.getLayer(layerName).setPos(y,x);
+        //orgo.editLayer("@", layerName, 1, 1);
+        orgo.getLayer(layerName).setPos(y-1, x-1);
         centerCamera();
     }
 
