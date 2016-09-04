@@ -261,7 +261,7 @@ public class Player extends Mortal implements java.io.Serializable {
      * Update the Player symbol
      */
     public void graphicUpdate() {
-        //orgo.editLayer("@", layerName, 1, 1);
+        orgo.editLayer("@", layerName, 1, 1);
         orgo.getLayer(layerName).setPos(y-1, x-1);
         centerCamera();
     }

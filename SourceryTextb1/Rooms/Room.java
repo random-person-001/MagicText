@@ -160,8 +160,6 @@ public class Room implements java.io.Serializable{
             for (GameObject obj : removeList) {
                 objs.remove(obj);
             }
-            int added = addList.size();
-            int removed = removeList.size();
             addList.clear();
             removeList.clear();
         } catch (ConcurrentModificationException ignore) {

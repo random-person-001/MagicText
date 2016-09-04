@@ -45,7 +45,7 @@ public class ImageOrg implements java.io.Serializable {
      */
     public void addLayer(Layer lay){
         toAdd.add(lay);
-        System.out.println(String.format("Layer Given: %1$s (%2$b)", lay.getName(), somethingChanged));
+        //System.out.println(String.format("Layer Given: %1$s (%2$b)", lay.getName(), somethingChanged));
         somethingChanged = true;
     }
 
@@ -56,37 +56,40 @@ public class ImageOrg implements java.io.Serializable {
                 importants.add(l);
             }
         }
-        toAdd.clear();
         for (Layer l : importants){
-            removeLayer(l.getName());
+            layers.remove(l);
         }
-        removeTheLayers();
         for (Layer l : importants){
-            addLayer(l);
+            layers.add(l);
         }
-        addTheLayers(false);
     }
 
-    private void addTheLayers () {
-        addTheLayers(true);
+    private String addTheLayers () {
+        return addTheLayers(true);
     }
 
-    private void addTheLayers (boolean reorderImportant) {
+    private String addTheLayers (boolean reorderImportant) {
+        String addList = "";
         for (Layer lay : toAdd) {
             layers.add(lay);
-            System.out.println("Adding: " + lay.getName());
+            addList += lay.getName() + " ";
+            //System.out.println("Adding: " + lay.getName());
         }
         if (reorderImportant && !toAdd.isEmpty()){
             moveImportantLayersUp();
         }
         toAdd.clear();
+        return addList;
     }
 
-    private void removeTheLayers () {
+    private String removeTheLayers () {
+        String output = String.format("\n[%1$d] Layers Removed: ", layerChangeInstance);
         for (Layer lay : toRemove){
             layers.remove(lay);
+            output += lay.getName() + " ";
         }
         toRemove.clear();
+        return output;
     }
 
     public boolean getDebug(){
@@ -188,7 +191,6 @@ public class ImageOrg implements java.io.Serializable {
         Layer get;
         try {
             get = layers.get(loc);
-
         } catch (ArrayIndexOutOfBoundsException e){
             System.out.println("No such layer (" + loc + ")! " + e);
             return;
@@ -345,13 +347,20 @@ public class ImageOrg implements java.io.Serializable {
         */
     }
 
+    int layerChangeInstance = 1;
     public void newSendImage(){
         try {
             if (somethingChanged) {
                 //System.out.println("New Frame...");
                 //long nanoTime = System.nanoTime();
-                addTheLayers();
-                removeTheLayers();
+                boolean doOutput = toAdd.size() > 0 || toRemove.size() > 0;
+                String changeList = String.format("- Org -\n[%1$d] Layers Added:   ", layerChangeInstance);
+                changeList += addTheLayers();
+                changeList += removeTheLayers();
+                if (doOutput) {
+                    System.out.println(changeList + "\n");
+                    layerChangeInstance++;
+                }
                 window.clearImage();
                 window.topDownBuild(layers, camX, camY);
                 window.build();
