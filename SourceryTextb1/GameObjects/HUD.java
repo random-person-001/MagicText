@@ -493,7 +493,7 @@ public class HUD extends GameObject {
             showResponse("Collected " + n + " items around the level!");
         } else if (command.equals("ser test") || command.contains("save")){
             showResponse("Running save dialog");
-            if (saveGame()) { // returns true on success
+            if (player.saveGame()) { // returns true on success
                 showResponse("Saved!");
             }else{
                 showResponse("There was a problem saving.");
@@ -628,43 +628,6 @@ public class HUD extends GameObject {
             e.printStackTrace();
         } catch (NullPointerException ignore) {
         } // happens when timer is late
-    }
-
-    /**
-     * Writes a .sav file (of the serialized Player) to a user-defined directory
-     * @return whether the saving was successful
-     */
-    private boolean saveGame(){
-        System.out.println("Running serialization test...");
-        String path;
-        JFileChooser chooser = new JFileChooser();
-        FileNameExtensionFilter filter = new FileNameExtensionFilter(
-                "Sourcery Text Saves", "sav");
-        chooser.setFileFilter(filter);
-        int returnVal = chooser.showSaveDialog(new Component(){});
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            path = chooser.getSelectedFile().getPath();
-            if (!path.endsWith(".sav")){ // Add .sav to file if user didn't.
-                path += ".sav";
-            }
-            System.out.println("You chose to save the file to: " + path);
-        } else return false;
-
-        try
-        {
-            FileOutputStream fileOut =
-                    new FileOutputStream(path);
-            ObjectOutputStream out = new ObjectOutputStream(fileOut);
-            out.writeObject(room.playo);
-            out.close();
-            fileOut.close();
-            System.out.printf("Serialized Player data is saved in " + path);
-            return true;
-        }catch(IOException i)
-        {
-            i.printStackTrace();
-            return false;
-        }
     }
 
     private class ConsoleKeyListener extends KeyAdapter {

@@ -18,9 +18,15 @@ import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
 
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 
 /**
  * Player-controlled protagonist
@@ -159,7 +165,7 @@ public class Player extends Mortal implements java.io.Serializable {
             try {
                 //orgo.editLayer(" ", layerName, y, x);
                 if (dead) {
-                    room.exitCode = "die";
+                    onDeath();
                 }
             } catch (IndexOutOfBoundsException ignored) {
             }
@@ -189,7 +195,7 @@ public class Player extends Mortal implements java.io.Serializable {
                 }
                 //System.out.print("The screen is red! | ");
                 int opposite = 255 - screenRedness;
-                orgo.getWindow().txtArea.setForeground(new Color (255, opposite, opposite));
+                orgo.getWindow().txtArea.setForeground(new Color(255, opposite, opposite));
             }
 
             resetTime();
@@ -249,12 +255,52 @@ public class Player extends Mortal implements java.io.Serializable {
         lastPainMessage = deathMessage;
     }
 
+
+    /**
+     * Writes a .sav file (of the serialized Player) to a user-defined directory
+     * @return whether the saving was successful
+     */
+    public boolean saveGame(){
+        System.out.println("Running serialization test...");
+        String path;
+        JFileChooser chooser = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(
+                "Sourcery Text Saves", "sav");
+        chooser.setFileFilter(filter);
+        int returnVal = chooser.showSaveDialog(new Component(){});
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            path = chooser.getSelectedFile().getPath();
+            if (!path.endsWith(".sav")){ // Add .sav to file if user didn't.
+                path += ".sav";
+            }
+            System.out.println("You chose to save the file to: " + path);
+        } else return false;
+
+        try
+        {
+            FileOutputStream fileOut =
+                    new FileOutputStream(path);
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(room.playo);
+            out.close();
+            fileOut.close();
+            System.out.printf("Serialized Player data is saved in " + path);
+            return true;
+        }catch(IOException i)
+        {
+            i.printStackTrace();
+            return false;
+        }
+    }
+
+
     @Override
     protected void onDeath() {
         orgo.getWindow().txtArea.setForeground(Color.RED);
         orgo.getWindow().txtArea.removeKeyListener(playerKeyListener);
         room.compactTextBox(orgo, lastPainMessage, "An ominous voice from above", false);
         dead = true;
+        room.exitCode = "die";
     }
 
     /**
