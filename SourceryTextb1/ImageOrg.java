@@ -350,7 +350,7 @@ public class ImageOrg implements java.io.Serializable {
     int layerChangeInstance = 1;
     public void newSendImage(){
         try {
-            if (somethingChanged) {
+            //if (somethingChanged) {
                 //System.out.println("New Frame...");
                 //long nanoTime = System.nanoTime();
                 boolean doOutput = toAdd.size() > 0 || toRemove.size() > 0;
@@ -366,7 +366,7 @@ public class ImageOrg implements java.io.Serializable {
                 window.build();
                 //int elapsedMs = (int) ((System.nanoTime() - nanoTime) / 1000000);
                 //System.out.println("Update time: " + elapsedMs + "ms");
-            }
+            //}
             somethingChanged = false;
         }
         catch (ConcurrentModificationException ignore) {}// Cuz it'll be fixed next time probs.
