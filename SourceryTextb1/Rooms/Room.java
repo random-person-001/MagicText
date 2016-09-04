@@ -604,59 +604,6 @@ public class Room implements java.io.Serializable{
 
 
 /**
- * A selector thing for listening to and selecting one of the few options on the top level of the oldish pause screen
- */
-class PauseSelector extends KeyAdapter implements java.io.Serializable {
-    private ImageOrg org;
-    private int x = 14;
-    private int y = 15;
-    boolean resume = false;
-    boolean options = false;
-
-    PauseSelector(ImageOrg o) {
-        org = o;
-        org.editLayer("@", "pause", y, x);
-    }
-
-    @Override
-    public void keyPressed(KeyEvent event) {
-        char ch = event.getKeyChar();
-        if (event.getKeyCode() == KeyEvent.VK_UP || ch == 'w') {
-            org.editLayer(" ", "pause", y, x);
-            y = (y > 15) ? y - 2 : y;
-            org.editLayer("@", "pause", y, x);
-        }
-        if (event.getKeyCode() == KeyEvent.VK_DOWN || ch == 's') {
-            org.editLayer(" ", "pause", y, x);
-            y = (y < 19) ? y + 2 : y;
-            org.editLayer("@", "pause", y, x);
-        }
-        if (event.getKeyCode() == KeyEvent.VK_ESCAPE) {
-            resume = true;
-        }
-        if (event.getKeyCode() == KeyEvent.VK_ENTER) {
-            select();
-        }
-        System.out.println(y);
-    }
-
-    private void select() {
-        switch (y) {
-            case 15: // Exit
-                System.exit(0);
-            case 17: // Resume
-                resume = true;
-                break;
-            case 19: // Options
-                options = true;
-                break;
-            default:
-                break;
-        }
-    }
-}
-
-/**
  * A selector thing for listening to and selecting one of the few options on the Options menu of the oldish pause screen
  */
 class OptionsSelector extends KeyAdapter implements java.io.Serializable {

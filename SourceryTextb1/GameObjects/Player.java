@@ -49,6 +49,12 @@ public class Player extends Mortal implements java.io.Serializable {
     private final int LEFT = 2;
     private final int RIGHT = 3;
 
+    protected boolean upPressed = false;
+    protected boolean downPressed = false;
+    protected boolean leftPressed = false;
+    protected boolean rightPressed = false;
+    private int movecount = 0;
+
     private int orientation = UP;
     boolean orientationLocked = false;
     private String aimDispName = "aimDisp";
@@ -203,6 +209,33 @@ public class Player extends Mortal implements java.io.Serializable {
             graphicUpdate();
             aimDispUpdate();
             updateBackground();
+            doMovement();
+        }
+    }
+
+    private void doMovement(){
+        int movespeed = 5;
+        if(isGhost){
+            movespeed = 1;
+        }
+        if (movecount == 0) {
+            if (upPressed) {
+                move(UP);
+            }
+            if (downPressed) {
+                move(DOWN);
+            }
+            if (leftPressed) {
+                move(LEFT);
+            }
+            if (rightPressed) {
+                move(RIGHT);
+            }
+        }
+        if (!(upPressed || downPressed || leftPressed || rightPressed) || (movecount >= movespeed)) {
+            movecount = 0;
+        } else {
+            movecount++;
         }
     }
 
@@ -396,6 +429,7 @@ public class Player extends Mortal implements java.io.Serializable {
      */
     void keyPressed(char key) {
         switch (Character.toLowerCase(key)) {
+            /*
             case '©':
                 move(UP);
                 break;
@@ -408,6 +442,7 @@ public class Player extends Mortal implements java.io.Serializable {
             case 'æ':
                 move(RIGHT);
                 break;
+                */
             case 'b':
                 autonomous = !autonomous;
                 break;
@@ -670,27 +705,44 @@ class PlayerKeypressListener extends KeyAdapter implements java.io.Serializable 
     @Override
     public void keyPressed(KeyEvent event) {
         if (!player.frozen && !player.dead) {
-            char ch = event.getKeyChar();
-            player.keyPressed(ch);
             if (event.getKeyCode() == KeyEvent.VK_UP) {
-                player.keyPressed('©');
+                player.upPressed = true;
             }
-            if (event.getKeyCode() == KeyEvent.VK_DOWN) {
-                player.keyPressed('®');
+            else if (event.getKeyCode() == KeyEvent.VK_DOWN) {
+                player.downPressed = true;
             }
-            if (event.getKeyCode() == KeyEvent.VK_LEFT) {
-                player.keyPressed('µ');
+            else if (event.getKeyCode() == KeyEvent.VK_LEFT) {
+                player.leftPressed = true;
             }
-            if (event.getKeyCode() == KeyEvent.VK_RIGHT) {
-                player.keyPressed('æ');
+            else if (event.getKeyCode() == KeyEvent.VK_RIGHT) {
+                player.rightPressed = true;
             }
-            if (event.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            else if (event.getKeyCode() == KeyEvent.VK_ESCAPE) {
                 player.keyPressed('\'');
-
+            } else{
+                player.keyPressed(event.getKeyChar());
             }
         }
         if (player.dead) {
             System.out.println("No, stop it.  You're dead.");
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent event) {
+        if (!player.frozen && !player.dead) {
+            if (event.getKeyCode() == KeyEvent.VK_UP) {
+                player.upPressed = false;
+            }
+            else if (event.getKeyCode() == KeyEvent.VK_DOWN) {
+                player.downPressed = false;
+            }
+            else if (event.getKeyCode() == KeyEvent.VK_LEFT) {
+                player.leftPressed = false;
+            }
+            else if (event.getKeyCode() == KeyEvent.VK_RIGHT) {
+                player.rightPressed = false;
+            }
         }
     }
 }
