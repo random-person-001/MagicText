@@ -24,6 +24,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -264,6 +265,7 @@ public class Player extends Mortal implements java.io.Serializable {
         System.out.println("Running serialization test...");
         String path;
         JFileChooser chooser = new JFileChooser();
+        chooser.setSelectedFile(new File(roomName + ".sav"));
         FileNameExtensionFilter filter = new FileNameExtensionFilter(
                 "Sourcery Text Saves", "sav");
         chooser.setFileFilter(filter);

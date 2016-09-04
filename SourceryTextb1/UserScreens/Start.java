@@ -8,9 +8,9 @@ package SourceryTextb1.UserScreens;
 import SourceryTextb1.GameObjects.Player;
 import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
+import SourceryTextb1.Rooms.TheSource.Cliffside;
 import SourceryTextb1.Rooms.TheSource.TutorialBasement;
 import SourceryTextb1.Rooms.TheSource.BanditFortress;
-import SourceryTextb1.Rooms.TheSource.Mountains;
 import SourceryTextb1.Rooms.TheSource.ThePit;
 import SourceryTextb1.Rooms.NewTestRoom;
 import SourceryTextb1.Rooms.Room;
@@ -72,15 +72,15 @@ public class Start {
                     pit.startup();
                     roomID = pit.enter();
                     break;
-                case "Mountains":
-                    System.out.println("Entering the Mountains");
-                    Mountains mtns = new Mountains(player);
+                case "Cliffside":
+                    System.out.println("Entering the Cliffside");
+                    Cliffside mtns = new Cliffside(player);
                     prepLevel(org, game, player, mtns);
                     mtns.startup();
                     roomID = mtns.enter();
                     break;
                 case "BanditFortress":
-                    System.out.println("Entering the Mountains");
+                    System.out.println("Entering the Cliffside");
                     BanditFortress bf = new BanditFortress(player);
                     prepLevel(org, game, player, bf);
                     bf.startup();

@@ -77,6 +77,7 @@ class MainMenu {
                             Thread.sleep(2000);
                         } catch (InterruptedException ignore) {}
                         org.removeAllButPlayer();
+                        org.removeLayer("playerLayer");
                         window.txtArea.setForeground(Color.WHITE);
                         org.setCam(0,0);
                     }

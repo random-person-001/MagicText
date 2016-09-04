@@ -13,7 +13,7 @@ import SourceryTextb1.art;
  * Some mountains, where you fight some enemies
  * Created by riley on 15-Jun-2016.
  */
-public class Mountains extends Room {
+public class Cliffside extends Room {
     private Layer baseLayer;
 
     protected String loop() {
@@ -73,7 +73,7 @@ public class Mountains extends Room {
         addToBaseHitMesh(base, solids);
         baseLayer = new Layer(base, "backgronud");
         org.addLayer(baseLayer);
-        playo.roomName = "Mountains";
+        playo.roomName = "Cliffside";
 
         int[][] locs = {{106, 115}, {14, 17}};
         for (int ii = 0 ; ii < locs[0].length ; ii++){
@@ -98,7 +98,7 @@ public class Mountains extends Room {
         genericRoomInitialize();
     }
 
-    public Mountains(Player player) {
+    public Cliffside(Player player) {
         constructor(player);
         org = player.orgo;
     }

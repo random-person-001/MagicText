@@ -215,7 +215,7 @@ public class HUD extends GameObject {
         } else if (Character.isLetterOrDigit(key) || key == ' ' || key == '-' || key == '&') {
             command += key;
         } else if (key == '~'){
-            command = "ghost && catch all && goto 118 2 && jumpto Mountains";
+            command = "ghost && catch all && goto 118 2 && jumpto Cliffside";
         }
     }
 

@@ -38,7 +38,7 @@ public class ThePit extends Room {
                 Thread.sleep(20);
                 //updateObjs(20);
                 if (getPlayer().getY() > 43){
-                    setNewRoom("Mountains",11,1);
+                    setNewRoom("Cliffside",11,1);
                 }
                 if (count == 0){
                     if (playo.getX() == 109 && playo.getY() == 10) {

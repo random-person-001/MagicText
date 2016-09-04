@@ -668,6 +668,7 @@ class OptionsSelector extends KeyAdapter implements java.io.Serializable {
         org = o;
     }
 
+
     @Override
     public void keyPressed(KeyEvent event) {
         char ch = event.getKeyChar();
@@ -708,7 +709,6 @@ class OptionsSelector extends KeyAdapter implements java.io.Serializable {
             } else if (c.equals(CYAN)) {
                 org.getWindow().txtArea.setBackground(BLACK);
             }
-
         }
         if (event.getKeyCode() == KeyEvent.VK_ESCAPE) {
             resume = true;
