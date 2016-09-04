@@ -28,12 +28,10 @@ import java.awt.Color;
  */
 public class Start {
     private static boolean doDemo = false;
-
     private static Window game;
     private static ImageOrg org;
-
     protected static Player player;
-    protected static String roomID;
+    private static String roomID;
 
     public static void main(String[] args) throws InterruptedException {
         game = new Window();
@@ -48,7 +46,6 @@ public class Start {
             rooma.startup();
             rooma.enter();
         } else {
-
             WindowConfig wincnfg = new WindowConfig(org);
             wincnfg.config(false);
 
@@ -57,8 +54,8 @@ public class Start {
         }
     }
 
-    public static void runGame(){
-        while (roomID != "die") { //Java 8 ONLY
+    private static void runGame(){
+        while (!roomID.equals("die")) {
             switch (roomID) {
                 case "Tutorial":
                     System.out.println("Beginning tutorial!");
@@ -173,30 +170,6 @@ public class Start {
      */
     private static int occurrencesOf(String input, String ofWhat) {
         return input.length() - input.replace(ofWhat, "").length();
-    }
-    
-    private static String[][] makeABox(int width, int height){
-        String[][] output = new String[height][width];
-        for(int ii = 0; ii < height; ii++){
-            for (int iii = 0 ; iii < width; iii++){
-                if (ii == 0 || ii == height - 1){
-                    if (iii == 0 || iii == width - 1){
-                        output[ii][iii] = "O";
-                    } else {
-                        output[ii][iii] = "-";
-                    }
-                } else {
-                    if (iii == 0 || iii == width - 1){
-                        output[ii][iii] = "|";
-                    } else if (ii % 3 == 0 && iii % 7 == 0){
-                        output[ii][iii] = ".";
-                    } else {
-                        output[ii][iii] = " ";
-                    }
-                }
-            }
-        }
-        return output;
     }
 
     private static void intro() throws InterruptedException{
@@ -354,22 +327,22 @@ public class Start {
         game.txtArea.setBackground(Color.BLACK);
     }
 
-    protected static class StartCheck extends TimerTask {
+    static class StartCheck extends TimerTask {
         WindowConfig lock;
         StartCheck self = this;
         private boolean hasRan = false;
 
-        protected StartCheck(WindowConfig toCheck){
+        StartCheck(WindowConfig toCheck){
             lock = toCheck;
         }
 
-        public void startGame(){
+        void startGame(){
             player = new Player(org);
             roomID = "Tutorial";
             runGame();
         }
 
-        public void buildGame(Player imported){
+        void buildGame(Player imported){
             Start.roomID = imported.roomName;
             System.out.println(Start.roomID);
             Start.player = imported;
@@ -381,16 +354,13 @@ public class Start {
         }
 
         public void run(){
-            Layer endingScene;
             if (lock.doContinue && !hasRan){
                 new MainMenu(org, game, self);
                 hasRan = true;
-            } else {
-                //System.out.println("Game hasn't started yet!");
             }
         }
 
-        public void doIntro(){
+        void doIntro(){
             try {
                 System.out.println("Starting intro...");
                 intro();

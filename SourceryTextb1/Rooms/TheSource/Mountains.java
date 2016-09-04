@@ -10,10 +10,11 @@ import SourceryTextb1.Rooms.Room;
 import SourceryTextb1.art;
 
 /**
+ * Some mountains, where you fight some enemies
  * Created by riley on 15-Jun-2016.
  */
 public class Mountains extends Room {
-    Layer baseLayer;
+    private Layer baseLayer;
 
     protected String loop() {
         int count = 0;
@@ -89,8 +90,8 @@ public class Mountains extends Room {
         addMortal(jack);
 
         int[][] towerLocs = {{124, 14}, {130, 18}, {130, 8}, {140, 16}};
-        for (int ii = 0 ; ii < towerLocs.length ; ii++){
-            WeakTower t = new WeakTower(org, this, towerLocs[ii][0], towerLocs[ii][1]);
+        for (int[] towerLoc : towerLocs) {
+            WeakTower t = new WeakTower(org, this, towerLoc[0], towerLoc[1]);
             addMortal(t);
         }
 
