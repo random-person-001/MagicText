@@ -26,25 +26,23 @@ public class Room implements java.io.Serializable{
     public ImageOrg org;
     protected art arty = new art();
     public List<GameObject> objs = new ArrayList<>();
-    public List<GameObject> addList = new ArrayList<>();
-    public List<GameObject> removeList = new ArrayList<>();
+    private List<GameObject> addList = new ArrayList<>();
+    private List<GameObject> removeList = new ArrayList<>();
     public List<Mortal> enemies = new ArrayList<>();
     public HashMap storedStuff = new HashMap<String, Integer>();
-    boolean[][] objHitMesh;
-    boolean[][] baseHitMesh;
+    private boolean[][] objHitMesh;
+    private boolean[][] baseHitMesh;
 
-    public List<FlavorText> flavorTexts = new ArrayList<>();
-    public List<FlavorText> messageQueue = new ArrayList<>();
+    private List<FlavorText> flavorTexts = new ArrayList<>();
+    private List<FlavorText> messageQueue = new ArrayList<>();
 
     public Player playo;
 
 
     public int foodEaten = 0;
-    int totalFood = 0;
-
     public int roomWidth;
     public int roomHeight;
-    public int index;
+    protected int index;
     public String exitCode = "";
 
 
@@ -64,15 +62,36 @@ public class Room implements java.io.Serializable{
         playo.frozen = false;
         String exit = loop();
         playo.frozen = true;
+        System.out.println(exit);
+        System.out.println(exitCode);
         if (!exit.equals("die")) {
             removeAllObjectsAndLayersButPlayer();
+        }
+        else { // in a moment, pause everything so the player sees their grave mistake
+            timedCancelAfter(3000);
         }
         return exit;
     }
 
     /**
+     * After a time, all objects' timers will cancel.
+     * @param msDelay delay (ms) after which the room will generally stop
+     */
+    private void timedCancelAfter(int msDelay) {
+        System.out.println("Hi.  I'm a timer");
+        new Timer().schedule(new TimerTask() {
+            public void run() {
+                System.out.println("CANCELLING STUFFFFFF\noetnauhnsopyihnsahei\nanoeuhtnaoeu\naoentuhaonseh\n\n");
+                for (GameObject o : objs){
+                    removeObject(o);
+                }
+            }
+        }, msDelay);
+    }
+
+    /**
      * Set room variables and stuff.
-     * @param player
+     * @param player you know what
      */
     protected void constructor(Player player){
         playo = player;
@@ -83,7 +102,7 @@ public class Room implements java.io.Serializable{
     }
 
 
-    public void setNewRoom(String newID, int playerX, int playerY){
+    protected void setNewRoom(String newID, int playerX, int playerY){
         exitCode = newID;
         playo.goTo(playerX, playerY);
     }
@@ -127,7 +146,7 @@ public class Room implements java.io.Serializable{
      * General work to be done at the end of a level.  Cleans layers for exit, cancels the timers of everything but the
      * Player, and clears the list of objects.
      */
-    protected void removeAllObjectsAndLayersButPlayer(){
+    private void removeAllObjectsAndLayersButPlayer(){
         cleanLayersForExit(org);
         for (GameObject o : objs){
             if (!o.strClass.equals("Player")) {
@@ -154,9 +173,7 @@ public class Room implements java.io.Serializable{
             triesLeftBeforeGivingUp--;
         }
         try {
-            for (GameObject obj : addList) {
-                objs.add(obj);
-            }
+            objs.addAll(addList);
             for (GameObject obj : removeList) {
                 objs.remove(obj);
             }
@@ -183,7 +200,7 @@ public class Room implements java.io.Serializable{
                 System.out.println("Whoops, something weird! [Room.java: setObjsPuase(): caught a ConcurrentModificationException]");
             } catch (NullPointerException e) {
                 System.out.println("[Room.java: setObjsPause(): caught nullpointer!  Probably Not Good!");
-                System.out.println(e);
+                e.printStackTrace();
             }
             //System.out.println("OBJS PAUSED: " + objManifest + "\n");
         }
@@ -199,7 +216,7 @@ public class Room implements java.io.Serializable{
      *
      * @param org imageOrg
      */
-    protected void cleanLayersForExit(ImageOrg org) {
+    private void cleanLayersForExit(ImageOrg org) {
         org.removeAllButPlayer(); //Cleanup, happens when loop is done.
         org.compileImage();
         org.getWindow().clearImage();
@@ -217,7 +234,7 @@ public class Room implements java.io.Serializable{
      *
      * @param org the ImageOrg
      */
-    void addHUD(ImageOrg org) {  //Fixes redundancy;
+    private void addHUD(ImageOrg org) {  //Fixes redundancy;
         Layer HUDd = new Layer(new String[1][70], "HUD", false, true);
         HUDd.setImportance(true);
         org.addLayer(HUDd);
@@ -293,7 +310,7 @@ public class Room implements java.io.Serializable{
         }
     }
 
-    public void addToObjHitMesh(String[][] picture, String solidChar, int x, int y) {
+    private void addToObjHitMesh(String[][] picture, String solidChar, int x, int y) {
         for (int i = 0; i < picture.length; i++) {
             for (int j = 0; j < picture[0].length; j++) {
                 if (picture[i][j].equals(solidChar)) {
@@ -354,7 +371,7 @@ public class Room implements java.io.Serializable{
         addToBaseHitMesh(picture, solidChar, 0, 0);
     }
 
-    protected void addToBaseHitMesh(String[][] picture, String solidChar, int x, int y) {
+    private void addToBaseHitMesh(String[][] picture, String solidChar, int x, int y) {
         for (int i = 0; i < picture.length; i++) {
             for (int j = 0; j < picture[0].length; j++) {
                 if (picture[i][j].equals(solidChar)) {
@@ -364,7 +381,7 @@ public class Room implements java.io.Serializable{
         }
     }
 
-    protected void emptyAllHitMeshes() {
+    private void emptyAllHitMeshes() {
         for (int i = 0; i < baseHitMesh.length; i++) {
             for (int j = 0; j < baseHitMesh[0].length; j++) {
                 baseHitMesh[i][j] = false;
@@ -407,7 +424,7 @@ public class Room implements java.io.Serializable{
         return playo;
     }
 
-    public void queueMessage(FlavorText message){
+    protected void queueMessage(FlavorText message){
         messageQueue.add(message);
         System.out.println("MESSAGE STACK SIZE: " + messageQueue.size());
         if (messageQueue.size() == 1){
@@ -415,7 +432,7 @@ public class Room implements java.io.Serializable{
         }
     }
 
-    public void plantText(FlavorText thing){ flavorTexts.add(thing); }
+    protected void plantText(FlavorText thing){ flavorTexts.add(thing); }
 
     public void queryForText(int testX, int testY){
         for (FlavorText text : flavorTexts){
@@ -491,7 +508,7 @@ public class Room implements java.io.Serializable{
         int x;
         int y;
 
-        public boolean isHelpful = false;
+        boolean isHelpful = false;
 
         public FlavorText(int xLoc, int yLoc, String[] theMessage, String theSpeaker){
             x = xLoc;
@@ -536,13 +553,13 @@ public class Room implements java.io.Serializable{
             return y;
         }
 
-        public void textIfCorrectSpot (int testX, int testY){
+        void textIfCorrectSpot(int testX, int testY){
             if (x == testX && y == testY){
                 doMessage();
             }
         }
 
-        public void doMessage(){
+        void doMessage(){
             for (String message : messages) {
                 //System.out.println("STACKING FOLLOWING MESSAGE:\n " + message);
                 FlavorText panel = new FlavorText(x, y, message, speaker);
@@ -550,18 +567,18 @@ public class Room implements java.io.Serializable{
             }
         }
 
-        public void output(){
+        void output(){
             compactTextBox(org, messages[0], speaker, isHelpful);
         }
 
     }
 
-    class TextBoxListener extends TimerTask {
+    private class TextBoxListener extends TimerTask {
 
         Dismissal listener;
         Window window;
 
-        protected TextBoxListener(Dismissal dismiss, Window windouw){
+        TextBoxListener(Dismissal dismiss, Window windouw){
             listener = dismiss;
             window = windouw;
         }
@@ -707,7 +724,7 @@ class OptionsSelector extends KeyAdapter implements java.io.Serializable {
  * to true
  */
 class Dismissal extends KeyAdapter implements java.io.Serializable {
-    public boolean resume = false;
+    boolean resume = false;
 
     @Override
     public void keyPressed(KeyEvent event) {
