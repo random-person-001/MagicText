@@ -72,7 +72,13 @@ class MainMenu {
                     }
                     if (cursorY == 9) {
                         starter.startGame();
-                        finished = true;
+                        //finished = true;
+                        try {
+                            Thread.sleep(2000);
+                        } catch (InterruptedException ignore) {}
+                        org.removeAllButPlayer();
+                        window.txtArea.setForeground(Color.WHITE);
+                        org.setCam(0,0);
                     }
                     if (cursorY == 10 && loadGame()) {
                         finished = true;

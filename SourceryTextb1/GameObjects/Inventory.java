@@ -158,17 +158,17 @@ class Inventory implements java.io.Serializable {
      * (Cleans up all the layers that may have been made, and then sets menuID to EXIT)
      */
     void exitAllMenus() {
+        menuID = EXIT;
+        infoLayer.clear();
+        selectorLayer.clear();
         org.removeLayer("top");
         org.removeLayer("quit");
         org.removeLayer("items");
-        org.removeLayer("spells");
         org.removeLayer("equip");
-        org.removeLayer("selector");
         org.removeLayer("tater");
-        org.clearLayer("invInfo");
+        org.removeLayer("spells");
         org.removeLayer("invInfo");
-        selectorLayer.clear();
-        menuID = EXIT;
+        org.removeLayer("selector");
     }
 
     /**
@@ -235,11 +235,7 @@ class Inventory implements java.io.Serializable {
                     newSelectY = 4;
                     break;
                 case 6:
-                    org.removeLayer("top");
-                    org.removeLayer("selector");
-                    org.removeLayer("invInfo");
-                    selectorLayer.clear();
-                    menuID = EXIT;
+                    exitAllMenus();
                     break;
             }
         }
@@ -415,7 +411,7 @@ class Inventory implements java.io.Serializable {
     }
 
     /**
-     * The submenu asking whether you really want to quit the entire game.
+     * The submenu asking whether you really want to quit and save.  Hopefully ends up at the top MainMenu again.
      */
     private void operateQuitMenu() {
         loopAtMenuEnd(4, 5);
@@ -426,7 +422,9 @@ class Inventory implements java.io.Serializable {
                 jumpToNewMenu(topMenuLayer, TOP, "quit");
             }
             if (newSelectY == 4) {
-                System.exit(0);
+                player.saveGame();
+                player.subtractHealth(2100000000, "For your convenience, you died.\n  Just press enter and carry on."); // cleanup
+                exitAllMenus();
             }
         }
     }
