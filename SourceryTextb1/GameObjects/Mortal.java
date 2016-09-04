@@ -54,6 +54,9 @@ public class Mortal extends GameObject implements java.io.Serializable{
             }
             health -= damage;
             room.playo.showPain(message);
+            if (health < 0){
+                health = 0;
+            }
             room.playo.screenRedness = (int)((1 - ((float)health / maxHealth)) * 255);
             System.out.println(String.format("Setting redness: %1$d (%2$f)", room.playo.screenRedness, 1 - ((float)health / maxHealth)));
         } else {
