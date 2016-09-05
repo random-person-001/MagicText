@@ -71,7 +71,7 @@ class MainMenu {
                         starter.doIntro();
                     }
                     if (cursorY == 9) {
-                        starter.startGame();
+                        starter.newGame();
                         //finished = true;
                         try {
                             Thread.sleep(2000);

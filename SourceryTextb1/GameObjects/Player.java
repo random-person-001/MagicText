@@ -127,7 +127,7 @@ public class Player extends Mortal implements java.io.Serializable {
         orgo.getWindow().txtArea.addKeyListener(playerKeyListener); // Add key listeners.
         setupForNewRoom();
         setupTimer(20);
-        orgo.restartClock();
+        orgo.resetClock();
     }
 
     public void setupForNewRoom() {
@@ -295,6 +295,7 @@ public class Player extends Mortal implements java.io.Serializable {
      * @return whether the saving was successful
      */
     public boolean saveGame(){
+        orgo.terminateClock();
         System.out.println("Running serialization test...");
         String path;
         JFileChooser chooser = new JFileChooser();
@@ -309,7 +310,11 @@ public class Player extends Mortal implements java.io.Serializable {
                 path += ".sav";
             }
             System.out.println("You chose to save the file to: " + path);
-        } else return false;
+        } else {
+            orgo.resetClock();
+            return false;
+        }
+
 
         try
         {
@@ -320,10 +325,12 @@ public class Player extends Mortal implements java.io.Serializable {
             out.close();
             fileOut.close();
             System.out.printf("Serialized Player data is saved in " + path);
+            orgo.resetClock();
             return true;
         }catch(IOException i)
         {
             i.printStackTrace();
+            orgo.resetClock();
             return false;
         }
     }

@@ -81,7 +81,7 @@ public class Room implements java.io.Serializable{
         System.out.println("Hi.  I'm a timer");
         new Timer().schedule(new TimerTask() {
             public void run() {
-                System.out.println("CANCELLING STUFFFFFF\noetnauhnsopyihnsahei\nanoeuhtnaoeu\naoentuhaonseh\n\n");
+                System.out.println("\n\nCANCELLING STUFFFFFF\n\n");
                 for (GameObject o : objs){
                     removeObject(o);
                 }

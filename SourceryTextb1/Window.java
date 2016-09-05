@@ -9,7 +9,6 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.Font;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
 
@@ -23,8 +22,18 @@ public class Window extends JFrame{
     private static final String OPAQUE_SPACE = "ñ";
     public JTextArea txtArea = new JTextArea();
     private Container c = getContentPane();
+
+    public int dbgSavedSerial = 0;
+    public int dbgCounter = 0;
     
     private Layer fullImage = new Layer(new String[screenH()][screenW()]);
+
+    public void giveSerial(int number){
+        if (number != dbgSavedSerial){
+            System.out.println(String.format("OH NO! There is another org!!! (%1$d vs. %2$d)", dbgSavedSerial, number));
+        }
+        dbgSavedSerial = number;
+    }
 
     /**
      * @return the maximum allowable height in the game

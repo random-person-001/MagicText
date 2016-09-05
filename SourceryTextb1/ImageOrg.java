@@ -5,13 +5,10 @@
  */
 package SourceryTextb1;
 
-import SourceryTextb1.GameObjects.GameObject;
-
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * An intermediate between the countless Layers and the Window, to organise and keep all the Layers in line.
@@ -27,17 +24,29 @@ public class ImageOrg implements java.io.Serializable {
     private int camY = 0;
     private boolean debugGame = false;
 
-    private boolean somethingChanged = true;
+    //FrameTimer frameTimerInstance = new FrameTimer();
+    Timer drawTimer = new Timer();
+
+    final int orgSerial = (int)(Math.random() * 10000);
 
     public ImageOrg(Window game){
-        Timer timer = new Timer();
-        timer.scheduleAtFixedRate(new frameTimer(), 0, 50); //20 fps lock
+        //drawTimer.scheduleAtFixedRate(frameTimerInstance, 0, 50); //20 fps lock
+        resetClock();
         window = game;
     }
 
-    public void restartClock(){
-        Timer timer = new Timer();
-        timer.scheduleAtFixedRate(new frameTimer(), 0, 50); //20 fps lock
+    public void resetClock(){
+        try {
+            drawTimer.cancel();
+        } catch (NullPointerException ignore){}
+        drawTimer = new Timer();
+        drawTimer.scheduleAtFixedRate(new FrameTimer(), 0, 50); //20 fps lock
+    }
+
+    public void terminateClock(){
+        drawTimer.cancel();
+        drawTimer.purge();
+        drawTimer = null;
     }
 
     /** Add a layer onto the top, or somewhere near it if there's more important things
@@ -46,7 +55,6 @@ public class ImageOrg implements java.io.Serializable {
     public void addLayer(Layer lay){
         toAdd.add(lay);
         //System.out.println(String.format("Layer Given: %1$s (%2$b)", lay.getName(), somethingChanged));
-        somethingChanged = true;
     }
 
     private void moveImportantLayersUp(){
@@ -160,7 +168,6 @@ public class ImageOrg implements java.io.Serializable {
                 toRemove.add(get);
             }
         }
-        somethingChanged = true;
     }
 
     /** Edit a single element of a Layer's array of strings.  Don't get X and Y mixed up.
@@ -173,7 +180,6 @@ public class ImageOrg implements java.io.Serializable {
         int loc = getPosLayer(layerName);
         if (loc != -1) {
             editLayer(input, loc, y, x);
-            somethingChanged = true;
         }
         else{
             System.out.println("No layer with the name " + layerName);
@@ -197,7 +203,6 @@ public class ImageOrg implements java.io.Serializable {
         }
         if (!(r > get.getRows() || r < 0 || c > get.getColumns() || c < 0)){
             get.setStr(r, c, input);
-            somethingChanged = true;
         }
     }
 
@@ -241,7 +246,6 @@ public class ImageOrg implements java.io.Serializable {
     public void moveCam(int x, int y){
         camX += y;
         camY += x;
-        somethingChanged = true;
     }
 
     /** Change the camera's absolute position
@@ -251,7 +255,6 @@ public class ImageOrg implements java.io.Serializable {
     public void setCam(int x, int y){
         camX = y; //This is totally intentional.  We really ought to do something about that.
         camY = x;
-        somethingChanged = true;
     }
     
     public int getCamX(){
@@ -320,7 +323,6 @@ public class ImageOrg implements java.io.Serializable {
         for (Layer get : remove){
             layers.remove(get);
         }
-        somethingChanged = true;
         /*
         System.out.println("\nLayers Marked as playerLayer: " + isPlayerList + "(Amount processed: " + count + ")");
 
@@ -348,26 +350,36 @@ public class ImageOrg implements java.io.Serializable {
     }
 
     int layerChangeInstance = 1;
+    long nanoLast = System.nanoTime();
     public void newSendImage(){
         try {
             //if (somethingChanged) {
-                //System.out.println("New Frame...");
-                //long nanoTime = System.nanoTime();
-                boolean doOutput = toAdd.size() > 0 || toRemove.size() > 0;
-                String changeList = String.format("- Org -\n[%1$d] Layers Added:   ", layerChangeInstance);
-                changeList += addTheLayers();
-                changeList += removeTheLayers();
-                if (doOutput) {
-                    System.out.println(changeList + "\n");
-                    layerChangeInstance++;
-                }
-                window.clearImage();
-                window.topDownBuild(layers, camX, camY);
-                window.build();
-                //int elapsedMs = (int) ((System.nanoTime() - nanoTime) / 1000000);
-                //System.out.println("Update time: " + elapsedMs + "ms");
+            //System.out.println("New Frame...");
+            //long nanoTime = System.nanoTime();
+            boolean doOutput = toAdd.size() > 0 || toRemove.size() > 0;
+            String changeList = String.format("- Org -\n[%1$d] Layers Added:   ", layerChangeInstance);
+            changeList += addTheLayers();
+            changeList += removeTheLayers();
+            if (doOutput) {
+                System.out.println(changeList + "\n");
+                layerChangeInstance++;
+            }
+            window.clearImage();
+            window.topDownBuild(layers, camX, camY);
+            window.build();
+            window.giveSerial(orgSerial);
+            window.dbgCounter++;
+            /*
+            if (((System.nanoTime() - nanoLast) / 1000000) >= 1000){
+                System.out.printf("Window updated %1$d times in the previous second\n", window.dbgCounter);
+                window.dbgCounter = 0;
+                nanoLast = System.nanoTime();
+
+            }
+            */
+            //int elapsedMs = (int) ((System.nanoTime() - nanoTime) / 1000000);
+            //System.out.println(" time: " + elapsedMs + "ms");
             //}
-            somethingChanged = false;
         }
         catch (ConcurrentModificationException ignore) {}// Cuz it'll be fixed next time probs.
     }
@@ -408,11 +420,11 @@ public class ImageOrg implements java.io.Serializable {
         }
     }
 
-    public class frameTimer extends TimerTask {
+    public class FrameTimer extends TimerTask {
 
         long lastRunNano = 0;
 
-        public frameTimer(){
+        public FrameTimer(){
             lastRunNano = System.nanoTime();
         }
 

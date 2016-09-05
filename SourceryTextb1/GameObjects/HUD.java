@@ -111,95 +111,97 @@ public class HUD extends GameObject {
      * Edit the layer to put all the stats and stuff on
      */
     private void drawLayer() {
-        if (responseMessage != null) {
-            for (int ii = 0; ii < responseMessage.length(); ii++) {
-                putChar(responseMessage.substring(ii, ii + 1));
-            }
-        } else if (consoleEntryProg < 3) {
-            if (inCmd){
-                orgo.getLayer(loc).clear();
-                inCmd = false;
-            }
-
-            loc = orgo.getPosLayer(layerName);
-
-            putChar("[");
-
-            // Your health
-            String healthValue = String.valueOf(room.playo.getHealth());
-            putChar(String.valueOf(healthValue.charAt(0)));
-            try {
-                putChar(String.valueOf(healthValue.charAt(1)));
-            } catch (StringIndexOutOfBoundsException e) {
-                putChar(" ");
-            }
-            for (int ii = 0; ii < 10; ii++) {
-                int fillPoint = (int) Math.ceil(((float) room.playo.getHealth() / (float) room.playo.maxHP) * 10);
-                if (fillPoint > 10 && ii < fillPoint - 10) {
-                    putChar("#");
-                } else if (ii < fillPoint) {
-                    putChar("+");
-                } else {
-                    putChar("_");
+        try {
+            if (responseMessage != null) {
+                for (int ii = 0; ii < responseMessage.length(); ii++) {
+                    putChar(responseMessage.substring(ii, ii + 1));
                 }
-            }
-            putChar("]");
-            x++;
+            } else if (consoleEntryProg < 3) {
+                if (inCmd) {
+                    orgo.getLayer(loc).clear();
+                    inCmd = false;
+                }
 
-            // Spell 1
-            putChar("(");
-            for (int ii = 0; ii < 5; ii++) {
-                putChar(spell1Name[ii]);
-            }
-            putChar(")");
-            x++;
+                loc = orgo.getPosLayer(layerName);
 
-            // Spell 2
-            putChar("(");
-            for (int ii = 0; ii < 5; ii++) {
-                putChar(spell2Name[ii]);
-            }
-            putChar(")");
-            x++;
+                putChar("[");
 
-            // Mana count
-            putChar("{");
-            putChar(Integer.toString(abs(room.playo.mana / 10)));
-            putChar(Integer.toString(abs(room.playo.mana /* / 1 */ - 10 * (room.playo.mana / 10))));
+                // Your health
+                String healthValue = String.valueOf(room.playo.getHealth());
+                putChar(String.valueOf(healthValue.charAt(0)));
+                try {
+                    putChar(String.valueOf(healthValue.charAt(1)));
+                } catch (StringIndexOutOfBoundsException e) {
+                    putChar(" ");
+                }
+                for (int ii = 0; ii < 10; ii++) {
+                    int fillPoint = (int) Math.ceil(((float) room.playo.getHealth() / (float) room.playo.maxHP) * 10);
+                    if (fillPoint > 10 && ii < fillPoint - 10) {
+                        putChar("#");
+                    } else if (ii < fillPoint) {
+                        putChar("+");
+                    } else {
+                        putChar("_");
+                    }
+                }
+                putChar("]");
+                x++;
 
-            // Mana bar
-            for (int ii = 0; ii < 10; ii++) {
-                int fillPoint = (int) Math.ceil(((float) room.playo.mana / (float) room.playo.maxMana) * 10);
-                if (ii < fillPoint) {
-                    putChar("=");
-                } else if (ii < (int) Math.ceil(((float) (2000 - room.playo.manaWait) / 2000.0f) * 10)) {
-                    putChar("_");
+                // Spell 1
+                putChar("(");
+                for (int ii = 0; ii < 5; ii++) {
+                    putChar(spell1Name[ii]);
+                }
+                putChar(")");
+                x++;
+
+                // Spell 2
+                putChar("(");
+                for (int ii = 0; ii < 5; ii++) {
+                    putChar(spell2Name[ii]);
+                }
+                putChar(")");
+                x++;
+
+                // Mana count
+                putChar("{");
+                putChar(Integer.toString(abs(room.playo.mana / 10)));
+                putChar(Integer.toString(abs(room.playo.mana /* / 1 */ - 10 * (room.playo.mana / 10))));
+
+                // Mana bar
+                for (int ii = 0; ii < 10; ii++) {
+                    int fillPoint = (int) Math.ceil(((float) room.playo.mana / (float) room.playo.maxMana) * 10);
+                    if (ii < fillPoint) {
+                        putChar("=");
+                    } else if (ii < (int) Math.ceil(((float) (2000 - room.playo.manaWait) / 2000.0f) * 10)) {
+                        putChar("_");
+                    } else {
+                        putChar(" ");
+                    }
+                }
+                putChar("}");
+            } else {
+                if (!inCmd) {
+                    orgo.getLayer(loc).clear();
+                    inCmd = true;
+                }
+
+                putChar(promptChar);
+                putChar(" ");
+                for (int ii = 0; ii < command.length(); ii++) {
+                    putChar(command.substring(ii, ii + 1));
+                }
+                if (cursorBlinkTimer % 10 < 6) {
+                    putChar("|");
                 } else {
                     putChar(" ");
                 }
+                if (cursorBlinkTimer == 10 * 50) {
+                    cursorBlinkTimer = 0;
+                }
+                cursorBlinkTimer++;
             }
-            putChar("}");
-        } else {
-            if (!inCmd){
-                orgo.getLayer(loc).clear();
-                inCmd = true;
-            }
-
-            putChar(promptChar);
-            putChar(" ");
-            for (int ii = 0; ii < command.length(); ii++) {
-                putChar(command.substring(ii, ii + 1));
-            }
-            if (cursorBlinkTimer % 10 < 6) {
-                putChar("|");
-            } else {
-                putChar(" ");
-            }
-            if (cursorBlinkTimer == 10 * 50) {
-                cursorBlinkTimer = 0;
-            }
-            cursorBlinkTimer++;
-        }
+        } catch (NullPointerException ignore){}
     }
 
     private void keyPressed(char key) {

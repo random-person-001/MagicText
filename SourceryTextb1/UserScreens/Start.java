@@ -336,7 +336,7 @@ public class Start {
             lock = toCheck;
         }
 
-        void startGame(){
+        void newGame(){
             player = new Player(org);
             roomID = "Tutorial";
             runGame();
@@ -347,7 +347,9 @@ public class Start {
             System.out.println(Start.roomID);
             Start.player = imported;
             imported.orgo.setWindow(Start.game); // hopefully doesn't kill anything
+            org.terminateClock();
             org = imported.orgo;
+            org.resetClock();
             org.printLayers();
             player.resumeFromSave();
             runGame();
