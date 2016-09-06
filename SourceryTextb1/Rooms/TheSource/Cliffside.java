@@ -46,6 +46,9 @@ public class Cliffside extends Room {
                 if (playo.getY() < 0){
                     setNewRoom("SourcePit",57,42);
                 }
+                if (playo.getY() >= 32){
+                    setNewRoom("SourceCaves",62,0);
+                }
             } catch (InterruptedException ignored) {
             }
         }
@@ -73,6 +76,7 @@ public class Cliffside extends Room {
         addToBaseHitMesh(base, solids);
         baseLayer = new Layer(base, "backgronud");
         org.addLayer(baseLayer);
+
         playo.roomName = "Cliffside";
 
         int[][] locs = {{106, 115}, {14, 17}};
