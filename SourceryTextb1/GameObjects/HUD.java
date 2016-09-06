@@ -103,7 +103,7 @@ public class HUD extends GameObject {
      * @param newChar a single-char long String to place in the Layer at the next spot.
      */
     private void putChar(String newChar) {
-        orgo.editLayer(newChar, loc, 0, x);
+        orgo.editLayer(newChar, layerName, 0, x);
         x++;
     }
 
