@@ -80,11 +80,11 @@ public class Start {
                     roomID = mtns.enter();
                     break;
                 case "SourceCaves":
-                    System.out.println("Entering the Bandit Fortress");
-                    SourceCaves bf = new SourceCaves(player);
-                    prepLevel(org, game, player, bf);
-                    bf.startup();
-                    roomID = bf.enter();
+                    System.out.println("Entering the Source Caves");
+                    SourceCaves sc = new SourceCaves(player);
+                    prepLevel(org, game, player, sc);
+                    sc.startup();
+                    roomID = sc.enter();
                     break;
                 default:
                     System.out.println("You were directed to a world which is not yet registered in Start.java." +
