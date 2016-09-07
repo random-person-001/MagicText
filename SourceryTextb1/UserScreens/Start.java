@@ -100,6 +100,7 @@ public class Start {
         org.removeAllButPlayer();
         game.clearImage();
         player.setRoom(newRoom);
+        newRoom.ownID = roomID;
     }
 
     private static void introText(String text, int offset, int line){

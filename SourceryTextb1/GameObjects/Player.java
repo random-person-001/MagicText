@@ -15,6 +15,7 @@
 package SourceryTextb1.GameObjects;
 
 import SourceryTextb1.ImageOrg;
+import SourceryTextb1.ItemTracker;
 import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
 
@@ -37,6 +38,7 @@ import java.io.ObjectOutputStream;
 public class Player extends Mortal implements java.io.Serializable {
     private PlayerKeypressListener playerKeyListener = new PlayerKeypressListener(this);
     private Inventory inv;
+    public ItemTracker tracker;
     public String roomName = ""; //Extremely important when we implement saving.
 
     private boolean autonomous = false;
@@ -116,6 +118,8 @@ public class Player extends Mortal implements java.io.Serializable {
         //setupForNewRoom();
 
         inv = new Inventory(orgo, this);
+
+        tracker = new ItemTracker();
 
         resumeFromSave();
     }

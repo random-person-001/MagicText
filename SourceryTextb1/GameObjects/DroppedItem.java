@@ -48,4 +48,9 @@ public class DroppedItem extends GameObject{
             }
         }
     }
+
+    @Override
+    public void selfCleanup(){
+        orgo.removeLayer(layerName);
+    }
 }

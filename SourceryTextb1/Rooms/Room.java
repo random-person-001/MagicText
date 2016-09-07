@@ -11,11 +11,9 @@ import java.awt.event.KeyEvent;
 import java.util.*;
 import java.util.List;
 
+import SourceryTextb1.*;
 import SourceryTextb1.GameObjects.*;
-import SourceryTextb1.ImageOrg;
-import SourceryTextb1.Layer;
 import SourceryTextb1.Window;
-import SourceryTextb1.art;
 
 import static java.awt.Color.*;
 
@@ -240,6 +238,21 @@ public class Room implements java.io.Serializable{
         org.addLayer(HUDd);
         HUD hud = new HUD(org, this, HUDd);
         addObject(hud);
+    }
+
+    /**
+     * Adds a dropped item to the room, but only if it hasn't been taken previously.
+     */
+    public String ownID = "";
+
+    public void addItem(DroppedItem toAdd){
+        addObject(toAdd);
+        if (!playo.tracker.alreadyTaken(toAdd.getX(),toAdd.getY(),ownID)){
+            playo.tracker.addLoc(toAdd.getX(),toAdd.getY(),ownID);
+            System.out.printf("Item a success @ (%1$d,%2$d,%3$s)\n", toAdd.getX(),toAdd.getY(),ownID);
+        } else {
+            removeObject(toAdd);
+        }
     }
 
     /**
