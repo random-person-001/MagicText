@@ -514,6 +514,9 @@ public class Room implements java.io.Serializable{
         plantText(new FlavorText(message, speaker));
     }
 
+    public void startup() {
+    }
+
     public class FlavorText implements java.io.Serializable {
 
         String[] messages = {""};

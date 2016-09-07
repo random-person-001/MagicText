@@ -59,32 +59,23 @@ public class Start {
             switch (roomID) {
                 case "Tutorial":
                     System.out.println("Beginning tutorial!");
-                    TutorialBasement forest = new TutorialBasement(player);
-                    prepLevel(org, game, player, forest);
-                    forest.startup();
-                    roomID = forest.enter();
-                    System.out.println("Exiting tutorial.  Going to: " + roomID);
+                    doLevel(new TutorialBasement(player));
                     break;
                 case "SourcePit":
                     System.out.println("Entering The Pit");
-                    ThePit pit = new ThePit(player);
-                    prepLevel(org, game, player, pit);
-                    pit.startup();
-                    roomID = pit.enter();
+                    doLevel(new ThePit(player));
                     break;
                 case "Cliffside":
                     System.out.println("Entering the Cliffside");
-                    Cliffside mtns = new Cliffside(player);
-                    prepLevel(org, game, player, mtns);
-                    mtns.startup();
-                    roomID = mtns.enter();
+                    doLevel(new Cliffside(player));
                     break;
                 case "SourceCaves":
                     System.out.println("Entering the Source Caves");
-                    SourceCaves sc = new SourceCaves(player);
-                    prepLevel(org, game, player, sc);
-                    sc.startup();
-                    roomID = sc.enter();
+                    doLevel(new SourceCaves(player));
+                    break;
+                case "BanditFortress":
+                    System.out.println("Entering the Bandit Fortress");
+                    //doLevel(new BanditFortress(player));
                     break;
                 default:
                     System.out.println("You were directed to a world which is not yet registered in Start.java." +
@@ -94,6 +85,12 @@ public class Start {
             }
         }
         System.out.println("\nBetter luck next time!");
+    }
+
+    private static void doLevel(Room r){
+        prepLevel(org, game, player, r);
+        r.startup();
+        roomID = r.enter();
     }
 
     private static void prepLevel(ImageOrg org, Window game, Player player, Room newRoom){

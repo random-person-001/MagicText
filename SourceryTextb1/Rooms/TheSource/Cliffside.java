@@ -69,6 +69,7 @@ public class Cliffside extends Room {
         }
     }
 
+    @Override
     public void startup() {
         ititHitMeshes();
         String[][] base = art.strToArray(arty.mountainPlace);

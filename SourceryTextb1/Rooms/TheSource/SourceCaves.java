@@ -39,6 +39,7 @@ public class SourceCaves extends Room{
         return exitCode;
     }
 
+    @Override
     public void startup(){
         ititHitMeshes();
         super.playo.roomName = "SourceCaves";

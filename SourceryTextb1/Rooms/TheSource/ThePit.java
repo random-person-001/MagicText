@@ -61,6 +61,7 @@ public class ThePit extends Room {
         return exitCode;
     }
 
+    @Override
     public void startup(){
         ititHitMeshes();
         super.playo.roomName = "ThePit";

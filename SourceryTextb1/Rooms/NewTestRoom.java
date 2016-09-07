@@ -46,6 +46,7 @@ public class NewTestRoom extends Room {
         return exitCode;
     }
 
+    @Override
     public void startup(){
         ititHitMeshes();
         super.playo.goTo(7,5);

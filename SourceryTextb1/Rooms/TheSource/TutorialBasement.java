@@ -134,6 +134,7 @@ public class TutorialBasement extends Room {
         return exitCode;
     }
 
+    @Override
     public void startup(){
         ititHitMeshes();
 

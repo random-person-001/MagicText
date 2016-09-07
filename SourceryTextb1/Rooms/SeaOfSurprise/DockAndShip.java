@@ -76,6 +76,7 @@ public class DockAndShip extends Room {
         addToObjHitMesh(dock, docksolids, docky.getY(), docky.getX());
     }
 
+    @Override
     public void startup(){
         ititHitMeshes();
         playo.goTo(72,51);
