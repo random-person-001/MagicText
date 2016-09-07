@@ -35,12 +35,11 @@ public class DroppedItem extends GameObject{
 
     @Override
     public void update(){
-        orgo.editLayer("!", layerName, 0, 0);
+        //orgo.editLayer("!", layerName, 0, 0);
         if (x == player.getX() && y == player.getY() && !pickedUp){
             pickedUp = true;
             room.removeObject(this);
-            orgo.editLayer(" ", layerName, 0, 0);
-            orgo.removeLayer(layerName);
+            room.playo.tracker.addLoc(getX(),getY(),room.ownID);
             player.addItem(me);
             if (!pickUpMessage.equals("None") || pickUpMessage == "") {
                 System.out.println("Picking up: " + me.getName());
@@ -51,6 +50,8 @@ public class DroppedItem extends GameObject{
 
     @Override
     public void selfCleanup(){
+        System.out.println("DroppedItem self clean!");
+        orgo.editLayer(" ", layerName, 0, 0);
         orgo.removeLayer(layerName);
     }
 }

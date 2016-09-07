@@ -247,12 +247,12 @@ public class Room implements java.io.Serializable{
 
     public void addItem(DroppedItem toAdd){
         addObject(toAdd);
-        if (!playo.tracker.alreadyTaken(toAdd.getX(),toAdd.getY(),ownID)){
-            playo.tracker.addLoc(toAdd.getX(),toAdd.getY(),ownID);
-            System.out.printf("Item a success @ (%1$d,%2$d,%3$s)\n", toAdd.getX(),toAdd.getY(),ownID);
-        } else {
+        //System.out.println(playo.tracker.alreadyTaken(toAdd.getX(),toAdd.getY(),ownID));
+        if (playo.tracker.alreadyTaken(toAdd.getX(),toAdd.getY(),ownID)) {
             removeObject(toAdd);
         }
+        //playo.tracker.addLoc(toAdd.getX(),toAdd.getY(),ownID);
+        //System.out.printf("[TRACKER] Item a success @ (%1$d,%2$d,%3$s)\n", toAdd.getX(),toAdd.getY(),ownID);
     }
 
     /**

@@ -182,7 +182,7 @@ public class ImageOrg implements java.io.Serializable {
             editLayer(input, loc, y, x);
         }
         else{
-            System.out.println("No layer with the name " + layerName);
+            //System.out.println("No layer with the name " + layerName);
         }
     }
 

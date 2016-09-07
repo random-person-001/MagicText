@@ -15,14 +15,22 @@ public class ItemTracker {
         itemLocs.add(taken);
     }
 
+    /**
+     * Returns true when the item @ that location and room is already taken.
+     *      False if it hasn't
+     */
     public boolean alreadyTaken (int x, int y, String rmID){
         System.out.printf("Running a check @ %1$d,%2$d (%3$d)\n", x, y, itemLocs.size());
+        if (itemLocs.size() == 0){
+            return false;
+        }
         for (ItemTakenFlag flag : itemLocs){
+            System.out.printf("\tIT: Parsing: p(%1$d,%2$d,%3$s) vs. l(%4$d,%5$d,%6$s)\n",x,y,rmID,flag.xLoc,flag.yLoc,flag.roomID);
             if (flag.xLoc == x && flag.yLoc == y && flag.roomID.equals(rmID)){
                 return true;
             }
         }
-        return itemLocs.size() == 0;
+        return false;
     }
 
     protected class ItemTakenFlag{
