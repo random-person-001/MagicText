@@ -5,16 +5,20 @@ import SourceryTextb1.GameObjects.Item;
 import SourceryTextb1.GameObjects.Player;
 import SourceryTextb1.GameObjects.TheSource.Bandit;
 import SourceryTextb1.GameObjects.TheSource.Spider;
+import SourceryTextb1.GameObjects.TheSource.WeakTower;
 import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
 import SourceryTextb1.art;
 
 /**
- * Caves!  Exciting!
+ * A Fortress!  Exciting!
+ * Normal entrance:
+ * Player X: 67
+ * Player Y: 103
  * Created by riley on 01-Sep-2016.
  */
-public class SourceCaves extends Room{
+public class BanditFortress extends Room{
     private ImageOrg org;
 
     @Override
@@ -24,11 +28,11 @@ public class SourceCaves extends Room{
         while (exitCode.equals("")){
             try {
                 Thread.sleep(20);
-                if (getPlayer().getY() <= 0){
-                    setNewRoom("Cliffside",134,31);
+                if (getPlayer().getY() >= 104){
+                    setNewRoom("Cliffside",5,5);
                 }
-                if (getPlayer().getY() == 1 && getPlayer().getX() == 230) {
-                    setNewRoom("BanditFortress",134,64);
+                if (getPlayer().getX() >= 135){
+                    setNewRoom("SourceCaves",1,231);
                 }
                 if (count == 0){
                     if (playo.getX() == 109 && playo.getY() == 10) {
@@ -45,38 +49,45 @@ public class SourceCaves extends Room{
     @Override
     public void startup(){
         ititHitMeshes();
-        super.playo.roomName = "SourceCaves";
+        super.playo.roomName = "BanditFortress";
 
         String[] doorLocked = {"The door seems to have locked behind you.","The owner must have installed\n an auto-lock on the door."};
         plantText(new Room.FlavorText(109, 9, doorLocked , ""));
 
         art arty = new art();
-        String[][] base = art.strToArray(arty.sourceCaves);
-        String[] solids = {"#"};
+        String[][] base = art.strToArray(arty.banditFortress);
+        String[] solids = {":", "w","m","#"};
         addToBaseHitMesh(base, solids);
         Layer lay1 = new Layer(base, "Base");
         org.addLayer(lay1);
 
-        Spider itsyBitsy = new Spider(this, 31, 11);
+        Spider itsyBitsy = new Spider(this, 39, 39);
         addMortal(itsyBitsy);
 
-        int[][] banditStations = {{13,105},{13, 117},{1,137},{5,144},{3,185},{5, 232},{5, 233},{2,227}}; // X and Y are switched.
+        int[][] banditStations = {{67,95},{30,71},{35,72},{34,70},{18,64}};
         for (int[] station : banditStations) {
-            Bandit roughBill = new Bandit(org, this, station[1], station[0]); // X and Y switched.  I'm really sorry.
+            Bandit roughBill = new Bandit(org, this, station[0], station[1]);
             addMortal(roughBill);
         }
 
-        Item magicTater = new Item("Magic Potato","How lucky! This eccentric\n potato can permanently\n increase either your\n Max HP or Max Mana.\n\nNOTE: it's permanent!", playo, "item");
-        DroppedItem gTater =  new DroppedItem(this, org, "You found a hidden magic potato!", magicTater, 5, 40);
+        int[][] towerLocs = {{18,46},{29,46},{81,45},{64,44},{72,88},{62,88},{76,15},{90,17},{48,6},{54,6},{76,32},{84,32}};
+        for (int[] towerLoc : towerLocs) {
+            WeakTower t = new WeakTower(org, this, towerLoc[0], towerLoc[1]);
+            addMortal(t);
+        }
+
+        Item magicTater = new Item("Illicit Magic Potato","How lucky! This eccentric\n potato can permanently\n " +
+                "increase either your\n Max HP or Max Mana.\n\nNOTE: it's permanent.\nYou got this illicitly.", playo, "item");
+        DroppedItem gTater =  new DroppedItem(this, org, "You found a magic potato.  Cheater.", magicTater, 51, 19);
         super.addObject(gTater);
 
         genericRoomInitialize();
     }
 
-    public SourceCaves(Player player){
+    public BanditFortress(Player player){
         constructor(player);
-        super.roomHeight = 63;
-        super.roomWidth = 420;
+        super.roomHeight = 105;
+        super.roomWidth = 137;
         org = player.orgo;
         super.index = 1;
     }

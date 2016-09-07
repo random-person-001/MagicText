@@ -8,10 +8,7 @@ package SourceryTextb1.UserScreens;
 import SourceryTextb1.GameObjects.Player;
 import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
-import SourceryTextb1.Rooms.TheSource.Cliffside;
-import SourceryTextb1.Rooms.TheSource.SourceCaves;
-import SourceryTextb1.Rooms.TheSource.TutorialBasement;
-import SourceryTextb1.Rooms.TheSource.ThePit;
+import SourceryTextb1.Rooms.TheSource.*;
 import SourceryTextb1.Rooms.NewTestRoom;
 import SourceryTextb1.Rooms.Room;
 import SourceryTextb1.Window;
@@ -56,26 +53,22 @@ public class Start {
 
     private static void runGame(){
         while (!roomID.equals("die")) {
+            System.out.println("Entering the room '" + roomID + "'");
             switch (roomID) {
                 case "Tutorial":
-                    System.out.println("Beginning tutorial!");
                     doLevel(new TutorialBasement(player));
                     break;
                 case "SourcePit":
-                    System.out.println("Entering The Pit");
                     doLevel(new ThePit(player));
                     break;
                 case "Cliffside":
-                    System.out.println("Entering the Cliffside");
                     doLevel(new Cliffside(player));
                     break;
                 case "SourceCaves":
-                    System.out.println("Entering the Source Caves");
                     doLevel(new SourceCaves(player));
                     break;
                 case "BanditFortress":
-                    System.out.println("Entering the Bandit Fortress");
-                    //doLevel(new BanditFortress(player));
+                    doLevel(new BanditFortress(player));
                     break;
                 default:
                     System.out.println("You were directed to a world which is not yet registered in Start.java." +
