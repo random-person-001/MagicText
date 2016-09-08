@@ -168,6 +168,9 @@ public class Layer implements java.io.Serializable{
      * @return what this Layer calls itself
      */
     public String getName(){
+        if (name == null){
+            return "";
+        }
         return name;
     }
     
@@ -223,8 +226,7 @@ public class Layer implements java.io.Serializable{
      * @return true iff the Strings are the same and keyExists (whatever that is)
      */
     public boolean nameMatches (String input) {
-        return keyExists && input.equals(getName()
-        );
+        return keyExists && input.equals(getName());
     }
 
     /**

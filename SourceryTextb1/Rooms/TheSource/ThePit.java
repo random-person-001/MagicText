@@ -40,6 +40,9 @@ public class ThePit extends Room {
                 if (getPlayer().getY() > 43){
                     setNewRoom("Cliffside",11,1);
                 }
+                if (getPlayer().getY() < 0){
+                    setNewRoom("Tutorial",11,1);
+                }
                 if (count == 0){
                     if (playo.getX() == 109 && playo.getY() == 10) {
                         queueMessage(new FlavorText("Welcome to the rest of the world!", ""));
@@ -84,7 +87,7 @@ public class ThePit extends Room {
         Layer lay1 = new Layer(base, "Test");
         org.addLayer(lay1);
 
-        Spider itsyBitsy = new Spider(this, 57, 42); // blocks way out.
+        Spider itsyBitsy = new Spider(this, 59, 30); // blocks way out.
         addMortal(itsyBitsy);
 
         genericRoomInitialize();

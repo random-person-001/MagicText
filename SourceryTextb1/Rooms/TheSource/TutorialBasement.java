@@ -154,30 +154,30 @@ public class TutorialBasement extends Room {
         Item dartSpell = new Item ("Astral Dart", "Arcane Spell;\nFires a small bolt of\n pure stardust.", "AstDt", playo, "spell", false);
         dartSpell.dmgSpellDefine(2, 9, 2, "arcane", "|", "-");
         DroppedItem gSpark =  new DroppedItem(this, org, "You found a spell: Astral Dart!", dartSpell, 87, 35);
-        super.addItem(gSpark);
+        super.addObject(gSpark);
 
         Item fireSpell = new Item ("Fireball", "Fire Spell;\nUse your imagination.", "FrBll", playo, "spell", true);
         fireSpell.dmgSpellDefine(4, 7, 5, "fire", "6", "9");
         DroppedItem gFire =  new DroppedItem(this, org, "You found a spell: Fireball!", fireSpell, 80, 29);
-        super.addItem(gFire);
+        super.addObject(gFire);
 
         Item healSpell = new Item ("Heal", "Simple healing spell.", "Heal ", playo, "spell");
         healSpell.altSpellDefine(12, "healing");
         healSpell.setHeal(8);
         DroppedItem gHeal =  new DroppedItem(this, org, "You found a spell: Heal!", healSpell, 65, 9);
-        super.addItem(gHeal);
+        super.addObject(gHeal);
 
         Item fireGlove = new Item("Pyro Glove", "A glove that's on fire!\n\nPyromancers are quite the\n adventurous people, and so" +
                 "\n these gloves became very\n commonplace\n\n+2 Fire Spell Damage", playo, "equipment");
         fireGlove.setEquipvals(0, 0, 0, 0, 2, 0 ,0, "weapon");
         DroppedItem gGlove =  new DroppedItem(this, org, "You found a weapon: Pyro Glove!", fireGlove, 85, 15);
-        super.addItem(gGlove);
+        super.addObject(gGlove);
 
         Item brokenStaff = new Item ("Broken Staff","A staff crafted by a\n dirt-poor student of\n The Magic Academy.\n\nMade of spare wood\n" +
                 " and frayed ropes, it's\n no surprise that it\n already snapped in two\n\n+1 (All) Spell Damage", playo, "equipment");
         brokenStaff.setEquipvals(0, 0, 1, 0, 0, 0 ,0, "weapon");
         DroppedItem gStaff =  new DroppedItem(this, org, "You found a weapon: Broken Staff!", brokenStaff, 90, 15);
-        super.addItem(gStaff);
+        super.addObject(gStaff);
 
 
         //Item magicTater = new Item ("Magic Potato","How lucky! This eccentric\n potato can permanently\n increase either your\n Max HP or Max Mana.\n\nNOTE: it's permanent.", playo, "item");

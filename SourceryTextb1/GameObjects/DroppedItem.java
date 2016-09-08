@@ -15,6 +15,8 @@ public class DroppedItem extends GameObject{
     private String layerName;
     private boolean pickedUp = false;
 
+    private boolean recordTaken = true;
+
     public DroppedItem(Room roomy, ImageOrg org, String messageOnPickup, Item dropped, int setx, int sety){
         strClass = "DroppedItem";
         room = roomy;
@@ -24,7 +26,7 @@ public class DroppedItem extends GameObject{
         me = dropped;
         x = setx;
         y = sety;
-        if (me.getName().length() > 0) { // Don't even set up timer if item name is an empty string (for dummy item)
+        if (me.getName().length() > 0 && !room.playo.tracker.alreadyTaken(getX(),getY(),room.ownID)) { // Don't even set up timer if item name is an empty string (for dummy item)
             layerName = room.makeUniqueLayerName(super.strClass);
             Layer thisLayer = new Layer(new String[1][1], layerName, y, x, true, true, false);
             thisLayer.setStr(0, 0, "!");
@@ -33,13 +35,15 @@ public class DroppedItem extends GameObject{
         }
     }
 
+    public void updateShouldRecord (boolean newBoolean) {recordTaken = newBoolean;}
+
     @Override
     public void update(){
         //orgo.editLayer("!", layerName, 0, 0);
         if (x == player.getX() && y == player.getY() && !pickedUp){
             pickedUp = true;
             room.removeObject(this);
-            room.playo.tracker.addLoc(getX(),getY(),room.ownID);
+            if (recordTaken) room.playo.tracker.addLoc(getX(), getY(), room.ownID);
             player.addItem(me);
             if (!pickUpMessage.equals("None") || pickUpMessage == "") {
                 System.out.println("Picking up: " + me.getName());
