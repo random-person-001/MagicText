@@ -1,11 +1,9 @@
 package SourceryTextb1.GameObjects;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.Random;
+import java.util.*;
 
 import static java.lang.StrictMath.abs;
+import static java.lang.StrictMath.max;
 
 /**
  * Base object (to extend) for Enemies
@@ -26,6 +24,8 @@ public class Mortal extends GameObject implements java.io.Serializable{
     protected int r(int max, int min) {
         return rand.nextInt((max - min) + 1) + min;
     }
+
+    protected String dmgIcon = "";
 
 
     /**
@@ -62,6 +62,24 @@ public class Mortal extends GameObject implements java.io.Serializable{
         } else {
             //System.out.println("My health is now " + getHealth());
             health -= amountLost;
+            int percentHealth = (int)(((float)health / maxHealth) * 10);
+            dmgIcon = String.valueOf(percentHealth);
+            setDispIcon(dmgIcon);
+            Timer timing = new Timer();
+            timing.schedule(new dmgTimer(), 250);
+        }
+    }
+
+    /**
+     * Sets display icon, factoring in whether or not it should display the damage percentage
+     */
+    public void setDispIcon (String icon){ setDispIcon(icon, 0, 0);}
+
+    public void setDispIcon(String icon, int x, int y){
+        if (icon.length() != 1 || dmgIcon.equals("")) {
+            orgo.editLayer(icon, layerName, y, x);
+        } else {
+            orgo.editLayer(dmgIcon, layerName, y, x);
         }
     }
 
@@ -71,6 +89,7 @@ public class Mortal extends GameObject implements java.io.Serializable{
 
     public void setHealth(int newHealth){
         health = newHealth;
+        if (maxHealth > newHealth) maxHealth = newHealth;
     }
 
     public void restoreHealth( int addHP){
@@ -281,5 +300,12 @@ public class Mortal extends GameObject implements java.io.Serializable{
         protected int getY(){ return y; }
 
         protected int getCntr(){ return counter; }
+    }
+
+    class dmgTimer extends TimerTask {
+        @Override
+        public void run(){
+            dmgIcon = "";
+        }
     }
 }

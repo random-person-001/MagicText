@@ -39,7 +39,7 @@ public class Spider extends Mortal {
             room.playo.subtractHealth(2);
         }
         pathToPos(followDist, room.playo.getX(), room.playo.getY());
-        orgo.editLayer("S", layerName, 0, 0);
+        setDispIcon("S");
     }
 
     @Override
