@@ -45,7 +45,7 @@ public class DroppedItem extends GameObject{
             room.removeObject(this);
             if (recordTaken) room.playo.tracker.addLoc(getX(), getY(), room.ownID);
             player.addItem(me);
-            if (!pickUpMessage.equals("None") || pickUpMessage == "") {
+            if (!pickUpMessage.equals("None") || pickUpMessage.equals("")) {
                 System.out.println("Picking up: " + me.getName());
                 room.compactTextBox(orgo, pickUpMessage, "", false);
             }
@@ -54,8 +54,11 @@ public class DroppedItem extends GameObject{
 
     @Override
     public void selfCleanup(){
-        System.out.println("DroppedItem self clean!");
-        orgo.editLayer(" ", layerName, 0, 0);
-        orgo.removeLayer(layerName);
+        try {
+            System.out.println("DroppedItem self clean!");
+            orgo.editLayer(" ", layerName, 0, 0);
+            orgo.removeLayer(layerName);
+        }
+        catch (NullPointerException ignore){}
     }
 }
