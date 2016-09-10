@@ -226,7 +226,7 @@ public class Layer implements java.io.Serializable{
      * @return true iff the Strings are the same and keyExists (whatever that is)
      */
     public boolean nameMatches (String input) {
-        return keyExists && input.equals(getName());
+        return name != null && input.equals(getName());
     }
 
     /**

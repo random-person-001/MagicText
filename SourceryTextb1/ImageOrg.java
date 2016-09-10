@@ -285,7 +285,7 @@ public class ImageOrg implements java.io.Serializable {
         int result = -1;
         for (int id = 0; id < layers.size() ; id++){
             Layer get = layers.get(id);
-            if (get.nameMatches(layerName)){
+            if (get != null && get.nameMatches(layerName)){
                 result = id;
             }
         }
