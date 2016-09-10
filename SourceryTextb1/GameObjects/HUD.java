@@ -260,6 +260,7 @@ public class HUD extends GameObject {
      * >import antigravity : open default web browser and navigate to relevant xkcd (353)
      * >jumpto (level name) : set the Room's exitCode string to what follows.
      * >lightning (x) (y) : strike a bunch of damage to a specified location.  Leaves hot ashes behind.
+     * >ludicrous | fast : toggle player's ludicrousSpeed, which makes you move very very fast.  Ghosting recommended.
      * >ls | pwd : currently not developed.  Later will tell the name of current room.
      * >make me a sandwich : evoke snarky response
      * >pointer | compiling | wifi | random : all relevant xkcd comics.
@@ -325,6 +326,9 @@ public class HUD extends GameObject {
             int amountToGive = Integer.valueOf(command.substring(9));
             player.addPotato(amountToGive);
             showResponse(String.format("Giving the player %1$d potato(es)", amountToGive));
+        } else if (command.contains("fast") || command.contains("ludicr")) {
+            player.ludicrousSpeed = ! player.ludicrousSpeed;
+            showResponse("Toggling ludicrous speed to " + ((player.ludicrousSpeed) ? "on" : "off"));
         } else if (command.contains("set red ") && command.length() > 8) {
             int amountToSet = Integer.valueOf(command.substring(8));
             room.playo.screenRedness = amountToSet;

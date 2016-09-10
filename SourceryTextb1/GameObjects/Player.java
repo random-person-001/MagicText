@@ -51,17 +51,18 @@ public class Player extends Mortal implements java.io.Serializable {
     private final int LEFT = 2;
     private final int RIGHT = 3;
 
-    protected boolean upPressed, downPressed, leftPressed, rightPressed, spacePressed = false;
+    boolean upPressed, downPressed, leftPressed, rightPressed, spacePressed = false;
     private int movecount = 0;
+    boolean ludicrousSpeed = false;
 
     private int orientation = UP;
-    boolean orientationLocked = false;
+    private boolean orientationLocked = false;
     private String aimDispName = "aimDisp";
     public Layer castingLayer;
 
     private int superCheatProgress = 0;
     private Color restingBackground = Color.black;
-    public boolean isGhost = false; //For debug reasons
+    boolean isGhost = false; //For debug reasons
     private String lastPainMessage = "None";
 
     //STATS
@@ -69,7 +70,7 @@ public class Player extends Mortal implements java.io.Serializable {
     int maxMana = 20;
     int mana = maxMana;
     private int manaRegenClock = 0;
-    protected int manaWait = 0;
+    int manaWait = 0;
     int defense = 0;
     //Note for the future: Damage can't be reduced below 1 damage. Swords and explosions don't heal people.
 
@@ -78,17 +79,17 @@ public class Player extends Mortal implements java.io.Serializable {
     int fireSpellBoost = 0;
     int iceSpellBoost = 0;
     int darkSpellBoost = 0;
-    int healBoost, durBoost, rangeBoost, armorHealthBoost = 0;
+    private int healBoost, durBoost, rangeBoost, armorHealthBoost = 0;
     //NO MORE STATS
 
     public boolean dead = false;
     private int technicolorIndex = 0;
     private int hurtColor = 0;
 
-    public Item spell1 = new Item("None", "", this);
-    public Item spell2 = new Item("None", "", this);
-    public Item weapon = new Item("None", "", this);
-    public Item armor = new Item("None", "", this);
+    Item spell1 = new Item("None", "", this);
+    Item spell2 = new Item("None", "", this);
+    Item weapon = new Item("None", "", this);
+    Item armor = new Item("None", "", this);
 
 
     int screenRedness = 0;
@@ -216,11 +217,16 @@ public class Player extends Mortal implements java.io.Serializable {
 
     private void doMovement(){
         int movespeed = 5;
+        boolean spendingManaToSprint = false;
+        if (spacePressed && mana > 0){
+            movespeed = 1;
+            spendingManaToSprint = true;
+        }
         if(isGhost){
             movespeed = 1;
         }
-        if (spacePressed && mana > 0){
-            movespeed = 3;
+        if(ludicrousSpeed){
+            movespeed = 0;
         }
         if (movecount == 0) {
             if (upPressed) {
@@ -235,7 +241,7 @@ public class Player extends Mortal implements java.io.Serializable {
             if (rightPressed) {
                 move(RIGHT);
             }
-            if ((upPressed || leftPressed || rightPressed || downPressed) && movespeed == 3){
+            if ((upPressed || leftPressed || rightPressed || downPressed) && spendingManaToSprint){
                 spendMana(1);
             }
         }
