@@ -51,10 +51,7 @@ public class Player extends Mortal implements java.io.Serializable {
     private final int LEFT = 2;
     private final int RIGHT = 3;
 
-    protected boolean upPressed = false;
-    protected boolean downPressed = false;
-    protected boolean leftPressed = false;
-    protected boolean rightPressed = false;
+    protected boolean upPressed, downPressed, leftPressed, rightPressed, spacePressed = false;
     private int movecount = 0;
 
     private int orientation = UP;
@@ -222,6 +219,9 @@ public class Player extends Mortal implements java.io.Serializable {
         if(isGhost){
             movespeed = 1;
         }
+        if (spacePressed && mana > 0){
+            movespeed = 3;
+        }
         if (movecount == 0) {
             if (upPressed) {
                 move(UP);
@@ -234,6 +234,9 @@ public class Player extends Mortal implements java.io.Serializable {
             }
             if (rightPressed) {
                 move(RIGHT);
+            }
+            if ((upPressed || leftPressed || rightPressed || downPressed) && movespeed == 3){
+                spendMana(1);
             }
         }
         if (!(upPressed || downPressed || leftPressed || rightPressed) || (movecount >= movespeed)) {
@@ -728,6 +731,9 @@ class PlayerKeypressListener extends KeyAdapter implements java.io.Serializable 
             else if (event.getKeyCode() == KeyEvent.VK_RIGHT) {
                 player.rightPressed = true;
             }
+            else if (event.getKeyCode() == KeyEvent.VK_SPACE) {
+                player.spacePressed = true;
+            }
             else if (event.getKeyCode() == KeyEvent.VK_ESCAPE) {
                 player.keyPressed('\'');
             } else{
@@ -753,6 +759,9 @@ class PlayerKeypressListener extends KeyAdapter implements java.io.Serializable 
             }
             else if (event.getKeyCode() == KeyEvent.VK_RIGHT) {
                 player.rightPressed = false;
+            }
+            else if (event.getKeyCode() == KeyEvent.VK_SPACE) {
+                player.spacePressed = false;
             }
         }
     }

@@ -5,7 +5,6 @@
  */
 package SourceryTextb1.Rooms.TheSource;
 
-
 import SourceryTextb1.GameObjects.TheSource.PotOfPetunias;
 import SourceryTextb1.GameObjects.TheSource.Spider;
 import SourceryTextb1.GameObjects.DroppedItem;
@@ -66,7 +65,7 @@ public class TutorialBasement extends Room {
                     count++;
                 }
                 if (!holdDownReminder && getPlayer().getX() > 14 && getPlayer().getX() < 20 && getPlayer().getY() == 22){
-                    queueMessage(new FlavorText("You can hold down the arrow keys\n to move very quickly.", ""));
+                    queueMessage(new FlavorText("Hold SPACE while moving to sprint.\n However you aren't that very athletic,\n so you get tired very quickly", ""));
                     holdDownReminder = true;
                 }
                 if (getPlayer().getX() == 87 && getPlayer().getY() == 35){
@@ -104,9 +103,8 @@ public class TutorialBasement extends Room {
                 }
                 if (count == 4 && getPlayer().getX() == 5 && getPlayer().getY() == 14){
                     queueMessage(new FlavorText("You've managed to defeat\n The Pot of Petunias!\nCongratulations!", ""));
-                    queueMessage(new FlavorText("As you may have noticed, the bar on the\n top right had depleted a little.\nThat is your mana bar.", ""));
-                    queueMessage(new FlavorText("Casting spells cost mana. You can't cast\n any spells if you run out.", ""));
-                    queueMessage(new FlavorText("Fortunately, your mana regenerates\n shortly after not casting spells\n for a bit.", "", false));
+                    queueMessage(new FlavorText("As you may have noticed, your meter\n at the top-right had depleted a bit.\nThat is your mana bar", ""));
+                    queueMessage(new FlavorText("Casting spells and sprinting\n costs mana. Fortunately, mana will\n regenerate shortly after.", "", false));
                     queueMessage(new FlavorText("Note: The less mana you spend,\n the less you have to wait before\n your mana refills.", "", false));
                     count++;
                 }
@@ -186,7 +184,6 @@ public class TutorialBasement extends Room {
 
         PotOfPetunias flowers = new PotOfPetunias(org, this, 5, 19);
         addMortal(flowers);
-
 
         Spider spoidur = new Spider(this, 39, 7);
         addMortal(spoidur);
