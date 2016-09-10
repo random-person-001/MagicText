@@ -49,8 +49,8 @@ public class Cliffside extends Room {
                 if (playo.getY() >= 32){
                     setNewRoom("SourceCaves",62,1);
                 }
-                if (playo.getX() >= 32){
-                    setNewRoom("SourceCaves",62,1);
+                if (playo.getX() >= 146){
+                    setNewRoom("BanditFortress",67,103);
                 }
             } catch (InterruptedException ignored) {
             }

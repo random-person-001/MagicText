@@ -32,7 +32,7 @@ public class BanditFortress extends Room{
                     setNewRoom("Cliffside",5,5);
                 }
                 if (getPlayer().getX() >= 135){
-                    setNewRoom("SourceCaves",1,231);
+                    setNewRoom("SourceCaves",231,1);
                 }
                 if (count == 0){
                     if (playo.getX() == 109 && playo.getY() == 10) {
