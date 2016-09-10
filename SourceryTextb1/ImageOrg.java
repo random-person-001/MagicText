@@ -54,6 +54,9 @@ public class ImageOrg implements java.io.Serializable {
      */
     public void addLayer(Layer lay){
         toAdd.add(lay);
+        if (lay.getName().contains("One-wayDoor")){
+            System.out.println(lay.getStr(0,0));
+        }
         //System.out.println(String.format("Layer Given: %1$s (%2$b)", lay.getName(), somethingChanged));
     }
 

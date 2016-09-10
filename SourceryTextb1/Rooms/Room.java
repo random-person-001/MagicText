@@ -192,17 +192,20 @@ public class Room implements java.io.Serializable{
      */
     public void setObjsPause(boolean set) {
         flushObjListChanges();
-        for (GameObject obj : objs) {
-            try {
-                obj.setPause(set);
-                //objManifest += obj.strClass + ", ";
-            } catch (ConcurrentModificationException ignore) { // Happens normally when an object is removed or added to the room
-                System.out.println("Whoops, something weird! [Room.java: setObjsPuase(): caught a ConcurrentModificationException]");
-            } catch (NullPointerException e) {
-                System.out.println("[Room.java: setObjsPause(): caught nullpointer!  Probably Not Good!");
-                e.printStackTrace();
+        try {
+            for (GameObject obj : objs) {
+                try {
+                    obj.setPause(set);
+                    //objManifest += obj.strClass + ", ";
+                } catch (NullPointerException e) {
+                    System.out.println("[Room.java: setObjsPause(): caught nullpointer!  Probably Not Good!");
+                    e.printStackTrace();
+                }
+                //System.out.println("OBJS PAUSED: " + objManifest + "\n");
             }
-            //System.out.println("OBJS PAUSED: " + objManifest + "\n");
+        } catch (ConcurrentModificationException ignore) { // Happens normally when an object is removed or added to the room
+            System.out.println("Whoops, something weird! [Room.java: setObjsPuase(): caught a ConcurrentModificationException]");
+
         }
     }
 
@@ -439,6 +442,9 @@ public class Room implements java.io.Serializable{
         return playo;
     }
 
+    /**
+     * Puts a message on the queue for display
+     */
     protected void queueMessage(FlavorText message){
         messageQueue.add(message);
         System.out.println("MESSAGE STACK SIZE: " + messageQueue.size());
@@ -447,8 +453,15 @@ public class Room implements java.io.Serializable{
         }
     }
 
+    /**
+     * 'Plants' a message at a location, specified by the message given.
+     * @param thing
+     */
     protected void plantText(FlavorText thing){ flavorTexts.add(thing); }
 
+    /**
+     * Mainly used by the player to check for nearby planted text
+     */
     public void queryForText(int testX, int testY){
         for (FlavorText text : flavorTexts){
             text.textIfCorrectSpot(testX, testY);
@@ -513,7 +526,7 @@ public class Room implements java.io.Serializable{
      */
 
     public void splashMessage(String message, String speaker){
-        plantText(new FlavorText(message, speaker));
+        queueMessage(new FlavorText(message, speaker));
     }
 
     public void startup() {
