@@ -15,6 +15,9 @@
 package SourceryTextb1;
 
 /**
+ * This file is the equivalent of a "strings.xml" in an android app, it's a central place to keep all our string, well,
+ * art.  Yes, it has a bijillion warnings and unused stuff, but, em, it may be useful later?
+ *
  * @author Riley
  */
 public class Art implements java.io.Serializable{
