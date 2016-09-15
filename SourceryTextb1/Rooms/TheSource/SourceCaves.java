@@ -1,5 +1,6 @@
 package SourceryTextb1.Rooms.TheSource;
 
+import SourceryTextb1.Art;
 import SourceryTextb1.GameObjects.DroppedItem;
 import SourceryTextb1.GameObjects.Item;
 import SourceryTextb1.GameObjects.Player;
@@ -8,7 +9,6 @@ import SourceryTextb1.GameObjects.TheSource.Spider;
 import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
-import SourceryTextb1.art;
 
 /**
  * Caves!  Exciting!
@@ -50,8 +50,8 @@ public class SourceCaves extends Room{
         String[] doorLocked = {"The door seems to have locked behind you.","The owner must have installed\n an auto-lock on the door."};
         plantText(new Room.FlavorText(109, 9, doorLocked , ""));
 
-        art arty = new art();
-        String[][] base = art.strToArray(arty.sourceCaves);
+        Art arty = new Art();
+        String[][] base = Art.strToArray(arty.sourceCaves);
         String[] solids = {"#"};
         addToBaseHitMesh(base, solids);
         Layer lay1 = new Layer(base, "Base");

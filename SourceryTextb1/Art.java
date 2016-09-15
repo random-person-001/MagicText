@@ -17,7 +17,7 @@ package SourceryTextb1;
 /**
  * @author Riley
  */
-public class art implements java.io.Serializable{
+public class Art implements java.io.Serializable{
 
     String cloud1
             = "          ____   _-_     "

@@ -37,7 +37,7 @@ public class ProcedurallyGeneratedDungeon extends Room {
     public void startup() {
         ititHitMeshes();
         playo.goTo(5, 5);
-        //String[][] base = art.strToArray(arty.largeBoat);
+        //String[][] base = Art.strToArray(arty.largeBoat);
         //String[] solids = {"|","-","\\", "/","_","="};
         //addToBaseHitMesh(base, solids);
         //Layer lay1 = new Layer(base, "Boat");

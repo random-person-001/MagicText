@@ -1,9 +1,9 @@
 package SourceryTextb1.GameObjects;
 
+import SourceryTextb1.Art;
 import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Window;
 import SourceryTextb1.Layer;
-import SourceryTextb1.art;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -44,12 +44,12 @@ class Inventory implements java.io.Serializable {
     private int page = 1;
     private int indexX = 0;
 
-    private Layer topMenuLayer = new Layer(art.strToArray(new art().topMenu), "top", 1, 27, false, true);
-    private Layer quitMenuLayer = new Layer(art.strToArray(new art().quitMenu), "quit", 1, 27, false, true);
-    private Layer itemsMenuLayer = new Layer(art.strToArray(new art().itemsMenu), "items", 1, 0, false, true);
-    private Layer spellsMenuLayer = new Layer(art.strToArray(new art().spellsMenu), "spells", 1, 0, false, true);
-    private Layer equipMenuLayer = new Layer(art.strToArray(new art().equipMenu), "equip", 1, 0, false, true);
-    private Layer taterMenuLayer = new Layer(art.strToArray(new art().taterMenu), "tater", 1, 27, false, true);
+    private Layer topMenuLayer = new Layer(Art.strToArray(new Art().topMenu), "top", 1, 27, false, true);
+    private Layer quitMenuLayer = new Layer(Art.strToArray(new Art().quitMenu), "quit", 1, 27, false, true);
+    private Layer itemsMenuLayer = new Layer(Art.strToArray(new Art().itemsMenu), "items", 1, 0, false, true);
+    private Layer spellsMenuLayer = new Layer(Art.strToArray(new Art().spellsMenu), "spells", 1, 0, false, true);
+    private Layer equipMenuLayer = new Layer(Art.strToArray(new Art().equipMenu), "equip", 1, 0, false, true);
+    private Layer taterMenuLayer = new Layer(Art.strToArray(new Art().taterMenu), "tater", 1, 27, false, true);
     private Layer selectorLayer = new Layer(new String[22][46], "selector", 0, 0, false, false);
     private Layer infoLayer = new Layer(new String[22][46], "invInfo", 0, 0, false, false);
 
@@ -510,7 +510,7 @@ class Inventory implements java.io.Serializable {
     }
 
     /**
-     * Put a new item art in the Primary Spell place
+     * Put a new item Art in the Primary Spell place
      *
      * @param thing a String (not String[][], this does that!).
      */
@@ -524,7 +524,7 @@ class Inventory implements java.io.Serializable {
     }
 
     /**
-     * Put a new item art in the Secondary Spell place
+     * Put a new item Art in the Secondary Spell place
      *
      * @param thing a String (not String[], this does that!).
      */

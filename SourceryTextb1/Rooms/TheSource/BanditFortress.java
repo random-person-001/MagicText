@@ -1,5 +1,6 @@
 package SourceryTextb1.Rooms.TheSource;
 
+import SourceryTextb1.Art;
 import SourceryTextb1.GameObjects.DroppedItem;
 import SourceryTextb1.GameObjects.Item;
 import SourceryTextb1.GameObjects.Player;
@@ -9,7 +10,6 @@ import SourceryTextb1.GameObjects.TheSource.WeakTower;
 import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
-import SourceryTextb1.art;
 
 /**
  * A Fortress!  Exciting!
@@ -61,8 +61,8 @@ public class BanditFortress extends Room{
                 "Meanwhile, you can enjoy the beautiful\n fountain.  There's an inaccessible item\n in the middle of it.  Pretty, huh?"};
         plantText(new Room.FlavorText(51, 25, byFountain, "Talking Gargoyle"));
 
-        art arty = new art();
-        String[][] base = art.strToArray(arty.banditFortress);
+        Art arty = new Art();
+        String[][] base = Art.strToArray(arty.banditFortress);
         String[] solids = {":", "w","m","#","R","G"};
         addToBaseHitMesh(base, solids);
         Layer lay1 = new Layer(base, "Base");

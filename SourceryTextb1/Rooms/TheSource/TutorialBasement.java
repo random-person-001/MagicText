@@ -5,6 +5,7 @@
  */
 package SourceryTextb1.Rooms.TheSource;
 
+import SourceryTextb1.Art;
 import SourceryTextb1.GameObjects.TheSource.PotOfPetunias;
 import SourceryTextb1.GameObjects.TheSource.Spider;
 import SourceryTextb1.GameObjects.DroppedItem;
@@ -14,7 +15,6 @@ import SourceryTextb1.GameObjects.Item;
 import SourceryTextb1.Rooms.Room;
 import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
-import SourceryTextb1.art;
 
 /**
  * A place to begin a tutorial, guiding you through stuff.
@@ -47,7 +47,7 @@ public class TutorialBasement extends Room {
 
         boolean holdDownReminder = false;
 
-        while (exitCode == ""){
+        while (exitCode.equals("")){
             try {
                 Thread.sleep(20);
 
@@ -142,8 +142,8 @@ public class TutorialBasement extends Room {
         FlavorText playerStart = new FlavorText(20, 29, "You start here!", "");
         plantText(playerStart);
 
-        art arty = new art();
-        String[][] base = art.strToArray(arty.tutForest);
+        Art arty = new Art();
+        String[][] base = Art.strToArray(arty.tutForest);
         String[] solids = {"|","-","0","/",",","#","%","$","'"};
         addToBaseHitMesh(base, solids);
         Layer lay1 = new Layer(base, "Test", 0, 0, true, false, false);

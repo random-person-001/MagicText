@@ -7,7 +7,7 @@ import SourceryTextb1.GameObjects.TheSource.WeakTower;
 import SourceryTextb1.GameObjects.TheSource.Wolf;
 import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
-import SourceryTextb1.art;
+import SourceryTextb1.Art;
 
 /**
  * Some mountains, where you fight some enemies
@@ -75,7 +75,7 @@ public class Cliffside extends Room {
     @Override
     public void startup() {
         ititHitMeshes();
-        String[][] base = art.strToArray(arty.mountainPlace);
+        String[][] base = Art.strToArray(arty.mountainPlace);
         String[] solids = {":", "^", "#",".","0","o"};
         addToBaseHitMesh(base, solids);
         baseLayer = new Layer(base, "backgronud");

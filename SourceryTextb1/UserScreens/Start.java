@@ -5,6 +5,7 @@
  */
 package SourceryTextb1.UserScreens;
 
+import SourceryTextb1.Art;
 import SourceryTextb1.GameObjects.Player;
 import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
@@ -12,7 +13,6 @@ import SourceryTextb1.Rooms.TheSource.*;
 import SourceryTextb1.Rooms.NewTestRoom;
 import SourceryTextb1.Rooms.Room;
 import SourceryTextb1.Window;
-import SourceryTextb1.art;
 
 import java.util.TimerTask;
 import java.util.Timer;
@@ -183,8 +183,8 @@ public class Start {
         Thread.sleep(5000);
 
         org.removeLayer("Intro1");
-        art arty = new art();
-        String[][] town = art.strToArray(arty.intro1);
+        Art arty = new Art();
+        String[][] town = Art.strToArray(arty.intro1);
         Layer lay = new Layer(town, "Intro2");
         org.addLayer(lay);
         Layer lay2Title = new Layer(new String[3][46], "Intro2Title", 30, 0);
@@ -269,7 +269,7 @@ public class Start {
 
         lay3.clear();
         org.removeLayer("Intro3");
-        String[][] code = art.strToArray(arty.intro2);
+        String[][] code = Art.strToArray(arty.intro2);
         lay3 = new Layer(code, "Intro4");
         org.addLayer(lay3);
         org.setCam(0, 18);

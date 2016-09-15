@@ -5,23 +5,24 @@ import SourceryTextb1.GameObjects.Player;
 import SourceryTextb1.GameObjects.TheSource.Spider;
 import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
-import SourceryTextb1.art;
+import SourceryTextb1.Art;
 
 import java.util.ConcurrentModificationException;
 
 /**
+ * A boat that moves away
  * Created by riley on 14-Jun-2016.
  */
 public class DockAndShip extends Room {
-    String[][] dock;
-    Layer docky;
+    private String[][] dock;
+    private Layer docky;
     private int maxW;
     private int maxH;
     @Override
     protected String loop(){
         int count = 0;
         int timer = 0;
-        while (exitCode == ""){
+        while (exitCode.equals("")){
             try {
                 Thread.sleep(20);
                 if (count == 0){
@@ -80,13 +81,13 @@ public class DockAndShip extends Room {
     public void startup(){
         ititHitMeshes();
         playo.goTo(72,51);
-        String[][] base = art.strToArray(arty.largeBoat);
+        String[][] base = Art.strToArray(arty.largeBoat);
         String[] solids = {"|","-","\\", "/","_","="};
         addToBaseHitMesh(base, solids);
         Layer lay1 = new Layer(base, "Boat");
         org.addLayer(lay1);
 
-        dock = art.strToArray(arty.dock);
+        dock = Art.strToArray(arty.dock);
         String[] docksolids = {"|","-","_"};
         addToObjHitMesh(dock, docksolids, 40, 27);
         docky = new Layer(dock, "Dock", 27, 40);
@@ -116,9 +117,7 @@ public class DockAndShip extends Room {
     }
 
     private void makePiranahAt(int x, int y){
-        //SmallPiranha p = new SmallPiranha(org, this, x, y);
-        //p.setMoveFrq(0);
-        //addMortal(p);
+        makeSpiderAt(x,y);
     }
 
     public DockAndShip(Player player){

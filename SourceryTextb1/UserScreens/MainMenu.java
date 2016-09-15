@@ -45,8 +45,8 @@ class MainMenu {
         keyInputter = new KeyInput(this);
         window.txtArea.addKeyListener(keyInputter);
 
-        art artida = new art();
-        Layer menuLayer = new Layer(art.strToArray(artida.mainMenu), "MAIN_MENU");
+        Art artida = new Art();
+        Layer menuLayer = new Layer(Art.strToArray(artida.mainMenu), "MAIN_MENU");
         org.addLayer(menuLayer);
     }
 

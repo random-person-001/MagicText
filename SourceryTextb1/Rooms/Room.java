@@ -22,7 +22,7 @@ import static java.awt.Color.*;
  */
 public class Room implements java.io.Serializable{
     public ImageOrg org;
-    protected art arty = new art();
+    protected Art arty = new Art();
     public List<GameObject> objs = new ArrayList<>();
     private List<GameObject> addList = new ArrayList<>();
     private List<GameObject> removeList = new ArrayList<>();
@@ -477,12 +477,12 @@ public class Room implements java.io.Serializable{
      * @param helpful whether the box ought to give instructions on its own dismissal
      */
     public void compactTextBox(ImageOrg org, String text, String speaker, boolean helpful) {
-        art artsedo = new art();
+        Art artsedo = new Art();
         Layer txtBox;
         if (helpful) {
-            txtBox = new Layer(art.strToArray(artsedo.textBoxHelpful), "Dialog", 13, 0, false, true);
+            txtBox = new Layer(Art.strToArray(artsedo.textBoxHelpful), "Dialog", 13, 0, false, true);
         } else {
-            txtBox = new Layer(art.strToArray(artsedo.textBox), "Dialog", 13, 0, false, true);
+            txtBox = new Layer(Art.strToArray(artsedo.textBox), "Dialog", 13, 0, false, true);
         }
 
         for (int ii = 0; ii < speaker.length(); ii++) {

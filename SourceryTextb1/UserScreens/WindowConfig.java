@@ -3,7 +3,7 @@ package SourceryTextb1.UserScreens;
 import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
 import SourceryTextb1.Window;
-import SourceryTextb1.art;
+import SourceryTextb1.Art;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -56,8 +56,8 @@ class WindowConfig {
         }
 
         if (interactable) {
-            art arty = new art();
-            String[][] base = art.strToArray(arty.configBox);
+            Art arty = new Art();
+            String[][] base = Art.strToArray(arty.configBox);
             Layer lay = new Layer(base, "helpful");
             org.addLayer(lay);
 

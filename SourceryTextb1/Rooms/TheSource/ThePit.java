@@ -5,12 +5,12 @@
  */
 package SourceryTextb1.Rooms.TheSource;
 
+import SourceryTextb1.Art;
 import SourceryTextb1.GameObjects.*;
 import SourceryTextb1.GameObjects.TheSource.Spider;
 import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
-import SourceryTextb1.art;
 
 /**
  * The initial view of the Source Pit.
@@ -80,8 +80,8 @@ public class ThePit extends Room {
         String[] doorLocked = {"The door seems to have locked behind you.","The owner must have installed\n an auto-lock on the door."};
         plantText(new FlavorText(109, 9, doorLocked , ""));
 
-        art arty = new art();
-        String[][] base = art.strToArray(arty.sourcePit);
+        Art arty = new Art();
+        String[][] base = Art.strToArray(arty.sourcePit);
         String[] solids = {".",",",":",";","^","_","#","'","D","X"};
         addToBaseHitMesh(base, solids);
         Layer lay1 = new Layer(base, "Test");

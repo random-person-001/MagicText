@@ -5,10 +5,10 @@
  */
 package SourceryTextb1.Rooms;
 
+import SourceryTextb1.Art;
 import SourceryTextb1.GameObjects.*;
 import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
-import SourceryTextb1.art;
 
 /**
  * A place to begin a tutorial, guiding you through stuff.
@@ -35,7 +35,7 @@ public class NewTestRoom extends Room {
 
     protected String loop(){
 
-        while (exitCode == ""){
+        while (exitCode.equals("")){
             try {
                 Thread.sleep(20);
                 if (getPlayer().getHealth() <= 0){
@@ -51,8 +51,8 @@ public class NewTestRoom extends Room {
         ititHitMeshes();
         super.playo.goTo(7,5);
 
-        art arty = new art();
-        String[][] base = art.strToArray(arty.testRoom);
+        Art arty = new Art();
+        String[][] base = Art.strToArray(arty.testRoom);
         String[] solids = {"|","-","0","#"};
         addToBaseHitMesh(base, solids);
         Layer lay1 = new Layer(base, "Test", 0, 0, true, false, false);
