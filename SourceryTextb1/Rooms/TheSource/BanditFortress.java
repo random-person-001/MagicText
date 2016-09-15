@@ -51,12 +51,19 @@ public class BanditFortress extends Room{
         ititHitMeshes();
         super.playo.roomName = "BanditFortress";
 
-        String[] doorLocked = {"The door seems to have locked behind you.","The owner must have installed\n an auto-lock on the door."};
-        plantText(new Room.FlavorText(109, 9, doorLocked , ""));
+        String[] rockText1 = {"You've passed safely through the walls of \n the fortress!  Unfortunately, many more\n bandits lie inside.  Be careful."};
+        plantText(new Room.FlavorText(59, 82, rockText1, ""));
+
+        String[] rockText2 = {"The immense, strong walls of the bandit   \n fortress tower before you.  This may be\n a long shot, whatever you're to do here."};
+        plantText(new Room.FlavorText(67, 94, rockText2, ""));
+
+        String[] byFountain = {"Phew!  So many bandits!  Thankfully, it  \n only gets worse from here on out.  The \n Bandit King lies ahead, ugly and brutal.",
+                "Meanwhile, you can enjoy the beautiful\n fountain.  There's an inaccessible item\n in the middle of it.  Pretty, huh?"};
+        plantText(new Room.FlavorText(51, 25, byFountain, "Talking Gargoyle"));
 
         art arty = new art();
         String[][] base = art.strToArray(arty.banditFortress);
-        String[] solids = {":", "w","m","#"};
+        String[] solids = {":", "w","m","#","R","G"};
         addToBaseHitMesh(base, solids);
         Layer lay1 = new Layer(base, "Base");
         org.addLayer(lay1);

@@ -23,7 +23,7 @@
                                   :        ::             ::        :                                                                   
                                    :         :::       :::         :                                                                    
                                     :           :::::::           :                                                                     
-                                     :                           :                                                                      
+                                     :             G             :
                                       :                        :::::::::::::::::::                                                      
                                        ::::                                       :                                                     
                                            :::::::::::::::::::::::::::::::::::    :                                                     
@@ -81,7 +81,7 @@
                w            :                                 :::                                     w                                 
                 w            :                                   :::                                 w                                  
                  w            :::::::::::::::::::::::::::           :::                             w                                   
-                  w                                      :::           ::                          w                                    
+                  w                                      ::: R         ::                          w
                    w                                        ::           :                        w                                     
                     w                                        :   w w w   :                       w                                      
                      wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww w wwwwwwwwwwwwwwwwwwwwwwwwwwww                                       
@@ -91,7 +91,7 @@
                                                          wwwww    : :    wwwww                                                          
                                                                   : :                                                                   
                                                                   : :                                                                   
-                                                             :::::: ::::::                                                              
+                                                             :::::R ::::::
                                                             :             :                                                             
                                                            :               :                                                            
                                                            :               :                                                            

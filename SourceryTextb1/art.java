@@ -1141,7 +1141,7 @@ public class art implements java.io.Serializable{
                     "                                  :        ::             ::        :                                                                   \n" +
                     "                                   :         :::       :::         :                                                                    \n" +
                     "                                    :           :::::::           :                                                                     \n" +
-                    "                                     :                           :                                                                      \n" +
+                    "                                     :             G             :                                                                      \n" +
                     "                                      :                        :::::::::::::::::::                                                      \n" +
                     "                                       ::::                                       :                                                     \n" +
                     "                                           :::::::::::::::::::::::::::::::::::    :                                                     \n" +
@@ -1198,7 +1198,7 @@ public class art implements java.io.Serializable{
                     "              w            :                               :::                                         w                                \n" +
                     "               w            :                                 :::                                     w                                 \n" +
                     "                w            :                                   :::                                 w                                  \n" +
-                    "                 w            :::::::::::::::::::::::::::           :::                             w                                   \n" +
+                    "                 w            :::::::::::::::::::::::::::  R        :::                             w                                   \n" +
                     "                  w                                      :::           ::                          w                                    \n" +
                     "                   w                                        ::           :                        w                                     \n" +
                     "                    w                                        :   w w w   :                       w                                      \n" +
@@ -1209,7 +1209,7 @@ public class art implements java.io.Serializable{
                     "                                                         wwwww    : :    wwwww                                                          \n" +
                     "                                                                  : :                                                                   \n" +
                     "                                                                  : :                                                                   \n" +
-                    "                                                             :::::: ::::::                                                              \n" +
+                    "                                                             :::::R ::::::                                                              \n" +
                     "                                                            :             :                                                             \n" +
                     "                                                           :               :                                                            \n" +
                     "                                                           :               :                                                            \n" +
