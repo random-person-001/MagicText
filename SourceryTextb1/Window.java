@@ -9,9 +9,8 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.Font;
 import java.util.List;
-import javax.swing.JFrame;
-import javax.swing.JTextArea;
-
+import javax.swing.*;
+import javax.swing.text.JTextComponent;
 
 
 /**
@@ -20,7 +19,7 @@ import javax.swing.JTextArea;
  */
 public class Window extends JFrame{
     private static final String OPAQUE_SPACE = "ñ";
-    public JTextArea txtArea = new JTextArea();
+    public JTextPane txtArea = new JTextPane();
     private Container c = getContentPane();
 
     public int dbgSavedSerial = 0;
@@ -123,7 +122,7 @@ public class Window extends JFrame{
                 }
             }
         }
-        //System.out.println("Drawn bounding box:\n X: " + (camY) + " to " + (camY + maxH - 1) + "\n Y: " + (camX) + " to " + (camX + maxW - 1));
+        //System.out.println("Drawn bounding box:<br> X: " + (camY) + " to " + (camY + maxH - 1) + "<br> Y: " + (camX) + " to " + (camX + maxW - 1));
     }
 
     /** Place the temporary idea of what should be on the screen (fullImage) onto the actual display
@@ -142,10 +141,12 @@ public class Window extends JFrame{
                     build += s;
                 }
             }
-            build += "\n";
+            build += "<br>";
         }
         clearText();
-        txtArea.append(build);
+        //txtArea.append();
+        txtArea.setText("<html><>" + "aoeu<span style='color:#990000'>B</span>oaeusntaoheu<span style='color:#099099'><b>L</b></span>aoeu<br>" +
+                "sanoteusnaohunsohisaohetnihaonuhaoensh<br>"+"<></html>"); // add a font thing later!
     }
 
     /** Toss some string onto the end of the window's text area.  Note that in most cases, this will be off the screen.
@@ -163,7 +164,7 @@ public class Window extends JFrame{
 
         clearImage();
         build();
-        txtArea.setBackground(Color.BLACK);
+        //txtArea.setBackground(Color.BLACK);
         txtArea.setForeground(Color.WHITE);
         //txtArea.setFont(new Font("Consolas", Font.PLAIN, 15));
         txtArea.setFont(new Font("Monospaced", Font.PLAIN, 15));
@@ -174,6 +175,10 @@ public class Window extends JFrame{
 
         setVisible(true);
         txtArea.requestFocusInWindow();
+
+        System.out.println(txtArea.getContentType());
+        txtArea.setContentType("text/html");
+
     }
 
 }

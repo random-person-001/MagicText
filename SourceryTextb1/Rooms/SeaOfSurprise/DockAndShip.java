@@ -30,7 +30,7 @@ public class DockAndShip extends Room {
                     count++;
                 }
                 if (count == 1 && playo.getX() == 23 && playo.getY() == 1){
-                    compactTextBox(org, "Ahoy!  This is the front of the ship. \n ", "Seagull", false);
+                    compactTextBox(org, "Ahoy!  This is the front of the ship. <br> ", "Seagull", false);
                     count++;
                 }
                 timer++;
@@ -47,7 +47,7 @@ public class DockAndShip extends Room {
                             if (m.getX() > 42) {
                                 m.goTo(m.getX() + 1, m.getY() + 1);
                                 if (m.getX() > maxW || m.getY() > maxH) { //Later, this might be good to put in Enemy.checkDead()
-                                    m.subtractHealth(30, "You were not long for this world. \n You *Were* told to get on the ship.");
+                                    m.subtractHealth(30, "You were not long for this world. <br> You *Were* told to get on the ship.");
                                 }
                                 if (count == 1 && m.strClass.equals("Player")) {
                                     compactTextBox(org, "You missed the ship!  I told you not to.", "THE PASSERBY", false);
