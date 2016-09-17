@@ -75,7 +75,7 @@ public class Troll extends Mortal {
         room.removeMortal(this);
 
         if (abs(room.playo.getY() - y) <= 3 && abs(room.playo.getX() - x) <= 3) {
-            room.playo.subtractHealth(3, "You know, maybe you should have listened \n when your mother told you not to \n play with trolls.");
+            room.playo.subtractHealth(3, "You know, maybe you should have listened <br> when your mother told you not to <br> play with trolls.");
         }
     }
 
