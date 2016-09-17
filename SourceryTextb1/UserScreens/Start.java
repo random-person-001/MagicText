@@ -59,7 +59,7 @@ public class Start {
                     doLevel(new TutorialBasement(player));
                     break;
                 case "SourcePit":
-                    doLevel(new ThePit(player));
+                    doLevel(new SourcePit(player));
                     break;
                 case "Cliffside":
                     doLevel(new Cliffside(player));
