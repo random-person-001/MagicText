@@ -347,12 +347,12 @@ public class HUD extends GameObject {
         } else if (command.contains("echo ")) {
             showResponse(command.substring(5));
         } else if (command.startsWith("die") || command.contains("suicide")) {
-            player.subtractHealth(1000000000, "Write with caution, for words are mightier<br> than the sword");
+            player.subtractHealth(1000000000, "Write with caution, for words are mightier\n than the sword");
             showResponse("Ok, then.  May you pass well into the next world!");
         } else if (command.contains("make") && command.contains("sandwich")) {
             if (command.contains("sudo") || promptChar.equals("#")) {
                 showResponse("Ok, fine, I'll make you a sandwich.");
-                Item sandwichItem = new Item("Sandwich", "Using your awesome<br> knowledge of commandline-<br> fu, you convinced the<br> computer to make you this.", "~", player, "item");
+                Item sandwichItem = new Item("Sandwich", "Using your awesome\n knowledge of commandline-\n fu, you convinced the\n computer to make you this.", "~", player, "item");
                 DroppedItem sandwichDrop = new DroppedItem(room, orgo, "Here's your sandwich", sandwichItem, player.getX(), player.getY());
                 room.addObject(sandwichDrop);
             } else {
@@ -426,11 +426,11 @@ public class HUD extends GameObject {
                 int y = p[1];
                 System.out.println("X: " + x);
                 System.out.println("Y: " + y);
-                room.hurtSomethingAt(x, y, 1000, "You were zapped by your own lightning!<br>Next time, be more careful" +
-                        "with <br>the command line.");
+                room.hurtSomethingAt(x, y, 1000, "You were zapped by your own lightning!\nNext time, be more careful" +
+                        "with \nthe command line.");
 
-                Item ashItem = new Item("Ash", "You struck down a <br> bolt of lightning, <br> which left only this<br> behind.", "~", player, "item");
-                DroppedItem ashDrop = new DroppedItem(room, orgo, "Ow!  The ashes of your smote<br> enemies are still hot!", ashItem, x, y);
+                Item ashItem = new Item("Ash", "You struck down a \n bolt of lightning, \n which left only this\n behind.", "~", player, "item");
+                DroppedItem ashDrop = new DroppedItem(room, orgo, "Ow!  The ashes of your smote\n enemies are still hot!", ashItem, x, y);
                 room.addObject(ashDrop);
                 showResponse("1000 damage zapped at x=" + x + " y=" + y);
             }
@@ -465,7 +465,7 @@ public class HUD extends GameObject {
                             float xDamageMult = abs(abs(xi) - r) / (float) r; // 0 to 1, peaking when xi=0 (center)
                             float yDamageMult = abs(abs(yi) - r) / (float) r;
                             int totalDamage = (int) (d * .5 * (xDamageMult + yDamageMult));
-                            room.hurtSomethingAt(xi + x, yi + y, totalDamage, "Jeez, killed yourself with an ICBM!<br> Careful!");
+                            room.hurtSomethingAt(xi + x, yi + y, totalDamage, "Jeez, killed yourself with an ICBM!\n Careful!");
                             System.out.println(x + xi + " " + (yi + y) + " given " + totalDamage + " damage");
                         }
                         System.out.println();
@@ -610,7 +610,7 @@ public class HUD extends GameObject {
             System.out.println(each);
         }
         System.out.println("##[] Console []##");
-        System.out.println(responseMessage + "<br>"); // newline for spacing
+        System.out.println(responseMessage + "\n"); // newline for spacing
         try {
             if (each > 0) {
                 sidescrollTimer.scheduleAtFixedRate(new TimerTask() { // sidescroll the message if needed.

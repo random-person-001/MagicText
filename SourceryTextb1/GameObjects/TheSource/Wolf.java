@@ -41,7 +41,7 @@ public class Wolf extends Mortal {
     protected void onDeath(){
         orgo.removeLayer(layerName);
         if (room.getCountOf("Wolf") == 0){
-            room.splashMessage("Fhweh!  Those wolves were mean!<br>Heal yourself, and brace for the road ahead.", "God");
+            room.splashMessage("Fhweh!  Those wolves were mean!\nHeal yourself, and brace for the road ahead.", "God");
         }
     }
 }

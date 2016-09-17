@@ -87,7 +87,7 @@ public class SmallPiranha extends Mortal{
         room.addMortal(this);
 
         if (distanceTo(room.playo) <= 3) {
-            room.playo.subtractHealth(3, "You know, maybe you should have listened <br> when your mother told you not to <br> play with piranhas.");
+            room.playo.subtractHealth(3, "You know, maybe you should have listened \n when your mother told you not to \n play with piranhas.");
         }
     }
 

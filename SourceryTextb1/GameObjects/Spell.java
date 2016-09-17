@@ -85,21 +85,21 @@ public class Spell extends GameObject{
         name = newName;
         switch (name){
             case "Book":
-                setKillMessage("You managed to get murdered by an old<br> book.  Not a common fate, and <br> I must say I am impressed.");
+                setKillMessage("You managed to get murdered by an old\n book.  Not a common fate, and \n I must say I am impressed.");
                 setDamage(1);
                 setRange(3);
                 setChar1("B");
                 setChar2("b");
                 break;
             case "Spark":
-                setKillMessage("You were electrocuted by a spark spell. <br> Honestly, try harder next time.");
+                setKillMessage("You were electrocuted by a spark spell. \n Honestly, try harder next time.");
                 setDamage(3);
                 setRange(6);
                 setChar1("X");
                 setChar2("+");
                 break;
             case "Flame":
-                setKillMessage("You were burnt to a crisp with a Flame spell. <br> At least it is a more noble death <br> than dying by a Spark, like some.");
+                setKillMessage("You were burnt to a crisp with a Flame spell. \n At least it is a more noble death \n than dying by a Spark, like some.");
                 setDamage(9);
                 setRange(6);
                 setChar1("M");

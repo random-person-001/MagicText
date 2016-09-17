@@ -75,7 +75,7 @@ class WindowConfig {
             exit();
         }
 
-        System.out.println("WinCnfg: End of config<br>");
+        System.out.println("WinCnfg: End of config\n");
     }
 
 

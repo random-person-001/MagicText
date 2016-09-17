@@ -122,7 +122,7 @@ public class Window extends JFrame{
                 }
             }
         }
-        //System.out.println("Drawn bounding box:<br> X: " + (camY) + " to " + (camY + maxH - 1) + "<br> Y: " + (camX) + " to " + (camX + maxW - 1));
+        //System.out.println("Drawn bounding box:\n X: " + (camY) + " to " + (camY + maxH - 1) + "\n Y: " + (camX) + " to " + (camX + maxW - 1));
     }
 
     /** Place the temporary idea of what should be on the screen (fullImage) onto the actual display

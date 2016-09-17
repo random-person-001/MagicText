@@ -205,25 +205,25 @@ public class Item implements java.io.Serializable {
             case "blank":
                 return description;
             case "damage":
-                return description + "<br><br>Damage: " + String.valueOf(damage) + "<br>Range : " + String.valueOf(range) + "<br>Cost  : " + String.valueOf(cost);
+                return description + "\n\nDamage: " + String.valueOf(damage) + "\nRange : " + String.valueOf(range) + "\nCost  : " + String.valueOf(cost);
             case "arcane":
-                return description + "<br><br>Damage: " + String.valueOf(damage) + " (+" + (player.allSpellBoost + player.arcSpellBoost)
-                        + ")<br>Range : " + String.valueOf(range) + "<br>Cost  : " + String.valueOf(cost);
+                return description + "\n\nDamage: " + String.valueOf(damage) + " (+" + (player.allSpellBoost + player.arcSpellBoost)
+                        + ")\nRange : " + String.valueOf(range) + "\nCost  : " + String.valueOf(cost);
             case "fire":
-                return description + "<br><br>Damage: " + String.valueOf(damage) + " (+" + (player.allSpellBoost + player.fireSpellBoost)
-                        + ")<br>Range : " + String.valueOf(range) + "<br>Cost  : " + String.valueOf(cost);
+                return description + "\n\nDamage: " + String.valueOf(damage) + " (+" + (player.allSpellBoost + player.fireSpellBoost)
+                        + ")\nRange : " + String.valueOf(range) + "\nCost  : " + String.valueOf(cost);
             case "ice":
-                return description + "<br><br>Damage: " + String.valueOf(damage) + " (+" + (player.allSpellBoost + player.iceSpellBoost)
-                        + ")<br>Range : " + String.valueOf(range) + "<br>Cost  : " + String.valueOf(cost);
+                return description + "\n\nDamage: " + String.valueOf(damage) + " (+" + (player.allSpellBoost + player.iceSpellBoost)
+                        + ")\nRange : " + String.valueOf(range) + "\nCost  : " + String.valueOf(cost);
             case "dark":
-                return description + "<br><br>Damage: " + String.valueOf(damage) + " (+" + (player.allSpellBoost + player.darkSpellBoost)
-                        + ")<br>Range : " + String.valueOf(range) + "<br>Cost  : " + String.valueOf(cost);
+                return description + "\n\nDamage: " + String.valueOf(damage) + " (+" + (player.allSpellBoost + player.darkSpellBoost)
+                        + ")\nRange : " + String.valueOf(range) + "\nCost  : " + String.valueOf(cost);
             case "healing":
-                return description + "<br><br>Restores " + String.valueOf(healing) + " Health<br>Cost: " + String.valueOf(cost);
+                return description + "\n\nRestores " + String.valueOf(healing) + " Health\nCost: " + String.valueOf(cost);
             case "buff":
-                return description + "<br><br>Duration: " + String.valueOf(duration) + " Seconds<br>Cost: " + String.valueOf(cost);
+                return description + "\n\nDuration: " + String.valueOf(duration) + " Seconds\nCost: " + String.valueOf(cost);
             default:
-                return description + "<br><br>INVALID DISPLAY MODE: <br>  \"" + displayMode + "\"";
+                return description + "\n\nINVALID DISPLAY MODE: \n  \"" + displayMode + "\"";
         }
     }
 }
