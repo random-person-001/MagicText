@@ -45,7 +45,6 @@ public class SourceCaves extends Room{
     @Override
     public void startup(){
         ititHitMeshes();
-        super.playo.roomName = "SourceCaves";
 
         String[] doorLocked = {"The door seems to have locked behind you.","The owner must have installed<br> an auto-lock on the door."};
         plantText(new Room.FlavorText(109, 9, doorLocked , ""));

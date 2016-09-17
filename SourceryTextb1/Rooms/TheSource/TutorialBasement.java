@@ -137,7 +137,6 @@ public class TutorialBasement extends Room {
         ititHitMeshes();
 
         super.playo.goTo(20,29);
-        super.playo.roomName = "Tutorial";
 
         FlavorText playerStart = new FlavorText(20, 29, "You start here!", "");
         plantText(playerStart);

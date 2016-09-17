@@ -67,7 +67,6 @@ public class ThePit extends Room {
     @Override
     public void startup(){
         ititHitMeshes();
-        super.playo.roomName = "ThePit";
 
         String[] dennisWords = {"Hey! Ya woke up!<br>How are ya?","Welcome to The Source!<br>I'm Dennis, the owner of the house<br> that ya woke up in.","Someone no-name guy went in this big hole" +
                 "<br> and completely overthrew the order<br> of this world.","Then there was this super bright flash,<br> and out goes the lights!","Ya've been in a coma for about<br> two weeks now;" +
