@@ -145,8 +145,8 @@ public class Window extends JFrame{
         }
         clearText();
         //txtArea.append();
-        txtArea.setText("<html><>" + "aoeu<span style='color:#990000'>B</span>oaeusntaoheu<span style='color:#099099'><b>L</b></span>aoeu<br>" +
-                "sanoteusnaohunsohisaohetnihaonuhaoensh<br>"+"<></html>"); // add a font thing later!
+        build = "<html style='font-family:'Lucida Console', monospace'>" + build + "</html>"; // add a font thing later!
+        txtArea.setText(build);
     }
 
     /** Toss some string onto the end of the window's text area.  Note that in most cases, this will be off the screen.

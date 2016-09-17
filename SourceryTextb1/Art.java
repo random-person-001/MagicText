@@ -14,6 +14,8 @@
  */
 package SourceryTextb1;
 
+import java.util.Arrays;
+
 /**
  * This file is the equivalent of a "strings.xml" in an android app, it's a central place to keep all our string, well,
  * art.  Yes, it has a bijillion warnings and unused stuff, but, em, it may be useful later?
@@ -1549,6 +1551,9 @@ public String testRoom =
      * @return a corresponding String[][] where each element is just one character
      */
     public static String[][] strToArray(String input, boolean debug) {
+
+        return toArr(input);
+        /*
         debug = true;
         int width = input.indexOf("<br>");
         int height = occurrancesOf(input, "<br>");//input.length() / (height);
@@ -1583,6 +1588,39 @@ public String testRoom =
             }
             //System.out.println(i);
         }
+        return result;*/
+    }
+
+    private static String[][] toArr(String s){
+        int height = occurrancesOf(s, "<br>");//input.length() / (height);
+        int maxLength = 0;
+        int lastLength = 0;
+        for (int h=0; h<height; h++){  // get max length
+            //System.out.println(lastLength);
+            int n = s.indexOf("br",lastLength+1) - lastLength;
+            if (n>maxLength) {
+                System.out.println("new max length: " + n);
+                maxLength = n;
+            }
+            lastLength = n;
+        }
+        String [][] result = new String[height][10];
+
+        for (int h=0; h<height; h++){  // TODO : THIS IS CRAP AND BROKEN CODE.
+            //System.out.println(Arrays.deepToString(result));
+            char [] thisRowChar = s.substring(0, s.indexOf("<br>")).toCharArray();
+            //System.out.println(thisRowChar);
+            String [] thisRowStr = new String[thisRowChar.length];
+            for (int i=0; i<thisRowChar.length; i++){
+                thisRowStr[i] = Character.toString(thisRowChar[i]);
+            }
+            result[h] = thisRowStr;
+            s = s.substring(0, s.indexOf("<br>"));
+            System.out.println(s);
+        }
+
+        System.out.println(Arrays.deepToString(result));
+
         return result;
     }
 }
