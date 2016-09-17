@@ -81,6 +81,8 @@ public class Cliffside extends Room {
         baseLayer = new Layer(base, "backgronud");
         org.addLayer(baseLayer);
 
+        playo.roomName = "Cliffside";
+
         int[][] locs = {{106, 115}, {14, 17}};
         for (int ii = 0 ; ii < locs[0].length ; ii++){
             Wolf wolf = new Wolf(org, this, locs[0][ii], locs[1][ii]);

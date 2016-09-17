@@ -431,7 +431,6 @@ public class Room implements java.io.Serializable{
         org.addLayer(spells);
 
         playo.castingLayer = spells;
-        playo.roomName = ownID;
         playo.setupForNewRoom();
 
         addMortal(playo);
