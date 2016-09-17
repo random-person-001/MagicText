@@ -145,7 +145,7 @@ public class Window extends JFrame{
         }
         clearText();
         //txtArea.append();
-        build = "<html><span color='#ffffff' style=font-family:'monospace'>" + build + "</span></html>"; // add a font thing later!
+        build = "<html><pre><span color='#ffffff' style=font-family:'monospace'>" + build + "</span></pre></html>"; // add a font thing later!
         txtArea.setText(build);
     }
 
