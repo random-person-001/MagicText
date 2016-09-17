@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * Created by Jared on 06-Sep-16.
  */
 
-public class ItemTracker {
+public class ItemTracker implements java.io.Serializable {
     private ArrayList<ItemTakenFlag> itemLocs = new ArrayList<>();
 
     public void addLoc(int x, int y, String ID){
@@ -33,7 +33,7 @@ public class ItemTracker {
         return false;
     }
 
-    protected class ItemTakenFlag{
+    protected class ItemTakenFlag implements java.io.Serializable{
         protected int xLoc;
         protected int yLoc;
         protected String roomID = "";
