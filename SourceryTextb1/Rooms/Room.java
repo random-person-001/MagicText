@@ -392,9 +392,12 @@ public class Room implements java.io.Serializable{
     private void addToBaseHitMesh(String[][] picture, String solidChar, int x, int y) {
         for (int i = 0; i < picture.length; i++) {
             for (int j = 0; j < picture[0].length; j++) {
-                if (picture[i][j].equals(solidChar)) {
-                    addToBaseHitMesh(j + x, i + y);
+                try {
+                    if (picture[i][j].equals(solidChar)) {
+                        addToBaseHitMesh(j + x, i + y);
+                    }
                 }
+                catch (NullPointerException | ArrayIndexOutOfBoundsException ignored) {}
             }
         }
     }

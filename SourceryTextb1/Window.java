@@ -145,7 +145,7 @@ public class Window extends JFrame{
         }
         clearText();
         //txtArea.append();
-        build = "<html style='font-family:'Lucida Console', monospace'>" + build + "</html>"; // add a font thing later!
+        build = "<html><span color='#ffffff' style=font-family:'monospace'>" + build + "</span></html>"; // add a font thing later!
         txtArea.setText(build);
     }
 
@@ -164,8 +164,8 @@ public class Window extends JFrame{
 
         clearImage();
         build();
-        //txtArea.setBackground(Color.BLACK);
-        txtArea.setForeground(Color.WHITE);
+        txtArea.setBackground(Color.BLACK);
+        //txtArea.setForeground(Color.WHITE);
         //txtArea.setFont(new Font("Consolas", Font.PLAIN, 15));
         txtArea.setFont(new Font("Monospaced", Font.PLAIN, 15));
         txtArea.setEditable(false);

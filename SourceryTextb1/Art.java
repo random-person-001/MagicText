@@ -1597,29 +1597,32 @@ public String testRoom =
         int lastLength = 0;
         for (int h=0; h<height; h++){  // get max length
             //System.out.println(lastLength);
-            int n = s.indexOf("br",lastLength+1) - lastLength;
+            int n = s.indexOf("<br>",lastLength+1) - lastLength;
             if (n>maxLength) {
                 System.out.println("new max length: " + n);
                 maxLength = n;
             }
             lastLength = n;
         }
-        String [][] result = new String[height][10];
+        String [][] result = new String[height][maxLength];
 
-        for (int h=0; h<height; h++){  // TODO : THIS IS CRAP AND BROKEN CODE.
-            //System.out.println(Arrays.deepToString(result));
-            char [] thisRowChar = s.substring(0, s.indexOf("<br>")).toCharArray();
-            //System.out.println(thisRowChar);
-            String [] thisRowStr = new String[thisRowChar.length];
-            for (int i=0; i<thisRowChar.length; i++){
-                thisRowStr[i] = Character.toString(thisRowChar[i]);
+        try {
+            for (int h = 0; h < height; h++) {
+                //System.out.println(Arrays.deepToString(result));
+                char[] thisRowChar = s.substring(0, s.indexOf("<br>")).toCharArray();
+                System.out.println(thisRowChar);
+                String[] thisRowStr = new String[thisRowChar.length];
+                for (int i = 0; i < thisRowChar.length; i++) {
+                    thisRowStr[i] = Character.toString(thisRowChar[i]);
+                }
+                result[h] = thisRowStr;
+                s = s.substring(s.indexOf("<br>") + 4, s.length());
+                //System.out.println(s);
             }
-            result[h] = thisRowStr;
-            s = s.substring(0, s.indexOf("<br>"));
-            System.out.println(s);
         }
+        catch (StringIndexOutOfBoundsException ignore){}
 
-        System.out.println(Arrays.deepToString(result));
+        //System.out.println(Arrays.deepToString(result));
 
         return result;
     }
