@@ -100,6 +100,33 @@ class Inventory implements java.io.Serializable {
     }
 
     /**
+     * Returns an item based upon the name of what you're looking for.
+     * @param invSection use "items", "spells", "equip" (It isn't case-sensitive, which should mitigate some human error)
+     */
+    public Item getItem(String name, String invSection){
+        ArrayList<Item> list;
+        switch (invSection.toLowerCase()){
+            case "items":
+                list = items;
+                break;
+            case "spells":
+                list = spells;
+                break;
+            case "equip":
+                list = equip;
+                break;
+            default:
+                return null;
+        }
+        for (Item it : list){
+            if (it.getName().equals(name)){
+                return it;
+            }
+        }
+        return null;
+    }
+
+    /**
      * Press a key?  Call this to do stuff!
      *
      * @param c which character you have pressed on the board
