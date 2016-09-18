@@ -269,15 +269,6 @@ class Inventory implements java.io.Serializable {
         genericItemListing(spells);
         indexX = 31;
 
-        char[] chars = player.spell1.getName().toCharArray();
-        for (int ii = 0; ii < chars.length; ii++) {
-            selectorLayer.setStr(16, 15 + ii, String.valueOf(chars[ii]));
-        }
-        chars = player.spell2.getName().toCharArray();
-        for (int ii = 0; ii < chars.length; ii++) {
-            selectorLayer.setStr(17, 15 + ii, String.valueOf(chars[ii]));
-        }
-
         if (pressedA && newSelectY == 21) {
             jumpToNewMenu(topMenuLayer, TOP, "spells");
         }
@@ -294,6 +285,15 @@ class Inventory implements java.io.Serializable {
                 putSecondary(spells.get(index).getIcon());
                 System.out.println("SECONDARY SET TO: " + spells.get(index).getName());
             }
+        }
+
+        char[] chars = player.spell1.getName().toCharArray();
+        for (int ii = 0; ii < chars.length; ii++) {
+            org.editLayer(String.valueOf(chars[ii]), "invInfo", 16, 15 + ii);
+        }
+        chars = player.spell2.getName().toCharArray();
+        for (int ii = 0; ii < chars.length; ii++) {
+            org.editLayer(String.valueOf(chars[ii]), "invInfo", 17, 15 + ii);
         }
     }
 
@@ -464,6 +464,10 @@ class Inventory implements java.io.Serializable {
         if (index != prevIndex){
             org.getLayer("invInfo").clear();
             System.out.println(String.format("Prev Index: %d vs. %d", prevIndex, index));
+        }
+        if (pressedS || pressedD){
+            org.getLayer("invInfo").clear();
+            System.out.println("Clearing infoLayer...");
         }
         prevIndex = index;
 

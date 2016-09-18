@@ -26,7 +26,7 @@ import SourceryTextb1.Rooms.Room;
  */
 
 
-public class ThePit extends Room {
+public class SourcePit extends Room {
     private ImageOrg org;
 
     @Override
@@ -92,7 +92,7 @@ public class ThePit extends Room {
         genericRoomInitialize();
     }
 
-    public ThePit(Player player){
+    public SourcePit(Player player){
         constructor(player);
         org = player.orgo;
         super.index = 1;
