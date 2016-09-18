@@ -6,6 +6,7 @@
 package SourceryTextb1.Rooms.TheSource;
 
 import SourceryTextb1.Art;
+import SourceryTextb1.GameObjects.LockedDoor;
 import SourceryTextb1.GameObjects.TheSource.PotOfPetunias;
 import SourceryTextb1.GameObjects.TheSource.Spider;
 import SourceryTextb1.GameObjects.DroppedItem;
@@ -186,6 +187,16 @@ public class TutorialBasement extends Room {
 
         Spider spoidur = new Spider(this, 39, 7);
         addMortal(spoidur);
+
+        /*
+        //Testing locked doors
+        LockedDoor door = new LockedDoor("testKey", 30, 30, 22, this, org);
+        addObject(door);
+
+        Item testKey = new Item ("testKey","This key opens a door\n\nAin't that neat!", playo, "item");
+        DroppedItem gKey = new DroppedItem(this, org, "You found a key!", testKey, 10, 29);
+        addObject(gKey);
+        */
 
         genericRoomInitialize();
     }

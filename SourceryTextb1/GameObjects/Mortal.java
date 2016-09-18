@@ -63,7 +63,11 @@ public class Mortal extends GameObject implements java.io.Serializable{
             //System.out.println("My health is now " + getHealth());
             health -= amountLost;
             int percentHealth = (int)(((float)health / maxHealth) * 10);
-            dmgIcon = String.valueOf(percentHealth);
+            if (percentHealth <= 0){
+                dmgIcon = "X";
+            } else {
+                dmgIcon = String.valueOf(percentHealth);
+            }
             setDispIcon(dmgIcon);
             Timer timing = new Timer();
             timing.schedule(new dmgTimer(), 250);

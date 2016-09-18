@@ -100,6 +100,32 @@ class Inventory implements java.io.Serializable {
     }
 
     /**
+     *
+     */
+    public Item getItem(String name, String section){
+        ArrayList<Item> list;
+        switch (section.toLowerCase()){
+            case "items":
+                list = items;
+                break;
+            case "spells":
+                list = spells;
+                break;
+            case "equip":
+                list = equip;
+                break;
+            default:
+                return null;
+        }
+        for (Item it : list){
+            if (it.getName().equals(name)){
+                return it;
+            }
+        }
+        return null;
+    }
+
+    /**
      * Press a key?  Call this to do stuff!
      *
      * @param c which character you have pressed on the board
