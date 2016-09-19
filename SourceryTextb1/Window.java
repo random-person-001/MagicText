@@ -5,10 +5,10 @@
  */
 package SourceryTextb1;
 
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.Font;
+import java.awt.*;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import javax.swing.*;
 
 
@@ -150,9 +150,11 @@ public class Window extends JFrame{
             }
             build += "<br>";
         }
-        clearText();
+        //clearText();
         build = "<pre><span color='" + foregroundColor + "'>" + build + "</span></pre>"; // style=font-family:'monospace'
-        txtArea.setText(build);
+        Timer buffer = new Timer();
+        buffer.schedule(new FrameBuffer(build), 5);
+        //txtArea.setText(build);
     }
 
     /** Toss some string onto the end of the window's text area.  Note that in most cases, this will be off the screen.
@@ -184,5 +186,16 @@ public class Window extends JFrame{
         System.out.println(txtArea.getContentType());
         txtArea.setContentType("text/html");
     }
+
+    protected class FrameBuffer extends TimerTask{
+        String toBuild = "";
+        protected FrameBuffer(String theScreen){
+            toBuild = theScreen;
+        }
+        public void run(){
+            txtArea.setText(toBuild);
+        }
+    }
+
 
 }
