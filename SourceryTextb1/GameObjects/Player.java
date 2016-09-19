@@ -91,8 +91,8 @@ public class Player extends Mortal implements java.io.Serializable {
     Item weapon = new Item("None", "", this);
     Item armor = new Item("None", "", this);
 
-
     int screenRedness = 0;
+    int screenYellowness = 0;
     /**
      * Initialize a whole lotta variables.
      *
@@ -194,17 +194,17 @@ public class Player extends Mortal implements java.io.Serializable {
                 manaRegenClock = 0;
             }
 
-            if (screenRedness > 0){
-                screenRedness --;
-                if (screenRedness > 200){ //This means that higher levels of redness depletes faster
-                    screenRedness--;
-                }
-                if (screenRedness > 100){
-                    screenRedness--;
-                }
+            if (screenRedness > 0 || screenYellowness > 0){
+                if (screenRedness > 0) screenRedness --;
+                //This means that higher levels of redness depletes faster
+                if (screenRedness > 200) screenRedness--;
+                if (screenRedness > 100) screenRedness--;
+                if (screenYellowness > 0) screenYellowness--;
                 //System.out.print("The screen is red! | ");
                 int opposite = 255 - screenRedness;
-                orgo.getWindow().txtArea.setForeground(new Color(255, opposite, opposite));
+                int yellowNumber = (int)(opposite * (1-((float)screenYellowness/100)));
+                //System.out.printf("Screen yellow factor: %1$d, (%2$d --> %3$d)\n", screenYellowness, opposite, yellowNumber);
+                orgo.getWindow().txtArea.setForeground(new Color(255, opposite, yellowNumber));
             }
 
             resetTime();

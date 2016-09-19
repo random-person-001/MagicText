@@ -109,6 +109,11 @@ public class Mortal extends GameObject implements java.io.Serializable{
         if (health > newMax){
             health = newMax;
         }
+        if (strClass.equals("Player") && !room.playo.dead && !room.playo.frozen){
+            int toSet = (int)(((float)addHP / room.playo.maxHP) * 150);
+            if (toSet > 100) toSet = 100;
+            room.playo.screenYellowness = toSet;
+        }
     }
 
     public int getAttack(){

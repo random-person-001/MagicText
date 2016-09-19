@@ -918,16 +918,16 @@ public class Art implements java.io.Serializable{
                     "|  Spells         |\n" +
                     "|  Items          |\n" +
                     "|  Equipment      |\n" +
-                    "|  QUIT GAME      |\n" +
+                    "|  SAVE / QUIT    |\n" +
                     "|  EXIT MENU      |\n" +
                     "+-----------------+\n";
 
     public String quitMenu =
-                    "+-QUIT------------+\n" +
-                    "| Quit playing?   |\n" +
-                    "|                 |\n" +
-                    "|  YES            |\n" +
-                    "|  NO             |\n" +
+                    "+-SAVE / QUIT-----+\n" +
+                    "|  BACK TO MENU   |\n" +
+                    "|  SAVE GAME      |\n" +
+                    "|  QUIT + SAVE    |\n" +
+                    "|  QUIT W/O SAVE  |\n" +
                     "|                 |\n" +
                     "+-----------------+\n";
 

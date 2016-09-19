@@ -440,16 +440,24 @@ class Inventory implements java.io.Serializable {
      * The submenu asking whether you really want to quit and save.  Hopefully ends up at the top MainMenu again.
      */
     private void operateQuitMenu() {
-        loopAtMenuEnd(4, 5);
+        loopAtMenuEnd(2, 5);
         indexX = 28;
 
         if (pressedA) {
-            if (newSelectY == 5) {
+            if (newSelectY == 2) {
+                jumpToNewMenu(topMenuLayer, TOP, "quit");
+            }
+            if (newSelectY == 3){
+                player.saveGame();
                 jumpToNewMenu(topMenuLayer, TOP, "quit");
             }
             if (newSelectY == 4) {
                 player.saveGame();
-                player.subtractHealth(2100000000, "For your convenience, you died.\n  Just press enter and carry on."); // cleanup
+                player.subtractHealth(2100000000, "IT SEEMS THAT SOME ALIEN\n FORCE HAS INSTANTLY KILLED YOU."); // cleanup, with style
+                exitAllMenus();
+            }
+            if (newSelectY == 5) {
+                player.subtractHealth(2100000000, "IT SEEMS THAT SOME UNFORGIVING\n FORCE HAS INSTANTLY KILLED YOU."); // cleanup, with style
                 exitAllMenus();
             }
         }

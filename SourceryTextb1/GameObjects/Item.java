@@ -36,7 +36,7 @@ public class Item implements java.io.Serializable {
     public String animation1 = "%";
     public String animation2 = "Q";
 
-    public int damage, range, healing, duration, cost = 0;
+    public int damage, range, healing, overheal, duration, cost = 0;
     private int armor, hpBoost, allBoost, arcBoost, fireBoost, iceBoost, darkBoost = 0;
     private boolean alting;
     private Player player;
@@ -109,6 +109,8 @@ public class Item implements java.io.Serializable {
         setDescMode(dMode);
         cost = toCost;
     }
+
+
 
     public boolean getAlting() {
         return alting;
@@ -188,6 +190,11 @@ public class Item implements java.io.Serializable {
         healing = to;
     }
 
+    public void setHeal(int to, int over){
+        healing = to;
+        overheal = over;
+    }
+
     public void setDuration(int to) {
         duration = to;
     }
@@ -219,7 +226,7 @@ public class Item implements java.io.Serializable {
                 return description + "\n\nDamage: " + String.valueOf(damage) + " (+" + (player.allSpellBoost + player.darkSpellBoost)
                         + ")\nRange : " + String.valueOf(range) + "\nCost  : " + String.valueOf(cost);
             case "healing":
-                return description + "\n\nRestores " + String.valueOf(healing) + " Health\nCost: " + String.valueOf(cost);
+                return description + "\n\nRestores " + String.valueOf(healing) + " Health\nOverheal: " + String.valueOf(overheal) + "\nCost: " + String.valueOf(cost);
             case "buff":
                 return description + "\n\nDuration: " + String.valueOf(duration) + " Seconds\nCost: " + String.valueOf(cost);
             default:

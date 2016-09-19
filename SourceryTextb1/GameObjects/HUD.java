@@ -333,6 +333,10 @@ public class HUD extends GameObject {
             int amountToSet = Integer.valueOf(command.substring(8));
             room.playo.screenRedness = amountToSet;
             showResponse(String.format("Setting the screen redness"));
+        } else if (command.contains("set yellow ") && command.length() > 11) {
+            int amountToSet = Integer.valueOf(command.substring(11));
+            room.playo.screenYellowness = amountToSet;
+            showResponse(String.format("Setting the screen yellowness to %1$d",amountToSet));
         } else if (command.contains("setResponseTime ")) {
             System.out.println(command.substring(16));
             int newTime = Integer.valueOf(command.substring(16));
