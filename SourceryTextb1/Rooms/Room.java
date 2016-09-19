@@ -393,9 +393,12 @@ public class Room implements java.io.Serializable{
     private void addToBaseHitMesh(String[][] picture, String solidChar, int x, int y) {
         for (int i = 0; i < picture.length; i++) {
             for (int j = 0; j < picture[0].length; j++) {
-                if (picture[i][j].equals(solidChar)) {
-                    addToBaseHitMesh(j + x, i + y);
+                try {
+                    if (picture[i][j].equals(solidChar)) {
+                        addToBaseHitMesh(j + x, i + y);
+                    }
                 }
+                catch (NullPointerException | ArrayIndexOutOfBoundsException ignored) {}
             }
         }
     }
@@ -501,6 +504,7 @@ public class Room implements java.io.Serializable{
             if (text.charAt(ii) == '\n') {
                 line++;
                 newLineAdjust = ii + 1;
+                System.out.println("Found newline.");
             } else {
                 txtBox.setStr(line, ii + 1 - newLineAdjust, String.valueOf(text.charAt(ii)));
             }

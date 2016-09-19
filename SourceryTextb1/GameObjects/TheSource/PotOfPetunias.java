@@ -17,19 +17,21 @@ public class PotOfPetunias extends Mortal {
         orgo = org;
         room = theRoom;
         layerName = "Petunias";
-        Layer staffLay = new Layer(new String[room.roomHeight][room.roomWidth], layerName);
-        org.addLayer(staffLay);
 
         x = setX;
         y = setY;
+
+        Layer potLayer = new Layer(new String[1][1], layerName, y, x);
+        potLayer.setStr(0,0,"V");
+        org.addLayer(potLayer);
+
         setHealth(1);
-        //orgo.editLayer("V", layerName, y, x);
 
         setupTimer(100);
     }
 
     public void update(){
-        orgo.editLayer("V", layerName, y, x);
+        orgo.editLayer("<span color='#cc0000'>V</span>", layerName, y, x);
 //  if (room.playo.x + 3 == x && room.playo.y == y && !sentMessageBefore) {
 //            room.infoMessage(orgo, "It appears you have come across an enemy.  It is suggested that you chose to be " +
 //                    "the survivor in this encounter.  Remember, A is lock orientation and S is fire.  Good luck.");

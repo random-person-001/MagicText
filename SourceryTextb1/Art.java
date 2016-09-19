@@ -14,6 +14,8 @@
  */
 package SourceryTextb1;
 
+import java.util.Arrays;
+
 /**
  * This file is the equivalent of a "strings.xml" in an android app, it's a central place to keep all our string, well,
  * art.  Yes, it has a bijillion warnings and unused stuff, but, em, it may be useful later?
@@ -827,47 +829,50 @@ public class Art implements java.io.Serializable{
 
 
     public String intro2 =
-            "public class World extends MagicPlanet{       \n" +
-            "   ArrayList<Stuff> things = new ArrayList<>()\n" +
-            "                                              \n" +
-            "   public World(God god, int x, int y, int z){\n" +
-            "      benev = god.getBenevolence();           \n" +
-            "      summonAllThings(benev, MAGICAL);        \n" +
-            "      super.xPos = x;                         \n" +
-            "      super.yPos = y;                         \n" +
-            "      super.zPos = z;                         \n" +
-            "      super.velocity = null;                  \n" +
-            "      super.spin = null;                      \n" +
-            "      init();                                 \n" +
-            "   }                                          \n" +
-            "                                              \n" +
-            "   public void orbit(Star sun, velMultiplier){\n" +
-            "      setOrbit(star, velMultip, false);       \n" +
-            "   }                                          \n" +
-            "                                              \n" +
-            "   boolean useAllCharacters = false;          \n" +
-            "                                              \n" +
-            "   public void getUsage(){                    \n" +
-            "      return useAllCharacters;                \n" +
-            "   }                                          \n" +
-            "                                              \n" +
-            "   /*                                         \n" +
-            "   WARNING: setting useAllCharacters to       \n" +
-            "     true will enable a very buggy build of   \n" +
-            "     a world, and really shouldn't be used.   \n" +
-            "     I'll be fixing that on Thursday.         \n" +
-            "   */                                         \n" +
-            "                                              \n" +
-            "   public void generateWorldMagic(){          \n" +
-            "      for(int ii = 0; ii < 9001; ii++){       \n" +
-            "         int x = Math.random() * 100:         \n" +
-            "         int y = Math.random() * 100;         \n" +
-            "         placeNodeOnSurface(x, y);            \n" +
-            "      }                                       \n" +
-            "      activateAllMagicNodes()                 \n" +
-            "   }                                          \n" +
-            "                                              \n" +
-            "   //Gravity Calculations                     \n";
+            "public class World extends MagicPlanet{        \n" +
+            "   ArrayList<Stuff> things = new ArrayList<>();\n" +
+            "                                               \n" +
+            "   public World(God god, int x, int y, int z){ \n" +
+            "      benev = god.getBenevolence();            \n" +
+            "      summonAllThings(benev, MAGICAL);         \n" +
+            "      super.xPos = x;                          \n" +
+            "      super.yPos = y;                          \n" +
+            "      super.zPos = z;                          \n" +
+            "      super.velocity = null;                   \n" +
+            "      super.spin = null;                       \n" +
+            "      init();                                  \n" +
+            "   }                                           \n" +
+            "                                               \n" +
+            "   public void orbit(Star sun, velMultiplier){ \n" +
+            "      setOrbit(star, velMultip, false);        \n" +
+            "   }                                           \n" +
+            "                                               \n" +
+            "   boolean useAllCharacters = false;           \n" +
+            "                                               \n" +
+            "   public void getUsage(){                     \n" +
+            "      return useAllCharacters;                 \n" +
+            "   }                                           \n" +
+            "                                               \n" +
+            "   /*                                          \n" +
+            "   WARNING: setting useAllCharacters to        \n" +
+            "     true will enable a very buggy build of    \n" +
+            "     a world, and really shouldn't be used.    \n" +
+            "     I'll be fixing that on Thursday.          \n" +
+            "   */                                          \n" +
+            "                                               \n" +
+            "   public void generateWorldMagic(){           \n" +
+            "      for(int ii = 0; ii < 9001; ii++){        \n" +
+            "         int x = Math.random() * 100:          \n" +
+            "         int y = Math.random() * 100;          \n" +
+            "         placeNodeOnSurface(x, y);             \n" +
+            "      }                                        \n" +
+            "      activateAllMagicNodes()                  \n" +
+            "   }                                           \n" +
+            "                                               \n" +
+            "   //Gravity Calculations                      \n" +
+            "   static final float G = -.01; // Remember to \n" +
+            "                            // tie things down!\n" +
+            "                                               \n";
 
 
 
@@ -1539,13 +1544,17 @@ public String testRoom =
     }
     /**
      * Create a String[height][width] (r,c?) array out of an inputted string that
-     * is at least that big (specified by its dimensions with /n).
+     * is at least that big (specified by its dimensions with \n).
      *
-     * @param input a string with '/n's
+     * @param input a string with '\n's
      * @param debug whether to print gunk to System.out
      * @return a corresponding String[][] where each element is just one character
      */
     public static String[][] strToArray(String input, boolean debug) {
+
+        //return toArr(input);
+
+        debug = true;
         int width = input.indexOf("\n");
         int height = occurrancesOf(input, "\n");//input.length() / (height);
         if (debug) {
@@ -1579,6 +1588,42 @@ public String testRoom =
             }
             //System.out.println(i);
         }
+        return result;
+    }
+
+    private static String[][] toArr(String s){
+        int height = occurrancesOf(s, "\n");//input.length() / (height);
+        int maxLength = 0;
+        int lastLength = 0;
+        for (int h=0; h<height; h++){  // get max length
+            //System.out.println(lastLength);
+            int n = s.indexOf("\n",lastLength+1) - lastLength;
+            if (n>maxLength) {
+                System.out.println("new max length: " + n);
+                maxLength = n;
+            }
+            lastLength = n;
+        }
+        String [][] result = new String[height][maxLength];
+
+        try {
+            for (int h = 0; h < height; h++) {
+                //System.out.println(Arrays.deepToString(result));
+                char[] thisRowChar = s.substring(0, s.indexOf("\n")).toCharArray();
+                System.out.println(thisRowChar);
+                String[] thisRowStr = new String[thisRowChar.length];
+                for (int i = 0; i < thisRowChar.length; i++) {
+                    thisRowStr[i] = Character.toString(thisRowChar[i]);
+                }
+                result[h] = thisRowStr;
+                s = s.substring(s.indexOf("\n") + 1, s.length());
+                //System.out.println(s);
+            }
+        }
+        catch (StringIndexOutOfBoundsException ignore){}
+
+        //System.out.println(Arrays.deepToString(result));
+
         return result;
     }
 }

@@ -100,11 +100,12 @@ class Inventory implements java.io.Serializable {
     }
 
     /**
-     *
+     * Returns an item based upon the name of what you're looking for.
+     * @param invSection use "items", "spells", "equip" (It isn't case-sensitive, which should mitigate some human error)
      */
-    public Item getItem(String name, String section){
+    public Item getItem(String name, String invSection){
         ArrayList<Item> list;
-        switch (section.toLowerCase()){
+        switch (invSection.toLowerCase()){
             case "items":
                 list = items;
                 break;
@@ -514,7 +515,7 @@ class Inventory implements java.io.Serializable {
         int line = 1;
         int newLineAdjust = 0;
         for (int ii = 0; ii < text.length(); ii++) {
-            if (text.charAt(ii) == '\n') {
+            if (Character.toString(text.charAt(ii)) == "\n") { // TODO: this is broken.
                 line++;
                 newLineAdjust = ii + 1;
             } else {
