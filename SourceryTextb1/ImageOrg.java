@@ -370,19 +370,6 @@ public class ImageOrg implements java.io.Serializable {
             window.clearImage();
             window.topDownBuild(layers, camX, camY);
             window.build();
-            window.giveSerial(orgSerial);
-            window.dbgCounter++;
-            /*
-            if (((System.nanoTime() - nanoLast) / 1000000) >= 1000){
-                System.out.printf("Window updated %1$d times in the previous second\n", window.dbgCounter);
-                window.dbgCounter = 0;
-                nanoLast = System.nanoTime();
-
-            }
-            */
-            //int elapsedMs = (int) ((System.nanoTime() - nanoTime) / 1000000);
-            //System.out.println(" time: " + elapsedMs + "ms");
-            //}
         }
         catch (ConcurrentModificationException ignore) {}// Cuz it'll be fixed next time probs.
     }

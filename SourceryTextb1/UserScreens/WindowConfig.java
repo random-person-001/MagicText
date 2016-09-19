@@ -99,7 +99,7 @@ class WindowConfig {
                 setSize(windowWidth, windowHeight);
                 break;
             case '1':
-                setSize(421, 513);
+                setSize(380, 500);
                 break;
             case '2':
                 setSize(417, 412);

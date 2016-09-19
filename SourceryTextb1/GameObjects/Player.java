@@ -40,6 +40,8 @@ public class Player extends Mortal implements java.io.Serializable {
     private Inventory inv;
     public ItemTracker tracker;
     public String roomName = ""; //Extremely important when we implement saving.
+    
+    private String playerIcon = "<span color=#80ff80>@</span color>";
 
     private boolean autonomous = false;
     private boolean shouldNewInv = false;
@@ -108,7 +110,7 @@ public class Player extends Mortal implements java.io.Serializable {
         orgo = theOrg;
         layerName = "playerLayer";
         Layer playerLayer = new Layer(new String[3][3], layerName);
-        playerLayer.setStr(1, 1, "<span color='#66ff33'>@</span>");
+        playerLayer.setStr(1, 1, playerIcon);
         playerLayer.setImportance(true);
 
         orgo.addLayer(playerLayer);
@@ -367,7 +369,7 @@ public class Player extends Mortal implements java.io.Serializable {
      * Update the Player symbol
      */
     public void graphicUpdate() {
-        orgo.editLayer("<span color='#66ff33'>@</span>", layerName, 1, 1);
+        orgo.editLayer(playerIcon, layerName, 1, 1);
         orgo.getLayer(layerName).setPos(y-1, x-1);
         centerCamera();
     }

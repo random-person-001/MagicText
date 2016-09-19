@@ -69,13 +69,7 @@ public class Window extends JFrame{
      * time org.compileImage() is called
      */
     public void clearImage(){
-        //fullImage = new String[50][20];
-        for (int row = 0; row < fullImage.getRows() ; row++){
-            for (int col = 0; col < fullImage.getColumns(); col++){
-                fullImage.setStr(row,col," ");
-            }
-        }
-        //System.out.println("Image cleaned!");
+        fullImage.clear();
     }
 
 
@@ -153,7 +147,7 @@ public class Window extends JFrame{
         //clearText();
         build = "<pre><span color='" + foregroundColor + "'>" + build + "</span></pre>"; // style=font-family:'monospace'
         Timer buffer = new Timer();
-        buffer.schedule(new FrameBuffer(build), 5);
+        buffer.schedule(new FrameBuffer(build), 25);
         //txtArea.setText(build);
     }
 
@@ -193,9 +187,8 @@ public class Window extends JFrame{
             toBuild = theScreen;
         }
         public void run(){
+            //System.out.println(txtArea.getText());
             txtArea.setText(toBuild);
         }
     }
-
-
 }
