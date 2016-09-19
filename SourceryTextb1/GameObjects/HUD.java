@@ -27,7 +27,7 @@ import java.net.URI;
 import static java.lang.Math.abs;
 
 /**
- * A nice heads-up display for stats on the Player
+ * A nice heads-up display for stats on the Player, maybe with color
  *
  * @author 119184
  */
