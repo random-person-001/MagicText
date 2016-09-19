@@ -103,12 +103,12 @@ public class Player extends Mortal implements java.io.Serializable {
         makeGoodGuy(); // Set good-guy-ness to true.
         super.maxHealth = maxHP + armorHealthBoost;
         super.strClass = "Player";
-        System.out.println("<br>NEW PLAYER<br>");
+        System.out.println("\nNEW PLAYER\n");
 
         orgo = theOrg;
         layerName = "playerLayer";
         Layer playerLayer = new Layer(new String[3][3], layerName);
-        playerLayer.setStr(1, 1, "@");
+        playerLayer.setStr(1, 1, "<span color='#66ff33'>@</span>");
         playerLayer.setImportance(true);
 
         orgo.addLayer(playerLayer);
@@ -280,7 +280,7 @@ public class Player extends Mortal implements java.io.Serializable {
     }
 
     public void reportPos() {
-        System.out.println("<br>Player X: " + x + "(" + orgo.getCamX() + ")" + "<br>Player Y: " + y + "(" + orgo.getCamY() + ")" + "<br>Paused?: " + paused + "<br>");
+        System.out.println("\nPlayer X: " + x + "(" + orgo.getCamX() + ")" + "\nPlayer Y: " + y + "(" + orgo.getCamY() + ")" + "\nPaused?: " + paused + "\n");
     }
 
     /**
@@ -362,7 +362,7 @@ public class Player extends Mortal implements java.io.Serializable {
      * Update the Player symbol
      */
     public void graphicUpdate() {
-        orgo.editLayer("@", layerName, 1, 1);
+        orgo.editLayer("<span color='#66ff33'>@</span>", layerName, 1, 1);
         orgo.getLayer(layerName).setPos(y-1, x-1);
         centerCamera();
     }
@@ -437,7 +437,7 @@ public class Player extends Mortal implements java.io.Serializable {
         iceSpellBoost = weapon.getEquipVals()[5];
         darkSpellBoost = weapon.getEquipVals()[6];
 
-        System.out.println("DEF: " + defense + " HpB: " + armorHealthBoost + " AllB: " + allSpellBoost + "<br>ArcB: " + arcSpellBoost + " FireB: " + fireSpellBoost +
+        System.out.println("DEF: " + defense + " HpB: " + armorHealthBoost + " AllB: " + allSpellBoost + "\nArcB: " + arcSpellBoost + " FireB: " + fireSpellBoost +
                 " IceB: " + iceSpellBoost + " DarkB: " + darkSpellBoost);
     }
 
@@ -706,8 +706,8 @@ public class Player extends Mortal implements java.io.Serializable {
 
     public void addPotato(int amount) {
         for (int ii = 0; ii < amount; ii++) {
-            inv.addItem(new Item("Magic Potato", "A magically enhanced potato<br><br>Can be used to either" +
-                    "<br> permanently increase<br> your max health or<br> max mana by 5.", this, "item"));
+            inv.addItem(new Item("Magic Potato", "A magically enhanced potato\n\nCan be used to either" +
+                    "\n permanently increase\n your max health or\n max mana by 5.", this, "item"));
         }
     }
 }

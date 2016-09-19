@@ -34,14 +34,14 @@ public class Wolf extends Mortal {
             room.playo.subtractHealth(3);
         }
         pathToPos(followDist, room.playo.getX(), room.playo.getY());
-        orgo.editLayer("W", layerName, 0, 0);
+        orgo.editLayer("<span color='#cc0000'>W</span>", layerName, 0, 0);
     }
 
     @Override
     protected void onDeath(){
         orgo.removeLayer(layerName);
         if (room.getCountOf("Wolf") == 0){
-            room.splashMessage("Fhweh!  Those wolves were mean!<br>Heal yourself, and brace for the road ahead.", "God");
+            room.splashMessage("Fhweh!  Those wolves were mean!\nHeal yourself, and brace for the road ahead.", "God");
         }
     }
 }

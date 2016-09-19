@@ -37,7 +37,7 @@ public class Bandit extends Mortal {
             pathToPos(followDist, room.playo.getX(), room.playo.getY());
         }
         pathToPos(followDist, room.playo.getX(), room.playo.getY());
-        orgo.editLayer("<span style='color:#990000'>B</span>", layerName, 0, 0); // with hex
+        orgo.editLayer("<span style='color:#cc0000'>B</span>", layerName, 0, 0); // with hex
     }
 
     @Override

@@ -122,7 +122,7 @@ public class Window extends JFrame{
                 }
             }
         }
-        //System.out.println("Drawn bounding box:<br> X: " + (camY) + " to " + (camY + maxH - 1) + "<br> Y: " + (camX) + " to " + (camX + maxW - 1));
+        //System.out.println("Drawn bounding box:\n X: " + (camY) + " to " + (camY + maxH - 1) + "\n Y: " + (camX) + " to " + (camX + maxW - 1));
     }
 
     /** Place the temporary idea of what should be on the screen (fullImage) onto the actual display
@@ -144,8 +144,7 @@ public class Window extends JFrame{
             build += "<br>";
         }
         clearText();
-        //txtArea.append();
-        build = "<html style='font-family:'Lucida Console', monospace'>" + build + "</html>"; // add a font thing later!
+        build = "<pre><span color='#ffffff'>" + build + "</span></pre>"; // style=font-family:'monospace'
         txtArea.setText(build);
     }
 
@@ -164,8 +163,7 @@ public class Window extends JFrame{
 
         clearImage();
         build();
-        //txtArea.setBackground(Color.BLACK);
-        txtArea.setForeground(Color.WHITE);
+        txtArea.setBackground(Color.BLACK);
         //txtArea.setFont(new Font("Consolas", Font.PLAIN, 15));
         txtArea.setFont(new Font("Monospaced", Font.PLAIN, 15));
         txtArea.setEditable(false);
@@ -178,7 +176,6 @@ public class Window extends JFrame{
 
         System.out.println(txtArea.getContentType());
         txtArea.setContentType("text/html");
-
     }
 
 }

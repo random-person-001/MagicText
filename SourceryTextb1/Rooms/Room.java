@@ -80,7 +80,7 @@ public class Room implements java.io.Serializable{
         System.out.println("Hi.  I'm a timer");
         new Timer().schedule(new TimerTask() {
             public void run() {
-                System.out.println("<br><br>CANCELLING STUFFFFFF<br><br>");
+                System.out.println("\n\nCANCELLING STUFFFFFF\n\n");
                 for (GameObject o : objs){
                     removeObject(o);
                 }
@@ -202,7 +202,7 @@ public class Room implements java.io.Serializable{
                     System.out.println("[Room.java: setObjsPause(): caught nullpointer!  Probably Not Good!");
                     e.printStackTrace();
                 }
-                //System.out.println("OBJS PAUSED: " + objManifest + "<br>");
+                //System.out.println("OBJS PAUSED: " + objManifest + "\n");
             }
         } catch (ConcurrentModificationException ignore) { // Happens normally when an object is removed or added to the room
             System.out.println("Whoops, something weird! [Room.java: setObjsPuase(): caught a ConcurrentModificationException]");
@@ -258,7 +258,7 @@ public class Room implements java.io.Serializable{
             removeObject(toAdd);
         }
         //playo.tracker.addLoc(toAdd.getX(),toAdd.getY(),ownID);
-        //System.out.printf("[TRACKER] Item a success @ (%1$d,%2$d,%3$s)<br>", toAdd.getX(),toAdd.getY(),ownID);
+        //System.out.printf("[TRACKER] Item a success @ (%1$d,%2$d,%3$s)\n", toAdd.getX(),toAdd.getY(),ownID);
     }
 
     /**
@@ -393,9 +393,12 @@ public class Room implements java.io.Serializable{
     private void addToBaseHitMesh(String[][] picture, String solidChar, int x, int y) {
         for (int i = 0; i < picture.length; i++) {
             for (int j = 0; j < picture[0].length; j++) {
-                if (picture[i][j].equals(solidChar)) {
-                    addToBaseHitMesh(j + x, i + y);
+                try {
+                    if (picture[i][j].equals(solidChar)) {
+                        addToBaseHitMesh(j + x, i + y);
+                    }
                 }
+                catch (NullPointerException | ArrayIndexOutOfBoundsException ignored) {}
             }
         }
     }
@@ -498,9 +501,10 @@ public class Room implements java.io.Serializable{
         int line = 1;
         int newLineAdjust = 0;
         for (int ii = 0; ii < text.length(); ii++) {
-            if (Character.toString(text.charAt(ii)) == "<br>") {
+            if (text.charAt(ii) == '\n') {
                 line++;
                 newLineAdjust = ii + 1;
+                System.out.println("Found newline.");
             } else {
                 txtBox.setStr(line, ii + 1 - newLineAdjust, String.valueOf(text.charAt(ii)));
             }
@@ -594,7 +598,7 @@ public class Room implements java.io.Serializable{
 
         void doMessage(){
             for (String message : messages) {
-                //System.out.println("STACKING FOLLOWING MESSAGE:<br> " + message);
+                //System.out.println("STACKING FOLLOWING MESSAGE:\n " + message);
                 FlavorText panel = new FlavorText(x, y, message, speaker);
                 queueMessage(panel);
             }

@@ -79,15 +79,15 @@ public class SmallPiranha extends Mortal{
             rationality--;
             if (rationality < 0) { // We're stuck in a really bad spot.  Suicide is painless, so they say...
                 room.removeMortal(this);
-                System.out.println("Troll at x=" + x + " y=" + y + " committing suicide cuz there's a low chance it's not stuck");
+                System.out.println("Piranha at x=" + x + " y=" + y + " committing suicide cuz there's a low chance it's not stuck");
                 return;
             }
         }
-        orgo.editLayer("p", layerName, 0, 0);
+        orgo.editLayer("<span color='#cc0000'>p</span>", layerName, 0, 0);
         room.addMortal(this);
 
         if (distanceTo(room.playo) <= 3) {
-            room.playo.subtractHealth(3, "You know, maybe you should have listened <br> when your mother told you not to <br> play with piranhas.");
+            room.playo.subtractHealth(3, "You know, maybe you should have listened \n when your mother told you not to \n play with piranhas.");
         }
     }
 

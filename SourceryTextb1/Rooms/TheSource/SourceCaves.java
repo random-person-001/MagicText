@@ -32,7 +32,7 @@ public class SourceCaves extends Room{
                 }
                 if (count == 0){
                     if (playo.getX() == 109 && playo.getY() == 10) {
-                        queueMessage(new Room.FlavorText("Most capital letters (ex: A, B, C..) out in<br> the world have flavor text <br> accessible through the 'F' key", ""));
+                        queueMessage(new Room.FlavorText("Most capital letters (ex: A, B, C..) out in\n the world have flavor text \n accessible through the 'F' key", ""));
                     }
                     count++;
                 }
@@ -46,7 +46,7 @@ public class SourceCaves extends Room{
     public void startup(){
         ititHitMeshes();
 
-        String[] doorLocked = {"The door seems to have locked behind you.","The owner must have installed<br> an auto-lock on the door."};
+        String[] doorLocked = {"The door seems to have locked behind you.","The owner must have installed\n an auto-lock on the door."};
         plantText(new Room.FlavorText(109, 9, doorLocked , ""));
 
         Art arty = new Art();
@@ -65,7 +65,7 @@ public class SourceCaves extends Room{
             addMortal(roughBill);
         }
 
-        Item magicTater = new Item("Magic Potato","How lucky! This eccentric<br> potato can permanently<br> increase either your<br> Max HP or Max Mana.<br><br>NOTE: it's permanent!", playo, "item");
+        Item magicTater = new Item("Magic Potato","How lucky! This eccentric\n potato can permanently\n increase either your\n Max HP or Max Mana.\n\nNOTE: it's permanent!", playo, "item");
         DroppedItem gTater =  new DroppedItem(this, org, "You found a hidden magic potato!", magicTater, 5, 40);
         super.addObject(gTater);
 
