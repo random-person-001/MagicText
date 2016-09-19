@@ -27,7 +27,7 @@ import java.net.URI;
 import static java.lang.Math.abs;
 
 /**
- * A nice heads-up display for stats on the Player
+ * A nice heads-up display for stats on the Player, with color!
  *
  * @author 119184
  */
@@ -83,9 +83,17 @@ public class HUD extends GameObject {
         spell2Name = convertIcon(room.getPlayer().getSecondarySpell());
 
         loc = orgo.getPosLayer(layerName);
-        //orgo.getLayer(loc).clear();
+        //orgo.getLayer(loc).clear(); // minimize flicker by comment out
+        orgo.editLayer(" ", layerName, 0, 45);
         x = 0;
         drawLayer();
+
+        // add color
+        Layer l = orgo.getLayer(layerName);
+        orgo.editLayer("<span color='#8c8c8c'>" + l.getStr(0,0), layerName, 0, 0);
+        String endChar = l.getStr(0,45);
+        endChar = (endChar.endsWith("ñ")) ? " " : endChar;
+        orgo.editLayer(endChar + "</span>", layerName, 0, 45);
     }
 
     @Override
@@ -333,10 +341,6 @@ public class HUD extends GameObject {
             int amountToSet = Integer.valueOf(command.substring(8));
             room.playo.screenRedness = amountToSet;
             showResponse(String.format("Setting the screen redness"));
-        } else if (command.contains("set yellow ") && command.length() > 11) {
-            int amountToSet = Integer.valueOf(command.substring(11));
-            room.playo.screenYellowness = amountToSet;
-            showResponse(String.format("Setting the screen yellowness to %1$d",amountToSet));
         } else if (command.contains("setResponseTime ")) {
             System.out.println(command.substring(16));
             int newTime = Integer.valueOf(command.substring(16));
