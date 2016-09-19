@@ -10,7 +10,6 @@ import java.awt.Container;
 import java.awt.Font;
 import java.util.List;
 import javax.swing.*;
-import javax.swing.text.JTextComponent;
 
 
 /**
@@ -21,11 +20,19 @@ public class Window extends JFrame{
     private static final String OPAQUE_SPACE = "ñ";
     public JTextPane txtArea = new JTextPane();
     private Container c = getContentPane();
+    private String foregroundColor = "#ffffff";
 
     public int dbgSavedSerial = 0;
     public int dbgCounter = 0;
     
     private Layer fullImage = new Layer(new String[screenH()][screenW()]);
+
+    /**
+     * @param newColor a string of hexcode (like "#c3c3c3") for the default foreground to be
+     */
+    public void setForegroundColor(String newColor){
+        foregroundColor = newColor;
+    }
 
     public void giveSerial(int number){
         if (number != dbgSavedSerial){
@@ -144,7 +151,7 @@ public class Window extends JFrame{
             build += "<br>";
         }
         clearText();
-        build = "<pre><span color='#ffffff'>" + build + "</span></pre>"; // style=font-family:'monospace'
+        build = "<pre><span color='" + foregroundColor + "'>" + build + "</span></pre>"; // style=font-family:'monospace'
         txtArea.setText(build);
     }
 

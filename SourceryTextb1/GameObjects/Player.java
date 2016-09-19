@@ -204,7 +204,12 @@ public class Player extends Mortal implements java.io.Serializable {
                 int opposite = 255 - screenRedness;
                 int yellowNumber = (int)(opposite * (1-((float)screenYellowness/100)));
                 //System.out.printf("Screen yellow factor: %1$d, (%2$d --> %3$d)\n", screenYellowness, opposite, yellowNumber);
-                orgo.getWindow().txtArea.setForeground(new Color(255, opposite, yellowNumber));
+
+                // convert old Java color thing to Hex color
+                Color c = new Color(255, opposite, yellowNumber);
+                String colorStr = String.format("#%06x", c.getRGB() & 0x00FFFFFF);
+                orgo.getWindow().setForegroundColor(colorStr);
+                //orgo.getWindow().txtArea.setForeground(new Color(255, opposite, yellowNumber)); // old way
             }
 
             resetTime();
@@ -351,7 +356,7 @@ public class Player extends Mortal implements java.io.Serializable {
 
     @Override
     protected void onDeath() {
-        orgo.getWindow().txtArea.setForeground(Color.RED);
+        orgo.getWindow().setForegroundColor("#ff0000");
         orgo.getWindow().txtArea.removeKeyListener(playerKeyListener);
         room.compactTextBox(orgo, lastPainMessage, "An ominous voice from above", false);
         dead = true;
