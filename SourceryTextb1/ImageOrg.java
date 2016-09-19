@@ -94,7 +94,7 @@ public class ImageOrg implements java.io.Serializable {
     }
 
     private String removeTheLayers () {
-        String output = String.format("\n[%1$d] Layers Removed: ", layerChangeInstance);
+        String output = String.format("<br>[%1$d] Layers Removed: ", layerChangeInstance);
         for (Layer lay : toRemove){
             layers.remove(lay);
             output += lay.getName() + " ";
@@ -309,7 +309,7 @@ public class ImageOrg implements java.io.Serializable {
             Layer get = layers.get(id);
             beginList += (get.getName() + ", ");
         }
-        System.out.println("Layers Before Clear: " + beginList + "(" + initSize + ")\n");
+        System.out.println("Layers Before Clear: " + beginList + "(" + initSize + ")<br>");
         */
         int count = 0;
         ArrayList<Layer> remove = new ArrayList<>();
@@ -327,7 +327,7 @@ public class ImageOrg implements java.io.Serializable {
             layers.remove(get);
         }
         /*
-        System.out.println("\nLayers Marked as playerLayer: " + isPlayerList + "(Amount processed: " + count + ")");
+        System.out.println("<br>Layers Marked as playerLayer: " + isPlayerList + "(Amount processed: " + count + ")");
 
         for (int id = 0; id < layers.size() ; id++){ //Gets all layers after operating
             Layer get = layers.get(id);
@@ -360,11 +360,11 @@ public class ImageOrg implements java.io.Serializable {
             //System.out.println("New Frame...");
             //long nanoTime = System.nanoTime();
             boolean doOutput = toAdd.size() > 0 || toRemove.size() > 0;
-            String changeList = String.format("- Org -\n[%1$d] Layers Added:   ", layerChangeInstance);
+            String changeList = String.format("- Org -<br>[%1$d] Layers Added:   ", layerChangeInstance);
             changeList += addTheLayers();
             changeList += removeTheLayers();
             if (doOutput) {
-                System.out.println(changeList + "\n");
+                System.out.println(changeList + "<br>");
                 layerChangeInstance++;
             }
             window.clearImage();
@@ -374,7 +374,7 @@ public class ImageOrg implements java.io.Serializable {
             window.dbgCounter++;
             /*
             if (((System.nanoTime() - nanoLast) / 1000000) >= 1000){
-                System.out.printf("Window updated %1$d times in the previous second\n", window.dbgCounter);
+                System.out.printf("Window updated %1$d times in the previous second<br>", window.dbgCounter);
                 window.dbgCounter = 0;
                 nanoLast = System.nanoTime();
 
@@ -418,7 +418,7 @@ public class ImageOrg implements java.io.Serializable {
             if (ii != layers.size() - 1){
                 System.out.print(", ");
             } else {
-                System.out.print("\n");
+                System.out.print("<br>");
             }
         }
     }

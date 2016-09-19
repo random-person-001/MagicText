@@ -59,7 +59,7 @@ public class Start {
                     doLevel(new TutorialBasement(player));
                     break;
                 case "SourcePit":
-                    doLevel(new ThePit(player));
+                    doLevel(new SourcePit(player));
                     break;
                 case "Cliffside":
                     doLevel(new Cliffside(player));
@@ -77,7 +77,7 @@ public class Start {
                     break;
             }
         }
-        System.out.println("\nBetter luck next time!");
+        System.out.println("<br>Better luck next time!");
     }
 
     private static void doLevel(Room r){
@@ -118,16 +118,16 @@ public class Start {
      * @return an array of single-character Strings
      */
     public static String[][] strToArray(String input, boolean debug) {
-        int width = input.indexOf("\n");
-        int height = occurrencesOf(input, "\n");//input.length() / (height);
+        int width = input.indexOf("<br>");
+        int height = occurrencesOf(input, "<br>");//input.length() / (height);
         if (debug) {
             System.out.println(height);
             System.out.println(width);
         }
         char[][] charresult = new char[height][width];
-        input = "\n" + input; //So it works.
+        input = "<br>" + input; //So it works.
         for (int i = 0; i < height; i++) {
-            input = input.substring(1 + input.indexOf("\n"));
+            input = input.substring(1 + input.indexOf("<br>"));
             System.out.println(input.substring(0, width));
             charresult[i] = input.substring(0, width).toCharArray();
         }

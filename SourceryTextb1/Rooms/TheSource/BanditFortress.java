@@ -36,7 +36,7 @@ public class BanditFortress extends Room{
                 }
                 if (count == 0){
                     if (playo.getX() == 109 && playo.getY() == 10) {
-                        queueMessage(new Room.FlavorText("Most capital letters (ex: A, B, C..) out in\n the world have flavor text \n accessible through the 'F' key", ""));
+                        queueMessage(new Room.FlavorText("Most capital letters (ex: A, B, C..) out in<br> the world have flavor text <br> accessible through the 'F' key", ""));
                     }
                     count++;
                 }
@@ -49,16 +49,15 @@ public class BanditFortress extends Room{
     @Override
     public void startup(){
         ititHitMeshes();
-        super.playo.roomName = "BanditFortress";
 
-        String[] rockText1 = {"You've passed safely through the walls of \n the fortress!  Unfortunately, many more\n bandits lie inside.  Be careful."};
+        String[] rockText1 = {"You've passed safely through the walls of <br> the fortress!  Unfortunately, many more<br> bandits lie inside.  Be careful."};
         plantText(new Room.FlavorText(59, 82, rockText1, ""));
 
-        String[] rockText2 = {"The immense, strong walls of the bandit   \n fortress tower before you.  This may be\n a long shot, whatever you're to do here."};
+        String[] rockText2 = {"The immense, strong walls of the bandit   <br> fortress tower before you.  This may be<br> a long shot, whatever you're to do here."};
         plantText(new Room.FlavorText(67, 94, rockText2, ""));
 
-        String[] byFountain = {"Phew!  So many bandits!  Thankfully, it  \n only gets worse from here on out.  The \n Bandit King lies ahead, ugly and brutal.",
-                "Meanwhile, you can enjoy the beautiful\n fountain.  There's an inaccessible item\n in the middle of it.  Pretty, huh?"};
+        String[] byFountain = {"Phew!  So many bandits!  Thankfully, it  <br> only gets worse from here on out.  The <br> Bandit King lies ahead, ugly and brutal.",
+                "Meanwhile, you can enjoy the beautiful<br> fountain.  There's an inaccessible item<br> in the middle of it.  Pretty, huh?"};
         plantText(new Room.FlavorText(51, 25, byFountain, "Talking Gargoyle"));
 
         Art arty = new Art();
@@ -83,8 +82,8 @@ public class BanditFortress extends Room{
             addMortal(t);
         }
 
-        Item magicTater = new Item("Illicit Magic Potato","How lucky! This eccentric\n potato can permanently\n " +
-                "increase either your\n Max HP or Max Mana.\n\nNOTE: it's permanent.\nYou got this illicitly.", playo, "item");
+        Item magicTater = new Item("Illicit Magic Potato","How lucky! This eccentric<br> potato can permanently<br> " +
+                "increase either your<br> Max HP or Max Mana.<br><br>NOTE: it's permanent.<br>You got this illicitly.", playo, "item");
         DroppedItem gTater =  new DroppedItem(this, org, "You found a magic potato.  Cheater.", magicTater, 51, 19);
         super.addObject(gTater);
 

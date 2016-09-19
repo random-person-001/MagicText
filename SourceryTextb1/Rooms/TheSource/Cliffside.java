@@ -25,9 +25,9 @@ public class Cliffside extends Room {
                 Thread.sleep(20);
 
                 if (count == 0) {
-                    queueMessage(new FlavorText("Ah, the air is nice and fresh\n outside.", ""));
-                    queueMessage(new FlavorText("Endless rows of trees covered in sunset\n sitting beyond your view distance....", ""));
-                    queueMessage(new FlavorText("A picture taken here on this cliff\n would definitely make a great postcard.", ""));
+                    queueMessage(new FlavorText("Ah, the air is nice and fresh<br> outside.", ""));
+                    queueMessage(new FlavorText("Endless rows of trees covered in sunset<br> sitting beyond your view distance....", ""));
+                    queueMessage(new FlavorText("A picture taken here on this cliff<br> would definitely make a great postcard.", ""));
                     // ^ This should be an item in The Mines of Mementos
                     count++;
                 }
@@ -80,8 +80,6 @@ public class Cliffside extends Room {
         addToBaseHitMesh(base, solids);
         baseLayer = new Layer(base, "backgronud");
         org.addLayer(baseLayer);
-
-        playo.roomName = "Cliffside";
 
         int[][] locs = {{106, 115}, {14, 17}};
         for (int ii = 0 ; ii < locs[0].length ; ii++){

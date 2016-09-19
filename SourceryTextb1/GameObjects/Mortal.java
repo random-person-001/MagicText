@@ -63,7 +63,11 @@ public class Mortal extends GameObject implements java.io.Serializable{
             //System.out.println("My health is now " + getHealth());
             health -= amountLost;
             int percentHealth = (int)(((float)health / maxHealth) * 10);
-            dmgIcon = String.valueOf(percentHealth);
+            if (percentHealth > 0) {
+                dmgIcon = String.valueOf(percentHealth);
+            } else {
+                dmgIcon = "X";
+            }
             setDispIcon(dmgIcon);
             Timer timing = new Timer();
             timing.schedule(new dmgTimer(), 250);
@@ -84,7 +88,7 @@ public class Mortal extends GameObject implements java.io.Serializable{
     }
 
     public void subtractHealth(int amountLost){
-        subtractHealth(amountLost, "Your killer is unknown.");
+        subtractHealth(amountLost, "You died.");
     }
 
     public void setHealth(int newHealth){
@@ -124,6 +128,7 @@ public class Mortal extends GameObject implements java.io.Serializable{
             try {
                 orgo.editLayer(" ", layerName, y, x);
             }catch (NullPointerException ignore){}
+            orgo.removeLayer(layerName);
             return true;
         }
         return false;

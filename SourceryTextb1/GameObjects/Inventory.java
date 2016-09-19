@@ -64,17 +64,17 @@ class Inventory implements java.io.Serializable {
         selectedSpellsLayer = new Layer(new String[22][47], "selectedSpells", false);
 
         /*
-        spells.add(new Item("Spark","Arcane Spell;\nFires a spark of energy.\n\n\"All great fires start\n with small sparks\"", "Spark", player, "spell"));
-        spells.add(new Item("Fireball","Fire Spell;\nUse your imagination", "FrBll", player, "spell"));
-        spells.add(new Item("Frostbite","Ice Spell;\nFreezes an enemy right\n in front of you.", "FrstB", player, "spell"));
-        spells.add(new Item("Shadow Knife","Dark Spell;\nThrows a blade made of\n forbidden magic.\n\nThe dart seems to have a \n soul that refuses to die," +
-                "\n and thus travels very far.", "ShKnf", player, "spell"));
+        spells.add(new Item("Spark","Arcane Spell;<br>Fires a spark of energy.<br><br>\"All great fires start<br> with small sparks\"", "Spark", player, "spell"));
+        spells.add(new Item("Fireball","Fire Spell;<br>Use your imagination", "FrBll", player, "spell"));
+        spells.add(new Item("Frostbite","Ice Spell;<br>Freezes an enemy right<br> in front of you.", "FrstB", player, "spell"));
+        spells.add(new Item("Shadow Knife","Dark Spell;<br>Throws a blade made of<br> forbidden magic.<br><br>The dart seems to have a <br> soul that refuses to die," +
+                "<br> and thus travels very far.", "ShKnf", player, "spell"));
         */
-        equip.add(new Item("Dusty Robe", "Dust is baked into this\n old robe.\n\nThe newest students at\n The Magic Academy get\n only hand-me-downs. As a" +
-                "\n result, they are usually\n really, really old.\n\n+2 Defense", player, "equip"));
+        equip.add(new Item("Dusty Robe", "Dust is baked into this<br> old robe.<br><br>The newest students at<br> The Magic Academy get<br> only hand-me-downs. As a" +
+                "<br> result, they are usually<br> really, really old.<br><br>+2 Defense", player, "equip"));
         equip.get(0).setEquipvals(2, 0, 0, 0, 0, 0, 0, "armor");
 
-        //items.add(new Item("Magic Potato","A magically enhanced potato\n\nCan be used to either\n permanently increase\n your max health or\n max mana by 5.", player, "item"));
+        //items.add(new Item("Magic Potato","A magically enhanced potato<br><br>Can be used to either<br> permanently increase<br> your max health or<br> max mana by 5.", player, "item"));
 
         player.armor = equip.get(0);
         player.defineStats();
@@ -97,6 +97,33 @@ class Inventory implements java.io.Serializable {
                 equip.add(input);
                 break;
         }
+    }
+
+    /**
+     * Returns an item based upon the name of what you're looking for.
+     * @param invSection use "items", "spells", "equip" (It isn't case-sensitive, which should mitigate some human error)
+     */
+    public Item getItem(String name, String invSection){
+        ArrayList<Item> list;
+        switch (invSection.toLowerCase()){
+            case "items":
+                list = items;
+                break;
+            case "spells":
+                list = spells;
+                break;
+            case "equip":
+                list = equip;
+                break;
+            default:
+                return null;
+        }
+        for (Item it : list){
+            if (it.getName().equals(name)){
+                return it;
+            }
+        }
+        return null;
     }
 
     /**
@@ -269,15 +296,6 @@ class Inventory implements java.io.Serializable {
         genericItemListing(spells);
         indexX = 31;
 
-        char[] chars = player.spell1.getName().toCharArray();
-        for (int ii = 0; ii < chars.length; ii++) {
-            selectorLayer.setStr(16, 15 + ii, String.valueOf(chars[ii]));
-        }
-        chars = player.spell2.getName().toCharArray();
-        for (int ii = 0; ii < chars.length; ii++) {
-            selectorLayer.setStr(17, 15 + ii, String.valueOf(chars[ii]));
-        }
-
         if (pressedA && newSelectY == 21) {
             jumpToNewMenu(topMenuLayer, TOP, "spells");
         }
@@ -294,6 +312,15 @@ class Inventory implements java.io.Serializable {
                 putSecondary(spells.get(index).getIcon());
                 System.out.println("SECONDARY SET TO: " + spells.get(index).getName());
             }
+        }
+
+        char[] chars = player.spell1.getName().toCharArray();
+        for (int ii = 0; ii < chars.length; ii++) {
+            org.editLayer(String.valueOf(chars[ii]), "invInfo", 16, 15 + ii);
+        }
+        chars = player.spell2.getName().toCharArray();
+        for (int ii = 0; ii < chars.length; ii++) {
+            org.editLayer(String.valueOf(chars[ii]), "invInfo", 17, 15 + ii);
         }
     }
 
@@ -423,7 +450,7 @@ class Inventory implements java.io.Serializable {
             }
             if (newSelectY == 4) {
                 player.saveGame();
-                player.subtractHealth(2100000000, "For your convenience, you died.\n  Just press enter and carry on."); // cleanup
+                player.subtractHealth(2100000000, "For your convenience, you died.<br>  Just press enter and carry on."); // cleanup
                 exitAllMenus();
             }
         }
@@ -465,6 +492,10 @@ class Inventory implements java.io.Serializable {
             org.getLayer("invInfo").clear();
             System.out.println(String.format("Prev Index: %d vs. %d", prevIndex, index));
         }
+        if (pressedS || pressedD){
+            org.getLayer("invInfo").clear();
+            System.out.println("Clearing infoLayer...");
+        }
         prevIndex = index;
 
         if (index < items.size() && newSelectY < 19) {
@@ -476,7 +507,7 @@ class Inventory implements java.io.Serializable {
         int line = 1;
         int newLineAdjust = 0;
         for (int ii = 0; ii < text.length(); ii++) {
-            if (text.charAt(ii) == '\n') {
+            if (Character.toString(text.charAt(ii)) == "<br>") { // TODO: this is broken.
                 line++;
                 newLineAdjust = ii + 1;
             } else {
