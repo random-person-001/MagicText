@@ -1544,16 +1544,16 @@ public String testRoom =
     }
     /**
      * Create a String[height][width] (r,c?) array out of an inputted string that
-     * is at least that big (specified by its dimensions with /n).
+     * is at least that big (specified by its dimensions with \n).
      *
-     * @param input a string with '/n's
+     * @param input a string with '\n's
      * @param debug whether to print gunk to System.out
      * @return a corresponding String[][] where each element is just one character
      */
     public static String[][] strToArray(String input, boolean debug) {
 
-        return toArr(input);
-        /*
+        //return toArr(input);
+
         debug = true;
         int width = input.indexOf("\n");
         int height = occurrancesOf(input, "\n");//input.length() / (height);
@@ -1588,7 +1588,7 @@ public String testRoom =
             }
             //System.out.println(i);
         }
-        return result;*/
+        return result;
     }
 
     private static String[][] toArr(String s){

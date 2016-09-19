@@ -83,9 +83,17 @@ public class HUD extends GameObject {
         spell2Name = convertIcon(room.getPlayer().getSecondarySpell());
 
         loc = orgo.getPosLayer(layerName);
-        //orgo.getLayer(loc).clear();
+        //orgo.getLayer(loc).clear(); // minimize flicker by comment out
+        orgo.editLayer(" ", layerName, 0, 45);
         x = 0;
         drawLayer();
+
+        // add color
+        Layer l = orgo.getLayer(layerName);
+        orgo.editLayer("<span color='#8c8c8c'>" + l.getStr(0,0), layerName, 0, 0);
+        String endChar = l.getStr(0,45);
+        endChar = (endChar.endsWith("ñ")) ? " " : endChar;
+        orgo.editLayer(endChar + "</span>", layerName, 0, 45);
     }
 
     @Override

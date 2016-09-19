@@ -108,7 +108,7 @@ public class Player extends Mortal implements java.io.Serializable {
         orgo = theOrg;
         layerName = "playerLayer";
         Layer playerLayer = new Layer(new String[3][3], layerName);
-        playerLayer.setStr(1, 1, "@");
+        playerLayer.setStr(1, 1, "<span color='#66ff33'>@</span>");
         playerLayer.setImportance(true);
 
         orgo.addLayer(playerLayer);
@@ -362,7 +362,7 @@ public class Player extends Mortal implements java.io.Serializable {
      * Update the Player symbol
      */
     public void graphicUpdate() {
-        orgo.editLayer("@", layerName, 1, 1);
+        orgo.editLayer("<span color='#66ff33'>@</span>", layerName, 1, 1);
         orgo.getLayer(layerName).setPos(y-1, x-1);
         centerCamera();
     }

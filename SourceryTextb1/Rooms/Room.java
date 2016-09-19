@@ -499,9 +499,10 @@ public class Room implements java.io.Serializable{
         int line = 1;
         int newLineAdjust = 0;
         for (int ii = 0; ii < text.length(); ii++) {
-            if (Character.toString(text.charAt(ii)) == "\n") {
+            if (text.charAt(ii) == '\n') {
                 line++;
                 newLineAdjust = ii + 1;
+                System.out.println("Found newline.");
             } else {
                 txtBox.setStr(line, ii + 1 - newLineAdjust, String.valueOf(text.charAt(ii)));
             }
