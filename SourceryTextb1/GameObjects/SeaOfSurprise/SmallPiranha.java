@@ -38,6 +38,7 @@ public class SmallPiranha extends Mortal{
     public void update() {
         // Try to move
         room.removeMortal(this);
+        Mortal closestGoodGuy = getClosestGoodGuy();
         boolean goodPlace = false;
         int rationality = 40000;
         while (!goodPlace) {
@@ -54,7 +55,7 @@ public class SmallPiranha extends Mortal{
                 if (orgo.getDebug())
                     System.out.println("Going towards good guy");
             } else if (r(8)>1){
-                Mortal m = room.playo;
+                Mortal m = closestGoodGuy;
                 if (r(1) == 0 && x != m.getX())
                     newX += (x < m.getX()) ? 1 : -1;
                 else if (m.getY() != y)
@@ -86,8 +87,8 @@ public class SmallPiranha extends Mortal{
         orgo.editLayer("<span color='#cc0000'>p</span>", layerName, 0, 0);
         room.addMortal(this);
 
-        if (distanceTo(room.playo) <= 3) {
-            room.playo.subtractHealth(3, "You know, maybe you should have listened \n when your mother told you not to \n play with piranhas.");
+        if (distanceTo(closestGoodGuy) <= 3) {
+            closestGoodGuy.subtractHealth(3, "You know, maybe you should have listened \n when your mother told you not to \n play with piranhas.");
         }
     }
 

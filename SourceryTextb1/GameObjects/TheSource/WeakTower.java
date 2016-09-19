@@ -35,15 +35,16 @@ public class WeakTower extends Mortal {
         String anim1 = "|";
         String anim2 = "-";
         boolean alt = false;
-        if (Math.abs(x - room.playo.getX()) <= 2 && Math.abs(y - room.playo.getY()) <= 2){
-            room.playo.subtractHealth(2);
+        Mortal m = getClosestGoodGuy();
+        if (Math.abs(x - m.getX()) <= 2 && Math.abs(y - m.getY()) <= 2){
+            m.subtractHealth(2);
         }
-        if (Math.abs(room.playo.getX() - getX()) <= 2){
-            int orientation = (room.playo.getY() - getY() > 0) ? 1 : 0;
+        if (Math.abs(m.getX() - getX()) <= 2){
+            int orientation = (m.getY() - getY() > 0) ? 1 : 0;
             room.addObject(new Spell(orgo, room, x, y, orientation, dmg, rng, anim1, anim2, alt));
         }
-        if (Math.abs(room.playo.getY() - getY()) <= 2){
-            int orientation = (room.playo.getX() - getX() > 0) ? 3 : 2;
+        if (Math.abs(m.getY() - getY()) <= 2){
+            int orientation = (m.getX() - getX() > 0) ? 3 : 2;
             room.addObject(new Spell(orgo, room, x, y, orientation, dmg, rng, anim1, anim2, alt));
         }
         orgo.editLayer("<span color='#993333'>T</span>", layerName, 0, 0);

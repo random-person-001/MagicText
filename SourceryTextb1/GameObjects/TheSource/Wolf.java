@@ -33,7 +33,7 @@ public class Wolf extends Mortal {
         if (Math.abs(x - room.playo.getX()) <= 1 && Math.abs(y - room.playo.getY()) <= 1){
             room.playo.subtractHealth(3);
         }
-        pathToPos(followDist, room.playo.getX(), room.playo.getY());
+        pathToPos(followDist, getClosestGoodGuy().getX(), getClosestGoodGuy().getY());
         orgo.editLayer("<span color='#cc0000'>W</span>", layerName, 0, 0);
     }
 

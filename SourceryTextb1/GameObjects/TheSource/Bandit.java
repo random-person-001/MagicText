@@ -30,13 +30,14 @@ public class Bandit extends Mortal {
 
     @Override
     public void update() {
-        if (Math.abs(x - room.playo.getX()) <= 2 && Math.abs(y - room.playo.getY()) <= 2){
-            room.playo.subtractHealth(2);
+        Mortal closestGoodGuy = getClosestGoodGuy();
+        if (Math.abs(x - closestGoodGuy.getX()) <= 2 && Math.abs(y - closestGoodGuy.getY()) <= 2){
+            closestGoodGuy.subtractHealth(2);
         }
-        if (room.playo.getX() == getX() || room.playo.getY() == getY()){ // sprint when straight line to player
-            pathToPos(followDist, room.playo.getX(), room.playo.getY());
+        if (closestGoodGuy.getX() == getX() || closestGoodGuy.getY() == getY()){ // sprint when straight line to player
+            pathToPos(followDist, closestGoodGuy.getX(), closestGoodGuy.getY());
         }
-        pathToPos(followDist, room.playo.getX(), room.playo.getY());
+        pathToPos(followDist, closestGoodGuy.getX(), closestGoodGuy.getY());
         orgo.editLayer("<span style='color:#cc0000'>B</span>", layerName, 0, 0); // with hex
     }
 

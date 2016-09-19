@@ -39,17 +39,18 @@ public class Troll extends Mortal {
     public void update() {
         // Try to move
         room.removeMortal(this);
+        Mortal closestGoodGuy = getClosestGoodGuy();
         boolean goodPlace = false;
         int rationality = 40000;
         while (!goodPlace) {
             int newX = x;
             int newY = y;
             System.out.println("Not good place yet");
-            if (distanceTo(room.playo) < 10 && r(15)>1){ /// Most of the time go towards player
-                if (r(1) == 0 && x != room.playo.getX())
-                    newX += (x < room.playo.getX()) ? 1 : -1;
-                else if (room.playo.getY() != y)
-                    newY += (y < room.playo.getY()) ? 1 : -1;
+            if (distanceTo(closestGoodGuy) < 10 && r(15)>1){ /// Most of the time go towards player
+                if (r(1) == 0 && x != closestGoodGuy.getX())
+                    newX += (x < closestGoodGuy.getX()) ? 1 : -1;
+                else if (closestGoodGuy.getY() != y)
+                    newY += (y < closestGoodGuy.getY()) ? 1 : -1;
                 System.out.println("Going towards player");
             }else if (r(moveFrq) < 1) {
                 System.out.println("Moving randomly");
@@ -74,8 +75,8 @@ public class Troll extends Mortal {
         orgo.editLayer("<span color='#cc0000'>T</span>", layerName, 0, 0);
         room.removeMortal(this);
 
-        if (abs(room.playo.getY() - y) <= 3 && abs(room.playo.getX() - x) <= 3) {
-            room.playo.subtractHealth(3, "You know, maybe you should have listened \n when your mother told you not to \n play with trolls.");
+        if (abs(closestGoodGuy.getY() - y) <= 3 && abs(closestGoodGuy.getX() - x) <= 3) {
+            closestGoodGuy.subtractHealth(3, "You know, maybe you should have listened \n when your mother told you not to \n play with trolls.");
         }
     }
 
