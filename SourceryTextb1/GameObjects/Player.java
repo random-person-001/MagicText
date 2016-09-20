@@ -40,8 +40,6 @@ public class Player extends Mortal implements java.io.Serializable {
     private Inventory inv;
     public ItemTracker tracker;
     public String roomName = ""; //Extremely important when we implement saving.
-    
-    private String playerIcon = "<span color=#80ff80>@</span color>";
 
     private boolean autonomous = false;
     private boolean shouldNewInv = false;
@@ -106,21 +104,15 @@ public class Player extends Mortal implements java.io.Serializable {
         super.maxHealth = maxHP + armorHealthBoost;
         super.strClass = "Player";
         System.out.println("\nNEW PLAYER\n");
-
         orgo = theOrg;
+
         layerName = "playerLayer";
         Layer playerLayer = new Layer(new String[3][3], layerName);
-        playerLayer.setStr(1, 1, playerIcon);
         playerLayer.setImportance(true);
-
         orgo.addLayer(playerLayer);
 
-        //setupForNewRoom();
-
         inv = new Inventory(orgo, this);
-
         tracker = new ItemTracker();
-
         resumeFromSave();
     }
 
@@ -156,8 +148,8 @@ public class Player extends Mortal implements java.io.Serializable {
     /**
      * Set x and y coordinates directly.
      *
-     * @param newX
-     * @param newY
+     * @param newX the new x coord
+     * @param newY the new y coord
      */
     @Override
     public void goTo(int newX, int newY) {
@@ -259,7 +251,7 @@ public class Player extends Mortal implements java.io.Serializable {
         }
     }
 
-    boolean hadLocked = false;
+    private boolean hadLocked = false;
     private void aimDispUpdate() {
         if (orientationLocked && !hadLocked){
             switch (orientation){
@@ -286,14 +278,14 @@ public class Player extends Mortal implements java.io.Serializable {
         }
     }
 
-    public void reportPos() {
+    private void reportPos() {
         System.out.println("\nPlayer X: " + x + "(" + orgo.getCamX() + ")" + "\nPlayer Y: " + y + "(" + orgo.getCamY() + ")" + "\nPaused?: " + paused + "\n");
     }
 
     /**
      * @return the player's instance of Inventory
      */
-    public Inventory getInventory() {
+    Inventory getInventory() {
         return inv;
     }
 
@@ -303,7 +295,7 @@ public class Player extends Mortal implements java.io.Serializable {
      *
      * @param deathMessage a final string to show lest you have died
      */
-    public void showPain(String deathMessage) {
+    void showPain(String deathMessage) {
         //orgo.editLayer(" ", layerName, 0, 0);
         hurtColor += 3;
         lastPainMessage = deathMessage;
@@ -314,7 +306,7 @@ public class Player extends Mortal implements java.io.Serializable {
      * Writes a .sav file (of the serialized Player) to a user-defined directory
      * @return whether the saving was successful
      */
-    public boolean saveGame(){
+    boolean saveGame(){
         orgo.terminateClock();
         System.out.println("Running serialization test...");
         String path;
@@ -368,7 +360,11 @@ public class Player extends Mortal implements java.io.Serializable {
     /**
      * Update the Player symbol
      */
-    public void graphicUpdate() {
+    private void graphicUpdate() {
+        String color = (upPressed|downPressed|leftPressed|rightPressed) ? "66ff66" : "80ff80";
+        color = (spacePressed) ? "33ff33" : color;
+        color = (ludicrousSpeed) ? "00b300" : color;
+        String playerIcon = "<span color=#"+color+">@</span color>";
         orgo.editLayer(playerIcon, layerName, 1, 1);
         orgo.getLayer(layerName).setPos(y-1, x-1);
         centerCamera();
@@ -421,7 +417,7 @@ public class Player extends Mortal implements java.io.Serializable {
      *
      * @param toEquip an Item that should be equipped now
      */
-    public void equip(Item toEquip) {
+    void equip(Item toEquip) {
         if (toEquip.getEquipType().toLowerCase().equals("weapon")) {
             weapon = toEquip;
             defineStats();
@@ -435,7 +431,7 @@ public class Player extends Mortal implements java.io.Serializable {
 
     @Deprecated // This should be done dynamically.
     //   Where the spell boost variables are used, the corresponding expression should be used instead. --Riley
-    public void defineStats() {
+    void defineStats() {
         defense = armor.getEquipVals()[0];
         armorHealthBoost = armor.getEquipVals()[1];
         allSpellBoost = weapon.getEquipVals()[2];
@@ -575,13 +571,6 @@ public class Player extends Mortal implements java.io.Serializable {
         }
     }
 
-    /**
-     * @param newColor a new Color for the player to perceive as the proper one for a background to be
-     */
-    public void setBackgroundColor(Color newColor) {
-        restingBackground = newColor;
-    }
-
     private void updateBackground() { // Max is about 15 or 16
         if (technicolorIndex > 0) { // Update the background color, if you did the supercheat.
             float r, g, b;
@@ -695,15 +684,15 @@ public class Player extends Mortal implements java.io.Serializable {
         superCheatProgress = 0;
     }
 
-    public String getPrimarySpell() {
+    String getPrimarySpell() {
         return spell1.getIcon();
     }
 
-    public void addItem(Item input) {
+    void addItem(Item input) {
         inv.addItem(input);
     }
 
-    public String getSecondarySpell() {
+    String getSecondarySpell() {
         return spell2.getIcon();
     }
 
@@ -711,7 +700,7 @@ public class Player extends Mortal implements java.io.Serializable {
      * Adds a potato to the player's inventory. For debug console.
      */
 
-    public void addPotato(int amount) {
+    void addPotato(int amount) {
         for (int ii = 0; ii < amount; ii++) {
             inv.addItem(new Item("Magic Potato", "A magically enhanced potato\n\nCan be used to either" +
                     "\n permanently increase\n your max health or\n max mana by 5.", this, "item"));
