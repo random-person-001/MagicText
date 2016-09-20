@@ -30,10 +30,11 @@ public class Wolf extends Mortal {
 
     @Override
     public void update() {
-        if (Math.abs(x - room.playo.getX()) <= 1 && Math.abs(y - room.playo.getY()) <= 1){
-            room.playo.subtractHealth(3);
+        Mortal closestGoodGuy = getClosestGoodGuy();
+        if (Math.abs(x - closestGoodGuy.getX()) <= 1 && Math.abs(y - closestGoodGuy.getY()) <= 1){
+            closestGoodGuy.subtractHealth(3);
         }
-        pathToPos(followDist, getClosestGoodGuy().getX(), getClosestGoodGuy().getY());
+        pathToPos(followDist, closestGoodGuy.getX(), closestGoodGuy.getY());
         orgo.editLayer("<span color='#cc0000'>W</span>", layerName, 0, 0);
     }
 
