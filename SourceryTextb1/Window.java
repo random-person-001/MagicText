@@ -186,7 +186,7 @@ public class Window extends JFrame{
         protected FrameBuffer(String theScreen){
             toBuild = theScreen;
         }
-        public void run(){
+        public void run() throws NullPointerException{
             //System.out.println(txtArea.getText());
             txtArea.setText(toBuild);
         }

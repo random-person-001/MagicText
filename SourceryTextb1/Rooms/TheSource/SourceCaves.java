@@ -62,6 +62,7 @@ public class SourceCaves extends Room{
 
     @Override
     public void startup(){
+        addItems();
 
         String[] doorLocked = {"The door seems to have locked behind you.","The owner must have installed\n an auto-lock on the door."};
         plantText(new Room.FlavorText(109, 9, doorLocked , ""));
@@ -73,7 +74,6 @@ public class SourceCaves extends Room{
         Layer lay1 = new Layer(base, "Base");
         org.addLayer(lay1);
 
-        addItems();
 
         genericRoomInitialize();
     }

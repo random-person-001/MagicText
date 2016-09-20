@@ -56,31 +56,7 @@ public class Start {
         HashMap<String, Room> zone1Rooms = initializeZone1Rooms();
         while (!roomID.equals("die")) {
             System.out.println("Entering the room '" + roomID + "'");
-            doLevel(zone1Rooms.get(roomID));   // This is all that's needed, no switch statements, weird stuff, etc
-            /*
-            switch (roomID) {
-                case "Tutorial":
-                    doLevel(new TutorialBasement(player));
-                    break;
-                case "SourcePit":
-                    doLevel(new SourcePit(player));
-                    break;
-                case "Cliffside":
-                    doLevel(new Cliffside(player));
-                    break;
-                case "SourceCaves":
-                    doLevel(new SourceCaves(player));
-                    break;
-                case "BanditFortress":
-                    doLevel(new BanditFortress(player));
-                    break;
-                default:
-                    System.out.println("You were directed to a world which is not yet registered in Start.java." +
-                            "Please add it there.  (roomID = " + roomID + ").  Meanwhile, I'll just kill you to ease the pain.");
-                    roomID = "die";
-                    break;
-            }
-            //*/
+            doLevel(zone1Rooms.get(roomID));
         }
         System.out.println("\nBetter luck next time!");
     }
@@ -96,7 +72,7 @@ public class Start {
         rooms.put("Cliffside", new Cliffside(player));
         rooms.put("SourceCaves", new SourceCaves(player));
         rooms.put("BanditFortress", new BanditFortress(player));
-        rooms.forEach((s, room) -> room.addItems());
+        //rooms.forEach((s, room) -> room.addItems()); // cuz add layers to current imageorg, which isn't good
         rooms.forEach((s, room) -> room.setObjsPause(true));
         return rooms;
     }

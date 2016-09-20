@@ -193,6 +193,8 @@ public class TutorialBasement extends Room {
 
     @Override
     public void startup(){
+
+        addItems();
         super.playo.goTo(20,29);
 
         FlavorText playerStart = new FlavorText(20, 29, "You start here!", "");
@@ -204,8 +206,6 @@ public class TutorialBasement extends Room {
         addToBaseHitMesh(base, solids);
         Layer lay1 = new Layer(base, "Test", 0, 0, true, false, false);
         org.addLayer(lay1);
-
-        addItems();
 
         genericRoomInitialize();
     }

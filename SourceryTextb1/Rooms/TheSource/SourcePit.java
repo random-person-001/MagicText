@@ -78,6 +78,8 @@ public class SourcePit extends Room {
 
     @Override
     public void startup(){
+
+        addItems();
         String[] dennisWords = {"Hey! Ya woke up!\nHow are ya?","Welcome to The Source!\nI'm Dennis, the owner of the house\n that ya woke up in.","Someone no-name guy went in this big hole" +
                 "\n and completely overthrew the order\n of this world.","Then there was this super bright flash,\n and out goes the lights!","Ya've been in a coma for about\n two weeks now;" +
                 "\nYa're latest I've seen to wake up!","Anyway, I decided to haul ya into my\n basement so that the local wolves\n don't make dinner out of ya.","I see you've grabbed a couple things" +
@@ -95,8 +97,6 @@ public class SourcePit extends Room {
         addToBaseHitMesh(base, solids);
         Layer lay1 = new Layer(base, "Test");
         org.addLayer(lay1);
-
-        addItems();
 
         genericRoomInitialize();
     }

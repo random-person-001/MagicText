@@ -102,13 +102,13 @@ public class Cliffside extends Room {
 
     @Override
     public void startup() {
+
+        addItems();
         String[][] base = Art.strToArray(arty.mountainPlace);
         String[] solids = {":", "^", "#",".","0","o"};
         addToBaseHitMesh(base, solids);
         baseLayer = new Layer(base, "backgronud");
         org.addLayer(baseLayer);
-
-        addItems();
 
         genericRoomInitialize();
     }

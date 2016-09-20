@@ -75,6 +75,8 @@ public class BanditFortress extends Room{
     @Override
     public void startup(){
 
+        addItems();
+
         String[] rockText1 = {"You've passed safely through the walls of \n the fortress!  Unfortunately, many more\n bandits lie inside.  Be careful."};
         plantText(new Room.FlavorText(59, 82, rockText1, ""));
 
@@ -91,8 +93,6 @@ public class BanditFortress extends Room{
         addToBaseHitMesh(base, solids);
         Layer lay1 = new Layer(base, "Base");
         org.addLayer(lay1);
-
-        addItems();
 
         genericRoomInitialize();
     }
