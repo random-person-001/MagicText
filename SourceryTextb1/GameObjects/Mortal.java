@@ -3,7 +3,6 @@ package SourceryTextb1.GameObjects;
 import java.util.*;
 
 import static java.lang.StrictMath.abs;
-import static java.lang.StrictMath.max;
 
 /**
  * Base object (to extend) for Enemies
@@ -25,7 +24,7 @@ public class Mortal extends GameObject implements java.io.Serializable{
         return rand.nextInt((max - min) + 1) + min;
     }
 
-    protected String dmgIcon = "";
+    private String dmgIcon = "";
 
 
     /**
@@ -58,7 +57,7 @@ public class Mortal extends GameObject implements java.io.Serializable{
                 health = 0;
             }
             room.playo.screenRedness = (int)((1 - ((float)health / maxHealth)) * 255);
-            System.out.println(String.format("Setting redness: %1$d (%2$f)", room.playo.screenRedness, 1 - ((float)health / maxHealth)));
+            //System.out.println(String.format("Setting redness: %1$d (%2$f)", room.playo.screenRedness, 1 - ((float)health / maxHealth)));
         } else {
             //System.out.println("My health is now " + getHealth());
             health -= amountLost;
@@ -77,9 +76,9 @@ public class Mortal extends GameObject implements java.io.Serializable{
     /**
      * Sets display icon, factoring in whether or not it should display the damage percentage
      */
-    public void setDispIcon (String icon){ setDispIcon(icon, 0, 0);}
+    protected void setDispIcon(String icon){ setDispIcon(icon, 0, 0);}
 
-    public void setDispIcon(String icon, int x, int y){
+    protected void setDispIcon(String icon, int x, int y){
         if (icon.length() != 1 || dmgIcon.equals("")) {
             orgo.editLayer(icon, layerName, y, x);
         } else {
@@ -123,8 +122,8 @@ public class Mortal extends GameObject implements java.io.Serializable{
         attack = newAttack;
     }
 
-    public boolean isGoodGuy(){ return isGoodGuy; }
-    public void makeGoodGuy(){ isGoodGuy = true; }
+    private boolean isGoodGuy(){ return isGoodGuy; }
+    void makeGoodGuy(){ isGoodGuy = true; }
 
     private boolean checkDeath() {
         if (getHealth() <= 0){
@@ -160,11 +159,9 @@ public class Mortal extends GameObject implements java.io.Serializable{
         int closest = 50000000;
         Mortal closestM = null;
         for (Mortal m : room.enemies) {
-            if (m.isGoodGuy()) {
-                if (distanceTo(m) < closest) {
-                    closest = distanceTo(m);
-                    closestM = m;
-                }
+            if (m.isGoodGuy() && distanceTo(m) < closest) {
+                closest = distanceTo(m);
+                closestM = m;
             }
         }
         return closestM;
@@ -197,10 +194,10 @@ public class Mortal extends GameObject implements java.io.Serializable{
         }
     }
 
-    public Set<PathPoint> pathPts = new HashSet<>();
-    public ArrayList<PathPoint> newPts = new ArrayList<>();
-    protected int[][] ptMatrix;
-    protected int createPathTo(int goalX, int goalY, int maxDist){
+    private Set<PathPoint> pathPts = new HashSet<>();
+    private ArrayList<PathPoint> newPts = new ArrayList<>();
+    private int[][] ptMatrix;
+    private int createPathTo(int goalX, int goalY, int maxDist){
         pathPts.clear();
         pathPts.add(new PathPoint(goalX, goalY, 0));
         ptMatrix = new int[(maxDist*2) - 1][(maxDist*2) - 1];
@@ -237,7 +234,7 @@ public class Mortal extends GameObject implements java.io.Serializable{
         }
      */
 
-    protected boolean spreadPathPts(int pX, int pY, int sX, int sY, int gX, int gY, int counter){
+    private boolean spreadPathPts(int pX, int pY, int sX, int sY, int gX, int gY, int counter){
         //if ((pX == gX && pY == gY) || (pX == gX && pY > gY) || (pX < gX && pY == gY) || (pX < gX && pY > gY)){
             attemptPoint(pX - 1, pY, counter);
         //}
@@ -267,18 +264,18 @@ public class Mortal extends GameObject implements java.io.Serializable{
         }
     }
 
-    protected boolean withinDist(int x1, int y1, int x2, int y2, int range){
+    private boolean withinDist(int x1, int y1, int x2, int y2, int range){
         double number = Math.sqrt(Math.pow((x1 - x2), 2) + Math.pow((y1 - y2), 2));
         //System.out.println(number);
         return (number < range);
     }
 
-    protected class PathPoint implements java.io.Serializable {
+    private class PathPoint implements java.io.Serializable {
         private int x;
         private int y;
         private int counter;
 
-        protected PathPoint(int theX, int theY, int theCounter){
+        PathPoint(int theX, int theY, int theCounter){
             x = theX;
             y = theY;
             counter = theCounter;
@@ -309,10 +306,10 @@ public class Mortal extends GameObject implements java.io.Serializable{
 
         protected int getY(){ return y; }
 
-        protected int getCntr(){ return counter; }
+        int getCntr(){ return counter; }
     }
 
-    class dmgTimer extends TimerTask {
+    private class dmgTimer extends TimerTask {
         @Override
         public void run(){
             dmgIcon = "";

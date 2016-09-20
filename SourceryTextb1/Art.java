@@ -1551,10 +1551,6 @@ public String testRoom =
      * @return a corresponding String[][] where each element is just one character
      */
     public static String[][] strToArray(String input, boolean debug) {
-
-        //return toArr(input);
-
-        debug = true;
         int width = input.indexOf("\n");
         int height = occurrancesOf(input, "\n");//input.length() / (height);
         if (debug) {

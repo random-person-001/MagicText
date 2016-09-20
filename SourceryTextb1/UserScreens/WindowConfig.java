@@ -19,9 +19,9 @@ class WindowConfig {
     private Window window;
     public ImageOrg org;
 
-    public boolean doContinue = false;
+    boolean doContinue = false;
     boolean resume = false;
-    boolean firstTime = true;
+    private boolean firstTime = true;
 
     private int windowHeight = 408;
     private int windowWidth =  412;
@@ -83,32 +83,32 @@ class WindowConfig {
         //System.out.println(c);
         switch (c){
             case '©': // Up
-                windowHeight -= 21;
+                windowHeight -= 1;//21;
                 setSize(windowWidth, windowHeight);
                 break;
             case '®': // Down
-                windowHeight += 21;
+                windowHeight += 1;//21;
                 setSize(windowWidth, windowHeight);
                 break;
             case 'µ': // Left
-                windowWidth -= 9;
+                windowWidth -= 1;//9;
                 setSize(windowWidth, windowHeight);
                break;
             case 'æ': // Right
-                windowWidth += 9;
+                windowWidth += 1;//9;
                 setSize(windowWidth, windowHeight);
                 break;
             case '1':
                 setSize(380, 500);
                 break;
             case '2':
-                setSize(417, 412);
+                setSize(375, 400);
                 break;
             case '3':
                 setSize(1312, 786);
                 break;
             default:
-                //System.out.println(windowHeight + " h  x  w " + windowWidth);
+                System.out.println(windowHeight + " h  x  w " + windowWidth);
                 break;
         }
     }
