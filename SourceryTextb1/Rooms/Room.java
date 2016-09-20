@@ -54,6 +54,20 @@ public class Room implements java.io.Serializable{
     }
 
     /**
+     * OVERRIDE THIS
+     * Initialize hit meshes, move player, set background layer, do generic room init here
+     */
+    public void startup() {
+    }
+
+    /**
+     * OVERRIDE THIS
+     * Add all of the items and enemies
+     */
+    public void addItems() {
+    }
+
+    /**
      * Enter the room. IE, start loops and stuff now.
      */
     public String enter(){
@@ -523,19 +537,10 @@ public class Room implements java.io.Serializable{
         Timer listenTick = new Timer();
         TextBoxListener listen = new TextBoxListener(keyListener, window);
         listenTick.scheduleAtFixedRate(listen, 100, 100);
-
-        /**/
     }
-
-    /**
-     *
-     */
 
     public void splashMessage(String message, String speaker){
         queueMessage(new FlavorText(message, speaker));
-    }
-
-    public void startup() {
     }
 
     public class FlavorText implements java.io.Serializable {

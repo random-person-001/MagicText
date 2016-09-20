@@ -47,25 +47,8 @@ public class BanditFortress extends Room{
     }
 
     @Override
-    public void startup(){
+    public void addItems(){
         ititHitMeshes();
-
-        String[] rockText1 = {"You've passed safely through the walls of \n the fortress!  Unfortunately, many more\n bandits lie inside.  Be careful."};
-        plantText(new Room.FlavorText(59, 82, rockText1, ""));
-
-        String[] rockText2 = {"The immense, strong walls of the bandit   \n fortress tower before you.  This may be\n a long shot, whatever you're to do here."};
-        plantText(new Room.FlavorText(67, 94, rockText2, ""));
-
-        String[] byFountain = {"Phew!  So many bandits!  Thankfully, it  \n only gets worse from here on out.  The \n Bandit King lies ahead, ugly and brutal.",
-                "Meanwhile, you can enjoy the beautiful\n fountain.  There's an inaccessible item\n in the middle of it.  Pretty, huh?"};
-        plantText(new Room.FlavorText(51, 25, byFountain, "Talking Gargoyle"));
-
-        Art arty = new Art();
-        String[][] base = Art.strToArray(arty.banditFortress);
-        String[] solids = {":", "w","m","#","R","G"};
-        addToBaseHitMesh(base, solids);
-        Layer lay1 = new Layer(base, "Base");
-        org.addLayer(lay1);
 
         Spider itsyBitsy = new Spider(this, 39, 39);
         addMortal(itsyBitsy);
@@ -86,6 +69,30 @@ public class BanditFortress extends Room{
                 "increase either your\n Max HP or Max Mana.\n\nNOTE: it's permanent.\nYou got this illicitly.", playo, "item");
         DroppedItem gTater =  new DroppedItem(this, org, "You found a magic potato.  Cheater.", magicTater, 51, 19);
         super.addObject(gTater);
+
+    }
+
+    @Override
+    public void startup(){
+
+        String[] rockText1 = {"You've passed safely through the walls of \n the fortress!  Unfortunately, many more\n bandits lie inside.  Be careful."};
+        plantText(new Room.FlavorText(59, 82, rockText1, ""));
+
+        String[] rockText2 = {"The immense, strong walls of the bandit   \n fortress tower before you.  This may be\n a long shot, whatever you're to do here."};
+        plantText(new Room.FlavorText(67, 94, rockText2, ""));
+
+        String[] byFountain = {"Phew!  So many bandits!  Thankfully, it  \n only gets worse from here on out.  The \n Bandit King lies ahead, ugly and brutal.",
+                "Meanwhile, you can enjoy the beautiful\n fountain.  There's an inaccessible item\n in the middle of it.  Pretty, huh?"};
+        plantText(new Room.FlavorText(51, 25, byFountain, "Talking Gargoyle"));
+
+        Art arty = new Art();
+        String[][] base = Art.strToArray(arty.banditFortress);
+        String[] solids = {":", "w","m","#","R","G"};
+        addToBaseHitMesh(base, solids);
+        Layer lay1 = new Layer(base, "Base");
+        org.addLayer(lay1);
+
+        addItems();
 
         genericRoomInitialize();
     }

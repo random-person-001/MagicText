@@ -72,14 +72,12 @@ public class Cliffside extends Room {
         }
     }
 
+    /**
+     * Everything that self-updates and can be paused (and acts nonexistent during paused) should go here.
+     */
     @Override
-    public void startup() {
+    public void addItems(){
         ititHitMeshes();
-        String[][] base = Art.strToArray(arty.mountainPlace);
-        String[] solids = {":", "^", "#",".","0","o"};
-        addToBaseHitMesh(base, solids);
-        baseLayer = new Layer(base, "backgronud");
-        org.addLayer(baseLayer);
 
         int[][] locs = {{106, 115}, {14, 17}};
         for (int ii = 0 ; ii < locs[0].length ; ii++){
@@ -100,6 +98,17 @@ public class Cliffside extends Room {
             WeakTower t = new WeakTower(org, this, towerLoc[0], towerLoc[1]);
             addMortal(t);
         }
+    }
+
+    @Override
+    public void startup() {
+        String[][] base = Art.strToArray(arty.mountainPlace);
+        String[] solids = {":", "^", "#",".","0","o"};
+        addToBaseHitMesh(base, solids);
+        baseLayer = new Layer(base, "backgronud");
+        org.addLayer(baseLayer);
+
+        addItems();
 
         genericRoomInitialize();
     }

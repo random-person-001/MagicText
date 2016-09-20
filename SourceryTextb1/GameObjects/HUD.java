@@ -88,7 +88,7 @@ public class HUD extends GameObject {
 
         // add color
         Layer l = orgo.getLayer(layerName);
-        orgo.editLayer("<span color='#d0d0d0'>" + l.getStr(0,0), layerName, 0, 0);
+        orgo.editLayer("<span color='#ccffff'>" + l.getStr(0,0), layerName, 0, 0);
         String endChar = l.getStr(0,45);
         endChar = (endChar.endsWith("ñ")) ? " " : endChar;
         orgo.editLayer(endChar + "</span>", layerName, 0, 45);

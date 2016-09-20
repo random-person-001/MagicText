@@ -14,6 +14,7 @@ import SourceryTextb1.Rooms.NewTestRoom;
 import SourceryTextb1.Rooms.Room;
 import SourceryTextb1.Window;
 
+import java.util.HashMap;
 import java.util.TimerTask;
 import java.util.Timer;
 import java.awt.Color;
@@ -52,8 +53,11 @@ public class Start {
     }
 
     private static void runGame(){
+        HashMap<String, Room> zone1Rooms = initializeZone1Rooms();
         while (!roomID.equals("die")) {
             System.out.println("Entering the room '" + roomID + "'");
+            doLevel(zone1Rooms.get(roomID));   // This is all that's needed, no switch statements, weird stuff, etc
+            /*
             switch (roomID) {
                 case "Tutorial":
                     doLevel(new TutorialBasement(player));
@@ -76,13 +80,31 @@ public class Start {
                     roomID = "die";
                     break;
             }
+            //*/
         }
         System.out.println("\nBetter luck next time!");
+    }
+
+    /**
+     * @return a hashmap of all the levels in Zone 1, initialized, startuped, paused, and paired with their string.
+     * representation.
+     */
+    private static HashMap<String, Room> initializeZone1Rooms() {
+        HashMap<String, Room> rooms = new HashMap<>();
+        rooms.put("Tutorial", new TutorialBasement(player));
+        rooms.put("SourcePit", new SourcePit(player));
+        rooms.put("Cliffside", new Cliffside(player));
+        rooms.put("SourceCaves", new SourceCaves(player));
+        rooms.put("BanditFortress", new BanditFortress(player));
+        rooms.forEach((s, room) -> room.addItems());
+        rooms.forEach((s, room) -> room.setObjsPause(true));
+        return rooms;
     }
 
     private static void doLevel(Room r){
         prepLevel(org, game, player, r);
         r.startup();
+        r.setObjsPause(false);
         roomID = r.enter();
     }
 

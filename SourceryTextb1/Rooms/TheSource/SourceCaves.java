@@ -43,18 +43,8 @@ public class SourceCaves extends Room{
     }
 
     @Override
-    public void startup(){
+    public void addItems(){
         ititHitMeshes();
-
-        String[] doorLocked = {"The door seems to have locked behind you.","The owner must have installed\n an auto-lock on the door."};
-        plantText(new Room.FlavorText(109, 9, doorLocked , ""));
-
-        Art arty = new Art();
-        String[][] base = Art.strToArray(arty.sourceCaves);
-        String[] solids = {"#"};
-        addToBaseHitMesh(base, solids);
-        Layer lay1 = new Layer(base, "Base");
-        org.addLayer(lay1);
 
         Spider itsyBitsy = new Spider(this, 31, 11);
         addMortal(itsyBitsy);
@@ -68,6 +58,22 @@ public class SourceCaves extends Room{
         Item magicTater = new Item("Magic Potato","How lucky! This eccentric\n potato can permanently\n increase either your\n Max HP or Max Mana.\n\nNOTE: it's permanent!", playo, "item");
         DroppedItem gTater =  new DroppedItem(this, org, "You found a hidden magic potato!", magicTater, 5, 40);
         super.addObject(gTater);
+    }
+
+    @Override
+    public void startup(){
+
+        String[] doorLocked = {"The door seems to have locked behind you.","The owner must have installed\n an auto-lock on the door."};
+        plantText(new Room.FlavorText(109, 9, doorLocked , ""));
+
+        Art arty = new Art();
+        String[][] base = Art.strToArray(arty.sourceCaves);
+        String[] solids = {"#"};
+        addToBaseHitMesh(base, solids);
+        Layer lay1 = new Layer(base, "Base");
+        org.addLayer(lay1);
+
+        addItems();
 
         genericRoomInitialize();
     }
