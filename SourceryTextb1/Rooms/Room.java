@@ -247,20 +247,6 @@ public class Room implements java.io.Serializable{
     }
 
     /**
-     * Make a HUD and its layer and plop them on.  You probably want to look in to using
-     * <code>genericRoomInitialize()</code> instead.
-     *
-     * @param org the ImageOrg
-     */
-    private void addHUD(ImageOrg org) {  //Fixes redundancy;
-        Layer HUDd = new Layer(new String[1][70], "HUD", false, true);
-        HUDd.setImportance(true);
-        org.addLayer(HUDd);
-        HUD hud = new HUD(org, this, HUDd);
-        addObject(hud);
-    }
-
-    /**
      * Adds a dropped item to the room, but only if it hasn't been taken previously.
      */
     public String ownID = "";
@@ -453,8 +439,6 @@ public class Room implements java.io.Serializable{
         playo.setupForNewRoom();
 
         addMortal(playo);
-
-        addHUD(org);
     }
 
     public Player getPlayer() {

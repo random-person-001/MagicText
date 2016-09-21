@@ -36,6 +36,7 @@ import java.io.ObjectOutputStream;
  * @author Riley
  */
 public class Player extends Mortal implements java.io.Serializable {
+    private String username = System.getProperty("user.name");  // os.getLogin() or prompting for this would probably be appropriate
     private PlayerKeypressListener playerKeyListener = new PlayerKeypressListener(this);
     private Inventory inv;
     public ItemTracker tracker;
@@ -132,6 +133,17 @@ public class Player extends Mortal implements java.io.Serializable {
         orgo.addLayer(aimDispLayer);
     }
 
+    /**
+     * Make a HUD and its layer and plop them on.
+     */
+    private void addHUD() {  //Fixes redundancy
+        Layer HUDd = new Layer(new String[1][70], "HUD_of_" + username, false, true);
+        HUDd.setImportance(true);
+        orgo.addLayer(HUDd);
+        HUD hud = new HUD(orgo, this, HUDd);
+        room.addObject(hud);
+    }
+
     private void centerCamera() {
         orgo.setCam(x - 22, y - 8);
     }
@@ -143,6 +155,7 @@ public class Player extends Mortal implements java.io.Serializable {
      */
     public void setRoom(Room newRoom) {
         room = newRoom;
+        addHUD();
     }
 
     /**

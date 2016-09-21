@@ -7,10 +7,6 @@ package SourceryTextb1.GameObjects;
 
 import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
-import SourceryTextb1.Rooms.Room;
-
-import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -29,7 +25,7 @@ import static java.lang.Math.abs;
  *
  * @author 119184
  */
-public class HUD extends GameObject {
+class HUD extends GameObject {
     String layerName;
     private String[] spell1Name = new String[6];
     private String[] spell2Name = new String[6];
@@ -43,13 +39,14 @@ public class HUD extends GameObject {
     private int responseDuration = 2;
     private boolean authing = false;
     private KeyListener playerKeyListener;
+    private Player player;
 
     private boolean inCmd = false;
 
-    public HUD(ImageOrg org, Room theRoom, Layer place) {
+    HUD(ImageOrg org, Player playerSet, Layer place) {
         super.strClass = "HUD";
+        player = playerSet;
         orgo = org;
-        room = theRoom;
         layerName = place.getName();
 
         ConsoleKeyListener listener = new ConsoleKeyListener(this);
@@ -77,8 +74,8 @@ public class HUD extends GameObject {
 
     @Override
     public void update() {  // Edit layer acts after stuff.
-        spell1Name = convertIcon(room.getPlayer().getPrimarySpell());
-        spell2Name = convertIcon(room.getPlayer().getSecondarySpell());
+        spell1Name = convertIcon(player.getPrimarySpell());
+        spell2Name = convertIcon(player.getSecondarySpell());
 
         loc = orgo.getPosLayer(layerName);
         //orgo.getLayer(loc).clear(); // minimize flicker by comment out
@@ -133,7 +130,7 @@ public class HUD extends GameObject {
                 putChar("[");
 
                 // Your health
-                String healthValue = String.valueOf(room.playo.getHealth());
+                String healthValue = String.valueOf(player.getHealth());
                 putChar(String.valueOf(healthValue.charAt(0)));
                 try {
                     putChar(String.valueOf(healthValue.charAt(1)));
@@ -141,7 +138,7 @@ public class HUD extends GameObject {
                     putChar(" ");
                 }
                 for (int ii = 0; ii < 10; ii++) {
-                    int fillPoint = (int) Math.ceil(((float) room.playo.getHealth() / (float) room.playo.maxHP) * 10);
+                    int fillPoint = (int) Math.ceil(((float) player.getHealth() / (float) player.maxHP) * 10);
                     if (fillPoint > 10 && ii < fillPoint - 10) {
                         putChar("#");
                     } else if (ii < fillPoint) {
@@ -171,15 +168,15 @@ public class HUD extends GameObject {
 
                 // Mana count
                 putChar("{");
-                putChar(Integer.toString(abs(room.playo.mana / 10)));
-                putChar(Integer.toString(abs(room.playo.mana /* / 1 */ - 10 * (room.playo.mana / 10))));
+                putChar(Integer.toString(abs(player.mana / 10)));
+                putChar(Integer.toString(abs(player.mana /* / 1 */ - 10 * (player.mana / 10))));
 
                 // Mana bar
                 for (int ii = 0; ii < 10; ii++) {
-                    int fillPoint = (int) Math.ceil(((float) room.playo.mana / (float) room.playo.maxMana) * 10);
+                    int fillPoint = (int) Math.ceil(((float) player.mana / (float) player.maxMana) * 10);
                     if (ii < fillPoint) {
                         putChar("=");
-                    } else if (ii < (int) Math.ceil(((float) (2000 - room.playo.manaWait) / 2000.0f) * 10)) {
+                    } else if (ii < (int) Math.ceil(((float) (2000 - player.manaWait) / 2000.0f) * 10)) {
                         putChar("_");
                     } else {
                         putChar(" ");
@@ -283,10 +280,10 @@ public class HUD extends GameObject {
      *     after 'sudo' to execute that command with root privileges, however there isn't much difference anymore :(
      */
 
-    private void processCommand() {
+    void processCommand() {
+        room = player.room;
         boolean executeNextCommand = false;
         System.out.println("Nxt cmd: " + nextCommand);
-        Player player = room.playo;
         if (command.contains("&& ")) {
             nextCommand = command.substring(command.indexOf("&& ") + 3);
             command = command.substring(0, command.indexOf("&& "));
@@ -326,7 +323,7 @@ public class HUD extends GameObject {
             showResponse("Player is now a ghost.");
         } else if (command.contains("addhp ") && command.length() > 6) {
             int amountToHeal = Integer.valueOf(command.substring(6));
-            room.playo.restoreHealth(amountToHeal, 50);
+            player.restoreHealth(amountToHeal, 50);
             showResponse(String.format("Restoring %1$d health to player", amountToHeal));
         } else if (command.contains("addtater ") && command.length() > 9) {
             int amountToGive = Integer.valueOf(command.substring(9));
@@ -336,9 +333,8 @@ public class HUD extends GameObject {
             player.ludicrousSpeed = ! player.ludicrousSpeed;
             showResponse("Toggling ludicrous speed to " + ((player.ludicrousSpeed) ? "on" : "off"));
         } else if (command.contains("set red ") && command.length() > 8) {
-            int amountToSet = Integer.valueOf(command.substring(8));
-            room.playo.screenRedness = amountToSet;
-            showResponse(String.format("Setting the screen redness"));
+            player.screenRedness = Integer.valueOf(command.substring(8));
+            showResponse("Setting the screen redness");
         } else if (command.contains("setResponseTime ")) {
             System.out.println(command.substring(16));
             int newTime = Integer.valueOf(command.substring(16));

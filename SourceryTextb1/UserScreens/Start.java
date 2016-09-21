@@ -87,8 +87,8 @@ public class Start {
     private static void prepLevel(ImageOrg org, Window game, Player player, Room newRoom){
         org.removeAllButPlayer();
         game.clearImage();
-        player.setRoom(newRoom);
         newRoom.ownID = roomID;
+        player.setRoom(newRoom);
     }
 
     private static void introText(String text, int offset, int line){
