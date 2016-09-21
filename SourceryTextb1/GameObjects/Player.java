@@ -40,6 +40,7 @@ public class Player extends Mortal implements java.io.Serializable {
     private PlayerKeypressListener playerKeyListener = new PlayerKeypressListener(this);
     private Inventory inv;
     public ItemTracker tracker;
+    private HUD hud;
     public String roomName = ""; //Extremely important when we implement saving.
 
     private boolean autonomous = false;
@@ -114,6 +115,8 @@ public class Player extends Mortal implements java.io.Serializable {
 
         inv = new Inventory(orgo, this);
         tracker = new ItemTracker();
+
+        hud = new HUD(orgo, this);
         resumeFromSave();
     }
 
@@ -127,6 +130,10 @@ public class Player extends Mortal implements java.io.Serializable {
         orgo.resetClock();
     }
 
+    String getUsername(){
+        return username;
+    }
+
     public void setupForNewRoom() {
         Layer aimDispLayer = new Layer(new String[1][1], aimDispName);
         centerCamera();
@@ -134,14 +141,13 @@ public class Player extends Mortal implements java.io.Serializable {
     }
 
     /**
-     * Make a HUD and its layer and plop them on.
+     * Make a HUD layer and plop it on.
      */
     private void addHUD() {  //Fixes redundancy
         Layer HUDd = new Layer(new String[1][70], "HUD_of_" + username, false, true);
         HUDd.setImportance(true);
         orgo.addLayer(HUDd);
-        HUD hud = new HUD(orgo, this, HUDd);
-        room.addObject(hud);
+        hud.setLayerName(HUDd.name);
     }
 
     private void centerCamera() {

@@ -7,6 +7,8 @@ package SourceryTextb1.GameObjects;
 
 import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
+import SourceryTextb1.Rooms.Room;
+
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -25,7 +27,7 @@ import static java.lang.Math.abs;
  *
  * @author 119184
  */
-class HUD extends GameObject {
+class HUD {
     String layerName;
     private String[] spell1Name = new String[6];
     private String[] spell2Name = new String[6];
@@ -40,14 +42,16 @@ class HUD extends GameObject {
     private boolean authing = false;
     private KeyListener playerKeyListener;
     private Player player;
+    private ImageOrg orgo;
+    private int xBulidIndex = 0;
+    private Timer timer;
 
     private boolean inCmd = false;
 
-    HUD(ImageOrg org, Player playerSet, Layer place) {
-        super.strClass = "HUD";
+    HUD(ImageOrg org, Player playerSet) {
         player = playerSet;
         orgo = org;
-        layerName = place.getName();
+        layerName = "HUD_of_" + player.getUsername();
 
         ConsoleKeyListener listener = new ConsoleKeyListener(this);
         orgo.getWindow().txtArea.addKeyListener(listener);
@@ -61,6 +65,10 @@ class HUD extends GameObject {
         }
     }
 
+    void setLayerName(String newLayerName){
+        layerName = newLayerName;
+    }
+
     private String[] convertIcon(String icon) {
         String[] result = new String[6];
         int cut = icon.length();
@@ -72,7 +80,6 @@ class HUD extends GameObject {
         return result;
     }
 
-    @Override
     public void update() {  // Edit layer acts after stuff.
         spell1Name = convertIcon(player.getPrimarySpell());
         spell2Name = convertIcon(player.getSecondarySpell());
@@ -80,7 +87,7 @@ class HUD extends GameObject {
         loc = orgo.getPosLayer(layerName);
         //orgo.getLayer(loc).clear(); // minimize flicker by comment out
         orgo.editLayer(" ", layerName, 0, 45);
-        x = 0;
+        xBulidIndex = 0;
         drawLayer();
 
         // add color
@@ -91,23 +98,14 @@ class HUD extends GameObject {
         orgo.editLayer(endChar + "</span>", layerName, 0, 45);
     }
 
-    @Override
-    public void selfCleanup(){
-        for (KeyListener kl : orgo.getWindow().txtArea.getKeyListeners()) {
-            if (kl.toString().contains("ConsoleKeyListener")) {
-                orgo.getWindow().txtArea.removeKeyListener(kl);
-            }
-        }
-    }
-
     /**
      * Place a character on the layer, one over from where the last one was placed. (a fairly specialized fn)
      *
-     * @param newChar a single-char long String to place in the Layer at the next spot.
+     * @param newChar a single-char long String to place in the Layer at the nexBulidIndext spot.
      */
     private void putChar(String newChar) {
-        orgo.editLayer(newChar, layerName, 0, x);
-        x++;
+        orgo.editLayer(newChar, layerName, 0, xBulidIndex);
+        xBulidIndex++;
     }
 
     /**
@@ -148,7 +146,7 @@ class HUD extends GameObject {
                     }
                 }
                 putChar("]");
-                x++;
+                xBulidIndex++;
 
                 // Spell 1
                 putChar("(");
@@ -156,7 +154,7 @@ class HUD extends GameObject {
                     putChar(spell1Name[ii]);
                 }
                 putChar(")");
-                x++;
+                xBulidIndex++;
 
                 // Spell 2
                 putChar("(");
@@ -164,7 +162,7 @@ class HUD extends GameObject {
                     putChar(spell2Name[ii]);
                 }
                 putChar(")");
-                x++;
+                xBulidIndex++;
 
                 // Mana count
                 putChar("{");
@@ -281,7 +279,7 @@ class HUD extends GameObject {
      */
 
     void processCommand() {
-        room = player.room;
+        Room room = player.room;
         boolean executeNextCommand = false;
         System.out.println("Nxt cmd: " + nextCommand);
         if (command.contains("&& ")) {
@@ -636,6 +634,34 @@ class HUD extends GameObject {
             e.printStackTrace();
         } catch (NullPointerException ignore) {
         } // happens when timer is late
+    }
+
+    // Timer methods same as from GameObject.java
+    public void setupTimer(int theFrequency){
+        cancelTimer();
+        timer = new Timer();
+        updateTimer updateTimerInstance = new updateTimer(theFrequency);
+        timer.scheduleAtFixedRate(updateTimerInstance, theFrequency, theFrequency);
+    }
+
+    private class updateTimer extends TimerTask implements java.io.Serializable {
+        int freq;
+
+        updateTimer(int frequency){
+            freq = frequency;
+        }
+
+        public void run(){
+            update();
+        }
+    }
+
+    public void cancelTimer(){
+        try {
+            timer.cancel();
+            timer.purge();
+        }
+        catch (NullPointerException ignore){}
     }
 
     private class ConsoleKeyListener extends KeyAdapter {
