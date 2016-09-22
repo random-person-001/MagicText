@@ -6,99 +6,77 @@
 package SourceryTextb1;
 
 /**
+ * A class that is essentially a convenience method for working with two dimensional String arrays.
  *
  * @author 119184
  */
-public class Layer implements java.io.Serializable{
-    public String[][] self;
-    
+public class Layer implements java.io.Serializable {
+    private String[][] self;
     public String name = "";
     private boolean keyExists = false;
     private boolean opaque = false;
     private boolean cameraObedient = true;
     private int xPos = 0;
     private int yPos = 0;
-    /**
-     * Pertinent to ordering the layers.
-     * Higher is more important/will mean more on top
-     * -1 is no preference to layer order,  100 is the Player's layer, 101 is the HUD, and anything higher than that
-     * will display above those
-     */
     private boolean importance = false;
 
-    /*
-    Note to future self:
-    In a given layer, rows = layer[0].length
-                      cols = layer.length
-    Each array in the array represent a column, and entries in each array repesent a row
-    therefore:
-    layer[col][row]    // Wait, what?  Everywhere here it's the other way around!?!?!?!!! -Riley
 
-    */
-    
     // Layers should be any size
 
     /**
      * @param assign an ititial String[][] for the layer to have (can be later edited, element at a time)
      */
-    public Layer(String[][] assign){
+    public Layer(String[][] assign) {
         self = assign;
     }
+
     /**
      * @param assign an ititial String[][] for the layer to have (can be later edited, element at a time)
-     * @param inkey a String name for the Layer to call itself
+     * @param inkey  a String name for the Layer to call itself
      */
-    public Layer(String[][] assign, String inkey){
-        self = assign;
+    public Layer(String[][] assign, String inkey) {
+        this(assign);
         name = inkey;
         keyExists = true;
     }
 
     /**
      * @param assign an ititial String[][] for the layer to have (can be later edited, element at a time)
-     * @param inkey a String name for the Layer to call itself
-     * @param xSet a X starting point
-     * @param ySet a Y starting point
+     * @param inkey  a String name for the Layer to call itself
+     * @param xSet   a X starting point
+     * @param ySet   a Y starting point
      */
-    public Layer(String[][] assign, String inkey, int xSet, int ySet){
-        self = assign;
-        name = inkey;
-        keyExists = true;
-        
+    public Layer(String[][] assign, String inkey, int xSet, int ySet) {
+        this(assign, inkey);
         xPos = xSet;
         yPos = ySet;
     }
+
     /**
      * @param assign an ititial String[][] for the layer to have (can be later edited, element at a time)
-     * @param inkey a String name for the Layer to call itself
-     * @param camOb whether the layer should be camera-obedient (default for others is false)
+     * @param inkey  a String name for the Layer to call itself
+     * @param camOb  whether the layer should be camera-obedient (default for others is false)
      */
-    public Layer(String[][] assign, String inkey, boolean camOb){
-        self = assign;
-        name = inkey;
-        keyExists = true;
+    public Layer(String[][] assign, String inkey, boolean camOb) {
+        this(assign, inkey);
         cameraObedient = camOb;
     }
 
     /**
-     * @param assign an ititial String[][] for the layer to have (can be later edited, element at a time)
-     * @param inkey a String name for the Layer to call itself
-     * @param camOb whether the layer should be camera-obedient (default for others is false)
+     * @param assign  an ititial String[][] for the layer to have (can be later edited, element at a time)
+     * @param inkey   a String name for the Layer to call itself
+     * @param camOb   whether the layer should be camera-obedient (default for others is false)
      * @param opacity whether the layer should wirite over layers even when writing blank spaces (default for others is false)
-     * NOTE: opacity unfinished / not implemented!
+     *                NOTE: opacity unfinished / not implemented!
      */
-    public Layer(String[][] assign, String inkey, boolean camOb, boolean opacity){
-        self = assign;
-        name = inkey;
-        keyExists = true;
+    public Layer(String[][] assign, String inkey, boolean camOb, boolean opacity) {
+        this(assign, inkey);
         cameraObedient = camOb;
         opaque = opacity;
     }
 
-    public Layer(String[][] assign, String inkey, int xSet, int ySet, boolean camOb, boolean opacity){
-        self = assign;
-        name = inkey;
-        keyExists = true;
+    public Layer(String[][] assign, String inkey, int xSet, int ySet, boolean camOb, boolean opacity) {
+        this(assign, inkey);
         cameraObedient = camOb;
         opaque = opacity;
 
@@ -106,10 +84,8 @@ public class Layer implements java.io.Serializable{
         yPos = ySet;
     }
 
-    public Layer(String[][] assign, String inkey, int xSet, int ySet, boolean camOb, boolean opacity, boolean important){
-        self = assign;
-        name = inkey;
-        keyExists = true;
+    public Layer(String[][] assign, String inkey, int xSet, int ySet, boolean camOb, boolean opacity, boolean important) {
+        this(assign, inkey);
         cameraObedient = camOb;
         opaque = opacity;
         importance = important;
@@ -117,49 +93,51 @@ public class Layer implements java.io.Serializable{
         xPos = xSet;
         yPos = ySet;
     }
-    
-    public void setCamOb(boolean set){  // JARED, I'M WORKING ON THIS
+
+    public void setCamOb(boolean set) {  // JARED, I'M WORKING ON THIS
         cameraObedient = set;
     }
 
     /**
      * @return whether the Layer is obedient to the camera or not
      */
-    public boolean getCamOb(){
+    boolean getCamOb() {
         return cameraObedient;
     }
 
-    public boolean getOpacity(){
+    private boolean getOpacity() {
         return opaque;
     }
 
     /**
      * @return Or, shall we say, the number of rows
      */
-    public int getRows(){
+    public int getRows() {
         return self.length;
     }
 
     /**
      * @return Or, shall we say, the number of columns
      */
-    public int getColumns(){
+    public int getColumns() {
         return self[0].length;
     }
-    
-    public int getX(){
+
+    public int getX() {
         return xPos;
     }
-    
-    public int getY(){
+
+    public int getY() {
         return yPos;
     }
 
-    /** Set the absolute position of the layer
+    /**
+     * Set the absolute position of the layer
+     *
      * @param newX a new X coordinate to start at
      * @param newY a new Y coordinate to start at
      */
-    public void setPos(int newX, int newY){
+    public void setPos(int newX, int newY) {
         xPos = newX;
         yPos = newY;
     }
@@ -167,27 +145,27 @@ public class Layer implements java.io.Serializable{
     /**
      * @return what this Layer calls itself
      */
-    public String getName(){
-        if (name == null){
+    public String getName() {
+        if (name == null) {
             return "";
         }
         return name;
     }
-    
-    public void setStr(int r, int c, String str){
-        if (!(r < 0 || r >= getRows() || c < 0 || c >= getColumns())){
+
+    public void setStr(int r, int c, String str) {
+        if (!(r < 0 || r >= getRows() || c < 0 || c >= getColumns())) {
             self[r][c] = str;
         }
     }
 
-    /** Hey Jared!  I think this is where to put in the opaque spaces.
-     * @param r
-     * @param c
-     * @param str
+    /**
+     * @param r   row
+     * @param c   column
+     * @param str the string to place there if there's currently a space/null/empty there.
      */
-    public void placeStr(int r, int c, String str){
+    void placeStr(int r, int c, String str) {
         if (!(r < 0 || r >= getRows() || c < 0 || c >= getColumns()) &&
-         !("".equals(self[r][c]) || " ".equals(self[r][c]) || (self[r][c]) != null)){
+                !("".equals(self[r][c]) || " ".equals(self[r][c]) || (self[r][c]) != null)) {
             self[r][c] = str;
         }
     }
@@ -195,11 +173,11 @@ public class Layer implements java.io.Serializable{
     /**
      * @param r a row that you want to know about
      * @param c a column you want to know about
-     * @return the String at the specified coordinates
+     * @return the String at the specified coordinates.  Will be ñ if opaque space, else the legit char there.
      */
-    public String getStr(int r, int c){
-        if (!(r < 0 || r >= getRows() || c < 0 || c >= getColumns())){
-            if ((getOpacity()) && ("".equals(self[r][c]) || " ".equals(self[r][c]) || self[r][c] == null)){
+    public String getStr(int r, int c) {
+        if (!(r < 0 || r >= getRows() || c < 0 || c >= getColumns())) {
+            if ((getOpacity()) && ("".equals(self[r][c]) || " ".equals(self[r][c]) || self[r][c] == null)) {
                 return "ñ";
             } else {
                 return self[r][c];
@@ -209,23 +187,11 @@ public class Layer implements java.io.Serializable{
         }
     }
 
-    public boolean withinBounds(int r, int c){
-        return (!(r < 0 || r >= getRows() || c < 0 || c >= getColumns()));
-    }
-
-    public String[][] getMatrix(){
-        return self;
-    }
-
-    public void makeDuplicateOf(Layer toCopy){
-        self = toCopy.getMatrix();
-    }
-
     /**
      * @param input a string that may be the name of the layer
      * @return true iff the Strings are the same and keyExists (whatever that is)
      */
-    public boolean nameMatches (String input) {
+    boolean nameMatches(String input) {
         return name != null && input.equals(getName());
     }
 
@@ -234,28 +200,31 @@ public class Layer implements java.io.Serializable{
      * Higher importance will mean more on top
      * -1 is no preference to layer order,  100 is the Player's layer, 101 is the HUD, and anything higher than that
      * will display above those
+     *
      * @return what it is for this Layer
      */
-    public boolean getImportance(){
+    boolean getImportance() {
         return importance;
     }
+
     /**
      * Pertinent to ordering the layers.
      * Higher importance will mean more on top
      * -1 is no preference to layer order,  100 is the Player's layer, 101 is the HUD, and anything higher than that
      * will display above those
+     *
      * @param newImportance what it should be set to now
      */
-    public void setImportance(boolean newImportance){
+    public void setImportance(boolean newImportance) {
         importance = newImportance;
     }
 
     /**
      * Make the layer completely empty strings
      */
-    public void clear(){
-        for(int row = 0 ; row < getRows(); row++){
-            for(int col = 0 ; col < getColumns(); col++){
+    public void clear() {
+        for (int row = 0; row < getRows(); row++) {
+            for (int col = 0; col < getColumns(); col++) {
                 setStr(row, col, "");
             }
         }
