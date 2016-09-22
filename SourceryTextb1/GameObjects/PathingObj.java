@@ -24,7 +24,7 @@ public class PathingObj extends Mortal {
     public void update() {
         orgo.editLayer("O", layerName, 0, 0);
         //long nanoLast = System.nanoTime();
-        pathToPos(followDist, room.playo.getX(), room.playo.getY());
+        pathToPos(followDist, getClosestGoodGuy().getX(), getClosestGoodGuy().getY());
         //System.out.println(String.format("Time to complete: %1$d ms", (System.nanoTime() - nanoLast) / 1000000));
         orgo.editLayer("O", layerName, 0, 0);
     }

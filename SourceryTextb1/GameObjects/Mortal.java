@@ -46,17 +46,17 @@ public class Mortal extends GameObject implements java.io.Serializable{
     }
 
     public void subtractHealth(int amountLost, String message){
-        if (strClass.equals("Player") && !room.playo.dead){
-            int damage = (amountLost - room.playo.defense);
+        if (strClass.equals("Player") ){
+            int damage = (amountLost - room.getPlayer().defense); // todo: make this specific to the actual player that this happens to
             if (damage < 1) {
                 damage = 1;
             }
             health -= damage;
-            room.playo.showPain(message);
+            room.getPlayer().showPain(message);
             if (health < 0){
                 health = 0;
             }
-            room.playo.screenRedness = (int)((1 - ((float)health / maxHealth)) * 255);
+            room.getPlayer().screenRedness = (int)((1 - ((float)health / maxHealth)) * 255);
             //System.out.println(String.format("Setting redness: %1$d (%2$f)", room.playo.screenRedness, 1 - ((float)health / maxHealth)));
         } else {
             //System.out.println("My health is now " + getHealth());
@@ -108,10 +108,10 @@ public class Mortal extends GameObject implements java.io.Serializable{
         if (health > newMax){
             health = newMax;
         }
-        if (strClass.equals("Player") && !room.playo.dead && !room.playo.frozen){
-            int toSet = (int)(((float)addHP / room.playo.maxHP) * 150);
+        if (strClass.contains("Player") && !room.getPlayer().paused.get()){
+            int toSet = (int)(((float)addHP / room.getPlayer().maxHP) * 150);
             if (toSet > 100) toSet = 100;
-            room.playo.screenYellowness = toSet;
+            room.getPlayer().screenYellowness = toSet; // todo: make this look at *which* player gets health restored.
         }
     }
 

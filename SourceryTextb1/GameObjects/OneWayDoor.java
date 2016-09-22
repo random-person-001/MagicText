@@ -5,6 +5,7 @@ import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
 
 /**
+ * What it says on the tin.
  * Created by Jared on 09-Sep-16.
  */
 public class OneWayDoor extends GameObject{
@@ -40,11 +41,13 @@ public class OneWayDoor extends GameObject{
 
     @Override
     public void update(){
-        if (facingLeft && room.playo.getX() == x + 1 && room.playo.getY() == y) {
-            selfDestruct();
-        }
-        if (!facingLeft && room.playo.getX() == x - 1 && room.playo.getY() == y){
-            selfDestruct();
+        for (Player player : room.players) {
+            if (facingLeft && player.getX() == x + 1 && player.getY() == y) {
+                selfDestruct();
+            }
+            if (!facingLeft && player.getX() == x - 1 && player.getY() == y) {
+                selfDestruct();
+            }
         }
     }
 }

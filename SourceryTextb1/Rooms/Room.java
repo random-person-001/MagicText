@@ -27,6 +27,7 @@ public class Room implements java.io.Serializable{
     private List<GameObject> addList = new ArrayList<>();
     private List<GameObject> removeList = new ArrayList<>();
     public List<Mortal> enemies = new ArrayList<>();
+    public List<Player> players = new ArrayList<>();
     public HashMap storedStuff = new HashMap<String, Integer>();
     private boolean[][] objHitMesh;
     private boolean[][] baseHitMesh;
@@ -43,6 +44,14 @@ public class Room implements java.io.Serializable{
     protected int index;
     public String exitCode = "";
 
+    public Player getPlayer(String username){
+        for (Player p : players){
+            if (p.getUsername().equals(username)){
+                return  p;
+            }
+        }
+        return null;
+    }
 
     /**
      * OVERRIDE THIS
@@ -246,15 +255,15 @@ public class Room implements java.io.Serializable{
         obj.selfCleanup();
     }
 
+    public String ownID = "";
+
     /**
      * Adds a dropped item to the room, but only if it hasn't been taken previously.
      */
-    public String ownID = "";
-
-    public void addItem(DroppedItem toAdd){
+    public void addItem(DroppedItem toAdd){ // todo: this isn't used.  Why?
         addObject(toAdd);
         //System.out.println(playo.tracker.alreadyTaken(toAdd.getX(),toAdd.getY(),ownID));
-        if (playo.tracker.alreadyTaken(toAdd.getX(),toAdd.getY(),ownID)) {
+        if (playo.tracker.alreadyTaken(toAdd.getX(),toAdd.getY(),ownID)) { // todo: this isn't the right way to do this for multiplayer
             removeObject(toAdd);
         }
         //playo.tracker.addLoc(toAdd.getX(),toAdd.getY(),ownID);
@@ -441,8 +450,11 @@ public class Room implements java.io.Serializable{
         addMortal(playo);
     }
 
+    /**
+     * @return the first Player in the list of Players in the level
+     */
     public Player getPlayer() {
-        return playo;
+        return players.get(0);
     }
 
     /**

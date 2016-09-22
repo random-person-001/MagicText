@@ -11,7 +11,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * A class to select something in your inventory
+ * Set the size of the viewing window, automatically or manually
  * Created by riley on 12-Jun-2016.
  */
 class WindowConfig {

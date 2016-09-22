@@ -41,13 +41,15 @@ public class LockedDoor extends GameObject{
 
     @Override
     public void update(){
-        if (Math.abs(room.playo.getX() - x) == 1 && room.playo.getY() == y){
-            if (room.playo.getInventory().getItem(keyName, "items") != null) {
-                selfDestruct();
-            } else {
-                if (willMessage){
-                    room.splashMessage("This door is locked!","");
-                    willMessage = false;
+        for (Player player : room.players) {
+            if (Math.abs(player.getX() - x) == 1 && player.getY() == y) {
+                if (player.getInventory().getItem(keyName, "items") != null) {
+                    selfDestruct();
+                } else {
+                    if (willMessage) {
+                        room.splashMessage("This door is locked!", "");
+                        willMessage = false;
+                    }
                 }
             }
         }

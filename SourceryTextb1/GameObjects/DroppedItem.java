@@ -4,12 +4,16 @@ import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * A dropped item that will put itself in the player's inventory when stepped on.
  * Created by riley on 13-Jun-2016.
  */
 public class DroppedItem extends GameObject{
-    private Player player;
+    //private Player player;
+    private List<String> playersWhoPickedMeUp;
     private Item me;
     private String pickUpMessage;
     private String layerName;
@@ -20,12 +24,12 @@ public class DroppedItem extends GameObject{
     public DroppedItem(Room roomy, ImageOrg org, String messageOnPickup, Item dropped, int setx, int sety){
         strClass = "DroppedItem";
         room = roomy;
-        player = room.playo;
+        playersWhoPickedMeUp = new ArrayList<>(); // Add THINGS HERE todo make player here
         orgo = org;
         pickUpMessage = messageOnPickup;
         me = dropped;
         x = setx;
-        y = sety;
+        y = sety; // todo: room.playo won't work with multiplayer
         if (me.getName().length() > 0 && !room.playo.tracker.alreadyTaken(getX(),getY(),room.ownID)) { // Don't even set up timer if item name is an empty string (for dummy item)
             layerName = room.makeUniqueLayerName(super.strClass);
             Layer thisLayer = new Layer(new String[1][1], layerName, y, x, true, true, false);
@@ -40,14 +44,16 @@ public class DroppedItem extends GameObject{
     @Override
     public void update(){
         //orgo.editLayer("!", layerName, 0, 0);
-        if (x == player.getX() && y == player.getY() && !pickedUp){
-            pickedUp = true;
-            room.removeObject(this);
-            if (recordTaken) room.playo.tracker.addLoc(getX(), getY(), room.ownID);
-            player.addItem(me);
-            if (!pickUpMessage.equals("None") || pickUpMessage.equals("")) {
-                System.out.println("Picking up: " + me.getName());
-                room.compactTextBox(orgo, pickUpMessage, "", false);
+        for (Player player : room.players) {
+            if (x == player.getX() && y == player.getY() && !pickedUp) {
+                pickedUp = true;
+                room.removeObject(this);
+                if (recordTaken) room.playo.tracker.addLoc(getX(), getY(), room.ownID);
+                player.addItem(me);
+                if (!pickUpMessage.equals("None") || pickUpMessage.equals("")) {
+                    System.out.println("Picking up: " + me.getName());
+                    room.compactTextBox(orgo, pickUpMessage, "", false);
+                }
             }
         }
     }

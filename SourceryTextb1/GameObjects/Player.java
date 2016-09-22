@@ -130,7 +130,7 @@ public class Player extends Mortal implements java.io.Serializable {
         orgo.resetClock();
     }
 
-    String getUsername(){
+    public String getUsername(){
         return username;
     }
 
@@ -352,7 +352,7 @@ public class Player extends Mortal implements java.io.Serializable {
             FileOutputStream fileOut =
                     new FileOutputStream(path);
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
-            out.writeObject(room.playo);
+            out.writeObject(room.playo); // todo: this won't work in long run with multiplayer.
             out.close();
             fileOut.close();
             System.out.printf("Serialized Player data is saved in " + path);

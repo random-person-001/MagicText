@@ -39,10 +39,10 @@ public class Cliffside extends Room {
                     }
                 }
                 enemies.forEach(this::checkMortalBelowEdge); // OK, intelliJ.  Sure.
-
-                if (playo.getX() == 91 && playo.getY() == 44){
-                    playo.dead = true;
-                }
+//
+//                if (playo.getX() == 91 && playo.getY() == 44){
+//                    playo.dead = true;
+//                }
                 if (playo.getY() < 0){
                     setNewRoom("SourcePit",57,42);
                 }

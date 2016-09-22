@@ -14,9 +14,7 @@ import SourceryTextb1.Rooms.NewTestRoom;
 import SourceryTextb1.Rooms.Room;
 import SourceryTextb1.Window;
 
-import java.util.HashMap;
-import java.util.TimerTask;
-import java.util.Timer;
+import java.util.*;
 import java.awt.Color;
 
 /**
@@ -29,18 +27,22 @@ public class Start {
     private static Window game;
     private static ImageOrg org;
     protected static Player player;
+    private static List<Player> playerList; // for multiplayer!
     private static String roomID;
 
     public static void main(String[] args) throws InterruptedException {
         game = new Window();
         Layer base = new Layer(new String[game.maxH()][game.maxW()], "base");
         org = new ImageOrg(game);
+
         org.addLayer(base);
 
         if (doDemo) {
             Player player = new Player(org);
+            playerList = new ArrayList<>();
+            playerList.add(player);
             NewTestRoom rooma = new NewTestRoom(player);
-            prepLevel(org, game, player, rooma);
+            prepLevel(org, game, rooma);
             rooma.startup();
             rooma.enter();
         } else {
@@ -56,13 +58,13 @@ public class Start {
         HashMap<String, Room> zone1Rooms = initializeZone1Rooms();
         while (!roomID.equals("die")) {
             System.out.println("Entering the room '" + roomID + "'");
-            doLevel(zone1Rooms.get(roomID));
+            doLevel(zone1Rooms.get(roomID));  // This is so slick!
         }
         System.out.println("\nBetter luck next time!");
     }
 
     /**
-     * @return a hashmap of all the levels in Zone 1, initialized, startuped, paused, and paired with their string.
+     * @return a hashmap of all the levels in Zone 1, initialized, NOT startuped, paused, and paired with their string.
      * representation.
      */
     private static HashMap<String, Room> initializeZone1Rooms() {
@@ -74,21 +76,24 @@ public class Start {
         rooms.put("BanditFortress", new BanditFortress(player));
         //rooms.forEach((s, room) -> room.addItems()); // cuz add layers to current imageorg, which isn't good
         rooms.forEach((s, room) -> room.setObjsPause(true));
+        rooms.forEach((s, r) -> r.players.add(player));
         return rooms;
     }
 
     private static void doLevel(Room r){
-        prepLevel(org, game, player, r);
+        prepLevel(org, game, r);
         r.startup();
         r.setObjsPause(false);
         roomID = r.enter();
     }
 
-    private static void prepLevel(ImageOrg org, Window game, Player player, Room newRoom){
+    private static void prepLevel(ImageOrg org, Window game, Room newRoom){
         org.removeAllButPlayer();
         game.clearImage();
         newRoom.ownID = roomID;
-        player.setRoom(newRoom);
+        for (Player p : playerList){
+            p.setRoom(newRoom);
+        }
     }
 
     private static void introText(String text, int offset, int line){
@@ -327,14 +332,18 @@ public class Start {
 
         void newGame(){
             player = new Player(org);
+            playerList = new ArrayList<>();
+            playerList.add(player);
             roomID = "Tutorial";
             runGame();
         }
 
         void buildGame(Player imported){
-            Start.roomID = imported.roomName;
+            roomID = imported.roomName;
             System.out.println(Start.roomID);
-            Start.player = imported;
+            player = imported;
+            playerList = new ArrayList<>();
+            playerList.add(imported);
             imported.orgo.setWindow(Start.game); // hopefully doesn't kill anything
             org.terminateClock();
             org = imported.orgo;

@@ -49,7 +49,9 @@ public class NewTestRoom extends Room {
     @Override
     public void startup(){
         ititHitMeshes();
-        super.playo.goTo(7,5);
+        for (Player p : players) {
+            p.goTo(7, 5);
+        }
 
         Art arty = new Art();
         String[][] base = Art.strToArray(arty.testRoom);
