@@ -36,7 +36,7 @@ import java.io.ObjectOutputStream;
  * @author Riley
  */
 public class Player extends Mortal implements java.io.Serializable {
-    private String username = System.getProperty("user.name");  // os.getLogin() or prompting for this would probably be appropriate
+    private String username = System.getProperty("user.name");
     private PlayerKeypressListener playerKeyListener = new PlayerKeypressListener(this);
     private Inventory inv;
     public ItemTracker tracker;
@@ -138,6 +138,10 @@ public class Player extends Mortal implements java.io.Serializable {
         Layer aimDispLayer = new Layer(new String[1][1], aimDispName);
         centerCamera();
         orgo.addLayer(aimDispLayer);
+        upPressed = false;
+        downPressed = false;
+        leftPressed = false;
+        rightPressed = false;
     }
 
     /**
