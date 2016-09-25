@@ -18,6 +18,7 @@ import javax.swing.*;
 public class Window extends JFrame {
     private static final String OPAQUE_SPACE = "ñ";
     public JTextPane txtArea = new JTextPane();
+    public ColoredTextArea newTxtArea = new ColoredTextArea();
     private Container c = getContentPane();
     private String foregroundColor = "#ffffff";
 
@@ -140,6 +141,7 @@ public class Window extends JFrame {
      * Usually takes 40-70ms. (at least, with an 80x150 fullImage size)
      */
     void build() {
+        /*
         int maxH = screenH();
         int maxW = screenW();
         String build = "";
@@ -159,14 +161,36 @@ public class Window extends JFrame {
         Timer buffer = new Timer();
         buffer.schedule(new FrameBuffer(build), 25);
         //txtArea.setText(build);
+        */
+        /*
+        for (int row = 0; row < 23; row++) {// Used to be 20
+            for (int col = 0; col < 46; col++) { // Used to be 50
+                String s = fullImage.getStr(row, col);
+                if (s == null || s.equals("")) {
+                    newTxtArea.text[col][row] = new SpecialText(" ");
+                } else {
+                    newTxtArea.text[col][row] = new SpecialText(s);
+                }
+            }
+        }
+        */
     }
 
     public Window() {
         setBounds(100, 100, 412, 412);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Sourcery Text  -  an alphanumeric misadventure");
-        setResizable(false);
+        setResizable(true);
 
+        /*
+        //NEW WAY (NOT COMPLETE)
+        add(newTxtArea);
+        clearImage();
+        build();
+        */
+
+        /*
+        //OLD WAY (FLICKERY)
         clearImage();
         build();
         txtArea.setBackground(Color.BLACK);
@@ -182,6 +206,9 @@ public class Window extends JFrame {
 
         System.out.println(txtArea.getContentType());
         txtArea.setContentType("text/html");
+        */
+
+        setVisible(true);
     }
 
     private class FrameBuffer extends TimerTask {
