@@ -1,5 +1,5 @@
 # MagicText
-A text-based Java adventure, in collaboration with @HazilTheNut
+A text-based Java adventure, in collaboration with @HazilTheNut, and @zachllogan
 
 
 /////////////////////////////////////////////////
