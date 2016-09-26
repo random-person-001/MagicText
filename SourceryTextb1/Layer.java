@@ -11,9 +11,8 @@ package SourceryTextb1;
  * @author 119184
  */
 public class Layer implements java.io.Serializable {
-    private String[][] self;
+    private SpecialText[][] self;
     public String name = "";
-    private boolean keyExists = false;
     private boolean opaque = false;
     private boolean cameraObedient = true;
     private int xPos = 0;
@@ -23,11 +22,21 @@ public class Layer implements java.io.Serializable {
 
     // Layers should be any size
 
+    public SpecialText[][] convertFromStrArray (String[][] original){
+        SpecialText[][] output = new SpecialText[original.length][original[0].length];
+        for (int col = 0 ; col < original.length; col++){
+            for (int row = 0; row < original[0].length; row++){
+                output[col][row] = new SpecialText(original[col][row]);
+            }
+        }
+        return output;
+    }
+
     /**
      * @param assign an ititial String[][] for the layer to have (can be later edited, element at a time)
      */
     public Layer(String[][] assign) {
-        self = assign;
+        self = convertFromStrArray(assign);
     }
 
     /**
@@ -37,7 +46,6 @@ public class Layer implements java.io.Serializable {
     public Layer(String[][] assign, String inkey) {
         this(assign);
         name = inkey;
-        keyExists = true;
     }
 
     /**
@@ -73,6 +81,9 @@ public class Layer implements java.io.Serializable {
         this(assign, inkey);
         cameraObedient = camOb;
         opaque = opacity;
+        if (opacity){
+            System.out.println("An opaque Layer has been created!");
+        }
     }
 
     public Layer(String[][] assign, String inkey, int xSet, int ySet, boolean camOb, boolean opacity) {
@@ -154,7 +165,7 @@ public class Layer implements java.io.Serializable {
 
     public void setStr(int r, int c, String str) {
         if (!(r < 0 || r >= getRows() || c < 0 || c >= getColumns())) {
-            self[r][c] = str;
+            self[r][c] = new SpecialText(str);
         }
     }
 
@@ -166,7 +177,7 @@ public class Layer implements java.io.Serializable {
     void placeStr(int r, int c, String str) {
         if (!(r < 0 || r >= getRows() || c < 0 || c >= getColumns()) &&
                 !("".equals(self[r][c]) || " ".equals(self[r][c]) || (self[r][c]) != null)) {
-            self[r][c] = str;
+            self[r][c] = new SpecialText(str);
         }
     }
 
@@ -180,7 +191,7 @@ public class Layer implements java.io.Serializable {
             if ((getOpacity()) && ("".equals(self[r][c]) || " ".equals(self[r][c]) || self[r][c] == null)) {
                 return "ñ";
             } else {
-                return self[r][c];
+                return self[r][c].getStr();
             }
         } else {
             return "";

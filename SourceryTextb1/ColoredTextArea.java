@@ -1,23 +1,27 @@
 package SourceryTextb1;
 
-import javax.swing.plaf.basic.BasicTextAreaUI;
-import javax.swing.text.JTextComponent;
+import javax.swing.*;
 import java.awt.*;
-import java.util.TimerTask;
 import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by Jared on 9/25/2016.
  */
-public class ColoredTextArea extends JTextComponent {
+public class ColoredTextArea extends JPanel{
 
-    public SpecialText[][] text = new SpecialText[46][23];
+    public SpecialText[][] text = new SpecialText[46][28];
     protected Color overallForeGround = Color.WHITE;
+
+    final int HOR_SEPARATION = 9;
+    final int VER_SEPARATION = 16;
+    final int CHAR_WIDTH     = 10;
+    final int CHAR_HEIGHT    = 15;
 
     public ColoredTextArea (){
         setOpaque(true);
-        setUI(new BasicTextAreaUI());
         setFont(new Font("Monospaced", Font.PLAIN, 15));
+        setFocusable(true);
 
         text[0][0] = new SpecialText("t");
 
@@ -31,29 +35,28 @@ public class ColoredTextArea extends JTextComponent {
         g.fillRect(0,0, getWidth(), getHeight());
 
         //System.out.println(text[0][0].getStr());
-        for (int col = 0; col < text.length; col++){
+        for (int col = 0; col < text.length; col++){ //Draws the highlighting / backgrounds first
             for (int row = 0; row < text[0].length; row++){
                 SpecialText get = text[col][row];
                 if (get != null){
                     g.setColor(get.getBackgroundColor());
-                    g.fillRect((col * 10), (row * 15) + 1, 10, 15);
-                    g.setColor(get.makeInfluencedForegroundColor(overallForeGround));
-                    g.drawString(get.getStr(), col * 10, (row * 15) + 15);
+                    g.fillRect((col * HOR_SEPARATION), (row * VER_SEPARATION) + 1, CHAR_WIDTH, CHAR_HEIGHT);
+                }
+            }
+        }
+        for (int col = 0; col < text.length; col++){ //Afterwards drawing the text on top
+            for (int row = 0; row < text[0].length; row++){
+                SpecialText get = text[col][row];
+                if (get != null){
+                    g.setColor(get.foregroundColor);
+                    g.drawString(get.getStr(), col * HOR_SEPARATION, (row * VER_SEPARATION) + 15);
                 }
             }
         }
     }
 
     private class frameResetTimer extends TimerTask {
-        int iter = 0;
-        int number = 0;
         public void run(){
-            number++;
-            if (iter < 46 && number > 10){
-                text[iter][0] = new SpecialText(String.valueOf(iter % 10));
-                iter++;
-                number = 0;
-            }
             repaint();
         }
     }

@@ -47,7 +47,7 @@ public class WeakTower extends Mortal {
             int orientation = (m.getX() - getX() > 0) ? 3 : 2;
             room.addObject(new Spell(orgo, room, x, y, orientation, dmg, rng, anim1, anim2, alt));
         }
-        orgo.editLayer("<span color='#993333'>T</span>", layerName, 0, 0);
+        orgo.editLayer("T", layerName, 0, 0);
     }
 
     @Override

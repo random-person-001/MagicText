@@ -91,11 +91,13 @@ class HUD {
         drawLayer();
 
         // add color
+        /*
         Layer l = orgo.getLayer(layerName);
         orgo.editLayer("<span color='#a3c2c2'>" + l.getStr(0,0), layerName, 0, 0);
         String endChar = l.getStr(0,45);
         endChar = (endChar.endsWith("ñ")) ? " " : endChar;
         orgo.editLayer(endChar + "</span>", layerName, 0, 45);
+        */
     }
 
     /**

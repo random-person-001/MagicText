@@ -384,10 +384,10 @@ public class Player extends Mortal implements java.io.Serializable {
      * Update the Player symbol
      */
     private void graphicUpdate() {
-        String color = (upPressed|downPressed|leftPressed|rightPressed) ? "66ff66" : "80ff80";
-        color = (spacePressed) ? "33ff33" : color;
-        color = (ludicrousSpeed) ? "00b300" : color;
-        String playerIcon = "<span color=#"+color+">@</span color>";
+        //String color = (upPressed|downPressed|leftPressed|rightPressed) ? "66ff66" : "80ff80";
+        //color = (spacePressed) ? "33ff33" : color;
+        //color = (ludicrousSpeed) ? "00b300" : color;
+        String playerIcon = "@";
         orgo.editLayer(playerIcon, layerName, 1, 1);
         orgo.getLayer(layerName).setPos(y-1, x-1);
         centerCamera();

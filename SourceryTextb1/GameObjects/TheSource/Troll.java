@@ -72,7 +72,7 @@ public class Troll extends Mortal {
                 return;
             }
         }
-        orgo.editLayer("<span color='#cc0000'>T</span>", layerName, 0, 0);
+        orgo.editLayer("T", layerName, 0, 0);
         room.removeMortal(this);
 
         if (abs(closestGoodGuy.getY() - y) <= 3 && abs(closestGoodGuy.getX() - x) <= 3) {

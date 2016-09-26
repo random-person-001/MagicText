@@ -17,13 +17,10 @@ import javax.swing.*;
  */
 public class Window extends JFrame {
     private static final String OPAQUE_SPACE = "ñ";
-    public JTextPane txtArea = new JTextPane();
-    public ColoredTextArea newTxtArea = new ColoredTextArea();
+    //public JTextPane txtArea = new JTextPane();
+    public ColoredTextArea txtArea = new ColoredTextArea();
     private Container c = getContentPane();
     private String foregroundColor = "#ffffff";
-
-    private int dbgSavedSerial = 0;
-    public int dbgCounter = 0;
 
     private Layer fullImage = new Layer(new String[screenH()][screenW()]);
 
@@ -32,13 +29,6 @@ public class Window extends JFrame {
      */
     public void setForegroundColor(String newColor) {
         foregroundColor = newColor;
-    }
-
-    public void giveSerial(int number) {
-        if (number != dbgSavedSerial) {
-            System.out.println(String.format("OH NO! There is another org!!! (%1$d vs. %2$d)", dbgSavedSerial, number));
-        }
-        dbgSavedSerial = number;
     }
 
     /**
@@ -56,7 +46,7 @@ public class Window extends JFrame {
     }
 
     private int screenH() {
-        return 23;
+        return 28;
     }
 
     private int screenW() {
@@ -67,7 +57,7 @@ public class Window extends JFrame {
      * Directly set the textArea contents to just an empty string
      */
     public void clearText() {
-        txtArea.setText("");
+        //txtArea.setText("");
     }
 
 
@@ -141,39 +131,18 @@ public class Window extends JFrame {
      * Usually takes 40-70ms. (at least, with an 80x150 fullImage size)
      */
     void build() {
-        /*
-        int maxH = screenH();
-        int maxW = screenW();
-        String build = "";
-        for (int row = 0; row < maxH; row++) {// Used to be 20
-            for (int col = 0; col < maxW; col++) { // Used to be 50
-                String s = fullImage.getStr(row, col);
-                if (s == null || s.equals("")) {
-                    build += " ";
-                } else {
-                    build += s;
-                }
-            }
-            build += "<br>";
-        }
-        //clearText();
-        build = "<pre><span color='" + foregroundColor + "'>" + build + "</span></pre>"; // style=font-family:'monospace'
-        Timer buffer = new Timer();
-        buffer.schedule(new FrameBuffer(build), 25);
-        //txtArea.setText(build);
-        */
-        /*
-        for (int row = 0; row < 23; row++) {// Used to be 20
+
+        for (int row = 0; row < 28; row++) {// Used to be 20
             for (int col = 0; col < 46; col++) { // Used to be 50
                 String s = fullImage.getStr(row, col);
                 if (s == null || s.equals("")) {
-                    newTxtArea.text[col][row] = new SpecialText(" ");
+                    txtArea.text[col][row] = new SpecialText(" ");
                 } else {
-                    newTxtArea.text[col][row] = new SpecialText(s);
+                    txtArea.text[col][row] = new SpecialText(s);
                 }
             }
         }
-        */
+
     }
 
     public Window() {
@@ -182,12 +151,12 @@ public class Window extends JFrame {
         setTitle("Sourcery Text  -  an alphanumeric misadventure");
         setResizable(true);
 
-        /*
+
         //NEW WAY (NOT COMPLETE)
-        add(newTxtArea);
+        c.add(txtArea);
+        c.validate();
         clearImage();
         build();
-        */
 
         /*
         //OLD WAY (FLICKERY)
@@ -220,7 +189,7 @@ public class Window extends JFrame {
 
         public void run() throws NullPointerException {
             //System.out.println(txtArea.getText());
-            txtArea.setText(toBuild);
+            //txtArea.setText(toBuild);
         }
     }
 }

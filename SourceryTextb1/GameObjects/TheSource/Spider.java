@@ -40,7 +40,7 @@ public class Spider extends Mortal {
             closestGoodGuy.subtractHealth(2);
         }
         pathToPos(followDist, closestGoodGuy.getX(), closestGoodGuy.getY());
-        setDispIcon("<span color='#cc2222'>S</span>");
+        setDispIcon("S");
     }
 
     @Override

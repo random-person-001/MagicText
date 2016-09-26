@@ -30,7 +30,7 @@ public class Wolf extends Mortal {
 
     @Override
     public void update() {
-        orgo.editLayer("<span color='#cc0000'>W</span>", layerName, 0, 0);
+        orgo.editLayer("W", layerName, 0, 0);
         Mortal closestGoodGuy = getClosestGoodGuy();
         if (Math.abs(x - closestGoodGuy.getX()) <= 1 && Math.abs(y - closestGoodGuy.getY()) <= 1){
             closestGoodGuy.subtractHealth(3);

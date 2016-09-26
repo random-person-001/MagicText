@@ -2,7 +2,7 @@ package SourceryTextb1;
 
 import java.awt.*;
 
-public class SpecialText{
+public class SpecialText implements java.io.Serializable{
     String self = "";
     Color foregroundColor = new Color (255,255,255);
     Color backgroundColor = new Color (0  ,0  ,0);
