@@ -32,12 +32,18 @@ public class SpecialText implements java.io.Serializable{
      * @param modifier The color that is influencing the base foreground color.
      */
     public Color makeInfluencedForegroundColor (Color modifier){
-        float redModifier = modifier.getRed() / 255;
-        float greenModifier = modifier.getGreen() / 255;
-        float blueModifier = modifier.getBlue() / 255;
+        return makeInfluencedForegroundColor(modifier, false);
+    }
+
+    public Color makeInfluencedForegroundColor (Color modifier, boolean debug){
+        float redModifier = (float)modifier.getRed() / 255;
+        float greenModifier = (float)modifier.getGreen() / 255;
+        float blueModifier = (float)modifier.getBlue() / 255;
+        if (debug) System.out.printf("factors:\nR: %1$f\nG: %2$f\nB: %3$f\n", (float)foregroundColor.getRed() * redModifier, (float)foregroundColor.getGreen() * greenModifier, (float)foregroundColor.getBlue() * blueModifier);
         return new Color(
-                (float)foregroundColor.getRed() * redModifier,
-                (float)foregroundColor.getGreen() * greenModifier,
-                (float)foregroundColor.getBlue() * blueModifier);
+                (int)((float)foregroundColor.getRed() * redModifier),
+                (int)((float)foregroundColor.getGreen() * greenModifier),
+                (int)((float)foregroundColor.getBlue() * blueModifier));
+        //return Color.WHITE;
     }
 }

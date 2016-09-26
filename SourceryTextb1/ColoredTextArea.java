@@ -23,8 +23,6 @@ public class ColoredTextArea extends JPanel{
         setFont(new Font("Monospaced", Font.PLAIN, 15));
         setFocusable(true);
 
-        text[0][0] = new SpecialText("t");
-
         Timer timing = new Timer();
         timing.scheduleAtFixedRate(new frameResetTimer(), 25, 25);
     }
@@ -48,11 +46,15 @@ public class ColoredTextArea extends JPanel{
             for (int row = 0; row < text[0].length; row++){
                 SpecialText get = text[col][row];
                 if (get != null){
-                    g.setColor(get.foregroundColor);
+                    g.setColor(get.makeInfluencedForegroundColor(overallForeGround));
                     g.drawString(get.getStr(), col * HOR_SEPARATION, (row * VER_SEPARATION) + 15);
                 }
             }
         }
+    }
+
+    public void setOverallForeGround (Color set){
+        overallForeGround = set;
     }
 
     private class frameResetTimer extends TimerTask {

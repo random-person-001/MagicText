@@ -224,8 +224,7 @@ public class Player extends Mortal implements java.io.Serializable {
 
                 // convert old Java color thing to Hex color
                 Color c = new Color(255, opposite, yellowNumber);
-                String colorStr = String.format("#%06x", c.getRGB() & 0x00FFFFFF);
-                orgo.getWindow().setForegroundColor(colorStr);
+                orgo.getWindow().txtArea.setOverallForeGround(c);
                 //orgo.getWindow().txtArea.setForeground(new Color(255, opposite, yellowNumber)); // old way
             }
 
