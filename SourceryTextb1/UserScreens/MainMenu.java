@@ -54,6 +54,8 @@ class MainMenu {
         if (!finished) {
             org.editLayer(" ", "MAIN_MENU", cursorY, 24);
 
+            window.txtArea.setOverallForeGround(Color.WHITE);
+
             switch (keyCode) {
                 case UP:
                     cursorY--;

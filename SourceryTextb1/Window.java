@@ -150,30 +150,10 @@ public class Window extends JFrame {
         setTitle("Sourcery Text  -  an alphanumeric misadventure");
         setResizable(true);
 
-        //NEW WAY (NOT COMPLETE)
         c.add(txtArea);
         c.validate();
         clearImage();
         build();
-
-        /*
-        //OLD WAY (FLICKERY)
-        clearImage();
-        build();
-        txtArea.setBackground(Color.BLACK);
-        //txtArea.setFont(new Font("Consolas", Font.PLAIN, 15));
-        txtArea.setFont(new Font("Monospaced", Font.PLAIN, 15));
-        txtArea.setEditable(false);
-
-        c.add(txtArea);
-        c.validate();
-
-        setVisible(true);
-        txtArea.requestFocusInWindow();
-
-        System.out.println(txtArea.getContentType());
-        txtArea.setContentType("text/html");
-        */
 
         setVisible(true);
     }
