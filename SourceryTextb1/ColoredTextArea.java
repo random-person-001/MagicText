@@ -13,14 +13,15 @@ public class ColoredTextArea extends JPanel{
     public SpecialText[][] text = new SpecialText[46][28];
     protected Color overallForeGround = Color.WHITE;
 
-    final int HOR_SEPARATION = 9;
-    final int VER_SEPARATION = 16;
-    final int CHAR_WIDTH     = 10;
-    final int CHAR_HEIGHT    = 15;
+    int HOR_SEPARATION = 9;
+    int VER_SEPARATION = 16;
+    int CHAR_WIDTH     = 10;
+    int CHAR_HEIGHT    = 16;
+    int CHAR_SIZE      = 15;
 
     public ColoredTextArea (){
         setOpaque(true);
-        setFont(new Font("Monospaced", Font.PLAIN, 15));
+        setFont(new Font("Monospaced", Font.PLAIN, CHAR_SIZE));
         setFocusable(true);
 
         Timer timing = new Timer();
@@ -31,6 +32,13 @@ public class ColoredTextArea extends JPanel{
     public void paintComponent (Graphics g){
         g.setColor(Color.BLACK);
         g.fillRect(0,0, getWidth(), getHeight());
+        HOR_SEPARATION = getWidth() / 46;
+        VER_SEPARATION = getHeight() / 27;
+        CHAR_SIZE = VER_SEPARATION - 1;
+        CHAR_WIDTH = HOR_SEPARATION;
+        CHAR_HEIGHT = CHAR_SIZE + 1;
+
+        setFont(new Font("Monospaced", Font.PLAIN, CHAR_SIZE));
 
         //System.out.println(text[0][0].getStr());
         for (int col = 0; col < text.length; col++){ //Draws the highlighting / backgrounds first
@@ -38,7 +46,7 @@ public class ColoredTextArea extends JPanel{
                 SpecialText get = text[col][row];
                 if (get != null){
                     g.setColor(get.getBackgroundColor());
-                    g.fillRect((col * HOR_SEPARATION), (row * VER_SEPARATION) + 1, CHAR_WIDTH, CHAR_HEIGHT);
+                    g.fillRect((col * HOR_SEPARATION), (row * VER_SEPARATION) + (CHAR_SIZE / 5), CHAR_WIDTH, CHAR_HEIGHT);
                 }
             }
         }
@@ -47,7 +55,7 @@ public class ColoredTextArea extends JPanel{
                 SpecialText get = text[col][row];
                 if (get != null){
                     g.setColor(get.makeInfluencedForegroundColor(overallForeGround));
-                    g.drawString(get.getStr(), col * HOR_SEPARATION, (row * VER_SEPARATION) + 15);
+                    g.drawString(get.getStr(), col * HOR_SEPARATION, (row * VER_SEPARATION) + CHAR_SIZE);
                 }
             }
         }

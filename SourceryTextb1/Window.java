@@ -101,44 +101,43 @@ public class Window extends JFrame {
         camY = camYtoBe;
         int maxH = screenH(); //Equals 23
         int maxW = screenW(); //Equals 46
-        for (int row = 0; row < maxH; row++) {
+        for (int row = 0; row < maxH; row++) { //Iterates over every coordinate of the screen
             for (int col = 0; col < maxW; col++) {
-                for (int ii = layers.size(); ii > 0; ii--) {
+                for (int ii = layers.size(); ii > 0; ii--) { //At each coordinate, goes through all layers until an opaque space is found
                     Layer layer = layers.get(ii - 1);
                     int xPos = row - layer.getX();
-                    int yPos = col - layer.getY();
+                    int yPos = col - layer.getY(); //Math done to find out what portion of the layer corresponds with the screen coordinate
                     if (layer.getCamOb()) {
                         xPos += camX;
                         yPos += camY;
                     }
-                    String input = layer.getStr(xPos, yPos);
-                    if (notEmpty(input)) {
-                        if ("ñ".equals(input)) {
-                            fullImage.setStr(row, col, " ");
-                        } else {
-                            fullImage.setStr(row, col, input);
+                    SpecialText found = layer.getSpecTxt(xPos, yPos); //Gets SpecialText from derived layer coordinate
+                    String input = found.getStr(); //Gets string from SpecialText to make code easier to read
+                    if (notEmpty(input)) { //If the SpecialText isn't blank
+                        if ("ñ".equals(input)) { //If space found was opaque
+                            fullImage.setSpecTxt(row, col, new SpecialText(" "));
+                        } else { //Otherwise, place found SpecialText
+                            fullImage.setSpecTxt(row, col, found);
                         }
-                        ii = 0;
+                        ii = 0; //Ends search at the coordinate and moves onto the next coordinate
                     }
                 }
             }
         }
-        //System.out.println("Drawn bounding box:\n X: " + (camY) + " to " + (camY + maxH - 1) + "\n Y: " + (camX) + " to " + (camX + maxW - 1));
     }
 
     /**
      * Place the temporary idea of what should be on the screen (fullImage) onto the actual display
-     * Usually takes 40-70ms. (at least, with an 80x150 fullImage size)
+     * Usually takes 40-70ms. (at least, with an 48x27 fullImage size)
      */
     void build() {
-
-        for (int row = 0; row < 28; row++) {// Used to be 20
+        for (int row = 0; row < 28; row++) { // Used to be 20
             for (int col = 0; col < 46; col++) { // Used to be 50
-                String s = fullImage.getStr(row, col);
-                if (s == null || s.equals("")) {
+                SpecialText s  = fullImage.getSpecTxt(row, col);
+                if (s == null || s.toString().equals("")) {
                     txtArea.text[col][row] = new SpecialText(" ");
                 } else {
-                    txtArea.text[col][row] = new SpecialText(s);
+                    txtArea.text[col][row] = s;
                 }
             }
         }
@@ -150,7 +149,6 @@ public class Window extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Sourcery Text  -  an alphanumeric misadventure");
         setResizable(true);
-
 
         //NEW WAY (NOT COMPLETE)
         c.add(txtArea);

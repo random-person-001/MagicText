@@ -14,6 +14,7 @@
  */
 package SourceryTextb1;
 
+import java.awt.*;
 import java.util.Arrays;
 
 /**
@@ -335,9 +336,10 @@ public class Art implements java.io.Serializable{
                     "..........................|...      ..      ..\n" +
                     "\\\\\\........................................///\n";
 
-    // Screen size: 46 x 23
-    // Is this right?
+    // Screen size: 46 x 27
+    // Is this right? Correct.
 
+    SpecialText g = new SpecialText(" ", null, new Color(255, 175, 0));
     public String configBox =
             "+--------------------------------------------+\n" +
             "| Use the ARROW keys to resize the window.   |\n" +
@@ -361,6 +363,11 @@ public class Art implements java.io.Serializable{
             "|  default browser.  Chrome-based browsers   |\n" +
             "|  don't support programs opening webpages.  |\n" +
             "|                Apologies.                  |\n" +
+            "|                                            |\n" +
+            "|                                            |\n" +
+            "|                                            |\n" +
+            "|                                            |\n" +
+            "|                                            |\n" +
             "+--------------------------------------------+\n";
 
     public String mainMenu =
@@ -377,6 +384,11 @@ public class Art implements java.io.Serializable{
             "|   |  |   / \\  |         Load Game          |\n" +
             "|   |  +-- | |  |         Options            |\n" +
             "|                         Quit               |\n" +
+            "|                                            |\n" +
+            "|                                            |\n" +
+            "|                                            |\n" +
+            "|                                            |\n" +
+            "|                                            |\n" +
             "|                                            |\n" +
             "|                                            |\n" +
             "|                                            |\n" +

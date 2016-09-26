@@ -8,6 +8,7 @@ package SourceryTextb1.GameObjects;
 import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
+import SourceryTextb1.SpecialText;
 
 import java.awt.*;
 import java.awt.event.KeyAdapter;
@@ -110,6 +111,11 @@ class HUD {
         xBulidIndex++;
     }
 
+    private void putChar(SpecialText newChar) {
+        orgo.editLayer(newChar, layerName, 0, xBulidIndex);
+        xBulidIndex++;
+    }
+
     /**
      * Edit the layer to put all the stats and stuff on
      */
@@ -127,7 +133,7 @@ class HUD {
 
                 loc = orgo.getPosLayer(layerName);
 
-                putChar("[");
+                putChar(new SpecialText("[", null, new Color (255, 255, 0)));
 
                 // Your health
                 String healthValue = String.valueOf(player.getHealth());
@@ -140,15 +146,16 @@ class HUD {
                 for (int ii = 0; ii < 10; ii++) {
                     int fillPoint = (int) Math.ceil(((float) player.getHealth() / (float) player.maxHP) * 10);
                     if (fillPoint > 10 && ii < fillPoint - 10) {
-                        putChar("#");
+                        putChar(new SpecialText("#", new Color (200, 255, 200), new Color(40, 40, 0)));
                     } else if (ii < fillPoint) {
-                        putChar("+");
+                        putChar(new SpecialText("+", new Color (200, 255, 200), new Color(0, 25, 0)));
                     } else {
                         putChar("_");
                     }
                 }
                 putChar("]");
                 xBulidIndex++;
+                putChar(new SpecialText("S", new Color (255, 255, 220)));
 
                 // Spell 1
                 putChar("(");
@@ -156,7 +163,7 @@ class HUD {
                     putChar(spell1Name[ii]);
                 }
                 putChar(")");
-                xBulidIndex++;
+                putChar(new SpecialText("D", new Color (255, 255, 220)));
 
                 // Spell 2
                 putChar("(");
@@ -175,9 +182,9 @@ class HUD {
                 for (int ii = 0; ii < 10; ii++) {
                     int fillPoint = (int) Math.ceil(((float) player.mana / (float) player.maxMana) * 10);
                     if (ii < fillPoint) {
-                        putChar("=");
+                        putChar(new SpecialText("=", new Color (200, 200, 255), new Color(0, 0, 30)));
                     } else if (ii < (int) Math.ceil(((float) (2000 - player.manaWait) / 2000.0f) * 10)) {
-                        putChar("_");
+                        putChar(new SpecialText("_", new Color (100, 100, 125), new Color(0, 0, 15)));
                     } else {
                         putChar(" ");
                     }

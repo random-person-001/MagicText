@@ -27,6 +27,12 @@ public class SpecialText implements java.io.Serializable{
 
     public Color getBackgroundColor(){ return backgroundColor; }
 
+    public void becomeOpaqueSpace() {self = "ñ";}
+
+    public String toString (){
+        return getStr();
+    }
+
     /**
      * Returns the foreground color accented by another one.
      * @param modifier The color that is influencing the base foreground color.

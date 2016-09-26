@@ -81,9 +81,7 @@ public class Layer implements java.io.Serializable {
         this(assign, inkey);
         cameraObedient = camOb;
         opaque = opacity;
-        if (opacity){
-            System.out.println("An opaque Layer has been created!");
-        }
+        //System.out.printf("Layer Created! I am %1s, whose opacity is %2$b\n", name, opaque);
     }
 
     public Layer(String[][] assign, String inkey, int xSet, int ySet, boolean camOb, boolean opacity) {
@@ -93,6 +91,7 @@ public class Layer implements java.io.Serializable {
 
         xPos = xSet;
         yPos = ySet;
+        //System.out.printf("Layer Created! I am %1s, whose opacity is %2$b\n", name, opaque);
     }
 
     public Layer(String[][] assign, String inkey, int xSet, int ySet, boolean camOb, boolean opacity, boolean important) {
@@ -103,6 +102,7 @@ public class Layer implements java.io.Serializable {
 
         xPos = xSet;
         yPos = ySet;
+        //System.out.printf("Layer Created! I am %1s, whose opacity is %2$b\n", name, opaque);
     }
 
     public void setCamOb(boolean set) {  // JARED, I'M WORKING ON THIS
@@ -163,9 +163,21 @@ public class Layer implements java.io.Serializable {
         return name;
     }
 
+    /**
+     * Makes a SpecialText based upon a given string at a location in the layer
+     */
     public void setStr(int r, int c, String str) {
         if (!(r < 0 || r >= getRows() || c < 0 || c >= getColumns())) {
             self[r][c] = new SpecialText(str);
+        }
+    }
+
+    /**
+     * Makes a SpecialText based upon a given string at a location in the layer
+     */
+    public void setSpecTxt(int r, int c, SpecialText toSet) {
+        if (!(r < 0 || r >= getRows() || c < 0 || c >= getColumns())) {
+            self[r][c] = toSet;
         }
     }
 
@@ -182,20 +194,31 @@ public class Layer implements java.io.Serializable {
     }
 
     /**
+     * Returns a SpecialText from a requested (row,col) coordinate in layer.
+     * @param r row of desired SpecialText
+     * @param c column of desired SpecialText
+     * @return
+     */
+    public SpecialText getSpecTxt(int r, int c){
+        if (!(r < 0 || r >= getRows() || c < 0 || c >= getColumns())) {
+            if ((getOpacity()) && ("".equals(self[r][c].toString()) || " ".equals(self[r][c].toString()) || self[r][c] == null)) {
+                //System.out.println("Opacity applied!");
+                return new SpecialText("ñ");
+            } else {
+                return self[r][c];
+            }
+        } else {
+            return new SpecialText("");
+        }
+    }
+
+    /**
      * @param r a row that you want to know about
      * @param c a column you want to know about
      * @return the String at the specified coordinates.  Will be ñ if opaque space, else the legit char there.
      */
     public String getStr(int r, int c) {
-        if (!(r < 0 || r >= getRows() || c < 0 || c >= getColumns())) {
-            if ((getOpacity()) && ("".equals(self[r][c]) || " ".equals(self[r][c]) || self[r][c] == null)) {
-                return "ñ";
-            } else {
-                return self[r][c].getStr();
-            }
-        } else {
-            return "";
-        }
+        return getSpecTxt(r,c).getStr();
     }
 
     /**

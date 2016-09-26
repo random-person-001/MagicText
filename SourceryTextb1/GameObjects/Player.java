@@ -18,6 +18,7 @@ import SourceryTextb1.ImageOrg;
 import SourceryTextb1.ItemTracker;
 import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
+import SourceryTextb1.SpecialText;
 
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -386,7 +387,7 @@ public class Player extends Mortal implements java.io.Serializable {
         //String color = (upPressed|downPressed|leftPressed|rightPressed) ? "66ff66" : "80ff80";
         //color = (spacePressed) ? "33ff33" : color;
         //color = (ludicrousSpeed) ? "00b300" : color;
-        String playerIcon = "@";
+        SpecialText playerIcon = new SpecialText("@",new Color (200, 255, 200));
         orgo.editLayer(playerIcon, layerName, 1, 1);
         orgo.getLayer(layerName).setPos(y-1, x-1);
         centerCamera();

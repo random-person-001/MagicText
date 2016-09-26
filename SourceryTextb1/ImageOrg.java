@@ -222,6 +222,30 @@ public class ImageOrg implements java.io.Serializable {
     }
 
     /**
+     * Edit a single element of a Layer's array of strings.  Don't get X and Y mixed up.  Note that you can instead
+     * specify the Layer's string name instead of loc here, saving some trouble.
+     *
+     * @param input what it should be now
+     * @param layerName The name of the layer you want to edit
+     * @param y     the row (Y coordinate) which you want to change something at
+     * @param x     the column (X coordinate) which you want to change something at
+     */
+    public void editLayer(SpecialText input, String layerName, int y, int x) {
+        Layer get;
+        try {
+            int loc = getPosLayer(layerName);
+            get = layers.get(loc);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("No such layer (" + layerName + ")! " + e);
+            return;
+        }
+        if (!(y > get.getRows() || y < 0 || x > get.getColumns() || x < 0)) {
+            get.setSpecTxt(y, x, input);
+            //System.out.println("SpecialText placement successful!");
+        }
+    }
+
+    /**
      * Change the camera's relative position
      *
      * @param x units along x axis

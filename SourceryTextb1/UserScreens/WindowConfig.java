@@ -1,10 +1,9 @@
 package SourceryTextb1.UserScreens;
 
-import SourceryTextb1.ImageOrg;
-import SourceryTextb1.Layer;
+import SourceryTextb1.*;
 import SourceryTextb1.Window;
-import SourceryTextb1.Art;
 
+import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Timer;
@@ -99,7 +98,7 @@ class WindowConfig {
                 setSize(windowWidth, windowHeight);
                 break;
             case '1':
-                setSize(380, 500);
+                setSize(430, 490);
                 break;
             case '2':
                 setSize(375, 400);
