@@ -133,7 +133,7 @@ class HUD {
 
                 loc = orgo.getPosLayer(layerName);
 
-                putChar(new SpecialText("[", null, new Color (255, 255, 0)));
+                putChar("[");
 
                 // Your health
                 String healthValue = String.valueOf(player.getHealth());
