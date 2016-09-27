@@ -1,10 +1,9 @@
 package SourceryTextb1.GameObjects;
 
-import SourceryTextb1.Art;
-import SourceryTextb1.ImageOrg;
+import SourceryTextb1.*;
 import SourceryTextb1.Window;
-import SourceryTextb1.Layer;
 
+import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -415,12 +414,12 @@ class Inventory implements java.io.Serializable {
         genericItemListing(equip);
         indexX = 31;
 
-        dispInt(player.defense, 12, 17, true);
-        dispInt(player.allSpellBoost, 25, 18, true);
-        dispInt(player.arcSpellBoost, 15, 19, false);
-        dispInt(player.darkSpellBoost, 15, 20, false);
-        dispInt(player.fireSpellBoost, 25, 19, false);
-        dispInt(player.iceSpellBoost, 25, 20, false);
+        dispInt(player.defense, 12, 17, true, new Color(150, 200, 200));
+        dispInt(player.allSpellBoost, 25, 18, true, new Color(255, 175, 175));
+        dispInt(player.arcSpellBoost, 15, 19, false, new Color(100, 100, 255));
+        dispInt(player.darkSpellBoost, 15, 20, false, new Color(125, 25, 155));
+        dispInt(player.fireSpellBoost, 25, 19, false, new Color(225, 150, 0));
+        dispInt(player.iceSpellBoost, 25, 20, false, new Color(200, 225, 255));
 
         putText(player.weapon.getName(), 9, 16);
         putText(player.armor.getName(), 9, 17);
@@ -464,15 +463,17 @@ class Inventory implements java.io.Serializable {
         }
     }
 
-    private void dispInt(int value, int x, int y, boolean includeZero) {
+    private void dispInt(int value, int x, int y, boolean includeZero){ dispInt(value, x, y, includeZero, Color.WHITE);}
+
+    private void dispInt(int value, int x, int y, boolean includeZero, Color txtColor) {
         String disp = String.valueOf(value);
         if (!disp.equals("0") || includeZero) {
-            org.editLayer(String.valueOf(disp.charAt(0)), "equip", y, x);
+            org.editLayer(new SpecialText(String.valueOf(disp.charAt(0)), txtColor), "equip", y, x);
         } else {
             org.editLayer(" ", "equip", y, x);
         }
         if (disp.length() > 1) {
-            org.editLayer(String.valueOf(disp.charAt(1)), "equip", y, x + 1);
+            org.editLayer(new SpecialText(String.valueOf(disp.charAt(1)), txtColor), "equip", y, x + 1);
         }
     }
 

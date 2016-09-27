@@ -261,6 +261,8 @@ class HUD {
      * >die : subtract a fatal amount of health
      * >echo (message) : print message out to standard out
      * >exit : exit sudo mode, or the game if you aren't in it.
+     * >fabulous off : Turns fabulous mode off
+     * >fabulous on : Turns fabulous mode on
      * >getpos : print out current player coords in response
      * >ghost : Disables the player checking for walls before moving into one (also called 'noclip')
      * >goto (x) (y) : teleport player to location
@@ -319,6 +321,12 @@ class HUD {
         }else if (command.contains("unfreeze")) {
             player.frozen = false;
             showResponse("Player unfrozen!");
+        }else if (command.contains("fabulous off")) {
+            orgo.getWindow().txtArea.fabulousMode = false;
+            showResponse("FABULOUS POWERS DISABLED?");
+        }else if (command.contains("fabulous on")) {
+            orgo.getWindow().txtArea.fabulousMode = true;
+            showResponse("FABULOUS POWERS ENABLED!");
         }else if (command.contains("unpause")) {
             player.setPause(false);
             showResponse("Player upaused!");

@@ -339,21 +339,21 @@ public class Art implements java.io.Serializable{
     // Screen size: 46 x 27
     // Is this right? Correct.
 
-    SpecialText g = new SpecialText(" ", null, new Color(255, 175, 0));
+    //SpecialText g = new SpecialText(" ", null, new Color(255, 175, 0));
     public String configBox =
             "+--------------------------------------------+\n" +
-            "| Use the ARROW keys to resize the window.   |\n" +
-            "| The edges of this box should lie at        |\n" +
-            "|   The edges of the window.                 |\n" +
+            "| This screen exists to help you configure   |\n" +
+            "|  the display's size to what you want.      |\n" +
             "|                                            |\n" +
-            "| Press the following keys for automatic     |\n" +
-            "|   presets for the corresponding operating  |\n" +
-            "|   system:                                  |\n" +
+            "| The edges of the box signify the viewing   |\n" +
+            "|  bounds of the game.                       |\n" +
             "|                                            |\n" +
-            "|1 - Windows 10                              |\n" +
-            "|2 - Ubuntu Linux                            |\n" +
+            "| To resize the screen, simply click + drag  |\n" +
+            "|  from the corner of the window.            |\n" +
             "|                                            |\n" +
-            "| Press ENTER to finish                      |\n" +
+            "|                                            |\n" +
+            "|                                            |\n" +
+            "| Press ENTER to finish.                     |\n" +
             "|                                            |\n" +
             "|                                            |\n" +
             "|                 *   *   *                  |\n" +
@@ -382,7 +382,7 @@ public class Art implements java.io.Serializable{
             "|   |  |   \\ /  |         Introduction       |\n" +
             "|   |  +--  |   |         New Game           |\n" +
             "|   |  |   / \\  |         Load Game          |\n" +
-            "|   |  +-- | |  |         Options            |\n" +
+            "|   |  +-- | |  |         Window Config      |\n" +
             "|                         Quit               |\n" +
             "|                                            |\n" +
             "|                                            |\n" +

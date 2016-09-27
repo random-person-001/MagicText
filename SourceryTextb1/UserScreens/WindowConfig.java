@@ -22,8 +22,8 @@ class WindowConfig {
     boolean resume = false;
     private boolean firstTime = true;
 
-    private int windowHeight = 408;
-    private int windowWidth =  412;
+    private int windowHeight = 500;
+    private int windowWidth =  500;
     private String OS = System.getProperty("os.name").toLowerCase();
 
     WindowConfig(ImageOrg orgo){
@@ -43,6 +43,7 @@ class WindowConfig {
         doContinue = false;
         setSize(windowWidth, windowHeight);
 
+        /*
         if (firstTime) {
             if (OS.contains("nix") || OS.contains("nux")) {
                 keyPressed('2');
@@ -53,6 +54,7 @@ class WindowConfig {
             }
             firstTime = false;
         }
+        */
 
         if (interactable) {
             Art arty = new Art();
