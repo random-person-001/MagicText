@@ -156,7 +156,7 @@ public class Player extends Mortal implements java.io.Serializable {
     }
 
     private void centerCamera() {
-        orgo.setCam(x - 22, y - 8);
+        orgo.setCam(x - 22, y - 11);
     }
 
     /**
@@ -452,7 +452,6 @@ public class Player extends Mortal implements java.io.Serializable {
         }
     }
 
-    @Deprecated // This should be done dynamically.
     //   Where the spell boost variables are used, the corresponding expression should be used instead. --Riley
     void defineStats() {
         defense = armor.getEquipVals()[0];
@@ -586,7 +585,7 @@ public class Player extends Mortal implements java.io.Serializable {
         looseCastDmgSpell(damage, spell.range, spell.cost, spell.animation1, spell.animation2, spell.getAlting());
     }
 
-    private void looseCastDmgSpell(int dmg, int rng, int cost, String anim1, String anim2, boolean alt) {
+    private void looseCastDmgSpell(int dmg, int rng, int cost, SpecialText anim1, SpecialText anim2, boolean alt) {
         if (mana >= cost) {
             room.addObject(new Spell(orgo, room, castingLayer, x, y, orientation, dmg, rng, anim1, anim2, alt));
             spendMana(cost);

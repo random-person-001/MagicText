@@ -1,6 +1,8 @@
 package SourceryTextb1.GameObjects;
 
 
+import SourceryTextb1.SpecialText;
+
 /**
  * Catch-all class that can go into your inventory.  Includes equipment, spells, and more!
  */
@@ -33,8 +35,8 @@ public class Item implements java.io.Serializable {
      */
     public int itemType;
 
-    public String animation1 = "%";
-    public String animation2 = "Q";
+    public SpecialText animation1 = new SpecialText("%");
+    public SpecialText animation2 = new SpecialText("Q");
 
     public int damage, range, healing, overheal, duration, cost = 0;
     private int armor, hpBoost, allBoost, arcBoost, fireBoost, iceBoost, darkBoost = 0;
@@ -100,6 +102,22 @@ public class Item implements java.io.Serializable {
     }
 
     /**
+     * Alternate version of dmgSpellDefine with SpecialText instead of strings
+     * @param toD   damage
+     * @param toR   range
+     * @param toC   cost
+     * @param dMode display mode
+     * @param s1    state one (animation)
+     * @param s2    state two (animation)
+     */
+    public void dmgSpellDefine(int toD, int toR, int toC, String dMode, SpecialText s1, SpecialText s2) {
+        setDmgRngCost(toD, toR, toC);
+        setDescMode(dMode);
+        setAnim(s1, s2);
+        System.out.println("Am I a damage spell?: " + isDmgSpell);
+    }
+
+    /**
      * Define a whole bunch of parameters for an alternating? spell
      *
      * @param toCost cost
@@ -117,6 +135,11 @@ public class Item implements java.io.Serializable {
     }
 
     public void setAnim(String s1, String s2) {
+        animation1 = new SpecialText(s1);
+        animation2 = new SpecialText(s2);
+    }
+
+    public void setAnim(SpecialText s1, SpecialText s2) {
         animation1 = s1;
         animation2 = s2;
     }

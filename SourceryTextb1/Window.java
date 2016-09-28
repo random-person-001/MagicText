@@ -7,7 +7,6 @@ package SourceryTextb1;
 
 import java.awt.*;
 import java.util.List;
-import java.util.Timer;
 import java.util.TimerTask;
 import javax.swing.*;
 
@@ -18,7 +17,7 @@ import javax.swing.*;
 public class Window extends JFrame {
     private static final String OPAQUE_SPACE = "ñ";
     //public JTextPane txtArea = new JTextPane();
-    public ColoredTextArea txtArea = new ColoredTextArea();
+    public ColoredTextMatrix txtArea = new ColoredTextMatrix();
     private Container c = getContentPane();
     private String foregroundColor = "#ffffff";
 

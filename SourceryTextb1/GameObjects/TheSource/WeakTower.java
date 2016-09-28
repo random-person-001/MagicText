@@ -5,6 +5,7 @@ import SourceryTextb1.GameObjects.Spell;
 import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
+import SourceryTextb1.SpecialText;
 
 
 /**
@@ -32,8 +33,8 @@ public class WeakTower extends Mortal {
         // spell stuff
         int dmg = 2;
         int rng = 7;
-        String anim1 = "|";
-        String anim2 = "-";
+        SpecialText anim1 = new SpecialText("|");
+        SpecialText anim2 = new SpecialText("|");
         boolean alt = false;
         Mortal m = getClosestGoodGuy();
         if (Math.abs(x - m.getX()) <= 2 && Math.abs(y - m.getY()) <= 2){

@@ -10,7 +10,7 @@ import static java.lang.Math.abs;
 /**
  * Created by Jared on 9/25/2016.
  */
-public class ColoredTextArea extends JPanel{
+public class ColoredTextMatrix extends JPanel{
 
     public SpecialText[][] text = new SpecialText[46][28];
     protected Color overallForeGround = Color.WHITE;
@@ -29,7 +29,7 @@ public class ColoredTextArea extends JPanel{
     int CHAR_SIZE      = 15;
     int HOR_MARGIN     = 0;
 
-    public ColoredTextArea (){
+    public ColoredTextMatrix(){
         setOpaque(true);
         setFont(new Font("Monospaced", Font.PLAIN, CHAR_SIZE));
         setFocusable(true);
@@ -85,7 +85,7 @@ public class ColoredTextArea extends JPanel{
     }
 
     private Color retrieveColor(SpecialText input, int row, int col){
-        if (fabulousMode && abs((row + col) - fabulousLocIndex) <= 5){
+        if (fabulousMode && abs((row + col) - fabulousLocIndex) <= 7){
             return fabulousColorWheel[fabulousColorIndex];
         } else {
             return input.makeInfluencedForegroundColor(overallForeGround);

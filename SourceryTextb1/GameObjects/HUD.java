@@ -28,7 +28,7 @@ import static java.lang.Math.abs;
  *
  * @author 119184
  */
-class HUD {
+class HUD implements java.io.Serializable {
     String layerName;
     private String[] spell1Name = new String[6];
     private String[] spell2Name = new String[6];
@@ -154,24 +154,30 @@ class HUD {
                     }
                 }
                 putChar("]");
-                xBulidIndex++;
-                putChar(new SpecialText("S", new Color (255, 255, 220)));
+                putChar(" ");
+                putChar(new SpecialText("S", new Color (255, 255, 200)));
 
                 // Spell 1
                 putChar("(");
                 for (int ii = 0; ii < 5; ii++) {
-                    putChar(spell1Name[ii]);
+                    if (spell1Name[ii] == null)
+                        putChar(" ");
+                    else
+                        putChar(spell1Name[ii]);
                 }
                 putChar(")");
-                putChar(new SpecialText("D", new Color (255, 255, 220)));
+                putChar(new SpecialText("D", new Color (255, 255, 200)));
 
                 // Spell 2
                 putChar("(");
                 for (int ii = 0; ii < 5; ii++) {
-                    putChar(spell2Name[ii]);
+                    if (spell2Name[ii] == null)
+                        putChar(" ");
+                    else
+                        putChar(spell2Name[ii]);
                 }
                 putChar(")");
-                xBulidIndex++;
+                putChar(" ");
 
                 // Mana count
                 putChar("{");

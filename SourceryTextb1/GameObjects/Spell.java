@@ -3,6 +3,7 @@ package SourceryTextb1.GameObjects;
 import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
+import SourceryTextb1.SpecialText;
 
 import java.util.Random;
 
@@ -14,8 +15,8 @@ public class Spell extends GameObject{
     private Random rand = new Random();
     private String name = "Generic";
     private int range = -1;
-    private String char1 = "X";
-    private String char2 = "x";
+    private SpecialText char1 = new SpecialText("X");
+    private SpecialText char2 = new SpecialText("x");
     private int damage = 10;
     private String killMessage = "You were electrocuted by a rouge spell";
 
@@ -55,13 +56,13 @@ public class Spell extends GameObject{
 
         setupTimer(30);
     }
-    public Spell (ImageOrg org, Room theRoom, int setX, int setY, int setOr, int setDmg, int setRng, String set1, String set2, boolean alting){
+    public Spell (ImageOrg org, Room theRoom, int setX, int setY, int setOr, int setDmg, int setRng, SpecialText set1, SpecialText set2, boolean alting){
         this(org, theRoom, "Spellz", setX, setY, setOr, setDmg, setRng, set1, set2, alting);
     }
-    public Spell (ImageOrg org, Room theRoom, Layer place, int setX, int setY, int setOr, int setDmg, int setRng, String set1, String set2, boolean alting){
+    public Spell (ImageOrg org, Room theRoom, Layer place, int setX, int setY, int setOr, int setDmg, int setRng, SpecialText set1, SpecialText set2, boolean alting){
         this(org, theRoom, place.getName(), setX, setY, setOr, setDmg, setRng, set1, set2, alting);
     }
-    public Spell (ImageOrg org, Room theRoom, String setLayerName, int setX, int setY, int setOr, int setDmg, int setRng, String set1, String set2, boolean alting){
+    public Spell (ImageOrg org, Room theRoom, String setLayerName, int setX, int setY, int setOr, int setDmg, int setRng, SpecialText set1, SpecialText set2, boolean alting){
         strClass = "Spell";
         orgo = org;
         room = theRoom;
@@ -83,6 +84,7 @@ public class Spell extends GameObject{
 
     public void setName(String newName){
         name = newName;
+        /*
         switch (name){
             case "Book":
                 setKillMessage("You managed to get murdered by an old\n book.  Not a common fate, and \n I must say I am impressed.");
@@ -123,9 +125,10 @@ public class Spell extends GameObject{
             default:
                 System.out.println("No default set for spells of name " + name);
         }
+        */
     }
 
-    public void define(int damage, int range, String charOne, String charTwo){
+    public void define(int damage, int range, SpecialText charOne, SpecialText charTwo){
         setKillMessage("You died!");
         setDamage(damage);
         setRange(range);
@@ -133,10 +136,10 @@ public class Spell extends GameObject{
         setChar2(charTwo);
     }
 
-    public void setChar1(String newChar1){
+    public void setChar1(SpecialText newChar1){
         char1 = newChar1;
     }
-    public void setChar2(String newChar2){
+    public void setChar2(SpecialText newChar2){
         char2 = newChar2;
     }
     public void setDamage(int newDamage){

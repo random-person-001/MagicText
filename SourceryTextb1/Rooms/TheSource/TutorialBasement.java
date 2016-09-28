@@ -16,6 +16,9 @@ import SourceryTextb1.GameObjects.Item;
 import SourceryTextb1.Rooms.Room;
 import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
+import SourceryTextb1.SpecialText;
+
+import java.awt.*;
 
 /**
  * A place to begin a tutorial, guiding you through stuff.
@@ -141,12 +144,12 @@ public class TutorialBasement extends Room {
         ititHitMeshes();
 
         Item dartSpell = new Item ("Astral Dart", "Arcane Spell;\nFires a small bolt of\n pure stardust.", "AstDt", playo, "spell", false);
-        dartSpell.dmgSpellDefine(2, 9, 2, "arcane", "|", "-");
+        dartSpell.dmgSpellDefine(2, 9, 2, "arcane", new SpecialText("|", new Color(162, 137, 225)), new SpecialText("-", new Color(162, 137, 225)));
         DroppedItem gSpark =  new DroppedItem(this, org, "You found a spell: Astral Dart!", dartSpell, 87, 35);
         super.addObject(gSpark);
 
         Item fireSpell = new Item ("Fireball", "Fire Spell;\nUse your imagination.", "FrBll", playo, "spell", true);
-        fireSpell.dmgSpellDefine(4, 7, 5, "fire", "6", "9");
+        fireSpell.dmgSpellDefine(4, 7, 5, "fire", new SpecialText("6", new Color(255, 200, 0)), new SpecialText("9", new Color(255, 150, 0)));
         DroppedItem gFire =  new DroppedItem(this, org, "You found a spell: Fireball!", fireSpell, 80, 29);
         super.addObject(gFire);
 
