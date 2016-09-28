@@ -27,6 +27,8 @@ class Inventory implements java.io.Serializable {
     private int prevIndex = 0;
     private int potatoIndex = 0;
 
+    private boolean shouldRedraw = true;
+
     private final int TOP = 1;
     private final int SPELLS = 2;
     private final int ITEMS = 3;
@@ -139,6 +141,11 @@ class Inventory implements java.io.Serializable {
         Item item3 = new Item("Stat Bomb", "It does everything!\n\nDon't actually use this\n in the game.\n\n+1 To all equipment stats.", player, "equip");
         item3.setEquipvals(1, 1, 1, 1, 1, 1, 1, "weapon");
         equip.add(item3);
+        for (int ii = 0; ii < 4; ii++) {
+            Item item4 = new Item("Carrot", "For some reason,\n they only grow\n in the mountains.\n\nNobody really know why.", player, "equip");
+            item4.healItemDefine(6, 3);
+            items.add(item4);
+        }
     }
 
     /**
@@ -362,6 +369,11 @@ class Inventory implements java.io.Serializable {
                     jumpToNewMenu(taterMenuLayer, UPGRADE, "items");
                     potatoIndex = index;
                 }
+                if (thing.getDescMode().equals("healitem")){
+                    player.restoreHealth(thing.healing, thing.overheal);
+                    items.remove(index);
+                    shouldRedraw = true;
+                }
             }
         }
     }
@@ -397,6 +409,7 @@ class Inventory implements java.io.Serializable {
     private void checkNewPage() {
         if (newSelectY == 20 && pressedA) {
             page++;
+            shouldRedraw = true;
         }
     }
 
@@ -503,6 +516,13 @@ class Inventory implements java.io.Serializable {
      */
     private void genericItemListing(ArrayList<Item> items) {
         double pageReq = Math.ceil((double) items.size() / 16);
+
+        if (shouldRedraw){
+            org.getLayer("selector").clear();
+            org.getLayer("invInfo").clear();
+            shouldRedraw = false;
+        }
+
 
         if (pageReq == 0) {
             pageReq = 1;

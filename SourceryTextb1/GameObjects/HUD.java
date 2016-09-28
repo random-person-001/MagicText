@@ -132,9 +132,10 @@ class HUD implements java.io.Serializable {
 
                 loc = orgo.getPosLayer(layerName);
 
+                //Player health
                 putChar("[");
 
-                // Your health
+                boolean healthBig = String.valueOf(player.maxHealth).length() == 3;
                 String healthValue = String.valueOf(player.getHealth());
                 putChar(String.valueOf(healthValue.charAt(0)));
                 try {
@@ -142,6 +143,10 @@ class HUD implements java.io.Serializable {
                 } catch (StringIndexOutOfBoundsException e) {
                     putChar(" ");
                 }
+                try {
+                    putChar(String.valueOf(healthValue.charAt(2)));
+                    healthBig = true;
+                } catch (StringIndexOutOfBoundsException ignored) {}
                 for (int ii = 0; ii < 10; ii++) {
                     int fillPoint = (int) Math.ceil(((float) player.getHealth() / (float) player.maxHealth) * 10);
                     if (fillPoint > 10 && ii < fillPoint - 10) {
@@ -153,7 +158,7 @@ class HUD implements java.io.Serializable {
                     }
                 }
                 putChar("]");
-                putChar(" ");
+                if (!healthBig) putChar(" ");
                 putChar(new SpecialText("S", new Color (255, 255, 200)));
 
                 // Spell 1
@@ -176,12 +181,21 @@ class HUD implements java.io.Serializable {
                         putChar(spell2Name[ii]);
                 }
                 putChar(")");
-                putChar(" ");
 
                 // Mana count
+                boolean manaBig = String.valueOf(player.maxMana).length() == 3;
+                String manaValue = String.valueOf(player.mana);
+                if (!manaBig)
+                    putChar(" ");
                 putChar("{");
-                putChar(Integer.toString(abs(player.mana / 10)));
-                putChar(Integer.toString(abs(player.mana /* / 1 */ - 10 * (player.mana / 10))));
+                putChar(String.valueOf(manaValue.charAt(0)));
+                try {
+                    putChar(String.valueOf(manaValue.charAt(1)));
+                } catch (StringIndexOutOfBoundsException e) {
+                    putChar(" ");
+                }
+                if (manaBig)
+                    putChar(String.valueOf(manaValue.charAt(2)));
 
                 // Mana bar
                 for (int ii = 0; ii < 10; ii++) {

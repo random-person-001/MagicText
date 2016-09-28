@@ -213,9 +213,10 @@ public class Item implements java.io.Serializable {
         healing = to;
     }
 
-    public void setHeal(int to, int over){
+    public void healItemDefine(int to, int over){
         healing = to;
         overheal = over;
+        displayMode = "healitem";
     }
 
     public void setDuration(int to) {
@@ -250,6 +251,8 @@ public class Item implements java.io.Serializable {
                         + ")\nRange : " + String.valueOf(range) + "\nCost  : " + String.valueOf(cost);
             case "healing":
                 return description + "\n\nRestores " + String.valueOf(healing) + " Health\nOverheal: " + String.valueOf(overheal) + "\nCost: " + String.valueOf(cost);
+            case "healitem":
+                return description + "\n\nRestores " + String.valueOf(healing) + " Health\nOverheal: " + String.valueOf(overheal);
             case "buff":
                 return description + "\n\nDuration: " + String.valueOf(duration) + " Seconds\nCost: " + String.valueOf(cost);
             default:
