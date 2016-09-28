@@ -1025,7 +1025,7 @@ public class Art implements java.io.Serializable{
                     "@Current Equipment~~~~~~~~~~@ 7              |\n" +
                     "|Weapon:                    | |              |\n" +
                     "|Armor :                    |-8              |\n" +
-                    "|  Defense:                 | |              |\n" +
+                    "|     Defense:    MaxHP:    | |              |\n" +
                     "|  Attack Bonus:   All :    |-9              |\n" +
                     "|      Arcane:     Fire:    | |  NEXT PAGE...|\n" +
                     "|      Dark  :     Ice :    |-0  EXIT        |\n" +

@@ -4,6 +4,9 @@ import SourceryTextb1.GameObjects.Mortal;
 import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
+import SourceryTextb1.SpecialText;
+
+import java.awt.*;
 
 
 /**
@@ -38,7 +41,7 @@ public class Bandit extends Mortal {
             pathToPos(followDist, closestGoodGuy.getX(), closestGoodGuy.getY());
         }
         pathToPos(followDist, closestGoodGuy.getX(), closestGoodGuy.getY());
-        orgo.editLayer("B", layerName, 0, 0); // with hex
+        setDispIcon(new SpecialText("B", new Color(255, 160, 160)));
     }
 
     @Override

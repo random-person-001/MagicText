@@ -1,5 +1,8 @@
 package SourceryTextb1.GameObjects;
 
+import SourceryTextb1.SpecialText;
+
+import java.awt.*;
 import java.util.*;
 
 import static java.lang.StrictMath.abs;
@@ -24,7 +27,7 @@ public class Mortal extends GameObject implements java.io.Serializable{
         return rand.nextInt((max - min) + 1) + min;
     }
 
-    private String dmgIcon = "";
+    private SpecialText dmgIcon = new SpecialText("");
 
 
     /**
@@ -58,14 +61,14 @@ public class Mortal extends GameObject implements java.io.Serializable{
             }
             room.getPlayer().screenRedness = (int)((1 - ((float)health / maxHealth)) * 255);
             //System.out.println(String.format("Setting redness: %1$d (%2$f)", room.playo.screenRedness, 1 - ((float)health / maxHealth)));
-        } else {
+        } else if ((dmgIcon.getStr() == "")){ //Prevents spam
             //System.out.println("My health is now " + getHealth());
             health -= amountLost;
             int percentHealth = (int)(((float)health / maxHealth) * 10);
             if (percentHealth > 0) {
-                dmgIcon = String.valueOf(percentHealth);
+                dmgIcon = new SpecialText(String.valueOf(percentHealth), new Color(255, 150, 90));
             } else {
-                dmgIcon = "X";
+                dmgIcon = new SpecialText("X", new Color(255, 150, 90));
             }
             setDispIcon(dmgIcon);
             Timer timing = new Timer();
@@ -76,10 +79,12 @@ public class Mortal extends GameObject implements java.io.Serializable{
     /**
      * Sets display icon, factoring in whether or not it should display the damage percentage
      */
-    protected void setDispIcon(String icon){ setDispIcon(icon, 0, 0);}
+    protected void setDispIcon (String icon){ setDispIcon(new SpecialText(icon));}
 
-    protected void setDispIcon(String icon, int x, int y){
-        if (icon.length() != 1 || dmgIcon.equals("")) {
+    protected void setDispIcon(SpecialText icon){ setDispIcon(icon, 0, 0);}
+
+    protected void setDispIcon(SpecialText icon, int x, int y){
+        if (icon.getStr().length() != 1 || dmgIcon.getStr().equals("")) {
             orgo.editLayer(icon, layerName, y, x);
         } else {
             orgo.editLayer(dmgIcon, layerName, y, x);
@@ -93,6 +98,14 @@ public class Mortal extends GameObject implements java.io.Serializable{
     public void setHealth(int newHealth){
         health = newHealth;
         if (maxHealth > newHealth) maxHealth = newHealth;
+    }
+
+    /**
+     * Should not be used in most cases!
+     */
+    public void addHealth(int toAdd){
+        health += toAdd;
+        System.out.println("RAW ADDING HEALTH: " + toAdd);
     }
 
     public void restoreHealth( int addHP){
@@ -109,7 +122,7 @@ public class Mortal extends GameObject implements java.io.Serializable{
             health = newMax;
         }
         if (strClass.contains("Player") && !room.getPlayer().paused.get()){
-            int toSet = (int)(((float)addHP / room.getPlayer().maxHP) * 150);
+            int toSet = (int)(((float)addHP / room.getPlayer().maxHealth) * 150);
             if (toSet > 100) toSet = 100;
             room.getPlayer().screenYellowness = toSet; // todo: make this look at *which* player gets health restored.
         }
@@ -312,7 +325,7 @@ public class Mortal extends GameObject implements java.io.Serializable{
     private class dmgTimer extends TimerTask {
         @Override
         public void run(){
-            dmgIcon = "";
+            dmgIcon = new SpecialText("");
         }
     }
 }

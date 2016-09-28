@@ -6,7 +6,6 @@
 package SourceryTextb1.GameObjects;
 
 import SourceryTextb1.ImageOrg;
-import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
 import SourceryTextb1.SpecialText;
 
@@ -144,7 +143,7 @@ class HUD implements java.io.Serializable {
                     putChar(" ");
                 }
                 for (int ii = 0; ii < 10; ii++) {
-                    int fillPoint = (int) Math.ceil(((float) player.getHealth() / (float) player.maxHP) * 10);
+                    int fillPoint = (int) Math.ceil(((float) player.getHealth() / (float) player.maxHealth) * 10);
                     if (fillPoint > 10 && ii < fillPoint - 10) {
                         putChar(new SpecialText("#", new Color (200, 255, 200), new Color(40, 40, 0)));
                     } else if (ii < fillPoint) {
@@ -287,6 +286,7 @@ class HUD implements java.io.Serializable {
      * >setResponseTime (time) : set a new duration for the response message on the console to be shown (seconds)
      * >sudo : enter sudo mode
      * >sudo make me a sandwich : evoke submissive response from computer.  Also enter sudo mode
+     * >testkit : Gives player the test kit.
      * >unfreeze : sets frozen to off for player (in the case it is forgotten somehow)     *
      * >unghost : Re-enables players checking for walls
      * >unpause : set Player's paused to false
@@ -327,6 +327,9 @@ class HUD implements java.io.Serializable {
         }else if (command.contains("unfreeze")) {
             player.frozen = false;
             showResponse("Player unfrozen!");
+        }else if (command.contains("testkit")) {
+            player.getInventory().testKit();
+            showResponse("Items given!");
         }else if (command.contains("fabulous off")) {
             orgo.getWindow().txtArea.fabulousMode = false;
             showResponse("FABULOUS POWERS DISABLED?");

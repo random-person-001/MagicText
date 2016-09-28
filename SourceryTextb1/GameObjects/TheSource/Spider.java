@@ -5,6 +5,9 @@ import SourceryTextb1.GameObjects.Item;
 import SourceryTextb1.GameObjects.Mortal;
 import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
+import SourceryTextb1.SpecialText;
+
+import java.awt.*;
 
 
 /**
@@ -40,7 +43,7 @@ public class Spider extends Mortal {
             closestGoodGuy.subtractHealth(2);
         }
         pathToPos(followDist, closestGoodGuy.getX(), closestGoodGuy.getY());
-        setDispIcon("S");
+        setDispIcon(new SpecialText("S", new Color(255, 100, 90)));
     }
 
     @Override

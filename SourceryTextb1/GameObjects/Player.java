@@ -69,7 +69,7 @@ public class Player extends Mortal implements java.io.Serializable {
     private String lastPainMessage = "None";
 
     //STATS
-    int maxHP = 20;
+    int baseMaxHP = 20;
     int maxMana = 20;
     int mana = maxMana;
     private int manaRegenClock = 0;
@@ -102,9 +102,9 @@ public class Player extends Mortal implements java.io.Serializable {
      * @param theOrg the ImageOrg(anizer)
      */
     public Player(ImageOrg theOrg) {
-        setHealth(maxHP);
+        setHealth(baseMaxHP);
         makeGoodGuy(); // Set good-guy-ness to true.
-        super.maxHealth = maxHP + armorHealthBoost;
+        super.maxHealth = baseMaxHP + armorHealthBoost;
         super.strClass = "Player";
         System.out.println("\nNEW PLAYER\n");
         orgo = theOrg;
@@ -454,13 +454,15 @@ public class Player extends Mortal implements java.io.Serializable {
 
     //   Where the spell boost variables are used, the corresponding expression should be used instead. --Riley
     void defineStats() {
-        defense = armor.getEquipVals()[0];
-        armorHealthBoost = armor.getEquipVals()[1];
-        allSpellBoost = weapon.getEquipVals()[2];
-        arcSpellBoost = weapon.getEquipVals()[3];
-        fireSpellBoost = weapon.getEquipVals()[4];
-        iceSpellBoost = weapon.getEquipVals()[5];
-        darkSpellBoost = weapon.getEquipVals()[6];
+        defense =          armor.getEquipVals()[0] + weapon.getEquipVals()[0];
+        armorHealthBoost = armor.getEquipVals()[1] + weapon.getEquipVals()[1];
+        allSpellBoost =    armor.getEquipVals()[2] + weapon.getEquipVals()[2];
+        arcSpellBoost =    armor.getEquipVals()[3] + weapon.getEquipVals()[3];
+        fireSpellBoost =   armor.getEquipVals()[4] + weapon.getEquipVals()[4];
+        iceSpellBoost =    armor.getEquipVals()[5] + weapon.getEquipVals()[5];
+        darkSpellBoost =   armor.getEquipVals()[6] + weapon.getEquipVals()[6];
+
+        super.maxHealth = baseMaxHP + armorHealthBoost;
 
         System.out.println("DEF: " + defense + " HpB: " + armorHealthBoost + " AllB: " + allSpellBoost + "\nArcB: " + arcSpellBoost + " FireB: " + fireSpellBoost +
                 " IceB: " + iceSpellBoost + " DarkB: " + darkSpellBoost);

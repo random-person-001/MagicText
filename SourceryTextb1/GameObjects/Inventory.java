@@ -126,6 +126,22 @@ class Inventory implements java.io.Serializable {
     }
 
     /**
+     * Gives player a bunch of items to probably be added later
+     */
+
+    public void testKit(){
+        Item item1 = new Item("InitiateTome", "A book full of dark rituals\n\nNewcomers to dark magic are\n handed this book to study.\n\nYes, it's a textbook.\n\n+3 Dark Spell Damage", player, "equip");
+        item1.setEquipvals(0, 0, 0, 0, 0, 0, 3, "weapon");
+        equip.add(item1);
+        Item item2 = new Item("Wool Scarf", "A fluffy scarf.\n\nWhat's not to love in\n a scarf?\n\nThey're magical, comfy, and\n fashionable!\nAwesome, right?\n\n+1 Ice Spell Damage\n+1 Defense", player, "equip");
+        item2.setEquipvals(1, 0, 0, 0, 0, 1, 0, "weapon");
+        equip.add(item2);
+        Item item3 = new Item("Stat Bomb", "It does everything!\n\nDon't actually use this\n in the game.\n\n+1 To all equipment stats.", player, "equip");
+        item3.setEquipvals(1, 1, 1, 1, 1, 1, 1, "weapon");
+        equip.add(item3);
+    }
+
+    /**
      * Press a key?  Call this to do stuff!
      *
      * @param c which character you have pressed on the board
@@ -361,8 +377,9 @@ class Inventory implements java.io.Serializable {
         if (pressedA) {
             switch (newSelectY){
                 case 4:
-                    player.maxHP += 5;
-                    player.setHealth(player.maxHP);
+                    player.baseMaxHP += 5;
+                    player.setHealth(player.baseMaxHP);
+                    player.defineStats();
                     items.remove(potatoIndex);
                     break;
                 case 5:
@@ -414,7 +431,8 @@ class Inventory implements java.io.Serializable {
         genericItemListing(equip);
         indexX = 31;
 
-        dispInt(player.defense, 12, 17, true, new Color(150, 200, 200));
+        dispInt(player.defense, 15, 17, true, new Color(150, 200, 200));
+        dispInt(player.maxHealth, 25, 17, true, new Color(175, 255, 175));
         dispInt(player.allSpellBoost, 25, 18, true, new Color(255, 175, 175));
         dispInt(player.arcSpellBoost, 15, 19, false, new Color(100, 100, 255));
         dispInt(player.darkSpellBoost, 15, 20, false, new Color(125, 25, 155));
@@ -427,7 +445,9 @@ class Inventory implements java.io.Serializable {
         if (pressedA) {
             int index = newSelectY - 3 + ((page - 1) * 16);
             if (index < equip.size() && newSelectY < 19) {
+                int prevMaxHP = player.maxHealth;
                 player.equip(equip.get(index));
+                player.addHealth(player.maxHealth - prevMaxHP);
             }
             if (newSelectY == 21) {
                 jumpToNewMenu(topMenuLayer, TOP, "equip");
