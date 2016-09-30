@@ -69,8 +69,8 @@ public class Player extends Mortal implements java.io.Serializable {
     private String lastPainMessage = "None";
 
     //STATS
-    int baseMaxHP = 20;
-    int maxMana = 20;
+    int baseMaxHP = 150;
+    int maxMana = 150;
     int mana = maxMana;
     private int manaRegenClock = 0;
     int manaWait = 0;
@@ -387,7 +387,7 @@ public class Player extends Mortal implements java.io.Serializable {
         //String color = (upPressed|downPressed|leftPressed|rightPressed) ? "66ff66" : "80ff80";
         //color = (spacePressed) ? "33ff33" : color;
         //color = (ludicrousSpeed) ? "00b300" : color;
-        SpecialText playerIcon = new SpecialText("@",new Color (200, 255, 200));
+        SpecialText playerIcon = new SpecialText("@",new Color (150, 255, 100));
         orgo.editLayer(playerIcon, layerName, 1, 1);
         orgo.getLayer(layerName).setPos(y-1, x-1);
         centerCamera();
