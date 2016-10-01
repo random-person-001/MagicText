@@ -96,8 +96,8 @@ public class GameObject implements java.io.Serializable{
          return abs(x-m.getX()) + abs(y-m.getY());
      }
 
-    protected Mortal getClosestBadGuy(){
-         int closest = 50000000;
+    protected Mortal getClosestBadGuy(int range){
+         int closest = range;
          Mortal closestM = null;
          for (Mortal m : room.enemies) {
              if (!m.isGoodGuy() && distanceTo(m) < closest) {
@@ -105,7 +105,6 @@ public class GameObject implements java.io.Serializable{
                  closestM = m;
              }
          }
-        System.out.println(closestM.getLayerName());
          return closestM;
      }
 
@@ -119,9 +118,13 @@ public class GameObject implements java.io.Serializable{
       *  and go to "Sample Algorithm"
       *  It explains how it should work.
       */
-     protected void pathToPos(int followDist, int gotoX, int gotoY, String layerName) {
+
+     protected boolean shouldCheckForSolids = true;
+
+     protected void pathToPos(int followDist, int gotoX, int gotoY, String layerName, boolean isSolid) {
          if (withinDist(gotoX, gotoY, x, y, followDist)) {
-             room.removeFromObjHitMesh(x, y);
+             if (isSolid)
+                room.removeFromObjHitMesh(x, y);
              int stepsNeeded = createPathTo(gotoX, gotoY, followDist);
              //System.out.println(stepsNeeded);
              for (PathPoint pt : pathPts) {
@@ -132,8 +135,13 @@ public class GameObject implements java.io.Serializable{
                      break;
                  }
              }
-             room.addToObjHitMesh(x, y);
+             if (isSolid)
+                room.addToObjHitMesh(x, y);
          }
+     }
+
+     protected void pathToPos(int followDist, int gotoX, int gotoY, String layerName){
+         pathToPos(followDist, gotoX, gotoY, layerName, false);
      }
 
      private Set<PathPoint> pathPts = new HashSet<>();
@@ -174,7 +182,7 @@ public class GameObject implements java.io.Serializable{
      }
 
      private void attemptPoint(int x, int y, int counter){
-         if ((!room.isPlaceSolid(x, y))){
+         if (shouldCheckForSolids && (!room.isPlaceSolid(x, y))){
              newPts.add(new PathPoint(x, y, counter));
          }
      }

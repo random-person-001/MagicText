@@ -224,7 +224,6 @@ public class Room implements java.io.Serializable{
             for (GameObject obj : objs) {
                 try {
                     obj.setPause(set);
-                    //objManifest += obj.strClass + ", ";
                 } catch (NullPointerException e) {
                     System.out.println("[Room.java: setObjsPause(): caught nullpointer!  Probably Not Good!");
                     e.printStackTrace();
