@@ -92,6 +92,23 @@ public class GameObject implements java.io.Serializable{
         return y;
     }
 
+    protected int distanceTo(GameObject m){
+         return abs(x-m.getX()) + abs(y-m.getY());
+     }
+
+    protected Mortal getClosestBadGuy(){
+         int closest = 50000000;
+         Mortal closestM = null;
+         for (Mortal m : room.enemies) {
+             if (!m.isGoodGuy() && distanceTo(m) < closest) {
+                 closest = distanceTo(m);
+                 closestM = m;
+             }
+         }
+        System.out.println(closestM.getLayerName());
+         return closestM;
+     }
+
      /**
       * pathToPos, createPathTo, spreadPathPts, attemptPoint, and withinDist are all methods used in a path-finding
       * algorithm I found on the internet.

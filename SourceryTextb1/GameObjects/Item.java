@@ -41,6 +41,7 @@ public class Item implements java.io.Serializable {
     public int damage, range, healing, overheal, duration, cost = 0;
     private int armor, hpBoost, allBoost, arcBoost, fireBoost, iceBoost, darkBoost = 0;
     private boolean alting;
+    private boolean pathfinds = false;
     private Player player;
 
     public boolean isDmgSpell = false;
@@ -94,10 +95,11 @@ public class Item implements java.io.Serializable {
      * @param s1    state one (animation)
      * @param s2    state two (animation)
      */
-    public void dmgSpellDefine(int toD, int toR, int toC, String dMode, String s1, String s2) {
+    public void dmgSpellDefine(int toD, int toR, int toC, String dMode, SpecialText s1, SpecialText s2, boolean pathfinding) {
         setDmgRngCost(toD, toR, toC);
         setDescMode(dMode);
         setAnim(s1, s2);
+        pathfinds = pathfinding;
         System.out.println("Am I a damage spell?: " + isDmgSpell);
     }
 
@@ -133,6 +135,8 @@ public class Item implements java.io.Serializable {
     public boolean getAlting() {
         return alting;
     }
+
+    public boolean getPathfinding() { return pathfinds; }
 
     public void setAnim(String s1, String s2) {
         animation1 = new SpecialText(s1);

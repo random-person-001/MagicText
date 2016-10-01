@@ -140,14 +140,18 @@ public class Room implements java.io.Serializable{
      * @param killMessage if you are hurting a player, what do you want to be said upon their death?
      * @return whether there was an mortals there, and thus whether they got subtractHealth
      */
-    public boolean hurtSomethingAt(int x, int y, int damage, String killMessage) {
+    public boolean hurtSomethingAt(int x, int y, int damage, String killMessage, boolean fromPlayer) {
         for (Mortal e : enemies) {
-            if (e.getX() == x && e.getY() == y) {
+            if (e.getX() == x && e.getY() == y && !(fromPlayer && e.strClass.equals("Player"))) {
                 e.subtractHealth(damage, killMessage);
                 return true;
             }
         }
         return false;
+    }
+
+    public boolean hurtSomethingAt(int x, int y, int damage, String killMessage){
+        return hurtSomethingAt(x, y, damage, killMessage, false);
     }
 
     /**

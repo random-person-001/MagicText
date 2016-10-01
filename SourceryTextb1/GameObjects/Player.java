@@ -69,8 +69,8 @@ public class Player extends Mortal implements java.io.Serializable {
     private String lastPainMessage = "None";
 
     //STATS
-    int baseMaxHP = 150;
-    int maxMana = 150;
+    int baseMaxHP = 20;
+    int maxMana = 20;
     int mana = maxMana;
     private int manaRegenClock = 0;
     int manaWait = 0;
@@ -584,12 +584,12 @@ public class Player extends Mortal implements java.io.Serializable {
     }
 
     private void looseCastDmgSpell(int damage, Item spell) {
-        looseCastDmgSpell(damage, spell.range, spell.cost, spell.animation1, spell.animation2, spell.getAlting());
+        looseCastDmgSpell(damage, spell.range, spell.cost, spell.animation1, spell.animation2, spell.getAlting(), spell.getPathfinding());
     }
 
-    private void looseCastDmgSpell(int dmg, int rng, int cost, SpecialText anim1, SpecialText anim2, boolean alt) {
+    private void looseCastDmgSpell(int dmg, int rng, int cost, SpecialText anim1, SpecialText anim2, boolean alt, boolean tracking) {
         if (mana >= cost) {
-            room.addObject(new Spell(orgo, room, castingLayer, x, y, orientation, dmg, rng, anim1, anim2, alt));
+            room.addObject(new Spell(orgo, room, castingLayer, x, y, orientation, dmg, rng, anim1, anim2, alt, tracking));
             spendMana(cost);
             //System.out.println("The damage spell fired!");
         }

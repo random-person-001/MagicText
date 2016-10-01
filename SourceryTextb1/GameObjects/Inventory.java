@@ -141,6 +141,9 @@ class Inventory implements java.io.Serializable {
         Item item3 = new Item("Stat Bomb", "It does everything!\n\nDon't actually use this\n in the game.\n\n+1 To all equipment stats.", player, "equip");
         item3.setEquipvals(1, 1, 1, 1, 1, 1, 1, "weapon");
         equip.add(item3);
+        Item item5 = new Item("NeodymNeedle", "Arcane spell;\n\nA neodymium needle.\n\nIt homes in on enemies for you\n no aim required.", "NeoNd", player, "spell", true);
+        item5.dmgSpellDefine(6, 20, 7, "arcane", new SpecialText("\\"), new SpecialText("/"), true);
+        spells.add(item5);
         for (int ii = 0; ii < 4; ii++) {
             Item item4 = new Item("Carrot", "For some reason,\n they only grow\n in the mountains.\n\nNobody really know why.", player, "equip");
             item4.healItemDefine(6, 3);

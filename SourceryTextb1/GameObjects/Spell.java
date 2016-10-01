@@ -23,6 +23,7 @@ public class Spell extends GameObject{
     private String layerName;
     private int orientation = 0;
     private boolean dispAlting = false;
+    private boolean enemySeeking = false;
 
     /**
      * You can name and customize different spells.  Some presets are:
@@ -62,14 +63,23 @@ public class Spell extends GameObject{
     public Spell (ImageOrg org, Room theRoom, Layer place, int setX, int setY, int setOr, int setDmg, int setRng, SpecialText set1, SpecialText set2, boolean alting){
         this(org, theRoom, place.getName(), setX, setY, setOr, setDmg, setRng, set1, set2, alting);
     }
+    public Spell (ImageOrg org, Room theRoom, Layer place, int setX, int setY, int setOr, int setDmg, int setRng, SpecialText set1, SpecialText set2, boolean alting, boolean tracking){
+        this(org, theRoom, place.getName(), setX, setY, setOr, setDmg, setRng, set1, set2, alting);
+        enemySeeking = tracking;
+    }
     public Spell (ImageOrg org, Room theRoom, String setLayerName, int setX, int setY, int setOr, int setDmg, int setRng, SpecialText set1, SpecialText set2, boolean alting){
         strClass = "Spell";
         orgo = org;
         room = theRoom;
-        layerName = setLayerName;
 
         x = setX;
         y = setY;
+
+        layerName = room.makeUniqueLayerName("Spell");
+        Layer effect = new Layer(new String[1][1], layerName);
+        effect.setStr(0,0, " ");
+        effect.setPos(y, x);
+        orgo.addLayer(effect);
 
         orientation = setOr;
 
@@ -153,51 +163,59 @@ public class Spell extends GameObject{
     }
 
     @Override
-    public void update(){
-        orgo.editLayer(" ", layerName, y, x);
+    public void update() {
+        //orgo.editLayer(" ", layerName, 0, 0);
 
-        if (orientation >= 0 && orientation <= 3){
+        if (orientation >= 0 && orientation <= 3) {
             //System.out.println("A spell is traveling normally... (" + x + "," + y + ")");
         }
 
-        switch(orientation){
-            case 0:
-                y -= 1;
-                break;
-            case 1:
-                y += 1;
-                break;
-            case 2:
-                x -= 1;
-                break;
-            case 3:
-                x += 1;
-                break;
-            case -1: // Random dir
-                x += r(1)*2-1; // does not stay still; must move L or R
-                y += r(1)*2-1;
-                break;
-            default:
-                break;
+        if (enemySeeking) {
+            Mortal target = getClosestBadGuy();
+            pathToPos(range, target.getX(), target.getY(), layerName);
+        } else {
+            switch (orientation) {
+                case 0:
+                    y -= 1;
+                    break;
+                case 1:
+                    y += 1;
+                    break;
+                case 2:
+                    x -= 1;
+                    break;
+                case 3:
+                    x += 1;
+                    break;
+                case -1: // Random dir
+                    x += r(1) * 2 - 1; // does not stay still; must move L or R
+                    y += r(1) * 2 - 1;
+                    break;
+                default:
+                    break;
+            }
         }
 
         if (dispAlting) {
             if (x % 2 == 0 ^ y % 2 == 0) { //A really clever way to alternate between two characters ('^' means XOR)
-                orgo.editLayer(char1, layerName, y, x);
+                orgo.editLayer(char1, layerName, 0, 0);
             } else {
-                orgo.editLayer(char2, layerName, y, x);
+                orgo.editLayer(char2, layerName, 0, 0);
             }
         } else {
             if (orientation <= 1) { //Orientation-sensitive display
-                orgo.editLayer(char1, layerName, y, x);
+                orgo.editLayer(char1, layerName, 0, 0);
             } else {
-                orgo.editLayer(char2, layerName, y, x);
+                orgo.editLayer(char2, layerName, 0, 0);
             }
         }
 
-        boolean hitSomeOne = room.hurtSomethingAt(x, y, damage, killMessage);
+        orgo.getLayer(layerName).setPos(y,x);
+
+        boolean hitSomeOne = room.hurtSomethingAt(x, y, damage, killMessage, true);
         if (room.isPlaceSolid(x,y) || hitSomeOne || range == 0){
-            orgo.editLayer(" ", layerName, y, x);
+            orgo.editLayer(" ", layerName, 0, 0);
+            orgo.removeLayer(layerName);
             room.removeObject(this);
         }
         if (range > 0){

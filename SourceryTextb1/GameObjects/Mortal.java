@@ -135,7 +135,7 @@ public class Mortal extends GameObject implements java.io.Serializable{
         attack = newAttack;
     }
 
-    private boolean isGoodGuy(){ return isGoodGuy; }
+    protected boolean isGoodGuy(){ return isGoodGuy; }
     void makeGoodGuy(){ isGoodGuy = true; }
 
     private boolean checkDeath() {
@@ -164,10 +164,6 @@ public class Mortal extends GameObject implements java.io.Serializable{
         y = newY;
     }
 
-    protected int distanceTo(GameObject m){
-        return abs(x-m.getX()) + abs(y-m.getY());
-    }
-
     protected Mortal getClosestGoodGuy(){
         int closest = 50000000;
         Mortal closestM = null;
@@ -184,7 +180,7 @@ public class Mortal extends GameObject implements java.io.Serializable{
         pathToPos(followDist, gotoX, gotoY, layerName);
     }
 
-    
+
 
     private class dmgTimer extends TimerTask {
         @Override

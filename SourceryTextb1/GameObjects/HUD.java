@@ -143,11 +143,11 @@ class HUD implements java.io.Serializable {
                 } catch (StringIndexOutOfBoundsException e) {
                     putChar(" ");
                 }
-                try {
-                    putChar(String.valueOf(healthValue.charAt(2)));
-                    healthBig = true;
-                } catch (StringIndexOutOfBoundsException whenSmall) {
-                    putChar(" ");
+                if (healthBig) {
+                    if (player.getHealth() >= 100)
+                        putChar(String.valueOf(healthValue.charAt(2)));
+                    else
+                        putChar(" ");
                 }
                 for (int ii = 0; ii < 10; ii++) {
                     int fillPoint = (int) Math.ceil(((float) player.getHealth() / (float) player.maxHealth) * 10);
