@@ -6,12 +6,9 @@
 package SourceryTextb1.Rooms.TheSource;
 
 import SourceryTextb1.Art;
-import SourceryTextb1.GameObjects.LockedDoor;
+import SourceryTextb1.GameObjects.*;
 import SourceryTextb1.GameObjects.TheSource.PotOfPetunias;
 import SourceryTextb1.GameObjects.TheSource.Spider;
-import SourceryTextb1.GameObjects.DroppedItem;
-import SourceryTextb1.GameObjects.Player;
-import SourceryTextb1.GameObjects.Item;
 
 import SourceryTextb1.Rooms.Room;
 import SourceryTextb1.ImageOrg;
@@ -192,6 +189,11 @@ public class TutorialBasement extends Room {
         addObject(gKey);
         */
 
+        /*
+        Art art = new Art();
+        WaterPool testingPool = new WaterPool(this, new Layer(Art.strToArray(art.tutWaterPool), "", true, true), org, 31, 3);
+        addObject(testingPool);
+        */
     }
 
     @Override
