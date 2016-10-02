@@ -45,6 +45,8 @@ public class WaterPool extends GameObject{
         orgo = org;
         orgo.addLayer(puddle);
 
+        super.strClass = "WaterPool";
+
         setupTimer(100);
     }
 
@@ -59,12 +61,24 @@ public class WaterPool extends GameObject{
             //System.out.printf("[Water] Instance %1$d\n", iter);
             //iter++;
             if (!player.swimming){
-                player.waterEntry = 3;
+                player.waterEntry = 2;
                 player.swimming = true;
             }
         } else {
             player.swimming = false;
         }
 
+    }
+
+    /**
+     * Returns if there is water at a given x and y coordinate
+     * @param absX "absolute X" as in x,y of rooms.
+     * @param absY "absolute Y" (see above)
+     */
+    public boolean isWaterHere(int absX, int absY) {
+        int xdif = absX - x;
+        int ydif = absY - y;
+
+        return (xdif < puddleData.length && xdif >= 0 && ydif < puddleData[0].length && ydif >= 0 && puddleData[xdif][ydif]);
     }
 }

@@ -166,10 +166,14 @@ class HUD implements java.io.Serializable {
                 // Spell 1
                 putChar("(");
                 for (int ii = 0; ii < 5; ii++) {
-                    if (spell1Name[ii] == null)
-                        putChar(" ");
-                    else
-                        putChar(spell1Name[ii]);
+                    if (player.swimming){
+                        putChar(new SpecialText("-", new Color(255, 50, 50), new Color(25, 10, 10)));
+                    } else {
+                        if (spell1Name[ii] == null)
+                            putChar(" ");
+                        else
+                            putChar(spell1Name[ii]);
+                    }
                 }
                 putChar(")");
                 putChar(new SpecialText("D", new Color (255, 255, 200)));
@@ -177,10 +181,14 @@ class HUD implements java.io.Serializable {
                 // Spell 2
                 putChar("(");
                 for (int ii = 0; ii < 5; ii++) {
-                    if (spell2Name[ii] == null)
-                        putChar(" ");
-                    else
-                        putChar(spell2Name[ii]);
+                    if (player.swimming) {
+                        putChar(new SpecialText("-", new Color(255, 50, 50), new Color(25, 10, 10)));
+                    } else {
+                        if (spell2Name[ii] == null)
+                            putChar(" ");
+                        else
+                            putChar(spell2Name[ii]);
+                    }
                 }
                 putChar(")");
 

@@ -395,10 +395,11 @@ public class Player extends Mortal implements java.io.Serializable {
         if (!swimming)
             playerIcon = new SpecialText("@",new Color (150, 255, 100));
         else {
-            if (waterEntry == 1 || waterEntry == 3)
-                playerIcon = new SpecialText("v", new Color(255, 255, 255), new Color(70, 70, 200));
-            else if (waterEntry == 2)
-                playerIcon = new SpecialText("V", new Color(255, 255, 255), new Color(70, 70, 200));
+            if (waterEntry == 2)
+                playerIcon = new SpecialText("u", new Color(255, 255, 255), new Color(70, 70, 200));
+            else if (waterEntry == 1){
+                playerIcon = new SpecialText("Y", new Color(255, 255, 255), new Color(70, 70, 200));
+            }
             else
                 playerIcon = new SpecialText("@", new Color(100, 150, 255), new Color(65, 65, 200));
         }
@@ -553,7 +554,7 @@ public class Player extends Mortal implements java.io.Serializable {
                 room.queryForText(getX() - 1, getY());
                 break;
         }*/
-        // Query discussions in a '+' around you.  I don't like having to face it.  --Riley
+        // Query discussions in a '+' around you.  I don't like having to face it.  --Riley;  Okay ---Jared
         room.queryForText(getX() - 1, getY());
         room.queryForText(getX() + 1, getY());
         room.queryForText(getX(), getY() - 1);
@@ -561,31 +562,33 @@ public class Player extends Mortal implements java.io.Serializable {
     }
 
     private void newCastSpell(Item spell) {
-        if (spell.isDmgSpell) {
-            int damage = spell.damage + allSpellBoost;
-            switch (spell.getDescMode()) {
-                case "arcane":
-                    damage += arcSpellBoost;
-                    break;
-                case "fire":
-                    damage += fireSpellBoost;
-                    break;
-                case "ice":
-                    damage += iceSpellBoost;
-                    break;
-                case "dark":
-                    damage += darkSpellBoost;
-                    break;
-            }
-            looseCastDmgSpell(damage, spell);
-        } else {
-            switch (spell.getName()) {
-                case "Heal":
-                    if (mana >= spell.cost) {
-                        restoreHealth(8);
-                        spendMana(spell.cost);
-                    }
-                    break;
+        if (!swimming) { //Swimming AND casting spells at the same time?!?!?! That's too much, man!
+            if (spell.isDmgSpell) {
+                int damage = spell.damage + allSpellBoost;
+                switch (spell.getDescMode()) {
+                    case "arcane":
+                        damage += arcSpellBoost;
+                        break;
+                    case "fire":
+                        damage += fireSpellBoost;
+                        break;
+                    case "ice":
+                        damage += iceSpellBoost;
+                        break;
+                    case "dark":
+                        damage += darkSpellBoost;
+                        break;
+                }
+                looseCastDmgSpell(damage, spell);
+            } else {
+                switch (spell.getName()) {
+                    case "Heal":
+                        if (mana >= spell.cost) {
+                            restoreHealth(8);
+                            spendMana(spell.cost);
+                        }
+                        break;
+                }
             }
         }
     }

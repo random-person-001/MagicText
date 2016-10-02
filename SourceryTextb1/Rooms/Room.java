@@ -440,6 +440,17 @@ public class Room implements java.io.Serializable{
         emptyAllHitMeshes();
     }
 
+    public boolean checkForWater (int x, int y){
+        boolean result = false;
+        for (GameObject obj : objs){
+            if (obj.strClass.equals("WaterPool")){
+                WaterPool pool = (WaterPool)obj;
+                result |= pool.isWaterHere(x,y);
+            }
+        }
+        return result;
+    }
+
     /**
      * Initialize some universal layers and stuff.  Generally call this at the end of setting up a room, lest the
      * spells, player, and HUD layers be placed below others.

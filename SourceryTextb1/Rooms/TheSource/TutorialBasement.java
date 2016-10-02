@@ -177,6 +177,7 @@ public class TutorialBasement extends Room {
         addMortal(flowers);
 
         Spider spoidur = new Spider(this, 39, 7);
+        //Spider spoidur = new Spider(this, 15, 29);
         addMortal(spoidur);
 
         /*
@@ -189,11 +190,12 @@ public class TutorialBasement extends Room {
         addObject(gKey);
         */
 
-
+        //Enable this to play around with water
+        /*
         Art art = new Art();
-        WaterPool testingPool = new WaterPool(this, new Layer(Art.strToArray(art.tutWaterPool), "", true, true), org, 3, 31);
+        WaterPool testingPool = new WaterPool(this, new Layer(Art.strToArray(art.tutWaterPool), "", true, false), org, 3, 31);
         addObject(testingPool);
-
+        */
     }
 
     @Override

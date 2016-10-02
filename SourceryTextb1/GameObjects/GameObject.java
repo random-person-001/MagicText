@@ -120,7 +120,7 @@ public class GameObject implements java.io.Serializable{
       */
 
      protected void pathToPos(int followDist, int gotoX, int gotoY, String layerName) {
-         pathToPos(followDist, gotoX, gotoY, layerName, false);
+         pathToPos(followDist, gotoX, gotoY, layerName, true);
      }
 
      protected void pathToPos(int followDist, int gotoX, int gotoY, String layerName, boolean isSolid) {
@@ -180,7 +180,7 @@ public class GameObject implements java.io.Serializable{
      }
 
      private void attemptPoint(int x, int y, int counter){
-         if ((!room.isPlaceSolid(x, y))){
+         if ((!room.isPlaceSolid(x, y) && !room.checkForWater(x,y))){
              newPts.add(new PathPoint(x, y, counter));
          }
      }
