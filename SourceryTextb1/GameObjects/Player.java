@@ -54,6 +54,9 @@ public class Player extends Mortal implements java.io.Serializable {
     private final int LEFT = 2;
     private final int RIGHT = 3;
 
+    public boolean swimming = false;
+    public int waterEntry = 0;
+
     boolean upPressed, downPressed, leftPressed, rightPressed, spacePressed = false;
     private int movecount = 0;
     boolean ludicrousSpeed = false;
@@ -244,27 +247,28 @@ public class Player extends Mortal implements java.io.Serializable {
             movespeed = 1;
             spendingManaToSprint = true;
         }
-        if(isGhost){
-            movespeed = 1;
-        }
-        if(ludicrousSpeed){
-            movespeed = 0;
-        }
+        if (swimming)      movespeed = 7;
+        if(isGhost)        movespeed = 1;
+        if(ludicrousSpeed) movespeed = 0;
         if (movecount == 0) {
-            if (upPressed) {
-                move(UP);
-            }
-            if (downPressed) {
-                move(DOWN);
-            }
-            if (leftPressed) {
-                move(LEFT);
-            }
-            if (rightPressed) {
-                move(RIGHT);
-            }
-            if ((upPressed || leftPressed || rightPressed || downPressed) && spendingManaToSprint){
-                spendMana(1);
+            if (waterEntry == 0) {
+                if (upPressed) {
+                    move(UP);
+                }
+                if (downPressed) {
+                    move(DOWN);
+                }
+                if (leftPressed) {
+                    move(LEFT);
+                }
+                if (rightPressed) {
+                    move(RIGHT);
+                }
+                if ((upPressed || leftPressed || rightPressed || downPressed) && spendingManaToSprint) {
+                    spendMana(1);
+                }
+            } else {
+                waterEntry--;
             }
         }
         if (!(upPressed || downPressed || leftPressed || rightPressed) || (movecount >= movespeed)) {
@@ -387,7 +391,17 @@ public class Player extends Mortal implements java.io.Serializable {
         //String color = (upPressed|downPressed|leftPressed|rightPressed) ? "66ff66" : "80ff80";
         //color = (spacePressed) ? "33ff33" : color;
         //color = (ludicrousSpeed) ? "00b300" : color;
-        SpecialText playerIcon = new SpecialText("@",new Color (150, 255, 100));
+        SpecialText playerIcon = new SpecialText(" ");
+        if (!swimming)
+            playerIcon = new SpecialText("@",new Color (150, 255, 100));
+        else {
+            if (waterEntry == 1 || waterEntry == 3)
+                playerIcon = new SpecialText("v", new Color(255, 255, 255), new Color(70, 70, 200));
+            else if (waterEntry == 2)
+                playerIcon = new SpecialText("V", new Color(255, 255, 255), new Color(70, 70, 200));
+            else
+                playerIcon = new SpecialText("@", new Color(100, 150, 255), new Color(65, 65, 200));
+        }
         orgo.editLayer(playerIcon, layerName, 1, 1);
         orgo.getLayer(layerName).setPos(y-1, x-1);
         centerCamera();

@@ -189,11 +189,11 @@ public class TutorialBasement extends Room {
         addObject(gKey);
         */
 
-        /*
+
         Art art = new Art();
-        WaterPool testingPool = new WaterPool(this, new Layer(Art.strToArray(art.tutWaterPool), "", true, true), org, 31, 3);
+        WaterPool testingPool = new WaterPool(this, new Layer(Art.strToArray(art.tutWaterPool), "", true, true), org, 3, 31);
         addObject(testingPool);
-        */
+
     }
 
     @Override
