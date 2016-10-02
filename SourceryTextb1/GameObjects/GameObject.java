@@ -96,17 +96,16 @@ public class GameObject implements java.io.Serializable{
          return abs(x-m.getX()) + abs(y-m.getY());
      }
 
-    protected Mortal getClosestBadGuy(){
-         int closest = 50000000;
-         Mortal closestM = null;
-         for (Mortal m : room.enemies) {
-             if (!m.isGoodGuy() && distanceTo(m) < closest) {
-                 closest = distanceTo(m);
-                 closestM = m;
-             }
-         }
-        System.out.println(closestM.getLayerName());
-         return closestM;
+    protected Mortal getClosestBadGuy(int range){
+        int closest = range;
+        Mortal closestM = null;
+        for (Mortal m : room.enemies) {
+            if (!m.isGoodGuy() && distanceTo(m) < closest) {
+                closest = distanceTo(m);
+                closestM = m;
+            }
+        }
+        return closestM;
      }
 
      /**
@@ -119,9 +118,15 @@ public class GameObject implements java.io.Serializable{
       *  and go to "Sample Algorithm"
       *  It explains how it should work.
       */
+
      protected void pathToPos(int followDist, int gotoX, int gotoY, String layerName) {
+         pathToPos(followDist, gotoX, gotoY, layerName, false);
+     }
+
+     protected void pathToPos(int followDist, int gotoX, int gotoY, String layerName, boolean isSolid) {
          if (withinDist(gotoX, gotoY, x, y, followDist)) {
-             room.removeFromObjHitMesh(x, y);
+             if (isSolid)
+                room.removeFromObjHitMesh(x, y);
              int stepsNeeded = createPathTo(gotoX, gotoY, followDist);
              //System.out.println(stepsNeeded);
              for (PathPoint pt : pathPts) {
@@ -132,7 +137,8 @@ public class GameObject implements java.io.Serializable{
                      break;
                  }
              }
-             room.addToObjHitMesh(x, y);
+             if (isSolid)
+                room.addToObjHitMesh(x, y);
          }
      }
 

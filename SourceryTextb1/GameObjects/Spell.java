@@ -170,30 +170,21 @@ public class Spell extends GameObject{
             //System.out.println("A spell is traveling normally... (" + x + "," + y + ")");
         }
 
+        boolean hitSomeOne = false;
+
         if (enemySeeking) {
-            Mortal target = getClosestBadGuy();
-            pathToPos(range, target.getX(), target.getY(), layerName);
-        } else {
-            switch (orientation) {
-                case 0:
-                    y -= 1;
-                    break;
-                case 1:
-                    y += 1;
-                    break;
-                case 2:
-                    x -= 1;
-                    break;
-                case 3:
-                    x += 1;
-                    break;
-                case -1: // Random dir
-                    x += r(1) * 2 - 1; // does not stay still; must move L or R
-                    y += r(1) * 2 - 1;
-                    break;
-                default:
-                    break;
+            Mortal target = getClosestBadGuy(range);
+            if (target != null) {
+                pathToPos(range, target.getX(), target.getY(), layerName);
+                if (Math.abs(target.getX() - x) + Math.abs(target.getY() - y) <= 1){
+                    target.subtractHealth(damage, killMessage);
+                    hitSomeOne = true;
+                }
+            } else {
+                doMovement();
             }
+        } else {
+            doMovement();
         }
 
         if (dispAlting) {
@@ -212,7 +203,8 @@ public class Spell extends GameObject{
 
         orgo.getLayer(layerName).setPos(y,x);
 
-        boolean hitSomeOne = room.hurtSomethingAt(x, y, damage, killMessage, true);
+        if (!hitSomeOne)
+            hitSomeOne = room.hurtSomethingAt(x, y, damage, killMessage, true);
         if (room.isPlaceSolid(x,y) || hitSomeOne || range == 0){
             orgo.editLayer(" ", layerName, 0, 0);
             orgo.removeLayer(layerName);
@@ -220,6 +212,29 @@ public class Spell extends GameObject{
         }
         if (range > 0){
             range --;
+        }
+    }
+
+    protected void doMovement(){
+        switch (orientation) {
+            case 0:
+                y -= 1;
+                break;
+            case 1:
+                y += 1;
+                break;
+            case 2:
+                x -= 1;
+                break;
+            case 3:
+                x += 1;
+                break;
+            case -1: // Random dir
+                x += r(1) * 2 - 1; // does not stay still; must move L or R
+                y += r(1) * 2 - 1;
+                break;
+            default:
+                break;
         }
     }
 
