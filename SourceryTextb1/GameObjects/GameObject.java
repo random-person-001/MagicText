@@ -97,15 +97,15 @@ public class GameObject implements java.io.Serializable{
      }
 
     protected Mortal getClosestBadGuy(int range){
-         int closest = range;
-         Mortal closestM = null;
-         for (Mortal m : room.enemies) {
-             if (!m.isGoodGuy() && distanceTo(m) < closest) {
-                 closest = distanceTo(m);
-                 closestM = m;
-             }
-         }
-         return closestM;
+        int closest = range;
+        Mortal closestM = null;
+        for (Mortal m : room.enemies) {
+            if (!m.isGoodGuy() && distanceTo(m) < closest) {
+                closest = distanceTo(m);
+                closestM = m;
+            }
+        }
+        return closestM;
      }
 
      /**
@@ -119,7 +119,9 @@ public class GameObject implements java.io.Serializable{
       *  It explains how it should work.
       */
 
-     protected boolean shouldCheckForSolids = true;
+     protected void pathToPos(int followDist, int gotoX, int gotoY, String layerName) {
+         pathToPos(followDist, gotoX, gotoY, layerName, false);
+     }
 
      protected void pathToPos(int followDist, int gotoX, int gotoY, String layerName, boolean isSolid) {
          if (withinDist(gotoX, gotoY, x, y, followDist)) {
@@ -138,10 +140,6 @@ public class GameObject implements java.io.Serializable{
              if (isSolid)
                 room.addToObjHitMesh(x, y);
          }
-     }
-
-     protected void pathToPos(int followDist, int gotoX, int gotoY, String layerName){
-         pathToPos(followDist, gotoX, gotoY, layerName, false);
      }
 
      private Set<PathPoint> pathPts = new HashSet<>();
@@ -182,7 +180,7 @@ public class GameObject implements java.io.Serializable{
      }
 
      private void attemptPoint(int x, int y, int counter){
-         if (shouldCheckForSolids && (!room.isPlaceSolid(x, y))){
+         if ((!room.isPlaceSolid(x, y))){
              newPts.add(new PathPoint(x, y, counter));
          }
      }

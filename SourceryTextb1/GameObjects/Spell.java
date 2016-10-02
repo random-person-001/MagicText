@@ -174,15 +174,14 @@ public class Spell extends GameObject{
 
         if (enemySeeking) {
             Mortal target = getClosestBadGuy(range);
-            if (target == null){
-                System.out.printf("No enemy found! (Dir: %1$d)\n", orientation);
-                doMovement();
-            } else {
-                System.out.printf("Enemy found! (Name: %1$s)\n", target.strClass);
-                pathToPos(range, target.getX(), target.getY(), layerName, false);
-                if (Math.abs(x - target.getX()) + Math.abs(y - target.getY()) <= 1) {
-                    hitSomeOne = room.hurtSomethingAt(target.getX(), target.getY(), damage, killMessage, true);
+            if (target != null) {
+                pathToPos(range, target.getX(), target.getY(), layerName);
+                if (Math.abs(target.getX() - x) + Math.abs(target.getY() - y) <= 1){
+                    target.subtractHealth(damage, killMessage);
+                    hitSomeOne = true;
                 }
+            } else {
+                doMovement();
             }
         } else {
             doMovement();
@@ -215,7 +214,8 @@ public class Spell extends GameObject{
             range --;
         }
     }
-    private void doMovement(){
+
+    protected void doMovement(){
         switch (orientation) {
             case 0:
                 y -= 1;
@@ -234,7 +234,6 @@ public class Spell extends GameObject{
                 y += r(1) * 2 - 1;
                 break;
             default:
-                System.out.printf("A spell (hint: %1$s & %2$s) is not moving anywhere!!!\n", char1.getStr(), char2.getStr());
                 break;
         }
     }

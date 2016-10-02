@@ -27,7 +27,7 @@ public class Room implements java.io.Serializable{
     private List<GameObject> addList = new ArrayList<>();
     private List<GameObject> removeList = new ArrayList<>();
     public List<Mortal> enemies = new ArrayList<>();
-    public List<Player> players = new ArrayList<>();
+    public List<Player> players = new ArrayList<Player>();
     public HashMap storedStuff = new HashMap<String, Integer>();
     private boolean[][] objHitMesh;
     private boolean[][] baseHitMesh;
@@ -35,7 +35,7 @@ public class Room implements java.io.Serializable{
     private List<FlavorText> flavorTexts = new ArrayList<>();
     private List<FlavorText> messageQueue = new ArrayList<>();
 
-    public Player playo;
+    public Player playo = null;
 
 
     public int foodEaten = 0;
@@ -94,6 +94,8 @@ public class Room implements java.io.Serializable{
         }
         return exit;
     }
+
+
 
     /**
      * After a time, all objects' timers will cancel.

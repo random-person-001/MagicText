@@ -592,6 +592,10 @@ public class Art implements java.io.Serializable{
             "                                                                  |    #$##%      ,#%#    %#|                                           \n" +
             "                                                                  0-------------------------0                                           \n";
 
+    public String tutWaterPool =
+            "W      \n" +
+            "WWW    \n" +
+            "WWWWWW \n";
     public String sourcePit =
             "                                                                                                                                                             \n" +
             "                                                                                                                                                             \n" +
