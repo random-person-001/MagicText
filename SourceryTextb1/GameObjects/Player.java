@@ -66,7 +66,6 @@ public class Player extends Mortal implements java.io.Serializable {
     private String aimDispName = "aimDisp";
     public Layer castingLayer;
 
-    private int superCheatProgress = 0;
     private Color restingBackground = Color.black;
     boolean isGhost = false; //For debug reasons
     private String lastPainMessage = "None";
@@ -491,20 +490,6 @@ public class Player extends Mortal implements java.io.Serializable {
      */
     void keyPressed(char key) {
         switch (Character.toLowerCase(key)) {
-            /*
-            case '©':
-                move(UP);
-                break;
-            case 'µ':
-                move(LEFT);
-                break;
-            case '®':
-                move(DOWN);
-                break;
-            case 'æ':
-                move(RIGHT);
-                break;
-                */
             case 'b':
                 autonomous = !autonomous;
                 break;
@@ -535,7 +520,6 @@ public class Player extends Mortal implements java.io.Serializable {
                 System.out.print(key);
         }
         graphicUpdate();
-        checkCheatProgress(key);
     }
 
     private void textBoxQuery() {
@@ -643,86 +627,6 @@ public class Player extends Mortal implements java.io.Serializable {
         } else {
             orgo.getWindow().txtArea.setBackground(restingBackground);
         }
-    }
-
-    /**
-     * Tracker for Up up down down left right left right b a [whatever] cheat.
-     *
-     * @param c character that was pressed
-     */
-    private void checkCheatProgress(char c) {
-        //System.out.println(superCheatProgress);
-        if (superCheatProgress > 9) {
-            // Yay!
-            room.foodEaten += 42;
-            technicolorIndex = 16;
-            superCheatProgress = 0;
-        }
-        //System.out.println(c);
-        switch (superCheatProgress) {
-            case 0:
-                if (c == '©') {
-                    superCheatProgress++;
-                    return;
-                }
-                break;
-            case 1:
-                if (c == '©') {
-                    superCheatProgress++;
-                    return;
-                }
-                break;
-            case 2:
-                if (c == '®') {
-                    superCheatProgress++;
-                    return;
-                }
-                break;
-            case 3:
-                if (c == '®') {
-                    superCheatProgress++;
-                    return;
-                }
-                break;
-            case 4:
-                if (c == 'µ') {
-                    superCheatProgress++;
-                    return;
-                }
-                break;
-            case 5:
-                if (c == 'æ') {
-                    superCheatProgress++;
-                    return;
-                }
-                break;
-            case 6:
-                if (c == 'µ') {
-                    superCheatProgress++;
-                    return;
-                }
-                break;
-            case 7:
-                if (c == 'æ') {
-                    superCheatProgress++;
-                    return;
-                }
-                break;
-            case 8:
-                if (c == 'b') {
-                    superCheatProgress++;
-                    return;
-                }
-                break;
-            case 9:
-                if (c == 'a') {
-                    superCheatProgress++;
-                    return;
-                }
-                break;
-        }
-        //System.out.println("No!  You messed up.");
-        superCheatProgress = 0;
     }
 
     String getPrimarySpell() {

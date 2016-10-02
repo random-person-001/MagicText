@@ -103,7 +103,7 @@ class WindowConfig {
                 setSize(430, 490);
                 break;
             case '2':
-                setSize(375, 400);
+                setSize(416, 478);
                 break;
             case '3':
                 setSize(1312, 786);
