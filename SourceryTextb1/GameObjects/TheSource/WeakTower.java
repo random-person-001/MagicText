@@ -52,7 +52,7 @@ public class WeakTower extends Mortal {
     }
 
     @Override
-    protected void onDeath(){
+    public void onDeath(){
         orgo.removeLayer(layerName);
     }
 }

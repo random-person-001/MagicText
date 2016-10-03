@@ -44,6 +44,10 @@ public class Room implements java.io.Serializable{
     protected int index;
     public String exitCode = "";
 
+    /**
+     * @param username a String by which the desired Player identifies
+     * @return the Player in the room if there is one with the username, else null
+     */
     public Player getPlayer(String username){
         for (Player p : players){
             if (p.getUsername().equals(username)){
@@ -51,6 +55,69 @@ public class Room implements java.io.Serializable{
             }
         }
         return null;
+    }
+
+    /**
+     * For a distributed multiplayer
+     *
+     * @param masterObjs a list to synch with
+     * @param masterMortals a list to synch with also
+     */
+    public void synchObjectsWith(List<GameObject> masterObjs, List<Mortal> masterMortals){
+        //First add to our list
+        for (GameObject theirs : masterObjs){
+            boolean matches = false;
+            for (GameObject ours : objs){
+                if (!theirs.equals(ours)){
+                    matches = true;
+                }
+            }
+            if (!matches && !theirs.strClass.equals("HUD")){
+                addObject(theirs);
+                // theirs.onAddToRoom();
+            }
+        }
+        for (Mortal theirs : masterMortals){
+            boolean matches = false;
+            for (Mortal ours : enemies){
+                if (!theirs.equals(ours)){
+                    matches = true;
+                }
+            }
+            if (!matches && !theirs.strClass.equals("HUD")){
+                addObject(theirs);
+                // theirs.onAddToRoom();
+            }
+        }
+
+        // Then remove from our list
+        for (Mortal ours : enemies){
+            if (!(ours.strClass.contains("DroppedItem") || ours.strClass.contains("Player"))) {
+                boolean matches = false;
+                for (Mortal theirs : masterMortals) {
+                    if (!theirs.equals(ours)) {
+                        matches = true;
+                    }
+                }
+                if (!matches) {
+                    removeMortal(ours);
+                    ours.onDeath();
+                }
+            }
+        }
+        for (GameObject ours : objs){
+            if (!(ours.strClass.contains("DroppedItem") || ours.strClass.contains("Player"))) {
+                boolean matches = false;
+                for (GameObject theirs : masterObjs) {
+                    if (!theirs.equals(ours)) {
+                        matches = true;
+                    }
+                }
+                if (!matches) {
+                    removeObject(ours);
+                }
+            }
+        }
     }
 
     /**
@@ -79,10 +146,23 @@ public class Room implements java.io.Serializable{
     /**
      * Enter the room. IE, start loops and stuff now.
      */
-    public String enter(){
+    public String enter(GameInstance master){
+        Timer objSynchTimer = new Timer();
         playo.frozen = false;
         setObjsPause(false);
+        if (master != null){
+            System.out.println("Room tied to master.");
+            objSynchTimer.scheduleAtFixedRate(new TimerTask() {
+                @Override
+                public void run() throws StringIndexOutOfBoundsException, NullPointerException {
+                    synchObjectsWith(master.getObjs(), master.getMortals());
+                }
+            }, 0, 100);
+        }
         String exit = loop();
+        if (master != null){
+            objSynchTimer.cancel();
+        }
         playo.frozen = true;
         System.out.println(exit);
         System.out.println(exitCode);

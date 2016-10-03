@@ -45,7 +45,7 @@ public class Bandit extends Mortal {
     }
 
     @Override
-    protected void onDeath(){
+    public void onDeath(){
         orgo.removeLayer(layerName);
     }
 }

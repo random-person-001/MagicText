@@ -47,7 +47,7 @@ public class Spider extends Mortal {
     }
 
     @Override
-    protected void onDeath(){
+    public void onDeath(){
         orgo.removeLayer(layerName);
         room.addObject(droppedItem);
     }

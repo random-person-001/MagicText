@@ -73,20 +73,19 @@ class MainMenu {
                         starter.doIntro();
                     }
                     if (cursorY == 9) {
-                        starter.newGame();
+                        System.out.println("\n\nNEW GAME!!!\n\n");
+                        starter.newGame(1);
                         //finished = true;
-                        try {
-                            Thread.sleep(2000);
-                        } catch (InterruptedException ignore) {}
-                        org.removeAllButPlayer();
-                        org.removeLayer("playerLayer");
-                        window.txtArea.setForeground(Color.WHITE);
-                        org.setCam(0,0);
                     }
-                    if (cursorY == 10 && loadGame()) {
+                    if (cursorY == 10) {
+                        System.out.println("\n\nNEW MULTIPLAYER GAME!!!\n\n");
+                        starter.newGame(2);
+                        //finished = true;
+                    }
+                    if (cursorY == 11 && loadGame()) {
                         finished = true;
                     }
-                    if (cursorY == 11) {
+                    if (cursorY == 12) {
                         // Do window size adjustment, interactively, and wait until it is done
                         wincnfg.config(true);
                         while (!wincnfg.doContinue) {
@@ -97,7 +96,7 @@ class MainMenu {
                             }
                         }
                     }
-                    if (cursorY == 12) {
+                    if (cursorY == 13) {
                         System.exit(0);
                     }
                     if (!finished) {
@@ -109,9 +108,9 @@ class MainMenu {
             keyCode = 0;
 
             if (cursorY <= 7) {
-                cursorY = 12;
+                cursorY = 13;
             }
-            if (cursorY >= 13) {
+            if (cursorY >= 14) {
                 cursorY = 8;
             }
 

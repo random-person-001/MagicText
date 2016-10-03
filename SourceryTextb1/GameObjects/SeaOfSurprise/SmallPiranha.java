@@ -93,7 +93,7 @@ public class SmallPiranha extends Mortal{
     }
 
     @Override
-    protected void onDeath(){
+    public void onDeath(){
         orgo.removeLayer(layerName);
         if (orgo.getDebug()) {
             System.out.println("AAAAAaaaack, a piranha died.");

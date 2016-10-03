@@ -322,7 +322,7 @@ class HUD implements java.io.Serializable {
      *     after 'sudo' to execute that command with root privileges, however there isn't much difference anymore :(
      */
 
-    void processCommand() {
+    private void processCommand() {
         Room room = player.room;
         boolean executeNextCommand = false;
         System.out.println("Nxt cmd: " + nextCommand);
@@ -709,7 +709,7 @@ class HUD implements java.io.Serializable {
         }
     }
 
-    public void cancelTimer(){
+    private void cancelTimer(){
         try {
             timer.cancel();
             timer.purge();

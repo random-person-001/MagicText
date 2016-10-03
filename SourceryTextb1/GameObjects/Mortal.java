@@ -155,7 +155,7 @@ public class Mortal extends GameObject implements java.io.Serializable{
      * Override this method to put fun stuff (like drops) to happen once you die.  Timer cancelling and putting
      * a space where the Mortal used to be and removing it from room is already taken care of; don't worry be happy
      */
-    protected void onDeath(){
+    public void onDeath(){
     }
 
     public void goTo(int newX, int newY) {

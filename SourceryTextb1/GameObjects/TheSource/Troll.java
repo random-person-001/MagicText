@@ -81,7 +81,7 @@ public class Troll extends Mortal {
     }
 
     @Override
-    protected void onDeath(){
+    public void onDeath(){
         orgo.removeLayer(layerName);
         System.out.println("AAAAAaaaack, a troll died.");
         //room.addObject(itemOnDrop);

@@ -5,14 +5,12 @@
  */
 package SourceryTextb1.UserScreens;
 
-import SourceryTextb1.Art;
+import SourceryTextb1.*;
 import SourceryTextb1.GameObjects.Player;
-import SourceryTextb1.ImageOrg;
-import SourceryTextb1.Layer;
+import SourceryTextb1.GameObjects.TheSource.Troll;
 import SourceryTextb1.Rooms.TheSource.*;
 import SourceryTextb1.Rooms.NewTestRoom;
 import SourceryTextb1.Rooms.Room;
-import SourceryTextb1.Window;
 
 import java.util.*;
 import java.awt.Color;
@@ -42,9 +40,12 @@ public class Start {
             playerList = new ArrayList<>();
             playerList.add(player);
             NewTestRoom rooma = new NewTestRoom(player);
-            prepLevel(org, game, rooma);
+            org.removeAllButPlayer();
+            game.clearImage();
+            rooma.ownID = "Tutorial";
+            player.setRoom(rooma);
             rooma.startup();
-            rooma.enter();
+            rooma.enter(null);
         } else {
             WindowConfig wincnfg = new WindowConfig(org);
             wincnfg.config(false);
@@ -52,15 +53,6 @@ public class Start {
             Timer time = new Timer();
             time.schedule(new StartCheck(wincnfg), 50, 100);
         }
-    }
-
-    private static void runGame(){
-        HashMap<String, Room> zone1Rooms = initializeZone1Rooms();
-        while (!roomID.equals("die")) {
-            System.out.println("Entering the room '" + roomID + "'");
-            doLevel(zone1Rooms.get(roomID));  // This is so slick!
-        }
-        System.out.println("\nBetter luck next time!");
     }
 
     /**
@@ -78,22 +70,6 @@ public class Start {
         rooms.forEach((s, room) -> room.setObjsPause(true));
         rooms.forEach((s, r) -> r.players.add(player));
         return rooms;
-    }
-
-    private static void doLevel(Room r){
-        prepLevel(org, game, r);
-        r.startup();
-        r.setObjsPause(false);
-        roomID = r.enter();
-    }
-
-    private static void prepLevel(ImageOrg org, Window game, Room newRoom){
-        org.removeAllButPlayer();
-        game.clearImage();
-        newRoom.ownID = roomID;
-        for (Player p : playerList){
-            p.setRoom(newRoom);
-        }
     }
 
     private static void introText(String text, int offset, int line){
@@ -330,17 +306,65 @@ public class Start {
             lock = toCheck;
         }
 
-        void newGame(){
+        void newGame(int numPlayers){
+            if (numPlayers < 1){
+                return;
+            }
             player = new Player(org);
             playerList = new ArrayList<>();
             playerList.add(player);
-            roomID = "Tutorial";
-            runGame();
+            //makeNewWindow();
+            player.roomName = "Tutorial";
+            GameInstance masterInstance = new GameInstance(initializeZone1Rooms(), player);
+            new Timer().schedule(new TimerTask() {
+                @Override
+                public void run() throws StringIndexOutOfBoundsException, NullPointerException {
+                    masterInstance.runGame();
+                }
+            }, 10);
+
+            // For multiplayer
+            for (int i=1; i<numPlayers; i++) {
+                System.out.println("Adding multiplayer player #"+i);
+                makeNewWindow();
+                playerList.add(player);
+                player.roomName = "Tutorial";
+                GameInstance instance = new GameInstance(initializeZone1Rooms(), player);
+                instance.runGame(masterInstance);
+                new Timer().schedule(new TimerTask() {
+                    @Override
+                    public void run() throws StringIndexOutOfBoundsException, NullPointerException {
+                        instance.runGame(masterInstance);
+                    }
+                }, 110);
+            }
+
+            // Only return from method when game finished.
+            while (true){
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    return;
+                }
+                if (masterInstance.getRoomID().equals("die")){
+                    return;
+                }
+            }
+        }
+
+        /**
+         * For internal use: set respective variables to new instances of Window, ImageOrg, and Player that know about
+         * each other.
+         */
+        private void makeNewWindow(){
+            game = new Window();
+            org = new ImageOrg(game);
+            player = new Player(org);
         }
 
         void buildGame(Player imported){
-            roomID = imported.roomName;
-            System.out.println(Start.roomID);
+            //roomID = imported.roomName;
+            //System.out.println(Start.roomID);
             player = imported;
             playerList = new ArrayList<>();
             playerList.add(imported);
@@ -350,7 +374,8 @@ public class Start {
             org.resetClock();
             org.printLayers();
             player.resumeFromSave();
-            runGame();
+            GameInstance i = new GameInstance(initializeZone1Rooms(), player);
+            i.runGame();
         }
 
         public void run(){
