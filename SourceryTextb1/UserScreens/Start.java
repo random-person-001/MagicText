@@ -24,7 +24,6 @@ public class Start {
     private static boolean doDemo = false;
     private static Window game;
     private static ImageOrg org;
-    protected static Player player;
     private static List<Player> playerList; // for multiplayer!
     private static String roomID;
 
@@ -59,7 +58,7 @@ public class Start {
      * @return a hashmap of all the levels in Zone 1, initialized, NOT startuped, paused, and paired with their string.
      * representation.
      */
-    private static HashMap<String, Room> initializeZone1Rooms() {
+    private static HashMap<String, Room> initializeZone1Rooms(Player player) {
         HashMap<String, Room> rooms = new HashMap<>();
         rooms.put("Tutorial", new TutorialBasement(player));
         rooms.put("SourcePit", new SourcePit(player));
@@ -310,12 +309,12 @@ public class Start {
             if (numPlayers < 1){
                 return;
             }
-            player = new Player(org);
+            Player player = new Player(org);
             playerList = new ArrayList<>();
             playerList.add(player);
             //makeNewWindow();
             player.roomName = "Tutorial";
-            GameInstance masterInstance = new GameInstance(initializeZone1Rooms(), player);
+            GameInstance masterInstance = new GameInstance(initializeZone1Rooms(player), player);
             new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() throws StringIndexOutOfBoundsException, NullPointerException {
@@ -327,9 +326,10 @@ public class Start {
             for (int i=1; i<numPlayers; i++) {
                 System.out.println("Adding multiplayer player #"+i);
                 makeNewWindow();
+                player = new Player(org);
                 playerList.add(player);
                 player.roomName = "Tutorial";
-                GameInstance instance = new GameInstance(initializeZone1Rooms(), player);
+                GameInstance instance = new GameInstance(initializeZone1Rooms(player), player);
                 instance.runGame(masterInstance);
                 new Timer().schedule(new TimerTask() {
                     @Override
@@ -359,13 +359,12 @@ public class Start {
         private void makeNewWindow(){
             game = new Window();
             org = new ImageOrg(game);
-            player = new Player(org);
         }
 
         void buildGame(Player imported){
             //roomID = imported.roomName;
             //System.out.println(Start.roomID);
-            player = imported;
+            Player player = imported;
             playerList = new ArrayList<>();
             playerList.add(imported);
             imported.orgo.setWindow(Start.game); // hopefully doesn't kill anything
@@ -374,7 +373,7 @@ public class Start {
             org.resetClock();
             org.printLayers();
             player.resumeFromSave();
-            GameInstance i = new GameInstance(initializeZone1Rooms(), player);
+            GameInstance i = new GameInstance(initializeZone1Rooms(player), player);
             i.runGame();
         }
 
