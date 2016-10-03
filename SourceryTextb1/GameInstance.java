@@ -4,8 +4,6 @@ import SourceryTextb1.GameObjects.GameObject;
 import SourceryTextb1.GameObjects.Mortal;
 import SourceryTextb1.GameObjects.Player;
 import SourceryTextb1.Rooms.Room;
-import SourceryTextb1.UserScreens.Start;
-import com.sun.istack.internal.Nullable;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -16,11 +14,11 @@ import java.util.List;
  * Created by riley on 02-Oct-2016.
  */
 public class GameInstance {
-    GameInstance masterInstance;
-    Player protaganist;
-    Room currentRoom;
-    String roomID;
-    HashMap<String, Room> zone1Rooms;
+    private GameInstance masterInstance;
+    private Player protaganist;
+    private Room currentRoom;
+    private String roomID;
+    private HashMap<String, Room> zone1Rooms;
 
     // BEGIN INTERNAL WORKINGS
     public GameInstance(HashMap<String, Room> roomsSet, Player protaganistSet){
@@ -33,7 +31,6 @@ public class GameInstance {
         runGame(null);
     }
 
-    @Nullable
     public void runGame(GameInstance master){
         masterInstance = master;
         while (!roomID.equals("die")) {
@@ -76,7 +73,7 @@ public class GameInstance {
             System.out.println("BRO!  Your 'master' game instance has its own master.  Not supposed to be that way.");
             return masterInstance.getObjs(); // This really shouldn't happen, but...
         }
-        System.out.println("Master doling out objects to subjects.");
+        //System.out.println("Master doling out objects to subjects.");
         return currentRoom.objs;
     }
 
@@ -85,7 +82,7 @@ public class GameInstance {
             System.out.println("BRO!  Your 'master' game instance has its own master.  Not supposed to be that way.");
             return masterInstance.getMortals(); // This really shouldn't happen, but...
         }
-        System.out.println("Master doling out objects to subjects.");
+        //System.out.println("Master doling out mortals to subjects.");
         return currentRoom.enemies;
     }
 

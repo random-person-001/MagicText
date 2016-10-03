@@ -60,19 +60,24 @@ public class Room implements java.io.Serializable{
     /**
      * For a distributed multiplayer
      *
+     * Todo: make the imageOrgs work when synched down.
+     *
      * @param masterObjs a list to synch with
      * @param masterMortals a list to synch with also
      */
-    public void synchObjectsWith(List<GameObject> masterObjs, List<Mortal> masterMortals){
+    public void synchObjectsWith(List<GameObject> masterObjs, List<Mortal> masterMortals) throws ConcurrentModificationException{
+        System.out.println("Synching objects.");
+
         //First add to our list
         for (GameObject theirs : masterObjs){
             boolean matches = false;
             for (GameObject ours : objs){
-                if (!theirs.equals(ours)){
+                if (theirs.getX() == ours.getX() && theirs.getY() == ours.getY() && theirs.strClass.equals(ours.strClass)){
                     matches = true;
                 }
             }
-            if (!matches && !theirs.strClass.equals("HUD")){
+            if (!matches && !theirs.strClass.equals("HUD") && !theirs.strClass.equals("DroppedItem")){
+                System.out.println("Adding GameObject " + theirs.strClass + " at " + theirs.getX() + ", " + theirs.getY());
                 addObject(theirs);
                 // theirs.onAddToRoom();
             }
@@ -80,26 +85,32 @@ public class Room implements java.io.Serializable{
         for (Mortal theirs : masterMortals){
             boolean matches = false;
             for (Mortal ours : enemies){
-                if (!theirs.equals(ours)){
+                if (theirs.getX() == ours.getX() && theirs.getY() == ours.getY() && theirs.strClass.equals(ours.strClass) && theirs.getHealth() == ours.getHealth()){
                     matches = true;
                 }
             }
-            if (!matches && !theirs.strClass.equals("HUD")){
+            if (!matches){
+                System.out.println("Adding Mortal " + theirs.strClass + " at " + theirs.getX() + ", " + theirs.getY());
                 addObject(theirs);
+                if (theirs.strClass.contains("Player")){
+                    players.add((Player) theirs);
+                }
                 // theirs.onAddToRoom();
             }
         }
 
         // Then remove from our list
-        for (Mortal ours : enemies){
-            if (!(ours.strClass.contains("DroppedItem") || ours.strClass.contains("Player"))) {
+        for (int i=0; i<enemies.size(); i++){
+            Mortal ours = enemies.get(i);
+            if (!ours.strClass.contains("DroppedItem") && !ours.strClass.equals("Player")) {
                 boolean matches = false;
                 for (Mortal theirs : masterMortals) {
-                    if (!theirs.equals(ours)) {
+                    if (theirs.getX() == ours.getX() && theirs.getY() == ours.getY() && theirs.strClass.equals(ours.strClass) && theirs.getHealth() == ours.getHealth()) {
                         matches = true;
                     }
                 }
                 if (!matches) {
+                    System.out.println("Removing Mortal " + ours.strClass + " at " + ours.getX() + ", " + ours.getY());
                     removeMortal(ours);
                     ours.onDeath();
                 }
@@ -109,12 +120,13 @@ public class Room implements java.io.Serializable{
             if (!(ours.strClass.contains("DroppedItem") || ours.strClass.contains("Player"))) {
                 boolean matches = false;
                 for (GameObject theirs : masterObjs) {
-                    if (!theirs.equals(ours)) {
+                    if (theirs.getX() == ours.getX() && theirs.getY() == ours.getY() && theirs.strClass.equals(ours.strClass)) {
                         matches = true;
                     }
                 }
-                if (!matches) {
+                if (!matches && !ours.strClass.equals("HUD") && !ours.strClass.equals("DroppedItem") && !ours.strClass.equals("Player")) {
                     removeObject(ours);
+                    System.out.println("Removing GameObject " + ours.strClass + " at " + ours.getX() + ", " + ours.getY());
                 }
             }
         }
@@ -154,10 +166,18 @@ public class Room implements java.io.Serializable{
             System.out.println("Room tied to master.");
             objSynchTimer.scheduleAtFixedRate(new TimerTask() {
                 @Override
-                public void run() throws StringIndexOutOfBoundsException, NullPointerException {
-                    synchObjectsWith(master.getObjs(), master.getMortals());
+                public void run() {
+                    //if (master.getRoomID().equals(playo.roomName)) {
+                    try {
+                        synchObjectsWith(master.getObjs(), master.getMortals());
+                        System.out.println("\n\nSuccessful synch!\n\n");
+                    }
+                    catch (ConcurrentModificationException e){
+                        e.printStackTrace();
+                    }
+                    //}
                 }
-            }, 0, 100);
+            }, 200, 200);
         }
         String exit = loop();
         if (master != null){
@@ -264,7 +284,14 @@ public class Room implements java.io.Serializable{
                 o.selfCleanup();
             }
         }
+        for (Mortal o : enemies){
+            if (!o.strClass.equals("Player")) {
+                o.cancelTimer();
+                o.selfCleanup();
+            }
+        }
         objs.clear();
+        enemies.clear();
     }
 
     /**
@@ -306,6 +333,15 @@ public class Room implements java.io.Serializable{
             for (GameObject obj : objs) {
                 try {
                     obj.setPause(set);
+                } catch (NullPointerException e) {
+                    System.out.println("[Room.java: setObjsPause(): caught nullpointer!  Probably Not Good!");
+                    e.printStackTrace();
+                }
+                //System.out.println("OBJS PAUSED: " + objManifest + "\n");
+            }
+            for (Mortal m : enemies) {
+                try {
+                    m.setPause(set);
                 } catch (NullPointerException e) {
                     System.out.println("[Room.java: setObjsPause(): caught nullpointer!  Probably Not Good!");
                     e.printStackTrace();
@@ -362,7 +398,6 @@ public class Room implements java.io.Serializable{
      * @param newMortal a new Mortal
      */
     public void addMortal(Mortal newMortal) {
-        addObject(newMortal);
         enemies.add(newMortal);
         addToObjHitMesh(newMortal.getX(), newMortal.getY());
     }
@@ -374,7 +409,8 @@ public class Room implements java.io.Serializable{
      * @param m the Mortal to be removed
      */
     public void removeMortal(Mortal m) {
-        removeObject(m);
+        m.cancelTimer();
+        m.selfCleanup();
         enemies.remove(m);
         removeFromObjHitMesh(m.getX(), m.getY());
     }
