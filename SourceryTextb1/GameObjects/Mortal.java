@@ -180,7 +180,87 @@ public class Mortal extends GameObject implements java.io.Serializable{
         pathToPos(followDist, gotoX, gotoY, layerName);
     }
 
+    protected void refinedPathToPos(int followDist, int gotoX, int gotoY){
+        if (Math.abs(x - gotoX) + Math.abs(y - gotoY) <= 1){
+            //System.out.printf("Jumping to %1$d,%2$d (dif: %3$d,%4$d, curr: %5$d,%6$d)\n", gotoX, gotoY, x - gotoX, y - gotoY, x, y);
+            x = gotoX;
+            y = gotoY;
+        } else {
+            pathToPos(followDist, gotoX, gotoY);
+        }
+    }
 
+    protected void rangedPathfinding(Mortal target, int attackRange, int followDist){
+        int xdif = target.getX() - x;
+        int ydif = target.getY() - y;
+        if (xdif == 0 && ydif == 0){
+            return;
+        }
+        if (Math.abs(ydif) > Math.abs(xdif)){
+            if (ydif < 0){
+                int dist = raycastDistance(target.getX(), target.getY(), attackRange, "down");
+                //orgo.getLayer("TestingLayer").setPos(target.getY() + dist, target.getX());
+                refinedPathToPos(followDist, target.getX(), target.getY() + dist);
+            } else {
+                int dist = raycastDistance(target.getX(), target.getY(), attackRange, "up");
+                //orgo.getLayer("TestingLayer").setPos(target.getY() - dist, target.getX());
+                refinedPathToPos(followDist, target.getX(), target.getY() - dist);
+            }
+        } else {
+            if (xdif < 0){
+                int dist = raycastDistance(target.getX(), target.getY(), attackRange, "right");
+                //orgo.getLayer("TestingLayer").setPos(target.getY(), target.getX() + dist);
+                refinedPathToPos(followDist, target.getX() + dist, target.getY());
+            } else {
+                int dist = raycastDistance(target.getX(), target.getY(), attackRange, "left");
+                //orgo.getLayer("TestingLayer").setPos(target.getY(), target.getX() - dist);
+                refinedPathToPos(followDist, target.getX() - dist, target.getY());
+            }
+        }
+    }
+
+    protected int raycastDistance(int startX, int startY, int maxDist, String direction){
+        int total = 0;
+        int currX = startX;
+        int currY = startY;
+        for (int ii = 0; ii < maxDist ; ii++){
+            switch (direction){
+                case "up":
+                    if (!room.isPlaceSolid(currX, currY - 1)){
+                        total++;
+                        currY--;
+                    } else {
+                        return total;
+                    }
+                    break;
+                case "down":
+                    if (!room.isPlaceSolid(currX, currY + 1)){
+                        total++;
+                        currY++;
+                    } else {
+                        return total;
+                    }
+                    break;
+                case "left":
+                    if (!room.isPlaceSolid(currX - 1, currY)){
+                        total++;
+                        currX--;
+                    } else {
+                        return total;
+                    }
+                    break;
+                case "right":
+                    if (!room.isPlaceSolid(currX + 1, currY)){
+                        total++;
+                        currX++;
+                    } else {
+                        return total;
+                    }
+                    break;
+            }
+        }
+        return total;
+    }
 
     private class dmgTimer extends TimerTask {
         @Override

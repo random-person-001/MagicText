@@ -21,7 +21,7 @@ import java.awt.Color;
  * @author 119184, and a bit of 104410
  */
 public class Start {
-    private static boolean doDemo = false;
+    private static boolean doDemo = true;
     private static Window game;
     private static ImageOrg org;
     private static List<Player> playerList; // for multiplayer!
@@ -36,6 +36,7 @@ public class Start {
 
         if (doDemo) {
             Player player = new Player(org);
+            player.goTo(4,4);
             playerList = new ArrayList<>();
             playerList.add(player);
             NewTestRoom rooma = new NewTestRoom(player);

@@ -60,7 +60,7 @@ public class NewTestRoom extends Room {
         Layer lay1 = new Layer(base, "Test", 0, 0, true, false, false);
         org.addLayer(lay1);
 
-        PathingObj pathor = new PathingObj(this, 20, 4);
+        PathingObj pathor = new PathingObj(this, 18, 7);
         addMortal(pathor);
 
         genericRoomInitialize();
