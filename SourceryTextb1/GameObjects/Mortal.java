@@ -38,6 +38,9 @@ public class Mortal extends GameObject implements java.io.Serializable{
         if (checkDeath()){
             onDeath();
         }
+        if (isRanged){
+            rangedUpdate();
+        }
     }
 
     public String getLayerName(){
@@ -180,13 +183,17 @@ public class Mortal extends GameObject implements java.io.Serializable{
         pathToPos(followDist, gotoX, gotoY, layerName);
     }
 
+    protected boolean atPathLoc = false;
+
     protected void refinedPathToPos(int followDist, int gotoX, int gotoY){
         if (Math.abs(x - gotoX) + Math.abs(y - gotoY) <= 1){
             //System.out.printf("Jumping to %1$d,%2$d (dif: %3$d,%4$d, curr: %5$d,%6$d)\n", gotoX, gotoY, x - gotoX, y - gotoY, x, y);
+            atPathLoc = true;
             x = gotoX;
             y = gotoY;
         } else {
             pathToPos(followDist, gotoX, gotoY);
+            atPathLoc = false;
         }
     }
 
@@ -260,6 +267,72 @@ public class Mortal extends GameObject implements java.io.Serializable{
             }
         }
         return total;
+    }
+
+    protected Spell rangedAttack;
+    protected int rangedPreShotDelay;
+    protected int rangedPostShotDelay;
+    protected int attackingRange;
+    protected int followingDist;
+    protected boolean isRanged = false;
+
+    protected int rangedCounter;
+
+    protected void rangedInit(int preShotDelay, int postShotDelay, int attackRange, int followDist, Spell weapon){
+        rangedAttack = weapon;
+        rangedPreShotDelay = preShotDelay;
+        rangedPostShotDelay = postShotDelay;
+        attackingRange = attackRange;
+        isRanged = true;
+        rangedCounter = preShotDelay + postShotDelay;
+        followingDist = followDist;
+    }
+
+    private int setOr = -1;
+    protected void rangedUpdate(){
+        //System.out.println("I'm alive");
+
+        Mortal target = getClosestGoodGuy();
+        //rangedPathfinding(target, attackingRange, followingDist);
+
+
+        if (rangedCounter == rangedPostShotDelay + rangedPreShotDelay){ //Done shooting
+            if (!atPathLoc) {
+                //System.out.println("Pathing....");
+                rangedPathfinding(target, attackingRange, followingDist);
+            }
+            else
+                rangedCounter = 0;
+        } else {
+            //System.out.println(rangedCounter);
+            if (rangedCounter == 0){
+                acquireTarget(target);
+            }
+            if (rangedCounter == rangedPreShotDelay){
+                int damage = rangedAttack.getDamage();
+                int range = rangedAttack.getRange();
+                SpecialText anim1 = rangedAttack.getAnim1();
+                SpecialText anim2 = rangedAttack.getAnim2();
+                boolean alting = rangedAttack.getAlting();
+                if (setOr == -1)
+                    acquireTarget(target);
+                if (setOr != -1) {
+                    System.out.printf("[TestRanged] Orientation: %d\n", setOr);
+                    room.addObject(new Spell(orgo, room, x, y, setOr, damage, range, anim1, anim2, alting));
+                    setOr = -1;
+                }
+                atPathLoc = false;
+            }
+            if (rangedCounter < rangedPostShotDelay + rangedPreShotDelay)
+                rangedCounter++;
+        }
+    }
+
+    private void acquireTarget (Mortal target){
+        if (target.getX() == x && target.getY() < y) { setOr = 0; }
+        if (target.getX() == x && target.getY() > y) { setOr = 1; }
+        if (target.getX() < x && target.getY() == y) { setOr = 2; }
+        if (target.getX() > x && target.getY() == y) { setOr = 3; }
     }
 
     private class dmgTimer extends TimerTask {

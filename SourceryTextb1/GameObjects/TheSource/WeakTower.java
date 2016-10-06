@@ -34,7 +34,7 @@ public class WeakTower extends Mortal {
         int dmg = 2;
         int rng = 7;
         SpecialText anim1 = new SpecialText("|");
-        SpecialText anim2 = new SpecialText("|");
+        SpecialText anim2 = new SpecialText("-");
         boolean alt = false;
         Mortal m = getClosestGoodGuy();
         if (Math.abs(x - m.getX()) <= 2 && Math.abs(y - m.getY()) <= 2){

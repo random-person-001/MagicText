@@ -25,6 +25,8 @@ public class Spell extends GameObject{
     private boolean dispAlting = false;
     private boolean enemySeeking = false;
 
+    private boolean isHostile = false;
+
     /**
      * You can name and customize different spells.  Some presets are:
      * Name    damage   range   char1   char2
@@ -91,6 +93,18 @@ public class Spell extends GameObject{
 
         setupTimer(30);
     }
+
+    public void setHostility(boolean set){ isHostile = set;}
+
+    public int getDamage(){ return damage; }
+
+    public int getRange(){ return range; }
+
+    public SpecialText getAnim1(){ return char1; }
+
+    public SpecialText getAnim2(){ return char2; }
+
+    public boolean getAlting(){ return dispAlting; }
 
     public void setName(String newName){
         name = newName;
@@ -204,7 +218,7 @@ public class Spell extends GameObject{
         orgo.getLayer(layerName).setPos(y,x);
 
         if (!hitSomeOne)
-            hitSomeOne = room.hurtSomethingAt(x, y, damage, killMessage, true);
+            hitSomeOne = room.hurtSomethingAt(x, y, damage, killMessage, !isHostile);
         if (room.isPlaceSolid(x,y) || hitSomeOne || range == 0){
             orgo.editLayer(" ", layerName, 0, 0);
             orgo.removeLayer(layerName);
