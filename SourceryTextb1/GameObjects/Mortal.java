@@ -189,8 +189,10 @@ public class Mortal extends GameObject implements java.io.Serializable{
         if (Math.abs(x - gotoX) + Math.abs(y - gotoY) <= 1){
             //System.out.printf("Jumping to %1$d,%2$d (dif: %3$d,%4$d, curr: %5$d,%6$d)\n", gotoX, gotoY, x - gotoX, y - gotoY, x, y);
             atPathLoc = true;
+            room.removeFromObjHitMesh(x,y);
             x = gotoX;
             y = gotoY;
+            room.addToObjHitMesh(x,y);
         } else {
             pathToPos(followDist, gotoX, gotoY);
             atPathLoc = false;
@@ -318,7 +320,9 @@ public class Mortal extends GameObject implements java.io.Serializable{
                     acquireTarget(target);
                 if (setOr != -1) {
                     System.out.printf("[TestRanged] Orientation: %d\n", setOr);
-                    room.addObject(new Spell(orgo, room, x, y, setOr, damage, range, anim1, anim2, alting));
+                    Spell toFire = new Spell(orgo, room, x, y, setOr, damage, range, anim1, anim2, alting);
+                    toFire.setHostility(true);
+                    room.addObject(toFire);
                     setOr = -1;
                 }
                 atPathLoc = false;

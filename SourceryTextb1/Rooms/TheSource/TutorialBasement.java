@@ -180,6 +180,9 @@ public class TutorialBasement extends Room {
         //Spider spoidur = new Spider(this, 15, 29);
         addMortal(spoidur);
 
+        PathingObj obj = new PathingObj(this, 15, 29);
+        addMortal(obj);
+
         /*
         //Testing locked doors
         LockedDoor door = new LockedDoor("testKey", 30, 30, 22, this, org);

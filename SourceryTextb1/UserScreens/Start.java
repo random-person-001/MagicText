@@ -21,7 +21,7 @@ import java.awt.Color;
  * @author 119184, and a bit of 104410
  */
 public class Start {
-    private static boolean doDemo = true;
+    private static boolean doDemo = false;
     private static Window game;
     private static ImageOrg org;
     private static List<Player> playerList; // for multiplayer!
