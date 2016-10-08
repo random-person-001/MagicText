@@ -147,7 +147,7 @@ class Inventory implements java.io.Serializable {
         Item item3 = new Item("Stat Bomb", "It does everything!\n\nDon't actually use this\n in the game.\n\n+1 To all equipment stats.", player, "equip");
         item3.setEquipvals(1, 1, 1, 1, 1, 1, 1, "weapon");
         equip.add(item3);
-        Item item5 = new Item("NeodymNeedle", "Arcane spell;\n\nA neodymium needle.\n\nIt is so magnetic it will\n fly around walls to hit\n enemies\n no aim required.", "NeoNd", player, "spell", true);
+        Item item5 = new Item("NeodymNeedle", "Arcane spell;\n\nA neodymium needle.\n\nIt is so magnetic it will\n fly around walls to hit\n enemies; no aim required.", "NeoNd", player, "spell", true);
         item5.dmgSpellDefine(6, 20, 7, "arcane", new SpecialText("\\"), new SpecialText("/"), true);
         spells.add(item5);
         for (int ii = 0; ii < 4; ii++) {
@@ -202,6 +202,7 @@ class Inventory implements java.io.Serializable {
         cursorX = 28;
 
         selectorLayer.clear();
+        selectorLayer.setStr(cursorY,cursorX, ">");
         org.addLayer(topMenuLayer);
         org.addLayer(selectorLayer);
         org.addLayer(infoLayer);
@@ -320,19 +321,21 @@ class Inventory implements java.io.Serializable {
      */
     private void jumpToNewMenu(Layer goTo, int newID, String from, int newXIndex) {
         //selectorLayer.clear();
+
         org.removeLayer(from);
+        Layer cleanup = org.getLayer("selector");
+        cleanup.clear();
+        org.getLayer("invInfo").clear();
         org.removeLayer("selector");
         org.removeLayer("invInfo");
-        selectorLayer.clear();
-        infoLayer.clear();
         org.addLayer(goTo);
-        org.addLayer(selectorLayer);
+        org.addLayer(cleanup);
         org.addLayer(infoLayer);
         menuID = newID;
         updateCursor = true;
         selectXChange = newXIndex - cursorX;
-        org.editLayer(" ", "selector", cursorY, cursorX);
-        System.out.println(selectXChange);
+        //org.editLayer(" ", "selector", cursorY, cursorX);
+        //System.out.println(selectXChange);
     }
 
     /**
@@ -343,9 +346,6 @@ class Inventory implements java.io.Serializable {
         genericItemListing(spells);
         //cursorX = 31;
 
-        if (pressedA && cursorY == 21) {
-            jumpToNewMenu(topMenuLayer, TOP, "spells", 28);
-        }
         checkNewPage();
         int index = cursorY - 3 + ((page - 1) * 16);
         if (index < spells.size() && cursorY < 19) {
@@ -368,6 +368,10 @@ class Inventory implements java.io.Serializable {
         chars = player.spell2.getName().toCharArray();
         for (int ii = 0; ii < chars.length; ii++) {
             org.editLayer(String.valueOf(chars[ii]), "invInfo", 17, 15 + ii);
+        }
+        if (pressedA && cursorY == 21) {
+            org.getLayer("invInfo").clear();
+            jumpToNewMenu(topMenuLayer, TOP, "spells", 28);
         }
     }
 
@@ -447,9 +451,11 @@ class Inventory implements java.io.Serializable {
     private void loopAtMenuEnd(int minAllowedYCoord, int maxAllowedYCoord) {
         if (cursorY + selectYChange <= minAllowedYCoord - 1) {
             selectYChange = maxAllowedYCoord - cursorY;
+            System.out.println("Below the min allowed coord, buddy.");
         }
         if (cursorY + selectYChange>= maxAllowedYCoord + 1) {
             selectYChange = minAllowedYCoord - cursorY;
+            System.out.println("Over the max allowed coord, buddy.");
         }
     }
 
@@ -543,8 +549,9 @@ class Inventory implements java.io.Serializable {
         double pageReq = Math.ceil((double) items.size() / 16);
 
         if (shouldRedraw){
-            org.getLayer("selector").clear();
+            //org.getLayer("selector").clear();
             org.getLayer("invInfo").clear();
+            //clearItemInfo();
             shouldRedraw = false;
         }
 
@@ -563,7 +570,7 @@ class Inventory implements java.io.Serializable {
         int index = cursorY - 3 + ((page - 1) * 16);
 
         if (index != prevIndex){
-            org.getLayer("invInfo").clear();
+            clearItemInfo();
             System.out.println(String.format("Prev Index: %d vs. %d", prevIndex, index));
         }
         if (pressedS || pressedD){
@@ -574,6 +581,14 @@ class Inventory implements java.io.Serializable {
 
         if (index < items.size() && cursorY + selectYChange < 19) {
             fillInfoText(items.get(index).getDesc(), 1, 1);
+        }
+    }
+
+    private void clearItemInfo(){
+        for (int ix = 0; ix < 29; ix++){
+            for(int iy = 0; iy < 13; iy++){
+                org.editLayer(" ", "invInfo", iy, ix);
+            }
         }
     }
 
@@ -610,7 +625,7 @@ class Inventory implements java.io.Serializable {
      */
     private void putText(String text, int xStart, int yStart) {
         for (int iii = 0; iii < text.length(); iii++) {
-            org.editLayer(String.valueOf(text.charAt(iii)), "selector", yStart, xStart + iii);
+            org.editLayer(String.valueOf(text.charAt(iii)), "invInfo", yStart, xStart + iii);
         }
     }
 
