@@ -180,8 +180,10 @@ public class TutorialBasement extends Room {
         //Spider spoidur = new Spider(this, 15, 29);
         addMortal(spoidur);
 
+        /*
         PathingObj obj = new PathingObj(this, 15, 29);
         addMortal(obj);
+        */
 
         /*
         //Testing locked doors
@@ -194,11 +196,11 @@ public class TutorialBasement extends Room {
         */
 
         //Enable this to play around with water
-        /*
+
         Art art = new Art();
-        WaterPool testingPool = new WaterPool(this, new Layer(Art.strToArray(art.tutWaterPool), "", true, false), org, 3, 31);
+        WaterPool testingPool = new WaterPool(this, new Layer(Art.strToArray(art.tutWaterPool), "Water!", true, false), org, 3, 31);
         addObject(testingPool);
-        */
+
     }
 
     @Override

@@ -33,6 +33,10 @@ public class SpecialText implements java.io.Serializable{
         return getStr();
     }
 
+    public boolean isSignificant(){
+        return !("".equals(self) || " ".equals(self) || self == null) || !backgroundColor.equals(Color.BLACK);
+    }
+
     /**
      * Returns the foreground color accented by another one.
      * @param modifier The color that is influencing the base foreground color.

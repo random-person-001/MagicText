@@ -21,7 +21,7 @@ public class WaterPool extends GameObject{
             for (int r = 0; r < puddle.getRows(); r++){
                 if (puddle.getStr(r,c).equals("W")) {
                     puddleData[c][r] = true;
-                    puddle.setSpecTxt(r, c, new SpecialText("~", null, new Color(65, 65, 200)));
+                    puddle.setSpecTxt(r, c, new SpecialText(" ", null, new Color(65, 65, 200)));
                 }
             }
         }
