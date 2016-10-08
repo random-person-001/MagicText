@@ -90,11 +90,7 @@ public class Window extends JFrame {
         }
     }
 
-    private boolean notEmpty(String input) {
-        return !("".equals(input) || " ".equals(input) || input == null);
-    }
-
-    private boolean notSignificant(SpecialText test) {return test.isSignificant();}
+    private boolean isSignificant(SpecialText test) {return test.isSignificant();}
 
     void topDownBuild(List<Layer> layers, int camX, int camY) {
         int camYtoBe = camX;
@@ -104,7 +100,6 @@ public class Window extends JFrame {
         int maxW = screenW(); //Equals 46
         for (int row = 0; row < maxH; row++) { //Iterates over every coordinate of the screen
             for (int col = 0; col < maxW; col++) {
-                Color finalBackground = null;
                 for (int ii = layers.size(); ii > 0; ii--) { //At each coordinate, goes through all layers until an opaque space is found
                     Layer layer = layers.get(ii - 1);
                     int xPos = row - layer.getX();
@@ -115,7 +110,7 @@ public class Window extends JFrame {
                     }
                     SpecialText found = layer.getSpecTxt(xPos, yPos); //Gets SpecialText from derived layer coordinate
                     String input = found.getStr(); //Gets string from SpecialText to make code easier to read
-                    if (notSignificant(found)) { //If the SpecialText isn't blank
+                    if (isSignificant(found)) { //If the SpecialText isn't blank
                         if ("ñ".equals(input)) { //If space found was opaque
                             fullImage.setSpecTxt(row, col, new SpecialText(" "));
                         } else { //Otherwise, place found SpecialText
