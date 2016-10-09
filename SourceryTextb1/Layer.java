@@ -18,6 +18,7 @@ public class Layer implements java.io.Serializable {
     private int xPos = 0;
     private int yPos = 0;
     private boolean importance = false;
+    private String owningPlayerUsername;
 
 
     // Layers should be any size
@@ -30,6 +31,14 @@ public class Layer implements java.io.Serializable {
             }
         }
         return output;
+    }
+
+    public String getRelaventPlayerUsername(){
+        return owningPlayerUsername;
+    }
+
+    public void setOwningPlayerUsername(String newOwningPlayerUsername){
+        owningPlayerUsername = newOwningPlayerUsername;
     }
 
     /**

@@ -36,6 +36,13 @@ public class ImageOrg implements java.io.Serializable {
         window = game;
     }
 
+    public ArrayList<Layer> getLayers(){
+        return layers;
+    }
+    public void setLayers(ArrayList<Layer> setLayers){
+        layers = setLayers;
+    }
+
     public void resetClock() {
         try {
             drawTimer.cancel();
@@ -298,7 +305,7 @@ public class ImageOrg implements java.io.Serializable {
     public void removeAllButPlayer() {
         ArrayList<Layer> remove = new ArrayList<>();
         for (Layer get : layers) { //Main block of logic. Does the operation and outputs as it does so.
-            if (!get.nameMatches("playerLayer")) {
+            if (!get.name.contains("playerLayer")) {
                 remove.add(get);
             }
         }

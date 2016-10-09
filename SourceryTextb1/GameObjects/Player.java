@@ -14,11 +14,8 @@
  */
 package SourceryTextb1.GameObjects;
 
-import SourceryTextb1.ImageOrg;
-import SourceryTextb1.ItemTracker;
-import SourceryTextb1.Layer;
+import SourceryTextb1.*;
 import SourceryTextb1.Rooms.Room;
-import SourceryTextb1.SpecialText;
 
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -38,15 +35,16 @@ import java.io.ObjectOutputStream;
  */
 public class Player extends Mortal implements java.io.Serializable {
     private String username = System.getProperty("user.name");
-    private PlayerKeypressListener playerKeyListener = new PlayerKeypressListener(this);
+    //private PlayerKeypressListener playerKeyListener;// = new PlayerKeypressListener(this);
     private Inventory inv;
     public ItemTracker tracker;
     private HUD hud;
     public String roomName = ""; //Extremely important when we implement saving.
+    private ImageOrg realOrg; // For access to the real window for keybindings
 
     private boolean autonomous = false;
     private boolean shouldNewInv = false;
-    public boolean frozen = true; //This gets changed by a room upon beginning the level
+    public boolean frozen = false; //This gets changed by a room upon beginning the level
 
     //Convenience variables
     private final int UP = 0;
@@ -103,17 +101,19 @@ public class Player extends Mortal implements java.io.Serializable {
      *
      * @param theOrg the ImageOrg(anizer)
      */
-    public Player(ImageOrg theOrg) {
+    public Player(ImageOrg theOrg, int playerNumber) {
         setHealth(baseMaxHP);
         makeGoodGuy(); // Set good-guy-ness to true.
         super.maxHealth = baseMaxHP + armorHealthBoost;
         super.strClass = "Player";
         System.out.println("\nNEW PLAYER\n");
         orgo = theOrg;
+        username += playerNumber;
 
-        layerName = "playerLayer";
+        layerName = "playerLayer-" + username;
         Layer playerLayer = new Layer(new String[3][3], layerName);
         playerLayer.setImportance(true);
+        aimDispName += username;
         orgo.addLayer(playerLayer);
 
         inv = new Inventory(orgo, this);
@@ -124,10 +124,29 @@ public class Player extends Mortal implements java.io.Serializable {
     }
 
     /**
+     * Intended for multiplayer, for instance adding key listeners
+     * @return the ImageOrg for the actual physical window that corresponds to the player
+     */
+    public ImageOrg getRealOrg(){
+        if (realOrg == null){
+            return orgo;
+        }
+        return realOrg;
+    }
+
+    /**
+     * Intended for multiplayer, for instance adding key listeners
+     * Set the ImageOrg for the actual physical window that corresponds to the player
+     */
+    public void setRealOrg(ImageOrg newRealOrg){
+        realOrg = newRealOrg;
+    }
+
+    /**
      * Set things up that don't get carried between saves, ex timers and ?keylisteners?
      */
     public void resumeFromSave() {
-        orgo.getWindow().txtArea.addKeyListener(playerKeyListener); // Add key listeners.
+        //orgo.getWindow().addKeyListener(playerKeyListener); // Add key listeners.
         setupForNewRoom();
         setupTimer(20);
         orgo.resetClock();
@@ -139,7 +158,9 @@ public class Player extends Mortal implements java.io.Serializable {
 
     public void setupForNewRoom() {
         Layer aimDispLayer = new Layer(new String[1][1], aimDispName);
-        centerCamera();
+        aimDispLayer.setOwningPlayerUsername(username);
+        addHUD();
+        graphicUpdate();
         orgo.addLayer(aimDispLayer);
         upPressed = false;
         downPressed = false;
@@ -153,12 +174,9 @@ public class Player extends Mortal implements java.io.Serializable {
     private void addHUD() {  //Fixes redundancy
         Layer HUDd = new Layer(new String[1][70], "HUD_of_" + username, false, true);
         HUDd.setImportance(true);
+        HUDd.setOwningPlayerUsername(username);
         orgo.addLayer(HUDd);
         hud.setLayerName(HUDd.name);
-    }
-
-    private void centerCamera() {
-        orgo.setCam(x - 22, y - 11);
     }
 
     /**
@@ -182,7 +200,7 @@ public class Player extends Mortal implements java.io.Serializable {
         //orgo.editLayer(" ", layerName, y, x);
         x = newX;
         y = newY;
-        centerCamera();
+        graphicUpdate();
     }
 
     /**
@@ -191,13 +209,13 @@ public class Player extends Mortal implements java.io.Serializable {
     @Override
     public void update() {
         if (frozen || dead) { // Should be first, so other things don't try to happen first
+            System.out.println("Not Updating " + username);
             try {
-                //orgo.editLayer(" ", layerName, y, x);
                 if (dead) {
                     onDeath();
                 }
-            } catch (IndexOutOfBoundsException ignored) {
-            }
+                orgo.editLayer(" ", layerName, y, x);
+            } catch (IndexOutOfBoundsException ignored) {}
         } else {
             if (shouldNewInv) {
                 System.out.println("Opening inventory");
@@ -377,7 +395,7 @@ public class Player extends Mortal implements java.io.Serializable {
     @Override
     public void onDeath() {
         orgo.getWindow().setForegroundColor("#ff0000");
-        orgo.getWindow().txtArea.removeKeyListener(playerKeyListener);
+        //orgo.getWindow().txtArea.removeKeyListener(playerKeyListener);
         room.compactTextBox(orgo, lastPainMessage, "An ominous voice from above", false);
         dead = true;
         room.exitCode = "die";
@@ -404,7 +422,6 @@ public class Player extends Mortal implements java.io.Serializable {
         }
         orgo.editLayer(playerIcon, layerName, 1, 1);
         orgo.getLayer(layerName).setPos(y-1, x-1);
-        centerCamera();
     }
 
     private void move(int direction) {
@@ -653,67 +670,34 @@ public class Player extends Mortal implements java.io.Serializable {
                     "\n permanently increase\n your max health or\n max mana by 5.", this, "item"));
         }
     }
-}
 
-/**
- * A listener class for keypresses, tailored to the Player.
- */
-class PlayerKeypressListener extends KeyAdapter implements java.io.Serializable {
-    private Player player;
-
-    PlayerKeypressListener(Player p) {
-        player = p;
-    }
-
-    @Override
-    public void keyPressed(KeyEvent event) {
-        if (!player.frozen && !player.dead) {
-            if (event.getKeyCode() == KeyEvent.VK_UP) {
-                player.upPressed = true;
-            }
-            else if (event.getKeyCode() == KeyEvent.VK_DOWN) {
-                player.downPressed = true;
-            }
-            else if (event.getKeyCode() == KeyEvent.VK_LEFT) {
-                player.leftPressed = true;
-            }
-            else if (event.getKeyCode() == KeyEvent.VK_RIGHT) {
-                player.rightPressed = true;
-            }
-            else if (event.getKeyCode() == KeyEvent.VK_SPACE) {
-                player.spacePressed = true;
-            }
-            else if (event.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                player.keyPressed('\'');
-            } else{
-                player.keyPressed(event.getKeyChar());
-            }
+    /**
+     * Receive an arrow (or space) keypress
+     * @param keyName a String: up, down, left, right, or space
+     * @param noActuallyItWasReleased for simplification.  Self explanitory.
+     */
+    public void moveKeyPressed(String keyName, boolean noActuallyItWasReleased){
+        if (frozen || dead){
+            return;
         }
-        if (player.dead) {
-            System.out.println("No, stop it.  You're dead.");
-        }
-    }
-
-    @Override
-    public void keyReleased(KeyEvent event) {
-        if (!player.frozen && !player.dead) {
-            if (event.getKeyCode() == KeyEvent.VK_UP) {
-                player.upPressed = false;
-            }
-            else if (event.getKeyCode() == KeyEvent.VK_DOWN) {
-                player.downPressed = false;
-            }
-            else if (event.getKeyCode() == KeyEvent.VK_LEFT) {
-                player.leftPressed = false;
-            }
-            else if (event.getKeyCode() == KeyEvent.VK_RIGHT) {
-                player.rightPressed = false;
-            }
-            else if (event.getKeyCode() == KeyEvent.VK_SPACE) {
-                player.spacePressed = false;
-            }
+        switch (keyName){
+            case "up":
+                upPressed = noActuallyItWasReleased;
+                break;
+            case "down":
+                downPressed = noActuallyItWasReleased;
+                break;
+            case "left":
+                leftPressed = noActuallyItWasReleased;
+                break;
+            case "right":
+                rightPressed = noActuallyItWasReleased;
+                break;
+            case "space":
+                spacePressed = noActuallyItWasReleased;
+                break;
+            default:
+                System.out.println("Someone called Player.moveKeyPressed() wrong! '" + keyName + "' not recognised");
         }
     }
 }
-
-

@@ -207,7 +207,9 @@ public class TutorialBasement extends Room {
     public void startup(){
 
         addItems();
-        super.playo.goTo(20,29);
+        for (Player p : players) {
+            p.goTo(20, 29);
+        }
 
         FlavorText playerStart = new FlavorText(20, 29, "You start here!", "");
         plantText(playerStart);

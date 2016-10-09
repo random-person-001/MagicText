@@ -22,6 +22,11 @@ public class Window extends JFrame {
     private String foregroundColor = "#ffffff";
 
     private Layer fullImage = new Layer(new String[screenH()][screenW()]);
+    private String owningPlayerUsername;
+
+    public void setOwningPlayerUsername(String newOwningPlayerUsername){
+        owningPlayerUsername = newOwningPlayerUsername;
+    }
 
     /**
      * @param newColor a string of hexcode (like "#c3c3c3") for the default foreground to be
@@ -110,7 +115,7 @@ public class Window extends JFrame {
                     }
                     SpecialText found = layer.getSpecTxt(xPos, yPos); //Gets SpecialText from derived layer coordinate
                     String input = found.getStr(); //Gets string from SpecialText to make code easier to read
-                    if (isSignificant(found)) { //If the SpecialText isn't blank
+                    if (isSignificant(found) && (layer.getRelaventPlayerUsername() == null || layer.getRelaventPlayerUsername().equals(owningPlayerUsername))) { //If the SpecialText isn't blank
                         if ("ñ".equals(input)) { //If space found was opaque
                             fullImage.setSpecTxt(row, col, new SpecialText(" "));
                         } else { //Otherwise, place found SpecialText

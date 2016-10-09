@@ -158,32 +158,11 @@ public class Room implements java.io.Serializable{
     /**
      * Enter the room. IE, start loops and stuff now.
      */
-    public String enter(GameInstance master){
-        Timer objSynchTimer = new Timer();
+    public String enter(){
         playo.frozen = false;
         setObjsPause(false);
-        if (master != null){
-            System.out.println("Room tied to master.");
-            objSynchTimer.scheduleAtFixedRate(new TimerTask() {
-                @Override
-                public void run() {
-                    //if (master.getRoomID().equals(playo.roomName)) {
-                    try {
-                        synchObjectsWith(master.getObjs(), master.getMortals());
-                        System.out.println("\n\nSuccessful synch!\n\n");
-                    }
-                    catch (ConcurrentModificationException e){
-                        e.printStackTrace();
-                    }
-                    //}
-                }
-            }, 200, 200);
-        }
         String exit = loop();
-        if (master != null){
-            objSynchTimer.cancel();
-        }
-        playo.frozen = true;
+        //playo.frozen = true;
         System.out.println(exit);
         System.out.println(exitCode);
         if (!exit.equals("die")) {
@@ -229,7 +208,9 @@ public class Room implements java.io.Serializable{
     protected void setNewRoom(String newID, int playerX, int playerY){
         if (exitCode.equals("")) {
             exitCode = newID;
-            playo.goTo(playerX, playerY);
+            for (Player p : players) {
+                p.goTo(playerX, playerY);
+            }
         }
     }
 
@@ -581,11 +562,19 @@ public class Room implements java.io.Serializable{
         Layer spells = new Layer(new String[roomHeight][roomWidth], "Spellz", true);
         org.addLayer(spells);
 
-        playo.castingLayer = spells;
-        playo.roomName = ownID;
-        playo.setupForNewRoom();
+        for (Player p : players) {
+            p.castingLayer = spells;
+            p.roomName = ownID;
+            p.setupForNewRoom();
+            addMortal(p);
+        }
+    }
 
-        addMortal(playo);
+    /**
+     * @param newPlayers a list of Players that the Room's 'players' variable should be set to
+     */
+    public void setPlayers(List<Player> newPlayers){
+        players = newPlayers;
     }
 
     /**

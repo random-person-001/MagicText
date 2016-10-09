@@ -25,7 +25,6 @@ public class Start {
     private static Window game;
     private static ImageOrg org;
     private static List<Player> playerList; // for multiplayer!
-    private static String roomID;
 
     public static void main(String[] args) throws InterruptedException {
         game = new Window();
@@ -35,7 +34,7 @@ public class Start {
         org.addLayer(base);
 
         if (doDemo) {
-            Player player = new Player(org);
+            Player player = new Player(org,0);
             player.goTo(4,4);
             playerList = new ArrayList<>();
             playerList.add(player);
@@ -45,7 +44,7 @@ public class Start {
             rooma.ownID = "Tutorial";
             player.setRoom(rooma);
             rooma.startup();
-            rooma.enter(null);
+            rooma.enter();
         } else {
             WindowConfig wincnfg = new WindowConfig(org);
             wincnfg.config(false);
@@ -310,32 +309,29 @@ public class Start {
             if (numPlayers < 1){
                 return;
             }
-            Player player = new Player(org);
             playerList = new ArrayList<>();
-            playerList.add(player);
             //makeNewWindow();
+            Player player = new Player(org,0);
             player.roomName = "Tutorial";
-            GameInstance masterInstance = new GameInstance(initializeZone1Rooms(player), player);
+            playerList.add(player);
+            GameInstance master = new GameInstance(initializeZone1Rooms(player),player);
             new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() throws StringIndexOutOfBoundsException, NullPointerException {
-                    masterInstance.runGame();
+                    master.runGame();
                 }
-            }, 10);
+            }, 310);
+            List<GameInstance> all = new ArrayList<>();
 
             // For multiplayer
             for (int i=1; i<numPlayers; i++) {
                 System.out.println("Adding multiplayer player #"+i);
-                makeNewWindow();
-                player = new Player(org);
-                playerList.add(player);
-                player.roomName = "Tutorial";
-                GameInstance instance = new GameInstance(initializeZone1Rooms(player), player);
-                instance.runGame(masterInstance);
+                SlaveGameInstance instance = new SlaveGameInstance(master);
                 new Timer().schedule(new TimerTask() {
                     @Override
                     public void run() throws StringIndexOutOfBoundsException, NullPointerException {
-                        instance.runGame(masterInstance);
+                        // Hi.
+                        instance.runGameAsSlaveTo(master);
                     }
                 }, 110);
             }
@@ -347,7 +343,7 @@ public class Start {
                 } catch (InterruptedException e) {
                     return;
                 }
-                if (masterInstance.getRoomID().equals("die")){
+                if (playerList.get(0).roomName.equals("die")){
                     return;
                 }
             }

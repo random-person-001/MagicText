@@ -6,9 +6,7 @@ import SourceryTextb1.Window;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
-import java.util.TimerTask;
-import java.util.Timer;
+import java.util.*;
 
 
 /**
@@ -22,7 +20,6 @@ class Inventory implements java.io.Serializable {
 
     private Player player;
     private ImageOrg org;
-    private Layer selectedSpellsLayer;
     //Cursor stuff
     private int cursorY = 2;
     private int cursorX = 28;
@@ -59,6 +56,7 @@ class Inventory implements java.io.Serializable {
     private Layer taterMenuLayer = new Layer(Art.strToArray(new Art().taterMenu), "tater", 1, 27, false, true);
     private Layer selectorLayer = new Layer(new String[22][46], "selector", 0, 0, false, false);
     private Layer infoLayer = new Layer(new String[22][46], "invInfo", 0, 0, false, false);
+    private Layer selectedSpellsLayer = new Layer(new String[22][47], "selectedSpells", false);
 
 
     int getY() {
@@ -68,7 +66,15 @@ class Inventory implements java.io.Serializable {
     Inventory(ImageOrg orgo, Player p) {
         org = orgo;
         player = p;
-        selectedSpellsLayer = new Layer(new String[22][47], "selectedSpells", false);
+        selectedSpellsLayer.setOwningPlayerUsername(p.getUsername());
+        topMenuLayer.setOwningPlayerUsername(p.getUsername());
+        quitMenuLayer.setOwningPlayerUsername(p.getUsername());
+        itemsMenuLayer.setOwningPlayerUsername(p.getUsername());
+        spellsMenuLayer.setOwningPlayerUsername(p.getUsername());
+        equipMenuLayer.setOwningPlayerUsername(p.getUsername());
+        taterMenuLayer.setOwningPlayerUsername(p.getUsername());
+        selectorLayer.setOwningPlayerUsername(p.getUsername());
+        infoLayer.setOwningPlayerUsername(p.getUsername());
 
         /*
         spells.add(new Item("Spark","Arcane Spell;\nFires a spark of energy.\n\n\"All great fires start\n with small sparks\"", "Spark", player, "spell"));
@@ -195,7 +201,7 @@ class Inventory implements java.io.Serializable {
     void newShow() {
         System.out.println("Bringing up menu...");
         player.frozen = true;
-        org.getLayer(player.layerName).setImportance(false);
+        org.getLayers().stream().filter(lay -> lay.name.contains("playerLayer")).forEach(lay -> lay.setImportance(false));
         player.room.setObjsPause(true);
 
         updateCursor = true;
@@ -210,7 +216,7 @@ class Inventory implements java.io.Serializable {
         org.addLayer(selectorLayer);
         org.addLayer(infoLayer);
 
-        Window window = org.getWindow();
+        Window window = player.getRealOrg().getWindow();
         Navigator keyListener = new Navigator(this);
         window.txtArea.addKeyListener(keyListener); // Add key listeners.
 
@@ -675,7 +681,7 @@ class Inventory implements java.io.Serializable {
                 org.removeLayer("top");
                 window.txtArea.removeKeyListener(keyListener);
                 player.frozen = false;
-                org.getLayer(player.layerName).setImportance(true);
+                org.getLayers().stream().filter(lay -> lay.name.contains("playerLayer")).forEach(lay -> lay.setImportance(true));
                 player.room.setObjsPause(false);
             } else {
                 newUpdateSelector(menuID);
