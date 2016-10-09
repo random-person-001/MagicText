@@ -124,7 +124,7 @@ public class GameObject implements java.io.Serializable{
      }
 
      protected void pathToPos(int followDist, int gotoX, int gotoY, String layerName, boolean isSolid) {
-         if (withinDist(gotoX, gotoY, x, y, followDist)) {
+         //if (withinDist(gotoX, gotoY, x, y, followDist)) {
              if (isSolid)
                 room.removeFromObjHitMesh(x, y);
              int stepsNeeded = createPathTo(gotoX, gotoY, followDist);
@@ -139,7 +139,7 @@ public class GameObject implements java.io.Serializable{
              }
              if (isSolid)
                 room.addToObjHitMesh(x, y);
-         }
+         //}
      }
 
      private Set<PathPoint> pathPts = new HashSet<>();

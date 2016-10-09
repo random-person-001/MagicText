@@ -189,7 +189,7 @@ public class Spell extends GameObject{
         if (enemySeeking) {
             Mortal target = getClosestBadGuy(range);
             if (target != null) {
-                pathToPos(range, target.getX(), target.getY(), layerName);
+                pathToPos(range, target.getX(), target.getY(), layerName, false);
                 if (Math.abs(target.getX() - x) + Math.abs(target.getY() - y) <= 1){
                     target.subtractHealth(damage, killMessage);
                     hitSomeOne = true;
