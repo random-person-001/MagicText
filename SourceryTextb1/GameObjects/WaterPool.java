@@ -6,6 +6,7 @@ import SourceryTextb1.Rooms.Room;
 import SourceryTextb1.SpecialText;
 
 import java.awt.*;
+import java.util.Random;
 
 /**
  * Created by Jared on 10/1/2016.
@@ -14,7 +15,7 @@ public class WaterPool extends GameObject{
     private Layer puddle;
     private boolean[][] puddleData;
 
-    public WaterPool(Room creator, Layer set , ImageOrg org, int xSet, int ySet){
+    public WaterPool(Room creator, Layer set, ImageOrg org, int xSet, int ySet){
         puddle = set;
         puddleData = new boolean[puddle.getColumns()][puddle.getRows()];
         for (int c = 0; c < puddle.getColumns(); c++){
@@ -52,22 +53,37 @@ public class WaterPool extends GameObject{
 
     //int iter = 0;
     public void update(){
-        Player player = room.getPlayer();
-        //System.out.printf("[Water]: xdif %1$d ydif %2$d (%3$d,%4$d)\n", player.getX() - x, player.getY() - y, x, y);
-        int xdif = player.getX() - x;
-        int ydif = player.getY() - y;
-
-        if (xdif < puddleData.length && xdif >= 0 && ydif < puddleData[0].length && ydif >= 0 && puddleData[xdif][ydif]){
-            //System.out.printf("[Water] Instance %1$d\n", iter);
-            //iter++;
-            if (!player.swimming){
-                player.waterEntry = 2;
-                player.swimming = true;
+        // Waves move across surface
+        Random rand = new Random();
+        if (time/100 % 6 == 0){
+            for (int r = 0; r<puddle.getRows(); r++){
+                for (int c = 0; c<puddle.getColumns(); c++){
+                    if (puddleData[c][r]) {
+                        if (rand.nextBoolean()) {
+                            puddle.setSpecTxt(r, c, new SpecialText("~", new Color(0, 117, 200), new Color(65, 65, 200)));
+                        } else {
+                            puddle.setSpecTxt(r, c, new SpecialText(" ", null, new Color(65, 65, 200)));
+                        }
+                    }
+                }
             }
-        } else {
-            player.swimming = false;
         }
+        for (Player player : room.players) {
+            //System.out.printf("[Water]: xdif %1$d ydif %2$d (%3$d,%4$d)\n", player.getX() - x, player.getY() - y, x, y);
+            int xdif = player.getX() - x;
+            int ydif = player.getY() - y;
 
+            if (xdif < puddleData.length && xdif >= 0 && ydif < puddleData[0].length && ydif >= 0 && puddleData[xdif][ydif]) {
+                //System.out.printf("[Water] Instance %1$d\n", iter);
+                //iter++;
+                if (!player.swimming) {
+                    player.waterEntry = 2;
+                    player.swimming = true;
+                }
+            } else {
+                player.swimming = false;
+            }
+        }
     }
 
     /**

@@ -16,6 +16,7 @@ public class SlaveGameInstance {
         masterInstance = master;
         Window w = new Window();
         org = new ImageOrg(w);
+        org.getWindow().txtArea.fabulousMode = true; // YEAH!
     }
 
     public void runGameAsSlaveTo(GameInstance master){
