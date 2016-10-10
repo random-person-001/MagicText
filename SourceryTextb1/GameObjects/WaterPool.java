@@ -30,9 +30,9 @@ public class WaterPool extends GameObject{
         for (int r = 0; r < puddleData[0].length; r++){
             for (int c = 0; c < puddleData.length ; c++){
                 if (puddleData[c][r]){
-                    debugOutput += "1";
+                    debugOutput += "~";
                 } else {
-                    debugOutput += "0";
+                    debugOutput += "#";
                 }
             }
             debugOutput += "\n";
