@@ -5,6 +5,8 @@
  */
 package SourceryTextb1;
 
+import java.awt.*;
+
 /**
  * A class that is essentially a convenience method for working with two dimensional String arrays.
  *
@@ -23,21 +25,21 @@ public class Layer implements java.io.Serializable {
 
     // Layers should be any size
 
-    public SpecialText[][] convertFromStrArray (String[][] original){
+    public SpecialText[][] convertFromStrArray(String[][] original) {
         SpecialText[][] output = new SpecialText[original.length][original[0].length];
-        for (int col = 0 ; col < original.length; col++){
-            for (int row = 0; row < original[0].length; row++){
+        for (int col = 0; col < original.length; col++) {
+            for (int row = 0; row < original[0].length; row++) {
                 output[col][row] = new SpecialText(original[col][row]);
             }
         }
         return output;
     }
 
-    public String getRelaventPlayerUsername(){
+    public String getRelaventPlayerUsername() {
         return owningPlayerUsername;
     }
 
-    public void setOwningPlayerUsername(String newOwningPlayerUsername){
+    public void setOwningPlayerUsername(String newOwningPlayerUsername) {
         owningPlayerUsername = newOwningPlayerUsername;
     }
 
@@ -204,11 +206,12 @@ public class Layer implements java.io.Serializable {
 
     /**
      * Returns a SpecialText from a requested (row,col) coordinate in layer.
+     *
      * @param r row of desired SpecialText
      * @param c column of desired SpecialText
      * @return
      */
-    public SpecialText getSpecTxt(int r, int c){
+    public SpecialText getSpecTxt(int r, int c) {
         if (!(r < 0 || r >= getRows() || c < 0 || c >= getColumns())) {
             if ((getOpacity()) && ("".equals(self[r][c].toString()) || " ".equals(self[r][c].toString()) || self[r][c] == null)) {
                 //System.out.println("Opacity applied!");
@@ -227,7 +230,7 @@ public class Layer implements java.io.Serializable {
      * @return the String at the specified coordinates.  Will be ñ if opaque space, else the legit char there.
      */
     public String getStr(int r, int c) {
-        return getSpecTxt(r,c).getStr();
+        return getSpecTxt(r, c).getStr();
     }
 
     /**
@@ -269,6 +272,35 @@ public class Layer implements java.io.Serializable {
         for (int row = 0; row < getRows(); row++) {
             for (int col = 0; col < getColumns(); col++) {
                 setStr(row, col, "");
+            }
+        }
+    }
+
+    /**
+     * Finds all SpecialTexts in layer and replaces it with another.
+     * @param find SpecialText to find
+     * @param replacement SpecialText to replace with
+     */
+    public void findAndReplace(SpecialText find, SpecialText replacement) {
+        for (int c = 0; c < getColumns(); c++){
+            for (int r = 0; r < getRows(); r++){
+                if (getSpecTxt(r,c).equals(find)) {
+                    setSpecTxt(r, c, replacement);
+                }
+            }
+        }
+    }
+
+    /**
+     * Influences the color of all SpecialText in the layer
+     */
+
+    public void influenceAll (Color flavor){
+        for (int c = 0; c < getColumns(); c++){
+            for (int r = 0; r < getRows(); r++){
+                SpecialText get = getSpecTxt(r,c);
+                Color newColor = get.makeInfluencedForegroundColor(flavor);
+                self[r][c] = new SpecialText(get.getStr(), newColor, get.getBackgroundColor());
             }
         }
     }

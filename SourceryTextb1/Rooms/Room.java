@@ -419,6 +419,18 @@ public class Room implements java.io.Serializable{
     }
 
     /**
+     * Colors all SpecialTexts in a layer that corresponds to FlavorText in room an bright aqua blue
+     */
+
+    protected void highlightFlavorText(Layer roomBase){
+        for (FlavorText txt : flavorTexts){
+            SpecialText toEdit = roomBase.getSpecTxt(txt.getY() + roomBase.getY(), txt.getX() + roomBase.getX());
+            toEdit = new SpecialText(toEdit.getStr(), new Color(175, 235, 255), toEdit.getBackgroundColor());
+            roomBase.setSpecTxt(txt.getY() + roomBase.getY(), txt.getX() + roomBase.getX(), toEdit);
+        }
+    }
+
+    /**
      * Is it a wall I walk into?  Find out now!
      *
      * @param x a specified X coord
@@ -642,6 +654,8 @@ public class Room implements java.io.Serializable{
                 line++;
                 newLineAdjust = ii + 1;
                 System.out.println("Found newline.");
+            } else if (String.valueOf(text.charAt(ii)).equals("ĩ")) {
+                txtBox.setSpecTxt(line, ii + 1 - newLineAdjust, new SpecialText("#", new Color(175, 215, 245), new Color(175, 215, 245)));
             } else {
                 txtBox.setStr(line, ii + 1 - newLineAdjust, String.valueOf(text.charAt(ii)));
             }

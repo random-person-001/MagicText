@@ -12,6 +12,8 @@ import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
 
+import java.awt.*;
+
 /**
  * The initial view of the Source Pit.
  * @author 119184
@@ -47,10 +49,8 @@ public class SourcePit extends Room {
                     if (playo.getX() == 109 && playo.getY() == 10) {
                         queueMessage(new FlavorText("Welcome to the rest of the world!", ""));
                         queueMessage(new FlavorText("There are many things to find and explore!\nUse the 'F' key to inspect things.", ""));
-                        queueMessage(new FlavorText("Most capital letters (ex: A, B, C..) out in\n the world have flavor text \n accessible through the 'F' key", ""));
-                        queueMessage(new FlavorText("Note:\nYou've gotta be facing towards the\n object you're trying to inspect", ""));
-                        queueMessage(new FlavorText("Locking your aim can help you see\nwhich direction you're facing in.", ""));
-                        queueMessage(new FlavorText("Note #2:\nCapital letters that are MOVING\n are usually hostile!", ""));
+                        queueMessage(new FlavorText("Characters that have this color:\n          ĩĩĩ\nHave text that you can read!", ""));
+                        queueMessage(new FlavorText("Sometimes, they also buttons and\n triggers for various things.\n Fun!", ""));
                     }
                     count++;
                 }
@@ -96,6 +96,8 @@ public class SourcePit extends Room {
         String[] solids = {".",",",":",";","^","_","#","'","D","X"};
         addToBaseHitMesh(base, solids);
         Layer lay1 = new Layer(base, "Test");
+        lay1.influenceAll(new Color(235, 215, 150));
+        highlightFlavorText(lay1);
         org.addLayer(lay1);
 
         genericRoomInitialize();

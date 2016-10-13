@@ -9,6 +9,9 @@ import SourceryTextb1.GameObjects.TheSource.Spider;
 import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
+import SourceryTextb1.SpecialText;
+
+import java.awt.*;
 
 /**
  * Caves!  Exciting!
@@ -72,6 +75,8 @@ public class SourceCaves extends Room{
         String[] solids = {"#"};
         addToBaseHitMesh(base, solids);
         Layer lay1 = new Layer(base, "Base");
+        lay1.findAndReplace(new SpecialText("#"), new SpecialText(" ", null, new Color(43, 38, 33)));
+        lay1.findAndReplace(new SpecialText(" "), new SpecialText(" ", null, new Color(0, 0, 10)));
         org.addLayer(lay1);
 
 

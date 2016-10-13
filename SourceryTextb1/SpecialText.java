@@ -56,4 +56,9 @@ public class SpecialText implements java.io.Serializable{
                 (int)((float)foregroundColor.getBlue() * blueModifier));
         //return Color.WHITE;
     }
+
+    public boolean equals (SpecialText other){
+        return self.equals(other.getStr()) && foregroundColor.equals(other.getForegroundColor()) && backgroundColor.equals(other.getBackgroundColor());
+    }
+
 }
