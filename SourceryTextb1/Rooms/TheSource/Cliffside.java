@@ -110,7 +110,7 @@ public class Cliffside extends Room {
         String[] solids = {":", "^", "#",".","0","o"};
         addToBaseHitMesh(base, solids);
         baseLayer = new Layer(base, "backgronud");
-        baseLayer.influenceAll(new Color(235, 215, 150));
+        baseLayer.influenceAll(new Color(255, 233, 166));
         org.addLayer(baseLayer);
 
         genericRoomInitialize();

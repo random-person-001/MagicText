@@ -207,10 +207,10 @@ public class Room implements java.io.Serializable{
 
     protected void setNewRoom(String newID, int playerX, int playerY){
         if (exitCode.equals("")) {
-            exitCode = newID;
             for (Player p : players) {
                 p.goTo(playerX, playerY);
             }
+            exitCode = newID;
         }
     }
 

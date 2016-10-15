@@ -38,6 +38,7 @@ public class SourcePit extends Room {
         while (exitCode.equals("")){
             try {
                 Thread.sleep(20);
+                System.out.println("SourcePit in operation...");
                 //updateObjs(20);
                 if (getPlayer().getY() > 43){
                     setNewRoom("Cliffside",11,1);
@@ -96,7 +97,7 @@ public class SourcePit extends Room {
         String[] solids = {".",",",":",";","^","_","#","'","D","X"};
         addToBaseHitMesh(base, solids);
         Layer lay1 = new Layer(base, "Test");
-        lay1.influenceAll(new Color(235, 215, 150));
+        lay1.influenceAll(new Color(255, 231, 163));
         highlightFlavorText(lay1);
         org.addLayer(lay1);
 
