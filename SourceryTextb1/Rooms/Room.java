@@ -27,8 +27,7 @@ public class Room implements java.io.Serializable{
     private List<GameObject> addList = new ArrayList<>();
     private List<GameObject> removeList = new ArrayList<>();
     public List<Mortal> enemies = new ArrayList<>();
-    public List<Player> players = new ArrayList<Player>();
-    public HashMap storedStuff = new HashMap<String, Integer>();
+    public List<Player> players = new ArrayList<>();
     private boolean[][] objHitMesh;
     private boolean[][] baseHitMesh;
 
@@ -37,8 +36,6 @@ public class Room implements java.io.Serializable{
 
     public Player playo = null;
 
-
-    public int foodEaten = 0;
     public int roomWidth;
     public int roomHeight;
     protected int index;
@@ -616,10 +613,14 @@ public class Room implements java.io.Serializable{
     /**
      * Mainly used by the player to check for nearby planted text
      */
-    public void queryForText(int testX, int testY){
+    public void queryForText(int testX, int testY, String username){
         for (FlavorText text : flavorTexts){
-            text.textIfCorrectSpot(testX, testY);
+            text.textIfCorrectSpot(testX, testY, username);
         }
+    }
+
+    public void compactTextBox(ImageOrg org, String text, String speaker, boolean helpful) {
+        compactTextBox(org, text, speaker,  helpful, null);
     }
 
     /**
@@ -629,8 +630,9 @@ public class Room implements java.io.Serializable{
      * @param text    a string, with appropriate newlines, to show
      * @param speaker Who said it?  Do tell!
      * @param helpful whether the box ought to give instructions on its own dismissal
+     * @param usernameToShowTo if not null, show this to only the Player with that username.
      */
-    public void compactTextBox(ImageOrg org, String text, String speaker, boolean helpful) {
+    public void compactTextBox(ImageOrg org, String text, String speaker, boolean helpful, String usernameToShowTo) {
         Art artsedo = new Art();
         Layer txtBox;
         if (helpful) {
@@ -638,6 +640,8 @@ public class Room implements java.io.Serializable{
         } else {
             txtBox = new Layer(Art.strToArray(artsedo.textBox), "Dialog", 13, 0, false, true);
         }
+        txtBox.setOwningPlayerUsername(usernameToShowTo);
+        System.out.println(usernameToShowTo);
 
         for (int ii = 0; ii < speaker.length(); ii++) {
             txtBox.setStr(0, ii + 2, String.valueOf(speaker.charAt(ii)));
@@ -665,11 +669,25 @@ public class Room implements java.io.Serializable{
         org.addLayer(txtBox);
 
         Window window = org.getWindow();
+        // only bind to relavent user.
+        for (Player p : players){
+            if (p.getUsername().equals(usernameToShowTo)){
+                window = p.getRealOrg().getWindow();
+                System.out.println("Found legit player to key bind to! " + usernameToShowTo);
+            }
+            // Also make them not go over the textbox
+            org.getLayer(p.getLayerName()).setImportance(false);
+        }
+        if (window == null){
+            window = players.get(0).orgo.getWindow();
+        }
+
         Dismissal keyListener = new Dismissal();
         keyListener.resume = false;
         window.txtArea.addKeyListener(keyListener); // Add key listeners.
 
         //System.out.println(text);
+
 
         Timer listenTick = new Timer();
         TextBoxListener listen = new TextBoxListener(keyListener, window);
@@ -681,7 +699,7 @@ public class Room implements java.io.Serializable{
     }
 
     public class FlavorText implements java.io.Serializable {
-
+        String usernameOfPlayer;
         String[] messages = {""};
         String speaker =  "";
         int x;
@@ -724,6 +742,10 @@ public class Room implements java.io.Serializable{
             speaker = theSpeaker;
         }
 
+        public void onlyShowTo(String username){
+            usernameOfPlayer = username;
+        }
+
         public int getX(){
             return x;
         }
@@ -732,28 +754,28 @@ public class Room implements java.io.Serializable{
             return y;
         }
 
-        void textIfCorrectSpot(int testX, int testY){
+        void textIfCorrectSpot(int testX, int testY, String username){
             if (x == testX && y == testY){
-                doMessage();
+                doMessage(username);
             }
         }
 
-        void doMessage(){
+        void doMessage(String username){
             for (String message : messages) {
                 //System.out.println("STACKING FOLLOWING MESSAGE:\n " + message);
                 FlavorText panel = new FlavorText(x, y, message, speaker);
+                panel.usernameOfPlayer = username;
                 queueMessage(panel);
             }
         }
 
         void output(){
-            compactTextBox(org, messages[0], speaker, isHelpful);
+            compactTextBox(org, messages[0], speaker, isHelpful, usernameOfPlayer);
         }
 
     }
 
     private class TextBoxListener extends TimerTask {
-
         Dismissal listener;
         Window window;
 
@@ -768,6 +790,9 @@ public class Room implements java.io.Serializable{
                 org.removeLayer("Dialog");
                 window.txtArea.removeKeyListener(listener);
                 cancel();
+                for (Player p : players){ // Remake the player layers important.
+                    players.get(0).orgo.getLayer(p.getLayerName()).setImportance(true);
+                }
                 if (messageQueue.size() > 0){
                     messageQueue.remove(messageQueue.get(0));
                 }

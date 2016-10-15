@@ -3,6 +3,7 @@ package SourceryTextb1;
 import SourceryTextb1.GameObjects.PlayerKeyPressListener;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * A slave instance of the multiplayer game.  Exists in own window.
@@ -30,6 +31,14 @@ public class SlaveGameInstance {
         while (true){
             try {
                 ArrayList<Layer> l = master.getLayers();
+                //Arrays.copyOf()
+
+                for (Layer lay : l){
+                    if (lay.name.contains("playerLayer") && !lay.name.contains(kl.getPlayerUsername())){
+                        //dim the color of other players
+                        lay.getSpecTxt(1,1).foregroundColor = lay.getSpecTxt(1,1).foregroundColor.darker();
+                    }
+                }
                 org.setLayers(l);
                 org.setCam(kl.player.getX()-22, kl.player.getY()-11);
                 Thread.sleep(10);

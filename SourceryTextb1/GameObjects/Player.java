@@ -539,27 +539,16 @@ public class Player extends Mortal implements java.io.Serializable {
         graphicUpdate();
     }
 
+    /**
+     * Call room.queryForText() in a + shape around you - effectively activating any peices of text planted around
+     * the level next to you.
+     */
     private void textBoxQuery() {
-        /*
-        switch(orientation){
-            case UP:
-                room.queryForText(getX(), getY() - 1);
-                break;
-            case DOWN:
-                room.queryForText(getX(), getY() + 1);
-                break;
-            case RIGHT:
-                room.queryForText(getX() + 1, getY());
-                break;
-            case LEFT:
-                room.queryForText(getX() - 1, getY());
-                break;
-        }*/
-        // Query discussions in a '+' around you.  I don't like having to face it.  --Riley;  Okay ---Jared
-        room.queryForText(getX() - 1, getY());
-        room.queryForText(getX() + 1, getY());
-        room.queryForText(getX(), getY() - 1);
-        room.queryForText(getX(), getY() + 1);
+        room.queryForText(getX() - 1, getY(), username);
+        room.queryForText(getX() + 1, getY(), username);
+        room.queryForText(getX(), getY() - 1, username);
+        room.queryForText(getX(), getY() + 1, username);
+        room.queryForText(getX(), getY(), username);
     }
 
     private void newCastSpell(Item spell) {
@@ -676,7 +665,7 @@ public class Player extends Mortal implements java.io.Serializable {
      * @param keyName a String: up, down, left, right, or space
      * @param noActuallyItWasReleased for simplification.  Self explanitory.
      */
-    public void moveKeyPressed(String keyName, boolean noActuallyItWasReleased){
+    void moveKeyPressed(String keyName, boolean noActuallyItWasReleased){
         if (frozen || dead){
             return;
         }
