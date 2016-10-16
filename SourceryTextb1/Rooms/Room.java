@@ -83,6 +83,7 @@ public class Room implements java.io.Serializable{
     public String enter(){
         playo.frozen = false;
         setObjsPause(false);
+        exitCode = "";
         String exit = loop();
         //playo.frozen = true;
         System.out.println(exit);

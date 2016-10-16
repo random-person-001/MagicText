@@ -38,7 +38,7 @@ public class SourcePit extends Room {
         while (exitCode.equals("")){
             try {
                 Thread.sleep(20);
-                System.out.println("SourcePit in operation...");
+                //System.out.println("SourcePit in operation...");
                 //updateObjs(20);
                 if (getPlayer().getY() > 43){
                     setNewRoom("Cliffside",11,1);
