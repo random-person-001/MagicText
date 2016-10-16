@@ -59,13 +59,12 @@ public class SourceCaves extends Room{
         }
 
         Item magicTater = new Item("Magic Potato","How lucky! This eccentric\n potato can permanently\n increase either your\n Max HP or Max Mana.\n\nNOTE: it's permanent!", playo, "item");
-        DroppedItem gTater =  new DroppedItem(this, org, "You found a hidden magic potato!", magicTater, 5, 40);
+        DroppedItem gTater =  new DroppedItem(this, org, "You found a hidden magic potato!", magicTater, 25, 57);
         super.addObject(gTater);
     }
 
     @Override
     public void startup(){
-        addItems();
 
         String[] doorLocked = {"The door seems to have locked behind you.","The owner must have installed\n an auto-lock on the door."};
         plantText(new Room.FlavorText(109, 9, doorLocked , ""));
@@ -79,6 +78,7 @@ public class SourceCaves extends Room{
         lay1.findAndReplace(new SpecialText(" "), new SpecialText(" ", null, new Color(0, 0, 10)));
         org.addLayer(lay1);
 
+        addItems();
 
         genericRoomInitialize();
     }
