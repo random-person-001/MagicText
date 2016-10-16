@@ -169,7 +169,7 @@ class Inventory implements java.io.Serializable {
         item6.dmgSpellDefine(1, 8, 2, "dark", new SpecialText("*", new Color(155, 55, 155)), new SpecialText("*", new Color(255, 55, 255)), true);
         spells.add(item6);
         for (int ii = 0; ii < 4; ii++) {
-            Item item4 = new Item("Carrot", "For some reason,\n they only grow\n in the mountains.\n\nNobody really know why.", player, "equip");
+            Item item4 = new Item("Carrot", "For some reason,\n they only grow\n in the mountains.\n\nNobody really know why.", player, "items");
             item4.healItemDefine(6, 3);
             items.add(item4);
         }

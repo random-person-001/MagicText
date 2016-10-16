@@ -47,8 +47,6 @@ public class SourceCaves extends Room{
 
     @Override
     public void addItems(){
-        ititHitMeshes();
-
         Spider itsyBitsy = new Spider(this, 31, 11);
         addMortal(itsyBitsy);
 
@@ -65,9 +63,7 @@ public class SourceCaves extends Room{
 
     @Override
     public void startup(){
-
-        String[] doorLocked = {"The door seems to have locked behind you.","The owner must have installed\n an auto-lock on the door."};
-        plantText(new Room.FlavorText(109, 9, doorLocked , ""));
+        ititHitMeshes();
 
         Art arty = new Art();
         String[][] base = Art.strToArray(arty.sourceCaves);

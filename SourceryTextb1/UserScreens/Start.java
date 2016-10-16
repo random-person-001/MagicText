@@ -65,6 +65,7 @@ public class Start {
         rooms.put("Cliffside", new Cliffside(player));
         rooms.put("SourceCaves", new SourceCaves(player));
         rooms.put("BanditFortress", new BanditFortress(player));
+        rooms.put("InnerMountains", new InnerMountains(player));
         //rooms.forEach((s, room) -> room.addItems()); // cuz add layers to current imageorg, which isn't good
         rooms.forEach((s, room) -> room.setObjsPause(true));
         rooms.forEach((s, r) -> r.players.add(player));

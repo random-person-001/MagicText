@@ -45,14 +45,14 @@ public class Cliffside extends Room {
 //                if (playo.getX() == 91 && playo.getY() == 44){
 //                    playo.dead = true;
 //                }
-                if (playo.getY() < 0){
+                if (playo.getY() <= 0 && playo.getX() < 20){
                     setNewRoom("SourcePit",57,42);
+                }
+                if (playo.getY() <= 0 && playo.getX() > 20){
+                    setNewRoom("InnerMountains",10,45);
                 }
                 if (playo.getY() >= 32){
                     setNewRoom("SourceCaves",62,1);
-                }
-                if (playo.getX() >= 146){
-                    setNewRoom("BanditFortress",67,103);
                 }
             } catch (InterruptedException ignored) {
             }
@@ -95,7 +95,7 @@ public class Cliffside extends Room {
         Bandit jack = new Bandit(org, this, 135, 13);
         addMortal(jack);
 
-        int[][] towerLocs = {{124, 14}, {130, 18}, {130, 8}, {140, 16}};
+        int[][] towerLocs = {{124, 14}, {130, 8}};
         for (int[] towerLoc : towerLocs) {
             WeakTower t = new WeakTower(org, this, towerLoc[0], towerLoc[1]);
             addMortal(t);
@@ -110,7 +110,7 @@ public class Cliffside extends Room {
         String[] solids = {":", "^", "#",".","0","o"};
         addToBaseHitMesh(base, solids);
         baseLayer = new Layer(base, "backgronud");
-        baseLayer.influenceAll(new Color(255, 233, 166));
+        baseLayer.influenceAll(new Color(255, 241, 183));
         org.addLayer(baseLayer);
 
         genericRoomInitialize();
