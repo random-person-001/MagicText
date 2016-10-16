@@ -28,10 +28,9 @@ import static java.lang.Math.abs;
  * @author 119184
  */
 class HUD implements java.io.Serializable {
-    String layerName;
+    private String layerName;
     private String[] spell1Name = new String[6];
     private String[] spell2Name = new String[6];
-    private int loc;
     private int cursorBlinkTimer = 0;
     private String command = "";
     private String nextCommand = "";
@@ -45,7 +44,6 @@ class HUD implements java.io.Serializable {
     private ImageOrg orgo;
     private int xBulidIndex = 0;
     private Timer timer;
-
     private boolean inCmd = false;
 
     HUD(ImageOrg org, Player playerSet) {
@@ -53,16 +51,22 @@ class HUD implements java.io.Serializable {
         orgo = org;
         layerName = "HUD_of_" + player.getUsername();
 
-        ConsoleKeyListener listener = new ConsoleKeyListener(this);
-        orgo.getWindow().txtArea.addKeyListener(listener);
+        HUD hud = this;
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run()  {
+                ConsoleKeyListener listener = new ConsoleKeyListener(hud);
+                player.getRealOrg().getWindow().txtArea.addKeyListener(listener);
+
+                for (KeyListener kl : player.getRealOrg().getWindow().txtArea.getKeyListeners()) {
+                    if (kl.toString().contains("PlayerKeyPressListener")) {
+                        playerKeyListener = kl;
+                    }
+                }
+            }
+        }, 2000);
 
         setupTimer(100);
-
-        for (KeyListener kl : orgo.getWindow().txtArea.getKeyListeners()) {
-            if (kl.toString().contains("PlayerKeypressListener")) {
-                playerKeyListener = kl;
-            }
-        }
     }
 
     void setLayerName(String newLayerName){
@@ -84,19 +88,9 @@ class HUD implements java.io.Serializable {
         spell1Name = convertIcon(player.getPrimarySpell());
         spell2Name = convertIcon(player.getSecondarySpell());
 
-        //orgo.getLayer(loc).clear(); // minimize flicker by comment out
         orgo.editLayer(" ", layerName, 0, 45);
         xBulidIndex = 0;
         drawLayer();
-
-        // add color
-        /*
-        Layer l = orgo.getLayer(layerName);
-        orgo.editLayer("<span color='#a3c2c2'>" + l.getStr(0,0), layerName, 0, 0);
-        String endChar = l.getStr(0,45);
-        endChar = (endChar.endsWith("ñ")) ? " " : endChar;
-        orgo.editLayer(endChar + "</span>", layerName, 0, 45);
-        */
     }
 
     /**
@@ -247,8 +241,9 @@ class HUD implements java.io.Serializable {
         if (consoleEntryProg < 3) {
             if (key == 'c') {
                 consoleEntryProg++;
+                System.out.println("The player key listener is null:" + (playerKeyListener == null));
                 if (consoleEntryProg >= 3) {
-                    orgo.getWindow().txtArea.removeKeyListener(playerKeyListener);
+                    player.getRealOrg().getWindow().txtArea.removeKeyListener(playerKeyListener);
                 }
             } else {
                 consoleEntryProg = 0;
@@ -356,10 +351,10 @@ class HUD implements java.io.Serializable {
             player.getInventory().testKit();
             showResponse("Items given!");
         }else if (command.contains("fabulous off")) {
-            orgo.getWindow().txtArea.fabulousMode = false;
+            player.getRealOrg().getWindow().txtArea.fabulousMode = false;
             showResponse("FABULOUS POWERS DISABLED?");
         }else if (command.contains("fabulous on")) {
-            orgo.getWindow().txtArea.fabulousMode = true;
+            player.getRealOrg().getWindow().txtArea.fabulousMode = true;
             showResponse("FABULOUS POWERS ENABLED!");
         }else if (command.contains("unpause")) {
             player.setPause(false);
@@ -578,7 +573,7 @@ class HUD implements java.io.Serializable {
         nextCommand = "";
         consoleEntryProg = 0;
         // Only add back the player key listener if it isn't already there, avoiding adding it multiple times.
-        KeyListener[] allKeyListeners = orgo.getWindow().txtArea.getKeyListeners();
+        KeyListener[] allKeyListeners = player.getRealOrg().getWindow().txtArea.getKeyListeners();
         boolean alreadyAdded = false;
         for (KeyListener kl : allKeyListeners) {
             if (kl.equals(playerKeyListener)){
@@ -586,7 +581,7 @@ class HUD implements java.io.Serializable {
             }
         }
         if (!alreadyAdded){
-            orgo.getWindow().txtArea.addKeyListener(playerKeyListener);
+            player.getRealOrg().getWindow().txtArea.addKeyListener(playerKeyListener);
         }
     }
 

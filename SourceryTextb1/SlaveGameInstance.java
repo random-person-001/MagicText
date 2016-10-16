@@ -31,14 +31,13 @@ public class SlaveGameInstance {
         while (true){
             try {
                 ArrayList<Layer> l = master.getLayers();
-                //Arrays.copyOf()
-
-                for (Layer lay : l){
-                    if (lay.name.contains("playerLayer") && !lay.name.contains(kl.getPlayerUsername())){
-                        //dim the color of other players
-                        lay.getSpecTxt(1,1).foregroundColor = lay.getSpecTxt(1,1).foregroundColor.darker();
-                    }
-                }
+                //for (Layer lay : l){  // Darken the @ symbol of other players
+                //    if (lay.name.contains("playerLayer") && !lay.name.contains(kl.getPlayerUsername())){
+                //        //dim the color of other players - unfortunately here it doesn't have a copy of the layers,
+                //        // but an actual reference to the real ones, so it edits everyone's @ symbol.
+                //        //lay.getSpecTxt(1,1).foregroundColor = lay.getSpecTxt(1,1).foregroundColor.darker();
+                //    }
+                //}
                 org.setLayers(l);
                 org.setCam(kl.player.getX()-22, kl.player.getY()-11);
                 Thread.sleep(10);
