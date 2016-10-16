@@ -161,7 +161,7 @@ public class ImageOrg implements java.io.Serializable {
      */
     public Layer getLayer(int go) {
         if (go == -1) {
-            return new Layer(new String[1][1]);
+            return new Layer(new String[1][1]); // TODO I don't think this is a good feature here.  It may cause problems.
         } else {
             return layers.get(go);
         }
@@ -202,37 +202,28 @@ public class ImageOrg implements java.io.Serializable {
     public void editLayer(String input, String layerName, int y, int x) {
         int loc = getPosLayer(layerName);
         if (loc != -1) {
-            editLayer(input, loc, y, x);
+            editLayer(input, layers.get(loc), y, x);
         }
     }
 
     /**
-     * Edit a single element of a Layer's array of strings.  Don't get X and Y mixed up.  Note that you can instead
-     * specify the Layer's string name instead of loc here, saving some trouble.
+     * Edit a single element of a Layer's array of strings.  Don't get X and Y mixed up.
      *
-     * @param input what it should be now
-     * @param loc   index of the Layer you want to edit
-     * @param r     the row (Y coordinate) which you want to change something at
-     * @param c     the column (X coordinate) which you want to change something at
+     * @param input     what it should be now
+     * @param lay       the actual Layer you want changed
+     * @param y         the Y coordinate which you want to change something at
+     * @param x         the X coordinate which you want to change something at
      */
-    public void editLayer(String input, int loc, int r, int c) {
-        Layer get;
-        try {
-            get = layers.get(loc);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println("No such layer (" + loc + ")! " + e);
-            return;
-        }
-        if (!(r > get.getRows() || r < 0 || c > get.getColumns() || c < 0)) {
-            get.setStr(r, c, input);
+    public void editLayer(String input, Layer lay, int y, int x) {
+        if (!(y > lay.getRows() || y < 0 || x > lay.getColumns() || x < 0)) {
+            lay.setStr(y, x, input);
         }
     }
 
     /**
-     * Edit a single element of a Layer's array of strings.  Don't get X and Y mixed up.  Note that you can instead
-     * specify the Layer's string name instead of loc here, saving some trouble.
+     * Edit a single element of a Layer's array of strings.  Don't get X and Y mixed up.
      *
-     * @param input what it should be now
+     * @param input what it should be now, a SpecialText!
      * @param layerName The name of the layer you want to edit
      * @param y     the row (Y coordinate) which you want to change something at
      * @param x     the column (X coordinate) which you want to change something at
@@ -246,9 +237,20 @@ public class ImageOrg implements java.io.Serializable {
             System.out.println("No such layer (" + layerName + ")! " + e);
             return;
         }
-        if (!(y > get.getRows() || y < 0 || x > get.getColumns() || x < 0)) {
-            get.setSpecTxt(y, x, input);
-            //System.out.println("SpecialText placement successful!");
+        editLayer(input, get, y, x);
+    }
+
+    /**
+     * Edit a single element of a Layer's array of strings.  Don't get X and Y mixed up.
+     *
+     * @param input what it should be now, a SpecialText!
+     * @param lay   the actual Layer you want to edit
+     * @param y     the row (Y coordinate) which you want to change something at
+     * @param x     the column (X coordinate) which you want to change something at
+     */
+    public void editLayer(SpecialText input, Layer lay, int y, int x) {
+        if (!(y > lay.getRows() || y < 0 || x > lay.getColumns() || x < 0)) {
+            lay.setSpecTxt(y, x, input);
         }
     }
 
@@ -270,7 +272,7 @@ public class ImageOrg implements java.io.Serializable {
      * @param y units, y axis
      */
     public void setCam(int x, int y) {
-        camY = y; //This is totally intentional.  We really ought to do something about that.
+        camY = y;
         camX = x;
     }
 
@@ -386,6 +388,10 @@ public class ImageOrg implements java.io.Serializable {
                 System.out.print("\n");
             }
         }
+    }
+
+    public void removeLayer(Layer layer) {
+        layers.remove(layer);
     }
 
     private class FrameTimer extends TimerTask {

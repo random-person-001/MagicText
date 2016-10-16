@@ -23,7 +23,7 @@ import java.net.URI;
 import static java.lang.Math.abs;
 
 /**
- * A nice heads-up display for stats on the Player, maybe with color!
+ * A nice heads-up display for stats on the Player, with color!
  *
  * @author 119184
  */
@@ -84,7 +84,6 @@ class HUD implements java.io.Serializable {
         spell1Name = convertIcon(player.getPrimarySpell());
         spell2Name = convertIcon(player.getSecondarySpell());
 
-        loc = orgo.getPosLayer(layerName);
         //orgo.getLayer(loc).clear(); // minimize flicker by comment out
         orgo.editLayer(" ", layerName, 0, 45);
         xBulidIndex = 0;
@@ -126,11 +125,9 @@ class HUD implements java.io.Serializable {
                 }
             } else if (consoleEntryProg < 3) {
                 if (inCmd) {
-                    orgo.getLayer(loc).clear();
+                    orgo.getLayer(layerName).clear();
                     inCmd = false;
                 }
-
-                loc = orgo.getPosLayer(layerName);
 
                 //Player health
                 putChar("[");
@@ -224,7 +221,7 @@ class HUD implements java.io.Serializable {
                 putChar("}");
             } else {
                 if (!inCmd) {
-                    orgo.getLayer(loc).clear();
+                    orgo.getLayer(layerName).clear();
                     inCmd = true;
                 }
 
@@ -303,6 +300,7 @@ class HUD implements java.io.Serializable {
      * >icbm [?] (x) (y) [d] [r] : splash damage about x, y. Use -r before params if relative location. d=damage, r=radius
      * >import antigravity : open default web browser and navigate to relevant xkcd (353)
      * >jumpto (level name) : set the Room's exitCode string to what follows.
+     * >layer : print all the layers to sout.
      * >lightning (x) (y) : strike a bunch of damage to a specified location.  Leaves hot ashes behind.
      * >ludicrous | fast : toggle player's ludicrousSpeed, which makes you move very very fast.  Ghosting recommended.
      * >ls | pwd : currently not developed.  Later will tell the name of current room.
@@ -557,6 +555,9 @@ class HUD implements java.io.Serializable {
             }else{
                 showResponse("There was a problem saving.");
             }
+        }
+        else if (command.contains("layer")){
+            orgo.printLayers();
         }
         else if (command.length() > 0){
             showResponse("Command '" + command + "' not recognised.  Check your spelling or " +

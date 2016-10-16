@@ -22,10 +22,6 @@ import java.awt.*;
  * @author 119184
  *
  *
- * So Far:
- *  > You have been introduced to the backstory
- *  > That's it
- *
  * What Generally Happens Here:
  *
  *      > The player familiarizes with the player-controlled character and learns how to navigate a text-based environment

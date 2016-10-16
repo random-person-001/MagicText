@@ -44,13 +44,12 @@ public class GameObject implements java.io.Serializable{
     int time; //May be useful when trying to do something asynchronous with room update timings
 
     /**
-     *
+     * Probably useless.
      */
     public void sendDisplayData(String layerName, Layer image, int x, int y){
-        int loc = orgo.getPosLayer(layerName);
         for (int row = 0; row < image.getRows() ; row++){
             for (int col = 0 ; col < image.getColumns() ; col++){
-                orgo.editLayer(image.getStr(row, col), loc, y, x);
+                orgo.editLayer(image.getStr(row, col), layerName, y, x);
             }
         }
     }

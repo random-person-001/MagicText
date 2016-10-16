@@ -55,81 +55,6 @@ public class Room implements java.io.Serializable{
     }
 
     /**
-     * For a distributed multiplayer
-     *
-     * Todo: make the imageOrgs work when synched down.
-     *
-     * @param masterObjs a list to synch with
-     * @param masterMortals a list to synch with also
-     */
-    public void synchObjectsWith(List<GameObject> masterObjs, List<Mortal> masterMortals) throws ConcurrentModificationException{
-        System.out.println("Synching objects.");
-
-        //First add to our list
-        for (GameObject theirs : masterObjs){
-            boolean matches = false;
-            for (GameObject ours : objs){
-                if (theirs.getX() == ours.getX() && theirs.getY() == ours.getY() && theirs.strClass.equals(ours.strClass)){
-                    matches = true;
-                }
-            }
-            if (!matches && !theirs.strClass.equals("HUD") && !theirs.strClass.equals("DroppedItem")){
-                System.out.println("Adding GameObject " + theirs.strClass + " at " + theirs.getX() + ", " + theirs.getY());
-                addObject(theirs);
-                // theirs.onAddToRoom();
-            }
-        }
-        for (Mortal theirs : masterMortals){
-            boolean matches = false;
-            for (Mortal ours : enemies){
-                if (theirs.getX() == ours.getX() && theirs.getY() == ours.getY() && theirs.strClass.equals(ours.strClass) && theirs.getHealth() == ours.getHealth()){
-                    matches = true;
-                }
-            }
-            if (!matches){
-                System.out.println("Adding Mortal " + theirs.strClass + " at " + theirs.getX() + ", " + theirs.getY());
-                addObject(theirs);
-                if (theirs.strClass.contains("Player")){
-                    players.add((Player) theirs);
-                }
-                // theirs.onAddToRoom();
-            }
-        }
-
-        // Then remove from our list
-        for (int i=0; i<enemies.size(); i++){
-            Mortal ours = enemies.get(i);
-            if (!ours.strClass.contains("DroppedItem") && !ours.strClass.equals("Player")) {
-                boolean matches = false;
-                for (Mortal theirs : masterMortals) {
-                    if (theirs.getX() == ours.getX() && theirs.getY() == ours.getY() && theirs.strClass.equals(ours.strClass) && theirs.getHealth() == ours.getHealth()) {
-                        matches = true;
-                    }
-                }
-                if (!matches) {
-                    System.out.println("Removing Mortal " + ours.strClass + " at " + ours.getX() + ", " + ours.getY());
-                    removeMortal(ours);
-                    ours.onDeath();
-                }
-            }
-        }
-        for (GameObject ours : objs){
-            if (!(ours.strClass.contains("DroppedItem") || ours.strClass.contains("Player"))) {
-                boolean matches = false;
-                for (GameObject theirs : masterObjs) {
-                    if (theirs.getX() == ours.getX() && theirs.getY() == ours.getY() && theirs.strClass.equals(ours.strClass)) {
-                        matches = true;
-                    }
-                }
-                if (!matches && !ours.strClass.equals("HUD") && !ours.strClass.equals("DroppedItem") && !ours.strClass.equals("Player")) {
-                    removeObject(ours);
-                    System.out.println("Removing GameObject " + ours.strClass + " at " + ours.getX() + ", " + ours.getY());
-                }
-            }
-        }
-    }
-
-    /**
      * OVERRIDE THIS
      * Run a loop, doing things, until the player should go to a new room.
      * @return the room name to go to next
@@ -740,10 +665,6 @@ public class Room implements java.io.Serializable{
             messageArray[0] = theMessage;
             messages = messageArray;
             speaker = theSpeaker;
-        }
-
-        public void onlyShowTo(String username){
-            usernameOfPlayer = username;
         }
 
         public int getX(){
