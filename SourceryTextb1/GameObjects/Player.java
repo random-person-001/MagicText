@@ -159,7 +159,7 @@ public class Player extends Mortal implements java.io.Serializable {
     public void setupForNewRoom() {
         Layer aimDispLayer = new Layer(new String[1][1], aimDispName);
         aimDispLayer.setOwningPlayerUsername(username);
-        addHUD();
+        //addHUD();
         graphicUpdate();
         orgo.addLayer(aimDispLayer);
         upPressed = false;
@@ -172,6 +172,7 @@ public class Player extends Mortal implements java.io.Serializable {
      * Make a HUD layer and plop it on.
      */
     private void addHUD() {  //Fixes redundancy
+        System.out.println("Adding HUD for " + username);
         Layer HUDd = new Layer(new String[1][70], "HUD_of_" + username, false, true);
         HUDd.setImportance(true);
         HUDd.setOwningPlayerUsername(username);
