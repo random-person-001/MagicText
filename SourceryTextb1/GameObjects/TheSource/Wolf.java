@@ -4,6 +4,9 @@ import SourceryTextb1.GameObjects.Mortal;
 import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
+import SourceryTextb1.SpecialText;
+
+import java.awt.*;
 
 
 /**
@@ -22,7 +25,8 @@ public class Wolf extends Mortal {
         x = xStart;
         y = yStart;
         setHealth(10);
-        orgo.addLayer(new Layer(new String[1][1], layerName, y, x));
+        Layer wolfLayer = new Layer(new String[1][1],layerName, y, x);
+        orgo.addLayer(wolfLayer);
 
         setupTimer(550);
     }
@@ -30,7 +34,7 @@ public class Wolf extends Mortal {
 
     @Override
     public void update() {
-        orgo.editLayer("W", layerName, 0, 0);
+        setDispIcon(new SpecialText("W", new Color(255, 200, 200)));
         Mortal closestGoodGuy = getClosestGoodGuy();
         if (Math.abs(x - closestGoodGuy.getX()) <= 1 && Math.abs(y - closestGoodGuy.getY()) <= 1){
             closestGoodGuy.subtractHealth(3);
@@ -41,8 +45,10 @@ public class Wolf extends Mortal {
     @Override
     public void onDeath(){
         orgo.removeLayer(layerName);
+        /*
         if (room.getCountOf("Wolf") == 0){
             room.splashMessage("Fhweh!  Those wolves were mean!\nHeal yourself, and brace for the road ahead.", "God");
         }
+        */
     }
 }

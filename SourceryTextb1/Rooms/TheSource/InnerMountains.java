@@ -10,6 +10,7 @@ import SourceryTextb1.GameObjects.DroppedItem;
 import SourceryTextb1.GameObjects.Item;
 import SourceryTextb1.GameObjects.Player;
 import SourceryTextb1.GameObjects.TheSource.Spider;
+import SourceryTextb1.GameObjects.TheSource.Wolf;
 import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
@@ -38,6 +39,9 @@ public class InnerMountains extends Room {
         while (exitCode.equals("")){
             try {
                 Thread.sleep(20);
+                if (getPlayer().getY() == 46){
+                    setNewRoom("Cliffside", 137, 1);
+                }
             } catch (InterruptedException ignored) {}
         }
         return exitCode;
@@ -54,6 +58,12 @@ public class InnerMountains extends Room {
             carrot.healItemDefine(6, 3);
             DroppedItem gCarrot = new DroppedItem(this, org, "You picked a carrot!", carrot, coord[0], coord[1]);
             addObject(gCarrot);
+        }
+
+        int[][] wolfLocs = {{39,31},{44,29},{23,21},{27,16}};
+        for (int[] coord : wolfLocs){
+            Wolf puppy = new Wolf(org, this, coord[0], coord[1]);
+            addMortal(puppy);
         }
     }
 

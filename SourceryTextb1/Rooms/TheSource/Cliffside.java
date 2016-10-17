@@ -25,7 +25,7 @@ public class Cliffside extends Room {
             try {
                 org.compileImage();
                 Thread.sleep(20);
-
+                /*
                 if (count == 0) {
                     queueMessage(new FlavorText("Ah, the air is nice and fresh\n outside.", ""));
                     queueMessage(new FlavorText("Endless rows of trees covered in sunset\n sitting beyond your view distance....", ""));
@@ -33,6 +33,7 @@ public class Cliffside extends Room {
                     // ^ This should be an item in The Mines of Mementos
                     count++;
                 }
+                */
                 if (baseLayer.getStr(playo.getY(), playo.getX()).equals(".")){ // Walking the critical edge
                     playo.subtractHealth(1, "Do.  Not.  Walk.  The critical edge.");
                     if (!warnedOfEdge) {
