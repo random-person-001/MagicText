@@ -6,6 +6,7 @@
 package SourceryTextb1;
 
 import java.awt.*;
+import java.util.Random;
 
 /**
  * A class that is essentially a convenience method for working with two dimensional String arrays.
@@ -292,6 +293,23 @@ public class Layer implements java.io.Serializable {
     }
 
     /**
+     * Finds all SpecialTexts in layer and replaces it with another.
+     * @param find SpecialText to find
+     * @param replacement SpecialText to replace with
+     * @param chance the chance (in 100) of each tile to be swapped
+     */
+    public void findAndReplace(SpecialText find, SpecialText replacement, int chance) {
+        Random rand = new Random();
+        for (int c = 0; c < getColumns(); c++){
+            for (int r = 0; r < getRows(); r++){
+                if (getSpecTxt(r,c).equals(find) && rand.nextInt(100) <= chance) {
+                    setSpecTxt(r, c, replacement);
+                }
+            }
+        }
+    }
+
+    /**
      * Influences the color of all SpecialText in the layer
      */
 
@@ -311,34 +329,5 @@ public class Layer implements java.io.Serializable {
 
     public void setY(int y) {
         yPos = y;
-    }
-
-    /**
-     * Finds all SpecialTexts in layer and replaces it with another.
-     * @param find SpecialText to find
-     * @param replacement SpecialText to replace with
-     */
-    public void findAndReplace(SpecialText find, SpecialText replacement) {
-        for (int c = 0; c < getColumns(); c++){
-            for (int r = 0; r < getRows(); r++){
-                if (getSpecTxt(r,c).equals(find)) {
-                    setSpecTxt(r, c, replacement);
-                }
-            }
-        }
-    }
-
-    /**
-     * Influences the color of all SpecialText in the layer
-     */
-
-    public void influenceAll (Color flavor){
-        for (int c = 0; c < getColumns(); c++){
-            for (int r = 0; r < getRows(); r++){
-                SpecialText get = getSpecTxt(r,c);
-                Color newColor = get.makeInfluencedForegroundColor(flavor);
-                self[r][c] = new SpecialText(get.getStr(), newColor, get.getBackgroundColor());
-            }
-        }
     }
 }

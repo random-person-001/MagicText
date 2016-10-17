@@ -353,18 +353,6 @@ public class Room implements java.io.Serializable{
     }
 
     /**
-     * Colors all SpecialTexts in a layer that corresponds to FlavorText in room an bright aqua blue
-     */
-
-    protected void highlightFlavorText(Layer roomBase){
-        for (FlavorText txt : flavorTexts){
-            SpecialText toEdit = roomBase.getSpecTxt(txt.getY() + roomBase.getY(), txt.getX() + roomBase.getX());
-            toEdit = new SpecialText(toEdit.getStr(), new Color(175, 235, 255), toEdit.getBackgroundColor());
-            roomBase.setSpecTxt(txt.getY() + roomBase.getY(), txt.getX() + roomBase.getX(), toEdit);
-        }
-    }
-
-    /**
      * Is it a wall I walk into?  Find out now!
      *
      * @param x a specified X coord

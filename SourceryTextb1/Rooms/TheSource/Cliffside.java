@@ -8,8 +8,7 @@ import SourceryTextb1.GameObjects.TheSource.Wolf;
 import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
 import SourceryTextb1.Art;
-
-import java.awt.*;
+import SourceryTextb1.SpecialText;
 
 /**
  * Some mountains, where you fight some enemies
@@ -45,8 +44,11 @@ public class Cliffside extends Room {
 //                if (playo.getX() == 91 && playo.getY() == 44){
 //                    playo.dead = true;
 //                }
-                if (playo.getY() < 0){
+                if (playo.getY() < 1 && playo.getX() < 20){
                     setNewRoom("SourcePit",57,42);
+                }
+                if (playo.getY() < 1 && playo.getX() > 20){
+                    setNewRoom("InnerMountains",11,44);
                 }
                 if (playo.getY() >= 32){
                     setNewRoom("SourceCaves",62,1);
@@ -110,7 +112,11 @@ public class Cliffside extends Room {
         String[] solids = {":", "^", "#",".","0","o"};
         addToBaseHitMesh(base, solids);
         baseLayer = new Layer(base, "backgronud");
-        baseLayer.influenceAll(new Color(255, 218, 166));
+        Art coloring = new Art();
+        baseLayer.influenceAll(coloring.mountainPallette1);
+        baseLayer.findAndReplace(new SpecialText("0",coloring.mountainPallette1), new SpecialText("O", coloring.mountainPallette2));
+        baseLayer.findAndReplace(new SpecialText("o",coloring.mountainPallette1), new SpecialText("o", coloring.mountainPallette2));
+        baseLayer.findAndReplace(new SpecialText(",",coloring.mountainPallette1), new SpecialText(",", coloring.mountainPallette2));
         org.addLayer(baseLayer);
 
         genericRoomInitialize();

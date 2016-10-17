@@ -11,8 +11,7 @@ import SourceryTextb1.GameObjects.TheSource.Spider;
 import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
-
-import java.awt.*;
+import SourceryTextb1.SpecialText;
 
 /**
  * The initial view of the Source Pit.
@@ -98,7 +97,8 @@ public class SourcePit extends Room {
         String[] solids = {".",",",":",";","^","_","#","'","D","X"};
         addToBaseHitMesh(base, solids);
         Layer lay1 = new Layer(base, "Test");
-        lay1.influenceAll(new Color(255, 218, 166));
+        Art coloring = new Art();
+        lay1.influenceAll(coloring.mountainPallette1);
         highlightFlavorText(lay1);
         org.addLayer(lay1);
 

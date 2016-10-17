@@ -9,13 +9,11 @@ import SourceryTextb1.Art;
 import SourceryTextb1.GameObjects.DroppedItem;
 import SourceryTextb1.GameObjects.Item;
 import SourceryTextb1.GameObjects.Player;
-import SourceryTextb1.GameObjects.TheSource.Spider;
 import SourceryTextb1.GameObjects.TheSource.Wolf;
 import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
-
-import java.awt.*;
+import SourceryTextb1.SpecialText;
 
 /**
  * The inner mountains area, filled with carrots and the fork in the road between the snowy peak and the bandit fortress
@@ -81,7 +79,11 @@ public class InnerMountains extends Room {
         String[] solids = {";",":","^","O","o","S"};
         addToBaseHitMesh(base, solids);
         Layer lay1 = new Layer(base, "Test");
-        lay1.influenceAll(new Color(255, 241, 183));
+        Art coloring = new Art();
+        lay1.influenceAll(coloring.mountainPallette1);
+        lay1.findAndReplace(new SpecialText("O",coloring.mountainPallette1), new SpecialText("O", coloring.mountainPallette2));
+        lay1.findAndReplace(new SpecialText("o",coloring.mountainPallette1), new SpecialText("o", coloring.mountainPallette2));
+        lay1.findAndReplace(new SpecialText(".",coloring.mountainPallette1), new SpecialText(".", coloring.mountainPallette2));
         highlightFlavorText(lay1);
         org.addLayer(lay1);
 
