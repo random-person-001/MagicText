@@ -27,7 +27,8 @@ public class Art implements java.io.Serializable{
 
     public Color mountainPallette1 = new Color(255, 210, 179);
     public Color mountainPallette2 = new Color(230, 230, 230);
-    //public Color mountainPallette2 = new Color(0, 216, 207);
+
+    public Color mtnPeakPallette1 = new Color(180, 220, 255);
 
     public Color forestPallete1 = new Color(80, 120, 40);
     public Color forestPallete2 = new Color(100, 240, 50);

@@ -48,10 +48,7 @@ public class SourcePit extends Room {
                     if (playo.getX() == 109 && playo.getY() == 10) {
                         queueMessage(new FlavorText("Welcome to the rest of the world!", ""));
                         queueMessage(new FlavorText("There are many things to find and explore!\nUse the 'F' key to inspect things.", ""));
-                        queueMessage(new FlavorText("Most capital letters (ex: A, B, C..) out in\n the world have flavor text \n accessible through the 'F' key", ""));
-                        queueMessage(new FlavorText("Note:\nYou've gotta be facing towards the\n object you're trying to inspect", ""));
-                        queueMessage(new FlavorText("Locking your aim can help you see\nwhich direction you're facing in.", ""));
-                        queueMessage(new FlavorText("Note #2:\nCapital letters that are MOVING\n are usually hostile!", ""));
+                        queueMessage(new FlavorText("Things to look at and interact with are\n usually colored teal-ish blue.\n It is usually helpful to inspect them", ""));
                     }
                     count++;
                 }
