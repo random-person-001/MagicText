@@ -15,7 +15,10 @@ import SourceryTextb1.Rooms.Room;
  * Created by riley on 01-Sep-2016.
  */
 public class SourceCaves extends Room{
-    private ImageOrg org;
+
+    public SourceCaves(Player player){
+        super(player);
+    }
 
     @Override
     protected String loop(){
@@ -76,13 +79,5 @@ public class SourceCaves extends Room{
 
 
         genericRoomInitialize();
-    }
-
-    public SourceCaves(Player player){
-        constructor(player);
-        super.roomHeight = 63;
-        super.roomWidth = 420;
-        org = player.orgo;
-        super.index = 1;
     }
 }

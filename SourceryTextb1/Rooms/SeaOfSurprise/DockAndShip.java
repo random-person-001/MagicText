@@ -18,6 +18,11 @@ public class DockAndShip extends Room {
     private Layer docky;
     private int maxW;
     private int maxH;
+
+    public DockAndShip(Player player){
+        super(player);
+    }
+
     @Override
     protected String loop(){
         int count = 0;
@@ -118,12 +123,5 @@ public class DockAndShip extends Room {
 
     private void makePiranahAt(int x, int y){
         makeSpiderAt(x,y);
-    }
-
-    public DockAndShip(Player player){
-        constructor(player);
-        org = player.orgo;
-        maxH = org.getWindow().maxH();
-        maxW = org.getWindow().maxW();
     }
 }

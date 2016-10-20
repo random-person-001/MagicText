@@ -29,9 +29,12 @@ import SourceryTextb1.Layer;
 
 
 public class NewTestRoom extends Room {
-    private ImageOrg org;
     private int maxH;
     private int maxW;
+
+    public NewTestRoom(Player player){
+        super(player);
+    }
 
     protected String loop(){
 
@@ -66,8 +69,5 @@ public class NewTestRoom extends Room {
         genericRoomInitialize();
     }
 
-    public NewTestRoom(Player player){
-        constructor(player);
-        org = player.orgo;
-    }
+
 }

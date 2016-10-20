@@ -27,7 +27,10 @@ import SourceryTextb1.Rooms.Room;
 
 
 public class SourcePit extends Room {
-    private ImageOrg org;
+
+    public SourcePit(Player player){
+        super(player);
+    }
 
     @Override
     protected String loop(){
@@ -101,9 +104,4 @@ public class SourcePit extends Room {
         genericRoomInitialize();
     }
 
-    public SourcePit(Player player){
-        constructor(player);
-        org = player.orgo;
-        super.index = 1;
-    }
 }

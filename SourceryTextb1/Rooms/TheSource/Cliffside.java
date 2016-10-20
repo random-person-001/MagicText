@@ -16,6 +16,10 @@ import SourceryTextb1.Art;
 public class Cliffside extends Room {
     private Layer baseLayer;
 
+    public Cliffside(Player player) {
+        super(player);
+    }
+
     protected String loop() {
         int count = 0;
         boolean warnedOfEdge = false;
@@ -113,8 +117,4 @@ public class Cliffside extends Room {
         genericRoomInitialize();
     }
 
-    public Cliffside(Player player) {
-        constructor(player);
-        org = player.orgo;
-    }
 }

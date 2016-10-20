@@ -44,6 +44,20 @@ public class Room implements java.io.Serializable{
     protected int index;
     public String exitCode = "";
 
+
+    /**
+     * Set room variables and stuff.
+     * @param player you know what
+     */
+    protected Room(Player player){
+        playo = player;
+        org = player.orgo;
+        roomHeight = org.getWindow().maxH();
+        roomWidth = org.getWindow().maxW();
+        index = 1;
+    }
+
+
     /**
      * @param username a String by which the desired Player identifies
      * @return the Player in the room if there is one with the username, else null
@@ -211,18 +225,6 @@ public class Room implements java.io.Serializable{
                 }
             }
         }, msDelay);
-    }
-
-    /**
-     * Set room variables and stuff.
-     * @param player you know what
-     */
-    protected void constructor(Player player){
-        playo = player;
-        org = player.orgo;
-        roomHeight = org.getWindow().maxH();
-        roomWidth = org.getWindow().maxW();
-        index = 1;
     }
 
 

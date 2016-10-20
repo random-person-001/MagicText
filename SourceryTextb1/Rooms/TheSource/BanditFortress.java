@@ -19,7 +19,10 @@ import SourceryTextb1.Rooms.Room;
  * Created by riley on 01-Sep-2016.
  */
 public class BanditFortress extends Room{
-    private ImageOrg org;
+
+    public BanditFortress(Player player){
+        super(player);
+    }
 
     @Override
     protected String loop(){
@@ -95,13 +98,5 @@ public class BanditFortress extends Room{
         org.addLayer(lay1);
 
         genericRoomInitialize();
-    }
-
-    public BanditFortress(Player player){
-        constructor(player);
-        super.roomHeight = 105;
-        super.roomWidth = 137;
-        org = player.orgo;
-        super.index = 1;
     }
 }

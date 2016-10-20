@@ -36,7 +36,10 @@ import java.awt.*;
 
 
 public class TutorialBasement extends Room {
-    private ImageOrg org;
+
+    public TutorialBasement(Player player){
+        super(player);
+    }
 
     @Override
     protected String loop(){
@@ -220,12 +223,6 @@ public class TutorialBasement extends Room {
         org.addLayer(lay1);
 
         genericRoomInitialize();
-    }
-
-
-    public TutorialBasement(Player player){
-        constructor(player);
-        org = player.orgo;
     }
 
 }
