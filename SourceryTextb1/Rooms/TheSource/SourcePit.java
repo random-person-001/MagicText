@@ -12,6 +12,8 @@ import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
 
+import java.awt.*;
+
 /**
  * The initial view of the Source Pit.
  * @author 119184
@@ -99,6 +101,8 @@ public class SourcePit extends Room {
         String[] solids = {".",",",":",";","^","_","#","'","D","X"};
         addToBaseHitMesh(base, solids);
         Layer lay1 = new Layer(base, "Test");
+        lay1.influenceAll(new Color(255, 218, 166));
+        highlightFlavorText(lay1);
         org.addLayer(lay1);
 
         genericRoomInitialize();

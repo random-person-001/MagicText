@@ -9,6 +9,8 @@ import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
 import SourceryTextb1.Art;
 
+import java.awt.*;
+
 /**
  * Some mountains, where you fight some enemies
  * Created by riley on 15-Jun-2016.
@@ -112,6 +114,7 @@ public class Cliffside extends Room {
         String[] solids = {":", "^", "#",".","0","o"};
         addToBaseHitMesh(base, solids);
         baseLayer = new Layer(base, "backgronud");
+        baseLayer.influenceAll(new Color(255, 218, 166));
         org.addLayer(baseLayer);
 
         genericRoomInitialize();
