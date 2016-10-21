@@ -29,6 +29,7 @@ public class Art implements java.io.Serializable{
     public Color mountainPallette2 = new Color(230, 230, 230);
 
     public Color mtnPeakPallette1 = new Color(180, 220, 255);
+    public Color mtnPeakPallette2 = new Color(0, 180, 255);
 
     public Color forestPallete1 = new Color(80, 120, 40);
     public Color forestPallete2 = new Color(100, 240, 50);
@@ -949,7 +950,8 @@ public class Art implements java.io.Serializable{
                     "|  Equipment      |\n" +
                     "|  SAVE / QUIT    |\n" +
                     "|  EXIT MENU      |\n" +
-                    "+-----------------+\n";
+                    "+-----------------+\n" +
+                    "    A: Confirm     \n";
 
     public String quitMenu =
                     "+-SAVE / QUIT-----+\n" +
@@ -958,7 +960,8 @@ public class Art implements java.io.Serializable{
                     "|  QUIT + SAVE    |\n" +
                     "|  QUIT W/O SAVE  |\n" +
                     "|                 |\n" +
-                    "+-----------------+\n";
+                    "+-----------------+\n" +
+                    "    A: Confirm     \n";
 
     public String taterMenu =
                     "+-MAGIC POTATO----+\n" +
@@ -968,7 +971,8 @@ public class Art implements java.io.Serializable{
                     "|  +5 Max Mana    |\n" +
                     "|  BACK           |\n" +
                     "|                 |\n" +
-                    "+-----------------+\n";
+                    "+-----------------+\n" +
+                    "    A: Confirm     \n";
 
 
     public String itemsMenu =
@@ -994,7 +998,7 @@ public class Art implements java.io.Serializable{
                     "                              |  NEXT PAGE...|\n" +
                     "                              0  EXIT        |\n" +
                     "                              +--------------+\n" +
-                    "                                              \n" +
+                    "                                  A: Use Item \n" +
                     "                                              \n" +
                     "                                              \n" +
                     "                                              \n" +
@@ -1052,7 +1056,7 @@ public class Art implements java.io.Serializable{
                     "|      Arcane:     Fire:    | |  NEXT PAGE...|\n" +
                     "|      Dark  :     Ice :    |-0  EXIT        |\n" +
                     "@~~~~~~~~~~~~~~~~~~~~~~~~~~~@ @~~~~~~~~~~~~~~@\n" +
-                    "                                              \n" +
+                    "                                   A: Equip   \n" +
                     "                                              \n" +
                     "                                              \n" +
                     "                                              \n" +
@@ -1282,13 +1286,13 @@ public class Art implements java.io.Serializable{
                     "              :    ^                                               \n" +
                     "              :   ;                                                \n" +
                     "             :    :                                                \n" +
-                    "             :   ;                                   :::::::^:::^::\n" +
-                    "             ^   :::^:                         :::::;              \n" +
+                    "             :   ;                                   ::R::::^R::^R:\n" +
+                    "             ^   :::^:                         ::R::;              \n" +
                     "             :        ::                    :^;                    \n" +
-                    "              :         ::^:::            :;            ;::::::^:::\n" +
-                    "              :   .     . .  .::::^::    ;        ;^::::           \n" +
+                    "              :         ::^:::            :;            ;::R::R^RRR\n" +
+                    "              :   .     . .  .::::^::    ;        ;^:R::           \n" +
                     "               ^       . .o..        :^:;     ;:::                 \n" +
-                    "               :    . .ooOOOo. .            ;^                     \n" +
+                    "               :    . .ooOOOo. .       S    ;^                     \n" +
                     "                :    .oOOOOo...   ;:      ;:                       \n" +
                     "                : .  . ooo. .    ;  :     :                        \n" +
                     "                 :^ .  .. .    ;:    ^     ^                       \n" +
@@ -1317,6 +1321,34 @@ public class Art implements java.io.Serializable{
                     "       :     :                                                     \n" +
                     "       ^     :                                                     \n" +
                     "       :     :                                                     \n";
+
+
+    public String snowyPeak =
+            "V                                                                                                                        @                                                                    00           \n" +
+            "                                                                                                                      @                                                                      O  \\         \n"+
+            "                                                                                                                       @                                                                    o    \\        \n"+
+            "                                                                                                              ________|_|_                                                                  0     \\       \n"+
+            "                                                                                                             /____________\\                                                                o      W       \n"+
+            "                                                                  00O00o0O0O00o00o000                       /##############\\                                                     0  0     0       W       \n"+
+            "                                                       0Oo00o00oO0(                  O00O00OO00oo00          ##### ########                                                       0 0    O       W|       \n"+
+            "                                              00O0o0o00(     (     ((         WWWW                 0O0O00O00o              0o                                                     0  Oo0o        W|       \n"+
+            "                  0O0O0    0O000       0O0Oo0o(        (     (     WWWWWWWWWWW|  |WWWWWWW                                    00                                                  0               W|       \n"+
+            "            0O0O00     0O00     0oO00O0        ((       ((  WWWWWWW|          |  |      |WWWWWWWWW                             O000OOO00O00oo000                            0O0oO                W|       \n"+
+            "        0O00                     (               (((     WWW|      |          |  |      |        |WWWWWWWWWW                                    0o0O00o00o0O00o00O00o00o0O00                   WW||       \n"+
+            "     OO0                          (                 (((WW|  |      |WWWWW     |  |   WWW|        |         |WWWWWW                                                                       WWWWWW| ||       \n"+
+            "   O0                             (                   W| |  |WW    |          |W |      |        |  W      |     |WWWWW                          WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW|     | ||       \n"+
+            "O0O                                (              WWWW|| |  |      |          |  |      |  W WW  |         |     |    |WWWWWWWWW        WWWWWWWWW|                                       |WW   | |        \n"+
+            "                                    ((        WWWW|   || |  |      |          |  |      |        |         |WW   |    |WW      |WWWWWWWW|        |    WWW              WWW               |     | |        \n"+
+            "                                      WWWWWWWW|   |   || |  |      |                    |        |      W  |     |    |        |        |  WW    |               W                  W    |     | |        \n"+
+            "                           WWWWWWWWWWW|       | W |   || |  |                                    |         |     |W   |     WW |     WW |        |          WW                WW         |     | |        \n"+
+            "WWWWW             WWWWWWWWW|          |       |   |   || |                                                 |     |    |        |        |        |                                       |     |          \n"+
+            "    |WWWWWWWWWWWWW|        |     W    |       |   |   ||                                                         |    |        |WWW     |        |                                       |                \n"+
+            "    |             |  WWW   |          |       |   |   |                                                               |        |        |        |                                                        \n"+
+            "    |             |        |          |  WWWW |   |                                                                            |        |                                                                 \n"+
+            "    |  WW         |        |          |       |                                                                                                                                                           \n"+
+            "    |             |        |          |                                                                                                                                                                   \n"+
+            "    |         W   |        |                                                                                                                                                                              \n"+
+            "    |             |                                                                                                                                                                                       \n";
     /*
                       _
                      /#\

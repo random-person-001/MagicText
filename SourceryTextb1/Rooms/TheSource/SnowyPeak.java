@@ -29,19 +29,18 @@ import SourceryTextb1.SpecialText;
  */
 
 
-public class InnerMountains extends Room {
+public class SnowyPeak extends Room {
     private ImageOrg org;
 
     @Override
     protected String loop(){
         while (exitCode.equals("")){
             try {
-                Thread.sleep(20);
-                if (getPlayer().getY() == 46){
-                    setNewRoom("Cliffside", 137, 1);
-                }
+                //System.out.println("It's chilly here in SnowyPeak!");
+                Thread.sleep(1000);
             } catch (InterruptedException ignored) {}
         }
+        //System.out.println("WOW, it was cold!");
         return exitCode;
     }
 
@@ -67,32 +66,33 @@ public class InnerMountains extends Room {
 
     @Override
     public void startup(){
+        roomWidth = 250;
         ititHitMeshes();
 
+        /*
         String[] signWords = {"Because carrots are a healthy snack,\n all carrots growing here are\n available to the general public",
                 "Eating food can restore health\n beyond your maximum health\nThis is called \"Overhealing\"",
                 "The Mountain Range Committee considers\n those who don't eat food regularly\n to be malnourished."};
         plantText(new FlavorText(8, 38, signWords,"A Sign"));
-
-        plantText(new FlavorText(39, 18, "<- Bandit Fortress\n   Snowy Peak      ->","A Sign"));
+        */
 
         Art arty = new Art();
-        String[][] base = Art.strToArray(arty.innerMountains);
-        String[] solids = {";",":","^","O","o","S"};
+        String[][] base = Art.strToArray(arty.snowyPeak);
+        String[] solids = {"0","o","O","W","#"};
         addToBaseHitMesh(base, solids);
         Layer lay1 = new Layer(base, "Test");
         Art coloring = new Art();
         lay1.influenceAll(coloring.mtnPeakPallette1);
-        lay1.findAndReplace(new SpecialText("W",coloring.mtnPeakPallette1), new SpecialText("W", coloring.mtnPeakPallette1));
+        lay1.findAndReplace(new SpecialText("W",coloring.mtnPeakPallette1), new SpecialText("W", coloring.mtnPeakPallette2));
         highlightFlavorText(lay1);
         org.addLayer(lay1);
 
-        addItems();
+        //addItems();
 
         genericRoomInitialize();
     }
 
-    public InnerMountains(Player player){
+    public SnowyPeak(Player player){
         constructor(player);
         org = player.orgo;
         super.index = 1;
