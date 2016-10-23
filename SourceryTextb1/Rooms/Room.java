@@ -41,6 +41,8 @@ public class Room implements java.io.Serializable{
     protected int index;
     public String exitCode = "";
 
+    protected boolean isPaused = false;
+
     /**
      * @param username a String by which the desired Player identifies
      * @return the Player in the room if there is one with the username, else null
@@ -250,6 +252,7 @@ public class Room implements java.io.Serializable{
      */
     public void setObjsPause(boolean set) {
         flushObjListChanges();
+        isPaused = set;
         try {
             for (GameObject obj : objs) {
                 try {

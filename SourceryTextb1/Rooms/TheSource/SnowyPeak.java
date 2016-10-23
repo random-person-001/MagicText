@@ -9,11 +9,14 @@ import SourceryTextb1.Art;
 import SourceryTextb1.GameObjects.DroppedItem;
 import SourceryTextb1.GameObjects.Item;
 import SourceryTextb1.GameObjects.Player;
+import SourceryTextb1.GameObjects.TheSource.Snowflake;
 import SourceryTextb1.GameObjects.TheSource.Wolf;
 import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
 import SourceryTextb1.SpecialText;
+
+import java.util.Random;
 
 /**
  * The inner mountains area, filled with carrots and the fork in the road between the snowy peak and the bandit fortress
@@ -34,10 +37,18 @@ public class SnowyPeak extends Room {
 
     @Override
     protected String loop(){
+        Random randy = new Random();
         while (exitCode.equals("")){
             try {
                 //System.out.println("It's chilly here in SnowyPeak!");
-                Thread.sleep(1000);
+                Thread.sleep(50);
+                /*
+                if (!isPaused)
+                    addObject(new Snowflake(org, this, randy.nextInt(220), 0));
+                */
+                if (getPlayer().getX() == 0){
+                    setNewRoom("InnerMountains", 64, 14);
+                }
             } catch (InterruptedException ignored) {}
         }
         //System.out.println("WOW, it was cold!");
@@ -78,7 +89,7 @@ public class SnowyPeak extends Room {
 
         Art arty = new Art();
         String[][] base = Art.strToArray(arty.snowyPeak);
-        String[] solids = {"0","o","O","W","#"};
+        String[] solids = {"0","o","O","W","#","\\"};
         addToBaseHitMesh(base, solids);
         Layer lay1 = new Layer(base, "Test");
         Art coloring = new Art();

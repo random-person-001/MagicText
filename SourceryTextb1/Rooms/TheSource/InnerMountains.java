@@ -40,6 +40,9 @@ public class InnerMountains extends Room {
                 if (getPlayer().getY() == 46){
                     setNewRoom("Cliffside", 137, 1);
                 }
+                if (getPlayer().getX() == 65){
+                    setNewRoom("SnowyPeak", 1, 15);
+                }
             } catch (InterruptedException ignored) {}
         }
         return exitCode;
@@ -78,12 +81,16 @@ public class InnerMountains extends Room {
 
         Art arty = new Art();
         String[][] base = Art.strToArray(arty.innerMountains);
-        String[] solids = {";",":","^","O","o","S"};
+        String[] solids = {";",":","^","O","o","S","R"};
         addToBaseHitMesh(base, solids);
         Layer lay1 = new Layer(base, "Test");
         Art coloring = new Art();
-        lay1.influenceAll(coloring.mtnPeakPallette1);
-        lay1.findAndReplace(new SpecialText("W",coloring.mtnPeakPallette1), new SpecialText("W", coloring.mtnPeakPallette1));
+        lay1.influenceAll(coloring.mountainPallette1);
+        lay1.findAndReplace(new SpecialText("R",coloring.mountainPallette1), new SpecialText(":", coloring.mtnPeakPallette1));
+        lay1.findAndReplace(new SpecialText("o",coloring.mountainPallette1), new SpecialText("o", coloring.mountainPallette2));
+        lay1.findAndReplace(new SpecialText("O",coloring.mountainPallette1), new SpecialText("O", coloring.mountainPallette2));
+        lay1.findAndReplace(new SpecialText("0",coloring.mountainPallette1), new SpecialText("0", coloring.mountainPallette2));
+        lay1.findAndReplace(new SpecialText(".",coloring.mountainPallette1), new SpecialText(".", coloring.mountainPallette2));
         highlightFlavorText(lay1);
         org.addLayer(lay1);
 

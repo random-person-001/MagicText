@@ -1324,7 +1324,7 @@ public class Art implements java.io.Serializable{
 
 
     public String snowyPeak =
-            "V                                                                                                                        @                                                                    00           \n" +
+            "                                                                                                                         @                                                                    00           \n" +
             "                                                                                                                      @                                                                      O  \\         \n"+
             "                                                                                                                       @                                                                    o    \\        \n"+
             "                                                                                                              ________|_|_                                                                  0     \\       \n"+
