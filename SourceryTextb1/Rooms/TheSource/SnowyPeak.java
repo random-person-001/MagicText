@@ -8,7 +8,9 @@ package SourceryTextb1.Rooms.TheSource;
 import SourceryTextb1.Art;
 import SourceryTextb1.GameObjects.DroppedItem;
 import SourceryTextb1.GameObjects.Item;
+import SourceryTextb1.GameObjects.LockedDoor;
 import SourceryTextb1.GameObjects.Player;
+import SourceryTextb1.GameObjects.TheSource.PolarBear;
 import SourceryTextb1.GameObjects.TheSource.Snowflake;
 import SourceryTextb1.GameObjects.TheSource.Wolf;
 import SourceryTextb1.ImageOrg;
@@ -60,19 +62,17 @@ public class SnowyPeak extends Room {
      */
     @Override
     public void addItems(){
-        int[][] carrotLocs = {{18,32},{44,28},{21,15},{22,22},{48,14}};
-        for (int[] coord : carrotLocs){
-            Item carrot = new Item("Carrot", "For some reason,\n they only grow\n in the mountains.\n\nNobody really know why.", playo, "item");
-            carrot.healItemDefine(6, 3);
-            DroppedItem gCarrot = new DroppedItem(this, org, "You picked a carrot!", carrot, coord[0], coord[1]);
-            addObject(gCarrot);
-        }
-
-        int[][] wolfLocs = {{39,31},{44,29},{23,21},{27,16}};
+        int[][] wolfLocs = {{32,10},{45,14},{58,8}};
         for (int[] coord : wolfLocs){
             Wolf puppy = new Wolf(org, this, coord[0], coord[1]);
             addMortal(puppy);
         }
+
+        PolarBear daBear = new PolarBear(org, this, 139, 10, true);
+        addMortal(daBear);
+
+        LockedDoor witchHutDoor = new LockedDoor ("Witch Hut Key", 100, 111, 7, this, org);
+        addObject(witchHutDoor);
     }
 
     @Override
@@ -89,7 +89,7 @@ public class SnowyPeak extends Room {
 
         Art arty = new Art();
         String[][] base = Art.strToArray(arty.snowyPeak);
-        String[] solids = {"0","o","O","W","#","\\"};
+        String[] solids = {"0","o","O","W","#","\\","-"};
         addToBaseHitMesh(base, solids);
         Layer lay1 = new Layer(base, "Test");
         Art coloring = new Art();
@@ -98,7 +98,7 @@ public class SnowyPeak extends Room {
         highlightFlavorText(lay1);
         org.addLayer(lay1);
 
-        //addItems();
+        addItems();
 
         genericRoomInitialize();
     }

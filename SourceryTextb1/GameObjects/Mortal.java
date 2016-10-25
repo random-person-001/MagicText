@@ -29,6 +29,8 @@ public class Mortal extends GameObject implements java.io.Serializable{
 
     private SpecialText dmgIcon = new SpecialText("");
 
+    public int slowedTimer = 0; //Timer for slowing enemies
+
 
     /**
      * Mortal-specific stuff for updates.  Checks death and runs onDeath() when appropriate
@@ -41,6 +43,7 @@ public class Mortal extends GameObject implements java.io.Serializable{
         if (isRanged){
             rangedUpdate();
         }
+        if (slowedTimer > 0) slowedTimer--;
     }
 
     public String getLayerName(){

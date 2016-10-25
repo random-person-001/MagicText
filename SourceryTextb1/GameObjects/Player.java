@@ -261,11 +261,15 @@ public class Player extends Mortal implements java.io.Serializable {
     private void doMovement(){
         int movespeed = 5;
         boolean spendingManaToSprint = false;
-        if (spacePressed && mana > 0){
+        if (spacePressed && mana > 0 && slowedTimer == 0){
             movespeed = 1;
             spendingManaToSprint = true;
+        } else if (slowedTimer > 0) {
+            movespeed = 10;
+            slowedTimer--;
+            //System.out.printf("Wow! I'm slow now! (%1$d)\n", slowedTimer);
         }
-        if (swimming)      movespeed = 7;
+        if(swimming)      movespeed = 7;
         if(isGhost)        movespeed = 1;
         if(ludicrousSpeed) movespeed = 0;
         if (movecount == 0) {
