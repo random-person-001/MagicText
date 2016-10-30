@@ -549,7 +549,7 @@ class Inventory implements java.io.Serializable {
     private void dispInt(int value, int x, int y, boolean includeZero, Color txtColor) {
         String disp = String.valueOf(value);
         if (!disp.equals("0") || includeZero) {
-            org.editLayer(new SpecialText(String.valueOf(disp.charAt(0)), txtColor), equipMenuLayer, y, x); // TODO this
+            org.editLayer(new SpecialText(String.valueOf(disp.charAt(0)), txtColor), equipMenuLayer, y, x);
         } else {
             org.editLayer(" ", equipMenuLayer, y, x);
         }

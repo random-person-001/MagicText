@@ -241,7 +241,6 @@ class HUD implements java.io.Serializable {
         if (consoleEntryProg < 3) {
             if (key == 'c') {
                 consoleEntryProg++;
-                System.out.println("The player key listener is null:" + (playerKeyListener == null));
                 if (consoleEntryProg >= 3) {
                     player.getRealOrg().getWindow().txtArea.removeKeyListener(playerKeyListener);
                 }

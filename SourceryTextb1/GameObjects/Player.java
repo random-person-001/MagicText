@@ -246,7 +246,7 @@ public class Player extends Mortal implements java.io.Serializable {
 
                 // convert old Java color thing to Hex color
                 Color c = new Color(255, opposite, yellowNumber);
-                orgo.getWindow().txtArea.setOverallForeGround(c);
+                getRealOrg().getWindow().txtArea.setOverallForeGround(c);
                 //orgo.getWindow().txtArea.setForeground(new Color(255, opposite, yellowNumber)); // old way
             }
 
@@ -261,13 +261,13 @@ public class Player extends Mortal implements java.io.Serializable {
     private void doMovement(){
         int movespeed = 5;
         boolean spendingManaToSprint = false;
+        if (swimming)       movespeed = 7;
+        if (isGhost)        movespeed = 1;
+        if (ludicrousSpeed) movespeed = 0;
         if (spacePressed && mana > 0){
-            movespeed = 1;
+            movespeed -= swimming ? 2 : 4;
             spendingManaToSprint = true;
         }
-        if (swimming)      movespeed = 7;
-        if(isGhost)        movespeed = 1;
-        if(ludicrousSpeed) movespeed = 0;
         if (movecount == 0) {
             if (waterEntry == 0) {
                 if (upPressed) {
@@ -378,7 +378,7 @@ public class Player extends Mortal implements java.io.Serializable {
             FileOutputStream fileOut =
                     new FileOutputStream(path);
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
-            out.writeObject(room.playo); // todo: this won't work in long run with multiplayer.
+            out.writeObject(room.playo);
             out.close();
             fileOut.close();
             System.out.printf("Serialized Player data is saved in " + path);
@@ -423,6 +423,7 @@ public class Player extends Mortal implements java.io.Serializable {
         }
         orgo.editLayer(playerIcon, layerName, 1, 1);
         orgo.getLayer(layerName).setPos(y-1, x-1);
+        getRealOrg().setCam(getX()-22, getY()-11);
     }
 
     private void move(int direction) {
