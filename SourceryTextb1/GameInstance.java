@@ -34,15 +34,15 @@ public class GameInstance {
     }
 
     public void runGame(){
-//        for (Room r : zone1Rooms.values()){
-//            r.startup();
+        for (Room r : zone1Rooms.values()){
+            r.startup();
 //            try {
 //                Thread.sleep(700);
 //            } catch (InterruptedException e) {
 //                e.printStackTrace();
 //            }
-//            r.setObjsPause(true);
-//        }
+            r.setObjsPause(true);
+        }
         org.terminateClock();
         for (Player p : playerList) {
             new Timer().schedule(new TimerTask() {
@@ -63,7 +63,6 @@ public class GameInstance {
 
     private void doLevel(Room r, Player p){
         org.getWindow().clearImage();
-        r.startup();
         r.ownID = r.strRoomName;
         r.setObjsPause(false);
         p.restartTimer(); // I'm really not sure why, but the player didn't move until I reset its timer after switching levels.
@@ -71,11 +70,12 @@ public class GameInstance {
         r.enter(p);
         System.out.println(p.roomName);
         System.out.println(r.strRoomName);
+        try {
         while (p.roomName.equals(r.strRoomName)) {
-            try {
-                Thread.sleep(20);
-            } catch (InterruptedException ignore) {}
+            Thread.sleep(20);
         }
+        Thread.sleep(100);
+    } catch (InterruptedException ignore) {}
     }
 
 
