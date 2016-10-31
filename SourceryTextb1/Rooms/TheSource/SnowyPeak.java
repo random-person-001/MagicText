@@ -33,7 +33,6 @@ import java.util.Random;
 
 
 public class SnowyPeak extends Room {
-    private ImageOrg org;
 
     @Override
     protected String loop(Player player){
@@ -42,10 +41,10 @@ public class SnowyPeak extends Room {
             try {
                 //System.out.println("It's chilly here in SnowyPeak!");
                 Thread.sleep(50);
-                /*
+
                 if (!isPaused)
                     addObject(new Snowflake(org, this, randy.nextInt(220), 0));
-                */
+
                 if (player.getX() == 0){
                     setNewRoom("InnerMountains", 64, 14);
                 }
@@ -105,6 +104,6 @@ public class SnowyPeak extends Room {
 
     public SnowyPeak(Player player){
         constructor(player);
-        org = player.orgo;
+        strRoomName = "SnowyPeak";
     }
 }

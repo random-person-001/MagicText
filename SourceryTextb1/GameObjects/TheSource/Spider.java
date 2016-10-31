@@ -39,10 +39,12 @@ public class Spider extends Mortal {
     @Override
     public void update() {
         Mortal closestGoodGuy = getClosestGoodGuy();
-        if (Math.abs(x - closestGoodGuy.getX()) <= 1 && Math.abs(y - closestGoodGuy.getY()) <= 1){
-            closestGoodGuy.subtractHealth(2);
+        if (closestGoodGuy != null) {
+            if (Math.abs(x - closestGoodGuy.getX()) <= 1 && Math.abs(y - closestGoodGuy.getY()) <= 1) {
+                closestGoodGuy.subtractHealth(2);
+            }
+            pathToPos(followDist, closestGoodGuy.getX(), closestGoodGuy.getY());
         }
-        pathToPos(followDist, closestGoodGuy.getX(), closestGoodGuy.getY());
         setDispIcon(new SpecialText("S", new Color(255, 100, 90)));
     }
 

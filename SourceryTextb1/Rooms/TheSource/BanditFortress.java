@@ -19,7 +19,6 @@ import SourceryTextb1.Rooms.Room;
  * Created by riley on 01-Sep-2016.
  */
 public class BanditFortress extends Room{
-    private ImageOrg org;
 
     @Override
     protected String loop(Player play){
@@ -98,7 +97,6 @@ public class BanditFortress extends Room{
     }
 
     public BanditFortress(Player player){
-        org = player.orgo;
         super.strRoomName = "BanditFortress";
         super.roomHeight = 105;
         super.roomWidth = 137;

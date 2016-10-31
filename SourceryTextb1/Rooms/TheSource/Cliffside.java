@@ -123,7 +123,6 @@ public class Cliffside extends Room {
     }
 
     public Cliffside(Player player) {
-        org = player.orgo;
         super.strRoomName = "Cliffside";
         constructor(player);
     }

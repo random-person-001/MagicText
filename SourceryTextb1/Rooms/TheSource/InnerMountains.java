@@ -30,7 +30,6 @@ import SourceryTextb1.SpecialText;
 
 
 public class InnerMountains extends Room {
-    private ImageOrg org;
 
     @Override
     protected String loop(Player player){
@@ -101,6 +100,6 @@ public class InnerMountains extends Room {
 
     public InnerMountains(Player player){
         constructor(player);
-        org = player.orgo;
+        strRoomName = "InnerMountains";
     }
 }
