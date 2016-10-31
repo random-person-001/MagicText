@@ -88,6 +88,7 @@ public class Room implements java.io.Serializable{
         org.resetClock();
         player.frozen = false;
         setObjsPause(false);
+        addMortal(player);
         players.add(player);
 //        for (Player p : players) {
 //            p.roomName = ownID;
