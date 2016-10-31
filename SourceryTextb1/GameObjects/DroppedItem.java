@@ -12,14 +12,10 @@ import java.util.List;
  * Created by riley on 13-Jun-2016.
  */
 public class DroppedItem extends GameObject{
-    //private Player player;
     private List<String> playersWhoPickedMeUp;
     private Item me;
     private String pickUpMessage;
-    private String layerName;
-    private boolean pickedUp = false;
-
-    private boolean recordTaken = true;
+    private String layerName = "Riley says that empty droppedItems should not be a thing";
 
     public DroppedItem(Room roomy, ImageOrg org, String messageOnPickup, Item dropped, int setx, int sety){
         strClass = "DroppedItem";
@@ -29,32 +25,48 @@ public class DroppedItem extends GameObject{
         pickUpMessage = messageOnPickup;
         me = dropped;
         x = setx;
-        y = sety; // todo: room.playo won't work with multiplayer
+        y = sety;
         if (me.getName().length() > 0 && !room.playo.tracker.alreadyTaken(getX(),getY(),room.ownID)) { // Don't even set up timer if item name is an empty string (for dummy item)
-            layerName = room.makeUniqueLayerName(super.strClass);
-            Layer thisLayer = new Layer(new String[1][1], layerName, y, x, true, true, false);
-            thisLayer.setStr(0, 0, "!");
-            orgo.addLayer(thisLayer);
+            layerName = room.makeUniqueLayerName(super.strClass) + "-";
             setupTimer(100);
         }
     }
 
-    public void updateShouldRecord (boolean newBoolean) {recordTaken = newBoolean;}
+    /**
+     * Updates the layers for new players.  Only necessary to call every less often, probably.
+     */
+    private void longUpdate (){
+        System.out.println("Long update");
+        // Ensure that we have layers for everyone
+        for (Player p : room.players){
+            // players who haven't picked me up AND we don't have a layer for them already
+            if (!playersWhoPickedMeUp.contains(p.getUsername()) && orgo.getPosLayer(layerName+p.getUsername()) == -1){
+                // should make a new layer for that specific player to see
+                Layer newLayer = new Layer(new String[1][1], layerName+p.getUsername(), y, x, true, true, false);
+                newLayer.setStr(0, 0, "!");
+                newLayer.setOwningPlayerUsername(p.getUsername());
+                orgo.addLayer(newLayer);
+            }
+        }
+    }
 
     @Override
     public void update(){
-        //orgo.editLayer("!", layerName, 0, 0);
         for (Player player : room.players) {
-            if (x == player.getX() && y == player.getY() && !pickedUp) {
-                pickedUp = true;
-                room.removeObject(this);
-                if (recordTaken) room.playo.tracker.addLoc(getX(), getY(), room.ownID);
+            if (x == player.getX() && y == player.getY() && !playersWhoPickedMeUp.contains(player.getUsername())) {
                 player.addItem(me);
+                playersWhoPickedMeUp.add(player.getUsername());
+                orgo.removeLayer(layerName+player.getUsername());
                 if (!pickUpMessage.equals("None") || pickUpMessage.equals("")) {
                     System.out.println("Picking up: " + me.getName());
                     room.compactTextBox(orgo, pickUpMessage, "", false);
                 }
             }
+        }
+
+        if (time % 2000 == 0){ // time stayed the same for a bit sometimes.
+            System.out.println(time);
+            longUpdate();
         }
     }
 
@@ -63,7 +75,7 @@ public class DroppedItem extends GameObject{
         try {
             System.out.println("DroppedItem self clean!");
             orgo.editLayer(" ", layerName, 0, 0);
-            orgo.removeLayer(layerName);
+            orgo.getLayers().stream().filter(l -> l.name.contains(layerName)).forEach(l -> orgo.removeLayer(layerName));
         }
         catch (NullPointerException ignore){}
     }
