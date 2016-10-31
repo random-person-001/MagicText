@@ -209,6 +209,7 @@ class Inventory implements java.io.Serializable {
      */
     void newShow() {
         System.out.println("Bringing up menu...");
+        org = player.orgo; // Update the org (cuz it changes based on room now)
         player.frozen = true;
         org.getLayers().stream().filter(lay -> lay.name.contains("playerLayer")).forEach(lay -> lay.setImportance(false));
         player.room.setObjsPause(true);

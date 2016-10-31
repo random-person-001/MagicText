@@ -33,14 +33,14 @@ public class InnerMountains extends Room {
     private ImageOrg org;
 
     @Override
-    protected String loop(){
+    protected String loop(Player player){
         while (exitCode.equals("")){
             try {
                 Thread.sleep(20);
-                if (getPlayer().getY() == 46){
+                if (player.getY() == 46){
                     setNewRoom("Cliffside", 137, 1);
                 }
-                if (getPlayer().getX() == 65){
+                if (player.getX() == 65){
                     setNewRoom("SnowyPeak", 1, 15);
                 }
             } catch (InterruptedException ignored) {}
@@ -102,6 +102,5 @@ public class InnerMountains extends Room {
     public InnerMountains(Player player){
         constructor(player);
         org = player.orgo;
-        super.index = 1;
     }
 }

@@ -19,7 +19,7 @@ public class DockAndShip extends Room {
     private int maxW;
     private int maxH;
     @Override
-    protected String loop(){
+    protected String loop(Player play){
         int count = 0;
         int timer = 0;
         while (exitCode.equals("")){
@@ -123,6 +123,7 @@ public class DockAndShip extends Room {
     public DockAndShip(Player player){
         constructor(player);
         org = player.orgo;
+        super.strRoomName = "DockAndShip";
         maxH = org.getWindow().maxH();
         maxW = org.getWindow().maxW();
     }

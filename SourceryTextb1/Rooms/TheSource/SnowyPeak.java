@@ -36,7 +36,7 @@ public class SnowyPeak extends Room {
     private ImageOrg org;
 
     @Override
-    protected String loop(){
+    protected String loop(Player player){
         Random randy = new Random();
         while (exitCode.equals("")){
             try {
@@ -46,7 +46,7 @@ public class SnowyPeak extends Room {
                 if (!isPaused)
                     addObject(new Snowflake(org, this, randy.nextInt(220), 0));
                 */
-                if (getPlayer().getX() == 0){
+                if (player.getX() == 0){
                     setNewRoom("InnerMountains", 64, 14);
                 }
             } catch (InterruptedException ignored) {}
@@ -106,6 +106,5 @@ public class SnowyPeak extends Room {
     public SnowyPeak(Player player){
         constructor(player);
         org = player.orgo;
-        super.index = 1;
     }
 }

@@ -33,7 +33,7 @@ public class NewTestRoom extends Room {
     private int maxH;
     private int maxW;
 
-    protected String loop(){
+    protected String loop(Player play){
 
         while (exitCode.equals("")){
             try {

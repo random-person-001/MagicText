@@ -6,7 +6,6 @@ import SourceryTextb1.GameObjects.Item;
 import SourceryTextb1.GameObjects.Player;
 import SourceryTextb1.GameObjects.TheSource.Bandit;
 import SourceryTextb1.GameObjects.TheSource.Spider;
-import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
 import SourceryTextb1.SpecialText;
@@ -18,10 +17,9 @@ import java.awt.*;
  * Created by riley on 01-Sep-2016.
  */
 public class SourceCaves extends Room{
-    private ImageOrg org;
 
     @Override
-    protected String loop(){
+    protected String loop(Player play){
         int count = 0;
 
         while (exitCode.equals("")){
@@ -81,10 +79,7 @@ public class SourceCaves extends Room{
     }
 
     public SourceCaves(Player player){
+        super.strRoomName = "SourceCaves";
         constructor(player);
-        super.roomHeight = 63;
-        super.roomWidth = 420;
-        org = player.orgo;
-        super.index = 1;
     }
 }

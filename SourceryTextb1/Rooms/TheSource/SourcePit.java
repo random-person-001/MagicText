@@ -8,10 +8,8 @@ package SourceryTextb1.Rooms.TheSource;
 import SourceryTextb1.Art;
 import SourceryTextb1.GameObjects.*;
 import SourceryTextb1.GameObjects.TheSource.Spider;
-import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
-import SourceryTextb1.SpecialText;
 
 /**
  * The initial view of the Source Pit.
@@ -28,10 +26,9 @@ import SourceryTextb1.SpecialText;
 
 
 public class SourcePit extends Room {
-    private ImageOrg org;
 
     @Override
-    protected String loop(){
+    protected String loop(Player play){
         int count = 0;
 
         while (exitCode.equals("")){
@@ -42,13 +39,14 @@ public class SourcePit extends Room {
                     setNewRoom("Cliffside",11,1);
                 }
                 if (getPlayer().getY() < 0){
-                    setNewRoom("Tutorial",11,1);
+                    setNewRoom("TutorialBasement",11,1);
                 }
                 if (count == 0){
                     if (playo.getX() == 109 && playo.getY() == 10) {
-                        queueMessage(new FlavorText("Welcome to the rest of the world!", ""));
-                        queueMessage(new FlavorText("There are many things to find and explore!\nUse the 'F' key to inspect things.", ""));
-                        queueMessage(new FlavorText("Things to look at and interact with are\n usually colored teal-ish blue.\n It is usually helpful to inspect them", ""));
+                        queueMessage(new FlavorText("Welcome to the rest of the world!", "").setViewerUsername(play.getUsername()));
+                        queueMessage(new FlavorText("There are many things to find and explore!\nUse the 'F' key to inspect things.", "").setViewerUsername(play.getUsername()));
+                        queueMessage(new FlavorText("Things to look at and interact with are\n usually colored teal-ish blue.\n It is usually helpful to inspect them", "").setViewerUsername(play.getUsername()));
+                        queueMessage(new FlavorText("Sometimes, they also buttons and\n triggers for various things.\n Fun!", "").setViewerUsername(play.getUsername()));
                     }
                     count++;
                 }
@@ -103,8 +101,7 @@ public class SourcePit extends Room {
     }
 
     public SourcePit(Player player){
+        super.strRoomName = "SourcePit";
         constructor(player);
-        org = player.orgo;
-        super.index = 1;
     }
 }

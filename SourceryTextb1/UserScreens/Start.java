@@ -44,7 +44,8 @@ public class Start {
             rooma.ownID = "Tutorial";
             player.setRoom(rooma);
             rooma.startup();
-            rooma.enter();
+            rooma.enter(player);
+            while (rooma.enemies.size() > 0){}
         } else {
             WindowConfig wincnfg = new WindowConfig(org);
             wincnfg.config(false);
@@ -60,7 +61,7 @@ public class Start {
      */
     private static HashMap<String, Room> initializeZone1Rooms(Player player) {
         HashMap<String, Room> rooms = new HashMap<>();
-        rooms.put("Tutorial", new TutorialBasement(player));
+        rooms.put("TutorialBasement", new TutorialBasement(player));
         rooms.put("SourcePit", new SourcePit(player));
         rooms.put("Cliffside", new Cliffside(player));
         rooms.put("SourceCaves", new SourceCaves(player));
@@ -312,18 +313,16 @@ public class Start {
                 return;
             }
             playerList = new ArrayList<>();
-            //makeNewWindow();
             Player player = new Player(org,0);
-            player.roomName = "Tutorial";
+            player.roomName = "TutorialBasement";
             playerList.add(player);
             GameInstance master = new GameInstance(initializeZone1Rooms(player),player);
             new Timer().schedule(new TimerTask() {
                 @Override
-                public void run() throws StringIndexOutOfBoundsException, NullPointerException {
+                public void run() {
                     master.runGame();
                 }
             }, 310);
-            List<GameInstance> all = new ArrayList<>();
 
             // For multiplayer
             for (int i=1; i<numPlayers; i++) {
@@ -331,8 +330,7 @@ public class Start {
                 SlaveGameInstance instance = new SlaveGameInstance(master);
                 new Timer().schedule(new TimerTask() {
                     @Override
-                    public void run() throws StringIndexOutOfBoundsException, NullPointerException {
-                        // Hi.
+                    public void run() {
                         instance.runGameAsSlaveTo(master);
                     }
                 }, 110);
@@ -349,15 +347,6 @@ public class Start {
                     return;
                 }
             }
-        }
-
-        /**
-         * For internal use: set respective variables to new instances of Window, ImageOrg, and Player that know about
-         * each other.
-         */
-        private void makeNewWindow(){
-            game = new Window();
-            org = new ImageOrg(game);
         }
 
         void buildGame(Player imported){

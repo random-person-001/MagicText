@@ -34,13 +34,15 @@ public class Bandit extends Mortal {
     @Override
     public void update() {
         Mortal closestGoodGuy = getClosestGoodGuy();
-        if (Math.abs(x - closestGoodGuy.getX()) <= 2 && Math.abs(y - closestGoodGuy.getY()) <= 2){
-            closestGoodGuy.subtractHealth(2);
-        }
-        if (closestGoodGuy.getX() == getX() || closestGoodGuy.getY() == getY()){ // sprint when straight line to player
+        if (closestGoodGuy != null) {
+            if (Math.abs(x - closestGoodGuy.getX()) <= 2 && Math.abs(y - closestGoodGuy.getY()) <= 2) {
+                closestGoodGuy.subtractHealth(2);
+            }
+            if (closestGoodGuy.getX() == getX() || closestGoodGuy.getY() == getY()) { // sprint when straight line to player
+                pathToPos(followDist, closestGoodGuy.getX(), closestGoodGuy.getY());
+            }
             pathToPos(followDist, closestGoodGuy.getX(), closestGoodGuy.getY());
         }
-        pathToPos(followDist, closestGoodGuy.getX(), closestGoodGuy.getY());
         setDispIcon(new SpecialText("B", new Color(255, 160, 160)));
     }
 

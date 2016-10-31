@@ -22,7 +22,7 @@ public class BanditFortress extends Room{
     private ImageOrg org;
 
     @Override
-    protected String loop(){
+    protected String loop(Player play){
         int count = 0;
 
         while (exitCode.equals("")){
@@ -98,10 +98,10 @@ public class BanditFortress extends Room{
     }
 
     public BanditFortress(Player player){
-        constructor(player);
+        org = player.orgo;
+        super.strRoomName = "BanditFortress";
         super.roomHeight = 105;
         super.roomWidth = 137;
-        org = player.orgo;
-        super.index = 1;
+        constructor(player);
     }
 }

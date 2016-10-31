@@ -17,7 +17,7 @@ import SourceryTextb1.SpecialText;
 public class Cliffside extends Room {
     private Layer baseLayer;
 
-    protected String loop() {
+    protected String loop(Player play) {
         int count = 0;
         boolean warnedOfEdge = false;
         while (exitCode.equals("")) {
@@ -123,7 +123,8 @@ public class Cliffside extends Room {
     }
 
     public Cliffside(Player player) {
-        constructor(player);
         org = player.orgo;
+        super.strRoomName = "Cliffside";
+        constructor(player);
     }
 }

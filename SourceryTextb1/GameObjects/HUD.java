@@ -46,9 +46,9 @@ class HUD implements java.io.Serializable {
     private Timer timer;
     private boolean inCmd = false;
 
-    HUD(ImageOrg org, Player playerSet) {
+    HUD(Player playerSet) {
         player = playerSet;
-        orgo = org;
+        orgo = player.orgo;
         layerName = "HUD_of_" + player.getUsername();
 
         HUD hud = this;
@@ -67,6 +67,10 @@ class HUD implements java.io.Serializable {
         }, 2000);
 
         setupTimer(100);
+    }
+
+    void setOrgo(ImageOrg newOrg){
+        orgo = newOrg;
     }
 
     void setLayerName(String newLayerName){
@@ -300,6 +304,7 @@ class HUD implements java.io.Serializable {
      * >ls | pwd : currently not developed.  Later will tell the name of current room.
      * >make me a sandwich : evoke snarky response
      * >pointer | compiling | wifi | random : all relevant xkcd comics.
+     * >reset timer : reset the GameObject update timer on Player (calls setupTimer(20);)
      * >ser test : Test serializing the player to a .sav file
      * >set red (amount) : reds up the screen like the player took damage
      * >setResponseTime (time) : set a new duration for the response message on the console to be shown (seconds)
@@ -364,6 +369,9 @@ class HUD implements java.io.Serializable {
         } else if (command.contains("ghost")) {
             player.isGhost = true;
             showResponse("Player is now a ghost.");
+        }else if (command.contains("reset") && command.contains("time")) {
+            player.restartTimer();
+            showResponse("Called Player.setupTimer(20)");
         } else if (command.contains("addhp ") && command.length() > 6) {
             int amountToHeal = Integer.valueOf(command.substring(6));
             player.restoreHealth(amountToHeal, 50);

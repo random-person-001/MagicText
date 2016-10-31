@@ -53,9 +53,11 @@ public class ImageOrg implements java.io.Serializable {
     }
 
     public void terminateClock() {
-        drawTimer.cancel();
-        drawTimer.purge();
-        drawTimer = null;
+        if (drawTimer != null) {
+            drawTimer.cancel();
+            drawTimer.purge();
+            drawTimer = null;
+        }
     }
 
     /**

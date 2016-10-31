@@ -10,6 +10,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.*;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ThreadFactory;
 
 import SourceryTextb1.*;
 import SourceryTextb1.GameObjects.*;
@@ -30,7 +32,7 @@ public class Room implements java.io.Serializable{
     public List<Player> players = new ArrayList<>();
     private boolean[][] objHitMesh;
     private boolean[][] baseHitMesh;
-
+    public String strRoomName = "not set";
     private List<FlavorText> flavorTexts = new ArrayList<>();
     private List<FlavorText> messageQueue = new ArrayList<>();
 
@@ -38,7 +40,6 @@ public class Room implements java.io.Serializable{
 
     public int roomWidth;
     public int roomHeight;
-    protected int index;
     public String exitCode = "";
 
     protected boolean isPaused = false;
@@ -60,14 +61,15 @@ public class Room implements java.io.Serializable{
      * OVERRIDE THIS
      * Run a loop, doing things, until the player should go to a new room.
      * @return the room name to go to next
+     * @param play
      */
-    protected String loop (){
+    protected String loop(Player play){
         return "You were supposed to override this, dummy.";
     }
 
     /**
      * OVERRIDE THIS
-     * Initialize hit meshes, move player, set background layer, do generic room init here
+     * Initialize hit meshes, set background layer, do generic room init here
      */
     public void startup() {
     }
@@ -82,23 +84,45 @@ public class Room implements java.io.Serializable{
     /**
      * Enter the room. IE, start loops and stuff now.
      */
-    public String enter(){
-        playo.frozen = false;
+    public void enter(Player player){
+        org.resetClock();
+        player.frozen = false;
         setObjsPause(false);
-        exitCode = "";
-        String exit = loop();
-        //playo.frozen = true;
-        System.out.println(exit);
-        System.out.println(exitCode);
-        if (!exit.equals("die")) {
-            removeAllObjectsAndLayersButPlayer();
+        players.add(player);
+        for (Player p : players) {
+            p.roomName = ownID;
+            p.setupForNewRoom();
+            addMortal(p);
         }
-        else { // in a moment, pause everything so the player sees their grave mistake
-            timedCancelAfter(3000);
-        }
-        return exit;
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                String exit = loop(player);
+                player.roomName = exit;
+                removeMortal(player);
+                players.remove(player);
+                takeCareOfPlayerLeavingRoom(player, exit);
+            }
+        }, 10);
     }
 
+    /**
+     * Thing to be called at the end of enter() after things are done.  Needs work for multiplayer.
+     * @param player a Player that left
+     * @param exit the String of what room they're trying to go to now.
+     */
+    private void takeCareOfPlayerLeavingRoom(Player player, String exit) {
+        if (getCountOf("Player") == 0) {
+            org.terminateClock();
+            player.frozen = true;
+            setObjsPause(true);
+            System.out.println(exit);
+            System.out.println(exitCode);
+            if (exit.equals("die")) { // in a moment, pause everything so the player sees their grave mistake
+                timedCancelAfter(3000);
+            }
+        }
+    }
 
 
     /**
@@ -109,10 +133,10 @@ public class Room implements java.io.Serializable{
         System.out.println("Hi.  I'm a timer");
         new Timer().schedule(new TimerTask() {
             public void run() {
-                System.out.println("\n\nCANCELLING STUFFFFFF\n\n");
-                for (GameObject o : objs){
-                    removeObject(o);
-                }
+                System.out.println("\n\n(Actually not) CANCELLING STUFFFFFF\n\n");
+                //for (GameObject o : objs){
+                //    removeObject(o);
+                //}
             }
         }, msDelay);
     }
@@ -123,10 +147,16 @@ public class Room implements java.io.Serializable{
      */
     protected void constructor(Player player){
         playo = player;
-        org = player.orgo;
+        // Makee a new imageOrg for this level, looking at the same Window as the last one did
+        org = new ImageOrg(player.orgo.getWindow());
+        // So it doesn't draw over other things.  It'll be restarted as needed later.
+        org.terminateClock();
+        // Boring stuff
         roomHeight = org.getWindow().maxH();
         roomWidth = org.getWindow().maxW();
-        index = 1;
+
+        Layer spells = new Layer(new String[roomHeight][roomWidth], "Spellz", true);
+        org.addLayer(spells);
     }
 
     protected void setNewRoom(String newID, int playerX, int playerY){
@@ -195,27 +225,6 @@ public class Room implements java.io.Serializable{
         }
     }
 
-    /**
-     * General work to be done at the end of a level.  Cleans layers for exit, cancels the timers of everything but the
-     * Player, and clears the list of objects.
-     */
-    private void removeAllObjectsAndLayersButPlayer(){
-        cleanLayersForExit(org);
-        for (GameObject o : objs){
-            if (!o.strClass.equals("Player")) {
-                o.cancelTimer();
-                o.selfCleanup();
-            }
-        }
-        for (Mortal o : enemies){
-            if (!o.strClass.equals("Player")) {
-                o.cancelTimer();
-                o.selfCleanup();
-            }
-        }
-        objs.clear();
-        enemies.clear();
-    }
 
     /**
      * Flush the buffers of things to be added and removed from the list of objects in the world.
@@ -261,7 +270,6 @@ public class Room implements java.io.Serializable{
                     System.out.println("[Room.java: setObjsPause(): caught nullpointer!  Probably Not Good!");
                     e.printStackTrace();
                 }
-                //System.out.println("OBJS PAUSED: " + objManifest + "\n");
             }
             for (Mortal m : enemies) {
                 try {
@@ -270,28 +278,15 @@ public class Room implements java.io.Serializable{
                     System.out.println("[Room.java: setObjsPause(): caught nullpointer!  Probably Not Good!");
                     e.printStackTrace();
                 }
-                //System.out.println("OBJS PAUSED: " + objManifest + "\n");
             }
         } catch (ConcurrentModificationException ignore) { // Happens normally when an object is removed or added to the room
             System.out.println("Whoops, something weird! [Room.java: setObjsPuase(): caught a ConcurrentModificationException]");
-
         }
     }
 
 
     public void addObject(GameObject theObj) {
         addList.add(theObj);
-    }
-
-    /**
-     * Don't want all that gunk of layering to clog up the next level!
-     *
-     * @param org imageOrg
-     */
-    private void cleanLayersForExit(ImageOrg org) {
-        org.removeAllButPlayer(); //Cleanup, happens when loop is done.
-        org.compileImage();
-        org.getWindow().clearImage();
     }
 
     public void removeObject(GameObject obj) {
@@ -495,17 +490,7 @@ public class Room implements java.io.Serializable{
      * Initialize some universal layers and stuff.  Generally call this at the end of setting up a room, lest the
      * spells, player, and HUD layers be placed below others.
      */
-    protected void genericRoomInitialize() {
-        Layer spells = new Layer(new String[roomHeight][roomWidth], "Spellz", true);
-        org.addLayer(spells);
-
-        for (Player p : players) {
-            p.castingLayer = spells;
-            p.roomName = ownID;
-            p.setupForNewRoom();
-            addMortal(p);
-        }
-    }
+    protected void genericRoomInitialize() {}
 
     /**
      * @param newPlayers a list of Players that the Room's 'players' variable should be set to
@@ -614,10 +599,7 @@ public class Room implements java.io.Serializable{
         keyListener.resume = false;
         window.txtArea.addKeyListener(keyListener); // Add key listeners.
 
-        //System.out.println(text);
-
-
-        Timer listenTick = new Timer();
+         Timer listenTick = new Timer();
         TextBoxListener listen = new TextBoxListener(keyListener, window);
         listenTick.scheduleAtFixedRate(listen, 100, 100);
     }
@@ -697,6 +679,10 @@ public class Room implements java.io.Serializable{
             compactTextBox(org, messages[0], speaker, isHelpful, usernameOfPlayer);
         }
 
+        public FlavorText setViewerUsername(String usernameOfPlayer) {
+            this.usernameOfPlayer = usernameOfPlayer;
+            return this;
+        }
     }
 
     private class TextBoxListener extends TimerTask {

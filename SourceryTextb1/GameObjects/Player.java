@@ -21,8 +21,6 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -96,6 +94,7 @@ public class Player extends Mortal implements java.io.Serializable {
 
     int screenRedness = 0;
     int screenYellowness = 0;
+
     /**
      * Initialize a whole lotta variables.
      *
@@ -111,15 +110,13 @@ public class Player extends Mortal implements java.io.Serializable {
         username += playerNumber;
 
         layerName = "playerLayer-" + username;
-        Layer playerLayer = new Layer(new String[3][3], layerName);
-        playerLayer.setImportance(true);
         aimDispName += username;
-        orgo.addLayer(playerLayer);
 
         inv = new Inventory(orgo, this);
         tracker = new ItemTracker();
 
-        hud = new HUD(orgo, this);
+        hud = new HUD(this);
+        hud.setOrgo(orgo);
         resumeFromSave();
     }
 
@@ -157,11 +154,7 @@ public class Player extends Mortal implements java.io.Serializable {
     }
 
     public void setupForNewRoom() {
-        Layer aimDispLayer = new Layer(new String[1][1], aimDispName);
-        aimDispLayer.setOwningPlayerUsername(username);
-        //addHUD();
         graphicUpdate();
-        orgo.addLayer(aimDispLayer);
         upPressed = false;
         downPressed = false;
         leftPressed = false;
@@ -169,25 +162,46 @@ public class Player extends Mortal implements java.io.Serializable {
     }
 
     /**
-     * Make a HUD layer and plop it on.
+     * Change the Player's perception of which room it is in, and do various cleenup from before.
+     *
+     * @param newRoom a Room that Player should consider itself in
      */
-    private void addHUD() {  //Fixes redundancy
+    public void setRoom(Room newRoom) {
+        // Clean up from old room
+        orgo.removeLayer(layerName);
+        orgo.removeLayer(aimDispName);
+        orgo.removeLayer("HUD_of_" + username);
+        //Set new room
+        room = newRoom;
+        //Update everybody's orgs
+        orgo = room.org;
+        hud.setOrgo(orgo);
+        // Add the player layers to this room
+        addPlayerLayers();
+    }
+
+    public void restartTimer(){
+        setupTimer(20);
+    }
+
+    private void addPlayerLayers() {
+        // Add hud layer
         System.out.println("Adding HUD for " + username);
         Layer HUDd = new Layer(new String[1][70], "HUD_of_" + username, false, true);
         HUDd.setImportance(true);
         HUDd.setOwningPlayerUsername(username);
         orgo.addLayer(HUDd);
         hud.setLayerName(HUDd.name);
-    }
 
-    /**
-     * Change the Player's perception of which room it is in.  As a bonus, celebrate a bit.
-     *
-     * @param newRoom a Room that Player should consider itself in
-     */
-    public void setRoom(Room newRoom) {
-        room = newRoom;
-        addHUD();
+        // Add player layer
+        Layer playerLayer = new Layer(new String[3][3], layerName);
+        playerLayer.setImportance(true);
+        orgo.addLayer(playerLayer);
+
+        // Add aim display layer
+        Layer aimDispLayer = new Layer(new String[1][1], aimDispName);
+        aimDispLayer.setOwningPlayerUsername(username);
+        orgo.addLayer(aimDispLayer);
     }
 
     /**

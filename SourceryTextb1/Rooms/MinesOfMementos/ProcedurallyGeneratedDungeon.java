@@ -16,7 +16,7 @@ import SourceryTextb1.Rooms.Room;
  */
 public class ProcedurallyGeneratedDungeon extends Room {
 
-    protected String loop() {
+    protected String loop(Player play) {
         int count = 0;
         while (exitCode.equals("")) {
             try {
@@ -49,6 +49,7 @@ public class ProcedurallyGeneratedDungeon extends Room {
     public ProcedurallyGeneratedDungeon(Player player) {
         playo = player;
         org = player.orgo;
+        super.strRoomName = "ProcedurallyGeneratedDungeon";
         constructor(player);
     }
 
