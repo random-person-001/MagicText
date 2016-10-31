@@ -37,16 +37,20 @@ public class WeakTower extends Mortal {
         SpecialText anim2 = new SpecialText("-");
         boolean alt = false;
         Mortal m = getClosestGoodGuy();
-        if (Math.abs(x - m.getX()) <= 2 && Math.abs(y - m.getY()) <= 2){
-            m.subtractHealth(2);
-        }
-        if (Math.abs(m.getX() - getX()) <= 2){
-            int orientation = (m.getY() - getY() > 0) ? 1 : 0;
-            room.addObject(new Spell(orgo, room, x, y, orientation, dmg, rng, anim1, anim2, alt));
-        }
-        if (Math.abs(m.getY() - getY()) <= 2){
-            int orientation = (m.getX() - getX() > 0) ? 3 : 2;
-            room.addObject(new Spell(orgo, room, x, y, orientation, dmg, rng, anim1, anim2, alt));
+        if (m != null) {
+            if (Math.abs(x - m.getX()) <= 2 && Math.abs(y - m.getY()) <= 2) {
+                m.subtractHealth(2);
+            }
+            if (Math.abs(m.getX() - getX()) <= 2) {
+                int orientation = (m.getY() - getY() > 0) ? 1 : 0;
+                room.addObject(new Spell(orgo, room, x, y, orientation, dmg, rng, anim1, anim2, alt));
+            }
+            if (Math.abs(m.getY() - getY()) <= 2) {
+                int orientation = (m.getX() - getX() > 0) ? 3 : 2;
+                room.addObject(new Spell(orgo, room, x, y, orientation, dmg, rng, anim1, anim2, alt));
+            }
+        } else {
+            System.out.println("WeakTower could not find a nearest good guy :(");
         }
         orgo.editLayer("T", layerName, 0, 0);
     }

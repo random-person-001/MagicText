@@ -44,6 +44,8 @@ public class Spider extends Mortal {
                 closestGoodGuy.subtractHealth(2);
             }
             pathToPos(followDist, closestGoodGuy.getX(), closestGoodGuy.getY());
+        } else {
+            System.out.println("Spider could not find a nearest good guy :(");
         }
         setDispIcon(new SpecialText("S", new Color(255, 100, 90)));
     }

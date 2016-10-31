@@ -42,6 +42,8 @@ public class Bandit extends Mortal {
                 pathToPos(followDist, closestGoodGuy.getX(), closestGoodGuy.getY());
             }
             pathToPos(followDist, closestGoodGuy.getX(), closestGoodGuy.getY());
+        } else {
+            System.out.println("Bandit could not find a nearest good guy :(");
         }
         setDispIcon(new SpecialText("B", new Color(255, 160, 160)));
     }
