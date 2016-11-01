@@ -163,7 +163,7 @@ public class ImageOrg implements java.io.Serializable {
      */
     public Layer getLayer(int go) {
         if (go == -1) {
-            return new Layer(new String[1][1]); // TODO I don't think this is a good feature here.  It may cause problems.
+            return new Layer(new String[1][1]); // TODO I don't think this is a good feature here, but somehow problems happen if it isn't.
         } else {
             return layers.get(go);
         }

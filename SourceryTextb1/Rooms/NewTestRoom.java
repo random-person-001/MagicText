@@ -11,20 +11,11 @@ import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
 
 /**
- * A place to begin a tutorial, guiding you through stuff.
+ * A room to test code in
  * @author 119184
  *
- *
- * So Far:
- *  > You have been introduced to the backstory
- *  > That's it
- *
  * What Generally Happens Here:
- *
- *      > The player familiarizes with the player-controlled character and learns how to navigate a text-based environment
- *      (Hence the pile of junk)
- *      > An innocent pot of petunias is murdered by you, only because the developers felt like playing a cruel god
- *      > Some starter spells are aquired
+ *      > The player can interact with an experimental environment
  */
 
 
@@ -35,7 +26,7 @@ public class NewTestRoom extends Room {
         while (exitCode.equals("")){
             try {
                 Thread.sleep(20);
-                if (getPlayer().getHealth() <= 0){
+                if (play.getHealth() <= 0){
                     exitCode = "die";
                 }
             } catch (InterruptedException ignored) {}

@@ -25,7 +25,7 @@ public class DroppedItem extends GameObject{
         me = dropped;
         x = setx;
         y = sety;
-        if (me.getName().length() > 0 && !room.playo.tracker.alreadyTaken(getX(),getY(),room.ownID)) { // Don't even set up timer if item name is an empty string (for dummy item)
+        if (me.getName().length() > 0) { // Don't even set up timer if item name is an empty string (for dummy item)
             layerName = room.makeUniqueLayerName(super.strClass) + "-";
             setupTimer(100);
         }

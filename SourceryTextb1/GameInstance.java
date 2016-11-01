@@ -17,14 +17,12 @@ import java.util.concurrent.ThreadFactory;
 public class GameInstance {
     private Player protaganist;
     List<Player> playerList;
-    private String roomID;
     private HashMap<String, Room> zone1Rooms;
     private ImageOrg org;
 
     public GameInstance(HashMap<String, Room> roomsSet, Player protaganistSet){
         zone1Rooms = roomsSet;
         protaganist = protaganistSet;
-        roomID = protaganist.roomName;
         playerList = new ArrayList<>();
         playerList.add(protaganist);
         org = protaganistSet.orgo;
@@ -36,11 +34,6 @@ public class GameInstance {
     public void runGame(){
         for (Room r : zone1Rooms.values()){
             r.startup();
-//            try {
-//                Thread.sleep(700);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
             r.setObjsPause(true);
         }
         org.terminateClock();
@@ -63,7 +56,6 @@ public class GameInstance {
 
     private void doLevel(Room r, Player p){
         org.getWindow().clearImage();
-        r.ownID = r.strRoomName;
         r.setObjsPause(false);
         p.restartTimer(); // I'm really not sure why, but the player didn't move until I reset its timer after switching levels.
         p.setRoom(r);

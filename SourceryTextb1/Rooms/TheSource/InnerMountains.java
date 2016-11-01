@@ -31,15 +31,15 @@ import SourceryTextb1.SpecialText;
 public class InnerMountains extends Room {
 
     @Override
-    protected String loop(Player player){
+    protected String loop(Player play){
         while (exitCode.equals("")){
             try {
                 Thread.sleep(20);
-                if (player.getY() == 46){
-                    setNewRoom("Cliffside", 137, 1);
+                if (play.getY() == 46){
+                    setNewRoom("Cliffside", play, 1, 137);
                 }
-                if (player.getX() == 65){
-                    setNewRoom("SnowyPeak", 1, 15);
+                if (play.getX() == 65){
+                    setNewRoom("SnowyPeak", play, 15, 1);
                 }
             } catch (InterruptedException ignored) {}
         }

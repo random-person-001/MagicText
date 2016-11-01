@@ -89,7 +89,6 @@ public class Room implements java.io.Serializable{
         addMortal(player);
         players.add(player);
 //        for (Player p : players) {
-//            p.roomName = ownID;
 //            p.setupForNewRoom();
 //            addMortal(p);
 //        }
@@ -116,13 +115,13 @@ public class Room implements java.io.Serializable{
         if (getCountOf("Player") == 0) {
             org.terminateClock();
             setObjsPause(true);
+            if (exit.equals("die")) { // in a moment, pause everything so the player sees their grave mistake
+                timedCancelAfter(3000);
+            }
         }
         System.out.println(exit);
         System.out.println(exitCode);
         player.frozen = true;
-        if (exit.equals("die")) { // in a moment, pause everything so the player sees their grave mistake
-            timedCancelAfter(3000);
-        }
     }
 
 
@@ -160,11 +159,9 @@ public class Room implements java.io.Serializable{
         org.addLayer(spells);
     }
 
-    protected void setNewRoom(String newID, int playerX, int playerY){
+    protected void setNewRoom(String newID, Player player, int playerY, int playerX){
         if (exitCode.equals("")) {
-            for (Player p : players) {
-                p.goTo(playerX, playerY);
-            }
+            player.goTo(playerX, playerY);
             exitCode = newID;
         }
     }
@@ -294,21 +291,6 @@ public class Room implements java.io.Serializable{
         removeList.add(obj);
         obj.cancelTimer();
         obj.selfCleanup();
-    }
-
-    public String ownID = "";
-
-    /**
-     * Adds a dropped item to the room, but only if it hasn't been taken previously.
-     */
-    public void addItem(DroppedItem toAdd){ // todo: this isn't used.  Why?
-        addObject(toAdd);
-        //System.out.println(playo.tracker.alreadyTaken(toAdd.getX(),toAdd.getY(),ownID));
-        if (playo.tracker.alreadyTaken(toAdd.getX(),toAdd.getY(),ownID)) { // todo: this isn't the right way to do this for multiplayer
-            removeObject(toAdd);
-        }
-        //playo.tracker.addLoc(toAdd.getX(),toAdd.getY(),ownID);
-        //System.out.printf("[TRACKER] Item a success @ (%1$d,%2$d,%3$s)\n", toAdd.getX(),toAdd.getY(),ownID);
     }
 
     /**

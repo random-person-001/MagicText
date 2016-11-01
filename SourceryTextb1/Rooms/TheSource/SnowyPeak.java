@@ -45,7 +45,7 @@ public class SnowyPeak extends Room {
                     addObject(new Snowflake(org, this, randy.nextInt(220), 0));
 
                 if (player.getX() == 0){
-                    setNewRoom("InnerMountains", 64, 14);
+                    setNewRoom("InnerMountains", player, 14, 64);
                 }
             } catch (InterruptedException ignored) {}
         }

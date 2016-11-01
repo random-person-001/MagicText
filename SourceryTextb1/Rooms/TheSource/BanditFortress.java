@@ -26,14 +26,14 @@ public class BanditFortress extends Room{
         while (exitCode.equals("")){
             try {
                 Thread.sleep(20);
-                if (getPlayer().getY() >= 104){
-                    setNewRoom("Cliffside",5,5);
+                if (play.getY() >= 104){
+                    setNewRoom("Cliffside", play, 5, 5);
                 }
-                if (getPlayer().getX() >= 135){
-                    setNewRoom("SourceCaves",231,1);
+                if (play.getX() >= 135){
+                    setNewRoom("SourceCaves", play, 1, 231);
                 }
                 if (count == 0){
-                    if (playo.getX() == 109 && playo.getY() == 10) {
+                    if (play.getX() == 109 && play.getY() == 10) {
                         queueMessage(new Room.FlavorText("Most capital letters (ex: A, B, C..) out in\n the world have flavor text \n accessible through the 'F' key", ""));
                     }
                     count++;

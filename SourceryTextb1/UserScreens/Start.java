@@ -41,7 +41,6 @@ public class Start {
             NewTestRoom rooma = new NewTestRoom(player);
             org.removeAllButPlayer();
             game.clearImage();
-            rooma.ownID = "Tutorial";
             player.setRoom(rooma);
             rooma.startup();
             rooma.enter(player);

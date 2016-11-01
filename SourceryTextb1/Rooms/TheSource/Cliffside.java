@@ -22,7 +22,6 @@ public class Cliffside extends Room {
         boolean warnedOfEdge = false;
         while (exitCode.equals("")) {
             try {
-                org.compileImage();
                 Thread.sleep(20);
 
                 if (count == 0) {
@@ -32,29 +31,25 @@ public class Cliffside extends Room {
                     // ^ This should be an item in The Mines of Mementos
                     count++;
                 }
-                if (baseLayer.getStr(playo.getY(), playo.getX()).equals(".")){ // Walking the critical edge
-                    playo.subtractHealth(1, "Do.  Not.  Walk.  The critical edge.");
+                if (baseLayer.getStr(play.getY(), play.getX()).equals(".")){ // Walking the critical edge
+                    play.subtractHealth(1, "Do.  Not.  Walk.  The critical edge.");
                     if (!warnedOfEdge) {
                         compactTextBox("Don't walk the critical edge!", "", false);
                         warnedOfEdge = true;
                     }
                 }
                 enemies.forEach(this::checkMortalBelowEdge); // OK, intelliJ.  Sure.
-//
-//                if (playo.getX() == 91 && playo.getY() == 44){
-//                    playo.dead = true;
-//                }
-                if (playo.getY() < 1 && playo.getX() < 20){
-                    setNewRoom("SourcePit",57,42);
+                if (play.getY() < 1 && play.getX() < 20){
+                    setNewRoom("SourcePit", play, 42, 57);
                 }
-                if (playo.getY() < 1 && playo.getX() > 20){
-                    setNewRoom("InnerMountains",11,44);
+                if (play.getY() < 1 && play.getX() > 20){
+                    setNewRoom("InnerMountains", play, 44, 11);
                 }
-                if (playo.getY() >= 32){
-                    setNewRoom("SourceCaves",62,1);
+                if (play.getY() >= 32){
+                    setNewRoom("SourceCaves", play, 1, 62);
                 }
-                if (playo.getX() >= 146){
-                    setNewRoom("BanditFortress",67,103);
+                if (play.getX() >= 146){
+                    setNewRoom("BanditFortress", play, 103, 67);
                 }
             } catch (InterruptedException ignored) {
             }
@@ -106,7 +101,6 @@ public class Cliffside extends Room {
 
     @Override
     public void startup() {
-
         addItems();
         String[][] base = Art.strToArray(arty.mountainPlace);
         String[] solids = {":", "^", "#",".","0","o"};

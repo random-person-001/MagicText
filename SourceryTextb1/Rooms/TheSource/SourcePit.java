@@ -35,14 +35,14 @@ public class SourcePit extends Room {
             try {
                 Thread.sleep(20);
                 //updateObjs(20);
-                if (getPlayer().getY() > 43){
-                    setNewRoom("Cliffside",11,1);
+                if (play.getY() > 43){
+                    setNewRoom("Cliffside", play, 1, 11);
                 }
-                if (getPlayer().getY() < 0){
-                    setNewRoom("TutorialBasement",11,1);
+                if (play.getY() < 0){
+                    setNewRoom("TutorialBasement", play, 1, 11);
                 }
                 if (count == 0){
-                    if (playo.getX() == 109 && playo.getY() == 10) {
+                    if (play.getX() == 109 && play.getY() == 10) {
                         queueMessage(new FlavorText("Welcome to the rest of the world!", "").setViewerUsername(play.getUsername()));
                         queueMessage(new FlavorText("There are many things to find and explore!\nUse the 'F' key to inspect things.", "").setViewerUsername(play.getUsername()));
                         queueMessage(new FlavorText("Things to look at and interact with are\n usually colored teal-ish blue.\n It is usually helpful to inspect them", "").setViewerUsername(play.getUsername()));
@@ -51,7 +51,7 @@ public class SourcePit extends Room {
                     count++;
                 }
 
-                if (getPlayer().getX() == 87 && getPlayer().getY() == 6){
+                if (play.getX() == 87 && play.getY() == 6){
                     System.out.println("Nooo!  You're escaping!");
                 }
 

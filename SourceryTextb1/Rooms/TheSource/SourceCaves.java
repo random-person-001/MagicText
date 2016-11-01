@@ -25,11 +25,11 @@ public class SourceCaves extends Room{
         while (exitCode.equals("")){
             try {
                 Thread.sleep(20);
-                if (getPlayer().getY() <= 0){
-                    setNewRoom("Cliffside",134,31);
+                if (play.getY() <= 0){
+                    setNewRoom("Cliffside", play, 31, 134);
                 }
-                if (getPlayer().getY() == 1 && getPlayer().getX() == 230) {
-                    setNewRoom("BanditFortress",134,64);
+                if (play.getY() == 1 && play.getX() == 230) {
+                    setNewRoom("BanditFortress", play, 64, 134);
                 }
                 if (count == 0){
                     if (playo.getX() == 109 && playo.getY() == 10) {
