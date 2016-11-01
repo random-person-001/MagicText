@@ -29,6 +29,8 @@ public class Mortal extends GameObject implements java.io.Serializable{
 
     private SpecialText dmgIcon = new SpecialText("");
 
+    public int slowedTimer = 0; //Timer for slowing enemies
+
 
     /**
      * Mortal-specific stuff for updates.  Checks death and runs onDeath() when appropriate
@@ -41,6 +43,7 @@ public class Mortal extends GameObject implements java.io.Serializable{
         if (isRanged){
             rangedUpdate();
         }
+        if (slowedTimer > 0) slowedTimer--;
     }
 
     public String getLayerName(){
@@ -68,7 +71,7 @@ public class Mortal extends GameObject implements java.io.Serializable{
             //System.out.println("My health is now " + getHealth());
             health -= amountLost;
             int percentHealth = (int)(((float)health / maxHealth) * 10);
-            if (percentHealth > 0) {
+            if (health > 0) {
                 dmgIcon = new SpecialText(String.valueOf(percentHealth), new Color(255, 100 + (percentHealth*10), 90));
             } else {
                 dmgIcon = new SpecialText("X", new Color(255, 90, 70));

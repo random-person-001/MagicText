@@ -58,6 +58,8 @@ class Inventory implements java.io.Serializable {
     private Layer infoLayer;
     private Layer selectedSpellsLayer;
 
+    private Color weaponColor = new Color(255, 210, 200);
+    private Color armorColor = new Color(200, 255, 255);
 
     int getY() {
         return cursorY;
@@ -168,6 +170,9 @@ class Inventory implements java.io.Serializable {
         Item item6 = new Item("Evil Powers", "Dark Spell;\n\nYou're not sure what it is\n exactly, but it has the\n word 'power' in its name,\n so it must be good,\n right?", "EvlPw", player, "spell", true);
         item6.dmgSpellDefine(1, 8, 2, "dark", new SpecialText("*", new Color(155, 55, 155)), new SpecialText("*", new Color(255, 55, 255)), true);
         spells.add(item6);
+        Item item7 = new Item("Witch Scarf", "A scarf imbued with witch\n magic, granting the user\n increased dark and ice\n magic power\n\nIt smells like flowers.\n\n+1 Ice Spell Damage\n+1 Dark Spell Damage\n+1 Defense\n+3 Max Health", player, "equip");
+        item7.setEquipvals(1, 3, 0, 0, 0, 2, 3, "weapon");
+        equip.add(item7);
         for (int ii = 0; ii < 4; ii++) {
             Item item4 = new Item("Carrot", "For some reason,\n they only grow\n in the mountains.\n\nNobody really know why.", player, "items");
             item4.healItemDefine(6, 3);
@@ -490,7 +495,7 @@ class Inventory implements java.io.Serializable {
      */
     private void operateEquipMenu() {
         loopAtMenuEnd();
-        genericItemListing(equip);
+        genericItemListing(equip, true);
         //cursorX = 31;
 
         dispInt(player.defense, 15, 17, true, new Color(150, 200, 200));
@@ -501,8 +506,8 @@ class Inventory implements java.io.Serializable {
         dispInt(player.fireSpellBoost, 25, 19, false, new Color(225, 150, 0));
         dispInt(player.iceSpellBoost, 25, 20, false, new Color(200, 225, 255));
 
-        putText(player.weapon.getName(), 9, 16);
-        putText(player.armor.getName(), 9, 17);
+        putText(player.weapon.getName(), 9, 16, weaponColor);
+        putText(player.armor.getName(), 9, 17, armorColor);
 
         if (pressedA) {
             int index = cursorY - 3 + ((page - 1) * 16);
@@ -564,6 +569,10 @@ class Inventory implements java.io.Serializable {
      * @param items dem array-list of you-know-what!
      */
     private void genericItemListing(ArrayList<Item> items) {
+        genericItemListing(items, false);
+    }
+
+    private void genericItemListing(ArrayList<Item> items, boolean highlightEquip) {
         double pageReq = Math.ceil((double) items.size() / 16);
 
         if (shouldRedraw){
@@ -583,7 +592,7 @@ class Inventory implements java.io.Serializable {
 
         org.editLayer(String.valueOf((int) pageReq), selectorLayer, 2, 41);
         org.editLayer(String.valueOf(page), selectorLayer, 2, 39);
-        fillItemNames(items, 33, 3, page);
+        fillItemNames(items, 33, 3, page, highlightEquip);
 
         int index = cursorY - 3 + ((page - 1) * 16);
 
@@ -623,15 +632,25 @@ class Inventory implements java.io.Serializable {
         }
     }
 
-    private void fillItemNames(ArrayList<Item> items, int startX, int startY, int page) {
+    private void fillItemNames(ArrayList<Item> items, int startX, int startY, int page, boolean highilghtEquip) {
         int pageOffset = (page - 1) * 16;
-        int pageSize = items.size() - pageOffset;
+        int pageSize = items.size() - pageOffset; //The amount of elements on page shown
         if (pageSize > 16) {
             pageSize = 16;
         }
         for (int ii = 0; ii < pageSize; ii++) {
-            String itemName = items.get(ii + pageOffset).getName();
-            putText(itemName, startX, startY + ii);
+            Item toDraw = items.get(ii + pageOffset);
+            Color drawWith = Color.WHITE;
+            if (highilghtEquip){
+                if (toDraw.equals(player.armor)){
+                    drawWith = armorColor;
+                } else if
+                    (toDraw.equals(player.weapon)){
+                    drawWith = weaponColor;
+                }
+            }
+            String itemName = toDraw.getName();
+            putText(itemName, startX, startY + ii, drawWith);
         }
     }
 
@@ -641,9 +660,19 @@ class Inventory implements java.io.Serializable {
      * @param xStart    starting X coordinate
      * @param yStart    Y coordinate
      */
-    private void putText(String text, int xStart, int yStart) {
+    private void putText(String text, int xStart, int yStart, Color toDrawWith){
+        putText(text, xStart, yStart, toDrawWith, 12);
+    }
+
+    private void putText(String text, int xStart, int yStart, Color toDrawWith, int maxLength) {
+        int iter = 0;
         for (int iii = 0; iii < text.length(); iii++) {
-            org.editLayer(String.valueOf(text.charAt(iii)), infoLayer, yStart, xStart + iii);
+            SpecialText toPut = new SpecialText(String.valueOf(text.charAt(iii)), toDrawWith);
+            org.editLayer(toPut, infoLayer, yStart, xStart + iii);
+            iter++;
+        }
+        for (int iif = iter; iif < maxLength; iif++){ //Fixes string by concatenating blank spaces until maxLength
+            org.editLayer(" ", infoLayer, yStart, xStart + iif);
         }
     }
 
