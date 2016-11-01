@@ -320,7 +320,7 @@ public class Mortal extends GameObject implements java.io.Serializable{
                     acquireTarget(target);
                 if (setOr != -1) {
                     System.out.printf("[TestRanged] Orientation: %d\n", setOr);
-                    Spell toFire = new Spell(orgo, room, x, y, setOr, damage, range, anim1, anim2, alting);
+                    Spell toFire = new Spell(room, x, y, setOr, damage, range, anim1, anim2, alting);
                     toFire.setHostility(true);
                     room.addObject(toFire);
                     setOr = -1;
