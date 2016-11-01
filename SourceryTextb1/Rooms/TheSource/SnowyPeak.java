@@ -44,10 +44,10 @@ public class SnowyPeak extends Room {
             try {
                 //System.out.println("It's chilly here in SnowyPeak!");
                 Thread.sleep(50);
-                /*
+
                 if (!isPaused)
                     addObject(new Snowflake(org, this, randy.nextInt(220), 0));
-                */
+
                 if (getPlayer().getX() == 0){
                     setNewRoom("InnerMountains", 64, 14);
                 }

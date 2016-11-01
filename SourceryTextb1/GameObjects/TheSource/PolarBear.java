@@ -37,29 +37,31 @@ public class PolarBear extends Mortal {
         originalX = xStart;
         originalY = yStart;
 
-        setupTimer(550); // Maybe the player should check this instead
+        setupTimer(150); // Maybe the player should check this instead
     }
 
 
     int chargeTime = 0;
+    int biteCooldown = 0;
 
     @Override
     public void update() {
-        Mortal closestGoodGuy = getClosestGoodGuy();
-        int dist = Math.abs(x - closestGoodGuy.getX()) + Math.abs(y - closestGoodGuy.getY());
-        if (dist <= 1){
-            closestGoodGuy.subtractHealth(6);
-            closestGoodGuy.slowedTimer = 300;
-        }
-        if (dist > followDist){
-            chargeTime = 20;
-        } else if (chargeTime > 0){
+        if (chargeTime > 0 || getTime() >= 450) {
+            Mortal closestGoodGuy = getClosestGoodGuy();
+            int dist = Math.abs(x - closestGoodGuy.getX()) + Math.abs(y - closestGoodGuy.getY());
+            if (dist <= 1 && biteCooldown == 0) {
+                closestGoodGuy.subtractHealth(6);
+                closestGoodGuy.slowedTimer = 300;
+                biteCooldown = 3;
+            }
+            if (dist > followDist) {
+                chargeTime = 20;
+            }
             pathToPos(followDist, closestGoodGuy.getX(), closestGoodGuy.getY());
-            chargeTime--;
-            //System.out.printf("Rar, I'm charging at you!!! (%1$d)\n", chargeTime);
+            if (chargeTime > 0) chargeTime--;
+            resetTime();
+            setDispIcon(new SpecialText("B", new Color(235, 215, 255)));
         }
-        pathToPos(followDist, closestGoodGuy.getX(), closestGoodGuy.getY());
-        setDispIcon(new SpecialText("B", new Color(235, 215, 255)));
     }
 
     @Override
