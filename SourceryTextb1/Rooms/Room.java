@@ -10,8 +10,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.*;
 import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ThreadFactory;
 
 import SourceryTextb1.*;
 import SourceryTextb1.GameObjects.*;
@@ -535,20 +533,18 @@ public class Room implements java.io.Serializable{
         }
     }
 
-    public void compactTextBox(ImageOrg org, String text, String speaker, boolean helpful) {
-        compactTextBox(org, text, speaker,  helpful, null);
+    public void compactTextBox(String text, String speaker, boolean helpful) {
+        compactTextBox(text, speaker,  helpful, null);
     }
 
     /**
      * Draw a smallish text box at the bottom of the screen, waiting for enter to be pressed to dismiss it.
-     *
-     * @param org     image organizer
-     * @param text    a string, with appropriate newlines, to show
+     *  @param text    a string, with appropriate newlines, to show
      * @param speaker Who said it?  Do tell!
      * @param helpful whether the box ought to give instructions on its own dismissal
      * @param usernameToShowTo if not null, show this to only the Player with that username.
      */
-    public void compactTextBox(ImageOrg org, String text, String speaker, boolean helpful, String usernameToShowTo) {
+    public void compactTextBox(String text, String speaker, boolean helpful, String usernameToShowTo) {
         Art artsedo = new Art();
         Layer txtBox;
         if (helpful) {
@@ -679,7 +675,7 @@ public class Room implements java.io.Serializable{
         }
 
         void output(){
-            compactTextBox(org, messages[0], speaker, isHelpful, usernameOfPlayer);
+            compactTextBox(messages[0], speaker, isHelpful, usernameOfPlayer);
         }
 
         public FlavorText setViewerUsername(String usernameOfPlayer) {

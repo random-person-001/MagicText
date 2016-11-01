@@ -411,7 +411,7 @@ public class Player extends Mortal implements java.io.Serializable {
     public void onDeath() {
         orgo.getWindow().setForegroundColor("#ff0000");
         //orgo.getWindow().txtArea.removeKeyListener(playerKeyListener);
-        room.compactTextBox(orgo, lastPainMessage, "An ominous voice from above", false);
+        room.compactTextBox(lastPainMessage, "An ominous voice from above", false);
         dead = true;
         room.exitCode = "die";
     }

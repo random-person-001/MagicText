@@ -35,7 +35,7 @@ public class Cliffside extends Room {
                 if (baseLayer.getStr(playo.getY(), playo.getX()).equals(".")){ // Walking the critical edge
                     playo.subtractHealth(1, "Do.  Not.  Walk.  The critical edge.");
                     if (!warnedOfEdge) {
-                        compactTextBox(org, "Don't walk the critical edge!", "", false);
+                        compactTextBox("Don't walk the critical edge!", "", false);
                         warnedOfEdge = true;
                     }
                 }
