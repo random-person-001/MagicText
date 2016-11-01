@@ -11,7 +11,6 @@ import SourceryTextb1.GameObjects.Item;
 import SourceryTextb1.GameObjects.Player;
 import SourceryTextb1.GameObjects.TheSource.Snowflake;
 import SourceryTextb1.GameObjects.TheSource.Wolf;
-import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
 import SourceryTextb1.SpecialText;
@@ -63,7 +62,7 @@ public class SnowyPeak extends Room {
         for (int[] coord : carrotLocs){
             Item carrot = new Item("Carrot", "For some reason,\n they only grow\n in the mountains.\n\nNobody really know why.", playo, "item");
             carrot.healItemDefine(6, 3);
-            DroppedItem gCarrot = new DroppedItem(this, org, "You picked a carrot!", carrot, coord[0], coord[1]);
+            DroppedItem gCarrot = new DroppedItem(this, "You picked a carrot!", carrot, coord[0], coord[1]);
             addObject(gCarrot);
         }
 

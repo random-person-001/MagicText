@@ -20,7 +20,7 @@ public class Spider extends Mortal {
 
     public Spider(Room theRoom, int xStart, int yStart) {
         this(theRoom, xStart, yStart,
-                new DroppedItem(theRoom, theRoom.org, "", new Item("","", theRoom.getPlayer()), 0, 0)); // blank item
+                new DroppedItem(theRoom, "", new Item("","", theRoom.getPlayer()), 0, 0)); // blank item
     }
     public Spider(Room theRoom, int xStart, int yStart, DroppedItem itemToDrop) {
         super.strClass = "Spider";

@@ -406,7 +406,7 @@ class HUD implements java.io.Serializable {
             if (command.contains("sudo") || promptChar.equals("#")) {
                 showResponse("Ok, fine, I'll make you a sandwich.");
                 Item sandwichItem = new Item("Sandwich", "Using your awesome\n knowledge of commandline-\n fu, you convinced the\n computer to make you this.", "~", player, "item");
-                DroppedItem sandwichDrop = new DroppedItem(room, orgo, "Here's your sandwich", sandwichItem, player.getX(), player.getY());
+                DroppedItem sandwichDrop = new DroppedItem(room, "Here's your sandwich", sandwichItem, player.getX(), player.getY());
                 room.addObject(sandwichDrop);
             } else {
                 showResponse("No!  Make your own sandwich!");
@@ -483,7 +483,7 @@ class HUD implements java.io.Serializable {
                         "with \nthe command line.");
 
                 Item ashItem = new Item("Ash", "You struck down a \n bolt of lightning, \n which left only this\n behind.", "~", player, "item");
-                DroppedItem ashDrop = new DroppedItem(room, orgo, "Ow!  The ashes of your smote\n enemies are still hot!", ashItem, x, y);
+                DroppedItem ashDrop = new DroppedItem(room, "Ow!  The ashes of your smote\n enemies are still hot!", ashItem, x, y);
                 room.addObject(ashDrop);
                 showResponse("1000 damage zapped at x=" + x + " y=" + y);
             }

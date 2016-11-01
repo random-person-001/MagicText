@@ -1,6 +1,5 @@
 package SourceryTextb1.GameObjects;
 
-import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
 
@@ -12,16 +11,16 @@ import java.util.List;
  * Created by riley on 13-Jun-2016.
  */
 public class DroppedItem extends GameObject{
-    private List<String> playersWhoPickedMeUp;
+    private List<String> playersWhoPickedMeUp; // their usernames
     private Item me;
     private String pickUpMessage;
     private String layerName = "Riley says that empty droppedItems should not be a thing";
 
-    public DroppedItem(Room roomy, ImageOrg org, String messageOnPickup, Item dropped, int setx, int sety){
+    public DroppedItem(Room roomy, String messageOnPickup, Item dropped, int setx, int sety){
         strClass = "DroppedItem";
         room = roomy;
-        playersWhoPickedMeUp = new ArrayList<>(); // Add THINGS HERE todo make player here
-        orgo = org;
+        playersWhoPickedMeUp = new ArrayList<>();
+        orgo = roomy.org;
         pickUpMessage = messageOnPickup;
         me = dropped;
         x = setx;
@@ -36,7 +35,6 @@ public class DroppedItem extends GameObject{
      * Updates the layers for new players.  Only necessary to call every less often, probably.
      */
     private void longUpdate (){
-        System.out.println("Long update");
         // Ensure that we have layers for everyone
         for (Player p : room.players){
             // players who haven't picked me up AND we don't have a layer for them already
@@ -63,9 +61,7 @@ public class DroppedItem extends GameObject{
                 }
             }
         }
-
-        if (time % 2000 == 0){ // time stayed the same for a bit sometimes.
-            System.out.println(time);
+        if (time % 3000 == 0){
             longUpdate();
         }
     }
