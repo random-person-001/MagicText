@@ -612,7 +612,7 @@ public class Player extends Mortal implements java.io.Serializable {
 
     private void looseCastDmgSpell(int dmg, int rng, int cost, SpecialText anim1, SpecialText anim2, boolean alt, boolean tracking) {
         if (mana >= cost) {
-            Spell toFire = new Spell(orgo, room, castingLayer, x, y, orientation, dmg, rng, anim1, anim2, alt, tracking);
+            Spell toFire = new Spell(room, x, y, orientation, dmg, rng, anim1, anim2, alt, tracking);
             toFire.setHostility(false);
             room.addObject(toFire);
             spendMana(cost);

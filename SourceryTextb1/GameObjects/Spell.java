@@ -1,6 +1,5 @@
 package SourceryTextb1.GameObjects;
 
-import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
 import SourceryTextb1.SpecialText;
@@ -36,45 +35,19 @@ public class Spell extends GameObject{
      * "Spark",   5        4       X       x
      * "Flame"    9        5       M       m
      * "Wanderer" 9        9*      W       w
-     * @param org the ImageOrganizer
      * @param theRoom the Room
-     * @param place a Layer for this piece of magic to reside in
      * @param setX X starting point
      * @param setY Y starting point
      * @param setOr integer orientation.  0: up  1:down  2:left  3:right
-     * @param name a String name for the
      */
-    public Spell (ImageOrg org, Room theRoom, Layer place, int setX, int setY, int setOr, String name){
-        strClass = "Spell";
-        orgo = org;
-        room = theRoom;
-        layerName = place.getName();
-
-        x = setX;
-        y = setY;
-
-        orientation = setOr;
-        setName(name);
-
-        if (orgo.getDebug())
-            System.out.println(name + " spell cast!");
-
-        setupTimer(30);
-    }
-    public Spell (ImageOrg org, Room theRoom, int setX, int setY, int setOr, int setDmg, int setRng, SpecialText set1, SpecialText set2, boolean alting){
-        this(org, theRoom, "Spellz", setX, setY, setOr, setDmg, setRng, set1, set2, alting);
-    }
-    public Spell (ImageOrg org, Room theRoom, Layer place, int setX, int setY, int setOr, int setDmg, int setRng, SpecialText set1, SpecialText set2, boolean alting){
-        this(org, theRoom, place.getName(), setX, setY, setOr, setDmg, setRng, set1, set2, alting);
-    }
-    public Spell (ImageOrg org, Room theRoom, Layer place, int setX, int setY, int setOr, int setDmg, int setRng, SpecialText set1, SpecialText set2, boolean alting, boolean tracking){
-        this(org, theRoom, place.getName(), setX, setY, setOr, setDmg, setRng, set1, set2, alting);
+    public Spell(Room theRoom, int setX, int setY, int setOr, int setDmg, int setRng, SpecialText set1, SpecialText set2, boolean alting, boolean tracking){
+        this(theRoom, setX, setY, setOr, setDmg, setRng, set1, set2, alting);
         enemySeeking = tracking;
     }
-    public Spell (ImageOrg org, Room theRoom, String setLayerName, int setX, int setY, int setOr, int setDmg, int setRng, SpecialText set1, SpecialText set2, boolean alting){
+    public Spell(Room theRoom, int setX, int setY, int setOr, int setDmg, int setRng, SpecialText set1, SpecialText set2, boolean alting){
         strClass = "Spell";
-        orgo = org;
         room = theRoom;
+        orgo = room.org;
 
         x = setX;
         y = setY;
