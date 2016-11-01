@@ -535,17 +535,10 @@ class HUD implements java.io.Serializable {
                 GameObject o = room.objs.get(i);
                 // TP to dropped object position, wait for it to be picked up.
                 if (o.strClass.equals("DroppedItem")){
-                    i--;  // cuz the list will shift down when it's gone.
                     n++;  // we found another item!
                     System.out.println("Found dropped object");
                     player.goTo(o.getX(), o.getY());
-                    while (room.objs.contains(o)){
-                        // wait
-                        try {
-                            o.update();
-                            Thread.sleep(40);
-                        } catch (InterruptedException ignore) {}
-                    }
+                    o.update();
                 }
             }
             player.goTo(startX, startY);
