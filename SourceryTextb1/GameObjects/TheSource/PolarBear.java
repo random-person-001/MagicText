@@ -68,7 +68,7 @@ public class PolarBear extends Mortal {
     public void onDeath(){
         if (hasKey){
             Item keyDrop = new Item("Witch Hut Key", "With polar bears runnin'\n around, it's a good idea\n to lock yourself in a hut.", room.playo, "item");
-            DroppedItem theDrop = new DroppedItem(room, orgo, "You found a key!", keyDrop, originalX, originalY);
+            DroppedItem theDrop = new DroppedItem(room, "You found a key!", keyDrop, originalX, originalY);
             room.addObject(theDrop);
         }
         orgo.removeLayer(layerName);

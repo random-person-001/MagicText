@@ -36,18 +36,18 @@ public class SnowyPeak extends Room {
     private ImageOrg org;
 
     @Override
-    protected String loop(){
+    protected String loop(Player play){
         Random randy = new Random();
         while (exitCode.equals("")){
             try {
                 //System.out.println("It's chilly here in SnowyPeak!");
                 Thread.sleep(50);
-                /*
+
                 if (!isPaused)
                     addObject(new Snowflake(org, this, randy.nextInt(220), 0));
-                */
-                if (getPlayer().getX() == 0){
-                    setNewRoom("InnerMountains", 64, 14);
+
+                if (play.getX() == 0) {
+                    setNewRoom("InnerMountains", play, 64, 14);
                 }
             } catch (InterruptedException ignored) {}
         }
@@ -64,7 +64,7 @@ public class SnowyPeak extends Room {
         for (int[] coord : carrotLocs){
             Item carrot = new Item("Carrot", "For some reason,\n they only grow\n in the mountains.\n\nNobody really know why.", playo, "item");
             carrot.healItemDefine(6, 3);
-            DroppedItem gCarrot = new DroppedItem(this, org, "You picked a carrot!", carrot, coord[0], coord[1]);
+            DroppedItem gCarrot = new DroppedItem(this, "You picked a carrot!", carrot, coord[0], coord[1]);
             addObject(gCarrot);
         }
 
@@ -106,6 +106,6 @@ public class SnowyPeak extends Room {
     public SnowyPeak(Player player){
         constructor(player);
         org = player.orgo;
-        super.index = 1;
+        //super.index = 1;
     }
 }
