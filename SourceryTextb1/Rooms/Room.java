@@ -104,18 +104,17 @@ public class Room implements java.io.Serializable{
      */
     public void enter(Player player){
         org.resetClock();
-        player.frozen = false;
+        setObjsPause(false);
         addMortal(player);
         players.add(player);
-        setObjsPause(false);
+        player.restartTimer(); // I'm really not sure why, but the player didn't move until I reset its timer after switching levels.
+        player.setRoom(this);
+        player.frozen = false;
         player.setupForNewRoom();
-        //new Timer().schedule(new TimerTask() {
-        //    @Override
-        //    public void run() {
-                String exit = loop(player);
-                takeCareOfPlayerLeavingRoom(player, exit);
-        //    }
-        //}, 10);
+
+        String exit = loop(player);
+
+        takeCareOfPlayerLeavingRoom(player, exit);
     }
 
     /**

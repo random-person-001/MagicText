@@ -37,7 +37,7 @@ public class GameInstance {
                 public void run() {
                     while (!p.roomName.equals("die")) {
                         System.out.println("Entering the room '" + p.roomName + "'");
-                        doLevel(zone1Rooms.get(p.roomName), p);
+                        zone1Rooms.get(p.roomName).enter(p);
                     }
                     System.out.println(p.getUsername() + " has DIED.  Oh, no, not again.");
                 }
@@ -47,22 +47,6 @@ public class GameInstance {
         protaganist.orgo.getWindow().txtArea.setForeground(Color.WHITE);
         protaganist.orgo.setCam(0,0);
     }
-
-    private void doLevel(Room r, Player p){
-        r.setObjsPause(false);
-        p.restartTimer(); // I'm really not sure why, but the player didn't move until I reset its timer after switching levels.
-        p.setRoom(r);
-        r.enter(p);
-        System.out.println(p.roomName);
-        System.out.println(r.strRoomName);
-        try {
-            while (p.roomName.equals(r.strRoomName)) {
-                Thread.sleep(20);
-            }
-            Thread.sleep(100);
-        } catch (InterruptedException ignore) {}
-    }
-
 
     /**
      * @param username which player
