@@ -26,17 +26,18 @@ public class Snowflake extends GameObject {
         flakeLayer.setSpecTxt(0, 0, new SpecialText("."));
         orgo.addLayer(flakeLayer);
 
-        setupTimer(200);
+        setupTimer(175);
     }
 
     public void update(){
         x--;
         y++;
         if (x < 0){
-            room.removeObject(this);
-        } else {
-            orgo.getLayer(layerName).setPos(y, x);
+            Random randal = new Random();
+            y = 0;
+            x = randal.nextInt(room.roomWidth);
         }
+        orgo.getLayer(layerName).setPos(y, x);
     }
 
     public void selfCleanup(){

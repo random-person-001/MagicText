@@ -49,11 +49,12 @@ public class PolarBear extends Mortal {
         if (chargeTime > 0 || getTime() >= 450) {
             Mortal closestGoodGuy = getClosestGoodGuy();
             int dist = Math.abs(x - closestGoodGuy.getX()) + Math.abs(y - closestGoodGuy.getY());
-            if (dist <= 1 && biteCooldown == 0) {
+            if (dist <= 1 && biteCooldown <= 0) {
                 closestGoodGuy.subtractHealth(6);
-                closestGoodGuy.slowedTimer = 300;
-                biteCooldown = 3;
+                //closestGoodGuy.slowedTimer = 300;
+                biteCooldown = 18;
             }
+            if (biteCooldown > 0) biteCooldown -= (chargeTime == 0) ? 1 : 3;
             if (dist > followDist) {
                 chargeTime = 20;
             }
