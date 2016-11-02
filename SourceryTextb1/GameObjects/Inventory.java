@@ -33,6 +33,7 @@ class Inventory implements java.io.Serializable {
 
     private boolean shouldRedraw = true;
 
+    private final int NEUTRAL = -1;
     private final int TOP = 1;
     private final int SPELLS = 2;
     private final int ITEMS = 3;
@@ -255,6 +256,7 @@ class Inventory implements java.io.Serializable {
         org.removeLayer(spellsMenuLayer);
         org.removeLayer(infoLayer);
         org.removeLayer(selectorLayer);
+        player.resetMovement();
     }
 
     /**
@@ -719,8 +721,11 @@ class Inventory implements java.io.Serializable {
                 org.removeLayer(topMenuLayer);
                 window.txtArea.removeKeyListener(keyListener);
                 player.frozen = false;
+                player.resetMovement();
+                System.out.println("Exiting menu through top menu....");
                 org.getLayers().stream().filter(lay -> lay.name.contains("playerLayer")).forEach(lay -> lay.setImportance(true));
                 player.room.setObjsPause(false);
+                menuID = NEUTRAL;
             } else {
                 newUpdateSelector(menuID);
             }

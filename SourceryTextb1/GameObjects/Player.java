@@ -272,6 +272,10 @@ public class Player extends Mortal implements java.io.Serializable {
         }
     }
 
+    private boolean manaHalfStep;
+    private float sprintVelocity = 1;
+    private final float sprintAcceleration = 0.9f;
+
     private void doMovement(){
         int movespeed = 5;
         boolean spendingManaToSprint = false;
@@ -279,8 +283,14 @@ public class Player extends Mortal implements java.io.Serializable {
         if (isGhost)        movespeed = 1;
         if (ludicrousSpeed) movespeed = 0;
         if (spacePressed && mana > 0){
-            movespeed -= swimming ? 2 : 4;
+            if (swimming) {
+                movespeed -= 3;
+            } else {
+                movespeed -= (int)sprintVelocity;
+            }
             spendingManaToSprint = true;
+        } else {
+            sprintVelocity = 1;
         }
         if (movecount == 0) {
             if (waterEntry == 0) {
@@ -297,7 +307,15 @@ public class Player extends Mortal implements java.io.Serializable {
                     move(RIGHT);
                 }
                 if ((upPressed || leftPressed || rightPressed || downPressed) && spendingManaToSprint) {
-                    spendMana(1);
+                    if (manaHalfStep) {
+                        spendMana(1);
+                        if (sprintVelocity < 4) {
+                            sprintVelocity += sprintAcceleration;
+                        }
+                        manaHalfStep = false;
+                    } else {
+                        manaHalfStep = true;
+                    }
                 }
             } else {
                 waterEntry--;
@@ -308,6 +326,17 @@ public class Player extends Mortal implements java.io.Serializable {
         } else {
             movecount++;
         }
+    }
+
+    /**
+     * Simply put, it resets the button press booleans so that the player doesn't confusingly drift around without input
+     */
+    public void resetMovement(){
+        upPressed = false;
+        downPressed = false;
+        leftPressed = false;
+        rightPressed = false;
+        spacePressed = false;
     }
 
     private boolean hadLocked = false;
@@ -522,37 +551,39 @@ public class Player extends Mortal implements java.io.Serializable {
      * @param key a character that was pressed on the leopard
      */
     void keyPressed(char key) {
-        switch (Character.toLowerCase(key)) {
-            case 'b':
-                autonomous = !autonomous;
-                break;
-            case '\'': // ESC right now, subject to change
-                reportPos();
-                break;
-            case 'a':
-                orientationLocked = !orientationLocked;
-                break;
-            case 's':
-                newCastSpell(spell1);
-                break;
-            case 'd':
-                newCastSpell(spell2);
-                break;
-            case 'w':
-                shouldNewInv = true;
-                break;
-            case 'q':
-                reportPos();
-                break;
-            case 'f':
-                textBoxQuery();
-                break;
-            case 'h':
-                System.out.println(room.getCountOf("HUD"));
-            default:
-                System.out.print(key);
+        if (!frozen) {
+            switch (Character.toLowerCase(key)) {
+                case 'b':
+                    autonomous = !autonomous;
+                    break;
+                case '\'': // ESC right now, subject to change
+                    reportPos();
+                    break;
+                case 'a':
+                    orientationLocked = !orientationLocked;
+                    break;
+                case 's':
+                    newCastSpell(spell1);
+                    break;
+                case 'd':
+                    newCastSpell(spell2);
+                    break;
+                case 'w':
+                    shouldNewInv = true;
+                    break;
+                case 'q':
+                    reportPos();
+                    break;
+                case 'f':
+                    textBoxQuery();
+                    break;
+                case 'h':
+                    System.out.println(room.getCountOf("HUD"));
+                default:
+                    System.out.print(key);
+            }
+            graphicUpdate();
         }
-        graphicUpdate();
     }
 
     /**

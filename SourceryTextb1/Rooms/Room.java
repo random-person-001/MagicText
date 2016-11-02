@@ -92,6 +92,9 @@ public class Room implements java.io.Serializable{
 //            p.setupForNewRoom();
 //            addMortal(p);
 //        }
+        String exit = loop(player);
+        takeCareOfPlayerLeavingRoom(player, exit);
+        /*
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
@@ -99,6 +102,7 @@ public class Room implements java.io.Serializable{
                 takeCareOfPlayerLeavingRoom(player, exit);
             }
         }, 10);
+        */
     }
 
     /**
