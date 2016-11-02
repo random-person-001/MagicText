@@ -30,16 +30,16 @@ public class Cliffside extends Room {
                 Thread.sleep(20);
 
                 if (count == 0) {
-                    queueMessage(new FlavorText("Ah, the air is nice and fresh\n outside.", ""));
-                    queueMessage(new FlavorText("Endless rows of trees covered in sunset\n sitting beyond your view distance....", ""));
-                    queueMessage(new FlavorText("A picture taken here on this cliff\n would definitely make a great postcard.", ""));
+                    queueMessage(new FlavorText("Ah, the air is nice and fresh\n outside.", "").setViewerUsername(play.getUsername()));
+                    queueMessage(new FlavorText("Endless rows of trees covered in sunset\n sitting beyond your view distance....", "").setViewerUsername(play.getUsername()));
+                    queueMessage(new FlavorText("A picture taken here on this cliff\n would definitely make a great postcard.", "").setViewerUsername(play.getUsername()));
                     // ^ This should be an item in The Mines of Mementos
                     count++;
                 }
                 if (baseLayer.getStr(play.getY(), play.getX()).equals(".")){ // Walking the critical edge
                     play.subtractHealth(1, "Do.  Not.  Walk.  The critical edge.");
                     if (!warnedOfEdge) {
-                        compactTextBox("Don't walk the critical edge!", "", false);
+                        compactTextBox("Don't walk the critical edge!", "", false, play.getUsername());
                         warnedOfEdge = true;
                     }
                 }
