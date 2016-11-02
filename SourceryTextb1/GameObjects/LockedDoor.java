@@ -47,7 +47,7 @@ public class LockedDoor extends GameObject{
                     selfDestruct();
                 } else {
                     if (willMessage) {
-                        room.splashMessage("This door is locked!", "");
+                        room.splashMessage("This door is locked!\n   (Key Needed: \'" + keyName + "\')", "");
                         willMessage = false;
                     }
                 }
