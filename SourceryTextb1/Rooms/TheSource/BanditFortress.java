@@ -19,6 +19,10 @@ import SourceryTextb1.Rooms.Room;
  */
 public class BanditFortress extends Room{
 
+    public BanditFortress(Player player){
+        super(player);
+    }
+
     @Override
     protected String loop(Player play){
         int count = 0;

@@ -22,6 +22,11 @@ import SourceryTextb1.Layer;
 public class NewTestRoom extends Room {
 
     protected String loop(Player play){
+    public NewTestRoom(Player player){
+        super(player);
+    }
+
+    protected String loop(){
 
         while (exitCode.equals("")){
             try {

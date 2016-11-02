@@ -18,6 +18,11 @@ public class DockAndShip extends Room {
     private Layer docky;
     private int maxW;
     private int maxH;
+
+    public DockAndShip(Player player){
+        super(player);
+    }
+
     @Override
     protected String loop(Player play){
         int count = 0;

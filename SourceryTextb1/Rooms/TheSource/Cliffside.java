@@ -17,6 +17,11 @@ import SourceryTextb1.SpecialText;
 public class Cliffside extends Room {
     private Layer baseLayer;
 
+    public Cliffside(Player player) {
+        super(player);
+    }
+
+    protected String loop() {
     protected String loop(Player play) {
         int count = 0;
         boolean warnedOfEdge = false;

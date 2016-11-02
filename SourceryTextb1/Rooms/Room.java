@@ -42,6 +42,20 @@ public class Room implements java.io.Serializable{
 
     protected boolean isPaused = false;
 
+
+    /**
+     * Set room variables and stuff.
+     * @param player you know what
+     */
+    protected Room(Player player){
+        playo = player;
+        org = player.orgo;
+        roomHeight = org.getWindow().maxH();
+        roomWidth = org.getWindow().maxW();
+        index = 1;
+    }
+
+
     /**
      * @param username a String by which the desired Player identifies
      * @return the Player in the room if there is one with the username, else null

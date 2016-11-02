@@ -17,6 +17,11 @@ import SourceryTextb1.Rooms.Room;
 public class ProcedurallyGeneratedDungeon extends Room {
 
     protected String loop(Player play) {
+    public ProcedurallyGeneratedDungeon(Player player) {
+        super(player);
+    }
+
+    protected String loop() {
         int count = 0;
         while (exitCode.equals("")) {
             try {

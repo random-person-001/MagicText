@@ -18,6 +18,10 @@ import java.awt.*;
  */
 public class SourceCaves extends Room{
 
+    public SourceCaves(Player player){
+        super(player);
+    }
+
     @Override
     protected String loop(Player play){
         int count = 0;

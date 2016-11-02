@@ -27,6 +27,10 @@ import SourceryTextb1.Rooms.Room;
 
 public class SourcePit extends Room {
 
+    public SourcePit(Player player){
+        super(player);
+    }
+
     @Override
     protected String loop(Player play){
         int count = 0;
