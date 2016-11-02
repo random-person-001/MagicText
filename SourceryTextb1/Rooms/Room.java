@@ -85,24 +85,17 @@ public class Room implements java.io.Serializable{
     public void enter(Player player){
         org.resetClock();
         player.frozen = false;
-        setObjsPause(false);
         addMortal(player);
         players.add(player);
-//        for (Player p : players) {
-//            p.setupForNewRoom();
-//            addMortal(p);
-//        }
-        String exit = loop(player);
-        takeCareOfPlayerLeavingRoom(player, exit);
-        /*
-        new Timer().schedule(new TimerTask() {
-            @Override
-            public void run() {
+        setObjsPause(false);
+        player.setupForNewRoom();
+        //new Timer().schedule(new TimerTask() {
+        //    @Override
+        //    public void run() {
                 String exit = loop(player);
                 takeCareOfPlayerLeavingRoom(player, exit);
-            }
-        }, 10);
-        */
+        //    }
+        //}, 10);
     }
 
     /**
@@ -116,7 +109,8 @@ public class Room implements java.io.Serializable{
         removeMortal(player);
         players.remove(player);
 
-        if (getCountOf("Player") == 0) {
+        if (players.size() == 0) {
+            System.out.println("No more players in " + strRoomName);
             org.terminateClock();
             setObjsPause(true);
             if (exit.equals("die")) { // in a moment, pause everything so the player sees their grave mistake

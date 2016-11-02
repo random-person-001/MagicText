@@ -36,10 +36,15 @@ public class Wolf extends Mortal {
     public void update() {
         setDispIcon(new SpecialText("W", new Color(255, 200, 200)));
         Mortal closestGoodGuy = getClosestGoodGuy();
-        if (Math.abs(x - closestGoodGuy.getX()) <= 1 && Math.abs(y - closestGoodGuy.getY()) <= 1){
-            closestGoodGuy.subtractHealth(3);
+        if (closestGoodGuy != null) {
+            if (Math.abs(x - closestGoodGuy.getX()) <= 1 && Math.abs(y - closestGoodGuy.getY()) <= 1) {
+                closestGoodGuy.subtractHealth(3);
+            }
+            pathToPos(followDist, closestGoodGuy.getX(), closestGoodGuy.getY());
         }
-        pathToPos(followDist, closestGoodGuy.getX(), closestGoodGuy.getY());
+        else {
+            System.out.println("Wolf in " + room.strRoomName + " couldn't find player to hunt");
+        }
     }
 
     @Override

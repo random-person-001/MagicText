@@ -16,17 +16,11 @@ import java.awt.*;
  */
 public class Spider extends Mortal {
     private int followDist = 20;
-    private DroppedItem droppedItem;
 
     public Spider(Room theRoom, int xStart, int yStart) {
-        this(theRoom, xStart, yStart,
-                new DroppedItem(theRoom, "", new Item("","", theRoom.getPlayer()), 0, 0)); // blank item
-    }
-    public Spider(Room theRoom, int xStart, int yStart, DroppedItem itemToDrop) {
         super.strClass = "Spider";
         room = theRoom;
         layerName = room.makeUniqueLayerName(super.strClass);
-        droppedItem = itemToDrop;
         orgo = room.org;
         x = xStart;
         y = yStart;
@@ -53,6 +47,5 @@ public class Spider extends Mortal {
     @Override
     public void onDeath(){
         orgo.removeLayer(layerName);
-        room.addObject(droppedItem);
     }
 }

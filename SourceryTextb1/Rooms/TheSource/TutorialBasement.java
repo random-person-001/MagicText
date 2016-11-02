@@ -39,8 +39,11 @@ public class TutorialBasement extends Room {
         boolean foundSpell2 = false;
         boolean inMaze = false;
         boolean leavingEarly = false;
-
         boolean holdDownReminder = false;
+
+        if (play.getX() == 0 && play.getY() == 0) {
+            play.goTo(20, 29);
+        }
 
         while (exitCode.equals("")){
             try {
@@ -210,9 +213,6 @@ public class TutorialBasement extends Room {
     @Override
     public void startup(){
         addItems();
-        for (Player p : players) {
-            p.goTo(20, 29);
-        }
 
         FlavorText playerStart = new FlavorText(20, 29, "You start here!", "");
         plantText(playerStart);
