@@ -62,6 +62,8 @@ class Inventory implements java.io.Serializable {
     private Color weaponColor = new Color(255, 210, 200);
     private Color armorColor = new Color(200, 255, 255);
 
+    private Color healingColor = new Color(225, 255, 125);
+
     int getY() {
         return cursorY;
     }
@@ -650,6 +652,10 @@ class Inventory implements java.io.Serializable {
                     (toDraw.equals(player.weapon)){
                     drawWith = weaponColor;
                 }
+            }
+            if (toDraw.getDescMode().equals("healitem")){
+                drawWith = healingColor;
+                System.out.println("Healing item detected");
             }
             String itemName = toDraw.getName();
             putText(itemName, startX, startY + ii, drawWith);

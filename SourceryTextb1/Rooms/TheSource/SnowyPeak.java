@@ -75,7 +75,7 @@ public class SnowyPeak extends Room {
         PolarBear daBear = new PolarBear(org, this, 139, 10, true);
         addMortal(daBear);
 
-        LockedDoor witchHutDoor = new LockedDoor("Witch Hut Key", 100, 111, 7, this, org);
+        LockedDoor witchHutDoor = new LockedDoor("WitchHut Key", 100, 111, 7, this, org);
         addObject(witchHutDoor);
     }
 
