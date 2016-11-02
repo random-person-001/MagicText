@@ -21,6 +21,7 @@ public class BanditFortress extends Room{
 
     public BanditFortress(Player player){
         super(player);
+        strRoomName = "BanditFortress";
     }
 
     @Override
@@ -97,12 +98,5 @@ public class BanditFortress extends Room{
         org.addLayer(lay1);
 
         genericRoomInitialize();
-    }
-
-    public BanditFortress(Player player){
-        super.strRoomName = "BanditFortress";
-        super.roomHeight = 105;
-        super.roomWidth = 137;
-        constructor(player);
     }
 }

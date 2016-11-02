@@ -16,12 +16,13 @@ import SourceryTextb1.Rooms.Room;
  */
 public class ProcedurallyGeneratedDungeon extends Room {
 
-    protected String loop(Player play) {
+
     public ProcedurallyGeneratedDungeon(Player player) {
         super(player);
+        strRoomName = "ProcedurallyGeneratedDungeon";
     }
 
-    protected String loop() {
+    protected String loop(Player play) {
         int count = 0;
         while (exitCode.equals("")) {
             try {
@@ -50,12 +51,4 @@ public class ProcedurallyGeneratedDungeon extends Room {
 
         genericRoomInitialize();
     }
-
-    public ProcedurallyGeneratedDungeon(Player player) {
-        playo = player;
-        org = player.orgo;
-        super.strRoomName = "ProcedurallyGeneratedDungeon";
-        constructor(player);
-    }
-
 }

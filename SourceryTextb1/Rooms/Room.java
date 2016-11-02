@@ -49,10 +49,16 @@ public class Room implements java.io.Serializable{
      */
     protected Room(Player player){
         playo = player;
-        org = player.orgo;
+        // Make a new imageOrg for this level, looking at the same Window as the last one did
+        org = new ImageOrg(player.orgo.getWindow());
+        // So it doesn't draw over other things.  It'll be restarted as needed later.
+        org.terminateClock();
+        // Boring stuff
         roomHeight = org.getWindow().maxH();
         roomWidth = org.getWindow().maxW();
-        index = 1;
+
+        Layer spells = new Layer(new String[roomHeight][roomWidth], "Spellz", true);
+        org.addLayer(spells);
     }
 
 

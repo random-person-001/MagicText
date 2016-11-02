@@ -20,6 +20,7 @@ public class SourceCaves extends Room{
 
     public SourceCaves(Player player){
         super(player);
+        strRoomName = "SourceCaves";
     }
 
     @Override
@@ -80,10 +81,5 @@ public class SourceCaves extends Room{
         addItems();
 
         genericRoomInitialize();
-    }
-
-    public SourceCaves(Player player){
-        super.strRoomName = "SourceCaves";
-        constructor(player);
     }
 }

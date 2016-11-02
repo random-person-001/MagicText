@@ -21,6 +21,7 @@ public class DockAndShip extends Room {
 
     public DockAndShip(Player player){
         super(player);
+        strRoomName = "DockAndShip";
     }
 
     @Override
@@ -123,13 +124,5 @@ public class DockAndShip extends Room {
 
     private void makePiranahAt(int x, int y){
         makeSpiderAt(x,y);
-    }
-
-    public DockAndShip(Player player){
-        constructor(player);
-        org = player.orgo;
-        super.strRoomName = "DockAndShip";
-        maxH = org.getWindow().maxH();
-        maxW = org.getWindow().maxW();
     }
 }

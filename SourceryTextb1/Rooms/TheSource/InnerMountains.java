@@ -30,6 +30,11 @@ import SourceryTextb1.SpecialText;
 
 public class InnerMountains extends Room {
 
+    public InnerMountains(Player player){
+        super(player);
+        strRoomName = "InnerMountains";
+    }
+
     @Override
     protected String loop(Player play){
         while (exitCode.equals("")){
@@ -95,10 +100,5 @@ public class InnerMountains extends Room {
         addItems();
 
         genericRoomInitialize();
-    }
-
-    public InnerMountains(Player player){
-        constructor(player);
-        strRoomName = "InnerMountains";
     }
 }

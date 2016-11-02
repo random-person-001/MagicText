@@ -33,14 +33,17 @@ import java.util.Random;
 
 
 public class SnowyPeak extends Room {
-    private ImageOrg org;
+
+    public SnowyPeak(Player player){
+        super(player);
+        strRoomName = "SnowyPeak";
+    }
 
     @Override
     protected String loop(Player play){
         Random randy = new Random();
         while (exitCode.equals("")){
             try {
-                //System.out.println("It's chilly here in SnowyPeak!");
                 Thread.sleep(50);
 
                 if (!isPaused)
@@ -51,7 +54,6 @@ public class SnowyPeak extends Room {
                 }
             } catch (InterruptedException ignored) {}
         }
-        //System.out.println("WOW, it was cold!");
         return exitCode;
     }
 
@@ -101,11 +103,5 @@ public class SnowyPeak extends Room {
         //addItems();
 
         genericRoomInitialize();
-    }
-
-    public SnowyPeak(Player player){
-        constructor(player);
-        org = player.orgo;
-        //super.index = 1;
     }
 }

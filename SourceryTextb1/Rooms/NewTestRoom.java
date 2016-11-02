@@ -21,12 +21,12 @@ import SourceryTextb1.Layer;
 
 public class NewTestRoom extends Room {
 
-    protected String loop(Player play){
+
     public NewTestRoom(Player player){
         super(player);
     }
 
-    protected String loop(){
+    protected String loop(Player play){
 
         while (exitCode.equals("")){
             try {
@@ -57,9 +57,5 @@ public class NewTestRoom extends Room {
         addMortal(pathor);
 
         genericRoomInitialize();
-    }
-
-    public NewTestRoom(Player player){
-        constructor(player);
     }
 }

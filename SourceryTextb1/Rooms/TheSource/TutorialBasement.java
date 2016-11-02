@@ -34,6 +34,7 @@ public class TutorialBasement extends Room {
 
     public TutorialBasement(Player player){
         super(player);
+        strRoomName = "TutorialBasement";
     }
 
     @Override
@@ -230,11 +231,4 @@ public class TutorialBasement extends Room {
 
         genericRoomInitialize();
     }
-
-
-    public TutorialBasement(Player player){
-        super.strRoomName = "TutorialBasement";
-        constructor(player);
-    }
-
 }

@@ -29,6 +29,7 @@ public class SourcePit extends Room {
 
     public SourcePit(Player player){
         super(player);
+        strRoomName = "SourcePit";
     }
 
     @Override
@@ -102,10 +103,5 @@ public class SourcePit extends Room {
         org.addLayer(lay1);
 
         genericRoomInitialize();
-    }
-
-    public SourcePit(Player player){
-        super.strRoomName = "SourcePit";
-        constructor(player);
     }
 }

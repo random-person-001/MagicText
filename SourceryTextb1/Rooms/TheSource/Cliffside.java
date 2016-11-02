@@ -19,9 +19,9 @@ public class Cliffside extends Room {
 
     public Cliffside(Player player) {
         super(player);
+        strRoomName = "Cliffside";
     }
 
-    protected String loop() {
     protected String loop(Player play) {
         int count = 0;
         boolean warnedOfEdge = false;
@@ -119,10 +119,5 @@ public class Cliffside extends Room {
         org.addLayer(baseLayer);
 
         genericRoomInitialize();
-    }
-
-    public Cliffside(Player player) {
-        super.strRoomName = "Cliffside";
-        constructor(player);
     }
 }
