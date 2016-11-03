@@ -8,6 +8,7 @@ package SourceryTextb1.GameObjects;
 import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Rooms.Room;
 import SourceryTextb1.SpecialText;
+import SourceryTextb1.GameClock;
 
 import java.awt.*;
 import java.awt.event.KeyAdapter;
@@ -16,7 +17,6 @@ import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Arrays;
-import java.util.Timer;
 import java.util.TimerTask;
 import java.net.URI;
 
@@ -43,7 +43,8 @@ class HUD implements java.io.Serializable {
     private Player player;
     private ImageOrg orgo;
     private int xBulidIndex = 0;
-    private Timer timer;
+    private updateTimer updateTimerInstance;
+    private TimerTask sidescrollTimerTask;
     private boolean inCmd = false;
 
     HUD(Player playerSet) {
@@ -52,7 +53,7 @@ class HUD implements java.io.Serializable {
         layerName = "HUD_of_" + player.getUsername();
 
         HUD hud = this;
-        new Timer().schedule(new TimerTask() {
+        GameClock.timer.schedule(new TimerTask() {
             @Override
             public void run()  {
                 ConsoleKeyListener listener = new ConsoleKeyListener(hud);
@@ -650,7 +651,6 @@ class HUD implements java.io.Serializable {
     private void showResponse(String message) {
         responseMessage = message;
         int each = 0;
-        Timer sidescrollTimer = new Timer();
         if (responseMessage.length() > 46) {
             int leftover = responseMessage.length() - 46 + 1; // pretend it's two longer so neither end gets 0 time to show
             responseMessage = " " + responseMessage;
@@ -662,20 +662,21 @@ class HUD implements java.io.Serializable {
         System.out.println(responseMessage + "\n"); // newline for spacing
         try {
             if (each > 0) {
-                sidescrollTimer.scheduleAtFixedRate(new TimerTask() { // sidescroll the message if needed.
+                sidescrollTimerTask = new TimerTask() { // sidescroll the message if needed.
                     @Override
                     public void run() throws StringIndexOutOfBoundsException, NullPointerException {
                         //System.out.println("HUD message moving.");
                         responseMessage = responseMessage.substring(1);
                     }
-                }, 0, each);
+                };
+                GameClock.timer.scheduleAtFixedRate(sidescrollTimerTask, 0, each);
             }
-            new Timer().schedule(new TimerTask() {
+            GameClock.timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
                     //System.out.println("HUD message done.");
                     responseMessage = null;
-                    sidescrollTimer.cancel();
+                    sidescrollTimerTask.cancel();
                     orgo.clearLayer(layerName);
                 }
             }, responseDuration * 1000);
@@ -688,9 +689,8 @@ class HUD implements java.io.Serializable {
     // Timer methods same as from GameObject.java
     public void setupTimer(int theFrequency){
         cancelTimer();
-        timer = new Timer();
-        updateTimer updateTimerInstance = new updateTimer(theFrequency);
-        timer.scheduleAtFixedRate(updateTimerInstance, theFrequency, theFrequency);
+        updateTimerInstance = new updateTimer(theFrequency);
+        GameClock.timer.scheduleAtFixedRate(updateTimerInstance, theFrequency, theFrequency);
     }
 
     private class updateTimer extends TimerTask implements java.io.Serializable {
@@ -707,8 +707,8 @@ class HUD implements java.io.Serializable {
 
     private void cancelTimer(){
         try {
-            timer.cancel();
-            timer.purge();
+            updateTimerInstance.cancel();
+            GameClock.timer.purge();
         }
         catch (NullPointerException ignore){}
     }

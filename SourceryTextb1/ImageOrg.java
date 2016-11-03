@@ -5,9 +5,10 @@
  */
 package SourceryTextb1;
 
+import SourceryTextb1.GameClock;
+
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
-import java.util.Timer;
 import java.util.TimerTask;
 
 /**
@@ -25,13 +26,13 @@ public class ImageOrg implements java.io.Serializable {
     private int camY = 0;
     private boolean debugGame = false;
 
-    //FrameTimer frameTimerInstance = new FrameTimer();
-    private Timer drawTimer = new Timer();
+    private FrameTimer frameTimerInstance;
 
     final int orgSerial = (int) (Math.random() * 10000);
 
     public ImageOrg(Window game) {
         //drawTimer.scheduleAtFixedRate(frameTimerInstance, 0, 50); //20 fps lock
+        frameTimerInstance = new FrameTimer();
         resetClock();
         window = game;
     }
@@ -44,20 +45,15 @@ public class ImageOrg implements java.io.Serializable {
     }
 
     public void resetClock() {
-        try {
-            drawTimer.cancel();
-        } catch (NullPointerException ignore) {
-        }
-        drawTimer = new Timer();
-        drawTimer.scheduleAtFixedRate(new FrameTimer(), 0, 50); //20 fps lock
+        frameTimerInstance.cancel();
+        GameClock.timer.purge();
+        frameTimerInstance = new FrameTimer();
+        GameClock.timer.scheduleAtFixedRate(frameTimerInstance, 0, 50); //20 fps lock
     }
 
     public void terminateClock() {
-        if (drawTimer != null) {
-            drawTimer.cancel();
-            drawTimer.purge();
-            drawTimer = null;
-        }
+        frameTimerInstance.cancel();
+        GameClock.timer.purge();
     }
 
     /**

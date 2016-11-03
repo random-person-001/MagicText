@@ -3,6 +3,7 @@ package SourceryTextb1;
 import SourceryTextb1.GameObjects.Player;
 import SourceryTextb1.GameObjects.PlayerKeyPressListener;
 import SourceryTextb1.Rooms.Room;
+import SourceryTextb1.GameClock;
 
 import java.awt.*;
 import java.util.*;
@@ -32,7 +33,7 @@ public class GameInstance {
     public void runGame(){
         protaganist.orgo.terminateClock();
         for (Player p : playerList) {
-            new Timer().schedule(new TimerTask() {
+            GameClock.timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
                     while (!p.roomName.equals("die")) {

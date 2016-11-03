@@ -2,11 +2,11 @@ package SourceryTextb1.UserScreens;
 
 import SourceryTextb1.*;
 import SourceryTextb1.Window;
+import SourceryTextb1.GameClock;
 
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.Timer;
 import java.util.TimerTask;
 
 /**
@@ -69,8 +69,7 @@ class WindowConfig {
 
             System.out.println("WinCnfg: keyListener created");
 
-            Timer update = new Timer();
-            update.schedule(new StopListener(keyListener), 0, 100);
+            GameClock.timer.schedule(new StopListener(keyListener), 0, 100);
         }
         else{
             exit();
