@@ -236,8 +236,7 @@ class Inventory implements java.io.Serializable {
         Navigator keyListener = new Navigator(this);
         window.txtArea.addKeyListener(keyListener); // Add key listeners.
 
-        Timer timer = new Timer();
-        timer.scheduleAtFixedRate(new MenuTimer(window, keyListener), 10 , 99);
+        GameClock.timer.scheduleAtFixedRate(new MenuTimer(window, keyListener), 10 , 99);
     }
 
     /**

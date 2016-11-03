@@ -1,8 +1,9 @@
 package SourceryTextb1;
 
+import SourceryTextb1.GameClock;
+
 import javax.swing.*;
 import java.awt.*;
-import java.util.Timer;
 import java.util.TimerTask;
 
 import static java.lang.Math.abs;
@@ -34,8 +35,7 @@ public class ColoredTextMatrix extends JPanel{
         setFont(new Font("Monospaced", Font.PLAIN, CHAR_SIZE));
         setFocusable(true);
 
-        Timer timing = new Timer();
-        timing.scheduleAtFixedRate(new frameResetTimer(), 25, 25);
+        GameClock.timer.scheduleAtFixedRate(new frameResetTimer(), 25, 25);
     }
 
     @Override

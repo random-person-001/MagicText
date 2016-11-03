@@ -17,6 +17,7 @@ package SourceryTextb1.GameObjects;
 import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
+import SourceryTextb1.GameClock;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -33,7 +34,6 @@ public class GameObject implements java.io.Serializable{
     public String strClass = "None";
     public ImageOrg orgo;
     protected Room room;
-    transient Timer timer;
     int frequency;
     
     protected int x;
@@ -232,15 +232,14 @@ public class GameObject implements java.io.Serializable{
     public void setupTimer(int theFrequency){
         cancelTimer();
         frequency = theFrequency;
-        timer = new Timer();
         updateTimerInstance = new updateTimer(frequency);
-        timer.scheduleAtFixedRate(updateTimerInstance, frequency, frequency);
+        GameClock.timer.scheduleAtFixedRate(updateTimerInstance, frequency, frequency);
     }
 
     public void cancelTimer(){
         try {
-            timer.cancel();
-            timer.purge();
+            updateTimerInstance.cancel();
+            GameClock.timer.purge();
         }
         catch (NullPointerException ignore){}
     }

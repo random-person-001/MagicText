@@ -27,6 +27,7 @@ public class Start {
     private static List<Player> playerList; // for multiplayer!
 
     public static void main(String[] args) throws InterruptedException {
+        GameClock clock = new GameClock();
         game = new Window();
         Layer base = new Layer(new String[game.maxH()][game.maxW()], "base");
         org = new ImageOrg(game);
@@ -48,9 +49,7 @@ public class Start {
         } else {
             WindowConfig wincnfg = new WindowConfig(org);
             wincnfg.config(false);
-
-            Timer time = new Timer();
-            time.schedule(new StartCheck(wincnfg), 50, 100);
+            GameClock.timer.schedule(new StartCheck(wincnfg), 50, 100);
         }
     }
 
@@ -315,7 +314,7 @@ public class Start {
             player.roomName = "TutorialBasement";
             playerList.add(player);
             GameInstance master = new GameInstance(initializeZone1Rooms(player),player);
-            new Timer().schedule(new TimerTask() {
+            GameClock.timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
                     master.runGame();
@@ -326,7 +325,7 @@ public class Start {
             for (int i=1; i<numPlayers; i++) {
                 System.out.println("Adding multiplayer player #"+i);
                 SlaveGameInstance instance = new SlaveGameInstance(master);
-                new Timer().schedule(new TimerTask() {
+                GameClock.timer.schedule(new TimerTask() {
                     @Override
                     public void run() {
                         instance.runGameAsSlaveTo(master);

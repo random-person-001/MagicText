@@ -9,7 +9,6 @@ import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.*;
-import java.util.Timer;
 import java.util.TimerTask;
 
 
@@ -39,8 +38,7 @@ class MainMenu {
         window = theWindow;
         starter = start;
         wincnfg = new WindowConfig(orgo);
-        Timer time = new Timer();
-        time.scheduleAtFixedRate(new MenuTimer(), 0, 100);
+        GameClock.timer.scheduleAtFixedRate(new MenuTimer(), 0, 100);
 
         keyInputter = new KeyInput(this);
         window.txtArea.addKeyListener(keyInputter);

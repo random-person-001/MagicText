@@ -1,6 +1,7 @@
 package SourceryTextb1.GameObjects;
 
 import SourceryTextb1.SpecialText;
+import SourceryTextb1.GameClock;
 
 import java.awt.*;
 import java.util.*;
@@ -77,8 +78,7 @@ public class Mortal extends GameObject implements java.io.Serializable{
                 dmgIcon = new SpecialText("X", new Color(255, 90, 70));
             }
             setDispIcon(dmgIcon);
-            Timer timing = new Timer();
-            timing.schedule(new dmgTimer(), 250);
+            GameClock.timer.schedule(new dmgTimer(), 250);
         }
     }
 
