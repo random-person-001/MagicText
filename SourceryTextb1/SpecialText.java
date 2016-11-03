@@ -7,6 +7,8 @@ public class SpecialText implements java.io.Serializable{
     Color foregroundColor = new Color (255,255,255);
     Color backgroundColor = new Color (0  ,0  ,0);
 
+    public boolean layerless = false;
+
     public SpecialText( String assign){
         this (assign, null, null);
     }

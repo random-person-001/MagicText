@@ -53,6 +53,9 @@ public class Room implements java.io.Serializable{
         org = new ImageOrg(player.orgo.getWindow());
         // So it doesn't draw over other things.  It'll be restarted as needed later.
         org.terminateClock();
+
+        org.roomBackground = Color.BLACK;
+
         // Boring stuff
         roomHeight = org.getWindow().maxH();
         roomWidth = org.getWindow().maxW();

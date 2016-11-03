@@ -70,7 +70,7 @@ public class Window extends JFrame {
      * time org.compileImage() is called
      */
     public void clearImage() {
-        fullImage.clear();
+        fullImage.clear(true);
     }
 
 

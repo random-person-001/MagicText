@@ -5,6 +5,7 @@
  */
 package SourceryTextb1;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.Timer;
@@ -27,6 +28,8 @@ public class ImageOrg implements java.io.Serializable {
 
     //FrameTimer frameTimerInstance = new FrameTimer();
     private Timer drawTimer = new Timer();
+
+    public Color roomBackground = Color.BLACK;
 
     final int orgSerial = (int) (Math.random() * 10000);
 
@@ -348,6 +351,7 @@ public class ImageOrg implements java.io.Serializable {
             }
             window.clearImage();
             window.topDownBuild(layers, camX, camY);
+            window.txtArea.displayBackground = roomBackground;
             window.build();
         } catch (ConcurrentModificationException ignore) {
         }// Cuz it'll be fixed next time probs.

@@ -269,10 +269,14 @@ public class Layer implements java.io.Serializable {
     /**
      * Make the layer completely empty strings
      */
-    public void clear() {
+    public void clear() {clear(true); }
+
+    public void clear(boolean layerState) {
         for (int row = 0; row < getRows(); row++) {
             for (int col = 0; col < getColumns(); col++) {
-                setStr(row, col, "");
+                SpecialText empty = new SpecialText("");
+                empty.layerless = layerState;
+                setSpecTxt(row, col, empty);
             }
         }
     }

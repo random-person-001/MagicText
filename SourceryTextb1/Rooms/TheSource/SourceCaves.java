@@ -78,6 +78,8 @@ public class SourceCaves extends Room{
         lay1.findAndReplace(new SpecialText(" "), new SpecialText(" ", null, new Color(0, 0, 10)));
         org.addLayer(lay1);
 
+        org.roomBackground = new Color(43, 38, 33);
+
         addItems();
 
         genericRoomInitialize();
