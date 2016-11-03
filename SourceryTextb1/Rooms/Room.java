@@ -280,7 +280,8 @@ public class Room implements java.io.Serializable{
         try {
             for (GameObject obj : objs) {
                 try {
-                    obj.setPause(set);
+                    if (set) obj.cancelTimer();
+                    else obj.setupTimer(obj.frequency);
                 } catch (NullPointerException e) {
                     System.out.println("[Room.java: setObjsPause(): caught nullpointer!  Probably Not Good!");
                     e.printStackTrace();
@@ -288,7 +289,8 @@ public class Room implements java.io.Serializable{
             }
             for (Mortal m : enemies) {
                 try {
-                    m.setPause(set);
+                    if (set) m.cancelTimer();
+                    else m.setupTimer(m.frequency);
                 } catch (NullPointerException e) {
                     System.out.println("[Room.java: setObjsPause(): caught nullpointer!  Probably Not Good!");
                     e.printStackTrace();
