@@ -39,6 +39,7 @@ public class Player extends Mortal implements java.io.Serializable {
     private HUD hud;
     public String roomName = ""; //Extremely important when we implement saving.
     private ImageOrg realOrg; // For access to the real window for keybindings
+    private NetworkerServer networkerServer;
 
     private boolean autonomous = false;
     private boolean shouldNewInv = false;
@@ -118,6 +119,15 @@ public class Player extends Mortal implements java.io.Serializable {
         hud = new HUD(this);
         hud.setOrgo(orgo);
         resumeFromSave();
+    }
+
+    public void testSendOverNetwork() {
+        try {
+            networkerServer = new NetworkerServer();
+            networkerServer.test(orgo.getWindow().txtArea);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

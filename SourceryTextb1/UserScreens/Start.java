@@ -11,9 +11,14 @@ import SourceryTextb1.GameObjects.TheSource.Troll;
 import SourceryTextb1.Rooms.TheSource.*;
 import SourceryTextb1.Rooms.NewTestRoom;
 import SourceryTextb1.Rooms.Room;
+import SourceryTextb1.Window;
 
+import javax.swing.*;
+import java.awt.*;
+import java.io.IOException;
 import java.util.*;
-import java.awt.Color;
+import java.util.List;
+import java.util.Timer;
 
 /**
  * Main class of MagicText, where everything starts.
@@ -22,11 +27,15 @@ import java.awt.Color;
  */
 public class Start {
     private static boolean doDemo = false;
+    private static boolean testingNetwork = !!true;
     private static Window game;
     private static ImageOrg org;
     private static List<Player> playerList; // for multiplayer!
 
     public static void main(String[] args) throws InterruptedException {
+        if (testingNetwork){
+            receiveNetwork();
+        }
         game = new Window();
         Layer base = new Layer(new String[game.maxH()][game.maxW()], "base");
         org = new ImageOrg(game);
@@ -51,6 +60,19 @@ public class Start {
 
             Timer time = new Timer();
             time.schedule(new StartCheck(wincnfg), 50, 100);
+        }
+    }
+
+    private static void receiveNetwork(){
+        try {
+            NetworkClient networker = new NetworkClient();
+            ColoredTextMatrix receivedMatrix = networker.beClient();
+            java.awt.Window w = new JFrame();
+            w.setBounds(100, 100, 412, 412);
+            w.add(receivedMatrix);
+            w.setVisible(true);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
     }
 
