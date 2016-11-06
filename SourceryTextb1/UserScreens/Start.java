@@ -27,7 +27,7 @@ import java.util.Timer;
  */
 public class Start {
     private static boolean doDemo = false;
-    private static boolean testingNetwork = !!true;
+    private static boolean testingNetwork = true;
     private static Window game;
     private static ImageOrg org;
     private static List<Player> playerList; // for multiplayer!
@@ -66,12 +66,8 @@ public class Start {
     private static void receiveNetwork(){
         try {
             NetworkClient networker = new NetworkClient();
-            ColoredTextMatrix receivedMatrix = networker.beClient();
-            java.awt.Window w = new JFrame();
-            w.setBounds(100, 100, 412, 412);
-            w.add(receivedMatrix);
-            w.setVisible(true);
-        } catch (ClassNotFoundException e) {
+            networker.beTimerClient();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

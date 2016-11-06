@@ -121,10 +121,10 @@ public class Player extends Mortal implements java.io.Serializable {
         resumeFromSave();
     }
 
-    public void testSendOverNetwork() {
+    void testSendOverNetwork() {
         try {
-            networkerServer = new NetworkerServer();
-            networkerServer.test(orgo.getWindow().txtArea);
+            networkerServer = new NetworkerServer(orgo.getWindow());
+            networkerServer.doTimerSend();
         } catch (IOException e) {
             e.printStackTrace();
         }
