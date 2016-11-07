@@ -346,9 +346,7 @@ public class ImageOrg implements java.io.Serializable {
                 System.out.println(changeList + "\n");
                 layerChangeInstance++;
             }
-            window.clearImage();
-            window.topDownBuild(layers, camX, camY);
-            window.build();
+            window.build(window.topDownBuild(layers, camX, camY));
         } catch (ConcurrentModificationException ignore) {
         }// Cuz it'll be fixed next time probs.
     }

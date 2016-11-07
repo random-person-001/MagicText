@@ -16,12 +16,9 @@ import javax.swing.*;
  */
 public class Window extends JFrame {
     private static final String OPAQUE_SPACE = "ñ";
-    //public JTextPane txtArea = new JTextPane();
     public ColoredTextMatrix txtArea = new ColoredTextMatrix();
     private Container c = getContentPane();
     private String foregroundColor = "#ffffff";
-
-    private Layer fullImage = new Layer(new String[screenH()][screenW()]);
     private String owningPlayerUsername;
 
     public void setOwningPlayerUsername(String newOwningPlayerUsername){
@@ -58,46 +55,17 @@ public class Window extends JFrame {
     }
 
     /**
-     * Directly set the textArea contents to just an empty string
-     */
-    public void clearText() {
-        //txtArea.setText("");
-    }
-
-
-    /**
      * Clear out the compiled layers to be spacey quotes.  Note that this will be overwritten/ignored next
      * time org.compileImage() is called
      */
     public void clearImage() {
-        fullImage.clear();
-    }
-
-
-    /**
-     * Much like placeLayer, but ignores camera.
-     *
-     * @param layer a layer to place on top of fullImage
-     */
-    public void setLayer(Layer layer) { //Much like placeLayer, but ignores camera
-        for (int row = 0; row < fullImage.getRows(); row++) {
-            for (int col = 0; col < fullImage.getColumns(); col++) { //This stuff is complicated!!!!
-                if (!" ".equals(layer.getStr(row, col))) {
-                    if ("".equals(layer.getStr(row, col)) || layer.getStr(row, col) == null) {
-                        fullImage.placeStr(row + layer.getX(), col + layer.getY(), " ");
-                    } else if (layer.getStr(row, col).equals(OPAQUE_SPACE)) {
-                        fullImage.setStr(row + layer.getX(), col + layer.getY(), " ");
-                    } else {
-                        fullImage.setStr(row + layer.getX(), col + layer.getY(), layer.getStr(row, col));
-                    }
-                }
-            }
-        }
+        //fullImage.clear();
     }
 
     private boolean isSignificant(SpecialText test) {return test.isSignificant();}
 
-    void topDownBuild(List<Layer> layers, int camX, int camY) {
+    Layer topDownBuild(List<Layer> layers, int camX, int camY) {
+        Layer fullImage = new Layer(new String[screenH()][screenW()]);
         int camYtoBe = camX;
         camX = camY; // Riley moved the wire-crossing to here (from the Layer.getX() and .getY()) on 21 Sept
         camY = camYtoBe;
@@ -126,20 +94,23 @@ public class Window extends JFrame {
                 }
             }
         }
+        return fullImage;
     }
 
     /**
      * Place the temporary idea of what should be on the screen (fullImage) onto the actual display
      * Usually takes 40-70ms. (at least, with an 48x27 fullImage size)
      */
-    void build() {
+    void build(Layer fullImage) {
         for (int row = 0; row < 28; row++) { // Used to be 20
             for (int col = 0; col < 46; col++) { // Used to be 50
                 SpecialText s  = fullImage.getSpecTxt(row, col);
-                if (s == null || s.toString().equals("")) {
-                    txtArea.text[col][row] = new SpecialText(" ");
+                if (s != null && s.toString() != null) {
+                    if (!s.toString().equals("")) {
+                        txtArea.text[col][row] = s;
+                    }
                 } else {
-                    txtArea.text[col][row] = s;
+                    txtArea.text[col][row] = new SpecialText(" ");
                 }
             }
         }
@@ -155,7 +126,6 @@ public class Window extends JFrame {
         c.add(txtArea);
         c.validate();
         clearImage();
-        build();
 
         setVisible(true);
     }
