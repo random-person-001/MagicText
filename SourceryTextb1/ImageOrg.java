@@ -321,22 +321,9 @@ public class ImageOrg implements java.io.Serializable {
         }
     }
 
-    /**
-     * Assemble all the layers together, and place it on the screen.
-     */
-
-
-    public void compileImage() {
-        /*
-        This should do nothing.
-        It's just here to make the game compile.
-        That is all.
-        */
-    }
-
     private int layerChangeInstance = 1;
 
-    private void newSendImage() {
+    private void compileImage() {
         try {
             //if (somethingChanged) {
             //System.out.println("New Frame...");
@@ -349,9 +336,8 @@ public class ImageOrg implements java.io.Serializable {
                 System.out.println(changeList + "\n");
                 layerChangeInstance++;
             }
-            window.clearImage();
+            window.clearImage(roomBackground);
             window.topDownBuild(layers, camX, camY);
-            window.txtArea.displayBackground = roomBackground;
             window.build();
         } catch (ConcurrentModificationException ignore) {
         }// Cuz it'll be fixed next time probs.
@@ -409,7 +395,7 @@ public class ImageOrg implements java.io.Serializable {
         }
 
         public void run() {
-            newSendImage();
+            compileImage();
         }
     }
 }

@@ -69,8 +69,8 @@ public class Window extends JFrame {
      * Clear out the compiled layers to be spacey quotes.  Note that this will be overwritten/ignored next
      * time org.compileImage() is called
      */
-    public void clearImage() {
-        fullImage.clear(true);
+    public void clearImage(Color displayBackground) {
+        fullImage.clear(displayBackground);
     }
 
 
@@ -154,7 +154,7 @@ public class Window extends JFrame {
 
         c.add(txtArea);
         c.validate();
-        clearImage();
+        clearImage(Color.BLACK);
         build();
 
         setVisible(true);

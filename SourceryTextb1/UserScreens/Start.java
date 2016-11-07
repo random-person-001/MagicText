@@ -40,7 +40,7 @@ public class Start {
             playerList.add(player);
             NewTestRoom rooma = new NewTestRoom(player);
             org.removeAllButPlayer();
-            game.clearImage();
+            game.clearImage(Color.BLACK);
             player.setRoom(rooma);
             rooma.startup();
             rooma.enter(player);

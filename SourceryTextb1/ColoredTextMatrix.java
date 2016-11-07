@@ -15,8 +15,6 @@ public class ColoredTextMatrix extends JPanel{
     public SpecialText[][] text = new SpecialText[46][28];
     protected Color overallForeGround = Color.WHITE;
 
-    public Color displayBackground = Color.BLACK;
-
     //Fabulous colors!
     private Color[] fabulousColorWheel = {new Color(255, 100, 100), new Color(255, 100, 255), new Color(100, 100, 255), new Color(100, 255, 255),
                                           new Color( 80, 255, 120), new Color(255, 255, 100), new Color(255, 150,  75)};
@@ -59,17 +57,11 @@ public class ColoredTextMatrix extends JPanel{
 
         setFont(new Font("Monospaced", Font.PLAIN, CHAR_SIZE));
 
-        //System.out.println(text[0][0].getStr());
-        int secondX = getWidth();
-        if (HOR_MARGIN > 0){
-            secondX = HOR_MARGIN + (HOR_SEPARATION*46);
+        if (HOR_MARGIN > 0) {
+            int secondX = HOR_MARGIN + (HOR_SEPARATION * 46);
             g.setColor(new Color(30, 30, 30));
             g.drawLine(HOR_MARGIN - 1, 0, HOR_MARGIN - 1, getHeight());
             g.drawLine(secondX, 0, secondX, getHeight());
-        }
-        if (!displayBackground.equals(Color.BLACK)){
-            g.setColor(displayBackground);
-            g.fillRect(HOR_MARGIN, 0, secondX - HOR_MARGIN, getHeight());
         }
 
         for (int col = 0; col < text.length; col++){ //Draws the highlighting / backgrounds first
@@ -77,8 +69,7 @@ public class ColoredTextMatrix extends JPanel{
                 SpecialText get = text[col][row];
                 if (get != null){
                     g.setColor(get.getBackgroundColor());
-                    if (!get.layerless)
-                        g.fillRect((col * HOR_SEPARATION) + HOR_MARGIN, (row * VER_SEPARATION) + (CHAR_SIZE / 5), CHAR_WIDTH, CHAR_HEIGHT);
+                    g.fillRect((col * HOR_SEPARATION) + HOR_MARGIN, (row * VER_SEPARATION) + (CHAR_SIZE / 5), CHAR_WIDTH, CHAR_HEIGHT);
                 }
             }
         }
