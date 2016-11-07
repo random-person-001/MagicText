@@ -1,26 +1,25 @@
 package SourceryTextb1;
 
 import java.io.*;
+import java.net.ConnectException;
 import java.net.Socket;
 import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * Connects to a NetworkerServer and places the ColoredTextMatrix it recives on its own window.
+ * Connects to a NetworkerServer and places the ColoredTextMatrix it recives on its own window.  Uses TCP.
  * Created by riley on 05-Nov-2016.
  */
 public class NetworkClient {
-    String serverName = "192.168.0.250"; // This should probably be a parameter.
     int port = 8792;
     Window w;
     Socket client;
     ObjectInputStream in;
     DataOutputStream out;
 
-    public void beTimerClient() throws IOException {
-        connect();
+    public void beTimerClient(String serverName) throws IOException {
+        connect(serverName);
         new Timer().scheduleAtFixedRate(new TimerTask(){
-            @Override
             public void run() {
                 try {
                     receiveImage();
@@ -32,11 +31,20 @@ public class NetworkClient {
 
     }
 
-    private void connect() throws IOException {
+    private void connect(String serverName) throws IOException {
         w = new Window();
 
+
         System.out.println("Connecting to " + serverName + " on port " + port);
-        client = new Socket(serverName, port);
+        try {
+            client = new Socket(serverName, port);
+        }
+        catch (ConnectException e){
+            System.out.println("Could not connect Sourcerery Text server "+serverName+" port "+port+"; therefore " +
+                    "nullpointers will be thrown.  Are you sure the server is up and running?" );
+            return;
+        }
+
 
         System.out.println("Just connected to " + client.getRemoteSocketAddress());
         OutputStream outToServer = client.getOutputStream();
@@ -48,9 +56,17 @@ public class NetworkClient {
     }
 
     private void receiveImage() throws IOException, ClassNotFoundException {
-        w.txtArea = (ColoredTextMatrix) in.readObject();
-        w.add(w.txtArea);
-        System.out.println("Received image");
+        //w.txtArea = (ColoredTextMatrix) in.readObject();
+        if (in == null){
+            System.out.println("Input stream is null; aborting reading ColoredTextMatrix attempt");
+            return;
+        }
+        w.getContentPane().remove(w.txtArea);
+        w.getContentPane().add((ColoredTextMatrix) in.readObject());
+        w.getContentPane().validate();
+        w.repaint();
+
+        System.out.println("Received image!");
         w.txtArea.repaint();
     }
 }

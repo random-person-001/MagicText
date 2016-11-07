@@ -30,6 +30,7 @@ class MainMenu {
     private final int ENTER = 3;
 
     private boolean finished = false;
+    private boolean inMultiplayerMenu = false;
 
     private int clock = 0;
     private int cursorY = 9;
@@ -50,10 +51,9 @@ class MainMenu {
         org.addLayer(menuLayer);
     }
 
-    protected void loop() {
+    protected void mainLoop() {
         if (!finished) {
             org.editLayer(" ", "MAIN_MENU", cursorY, 24);
-
             window.txtArea.setOverallForeGround(Color.WHITE);
 
             switch (keyCode) {
@@ -75,12 +75,15 @@ class MainMenu {
                     if (cursorY == 9) {
                         System.out.println("\n\nNEW GAME!!!\n\n");
                         starter.newGame(1);
-                        //finished = true;
                     }
                     if (cursorY == 10) {
-                        System.out.println("\n\nNEW MULTIPLAYER GAME!!!\n\n");
-                        starter.newGame(2);
-                        //finished = true;
+                        org.editLayer(" ", "MAIN_MENU", cursorY, 24);
+                        org.removeLayer("MAIN_MENU");
+                        Layer multiplayerLayer = new Layer(Art.strToArray(new Art().multiplayerMenu,true), "MULTIPLAYER_MENU");
+                        org.addLayer(multiplayerLayer);
+                        window.txtArea.addKeyListener(keyInputter); // Cuz we removed it before
+                        inMultiplayerMenu = true;
+                        cursorY = 9;
                     }
                     if (cursorY == 11 && loadGame()) {
                         finished = true;
@@ -116,6 +119,57 @@ class MainMenu {
 
             org.editLayer("*", "MAIN_MENU", cursorY, 24);
         }
+    }
+
+    /**
+     * Multiplayer options screen
+     */
+    private void multiplayerLoop(){
+        if (!finished) {
+            org.editLayer(" ", "MULTIPLAYER_MENU", cursorY, 24);
+
+            switch (keyCode) {
+                case UP:
+                    cursorY--;
+                    break;
+                case DOWN:
+                    cursorY++;
+                    break;
+                case ENTER:
+                    org.removeLayer("MULTIPLAYER_MENU");
+                    window.txtArea.removeKeyListener(keyInputter);
+                    if (cursorY == 5){
+                        System.out.println("New multiplayer game made!");
+                        System.out.println("In the HUD, enter 'lan' to start a server.");
+                        starter.newGame(2);
+                    }// /*
+                    if (cursorY == 6){ // For Riley
+                        System.out.println("Requesting connection to Sourcery Text server at \"192.168.0.250\"");
+                        starter.doNetworkClient("192.168.0.250");
+                    }// */
+                    /*
+                    if (cursorY == 6){  // For others, Uncomment to make work
+                        System.out.println("Requesting connection to Sourcery Text server somewhere else");
+                        starter.doNetworkClient("Your Local IP Here");
+                    }*/
+                    if (cursorY == 7){
+                        org.removeLayer("MULTIPLAYER_MENU");
+                        System.out.println("Returning to main menu");
+                        inMultiplayerMenu = false;
+                        window.txtArea.addKeyListener(keyInputter);
+                        org.addLayer(new Layer(Art.strToArray(new Art().mainMenu,true), "MAIN_MENU"));
+                    }
+            }
+            if (cursorY <= 4) {
+                cursorY = 7;
+            }
+            if (cursorY >= 8) {
+                cursorY = 5;
+            }
+            org.editLayer("*", "MULTIPLAYER_MENU", cursorY, 24);
+            keyCode = 0;
+        }
+
     }
 
     private boolean loadGame(){
@@ -154,7 +208,11 @@ class MainMenu {
         @Override
         public void run() {
             clock++;
-            loop();
+            if (!inMultiplayerMenu){
+                mainLoop();
+            }else {
+                multiplayerLoop();
+            }
         }
     }
 

@@ -27,15 +27,11 @@ import java.util.Timer;
  */
 public class Start {
     private static boolean doDemo = false;
-    private static boolean testingNetwork = true;
     private static Window game;
     private static ImageOrg org;
     private static List<Player> playerList; // for multiplayer!
 
     public static void main(String[] args) throws InterruptedException {
-        if (testingNetwork){
-            receiveNetwork();
-        }
         game = new Window();
         Layer base = new Layer(new String[game.maxH()][game.maxW()], "base");
         org = new ImageOrg(game);
@@ -60,15 +56,6 @@ public class Start {
 
             Timer time = new Timer();
             time.schedule(new StartCheck(wincnfg), 50, 100);
-        }
-    }
-
-    private static void receiveNetwork(){
-        try {
-            NetworkClient networker = new NetworkClient();
-            networker.beTimerClient();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
@@ -395,6 +382,15 @@ public class Start {
                 intro();
             } catch (InterruptedException e) {
                 System.out.println("Intro interrupted.");
+            }
+        }
+
+        void doNetworkClient(String serverName) {
+            try {
+                NetworkClient networker = new NetworkClient();
+                networker.beTimerClient(serverName);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
     }

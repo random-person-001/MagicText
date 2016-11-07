@@ -390,7 +390,7 @@ public class Art implements java.io.Serializable{
             "|  -+- +-- | | -+-                           |\n" +
             "|   |  |   \\ /  |         Introduction       |\n" +
             "|   |  +--  |   |         New Game           |\n" +
-            "|   |  |   / \\  |         New Multiplayer β  |\n" +
+            "|   |  |   / \\  |         Multiplayer        |\n" +
             "|   |  +-- | |  |         Load Game          |\n" +
             "|                         Window Config      |\n" +
             "|                         Quit               |\n" +
@@ -408,6 +408,36 @@ public class Art implements java.io.Serializable{
             "|                                            |\n" +
             "|                                            |\n" +
             "|                                            |\n";
+
+    public String multiplayerMenu =
+            "@                                            @\n" +
+            "|                                            |\n" +
+            "|   M U L T I P L A Y E R     ( B E T A )    |\n" +
+            "|                                            |\n" +
+            "|                                            |\n" +
+            "|                   β     New Game as server |\n" +
+            "|                   β     ~ as client        |\n" +
+            "|                         Abort              |\n" +
+            "|                                            |\n" +
+            "|                                            |\n" +
+            "|                                            |\n" +
+            "|                                            |\n" +
+            "|                                            |\n" +
+            "|                 *   *   *                  |\n" +
+            "|                   W O T                    |\n" +
+            "|                                            |\n" +
+            "|  MULTIPLAYER is still in beta development. |\n" +
+            "|  Features are subject to change and bugs   |\n" +
+            "|     are likely.  Please report them.       |\n" +
+            "|   Multiplayer uses network connections to  |\n" +
+            "| communicate with other computers, and you  |\n" +
+            "| must know the IP address of a computer you |\n" +
+            "|    wish to join a game with if you are a   |\n" +
+            "| client.  On local networks, a relative IP  |\n" +
+            "| (like 192.168.0.* or 127.0.0.*) works, but |\n" +
+            "|  across the internet, the real IP must be  |\n" +
+            "|                  shared.                   |\n" +
+            "@                                            @\n";
 
     public String woodStaff =
                     " _ \n"+
