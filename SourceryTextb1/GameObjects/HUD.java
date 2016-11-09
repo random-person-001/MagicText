@@ -309,6 +309,7 @@ class HUD implements java.io.Serializable {
      * >ser test : Test serializing the player to a .sav file
      * >set red (amount) : reds up the screen like the player took damage
      * >setResponseTime (time) : set a new duration for the response message on the console to be shown (seconds)
+     * >stop lan | cancel network : stop being a server and sending client ColoredTextMatrices
      * >sudo : enter sudo mode
      * >sudo make me a sandwich : evoke submissive response from computer.  Also enter sudo mode
      * >testkit : Gives player the test kit.
@@ -376,6 +377,9 @@ class HUD implements java.io.Serializable {
         }else if (command.contains("network") || command.contains("lan")) {
             player.testSendOverNetwork();
             showResponse("Called Player.testSendOverNetwork()");
+        }else if ((command.contains("cancel") || command.contains("stop")) && (command.contains("network") || command.contains("lan"))) {
+            player.cancelSendOverNetwork();
+            showResponse("Called Player.cancelSendOverNetwork()");
         } else if (command.contains("addhp ") && command.length() > 6) {
             int amountToHeal = Integer.valueOf(command.substring(6));
             player.restoreHealth(amountToHeal, 50);

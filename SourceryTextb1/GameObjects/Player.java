@@ -97,6 +97,7 @@ public class Player extends Mortal implements java.io.Serializable {
     int screenRedness = 0;
     int screenYellowness = 0;
     boolean hasLocalWindow;
+    private NetworkerServer networkerServer;
 
     /**
      * Initialize a whole lotta variables.
@@ -129,8 +130,19 @@ public class Player extends Mortal implements java.io.Serializable {
      */
     void testSendOverNetwork() {
         try {
-            NetworkerServer networkerServer = new NetworkerServer();
+            networkerServer = new NetworkerServer();
             networkerServer.doTimerSend(this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Attempt to cancel the sending of the display data over network. (stops an earlier instance of calling testSendOverNetwork())
+     */
+    void cancelSendOverNetwork(){
+        try {
+            networkerServer.disconnect();
         } catch (IOException e) {
             e.printStackTrace();
         }
