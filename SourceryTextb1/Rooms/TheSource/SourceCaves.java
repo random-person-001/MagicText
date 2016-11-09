@@ -82,9 +82,9 @@ public class SourceCaves extends Room{
 
         org.addLayer(lay1);
 
-        Layer exitLayer = new Layer(new String[2][2], "exit", -1, 61);
-        exitLayer.setSpecTxt(0, 0, new SpecialText(" ", null, Color.GRAY));
-        exitLayer.setSpecTxt(0, 1, new SpecialText(" ", null, Color.GRAY));
+        Layer exitLayer = new Layer(new String[2][2], "exit", 0, 61);
+        exitLayer.setSpecTxt(0, 0, new SpecialText(" ", null, new Color(100, 100, 90)));
+        exitLayer.setSpecTxt(0, 1, new SpecialText(" ", null, new Color(100, 100, 90)));
 
         org.addLayer(exitLayer);
 

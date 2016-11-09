@@ -161,8 +161,8 @@ class Inventory implements java.io.Serializable {
         Item item1 = new Item("InitiateTome", "A book full of dark rituals\n\nNewcomers to dark magic are\n handed this book to study.\n\nYes, it's a textbook.\n\n+3 Dark Spell Damage", player, "equip");
         item1.setEquipvals(0, 0, 0, 0, 0, 0, 3, "weapon");
         equip.add(item1);
-        Item item2 = new Item("Wool Scarf", "A fluffy scarf.\n\nWhat's not to love in\n a scarf?\n\nThey're magical, comfy, and\n fashionable!\nAwesome, right?\n\n+1 Ice Spell Damage\n+1 Defense", player, "equip");
-        item2.setEquipvals(1, 0, 0, 0, 0, 1, 0, "weapon");
+        Item item2 = new Item("Wool Scarf", "A fluffy scarf.\n\nWhat's not to love in\n a scarf?\n\nThey're magical, comfy, and\n fashionable!\nAwesome, right?\n\n+1 Ice Spell Damage\n+2 Defense", player, "equip");
+        item2.setEquipvals(2, 0, 0, 0, 0, 1, 0, "weapon");
         equip.add(item2);
         Item item3 = new Item("Stat Bomb", "It does everything!\n\nDon't actually use this\n in the game.\n\n+1 To all equipment stats.", player, "equip");
         item3.setEquipvals(1, 1, 1, 1, 1, 1, 1, "weapon");
@@ -171,10 +171,10 @@ class Inventory implements java.io.Serializable {
         item5.dmgSpellDefine(6, 20, 7, "arcane", new SpecialText("\\"), new SpecialText("/"), true);
         spells.add(item5);
         Item item6 = new Item("Evil Powers", "Dark Spell;\n\nYou're not sure what it is\n exactly, but it has the\n word 'power' in its name,\n so it must be good,\n right?", "EvlPw", player, "spell", true);
-        item6.dmgSpellDefine(1, 8, 2, "dark", new SpecialText("*", new Color(155, 55, 155)), new SpecialText("*", new Color(255, 55, 255)), true);
+        item6.dmgSpellDefine(1, 8, 2, "dark", new SpecialText("*", new Color(155, 55, 155)), new SpecialText("*", new Color(255, 55, 255)), false);
         spells.add(item6);
-        Item item7 = new Item("Witch Scarf", "A scarf imbued with witch\n magic, granting the user\n increased dark and ice\n magic power\n\nIt smells like flowers.\n\n+1 Ice Spell Damage\n+1 Dark Spell Damage\n+1 Defense\n+3 Max Health", player, "equip");
-        item7.setEquipvals(1, 3, 0, 0, 0, 2, 3, "weapon");
+        Item item7 = new Item("Witch Scarf", "A scarf imbued with witch\n magic, granting the user\n increased dark and ice\n magic power\n\nIt smells like flowers.\n\n+1 Ice Spell Damage\n+2 Dark Spell Damage\n+1 Defense\n+3 Max Health", player, "equip");
+        item7.setEquipvals(1, 3, 0, 0, 0, 2, 2, "weapon");
         equip.add(item7);
         for (int ii = 0; ii < 4; ii++) {
             Item item4 = new Item("Carrot", "For some reason,\n they only grow\n in the mountains.\n\nNobody really know why.", player, "items");
