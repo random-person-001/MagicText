@@ -5,10 +5,7 @@
  */
 package SourceryTextb1;
 
-import java.util.ArrayList;
-import java.util.ConcurrentModificationException;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 /**
  * An intermediate between the countless Layers and the Window, to organise and keep all the Layers in line.
@@ -29,11 +26,16 @@ public class ImageOrg implements java.io.Serializable {
     private Timer drawTimer = new Timer();
 
     final int orgSerial = (int) (Math.random() * 10000);
+    private String owningPlayerUsername = null;
 
     public ImageOrg(Window game) {
         //drawTimer.scheduleAtFixedRate(frameTimerInstance, 0, 50); //20 fps lock
         resetClock();
         window = game;
+    }
+
+    public void setOwningPlayerUsername(String newOwningPlayerUsername){
+        owningPlayerUsername = newOwningPlayerUsername;
     }
 
     public ArrayList<Layer> getLayers(){
@@ -346,9 +348,49 @@ public class ImageOrg implements java.io.Serializable {
                 System.out.println(changeList + "\n");
                 layerChangeInstance++;
             }
-            window.build(window.topDownBuild(layers, camX, camY));
+            window.build(topDownBuild(camX, camY, owningPlayerUsername));
         } catch (ConcurrentModificationException ignore) {
         }// Cuz it'll be fixed next time probs.
+    }
+
+    private int screenH() {
+        return 28;
+    }
+    private int screenW() {
+        return 46;
+    }
+
+    public Layer topDownBuild(int camX, int camY, String owningPlayerUsername) {
+        Layer fullImage = new Layer(new String[screenH()][screenW()]);
+        int camYtoBe = camX;
+        camX = camY;
+        camY = camYtoBe;
+        int maxH = screenH(); //Equals 23
+        int maxW = screenW(); //Equals 46
+        for (int row = 0; row < maxH; row++) { //Iterates over every coordinate of the screen
+            for (int col = 0; col < maxW; col++) {
+                for (int ii = layers.size(); ii > 0; ii--) { //At each coordinate, goes through all layers until an opaque space is found
+                    Layer layer = layers.get(ii - 1);
+                    int xPos = row - layer.getX();
+                    int yPos = col - layer.getY(); //Math done to find out what portion of the layer corresponds with the screen coordinate
+                    if (layer.getCamOb()) {
+                        xPos += camX;
+                        yPos += camY;
+                    }
+                    SpecialText found = layer.getSpecTxt(xPos, yPos); //Gets SpecialText from derived layer coordinate
+                    String input = found.getStr(); //Gets string from SpecialText to make code easier to read
+                    if (found.isSignificant() && (layer.getRelaventPlayerUsername() == null || layer.getRelaventPlayerUsername().equals(owningPlayerUsername))) { //If the SpecialText isn't blank
+                        if ("ñ".equals(input)) { //If space found was opaque
+                            fullImage.setSpecTxt(row, col, new SpecialText(" "));
+                        } else { //Otherwise, place found SpecialText
+                            fullImage.setSpecTxt(row, col, found);
+                        }
+                        ii = 0; //Ends search at the coordinate and moves onto the next coordinate
+                    }
+                }
+            }
+        }
+        return fullImage;
     }
 
     /**
@@ -369,7 +411,6 @@ public class ImageOrg implements java.io.Serializable {
 
     /**
      * Wipe a layer clean
-     *
      * @param layName string of layer
      */
     public void clearLayer(String layName) {
@@ -392,6 +433,10 @@ public class ImageOrg implements java.io.Serializable {
 
     public void removeLayer(Layer layer) {
         layers.remove(layer);
+    }
+
+    public String getOwningPlayerUsername() {
+        return owningPlayerUsername;
     }
 
     private class FrameTimer extends TimerTask {

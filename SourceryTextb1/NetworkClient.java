@@ -56,17 +56,11 @@ public class NetworkClient {
     }
 
     private void receiveImage() throws IOException, ClassNotFoundException {
-        //w.txtArea = (ColoredTextMatrix) in.readObject();
         if (in == null){
             System.out.println("Input stream is null; aborting reading ColoredTextMatrix attempt");
             return;
         }
-        w.getContentPane().remove(w.txtArea);
-        w.getContentPane().add((ColoredTextMatrix) in.readObject());
-        w.getContentPane().validate();
-        w.repaint();
-
+        w.build((Layer) in.readObject());
         System.out.println("Received image!");
-        w.txtArea.repaint();
     }
 }

@@ -25,7 +25,6 @@ public class SlaveGameInstance {
         org.getWindow().txtArea.addKeyListener(kl);
         kl.player.setRealOrg(org);
         System.out.println(kl.getPlayerUsername());
-        org.getWindow().setOwningPlayerUsername(kl.getPlayerUsername());
         // Run game
         while (true){
             try {

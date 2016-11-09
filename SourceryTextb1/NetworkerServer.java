@@ -1,5 +1,7 @@
 package SourceryTextb1;
 
+import SourceryTextb1.GameObjects.Player;
+
 import java.net.*;
 import java.io.*;
 import java.util.Timer;
@@ -15,15 +17,13 @@ public class NetworkerServer {
     Socket server = new Socket();
     ObjectOutputStream out;
     DataInputStream in;
-    Window window;
 
-    public NetworkerServer(Window windowFrom) throws IOException {
+    public NetworkerServer() throws IOException {
         serverSocket = new ServerSocket(PORT);
         serverSocket.setSoTimeout(10000);
-        window = windowFrom;
     }
 
-    public void doTimerSend(){
+    public void doTimerSend(Player playery){
         try {
             connect();
         } catch (IOException e) {
@@ -33,7 +33,7 @@ public class NetworkerServer {
             @Override
             public void run() {
                 try {
-                    sendImage();
+                    sendImage(playery);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -53,7 +53,8 @@ public class NetworkerServer {
         out = new ObjectOutputStream(server.getOutputStream());
     }
 
-    private void sendImage() throws IOException {
-        out.writeObject(window.txtArea);
+    private void sendImage(Player player) throws IOException {
+        Layer fullImage = player.orgo.topDownBuild(player.getX()-22, player.getY()-11, player.getUsername());
+        out.writeObject(fullImage);
     }
 }

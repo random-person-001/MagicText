@@ -51,6 +51,7 @@ public class Room implements java.io.Serializable{
         playo = player;
         // Make a new imageOrg for this level, looking at the same Window as the last one did
         org = new ImageOrg(player.orgo.getWindow());
+        org.setOwningPlayerUsername(player.orgo.getOwningPlayerUsername());
         // So it doesn't draw over other things.  It'll be restarted as needed later.
         org.terminateClock();
         // Boring stuff

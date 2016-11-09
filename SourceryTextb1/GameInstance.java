@@ -25,7 +25,7 @@ public class GameInstance {
         playerList = new ArrayList<>();
         playerList.add(protaganist);
         PlayerKeyPressListener kl = new PlayerKeyPressListener(protaganist);
-        protaganist.orgo.getWindow().setOwningPlayerUsername(protaganist.getUsername());
+        protaganist.orgo.setOwningPlayerUsername(protaganist.getUsername());
         protaganist.orgo.getWindow().txtArea.addKeyListener(kl);
     }
 

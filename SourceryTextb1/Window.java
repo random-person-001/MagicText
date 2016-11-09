@@ -15,32 +15,33 @@ import javax.swing.*;
  * @author 119184
  */
 public class Window extends JFrame {
-    private static final String OPAQUE_SPACE = "ñ";
     public ColoredTextMatrix txtArea = new ColoredTextMatrix();
     private Container c = getContentPane();
-    private String foregroundColor = "#ffffff";
-    private String owningPlayerUsername;
 
-    public void setOwningPlayerUsername(String newOwningPlayerUsername){
-        owningPlayerUsername = newOwningPlayerUsername;
+    public Window() {
+        setBounds(100, 100, 412, 412);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setTitle("Sourcery Text  -  an alphanumeric misadventure");
+        setResizable(true);
+
+        c.add(txtArea);
+        c.validate();
+
+        setVisible(true);
     }
 
     /**
-     * @param newColor a string of hexcode (like "#c3c3c3") for the default foreground to be
-     */
-    public void setForegroundColor(String newColor) {
-        foregroundColor = newColor;
-    }
-
-    /**
-     * @return the maximum allowable height in the game
+     * @return the maximum allowable height in the game, an arbitrary large number that should be greater or equal to
+     * the size of a room.  Used for hitmesh sizes and used to be used for the size of a unified spellcasting layer, but
+     * now each spell has their own layer so it's only used for hitmeshes.  I suppose we could make this dynamic and
+     * depend on the size of the background art if we really wanted to, but it isn't a high priority I think.
      */
     public int maxH() {
         return 80;
-    } //Note that this must be >= any layer sizes, but other than that it's arbitrary
+    }
 
     /**
-     * @return the maximum allowable width in the game
+     * @return the maximum allowable width in the game, an arbitrary large number
      */
     public int maxW() {
         return 150;
@@ -55,53 +56,11 @@ public class Window extends JFrame {
     }
 
     /**
-     * Clear out the compiled layers to be spacey quotes.  Note that this will be overwritten/ignored next
-     * time org.compileImage() is called
+     * Place the temporary idea of what should be on the screen (fullImage) onto the actual display, the txtArea that
+     * is a ColoredTextMatrix.
+     * @param fullImage the 28x46 Layer that is the final result of rendering and should be placed onto the screen
      */
-    public void clearImage() {
-        //fullImage.clear();
-    }
-
-    private boolean isSignificant(SpecialText test) {return test.isSignificant();}
-
-    Layer topDownBuild(List<Layer> layers, int camX, int camY) {
-        Layer fullImage = new Layer(new String[screenH()][screenW()]);
-        int camYtoBe = camX;
-        camX = camY; // Riley moved the wire-crossing to here (from the Layer.getX() and .getY()) on 21 Sept
-        camY = camYtoBe;
-        int maxH = screenH(); //Equals 23
-        int maxW = screenW(); //Equals 46
-        for (int row = 0; row < maxH; row++) { //Iterates over every coordinate of the screen
-            for (int col = 0; col < maxW; col++) {
-                for (int ii = layers.size(); ii > 0; ii--) { //At each coordinate, goes through all layers until an opaque space is found
-                    Layer layer = layers.get(ii - 1);
-                    int xPos = row - layer.getX();
-                    int yPos = col - layer.getY(); //Math done to find out what portion of the layer corresponds with the screen coordinate
-                    if (layer.getCamOb()) {
-                        xPos += camX;
-                        yPos += camY;
-                    }
-                    SpecialText found = layer.getSpecTxt(xPos, yPos); //Gets SpecialText from derived layer coordinate
-                    String input = found.getStr(); //Gets string from SpecialText to make code easier to read
-                    if (isSignificant(found) && (layer.getRelaventPlayerUsername() == null || layer.getRelaventPlayerUsername().equals(owningPlayerUsername))) { //If the SpecialText isn't blank
-                        if ("ñ".equals(input)) { //If space found was opaque
-                            fullImage.setSpecTxt(row, col, new SpecialText(" "));
-                        } else { //Otherwise, place found SpecialText
-                            fullImage.setSpecTxt(row, col, found);
-                        }
-                        ii = 0; //Ends search at the coordinate and moves onto the next coordinate
-                    }
-                }
-            }
-        }
-        return fullImage;
-    }
-
-    /**
-     * Place the temporary idea of what should be on the screen (fullImage) onto the actual display
-     * Usually takes 40-70ms. (at least, with an 48x27 fullImage size)
-     */
-    void build(Layer fullImage) {
+    public void build(Layer fullImage) {
         for (int row = 0; row < 28; row++) { // Used to be 20
             for (int col = 0; col < 46; col++) { // Used to be 50
                 SpecialText s  = fullImage.getSpecTxt(row, col);
@@ -115,31 +74,5 @@ public class Window extends JFrame {
             }
         }
 
-    }
-
-    public Window() {
-        setBounds(100, 100, 412, 412);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setTitle("Sourcery Text  -  an alphanumeric misadventure");
-        setResizable(true);
-
-        c.add(txtArea);
-        c.validate();
-        clearImage();
-
-        setVisible(true);
-    }
-
-    private class FrameBuffer extends TimerTask {
-        String toBuild = "";
-
-        FrameBuffer(String theScreen) {
-            toBuild = theScreen;
-        }
-
-        public void run() throws NullPointerException {
-            //System.out.println(txtArea.getText());
-            //txtArea.setText(toBuild);
-        }
     }
 }

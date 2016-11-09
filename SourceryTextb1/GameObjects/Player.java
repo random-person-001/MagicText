@@ -35,13 +35,11 @@ public class Player extends Mortal implements java.io.Serializable {
     private String username = System.getProperty("user.name");
     //private PlayerKeypressListener playerKeyListener;// = new PlayerKeypressListener(this);
     private Inventory inv;
-    public ItemTracker tracker;
+    private ItemTracker tracker;
     private HUD hud;
     public String roomName = ""; //Extremely important when we implement saving.
     private ImageOrg realOrg; // For access to the real window for keybindings
-    private NetworkerServer networkerServer;
 
-    private boolean autonomous = false;
     private boolean shouldNewInv = false;
     public boolean frozen = false; //This gets changed by a room upon beginning the level
 
@@ -51,30 +49,33 @@ public class Player extends Mortal implements java.io.Serializable {
     private final int LEFT = 2;
     private final int RIGHT = 3;
 
-    public boolean swimming = false;
-    public int waterEntry = 0;
-
     boolean upPressed, downPressed, leftPressed, rightPressed, spacePressed = false;
+    boolean swimming = false;
+    int waterEntry = 0;
     private int movecount = 0;
     boolean ludicrousSpeed = false;
 
     private int orientation = UP;
     private boolean orientationLocked = false;
     private String aimDispName = "aimDisp";
-    public Layer castingLayer;
 
     private Color restingBackground = Color.black;
-    boolean isGhost = false; //For debug reasons
+    boolean isGhost = false;
     private String lastPainMessage = "None";
 
-    //STATS
+    // CONSTANT STATS
     int baseMaxHP = 20;
     int maxMana = 20;
-    int mana = maxMana;
     private int manaRegenClock = 0;
     int manaWait = 0;
+    private boolean manaHalfStep;
     int defense = 0;
     //Note for the future: Damage can't be reduced below 1 damage. Swords and explosions don't heal people.
+
+    // CHANGABLE STATS
+    int mana = maxMana;
+    private float sprintVelocity = 1;
+    private float sprintAcceleration = 0.9f;
 
     int allSpellBoost = 0;
     int arcSpellBoost = 0;
@@ -95,6 +96,7 @@ public class Player extends Mortal implements java.io.Serializable {
 
     int screenRedness = 0;
     int screenYellowness = 0;
+    boolean hasLocalWindow;
 
     /**
      * Initialize a whole lotta variables.
@@ -102,6 +104,7 @@ public class Player extends Mortal implements java.io.Serializable {
      * @param theOrg the ImageOrg(anizer)
      */
     public Player(ImageOrg theOrg, int playerNumber) {
+        hasLocalWindow = (playerNumber == 0);
         setHealth(baseMaxHP);
         makeGoodGuy(); // Set good-guy-ness to true.
         super.maxHealth = baseMaxHP + armorHealthBoost;
@@ -121,30 +124,35 @@ public class Player extends Mortal implements java.io.Serializable {
         resumeFromSave();
     }
 
+    /**
+     * Initialize a new NetworkerServer and start its doTimerSend() method, which sends display information to clients.
+     */
     void testSendOverNetwork() {
         try {
-            networkerServer = new NetworkerServer(orgo.getWindow());
-            networkerServer.doTimerSend();
+            NetworkerServer networkerServer = new NetworkerServer();
+            networkerServer.doTimerSend(this);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     /**
-     * Intended for multiplayer, for instance adding key listeners
-     * @return the ImageOrg for the actual physical window that corresponds to the player
+     * Intended for multiplayer, for instance adding key listeners, something that is now being moved over to network stuff
+     * @return the ImageOrg for the actual physical window that corresponds to the player, something not viable with network.
      */
+    @Deprecated // Only useful in obsolete implementations of multiplayer
     public ImageOrg getRealOrg(){
-        if (realOrg == null){
+        if (realOrg == null){ // which is the same as hasLocalWindow
             return orgo;
         }
         return realOrg;
     }
 
     /**
-     * Intended for multiplayer, for instance adding key listeners
-     * Set the ImageOrg for the actual physical window that corresponds to the player
+     * Intended for multiplayer, for instance adding key listeners, something that is now being moved over to network stuff
+     * Set the ImageOrg for the actual physical window that corresponds to the player, something not viable with network.
      */
+    @Deprecated // Only useful in obsolete implementations of multiplayer
     public void setRealOrg(ImageOrg newRealOrg){
         realOrg = newRealOrg;
     }
@@ -233,6 +241,9 @@ public class Player extends Mortal implements java.io.Serializable {
      */
     @Override
     public void update() {
+        if (hasLocalWindow){ // Build the image if this is the local player.  Otherwise, somewhere else will.
+            //orgo.getWindow().build(orgo.topDownBuild(getX()-22, getY()-11, username));
+        }
         if (frozen || dead) { // Should be first, so other things don't try to happen first
             System.out.println("Not Updating " + username);
             try {
@@ -281,10 +292,6 @@ public class Player extends Mortal implements java.io.Serializable {
             doMovement();
         }
     }
-
-    private boolean manaHalfStep;
-    private float sprintVelocity = 1;
-    private final float sprintAcceleration = 0.9f;
 
     private void doMovement(){
         int movespeed = 5;
@@ -448,7 +455,6 @@ public class Player extends Mortal implements java.io.Serializable {
 
     @Override
     public void onDeath() {
-        orgo.getWindow().setForegroundColor("#ff0000");
         //orgo.getWindow().txtArea.removeKeyListener(playerKeyListener);
         room.compactTextBox(lastPainMessage, "An ominous voice from above", false);
         dead = true;
@@ -563,9 +569,6 @@ public class Player extends Mortal implements java.io.Serializable {
     void keyPressed(char key) {
         if (!frozen) {
             switch (Character.toLowerCase(key)) {
-                case 'b':
-                    autonomous = !autonomous;
-                    break;
                 case '\'': // ESC right now, subject to change
                     reportPos();
                     break;
