@@ -24,6 +24,8 @@ class Inventory implements java.io.Serializable {
     private int cursorY = 2;
     private int cursorX = 28;
 
+    Navigator inputReader = new Navigator(this);
+
     private int selectYChange = 0;
     private int selectXChange = 0;
     private boolean updateCursor = false;
@@ -68,7 +70,7 @@ class Inventory implements java.io.Serializable {
         return cursorY;
     }
 
-    Inventory(ImageOrg orgo, Player p) {
+    Inventory(ImageOrg orgo, Player p, Window window) {
         org = orgo;
         player = p;
         spellsMenuLayer = new Layer(Art.strToArray(new Art().spellsMenu), "spells" + player.getUsername(), 1, 0, false, true);
@@ -105,6 +107,8 @@ class Inventory implements java.io.Serializable {
 
         player.armor = equip.get(0);
         player.defineStats();
+
+        window.txtArea.addKeyListener(inputReader); // Add key listeners.
     }
 
     /**
@@ -235,11 +239,9 @@ class Inventory implements java.io.Serializable {
         org.addLayer(infoLayer);
 
         Window window = player.getRealOrg().getWindow();
-        Navigator keyListener = new Navigator(this);
-        window.txtArea.addKeyListener(keyListener); // Add key listeners.
 
         Timer timer = new Timer();
-        timer.scheduleAtFixedRate(new MenuTimer(window, keyListener), 10 , 99);
+        timer.scheduleAtFixedRate(new MenuTimer(window, inputReader), 10 , 99);
     }
 
     /**
@@ -725,7 +727,7 @@ class Inventory implements java.io.Serializable {
             if (menuID == EXIT){
                 org.removeLayer(selectorLayer);
                 org.removeLayer(topMenuLayer);
-                window.txtArea.removeKeyListener(keyListener);
+                //window.txtArea.removeKeyListener(keyListener);
                 player.frozen = false;
                 player.resetMovement();
                 System.out.println("Exiting menu through top menu....");
