@@ -292,6 +292,9 @@ public class Player extends Mortal implements java.io.Serializable {
         } else {
             sprintVelocity = 1;
         }
+        if (slowedTimer > 0){
+            movespeed *= 2;
+        }
         if (movecount == 0) {
             if (waterEntry == 0) {
                 if (upPressed) {
@@ -477,6 +480,8 @@ public class Player extends Mortal implements java.io.Serializable {
             } catch (IndexOutOfBoundsException e) {
                 return;
             }
+            if (slowedTimer > 0)
+                slowedTimer--;
             switch (direction) {
                 case UP:
                     if (!room.isPlaceSolid(x, y - 1) || isGhost)

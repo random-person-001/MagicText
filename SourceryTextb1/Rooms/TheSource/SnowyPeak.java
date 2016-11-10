@@ -84,21 +84,18 @@ public class SnowyPeak extends Room {
         roomWidth = 250;
         ititHitMeshes();
 
-        /*
-        String[] signWords = {"Because carrots are a healthy snack,\n all carrots growing here are\n available to the general public",
-                "Eating food can restore health\n beyond your maximum health\nThis is called \"Overhealing\"",
-                "The Mountain Range Committee considers\n those who don't eat food regularly\n to be malnourished."};
-        plantText(new FlavorText(8, 38, signWords,"A Sign"));
-        */
+        String[] signWords = {"WARNING:\n Polar bears ahead.\n RUN AWAY if one attacks you!","However, they are known for stealing\n keys and whatnot.\nGetting them back is not recommended though"};
+        plantText(new FlavorText(114, 9, signWords,"A Sign"));
 
         Art arty = new Art();
         String[][] base = Art.strToArray(arty.snowyPeak);
-        String[] solids = {"0","o","O","W","#","\\","-"};
+        String[] solids = {"0","o","O","W","#","\\","-","S"};
         addToBaseHitMesh(base, solids);
         Layer lay1 = new Layer(base, "Test");
         Art coloring = new Art();
         lay1.influenceAll(coloring.mtnPeakPallette1);
         lay1.findAndReplace(new SpecialText("W",coloring.mtnPeakPallette1), new SpecialText("W", coloring.mtnPeakPallette2));
+        lay1.findAndReplace(new SpecialText("-",coloring.mtnPeakPallette1), new SpecialText("-"));
         highlightFlavorText(lay1);
         org.addLayer(lay1);
 

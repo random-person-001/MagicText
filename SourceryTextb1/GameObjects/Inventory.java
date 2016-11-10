@@ -657,7 +657,6 @@ class Inventory implements java.io.Serializable {
             }
             if (toDraw.getDescMode().equals("healitem")){
                 drawWith = healingColor;
-                System.out.println("Healing item detected");
             }
             String itemName = toDraw.getName();
             putText(itemName, startX, startY + ii, drawWith);
