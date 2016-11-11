@@ -21,6 +21,7 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -130,8 +131,8 @@ public class Player extends Mortal implements java.io.Serializable {
      */
     void testSendOverNetwork() {
         try {
-            networkerServer = new NetworkerServer();
-            networkerServer.doTimerSend(this);
+            networkerServer = new NetworkerServer(this);
+            networkerServer.doTimerSend();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -733,32 +734,12 @@ public class Player extends Mortal implements java.io.Serializable {
     }
 
     /**
-     * Receive an arrow (or space) keypress
-     * @param keyName a String: up, down, left, right, or space
-     * @param noActuallyItWasReleased for simplification.  Self explanitory.
+     * This is the place where incoming key events go from faraway windows.  This method is called by the NetworkerServer.
+     * This method runs even when the player is paused or frozen, as the network stops for no-one.
+     * @param event a KeyEvent that occurred on the window pertaining to this player.
      */
-    void moveKeyPressed(String keyName, boolean noActuallyItWasReleased){
-        if (frozen || dead){
-            return;
-        }
-        switch (keyName){
-            case "up":
-                upPressed = noActuallyItWasReleased;
-                break;
-            case "down":
-                downPressed = noActuallyItWasReleased;
-                break;
-            case "left":
-                leftPressed = noActuallyItWasReleased;
-                break;
-            case "right":
-                rightPressed = noActuallyItWasReleased;
-                break;
-            case "space":
-                spacePressed = noActuallyItWasReleased;
-                break;
-            default:
-                System.out.println("Someone called Player.moveKeyPressed() wrong! '" + keyName + "' not recognised");
-        }
+    public void fireKeyEvent(KeyEvent event) {
+        // TODO: consolidate the player key listener and all of its annoying methods and stuff to here.
+        // TODO: also, call methods in the Room, HUD, Inventory, etc (probably from here)
     }
 }

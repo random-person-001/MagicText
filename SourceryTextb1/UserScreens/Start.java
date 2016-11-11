@@ -386,11 +386,12 @@ public class Start {
         }
 
         void doNetworkClient(String serverName) {
+            NetworkClient networker = new NetworkClient();
             try {
-                NetworkClient networker = new NetworkClient();
-                networker.beTimerClient(serverName);
+                networker.main(serverName);
             } catch (IOException e) {
                 e.printStackTrace();
+                networker.attemptCancel();
             }
         }
     }

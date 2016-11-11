@@ -2,6 +2,7 @@ package SourceryTextb1;
 
 import SourceryTextb1.GameObjects.Player;
 
+import java.awt.event.KeyEvent;
 import java.net.*;
 import java.io.*;
 import java.util.Timer;
@@ -14,35 +15,41 @@ public class NetworkerServer {
     private int PORT = 8792;
     private ServerSocket serverSocket;
     private Updater updaterTask = new Updater();
-    Socket server = new Socket();
-    ObjectOutputStream out;
-    DataInputStream in;
+    private Socket server = new Socket();
+    private ObjectOutputStream out;
+    private ObjectInputStream in;
+    private Player player;
 
-    public NetworkerServer() throws IOException {
+    /**
+     * @param playery the Player who the display should be centered on
+     * @throws IOException
+     */
+    public NetworkerServer(Player playery) throws IOException {
+        player = playery;
         serverSocket = new ServerSocket(PORT);
         serverSocket.setSoTimeout(10000);
     }
 
     /**
      * Find a client and start a task to periodically send them display data
-     * @param playery the Player who the display should be centered on
      * @throws IOException when it's feeling down
      */
-    public void doTimerSend(Player playery) throws IOException {
+    public void doTimerSend() throws IOException {
         connect();
-        updaterTask.playery = playery;
         new Timer().scheduleAtFixedRate(updaterTask, 4, 200);
     }
 
+    /**
+     * Connect to a client who asks nicely
+     * @throws IOException
+     */
     private void connect() throws IOException {
         System.out.println("Waiting for client on port " +
                 serverSocket.getLocalPort() + "...");
         server = serverSocket.accept();
 
         System.out.println("Just connected to " + server.getRemoteSocketAddress());
-        in = new DataInputStream(server.getInputStream());
-
-        System.out.println(in.readUTF());
+        in = new ObjectInputStream(server.getInputStream());
         out = new ObjectOutputStream(server.getOutputStream());
     }
 
@@ -65,6 +72,18 @@ public class NetworkerServer {
         out.writeObject(fullImage);
     }
 
+    /**
+     * Recieve keys that were pressed on a window far away and sent over the network, and tell the Player about them.
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    private void readKeys() throws IOException, ClassNotFoundException {
+        while (in.available() > 0){ // Note: I think this works.  --Riley
+            KeyEvent e = (KeyEvent) in.readObject();
+            player.fireKeyEvent(e);
+        }
+    }
+
     private class Updater extends TimerTask {
         Player playery;
         @Override
@@ -72,7 +91,8 @@ public class NetworkerServer {
             Layer fullImage = playery.orgo.topDownBuild(playery.getX()-22, playery.getY()-11, playery.getUsername());
             try {
                 sendImage(fullImage);
-            } catch (IOException e) {
+                readKeys();
+            } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
         }
