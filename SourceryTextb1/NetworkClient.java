@@ -104,6 +104,8 @@ public class NetworkClient {
         public void keyPressed(KeyEvent event) {
             try {
                 sendKey(event);
+            } catch (SocketException e) {
+                System.out.println("The other side probably disconnected (SocketException).");
             } catch (IOException e) {
                 e.printStackTrace();
             }
