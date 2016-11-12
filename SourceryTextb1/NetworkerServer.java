@@ -88,7 +88,6 @@ public class NetworkerServer {
     }
 
     private class Updater extends TimerTask {
-        //Player playery;
         @Override
         public void run() {
             Layer fullImage = player.orgo.topDownBuild(player.getX()-22, player.getY()-11, player.getUsername(), player.foregroundColor);
@@ -108,9 +107,9 @@ public class NetworkerServer {
         public void run(){
             try {
                 readKeys();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (ClassNotFoundException e) {
+            } catch (SocketException e) {
+                System.out.println("The other side probably disconnected (SocketException).");
+            } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
         }
