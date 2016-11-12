@@ -25,6 +25,11 @@ public class ImageOrg implements java.io.Serializable {
 
     public Color roomBackground = Color.BLACK;
 
+    /**
+     * Only for Player 1
+     */
+    public Color imageForeground = null;
+
     //FrameTimer frameTimerInstance = new FrameTimer();
     private Timer drawTimer = new Timer();
 
@@ -327,7 +332,9 @@ public class ImageOrg implements java.io.Serializable {
 
     private void newSendImage() {
         try {
-            window.build(topDownBuild(camX, camY, owningPlayerUsername));
+            window.build(topDownBuild(camX, camY, owningPlayerUsername, imageForeground));
+            if (imageForeground != null)
+                System.out.println(imageForeground.toString());
         } catch (ConcurrentModificationException e) {
             e.printStackTrace();
             System.out.println("[ImageOrg] Concurrent Modification error while building image!");
@@ -341,7 +348,7 @@ public class ImageOrg implements java.io.Serializable {
         return 46;
     }
 
-    public Layer topDownBuild(int camX, int camY, String owningPlayerUsername) {
+    public Layer topDownBuild(int camX, int camY, String owningPlayerUsername, Color foregroundColor) {
         //Update layer order to minimize nonexistant layers
         boolean doOutput = toAdd.size() > 0 || toRemove.size() > 0;
         String changeList = String.format("- Org -\n[%1$d] Layers Added:   ", layerChangeInstance);
@@ -383,6 +390,9 @@ public class ImageOrg implements java.io.Serializable {
                     }
                 }
             }
+        }
+        if (foregroundColor != null && foregroundColor != Color.WHITE){
+            fullImage.influenceAll(foregroundColor);
         }
         return fullImage;
     }

@@ -41,6 +41,8 @@ public class Player extends Mortal implements java.io.Serializable {
     public String roomName = ""; //Extremely important when we implement saving.
     private ImageOrg realOrg; // For access to the real window for keybindings
 
+    public Color foregroundColor = Color.WHITE;
+
     private boolean shouldNewInv = false;
     public boolean frozen = false; //This gets changed by a room upon beginning the level
 
@@ -293,8 +295,7 @@ public class Player extends Mortal implements java.io.Serializable {
                 //System.out.printf("Screen yellow factor: %1$d, (%2$d --> %3$d)\n", screenYellowness, opposite, yellowNumber);
 
                 // convert old Java color thing to Hex color
-                Color c = new Color(255, opposite, yellowNumber);
-                getRealOrg().getWindow().txtArea.setOverallForeGround(c);
+                foregroundColor = new Color(255, opposite, yellowNumber);
                 //orgo.getWindow().txtArea.setForeground(new Color(255, opposite, yellowNumber)); // old way
             }
 
@@ -498,8 +499,10 @@ public class Player extends Mortal implements java.io.Serializable {
         }
         orgo.editLayer(playerIcon, layerName, 1, 1);
         orgo.getLayer(layerName).setPos(y-1, x-1);
-        if (hasLocalWindow)
-            orgo.setCam(getX()-22, getY()-11);
+        if (hasLocalWindow) {
+            orgo.setCam(getX() - 22, getY() - 11);
+            orgo.imageForeground = foregroundColor;
+        }
     }
 
     private void move(int direction) {

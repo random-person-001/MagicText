@@ -19,7 +19,7 @@ public class NetworkerServer {
     private Socket server = new Socket();
     private ObjectOutputStream out;
     private ObjectInputStream in;
-    private Player player;
+    private Player player; //Client player
 
     /**
      * @param playery the Player who the display should be centered on
@@ -72,7 +72,6 @@ public class NetworkerServer {
      */
     private void sendImage(Layer fullImage) throws IOException {
         out.writeObject(fullImage);
-        System.out.println("sent image");
     }
 
     /**
@@ -92,7 +91,7 @@ public class NetworkerServer {
         //Player playery;
         @Override
         public void run() {
-            Layer fullImage = player.orgo.topDownBuild(player.getX()-22, player.getY()-11, player.getUsername());
+            Layer fullImage = player.orgo.topDownBuild(player.getX()-22, player.getY()-11, player.getUsername(), player.foregroundColor);
             try {
                 out.flush();
                 sendImage(fullImage);
