@@ -15,7 +15,7 @@ import java.util.TimerTask;
 public class NetworkClient {
     private int port = 8793;
     private Window w = null;
-    private Socket client = null;
+    private Socket server = null;
     private ObjectInputStream in = null;
     private ObjectOutputStream out = null;
     private MultiplayerKeyListener kl = new MultiplayerKeyListener();
@@ -31,20 +31,20 @@ public class NetworkClient {
     private void connect(String serverName) throws IOException {
         System.out.println("Connecting to " + serverName + " on port " + port);
         try {
-            client = new Socket(serverName, port);
+            server = new Socket(serverName, port);
         }
         catch (ConnectException e){
             System.out.println("Could not connect Sourcerery Text server "+serverName+" port "+port+"; therefore " +
                     "nullpointers will be thrown.  Are you sure the server is up and running?" );
-            client = null;
+            server = null;
             return;
         }
 
-        System.out.println("Just connected to " + client.getRemoteSocketAddress());
-        OutputStream outToServer = client.getOutputStream();
+        System.out.println("Just connected to " + server.getRemoteSocketAddress());
+        OutputStream outToServer = server.getOutputStream();
         out = new ObjectOutputStream(outToServer);
 
-        InputStream inFromServer = client.getInputStream();
+        InputStream inFromServer = server.getInputStream();
         in = new ObjectInputStream(inFromServer);
         System.out.println("Network connections look all good!");
     }
@@ -54,7 +54,7 @@ public class NetworkClient {
      */
     public void attemptCancel() {
         try {
-            client.close();
+            server.close();
         } catch (IOException e) {
             System.out.println("Cancelling the NetworkClient failed:");
             e.printStackTrace();
@@ -73,7 +73,7 @@ public class NetworkClient {
             System.out.println("Input stream is null; aborting reading ColoredTextMatrix attempt");
             return;
         }
-        w.build((Layer) in.readObject());
+        w.build((Layer)in.readObject());
         System.out.println("Received image!");
     }
 
@@ -116,6 +116,7 @@ public class NetworkClient {
         public void run() {
             try {
                 receiveImage();
+                out.flush();
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
