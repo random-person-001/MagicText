@@ -767,6 +767,8 @@ public class Player extends Mortal implements java.io.Serializable {
             } else {
                 keyPressed(event.getKeyChar());
             }
+            hud.fireKeyEvent(event);
+            inv.fireKeyEvent(event);
         }
         else if (event.toString().contains("KEY_RELEASED")) {
             if (event.getKeyCode() == KeyEvent.VK_UP) {
@@ -779,6 +781,5 @@ public class Player extends Mortal implements java.io.Serializable {
                 rightPressed = false;
             }
         }
-        hud.fireKeyEvent(event);
     }
 }
