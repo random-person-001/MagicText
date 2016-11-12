@@ -323,19 +323,6 @@ public class ImageOrg implements java.io.Serializable {
         }
     }
 
-    /**
-     * Assemble all the layers together, and place it on the screen.
-     */
-
-
-    public void compileImage() {
-        /*
-        This should do nothing.
-        It's just here to make the game compile.
-        That is all.
-        */
-    }
-
     private int layerChangeInstance = 1;
 
     private void newSendImage() {
@@ -353,6 +340,7 @@ public class ImageOrg implements java.io.Serializable {
     }
 
     public Layer topDownBuild(int camX, int camY, String owningPlayerUsername) {
+        //Update layer order to minimize nonexistant layers
         boolean doOutput = toAdd.size() > 0 || toRemove.size() > 0;
         String changeList = String.format("- Org -\n[%1$d] Layers Added:   ", layerChangeInstance);
         changeList += addTheLayers();
@@ -361,6 +349,7 @@ public class ImageOrg implements java.io.Serializable {
             System.out.println(changeList + "\n");
             layerChangeInstance++;
         }
+        //Actually render image
         Layer fullImage = new Layer(new String[screenH()][screenW()]);
         fullImage.clear(roomBackground);
         int camYtoBe = camX;

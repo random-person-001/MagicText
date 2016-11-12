@@ -90,6 +90,7 @@ public class NetworkerServer {
         public void run() {
             Layer fullImage = player.orgo.topDownBuild(player.getX()-22, player.getY()-11, player.getUsername());
             try {
+                out.flush();
                 sendImage(fullImage);
                 readKeys();
             } catch (IOException | ClassNotFoundException e) {
