@@ -319,7 +319,7 @@ public class Art implements java.io.Serializable{
                     "    |                                    |    \n" +
                     "    ||||||||||||||||||||||||||||||||||||||    \n" +
                     "\\\\\\    Game  made  by  Jared  and  Riley   ///\n";
-    
+
     public String inventoryBkgd =
                     "///.........  I N V E N T O R Y  ..........\\\\\\\n" +
                     ".      ..      ..      ..      ..      ..    .\n" +
@@ -390,7 +390,7 @@ public class Art implements java.io.Serializable{
             "|  -+- +-- | | -+-                           |\n" +
             "|   |  |   \\ /  |         Introduction       |\n" +
             "|   |  +--  |   |         New Game           |\n" +
-            "|   |  |   / \\  |         New Multiplayer β  |\n" +
+            "|   |  |   / \\  |         Multiplayer        |\n" +
             "|   |  +-- | |  |         Load Game          |\n" +
             "|                         Window Config      |\n" +
             "|                         Quit               |\n" +
@@ -408,6 +408,36 @@ public class Art implements java.io.Serializable{
             "|                                            |\n" +
             "|                                            |\n" +
             "|                                            |\n";
+
+    public String multiplayerMenu =
+            "@                                            @\n" +
+            "|                                            |\n" +
+            "|   M U L T I P L A Y E R     ( B E T A )    |\n" +
+            "|                                            |\n" +
+            "|                                            |\n" +
+            "|                   β     New Game as server |\n" +
+            "|                   β     Connect to server  |\n" +
+            "|                         Abort              |\n" +
+            "|                                            |\n" +
+            "|                                            |\n" +
+            "|                                            |\n" +
+            "|                                            |\n" +
+            "|                                            |\n" +
+            "|                                            |\n" +
+            "|                                            |\n" +
+            "|                                            |\n" +
+            "|                                            |\n" +
+            "|                 *   *   *                  |\n" +
+            "|   Note: Multiplayer does not work over the |\n" +
+            "|     Internet.                              |\n" +
+            "|                                            |\n" +
+            "|   Multiplayer can only be used over LAN    |\n" +
+            "|                                            |\n" +
+            "|   Be sure you enter in the ip address of   |\n" +
+            "|     the computer you are connecting to.    |\n" +
+            "|                                            |\n" +
+            "|                                            |\n" +
+            "@                                            @\n";
 
     public String woodStaff =
                     " _ \n"+
@@ -973,6 +1003,12 @@ public class Art implements java.io.Serializable{
                     "|                 |\n" +
                     "+-----------------+\n" +
                     "    A: Confirm     \n";
+
+    public String ipSetMenu =
+            "  Type IP: _____________\n" +
+            "  <Clear IP>            \n" +
+            "  Connect (Play!)       \n" +
+            "  Back                  \n";
 
 
     public String itemsMenu =

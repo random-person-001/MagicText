@@ -5,6 +5,7 @@ import SourceryTextb1.GameObjects.PlayerKeyPressListener;
 import SourceryTextb1.Rooms.Room;
 
 import java.awt.*;
+import java.io.IOException;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.ThreadFactory;
@@ -25,7 +26,7 @@ public class GameInstance {
         playerList = new ArrayList<>();
         playerList.add(protaganist);
         PlayerKeyPressListener kl = new PlayerKeyPressListener(protaganist);
-        protaganist.orgo.getWindow().setOwningPlayerUsername(protaganist.getUsername());
+        protaganist.orgo.setOwningPlayerUsername(protaganist.getUsername());
         protaganist.orgo.getWindow().txtArea.addKeyListener(kl);
     }
 
@@ -61,12 +62,11 @@ public class GameInstance {
         return null;
     }
 
-    PlayerKeyPressListener requestNewPlayer(){
+    Player requestNewPlayer(){
         Player noob = new Player(playerList.get(0).orgo, playerList.size());
         noob.frozen = false;
         noob.roomName = "TutorialBasement";
-        PlayerKeyPressListener kl = new PlayerKeyPressListener(noob);
         playerList.add(noob);
-        return kl;
+        return noob;
     }
 }

@@ -29,7 +29,11 @@ class MainMenu {
     private final int DOWN = 2;
     private final int ENTER = 3;
 
+    private char keyChar = ' ';
+    private String ipString = "192.168.0.";
+
     private boolean finished = false;
+    private boolean inMultiplayerMenu = false;
 
     private int clock = 0;
     private int cursorY = 9;
@@ -48,13 +52,13 @@ class MainMenu {
         Art artida = new Art();
         Layer menuLayer = new Layer(Art.strToArray(artida.mainMenu,true), "MAIN_MENU");
         org.addLayer(menuLayer);
+
+        window.txtArea.setOverallForeGround(Color.WHITE);
     }
 
-    protected void loop() {
+    protected void mainLoop() {
         if (!finished) {
             org.editLayer(" ", "MAIN_MENU", cursorY, 24);
-
-            window.txtArea.setOverallForeGround(Color.WHITE);
 
             switch (keyCode) {
                 case UP:
@@ -75,12 +79,15 @@ class MainMenu {
                     if (cursorY == 9) {
                         System.out.println("\n\nNEW GAME!!!\n\n");
                         starter.newGame(1);
-                        //finished = true;
                     }
                     if (cursorY == 10) {
-                        System.out.println("\n\nNEW MULTIPLAYER GAME!!!\n\n");
-                        starter.newGame(2);
-                        //finished = true;
+                        org.editLayer(" ", "MAIN_MENU", cursorY, 24);
+                        org.removeLayer("MAIN_MENU");
+                        Layer multiplayerLayer = new Layer(Art.strToArray(new Art().multiplayerMenu,true), "MULTIPLAYER_MENU");
+                        org.addLayer(multiplayerLayer);
+                        window.txtArea.addKeyListener(keyInputter); // Cuz we removed it before
+                        inMultiplayerMenu = true;
+                        cursorY = 9;
                     }
                     if (cursorY == 11 && loadGame()) {
                         finished = true;
@@ -116,6 +123,97 @@ class MainMenu {
 
             org.editLayer("*", "MAIN_MENU", cursorY, 24);
         }
+    }
+
+    /**
+     * Multiplayer options screen
+     */
+    private boolean settingIP = false;
+    private int ipSetXPos = 11+10;
+
+    private void clearIPAddress(){
+        ipString = "";
+        for (int ii = 0 ; ii < 13; ii++){
+            org.editLayer("_", "IP_ENTER_MENU", 0, 11+ii);
+        }
+        ipSetXPos = 11;
+    }
+
+    private void multiplayerLoop(){
+        if (!finished) {
+            int cursorX = 24;
+            if (settingIP) cursorX = 10;
+            org.editLayer(" ", "MULTIPLAYER_MENU", cursorY, cursorX);
+            switch (keyCode) {
+                case UP:
+                    cursorY--;
+                    break;
+                case DOWN:
+                    cursorY++;
+                    break;
+                case ENTER:
+                    if (cursorY == 5){ //Starts new game "as a server"
+                        org.removeLayer("MULTIPLAYER_MENU");
+                        window.txtArea.removeKeyListener(keyInputter);
+                        System.out.println("New multiplayer game made!");
+                        System.out.println("In the HUD, enter 'lan' to start a server.");
+                        starter.newGame(2);
+                    }
+                    if (cursorY == 6){ //Jumps to ip address submenu
+                        Layer ipSetLayer = new Layer(Art.strToArray(new Art().ipSetMenu,true), "IP_ENTER_MENU", 10, 10);
+                        org.addLayer(ipSetLayer);
+                        settingIP = true;
+                        cursorY = 10;
+                        cursorX = 10;
+                    }
+                    if (cursorY == 7){ //Go back to main menu
+                        org.removeLayer("MULTIPLAYER_MENU");
+                        System.out.println("Returning to main menu");
+                        inMultiplayerMenu = false;
+                        org.addLayer(new Layer(Art.strToArray(new Art().mainMenu,true), "MAIN_MENU"));
+                    }
+                    if (cursorY == 11){ //Clears the ip address that you wrote
+                        clearIPAddress();
+                    }
+                    if (cursorY == 12){ //Runs client connection based on entered ip address
+                        System.out.println("Requesting connection to Sourcery Text server at \""+ipString+"\"");
+                        starter.doNetworkClient(ipString);
+                    }
+                    if (cursorY == 13){ //Go back to multiplayer top menu.
+                        clearIPAddress();
+                        org.removeLayer("IP_ENTER_MENU");
+                        settingIP = false;
+                        cursorY = 5;
+                        cursorX = 24;
+                    }
+            }
+            if (!settingIP) {
+                if (cursorY <= 4) { //Looping
+                    cursorY = 7;
+                }
+                if (cursorY >= 8) {
+                    cursorY = 5;
+                }
+            } else {
+                if (cursorY <= 9) { //Looping
+                    cursorY = 13;
+                }
+                if (cursorY >= 14) {
+                    cursorY = 10;
+                }
+                if (cursorY == 10 && (keyChar == '.' || Character.isDigit(keyChar)) && ipSetXPos < 24){
+                    ipString += keyChar;
+                    org.editLayer(String.valueOf(keyChar), "IP_ENTER_MENU", 0, ipSetXPos);
+                    ipSetXPos++;
+                    System.out.printf("IP Appended! (Now %1$s)\n", ipString);
+                }
+
+            }
+            org.editLayer("*", "MULTIPLAYER_MENU", cursorY, cursorX);
+            keyCode = 0;
+            keyChar = ' ';
+        }
+
     }
 
     private boolean loadGame(){
@@ -154,7 +252,11 @@ class MainMenu {
         @Override
         public void run() {
             clock++;
-            loop();
+            if (!inMultiplayerMenu){
+                mainLoop();
+            }else {
+                multiplayerLoop();
+            }
         }
     }
 
@@ -179,6 +281,10 @@ class MainMenu {
                 case KeyEvent.VK_ENTER:
                     owner.keyCode = ENTER;
                     break;
+            }
+            keyChar = e.getKeyChar();
+            if (Character.isDigit(keyChar)){
+                System.out.println("Digit: " + keyChar);
             }
         }
     }

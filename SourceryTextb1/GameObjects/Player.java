@@ -21,6 +21,7 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -35,12 +36,12 @@ public class Player extends Mortal implements java.io.Serializable {
     private String username = System.getProperty("user.name");
     //private PlayerKeypressListener playerKeyListener;// = new PlayerKeypressListener(this);
     private Inventory inv;
-    public ItemTracker tracker;
+    private ItemTracker tracker;
     private HUD hud;
     public String roomName = ""; //Extremely important when we implement saving.
-    private ImageOrg realOrg; // For access to the real window for keybindings
 
-    private boolean autonomous = false;
+    public Color foregroundColor = Color.WHITE;
+
     private boolean shouldNewInv = false;
     public boolean frozen = false; //This gets changed by a room upon beginning the level
 
@@ -50,30 +51,33 @@ public class Player extends Mortal implements java.io.Serializable {
     private final int LEFT = 2;
     private final int RIGHT = 3;
 
-    public boolean swimming = false;
-    public int waterEntry = 0;
-
     boolean upPressed, downPressed, leftPressed, rightPressed, spacePressed = false;
+    boolean swimming = false;
+    int waterEntry = 0;
     private int movecount = 0;
     boolean ludicrousSpeed = false;
 
     private int orientation = UP;
     private boolean orientationLocked = false;
     private String aimDispName = "aimDisp";
-    public Layer castingLayer;
 
     private Color restingBackground = Color.black;
-    boolean isGhost = false; //For debug reasons
+    boolean isGhost = false;
     private String lastPainMessage = "None";
 
-    //STATS
+    // CONSTANT STATS
     int baseMaxHP = 20;
     int maxMana = 20;
-    int mana = maxMana;
     private int manaRegenClock = 0;
     int manaWait = 0;
+    private boolean manaHalfStep;
     int defense = 0;
     //Note for the future: Damage can't be reduced below 1 damage. Swords and explosions don't heal people.
+
+    // CHANGABLE STATS
+    int mana = maxMana;
+    private float sprintVelocity = 1;
+    private float sprintAcceleration = 0.9f;
 
     int allSpellBoost = 0;
     int arcSpellBoost = 0;
@@ -84,7 +88,6 @@ public class Player extends Mortal implements java.io.Serializable {
     //NO MORE STATS
 
     public boolean dead = false;
-    private int technicolorIndex = 0;
     private int hurtColor = 0;
 
     Item spell1 = new Item("None", "", this);
@@ -94,6 +97,8 @@ public class Player extends Mortal implements java.io.Serializable {
 
     int screenRedness = 0;
     int screenYellowness = 0;
+    private boolean hasLocalWindow;
+    private NetworkerServer networkerServer;
 
     /**
      * Initialize a whole lotta variables.
@@ -101,6 +106,7 @@ public class Player extends Mortal implements java.io.Serializable {
      * @param theOrg the ImageOrg(anizer)
      */
     public Player(ImageOrg theOrg, int playerNumber) {
+        hasLocalWindow = (playerNumber == 0);
         setHealth(baseMaxHP);
         makeGoodGuy(); // Set good-guy-ness to true.
         super.maxHealth = baseMaxHP + armorHealthBoost;
@@ -121,22 +127,26 @@ public class Player extends Mortal implements java.io.Serializable {
     }
 
     /**
-     * Intended for multiplayer, for instance adding key listeners
-     * @return the ImageOrg for the actual physical window that corresponds to the player
+     * Initialize a new NetworkerServer and start its doTimerSend() method, which sends display information to clients.
      */
-    public ImageOrg getRealOrg(){
-        if (realOrg == null){
-            return orgo;
+    void testSendOverNetwork() {
+        try {
+            networkerServer = new NetworkerServer(this);
+            networkerServer.doTimerSend();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        return realOrg;
     }
 
     /**
-     * Intended for multiplayer, for instance adding key listeners
-     * Set the ImageOrg for the actual physical window that corresponds to the player
+     * Attempt to cancel the sending of the display data over network. (stops an earlier instance of calling testSendOverNetwork())
      */
-    public void setRealOrg(ImageOrg newRealOrg){
-        realOrg = newRealOrg;
+    void cancelSendOverNetwork(){
+        try {
+            networkerServer.disconnect();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -247,34 +257,12 @@ public class Player extends Mortal implements java.io.Serializable {
                 manaRegenClock = 0;
             }
 
-            if (screenRedness > 0 || screenYellowness > 0){
-                if (screenRedness > 0) screenRedness --;
-                //This means that higher levels of redness depletes faster
-                if (screenRedness > 200) screenRedness--;
-                if (screenRedness > 100) screenRedness--;
-                if (screenYellowness > 0) screenYellowness--;
-                //System.out.print("The screen is red! | ");
-                int opposite = 255 - screenRedness;
-                int yellowNumber = (int)(opposite * (1-((float)screenYellowness/100)));
-                //System.out.printf("Screen yellow factor: %1$d, (%2$d --> %3$d)\n", screenYellowness, opposite, yellowNumber);
-
-                // convert old Java color thing to Hex color
-                Color c = new Color(255, opposite, yellowNumber);
-                getRealOrg().getWindow().txtArea.setOverallForeGround(c);
-                //orgo.getWindow().txtArea.setForeground(new Color(255, opposite, yellowNumber)); // old way
-            }
-
-            resetTime();
+            resetTime(); // time is used for mana regen.
             graphicUpdate();
             aimDispUpdate();
-            updateBackground();
             doMovement();
         }
     }
-
-    private boolean manaHalfStep;
-    private float sprintVelocity = 1;
-    private final float sprintAcceleration = 0.9f;
 
     private void doMovement(){
         int movespeed = 5;
@@ -381,19 +369,6 @@ public class Player extends Mortal implements java.io.Serializable {
     }
 
     /**
-     * Show the player was damaged.  This will make the player flicker and the text on
-     * the screen to flicker between to be more red than white.  Probably only called after subtractHealth in Mortal.
-     *
-     * @param deathMessage a final string to show lest you have died
-     */
-    void showPain(String deathMessage) {
-        //orgo.editLayer(" ", layerName, 0, 0);
-        hurtColor += 3;
-        lastPainMessage = deathMessage;
-    }
-
-
-    /**
      * Writes a .sav file (of the serialized Player) to a user-defined directory
      * @return whether the saving was successful
      */
@@ -418,7 +393,6 @@ public class Player extends Mortal implements java.io.Serializable {
             return false;
         }
 
-
         try
         {
             FileOutputStream fileOut =
@@ -441,21 +415,34 @@ public class Player extends Mortal implements java.io.Serializable {
 
     @Override
     public void onDeath() {
-        orgo.getWindow().setForegroundColor("#ff0000");
-        //orgo.getWindow().txtArea.removeKeyListener(playerKeyListener);
         room.compactTextBox(lastPainMessage, "An ominous voice from above", false);
         dead = true;
         room.exitCode = "die";
     }
 
     /**
-     * Update the Player symbol
+     * Update the Player symbol and all the graphic things
      */
     private void graphicUpdate() {
-        //String color = (upPressed|downPressed|leftPressed|rightPressed) ? "66ff66" : "80ff80";
-        //color = (spacePressed) ? "33ff33" : color;
-        //color = (ludicrousSpeed) ? "00b300" : color;
-        SpecialText playerIcon = new SpecialText(" ");
+        if (screenRedness > 0 || screenYellowness > 0){
+            if (screenRedness > 0) screenRedness --;
+            //This means that higher levels of redness depletes faster
+            if (screenRedness > 200) screenRedness--;
+            if (screenRedness > 100) screenRedness--;
+            if (screenYellowness > 0) screenYellowness--;
+            int opposite = 255 - screenRedness;
+            int yellowNumber = (int)(opposite * (1-((float)screenYellowness/100)));
+            //System.out.printf("Screen yellow factor: %1$d, (%2$d --> %3$d)\n", screenYellowness, opposite, yellowNumber);
+
+            foregroundColor = new Color(255, opposite, yellowNumber);
+            //orgo.getWindow().txtArea.setForeground(new Color(255, opposite, yellowNumber)); // old way
+        }
+        if (hasLocalWindow) {
+            orgo.setCam(getX() - 22, getY() - 11);
+            orgo.imageForeground = foregroundColor;
+        }
+
+        SpecialText playerIcon;
         if (!swimming)
             playerIcon = new SpecialText("@",new Color (150, 255, 100));
         else {
@@ -468,8 +455,12 @@ public class Player extends Mortal implements java.io.Serializable {
                 playerIcon = new SpecialText("@", new Color(100, 150, 255), new Color(65, 65, 200));
         }
         orgo.editLayer(playerIcon, layerName, 1, 1);
-        orgo.getLayer(layerName).setPos(y-1, x-1);
-        getRealOrg().setCam(getX()-22, getY()-11);
+        Layer iconLayer = orgo.getLayer(layerName);
+        if (iconLayer != null) iconLayer.setPos(y-1, x-1);
+        if (hasLocalWindow) {
+            orgo.setCam(getX() - 22, getY() - 11);
+            orgo.imageForeground = foregroundColor;
+        }
     }
 
     private void move(int direction) {
@@ -558,9 +549,6 @@ public class Player extends Mortal implements java.io.Serializable {
     void keyPressed(char key) {
         if (!frozen) {
             switch (Character.toLowerCase(key)) {
-                case 'b':
-                    autonomous = !autonomous;
-                    break;
                 case '\'': // ESC right now, subject to change
                     reportPos();
                     break;
@@ -656,39 +644,6 @@ public class Player extends Mortal implements java.io.Serializable {
         }
     }
 
-    private void updateBackground() { // Max is about 15 or 16
-        if (technicolorIndex > 0) { // Update the background color, if you did the supercheat.
-            float r, g, b;
-            r = 0;
-            b = 0;
-            g = 0;
-            // RGB:  001 010 011 100 101 110 111
-            //         1   2   3   4   5   6   7
-            if ((technicolorIndex / 4) % 2 > 0.) {
-                r = .5f;
-            }
-            if ((technicolorIndex / 2) % 2 > 0) { // Uh
-                g = .5f;
-            }
-            if (technicolorIndex % 2 > 0) { // On odds
-                b = .5f;
-            }
-            technicolorIndex--;
-            orgo.getWindow().txtArea.setBackground(new Color(r, g, b));
-        } else if (hurtColor >= 1) {  // update the redness of the screen; more red = more recently hurt more
-            int top = 5;
-            if (hurtColor > top) {
-                hurtColor = top;
-            }
-            float eh = (float) (hurtColor - 1) / top;
-            Color c = new Color(1f - eh / 2, 1f - eh, 1f - eh);
-            orgo.getWindow().txtArea.setForeground(c);
-            hurtColor--;
-        } else {
-            orgo.getWindow().txtArea.setBackground(restingBackground);
-        }
-    }
-
     String getPrimarySpell() {
         return spell1.getIcon();
     }
@@ -713,32 +668,48 @@ public class Player extends Mortal implements java.io.Serializable {
     }
 
     /**
-     * Receive an arrow (or space) keypress
-     * @param keyName a String: up, down, left, right, or space
-     * @param noActuallyItWasReleased for simplification.  Self explanitory.
+     * This is the place where incoming key events go from faraway windows.  This method is called by the NetworkerServer.
+     * This method runs even when the player is paused or frozen, as the network stops for no-one.
+     * @param event a KeyEvent that occurred on the window pertaining to this player.
      */
-    void moveKeyPressed(String keyName, boolean noActuallyItWasReleased){
-        if (frozen || dead){
-            return;
+    public void fireKeyEvent(KeyEvent event) {
+        if (event.toString().contains("KEY_PRESSED")){
+            if (event.getKeyCode() == KeyEvent.VK_UP) {
+                upPressed =  true;
+            }
+            else if (event.getKeyCode() == KeyEvent.VK_DOWN) {
+                downPressed =  true;
+            }
+            else if (event.getKeyCode() == KeyEvent.VK_LEFT) {
+                leftPressed =  true;
+            }
+            else if (event.getKeyCode() == KeyEvent.VK_RIGHT) {
+                rightPressed =  true;
+            }
+            else if (event.getKeyCode() == KeyEvent.VK_SPACE) {
+                spacePressed = true;
+            }
+            else if (event.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                keyPressed('\'');
+            } else {
+                keyPressed(event.getKeyChar());
+            }
+            inv.fireKeyEvent(event);
+            room.fireKeyEvent(event, getUsername());
+            hud.fireKeyEvent(event);
         }
-        switch (keyName){
-            case "up":
-                upPressed = noActuallyItWasReleased;
-                break;
-            case "down":
-                downPressed = noActuallyItWasReleased;
-                break;
-            case "left":
-                leftPressed = noActuallyItWasReleased;
-                break;
-            case "right":
-                rightPressed = noActuallyItWasReleased;
-                break;
-            case "space":
-                spacePressed = noActuallyItWasReleased;
-                break;
-            default:
-                System.out.println("Someone called Player.moveKeyPressed() wrong! '" + keyName + "' not recognised");
+        else if (event.toString().contains("KEY_RELEASED")) {
+            if (event.getKeyCode() == KeyEvent.VK_UP) {
+                upPressed = false;
+            } else if (event.getKeyCode() == KeyEvent.VK_DOWN) {
+                downPressed = false;
+            } else if (event.getKeyCode() == KeyEvent.VK_LEFT) {
+                leftPressed = false;
+            } else if (event.getKeyCode() == KeyEvent.VK_RIGHT) {
+                rightPressed = false;
+            } else if (event.getKeyCode() == KeyEvent.VK_SPACE) {
+                spacePressed = false;
+            }
         }
     }
 }

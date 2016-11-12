@@ -41,6 +41,7 @@ public class Room implements java.io.Serializable{
     public String exitCode = "";
 
     protected boolean isPaused = false;
+    private boolean resume = true;
 
 
     /**
@@ -51,6 +52,7 @@ public class Room implements java.io.Serializable{
         playo = player;
         // Make a new imageOrg for this level, looking at the same Window as the last one did
         org = new ImageOrg(player.orgo.getWindow());
+        org.setOwningPlayerUsername(player.orgo.getOwningPlayerUsername());
         // So it doesn't draw over other things.  It'll be restarted as needed later.
         org.terminateClock();
 
@@ -584,31 +586,38 @@ public class Room implements java.io.Serializable{
         setObjsPause(true);
         org.addLayer(txtBox);
 
-        Window window = org.getWindow();
         // only bind to relavent user.
         for (Player p : players){
             if (p.getUsername().equals(usernameToShowTo)){
-                window = p.getRealOrg().getWindow();
-                System.out.println("Found legit player to key bind to! " + usernameToShowTo);
+                System.out.println("Binding to " + usernameToShowTo);
             }
             // Also make them not go over the textbox
-            org.getLayer(p.getLayerName()).setImportance(false);
-        }
-        if (window == null){
-            window = players.get(0).orgo.getWindow();
+            Layer playerLayer = org.getLayer(p.getLayerName());
+            if (playerLayer != null)
+                org.getLayer(p.getLayerName()).setImportance(false);
+
+            Layer iconLayer = org.getLayer(p.getLayerName());
+            if (iconLayer != null) iconLayer.setImportance(false);
         }
 
-        Dismissal keyListener = new Dismissal();
-        keyListener.resume = false;
-        window.txtArea.addKeyListener(keyListener); // Add key listeners.
+        resume = false;
 
-         Timer listenTick = new Timer();
-        TextBoxListener listen = new TextBoxListener(keyListener, window);
+        Timer listenTick = new Timer();
+        TextBoxListener listen = new TextBoxListener();
         listenTick.scheduleAtFixedRate(listen, 100, 100);
     }
 
     public void splashMessage(String message, String speaker){
         queueMessage(new FlavorText(message, speaker));
+    }
+
+    public void fireKeyEvent(KeyEvent event, String playerUsername) {
+        if (event.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            resume = true;
+        }
+        if (event.getKeyCode() == KeyEvent.VK_ENTER) {
+            resume = true;
+        }
     }
 
     public class FlavorText implements java.io.Serializable {
@@ -689,22 +698,15 @@ public class Room implements java.io.Serializable{
     }
 
     private class TextBoxListener extends TimerTask {
-        Dismissal listener;
-        Window window;
-
-        TextBoxListener(Dismissal dismiss, Window windouw){
-            listener = dismiss;
-            window = windouw;
-        }
-
         public void run(){
-            if (listener.resume){
+            if (resume){
+                cancel();
                 setObjsPause(false);
                 org.removeLayer("Dialog");
-                window.txtArea.removeKeyListener(listener);
-                cancel();
                 for (Player p : players){ // Remake the player layers important.
-                    players.get(0).orgo.getLayer(p.getLayerName()).setImportance(true);
+                    Layer iconLayer = org.getLayer(p.getLayerName());
+                    if (iconLayer != null)
+                        iconLayer.setImportance(true);
                 }
                 if (messageQueue.size() > 0){
                     messageQueue.remove(messageQueue.get(0));
@@ -774,24 +776,6 @@ class OptionsSelector extends KeyAdapter implements java.io.Serializable {
                 org.getWindow().txtArea.setBackground(BLACK);
             }
         }
-        if (event.getKeyCode() == KeyEvent.VK_ESCAPE) {
-            resume = true;
-        }
-        if (event.getKeyCode() == KeyEvent.VK_ENTER) {
-            resume = true;
-        }
-    }
-}
-
-/**
- * A little key listener that will tell you when you press ESCAPE or ENTER, by setting its <code>pause</code> boolean
- * to true
- */
-class Dismissal extends KeyAdapter implements java.io.Serializable {
-    boolean resume = false;
-
-    @Override
-    public void keyPressed(KeyEvent event) {
         if (event.getKeyCode() == KeyEvent.VK_ESCAPE) {
             resume = true;
         }

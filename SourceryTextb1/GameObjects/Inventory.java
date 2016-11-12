@@ -24,8 +24,6 @@ class Inventory implements java.io.Serializable {
     private int cursorY = 2;
     private int cursorX = 28;
 
-    Navigator inputReader = new Navigator(this);
-
     private int selectYChange = 0;
     private int selectXChange = 0;
     private boolean updateCursor = false;
@@ -107,8 +105,6 @@ class Inventory implements java.io.Serializable {
 
         player.armor = equip.get(0);
         player.defineStats();
-
-        window.txtArea.addKeyListener(inputReader); // Add key listeners.
     }
 
     /**
@@ -224,7 +220,7 @@ class Inventory implements java.io.Serializable {
         org = player.orgo; // Update the org (cuz it changes based on room now)
         player.frozen = true;
         org.getLayers().stream().filter(lay -> lay.name.contains("playerLayer")).forEach(lay -> lay.setImportance(false));
-        player.room.setObjsPause(true);
+        //player.room.setObjsPause(true);
 
         updateCursor = true;
 
@@ -238,10 +234,8 @@ class Inventory implements java.io.Serializable {
         org.addLayer(selectorLayer);
         org.addLayer(infoLayer);
 
-        Window window = player.getRealOrg().getWindow();
-
         Timer timer = new Timer();
-        timer.scheduleAtFixedRate(new MenuTimer(window, inputReader), 10 , 99);
+        timer.scheduleAtFixedRate(new MenuTimer(), 10 , 99);
     }
 
     /**
@@ -713,20 +707,45 @@ class Inventory implements java.io.Serializable {
         }
     }
 
-    private class MenuTimer extends TimerTask{
-        Window window;
-        Navigator keyListener;
-
-        MenuTimer(Window windouw, Navigator navi){
-            window = windouw;
-            keyListener = navi;
+    void fireKeyEvent(KeyEvent event) {
+        int key = event.getKeyCode();
+        if (key == KeyEvent.VK_UP) {
+            keyPressed('©');
         }
+        if (key == KeyEvent.VK_DOWN) {
+            keyPressed('®');
+        }
+        if (key == KeyEvent.VK_LEFT) {
+            keyPressed('µ');
+        }
+        if (key == KeyEvent.VK_RIGHT) {
+            keyPressed('æ');
+        }
+        if (Character.isDigit(event.getKeyChar())) {
+            keyPressed(event.getKeyChar());
+        }
+        if (key == 'A' || key == KeyEvent.VK_ENTER) {
+            pressedA = true;
+        }
+        if (key == 'S') {
+            pressedS = true;
+        }
+        if (key == 'D') {
+            pressedD = true;
+        }
+        if (key == '\\') {
+            System.out.println(getY());
+        }
+        if (key == KeyEvent.VK_ESCAPE || event.getKeyChar() == 'w') {
+            exitAllMenus();
+        }
+    }
 
+    private class MenuTimer extends TimerTask{
         public void run(){
             if (menuID == EXIT){
                 org.removeLayer(selectorLayer);
                 org.removeLayer(topMenuLayer);
-                //window.txtArea.removeKeyListener(keyListener);
                 player.frozen = false;
                 player.resetMovement();
                 System.out.println("Exiting menu through top menu....");
@@ -739,48 +758,3 @@ class Inventory implements java.io.Serializable {
         }
     }
 }
-
-
-class Navigator extends KeyAdapter {
-    private Inventory inv;
-
-    Navigator(Inventory inventory) {
-        inv = inventory;
-    }
-
-    @Override
-    public void keyPressed(KeyEvent event) {
-        int key = event.getKeyCode();
-        if (key == KeyEvent.VK_UP) {
-            inv.keyPressed('©');
-        }
-        if (key == KeyEvent.VK_DOWN) {
-            inv.keyPressed('®');
-        }
-        if (key == KeyEvent.VK_LEFT) {
-            inv.keyPressed('µ');
-        }
-        if (key == KeyEvent.VK_RIGHT) {
-            inv.keyPressed('æ');
-        }
-        if (Character.isDigit(event.getKeyChar())) {
-            inv.keyPressed(event.getKeyChar());
-        }
-        if (key == 'A' || key == KeyEvent.VK_ENTER) {
-            inv.pressedA = true;
-        }
-        if (key == 'S') {
-            inv.pressedS = true;
-        }
-        if (key == 'D') {
-            inv.pressedD = true;
-        }
-        if (key == '\\') {
-            System.out.println(inv.getY());
-        }
-        if (key == KeyEvent.VK_ESCAPE || event.getKeyChar() == 'w') {
-            inv.exitAllMenus();
-        }
-    }
-}
-

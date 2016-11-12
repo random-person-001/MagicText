@@ -39,7 +39,6 @@ class HUD implements java.io.Serializable {
     private String responseMessage = null;
     private int responseDuration = 2;
     private boolean authing = false;
-    private KeyListener playerKeyListener;
     private Player player;
     private ImageOrg orgo;
     private int xBulidIndex = 0;
@@ -50,22 +49,6 @@ class HUD implements java.io.Serializable {
         player = playerSet;
         orgo = player.orgo;
         layerName = "HUD_of_" + player.getUsername();
-
-        HUD hud = this;
-        new Timer().schedule(new TimerTask() {
-            @Override
-            public void run()  {
-                ConsoleKeyListener listener = new ConsoleKeyListener(hud);
-                player.getRealOrg().getWindow().txtArea.addKeyListener(listener);
-
-                for (KeyListener kl : player.getRealOrg().getWindow().txtArea.getKeyListeners()) {
-                    if (kl.toString().contains("PlayerKeyPressListener")) {
-                        playerKeyListener = kl;
-                    }
-                }
-            }
-        }, 2000);
-
         setupTimer(100);
     }
 
@@ -123,7 +106,7 @@ class HUD implements java.io.Serializable {
                 }
             } else if (consoleEntryProg < 3) {
                 if (inCmd) {
-                    orgo.getLayer(layerName).clear();
+                    orgo.clearLayer(layerName);
                     inCmd = false;
                 }
 
@@ -219,7 +202,7 @@ class HUD implements java.io.Serializable {
                 putChar("}");
             } else {
                 if (!inCmd) {
-                    orgo.getLayer(layerName).clear();
+                    orgo.clearLayer(layerName);
                     inCmd = true;
                 }
 
@@ -246,7 +229,7 @@ class HUD implements java.io.Serializable {
             if (key == 'c') {
                 consoleEntryProg++;
                 if (consoleEntryProg >= 3) {
-                    player.getRealOrg().getWindow().txtArea.removeKeyListener(playerKeyListener);
+                    player.frozen = true;
                 }
             } else {
                 consoleEntryProg = 0;
@@ -303,11 +286,13 @@ class HUD implements java.io.Serializable {
      * >ludicrous | fast : toggle player's ludicrousSpeed, which makes you move very very fast.  Ghosting recommended.
      * >ls | pwd : currently not developed.  Later will tell the name of current room.
      * >make me a sandwich : evoke snarky response
+     * >network | la n : be a server on port 8792 and send anyone who connects a serialized ColorTextMatrix
      * >pointer | compiling | wifi | random : all relevant xkcd comics.
      * >reset timer : reset the GameObject update timer on Player (calls setupTimer(20);)
      * >ser test : Test serializing the player to a .sav file
      * >set red (amount) : reds up the screen like the player took damage
      * >setResponseTime (time) : set a new duration for the response message on the console to be shown (seconds)
+     * >stop lan | cancel network : stop being a server and sending client ColoredTextMatrices
      * >sudo : enter sudo mode
      * >sudo make me a sandwich : evoke submissive response from computer.  Also enter sudo mode
      * >testkit : Gives player the test kit.
@@ -355,11 +340,11 @@ class HUD implements java.io.Serializable {
             player.getInventory().testKit();
             showResponse("Items given!");
         }else if (command.contains("fabulous off")) {
-            player.getRealOrg().getWindow().txtArea.fabulousMode = false;
-            showResponse("FABULOUS POWERS DISABLED?");
+            player.orgo.getWindow().txtArea.fabulousMode = false;
+            showResponse("FABULOUS POWERS DISABLED? (for 1st player)");
         }else if (command.contains("fabulous on")) {
-            player.getRealOrg().getWindow().txtArea.fabulousMode = true;
-            showResponse("FABULOUS POWERS ENABLED!");
+            player.orgo.getWindow().txtArea.fabulousMode = true;
+            showResponse("FABULOUS POWERS ENABLED! (for 1st player)");
         }else if (command.contains("unpause")) {
             player.setPause(false);
             showResponse("Player upaused!");
@@ -371,7 +356,13 @@ class HUD implements java.io.Serializable {
             showResponse("Player is now a ghost.");
         }else if (command.contains("reset") && command.contains("time")) {
             player.restartTimer();
-            showResponse("Called Player.setupTimer(20)");
+            showResponse("Called Player.restartTimer()");
+        }else if (command.contains("network") || command.contains("lan")) {
+            player.testSendOverNetwork();
+            showResponse("Called Player.testSendOverNetwork()");
+        }else if ((command.contains("cancel") || command.contains("stop")) && (command.contains("network") || command.contains("lan"))) {
+            player.cancelSendOverNetwork();
+            showResponse("Called Player.cancelSendOverNetwork()");
         } else if (command.contains("addhp ") && command.length() > 6) {
             int amountToHeal = Integer.valueOf(command.substring(6));
             player.restoreHealth(amountToHeal, 50);
@@ -396,7 +387,7 @@ class HUD implements java.io.Serializable {
                 showResponse("Dude, give something reasonable");
             }
         } else if (command.contains("addhp") || command.contains("addtater") || command.contains("setResponseTime")) { //no spaces
-            showResponse("No quantity specified.");
+            showResponse("No quantity specified!");
         } else if (command.contains("echo ")) {
             showResponse(command.substring(5));
         } else if (command.startsWith("die") || command.contains("suicide")) {
@@ -572,17 +563,7 @@ class HUD implements java.io.Serializable {
         command = "";
         nextCommand = "";
         consoleEntryProg = 0;
-        // Only add back the player key listener if it isn't already there, avoiding adding it multiple times.
-        KeyListener[] allKeyListeners = player.getRealOrg().getWindow().txtArea.getKeyListeners();
-        boolean alreadyAdded = false;
-        for (KeyListener kl : allKeyListeners) {
-            if (kl.equals(playerKeyListener)){
-                alreadyAdded = true;
-            }
-        }
-        if (!alreadyAdded){
-            player.getRealOrg().getWindow().txtArea.addKeyListener(playerKeyListener);
-        }
+        player.frozen = false;
     }
 
     /**
@@ -693,6 +674,29 @@ class HUD implements java.io.Serializable {
         timer.scheduleAtFixedRate(updateTimerInstance, theFrequency, theFrequency);
     }
 
+    /**
+     * Rather than putting its own network-incompatible key listener on a window, the player (who gets things from network)
+     * calls this.
+     * @param event KeyEvent that the relevant player performed
+     */
+    void fireKeyEvent(KeyEvent event) {
+        int key = event.getKeyCode();
+        char ch = event.getKeyChar();
+        if (consoleEntryProg >= 3 && key == KeyEvent.VK_ENTER) {
+            orgo.clearLayer(layerName);
+            System.out.println("Proc cmd..");
+            processCommand();
+        } else if (key == KeyEvent.VK_ESCAPE){
+            exitCommandLine();
+        } else if (consoleEntryProg >= 3 && key == KeyEvent.VK_BACK_SPACE) {
+            orgo.editLayer(" ", layerName, 0, command.length() + 3);
+            orgo.editLayer(" ", layerName, 0, command.length() + 2);  // eliminate double cursor
+            command = (command.length() > 0) ? command.substring(0, command.length() - 1) : "";
+        } else {
+            keyPressed(ch);
+        }
+    }
+
     private class updateTimer extends TimerTask implements java.io.Serializable {
         int freq;
 
@@ -712,32 +716,4 @@ class HUD implements java.io.Serializable {
         }
         catch (NullPointerException ignore){}
     }
-
-    private class ConsoleKeyListener extends KeyAdapter {
-        private HUD sendTo;
-
-        ConsoleKeyListener(HUD theHUD) {
-            sendTo = theHUD;
-        }
-
-        @Override
-        public void keyPressed(KeyEvent event) {
-            int key = event.getKeyCode();
-            char ch = event.getKeyChar();
-            if (sendTo.consoleEntryProg >= 3 && key == KeyEvent.VK_ENTER) {
-                orgo.clearLayer(layerName);
-                System.out.println("Proc cmd..");
-                sendTo.processCommand();
-            } else if (key == KeyEvent.VK_ESCAPE){
-                sendTo.exitCommandLine();
-            } else if (sendTo.consoleEntryProg >= 3 && key == KeyEvent.VK_BACK_SPACE) {
-                orgo.editLayer(" ", layerName, 0, sendTo.command.length() + 3);
-                orgo.editLayer(" ", layerName, 0, sendTo.command.length() + 2);  // eliminate double cursor
-                sendTo.command = (sendTo.command.length() > 0) ? sendTo.command.substring(0, sendTo.command.length() - 1) : "";
-            } else {
-                sendTo.keyPressed(ch);
-            }
-        }
-    }
-
 }
