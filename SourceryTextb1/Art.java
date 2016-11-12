@@ -416,7 +416,7 @@ public class Art implements java.io.Serializable{
             "|                                            |\n" +
             "|                                            |\n" +
             "|                   β     New Game as server |\n" +
-            "|                   β     ~ as client        |\n" +
+            "|                   β     Connect to server  |\n" +
             "|                         Abort              |\n" +
             "|                                            |\n" +
             "|                                            |\n" +
@@ -425,18 +425,18 @@ public class Art implements java.io.Serializable{
             "|                                            |\n" +
             "|                                            |\n" +
             "|                                            |\n" +
+            "|                                            |\n" +
+            "|                                            |\n" +
             "|                 *   *   *                  |\n" +
-            "|  MULTIPLAYER is still in beta development. |\n" +
-            "|  Features are subject to change and bugs   |\n" +
-            "|     are likely.  Please report them.       |\n" +
-            "|   Multiplayer uses network connections to  |\n" +
-            "| communicate with other computers, and you  |\n" +
-            "| must know the IP address of a computer you |\n" +
-            "|    wish to join a game with if you are a   |\n" +
-            "| client.  On local networks, a relative IP  |\n" +
-            "| (like 192.168.0.* or 127.0.0.*) works, but |\n" +
-            "|  across the internet, the real IP must be  |\n" +
-            "|                  shared.                   |\n" +
+            "|   Note: Multiplayer does not work over the |\n" +
+            "|     Internet.                              |\n" +
+            "|                                            |\n" +
+            "|   Multiplayer can only be used over LAN    |\n" +
+            "|                                            |\n" +
+            "|   Be sure you enter in the ip address of   |\n" +
+            "|     the computer you are connecting to.    |\n" +
+            "|                                            |\n" +
+            "|                                            |\n" +
             "@                                            @\n";
 
     public String woodStaff =

@@ -151,34 +151,34 @@ class MainMenu {
                     cursorY++;
                     break;
                 case ENTER:
-                    if (cursorY == 5){
+                    if (cursorY == 5){ //Starts new game "as a server"
                         org.removeLayer("MULTIPLAYER_MENU");
                         window.txtArea.removeKeyListener(keyInputter);
                         System.out.println("New multiplayer game made!");
                         System.out.println("In the HUD, enter 'lan' to start a server.");
                         starter.newGame(2);
                     }
-                    if (cursorY == 6){ // For Riley
+                    if (cursorY == 6){ //Jumps to ip address submenu
                         Layer ipSetLayer = new Layer(Art.strToArray(new Art().ipSetMenu,true), "IP_ENTER_MENU", 10, 10);
                         org.addLayer(ipSetLayer);
                         settingIP = true;
                         cursorY = 10;
                         cursorX = 10;
                     }
-                    if (cursorY == 7){
+                    if (cursorY == 7){ //Go back to main menu
                         org.removeLayer("MULTIPLAYER_MENU");
                         System.out.println("Returning to main menu");
                         inMultiplayerMenu = false;
                         org.addLayer(new Layer(Art.strToArray(new Art().mainMenu,true), "MAIN_MENU"));
                     }
-                    if (cursorY == 11){
+                    if (cursorY == 11){ //Clears the ip address that you wrote
                         clearIPAddress();
                     }
-                    if (cursorY == 12){
+                    if (cursorY == 12){ //Runs client connection based on entered ip address
                         System.out.println("Requesting connection to Sourcery Text server at \"192.168.0.250\"");
                         starter.doNetworkClient("192.168.0.250");
                     }
-                    if (cursorY == 13){
+                    if (cursorY == 13){ //Go back to multiplayer top menu.
                         clearIPAddress();
                         org.removeLayer("IP_ENTER_MENU");
                         settingIP = false;
