@@ -5,6 +5,7 @@
  */
 package SourceryTextb1;
 
+import java.awt.*;
 import java.util.*;
 
 /**
@@ -21,6 +22,8 @@ public class ImageOrg implements java.io.Serializable {
     private int camX = 0;
     private int camY = 0;
     private boolean debugGame = false;
+
+    public Color roomBackground = Color.BLACK;
 
     //FrameTimer frameTimerInstance = new FrameTimer();
     private Timer drawTimer = new Timer();
@@ -362,6 +365,7 @@ public class ImageOrg implements java.io.Serializable {
 
     public Layer topDownBuild(int camX, int camY, String owningPlayerUsername) {
         Layer fullImage = new Layer(new String[screenH()][screenW()]);
+        fullImage.clear(roomBackground);
         int camYtoBe = camX;
         camX = camY;
         camY = camYtoBe;

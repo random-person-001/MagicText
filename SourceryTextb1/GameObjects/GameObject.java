@@ -34,7 +34,7 @@ public class GameObject implements java.io.Serializable{
     public ImageOrg orgo;
     protected Room room;
     transient Timer timer;
-    int frequency;
+    public int frequency;
     
     protected int x;
     protected int y;
