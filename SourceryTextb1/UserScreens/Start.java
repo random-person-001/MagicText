@@ -331,7 +331,7 @@ public class Start {
                 new Timer().schedule(new TimerTask() {
                     @Override
                     public void run() {
-                        instance.runGameAsSlaveTo(master);
+                        instance.runGameAsSlave();
                     }
                 }, 110);
             }

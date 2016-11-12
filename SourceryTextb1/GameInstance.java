@@ -64,12 +64,6 @@ public class GameInstance {
 
     Player requestNewPlayer(){
         Player noob = new Player(playerList.get(0).orgo, playerList.size());
-        try {
-            NetworkerServer server = new NetworkerServer(noob);
-            server.doTimerSend();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         noob.frozen = false;
         noob.roomName = "TutorialBasement";
         playerList.add(noob);
