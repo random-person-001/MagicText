@@ -5,6 +5,7 @@ import java.awt.event.KeyEvent;
 import java.io.*;
 import java.net.ConnectException;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -73,8 +74,13 @@ public class NetworkClient {
             System.out.println("Input stream is null; aborting reading ColoredTextMatrix attempt");
             return;
         }
-        w.build((Layer)in.readObject());
-        System.out.println("Received image!");
+        Layer l = (Layer)in.readObject();
+        if (l!=null) {
+            System.out.println("Received image!");
+            w.build(l);
+        } else {
+            System.out.println("no layer received over network");
+        }
     }
 
     /**
@@ -103,11 +109,7 @@ public class NetworkClient {
             }
         }
         public void keyReleased(KeyEvent event) {
-            try {
-                sendKey(event);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            keyPressed(event); //Does same thing anyway
         }
     }
 
@@ -116,7 +118,8 @@ public class NetworkClient {
         public void run() {
             try {
                 receiveImage();
-                out.flush();
+            } catch (SocketException e) {
+                System.out.println("The other side probably disconnected (SocketException).");
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
             }

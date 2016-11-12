@@ -70,6 +70,7 @@ public class NetworkerServer {
      */
     private void sendImage(Layer fullImage) throws IOException {
         out.writeObject(fullImage);
+        System.out.println("sent image");
     }
 
     /**
@@ -80,6 +81,7 @@ public class NetworkerServer {
     private void readKeys() throws IOException, ClassNotFoundException {
         KeyEvent e = (KeyEvent) in.readObject();
         if (e != null){
+            System.out.println("Client pressed: " + KeyEvent.getKeyText(e.getKeyCode()));
             player.fireKeyEvent(e);
         }
     }
@@ -93,6 +95,8 @@ public class NetworkerServer {
                 out.flush();
                 sendImage(fullImage);
                 readKeys();
+            } catch (SocketException e) {
+                System.out.println("The other side probably disconnected (SocketException).");
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
