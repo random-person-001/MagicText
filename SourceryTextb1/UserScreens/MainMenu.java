@@ -52,12 +52,13 @@ class MainMenu {
         Art artida = new Art();
         Layer menuLayer = new Layer(Art.strToArray(artida.mainMenu,true), "MAIN_MENU");
         org.addLayer(menuLayer);
+
+        window.txtArea.setOverallForeGround(Color.WHITE);
     }
 
     protected void mainLoop() {
         if (!finished) {
             org.editLayer(" ", "MAIN_MENU", cursorY, 24);
-            window.txtArea.setOverallForeGround(Color.WHITE);
 
             switch (keyCode) {
                 case UP:

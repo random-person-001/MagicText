@@ -15,6 +15,7 @@ public class NetworkerServer {
     private int PORT = 8793;
     private ServerSocket serverSocket;
     private Updater updaterTask = new Updater();
+    private InputReader inputReceiver = new InputReader();
     private Socket server = new Socket();
     private ObjectOutputStream out;
     private ObjectInputStream in;
@@ -37,6 +38,7 @@ public class NetworkerServer {
     public void doTimerSend() throws IOException {
         connect();
         new Timer().scheduleAtFixedRate(updaterTask, 4, 50);
+        new Timer().scheduleAtFixedRate(inputReceiver, 8, 50);
     }
 
     /**
@@ -94,12 +96,25 @@ public class NetworkerServer {
             try {
                 out.flush();
                 sendImage(fullImage);
-                readKeys();
             } catch (SocketException e) {
                 System.out.println("The other side probably disconnected (SocketException).");
-            } catch (IOException | ClassNotFoundException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
+
+    private class InputReader extends TimerTask {
+
+        public void run(){
+            try {
+                readKeys();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 }

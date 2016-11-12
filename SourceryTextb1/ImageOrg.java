@@ -328,7 +328,9 @@ public class ImageOrg implements java.io.Serializable {
     private void newSendImage() {
         try {
             window.build(topDownBuild(camX, camY, owningPlayerUsername));
-        } catch (ConcurrentModificationException ignore) {
+        } catch (ConcurrentModificationException e) {
+            e.printStackTrace();
+            System.out.println("[ImageOrg] Concurrent Modification error while building image!");
         }// Cuz it'll be fixed next time probs.
     }
 
