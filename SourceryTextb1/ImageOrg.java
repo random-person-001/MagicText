@@ -17,6 +17,7 @@ import java.util.*;
 public class ImageOrg implements java.io.Serializable {
     private Window window;
     private ArrayList<Layer> layers = new ArrayList<>();
+    private ArrayList<Layer> importantLayers = new ArrayList<>();
     private ArrayList<Layer> toAdd = new ArrayList<>();
     private ArrayList<Layer> toRemove = new ArrayList<>();
     private int camX = 0;
@@ -77,25 +78,7 @@ public class ImageOrg implements java.io.Serializable {
      */
     public void addLayer(Layer lay) {
         toAdd.add(lay);
-        if (lay.getName().contains("One-wayDoor")) {
-            System.out.println(lay.getStr(0, 0));
-        }
         //System.out.println(String.format("Layer Given: %1$s (%2$b)", lay.getName(), somethingChanged));
-    }
-
-    private void moveImportantLayersUp() {
-        ArrayList<Layer> importants = new ArrayList<>();
-        for (Layer l : layers) {
-            if (l.getImportance()) {
-                importants.add(l);
-            }
-        }
-        for (Layer l : importants) {
-            layers.remove(l);
-        }
-        for (Layer l : importants) {
-            layers.add(l);
-        }
     }
 
     private String addTheLayers() {
@@ -105,13 +88,16 @@ public class ImageOrg implements java.io.Serializable {
     private String addTheLayers(boolean reorderImportant) {
         String addList = "";
         for (Layer lay : toAdd) {
-            layers.add(lay);
+            if (!lay.getImportance())
+                layers.add(lay);
+            else
+                importantLayers.add(lay);
             addList += lay.getName() + " ";
             //System.out.println("Adding: " + lay.getName());
         }
-        if (reorderImportant && !toAdd.isEmpty()) {
-            moveImportantLayersUp();
-        }
+        //if (reorderImportant && !toAdd.isEmpty()) {
+        //    moveImportantLayersUp();
+        //}
         toAdd.clear();
         return addList;
     }
@@ -166,28 +152,21 @@ public class ImageOrg implements java.io.Serializable {
     }
 
     /**
-     * Return the Layer specified by its index
-     *
-     * @param go the Layer's index
-     * @return that Layer
-     */
-    public Layer getLayer(int go) {
-        if (go == -1) {
-            return new Layer(new String[1][1]); // TODO I don't think this is a good feature here, but somehow problems happen if it isn't.
-        } else {
-            return layers.get(go);
-        }
-    }
-
-    /**
      * Return the Layer specified by its name
      *
      * @param layerName the Layer's name
      * @return that Layer
      */
     public Layer getLayer(String layerName) {
-        int go = getPosLayer(layerName);
-        return getLayer(go);
+        for (Layer lay1 : layers){
+            if (lay1 != null && lay1.getName().equals(layerName))
+                return lay1;
+        }
+        for (Layer lay2 : importantLayers){
+            if (lay2 != null && lay2.getName().equals(layerName))
+                return lay2;
+        }
+        return null;
     }
 
     /**
@@ -241,15 +220,11 @@ public class ImageOrg implements java.io.Serializable {
      * @param x     the column (X coordinate) which you want to change something at
      */
     public void editLayer(SpecialText input, String layerName, int y, int x) {
-        Layer get;
-        try {
-            int loc = getPosLayer(layerName);
-            get = layers.get(loc);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println("No such layer (" + layerName + ")! " + e);
-            return;
-        }
-        editLayer(input, get, y, x);
+        Layer get = getLayer(layerName);
+        if (get != null)
+            editLayer(input, get, y, x);
+        else
+            System.out.printf("Null Layer called: \"%1$s\"", layerName);
     }
 
     /**
@@ -314,6 +289,28 @@ public class ImageOrg implements java.io.Serializable {
     }
 
     /**
+     * Specifying a Layer name (String), return the whether the layer exists
+     *
+     * @param layerName string that the Layer calls its own
+     * @return boolean of the layer's existence
+     */
+    public boolean layerExists(String layerName) {
+        for (int id = 0; id < layers.size(); id++) {
+            Layer get = layers.get(id);
+            if (get != null && get.nameMatches(layerName)) {
+                return true;
+            }
+        }
+        for (int id = 0; id < importantLayers.size(); id++) {
+            Layer get = importantLayers.get(id);
+            if (get != null && get.nameMatches(layerName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * Remove all layers from existence except for the one named "playerLayer"
      */
     public void removeAllButPlayer() {
@@ -333,8 +330,8 @@ public class ImageOrg implements java.io.Serializable {
     private void newSendImage() {
         try {
             window.build(topDownBuild(camX, camY, owningPlayerUsername, imageForeground));
-            if (imageForeground != null)
-                System.out.println(imageForeground.toString());
+            //if (imageForeground != null)
+                //System.out.println(imageForeground.toString());
         } catch (ConcurrentModificationException e) {
             e.printStackTrace();
             System.out.println("[ImageOrg] Concurrent Modification error while building image!");
@@ -358,6 +355,8 @@ public class ImageOrg implements java.io.Serializable {
             System.out.println(changeList + "\n");
             layerChangeInstance++;
         }
+        ArrayList<Layer> allLayers = layers;
+        allLayers.addAll(importantLayers);
         //Actually render image
         Layer fullImage = new Layer(new String[screenH()][screenW()]);
         fullImage.clear(roomBackground);
@@ -368,8 +367,8 @@ public class ImageOrg implements java.io.Serializable {
         int maxW = screenW(); //Equals 46
         for (int row = 0; row < maxH; row++) { //Iterates over every coordinate of the screen
             for (int col = 0; col < maxW; col++) {
-                for (int ii = layers.size(); ii > 0; ii--) { //At each coordinate, goes through all layers until an opaque space is found
-                    Layer layer = layers.get(ii - 1);
+                for (int ii = allLayers.size(); ii > 0; ii--) { //At each coordinate, goes through all layers until an opaque space is found
+                    Layer layer = allLayers.get(ii - 1);
                     if (layer != null) {
                         int xPos = row - layer.getX();
                         int yPos = col - layer.getY(); //Math done to find out what portion of the layer corresponds with the screen coordinate
@@ -418,9 +417,13 @@ public class ImageOrg implements java.io.Serializable {
      * @param layName string of layer
      */
     public void clearLayer(String layName) {
-        int loc = getPosLayer(layName);
-        getLayer(loc).clear();
-        System.out.println("Clearing " + getLayer(loc).getName());
+        Layer toClear = getLayer(layName);
+        if (toClear != null) {
+            toClear.clear();
+            System.out.println("Clearing " + toClear.getName());
+        } else {
+            System.out.printf("Layer '%1$s' could not be found to be cleared!\n", layName);
+        }
     }
 
     public void printLayers() {

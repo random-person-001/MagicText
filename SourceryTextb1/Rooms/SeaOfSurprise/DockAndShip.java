@@ -42,8 +42,7 @@ public class DockAndShip extends Room {
                 timer++;
                 if (timer > 200 && timer < 1000 && timer % 10 == 0){
                     System.out.println("Moving one");
-                    int loc = org.getPosLayer("Dock");
-                    Layer docky = org.getLayer(loc);
+                    Layer docky = org.getLayer("Dock");
                     docky.setX(docky.getX()+1);
                     docky.setY(docky.getY()+1);
                     System.out.println(docky.getX());
