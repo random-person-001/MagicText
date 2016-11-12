@@ -25,7 +25,7 @@ public class NetworkClient {
         w = new Window();
         w.txtArea.addKeyListener(kl);
         connect(serverName);
-        new Timer().scheduleAtFixedRate(updateTask, 4, 200);
+        new Timer().scheduleAtFixedRate(updateTask, 4, 50);
     }
 
     private void connect(String serverName) throws IOException {

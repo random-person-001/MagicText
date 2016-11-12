@@ -36,7 +36,7 @@ public class NetworkerServer {
      */
     public void doTimerSend() throws IOException {
         connect();
-        new Timer().scheduleAtFixedRate(updaterTask, 4, 200);
+        new Timer().scheduleAtFixedRate(updaterTask, 4, 50);
     }
 
     /**
