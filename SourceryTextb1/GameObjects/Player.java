@@ -742,4 +742,34 @@ public class Player extends Mortal implements java.io.Serializable {
         // TODO: consolidate the player key listener and all of its annoying methods and stuff to here.
         // TODO: also, call methods in the Room, HUD, Inventory, etc (probably from here)
     }
+
+    /**
+     * Receive an arrow (or space) keypress
+     * @param keyName a String: up, down, left, right, or space
+     * @param noActuallyItWasReleased for simplification.  Self explanitory.
+     */
+    void moveKeyPressed(String keyName, boolean noActuallyItWasReleased){
+        if (frozen || dead){
+            return;
+        }
+        switch (keyName){
+            case "up":
+                upPressed = noActuallyItWasReleased;
+                break;
+            case "down":
+                downPressed = noActuallyItWasReleased;
+                break;
+            case "left":
+                leftPressed = noActuallyItWasReleased;
+                break;
+            case "right":
+                rightPressed = noActuallyItWasReleased;
+                break;
+            case "space":
+                spacePressed = noActuallyItWasReleased;
+                break;
+            default:
+                System.out.println("Someone called Player.moveKeyPressed() wrong! '" + keyName + "' not recognised");
+        }
+    }
 }

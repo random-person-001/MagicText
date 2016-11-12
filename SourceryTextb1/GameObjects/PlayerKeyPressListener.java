@@ -19,9 +19,9 @@ public class PlayerKeyPressListener extends KeyAdapter {
 
     @Override
     public void keyPressed(KeyEvent event) {
-        /*
+
         if (event.getKeyCode() == KeyEvent.VK_UP) {
-            player.upPressed = event.getEventType();
+            player.moveKeyPressed("up", true);
         }
         else if (event.getKeyCode() == KeyEvent.VK_DOWN) {
             player.moveKeyPressed("down", true);
@@ -40,14 +40,14 @@ public class PlayerKeyPressListener extends KeyAdapter {
         } else {
             player.keyPressed(event.getKeyChar());
         }
-        */
+
         //System.out.println(event.paramString());
         System.out.println(event.getKeyCode());
     }
 
     @Override
     public void keyReleased(KeyEvent event) {
-        /*
+
         if (!player.frozen && !player.dead) {
             if (event.getKeyCode() == KeyEvent.VK_UP) {
                 player.moveKeyPressed("up", false);
@@ -65,7 +65,7 @@ public class PlayerKeyPressListener extends KeyAdapter {
                 player.moveKeyPressed("space", false);
             }
         }
-        */
+
         System.out.println(event.getKeyCode());
     }
 }
