@@ -498,7 +498,8 @@ public class Player extends Mortal implements java.io.Serializable {
         }
         orgo.editLayer(playerIcon, layerName, 1, 1);
         orgo.getLayer(layerName).setPos(y-1, x-1);
-        getRealOrg().setCam(getX()-22, getY()-11);
+        if (hasLocalWindow)
+            orgo.setCam(getX()-22, getY()-11);
     }
 
     private void move(int direction) {
