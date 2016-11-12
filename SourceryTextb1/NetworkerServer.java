@@ -78,8 +78,8 @@ public class NetworkerServer {
      * @throws ClassNotFoundException
      */
     private void readKeys() throws IOException, ClassNotFoundException {
-        while (in.available() > 0){ // Note: I think this works.  --Riley
-            KeyEvent e = (KeyEvent) in.readObject();
+        KeyEvent e = (KeyEvent) in.readObject();
+        if (e != null){
             player.fireKeyEvent(e);
         }
     }
