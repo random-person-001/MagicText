@@ -761,7 +761,7 @@ public class Player extends Mortal implements java.io.Serializable {
                 rightPressed =  true;
             }
             else if (event.getKeyCode() == KeyEvent.VK_SPACE) {
-                upPressed =  true;
+                spacePressed = true;
             }
             else if (event.getKeyCode() == KeyEvent.VK_ESCAPE) {
                 keyPressed('\'');
@@ -781,6 +781,8 @@ public class Player extends Mortal implements java.io.Serializable {
                 leftPressed = false;
             } else if (event.getKeyCode() == KeyEvent.VK_RIGHT) {
                 rightPressed = false;
+            } else if (event.getKeyCode() == KeyEvent.VK_SPACE) {
+                spacePressed = false;
             }
         }
     }
