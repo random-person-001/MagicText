@@ -769,6 +769,7 @@ public class Player extends Mortal implements java.io.Serializable {
             }
             hud.fireKeyEvent(event);
             inv.fireKeyEvent(event);
+            room.fireKeyEvent(event);
         }
         else if (event.toString().contains("KEY_RELEASED")) {
             if (event.getKeyCode() == KeyEvent.VK_UP) {
