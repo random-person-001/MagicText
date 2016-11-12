@@ -132,7 +132,9 @@ public class GameObject implements java.io.Serializable{
                  if (pt.getCntr() == stepsNeeded - 1 && pt.getCntr() != 0 && abs(pt.getX() - x) <= 1 && abs(pt.getY() - y) <= 1) {
                      x = pt.getX();
                      y = pt.getY();
-                     orgo.getLayer(orgo.getPosLayer(layerName)).setPos(y, x);
+                     Layer selfLayer = orgo.getLayer(layerName);
+                     if (selfLayer != null)
+                        selfLayer.setPos(y, x);
                      break;
                  }
              }

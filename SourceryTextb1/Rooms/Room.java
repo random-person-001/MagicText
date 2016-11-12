@@ -594,7 +594,12 @@ public class Room implements java.io.Serializable{
                 System.out.println("Found legit player to key bind to! " + usernameToShowTo);
             }
             // Also make them not go over the textbox
-            org.getLayer(p.getLayerName()).setImportance(false);
+            Layer playerLayer = org.getLayer(p.getLayerName());
+            if (playerLayer != null)
+                org.getLayer(p.getLayerName()).setImportance(false);
+
+            Layer iconLayer = org.getLayer(p.getLayerName());
+            if (iconLayer != null) iconLayer.setImportance(false);
         }
         if (window == null){
             window = players.get(0).orgo.getWindow();
@@ -704,7 +709,9 @@ public class Room implements java.io.Serializable{
                 org.removeLayer("Dialog");
                 cancel();
                 for (Player p : players){ // Remake the player layers important.
-                    players.get(0).orgo.getLayer(p.getLayerName()).setImportance(true);
+                    Layer iconLayer = org.getLayer(p.getLayerName());
+                    if (iconLayer != null)
+                        iconLayer.setImportance(true);
                 }
                 if (messageQueue.size() > 0){
                     messageQueue.remove(messageQueue.get(0));

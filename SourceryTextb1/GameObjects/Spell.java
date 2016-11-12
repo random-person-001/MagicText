@@ -190,7 +190,8 @@ public class Spell extends GameObject{
             }
         }
 
-        orgo.getLayer(layerName).setPos(y,x);
+        Layer iconLayer = orgo.getLayer(layerName);
+        if (iconLayer != null) iconLayer.setPos(y, x);
 
         if (!hitSomeOne)
             hitSomeOne = room.hurtSomethingAt(x, y, damage, killMessage, !isHostile);

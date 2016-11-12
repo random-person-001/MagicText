@@ -106,7 +106,7 @@ class HUD implements java.io.Serializable {
                 }
             } else if (consoleEntryProg < 3) {
                 if (inCmd) {
-                    orgo.getLayer(layerName).clear();
+                    orgo.clearLayer(layerName);
                     inCmd = false;
                 }
 
@@ -202,7 +202,7 @@ class HUD implements java.io.Serializable {
                 putChar("}");
             } else {
                 if (!inCmd) {
-                    orgo.getLayer(layerName).clear();
+                    orgo.clearLayer(layerName);
                     inCmd = true;
                 }
 

@@ -51,7 +51,8 @@ public class PathingObj extends Mortal {
             rangedPathfinding(getClosestGoodGuy(), attackRange, followDist);
             */
 
-        orgo.getLayer(layerName).setPos(y, x);
+        Layer iconLayer = orgo.getLayer(layerName);
+        if (iconLayer != null) iconLayer.setPos(y, x);
         orgo.editLayer("O", layerName, 0, 0);
     }
 }

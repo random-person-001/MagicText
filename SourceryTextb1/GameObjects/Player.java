@@ -498,7 +498,8 @@ public class Player extends Mortal implements java.io.Serializable {
                 playerIcon = new SpecialText("@", new Color(100, 150, 255), new Color(65, 65, 200));
         }
         orgo.editLayer(playerIcon, layerName, 1, 1);
-        orgo.getLayer(layerName).setPos(y-1, x-1);
+        Layer iconLayer = orgo.getLayer(layerName);
+        if (iconLayer != null) iconLayer.setPos(y-1, x-1);
         if (hasLocalWindow) {
             orgo.setCam(getX() - 22, getY() - 11);
             orgo.imageForeground = foregroundColor;
