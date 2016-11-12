@@ -39,7 +39,6 @@ class HUD implements java.io.Serializable {
     private String responseMessage = null;
     private int responseDuration = 2;
     private boolean authing = false;
-    private KeyListener playerKeyListener;
     private Player player;
     private ImageOrg orgo;
     private int xBulidIndex = 0;
@@ -50,22 +49,6 @@ class HUD implements java.io.Serializable {
         player = playerSet;
         orgo = player.orgo;
         layerName = "HUD_of_" + player.getUsername();
-
-        HUD hud = this;
-        new Timer().schedule(new TimerTask() {
-            @Override
-            public void run()  {
-                ConsoleKeyListener listener = new ConsoleKeyListener(hud);
-                player.getRealOrg().getWindow().txtArea.addKeyListener(listener);
-
-                for (KeyListener kl : player.getRealOrg().getWindow().txtArea.getKeyListeners()) {
-                    if (kl.toString().contains("PlayerKeyPressListener")) {
-                        playerKeyListener = kl;
-                    }
-                }
-            }
-        }, 2000);
-
         setupTimer(100);
     }
 
@@ -246,7 +229,7 @@ class HUD implements java.io.Serializable {
             if (key == 'c') {
                 consoleEntryProg++;
                 if (consoleEntryProg >= 3) {
-                    player.getRealOrg().getWindow().txtArea.removeKeyListener(playerKeyListener);
+                    player.frozen = true;
                 }
             } else {
                 consoleEntryProg = 0;
@@ -580,17 +563,7 @@ class HUD implements java.io.Serializable {
         command = "";
         nextCommand = "";
         consoleEntryProg = 0;
-        // Only add back the player key listener if it isn't already there, avoiding adding it multiple times.
-        KeyListener[] allKeyListeners = player.getRealOrg().getWindow().txtArea.getKeyListeners();
-        boolean alreadyAdded = false;
-        for (KeyListener kl : allKeyListeners) {
-            if (kl.equals(playerKeyListener)){
-                alreadyAdded = true;
-            }
-        }
-        if (!alreadyAdded){
-            player.getRealOrg().getWindow().txtArea.addKeyListener(playerKeyListener);
-        }
+        player.frozen = false;
     }
 
     /**
@@ -701,6 +674,29 @@ class HUD implements java.io.Serializable {
         timer.scheduleAtFixedRate(updateTimerInstance, theFrequency, theFrequency);
     }
 
+    /**
+     * Rather than putting its own network-incompatible key listener on a window, the player (who gets things from network)
+     * calls this.
+     * @param event KeyEvent that the relevant player performed
+     */
+    void fireKeyEvent(KeyEvent event) {
+        int key = event.getKeyCode();
+        char ch = event.getKeyChar();
+        if (consoleEntryProg >= 3 && key == KeyEvent.VK_ENTER) {
+            orgo.clearLayer(layerName);
+            System.out.println("Proc cmd..");
+            processCommand();
+        } else if (key == KeyEvent.VK_ESCAPE){
+            exitCommandLine();
+        } else if (consoleEntryProg >= 3 && key == KeyEvent.VK_BACK_SPACE) {
+            orgo.editLayer(" ", layerName, 0, command.length() + 3);
+            orgo.editLayer(" ", layerName, 0, command.length() + 2);  // eliminate double cursor
+            command = (command.length() > 0) ? command.substring(0, command.length() - 1) : "";
+        } else {
+            keyPressed(ch);
+        }
+    }
+
     private class updateTimer extends TimerTask implements java.io.Serializable {
         int freq;
 
@@ -720,32 +716,4 @@ class HUD implements java.io.Serializable {
         }
         catch (NullPointerException ignore){}
     }
-
-    private class ConsoleKeyListener extends KeyAdapter {
-        private HUD sendTo;
-
-        ConsoleKeyListener(HUD theHUD) {
-            sendTo = theHUD;
-        }
-
-        @Override
-        public void keyPressed(KeyEvent event) {
-            int key = event.getKeyCode();
-            char ch = event.getKeyChar();
-            if (sendTo.consoleEntryProg >= 3 && key == KeyEvent.VK_ENTER) {
-                orgo.clearLayer(layerName);
-                System.out.println("Proc cmd..");
-                sendTo.processCommand();
-            } else if (key == KeyEvent.VK_ESCAPE){
-                sendTo.exitCommandLine();
-            } else if (sendTo.consoleEntryProg >= 3 && key == KeyEvent.VK_BACK_SPACE) {
-                orgo.editLayer(" ", layerName, 0, sendTo.command.length() + 3);
-                orgo.editLayer(" ", layerName, 0, sendTo.command.length() + 2);  // eliminate double cursor
-                sendTo.command = (sendTo.command.length() > 0) ? sendTo.command.substring(0, sendTo.command.length() - 1) : "";
-            } else {
-                sendTo.keyPressed(ch);
-            }
-        }
-    }
-
 }

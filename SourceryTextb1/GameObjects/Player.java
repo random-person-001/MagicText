@@ -744,37 +744,41 @@ public class Player extends Mortal implements java.io.Serializable {
      * @param event a KeyEvent that occurred on the window pertaining to this player.
      */
     public void fireKeyEvent(KeyEvent event) {
-        // TODO: consolidate the player key listener and all of its annoying methods and stuff to here.
-        // TODO: also, call methods in the Room, HUD, Inventory, etc (probably from here)
-    }
-
-    /**
-     * Receive an arrow (or space) keypress
-     * @param keyName a String: up, down, left, right, or space
-     * @param noActuallyItWasReleased for simplification.  Self explanitory.
-     */
-    void moveKeyPressed(String keyName, boolean noActuallyItWasReleased){
-        if (frozen || dead){
-            return;
+        // TODO: call methods in the Room, HUD, Inventory, etc (probably from here)
+        //System.out.println("Someone pressed a button for "+getUsername()+":" + event.toString());
+        if (event.toString().contains("KEY_PRESSED")){
+            if (event.getKeyCode() == KeyEvent.VK_UP) {
+                upPressed =  true;
+            }
+            else if (event.getKeyCode() == KeyEvent.VK_DOWN) {
+                downPressed =  true;
+            }
+            else if (event.getKeyCode() == KeyEvent.VK_LEFT) {
+                leftPressed =  true;
+            }
+            else if (event.getKeyCode() == KeyEvent.VK_RIGHT) {
+                rightPressed =  true;
+            }
+            else if (event.getKeyCode() == KeyEvent.VK_SPACE) {
+                upPressed =  true;
+            }
+            else if (event.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                keyPressed('\'');
+            } else {
+                keyPressed(event.getKeyChar());
+            }
         }
-        switch (keyName){
-            case "up":
-                upPressed = noActuallyItWasReleased;
-                break;
-            case "down":
-                downPressed = noActuallyItWasReleased;
-                break;
-            case "left":
-                leftPressed = noActuallyItWasReleased;
-                break;
-            case "right":
-                rightPressed = noActuallyItWasReleased;
-                break;
-            case "space":
-                spacePressed = noActuallyItWasReleased;
-                break;
-            default:
-                System.out.println("Someone called Player.moveKeyPressed() wrong! '" + keyName + "' not recognised");
+        else if (event.toString().contains("KEY_RELEASED")) {
+            if (event.getKeyCode() == KeyEvent.VK_UP) {
+                upPressed = false;
+            } else if (event.getKeyCode() == KeyEvent.VK_DOWN) {
+                downPressed = false;
+            } else if (event.getKeyCode() == KeyEvent.VK_LEFT) {
+                leftPressed = false;
+            } else if (event.getKeyCode() == KeyEvent.VK_RIGHT) {
+                rightPressed = false;
+            }
         }
+        hud.fireKeyEvent(event);
     }
 }

@@ -27,7 +27,7 @@ public class NetworkerServer {
     public NetworkerServer(Player playery) throws IOException {
         player = playery;
         serverSocket = new ServerSocket(PORT);
-        serverSocket.setSoTimeout(10000);
+        serverSocket.setSoTimeout(60 * 1000);
     }
 
     /**
@@ -46,7 +46,7 @@ public class NetworkerServer {
     private void connect() throws IOException {
         System.out.println("Waiting for client on port " +
                 serverSocket.getLocalPort() + "...");
-        server = serverSocket.accept();
+        server = serverSocket.accept(); // Note: code waits here until it accepts an incoming request
 
         System.out.println("Just connected to " + server.getRemoteSocketAddress());
         in = new ObjectInputStream(server.getInputStream());
