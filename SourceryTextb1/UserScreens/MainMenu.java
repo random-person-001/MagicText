@@ -29,6 +29,9 @@ class MainMenu {
     private final int DOWN = 2;
     private final int ENTER = 3;
 
+    private char keyChar = ' ';
+    private String ipString = "";
+
     private boolean finished = false;
     private boolean inMultiplayerMenu = false;
 
@@ -124,10 +127,22 @@ class MainMenu {
     /**
      * Multiplayer options screen
      */
+    private boolean settingIP = false;
+    private int ipSetXPos = 11;
+
+    private void clearIPAddress(){
+        ipString = "";
+        for (int ii = 0 ; ii < 13; ii++){
+            org.editLayer("_", "IP_ENTER_MENU", 0, 11+ii);
+        }
+        ipSetXPos = 11;
+    }
+
     private void multiplayerLoop(){
         if (!finished) {
-            org.editLayer(" ", "MULTIPLAYER_MENU", cursorY, 24);
-
+            int cursorX = 24;
+            if (settingIP) cursorX = 10;
+            org.editLayer(" ", "MULTIPLAYER_MENU", cursorY, cursorX);
             switch (keyCode) {
                 case UP:
                     cursorY--;
@@ -136,38 +151,66 @@ class MainMenu {
                     cursorY++;
                     break;
                 case ENTER:
-                    org.removeLayer("MULTIPLAYER_MENU");
-                    window.txtArea.removeKeyListener(keyInputter);
                     if (cursorY == 5){
+                        org.removeLayer("MULTIPLAYER_MENU");
+                        window.txtArea.removeKeyListener(keyInputter);
                         System.out.println("New multiplayer game made!");
                         System.out.println("In the HUD, enter 'lan' to start a server.");
                         starter.newGame(2);
-                    }// /*
+                    }
                     if (cursorY == 6){ // For Riley
-                        System.out.println("Requesting connection to Sourcery Text server at \"192.168.0.250\"");
-                        starter.doNetworkClient("192.168.0.250");
-                    }// */
-                    /*
-                    if (cursorY == 6){  // For others, Uncomment to make work
-                        System.out.println("Requesting connection to Sourcery Text server somewhere else");
-                        starter.doNetworkClient("Your Local IP Here");
-                    }*/
+                        Layer ipSetLayer = new Layer(Art.strToArray(new Art().ipSetMenu,true), "IP_ENTER_MENU", 10, 10);
+                        org.addLayer(ipSetLayer);
+                        settingIP = true;
+                        cursorY = 10;
+                        cursorX = 10;
+                    }
                     if (cursorY == 7){
                         org.removeLayer("MULTIPLAYER_MENU");
                         System.out.println("Returning to main menu");
                         inMultiplayerMenu = false;
-                        window.txtArea.addKeyListener(keyInputter);
                         org.addLayer(new Layer(Art.strToArray(new Art().mainMenu,true), "MAIN_MENU"));
                     }
+                    if (cursorY == 11){
+                        clearIPAddress();
+                    }
+                    if (cursorY == 12){
+                        System.out.println("Requesting connection to Sourcery Text server at \"192.168.0.250\"");
+                        starter.doNetworkClient("192.168.0.250");
+                    }
+                    if (cursorY == 13){
+                        clearIPAddress();
+                        org.removeLayer("IP_ENTER_MENU");
+                        settingIP = false;
+                        cursorY = 5;
+                        cursorX = 24;
+                    }
             }
-            if (cursorY <= 4) {
-                cursorY = 7;
+            if (!settingIP) {
+                if (cursorY <= 4) { //Looping
+                    cursorY = 7;
+                }
+                if (cursorY >= 8) {
+                    cursorY = 5;
+                }
+            } else {
+                if (cursorY <= 9) { //Looping
+                    cursorY = 13;
+                }
+                if (cursorY >= 14) {
+                    cursorY = 10;
+                }
+                if (cursorY == 10 && (keyChar == '.' || Character.isDigit(keyChar)) && ipSetXPos < 24){
+                    ipString += keyChar;
+                    org.editLayer(String.valueOf(keyChar), "IP_ENTER_MENU", 0, ipSetXPos);
+                    ipSetXPos++;
+                    System.out.printf("IP Appended! (Now %1$s)\n", ipString);
+                }
+
             }
-            if (cursorY >= 8) {
-                cursorY = 5;
-            }
-            org.editLayer("*", "MULTIPLAYER_MENU", cursorY, 24);
+            org.editLayer("*", "MULTIPLAYER_MENU", cursorY, cursorX);
             keyCode = 0;
+            keyChar = ' ';
         }
 
     }
@@ -237,6 +280,10 @@ class MainMenu {
                 case KeyEvent.VK_ENTER:
                     owner.keyCode = ENTER;
                     break;
+            }
+            keyChar = e.getKeyChar();
+            if (Character.isDigit(keyChar)){
+                System.out.println("Digit: " + keyChar);
             }
         }
     }

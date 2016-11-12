@@ -319,7 +319,7 @@ public class Art implements java.io.Serializable{
                     "    |                                    |    \n" +
                     "    ||||||||||||||||||||||||||||||||||||||    \n" +
                     "\\\\\\    Game  made  by  Jared  and  Riley   ///\n";
-    
+
     public String inventoryBkgd =
                     "///.........  I N V E N T O R Y  ..........\\\\\\\n" +
                     ".      ..      ..      ..      ..      ..    .\n" +
@@ -423,9 +423,9 @@ public class Art implements java.io.Serializable{
             "|                                            |\n" +
             "|                                            |\n" +
             "|                                            |\n" +
-            "|                 *   *   *                  |\n" +
-            "|                   W O T                    |\n" +
             "|                                            |\n" +
+            "|                                            |\n" +
+            "|                 *   *   *                  |\n" +
             "|  MULTIPLAYER is still in beta development. |\n" +
             "|  Features are subject to change and bugs   |\n" +
             "|     are likely.  Please report them.       |\n" +
@@ -1003,6 +1003,12 @@ public class Art implements java.io.Serializable{
                     "|                 |\n" +
                     "+-----------------+\n" +
                     "    A: Confirm     \n";
+
+    public String ipSetMenu =
+            "  Type IP: _____________\n" +
+            "  <Clear IP>            \n" +
+            "  Connect (Play!)       \n" +
+            "  Back                  \n";
 
 
     public String itemsMenu =
