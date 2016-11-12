@@ -85,10 +85,10 @@ public class NetworkerServer {
     }
 
     private class Updater extends TimerTask {
-        Player playery;
+        //Player playery;
         @Override
         public void run() {
-            Layer fullImage = playery.orgo.topDownBuild(playery.getX()-22, playery.getY()-11, playery.getUsername());
+            Layer fullImage = player.orgo.topDownBuild(player.getX()-22, player.getY()-11, player.getUsername());
             try {
                 sendImage(fullImage);
                 readKeys();

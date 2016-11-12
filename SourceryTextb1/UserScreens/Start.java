@@ -12,6 +12,7 @@ import SourceryTextb1.Rooms.TheSource.*;
 import SourceryTextb1.Rooms.NewTestRoom;
 import SourceryTextb1.Rooms.Room;
 
+import java.io.IOException;
 import java.util.*;
 import java.awt.Color;
 
@@ -40,7 +41,7 @@ public class Start {
             playerList.add(player);
             NewTestRoom rooma = new NewTestRoom(player);
             org.removeAllButPlayer();
-            game.clearImage(Color.BLACK);
+            org.roomBackground = Color.BLACK;
             player.setRoom(rooma);
             rooma.startup();
             rooma.enter(player);
@@ -312,6 +313,7 @@ public class Start {
             }
             playerList = new ArrayList<>();
             Player player = new Player(org,0);
+            org.setOwningPlayerUsername(player.getUsername());
             player.roomName = "TutorialBasement";
             playerList.add(player);
             GameInstance master = new GameInstance(initializeZone1Rooms(player),player);
@@ -377,6 +379,16 @@ public class Start {
                 intro();
             } catch (InterruptedException e) {
                 System.out.println("Intro interrupted.");
+            }
+        }
+
+        void doNetworkClient(String serverName) {
+            NetworkClient networker = new NetworkClient();
+            try {
+                networker.main(serverName);
+            } catch (IOException e) {
+                e.printStackTrace();
+                networker.attemptCancel();
             }
         }
     }
