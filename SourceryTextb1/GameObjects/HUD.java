@@ -340,11 +340,11 @@ class HUD implements java.io.Serializable {
             player.getInventory().testKit();
             showResponse("Items given!");
         }else if (command.contains("fabulous off")) {
-            player.getRealOrg().getWindow().txtArea.fabulousMode = false;
-            showResponse("FABULOUS POWERS DISABLED?");
+            player.orgo.getWindow().txtArea.fabulousMode = false;
+            showResponse("FABULOUS POWERS DISABLED? (for 1st player)");
         }else if (command.contains("fabulous on")) {
-            player.getRealOrg().getWindow().txtArea.fabulousMode = true;
-            showResponse("FABULOUS POWERS ENABLED!");
+            player.orgo.getWindow().txtArea.fabulousMode = true;
+            showResponse("FABULOUS POWERS ENABLED! (for 1st player)");
         }else if (command.contains("unpause")) {
             player.setPause(false);
             showResponse("Player upaused!");
@@ -356,7 +356,7 @@ class HUD implements java.io.Serializable {
             showResponse("Player is now a ghost.");
         }else if (command.contains("reset") && command.contains("time")) {
             player.restartTimer();
-            showResponse("Called Player.setupTimer(20)");
+            showResponse("Called Player.restartTimer()");
         }else if (command.contains("network") || command.contains("lan")) {
             player.testSendOverNetwork();
             showResponse("Called Player.testSendOverNetwork()");
@@ -387,7 +387,7 @@ class HUD implements java.io.Serializable {
                 showResponse("Dude, give something reasonable");
             }
         } else if (command.contains("addhp") || command.contains("addtater") || command.contains("setResponseTime")) { //no spaces
-            showResponse("No quantity specified.");
+            showResponse("No quantity specified!");
         } else if (command.contains("echo ")) {
             showResponse(command.substring(5));
         } else if (command.startsWith("die") || command.contains("suicide")) {

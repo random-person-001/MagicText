@@ -39,7 +39,6 @@ public class Player extends Mortal implements java.io.Serializable {
     private ItemTracker tracker;
     private HUD hud;
     public String roomName = ""; //Extremely important when we implement saving.
-    private ImageOrg realOrg; // For access to the real window for keybindings
 
     public Color foregroundColor = Color.WHITE;
 
@@ -89,7 +88,6 @@ public class Player extends Mortal implements java.io.Serializable {
     //NO MORE STATS
 
     public boolean dead = false;
-    private int technicolorIndex = 0;
     private int hurtColor = 0;
 
     Item spell1 = new Item("None", "", this);
@@ -99,7 +97,7 @@ public class Player extends Mortal implements java.io.Serializable {
 
     int screenRedness = 0;
     int screenYellowness = 0;
-    boolean hasLocalWindow;
+    private boolean hasLocalWindow;
     private NetworkerServer networkerServer;
 
     /**
@@ -149,27 +147,6 @@ public class Player extends Mortal implements java.io.Serializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    /**
-     * Intended for multiplayer, for instance adding key listeners, something that is now being moved over to network stuff
-     * @return the ImageOrg for the actual physical window that corresponds to the player, something not viable with network.
-     */
-    @Deprecated // Only useful in obsolete implementations of multiplayer
-    public ImageOrg getRealOrg(){
-        if (realOrg == null){ // which is the same as hasLocalWindow
-            return orgo;
-        }
-        return realOrg;
-    }
-
-    /**
-     * Intended for multiplayer, for instance adding key listeners, something that is now being moved over to network stuff
-     * Set the ImageOrg for the actual physical window that corresponds to the player, something not viable with network.
-     */
-    @Deprecated // Only useful in obsolete implementations of multiplayer
-    public void setRealOrg(ImageOrg newRealOrg){
-        realOrg = newRealOrg;
     }
 
     /**
@@ -256,9 +233,6 @@ public class Player extends Mortal implements java.io.Serializable {
      */
     @Override
     public void update() {
-        if (hasLocalWindow){ // Build the image if this is the local player.  Otherwise, somewhere else will.
-            //orgo.getWindow().build(orgo.topDownBuild(getX()-22, getY()-11, username));
-        }
         if (frozen || dead) { // Should be first, so other things don't try to happen first
             System.out.println("Not Updating " + username);
             try {
@@ -283,26 +257,9 @@ public class Player extends Mortal implements java.io.Serializable {
                 manaRegenClock = 0;
             }
 
-            if (screenRedness > 0 || screenYellowness > 0){
-                if (screenRedness > 0) screenRedness --;
-                //This means that higher levels of redness depletes faster
-                if (screenRedness > 200) screenRedness--;
-                if (screenRedness > 100) screenRedness--;
-                if (screenYellowness > 0) screenYellowness--;
-                //System.out.print("The screen is red! | ");
-                int opposite = 255 - screenRedness;
-                int yellowNumber = (int)(opposite * (1-((float)screenYellowness/100)));
-                //System.out.printf("Screen yellow factor: %1$d, (%2$d --> %3$d)\n", screenYellowness, opposite, yellowNumber);
-
-                // convert old Java color thing to Hex color
-                foregroundColor = new Color(255, opposite, yellowNumber);
-                //orgo.getWindow().txtArea.setForeground(new Color(255, opposite, yellowNumber)); // old way
-            }
-
-            resetTime();
+            resetTime(); // time is used for mana regen.
             graphicUpdate();
             aimDispUpdate();
-            updateBackground();
             doMovement();
         }
     }
@@ -412,19 +369,6 @@ public class Player extends Mortal implements java.io.Serializable {
     }
 
     /**
-     * Show the player was damaged.  This will make the player flicker and the text on
-     * the screen to flicker between to be more red than white.  Probably only called after subtractHealth in Mortal.
-     *
-     * @param deathMessage a final string to show lest you have died
-     */
-    void showPain(String deathMessage) {
-        //orgo.editLayer(" ", layerName, 0, 0);
-        hurtColor += 3;
-        lastPainMessage = deathMessage;
-    }
-
-
-    /**
      * Writes a .sav file (of the serialized Player) to a user-defined directory
      * @return whether the saving was successful
      */
@@ -449,7 +393,6 @@ public class Player extends Mortal implements java.io.Serializable {
             return false;
         }
 
-
         try
         {
             FileOutputStream fileOut =
@@ -472,20 +415,34 @@ public class Player extends Mortal implements java.io.Serializable {
 
     @Override
     public void onDeath() {
-        //orgo.getWindow().txtArea.removeKeyListener(playerKeyListener);
         room.compactTextBox(lastPainMessage, "An ominous voice from above", false);
         dead = true;
         room.exitCode = "die";
     }
 
     /**
-     * Update the Player symbol
+     * Update the Player symbol and all the graphic things
      */
     private void graphicUpdate() {
-        //String color = (upPressed|downPressed|leftPressed|rightPressed) ? "66ff66" : "80ff80";
-        //color = (spacePressed) ? "33ff33" : color;
-        //color = (ludicrousSpeed) ? "00b300" : color;
-        SpecialText playerIcon = new SpecialText(" ");
+        if (screenRedness > 0 || screenYellowness > 0){
+            if (screenRedness > 0) screenRedness --;
+            //This means that higher levels of redness depletes faster
+            if (screenRedness > 200) screenRedness--;
+            if (screenRedness > 100) screenRedness--;
+            if (screenYellowness > 0) screenYellowness--;
+            int opposite = 255 - screenRedness;
+            int yellowNumber = (int)(opposite * (1-((float)screenYellowness/100)));
+            //System.out.printf("Screen yellow factor: %1$d, (%2$d --> %3$d)\n", screenYellowness, opposite, yellowNumber);
+
+            foregroundColor = new Color(255, opposite, yellowNumber);
+            //orgo.getWindow().txtArea.setForeground(new Color(255, opposite, yellowNumber)); // old way
+        }
+        if (hasLocalWindow) {
+            orgo.setCam(getX() - 22, getY() - 11);
+            orgo.imageForeground = foregroundColor;
+        }
+
+        SpecialText playerIcon;
         if (!swimming)
             playerIcon = new SpecialText("@",new Color (150, 255, 100));
         else {
@@ -687,39 +644,6 @@ public class Player extends Mortal implements java.io.Serializable {
         }
     }
 
-    private void updateBackground() { // Max is about 15 or 16
-        if (technicolorIndex > 0) { // Update the background color, if you did the supercheat.
-            float r, g, b;
-            r = 0;
-            b = 0;
-            g = 0;
-            // RGB:  001 010 011 100 101 110 111
-            //         1   2   3   4   5   6   7
-            if ((technicolorIndex / 4) % 2 > 0.) {
-                r = .5f;
-            }
-            if ((technicolorIndex / 2) % 2 > 0) { // Uh
-                g = .5f;
-            }
-            if (technicolorIndex % 2 > 0) { // On odds
-                b = .5f;
-            }
-            technicolorIndex--;
-            orgo.getWindow().txtArea.setBackground(new Color(r, g, b));
-        } else if (hurtColor >= 1) {  // update the redness of the screen; more red = more recently hurt more
-            int top = 5;
-            if (hurtColor > top) {
-                hurtColor = top;
-            }
-            float eh = (float) (hurtColor - 1) / top;
-            Color c = new Color(1f - eh / 2, 1f - eh, 1f - eh);
-            orgo.getWindow().txtArea.setForeground(c);
-            hurtColor--;
-        } else {
-            orgo.getWindow().txtArea.setBackground(restingBackground);
-        }
-    }
-
     String getPrimarySpell() {
         return spell1.getIcon();
     }
@@ -749,8 +673,6 @@ public class Player extends Mortal implements java.io.Serializable {
      * @param event a KeyEvent that occurred on the window pertaining to this player.
      */
     public void fireKeyEvent(KeyEvent event) {
-        // TODO: call methods in the Room, HUD, Inventory, etc (probably from here)
-        //System.out.println("Someone pressed a button for "+getUsername()+":" + event.toString());
         if (event.toString().contains("KEY_PRESSED")){
             if (event.getKeyCode() == KeyEvent.VK_UP) {
                 upPressed =  true;
@@ -772,9 +694,9 @@ public class Player extends Mortal implements java.io.Serializable {
             } else {
                 keyPressed(event.getKeyChar());
             }
-            hud.fireKeyEvent(event);
             inv.fireKeyEvent(event);
-            room.fireKeyEvent(event);
+            room.fireKeyEvent(event, getUsername());
+            hud.fireKeyEvent(event);
         }
         else if (event.toString().contains("KEY_RELEASED")) {
             if (event.getKeyCode() == KeyEvent.VK_UP) {

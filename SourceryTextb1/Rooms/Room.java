@@ -586,12 +586,10 @@ public class Room implements java.io.Serializable{
         setObjsPause(true);
         org.addLayer(txtBox);
 
-        Window window = org.getWindow();
         // only bind to relavent user.
         for (Player p : players){
             if (p.getUsername().equals(usernameToShowTo)){
-                window = p.getRealOrg().getWindow();
-                System.out.println("Found legit player to key bind to! " + usernameToShowTo);
+                System.out.println("Binding to " + usernameToShowTo);
             }
             // Also make them not go over the textbox
             Layer playerLayer = org.getLayer(p.getLayerName());
@@ -600,9 +598,6 @@ public class Room implements java.io.Serializable{
 
             Layer iconLayer = org.getLayer(p.getLayerName());
             if (iconLayer != null) iconLayer.setImportance(false);
-        }
-        if (window == null){
-            window = players.get(0).orgo.getWindow();
         }
 
         resume = false;
@@ -616,7 +611,7 @@ public class Room implements java.io.Serializable{
         queueMessage(new FlavorText(message, speaker));
     }
 
-    public void fireKeyEvent(KeyEvent event) {
+    public void fireKeyEvent(KeyEvent event, String playerUsername) {
         if (event.getKeyCode() == KeyEvent.VK_ESCAPE) {
             resume = true;
         }
@@ -705,9 +700,9 @@ public class Room implements java.io.Serializable{
     private class TextBoxListener extends TimerTask {
         public void run(){
             if (resume){
+                cancel();
                 setObjsPause(false);
                 org.removeLayer("Dialog");
-                cancel();
                 for (Player p : players){ // Remake the player layers important.
                     Layer iconLayer = org.getLayer(p.getLayerName());
                     if (iconLayer != null)
