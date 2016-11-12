@@ -30,7 +30,7 @@ class MainMenu {
     private final int ENTER = 3;
 
     private char keyChar = ' ';
-    private String ipString = "";
+    private String ipString = "192.168.0.";
 
     private boolean finished = false;
     private boolean inMultiplayerMenu = false;
@@ -128,7 +128,7 @@ class MainMenu {
      * Multiplayer options screen
      */
     private boolean settingIP = false;
-    private int ipSetXPos = 11;
+    private int ipSetXPos = 11+10;
 
     private void clearIPAddress(){
         ipString = "";

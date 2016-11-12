@@ -23,7 +23,7 @@ public class NetworkClient {
 
     public void main(String serverName) throws IOException {
         w = new Window();
-        w.addKeyListener(kl);
+        w.txtArea.addKeyListener(kl);
         connect(serverName);
         new Timer().scheduleAtFixedRate(updateTask, 4, 200);
     }
@@ -83,6 +83,7 @@ public class NetworkClient {
      */
     private void sendKey(KeyEvent event) throws IOException {
         if (out != null){
+            System.out.println("You pressed a key.  I'll try to send it over.");
             out.writeObject(event);
         }else {
             System.out.println("Bro, I would send this juicy key event ("+event.toString()+") to Kathmandu or wherever" +
