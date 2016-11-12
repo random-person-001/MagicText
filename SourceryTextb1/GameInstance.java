@@ -5,6 +5,7 @@ import SourceryTextb1.GameObjects.PlayerKeyPressListener;
 import SourceryTextb1.Rooms.Room;
 
 import java.awt.*;
+import java.io.IOException;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.ThreadFactory;
@@ -63,6 +64,12 @@ public class GameInstance {
 
     PlayerKeyPressListener requestNewPlayer(){
         Player noob = new Player(playerList.get(0).orgo, playerList.size());
+        try {
+            NetworkerServer server = new NetworkerServer(noob);
+            server.doTimerSend();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         noob.frozen = false;
         noob.roomName = "TutorialBasement";
         PlayerKeyPressListener kl = new PlayerKeyPressListener(noob);

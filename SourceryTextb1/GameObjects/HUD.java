@@ -286,7 +286,7 @@ class HUD implements java.io.Serializable {
      * >ludicrous | fast : toggle player's ludicrousSpeed, which makes you move very very fast.  Ghosting recommended.
      * >ls | pwd : currently not developed.  Later will tell the name of current room.
      * >make me a sandwich : evoke snarky response
-     * >network | lan : be a server on port 8792 and send anyone who connects a serialized ColorTextMatrix
+     * >network | la n : be a server on port 8792 and send anyone who connects a serialized ColorTextMatrix
      * >pointer | compiling | wifi | random : all relevant xkcd comics.
      * >reset timer : reset the GameObject update timer on Player (calls setupTimer(20);)
      * >ser test : Test serializing the player to a .sav file
