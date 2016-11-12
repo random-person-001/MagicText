@@ -57,13 +57,13 @@ public class ColoredTextMatrix extends JPanel{
 
         setFont(new Font("Monospaced", Font.PLAIN, CHAR_SIZE));
 
-        //System.out.println(text[0][0].getStr());
-        if (HOR_MARGIN > 0){
-            g.setColor(new Color(35, 35, 35));
+        if (HOR_MARGIN > 0) {
+            int secondX = HOR_MARGIN + (HOR_SEPARATION * 46);
+            g.setColor(new Color(30, 30, 30));
             g.drawLine(HOR_MARGIN - 1, 0, HOR_MARGIN - 1, getHeight());
-            int secondX = HOR_MARGIN + (HOR_SEPARATION*46);
             g.drawLine(secondX, 0, secondX, getHeight());
         }
+
         for (int col = 0; col < text.length; col++){ //Draws the highlighting / backgrounds first
             for (int row = 0; row < text[0].length; row++){
                 SpecialText get = text[col][row];

@@ -42,6 +42,7 @@ public class PolarBear extends Mortal {
 
 
     int chargeTime = 0;
+    int chargeRechargeTime = 0;
     int biteCooldown = 0;
 
     @Override
@@ -51,15 +52,17 @@ public class PolarBear extends Mortal {
             int dist = Math.abs(x - closestGoodGuy.getX()) + Math.abs(y - closestGoodGuy.getY());
             if (dist <= 1 && biteCooldown <= 0) {
                 closestGoodGuy.subtractHealth(6);
-                //closestGoodGuy.slowedTimer = 300;
+                closestGoodGuy.slowedTimer = 300;
                 biteCooldown = 18;
             }
             if (biteCooldown > 0) biteCooldown -= (chargeTime == 0) ? 1 : 3;
-            if (dist > followDist) {
-                chargeTime = 20;
+            if (dist > followDist || chargeRechargeTime > 5) {
+                chargeTime = 40;
+                chargeRechargeTime = 0;
             }
             pathToPos(followDist, closestGoodGuy.getX(), closestGoodGuy.getY());
             if (chargeTime > 0) chargeTime--;
+            else chargeRechargeTime++;
             resetTime();
             setDispIcon(new SpecialText("B", new Color(235, 215, 255)));
         }

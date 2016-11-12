@@ -229,6 +229,8 @@ public class TutorialBasement extends Room {
         Layer lay1 = new Layer(base, "Test", 0, 0, true, false, false);
         org.addLayer(lay1);
 
+        //org.roomBackground = new Color(15, 60, 15);
+
         genericRoomInitialize();
     }
 }
