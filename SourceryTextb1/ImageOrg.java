@@ -340,17 +340,6 @@ public class ImageOrg implements java.io.Serializable {
 
     private void newSendImage() {
         try {
-            //if (somethingChanged) {
-            //System.out.println("New Frame...");
-            //long nanoTime = System.nanoTime();
-            boolean doOutput = toAdd.size() > 0 || toRemove.size() > 0;
-            String changeList = String.format("- Org -\n[%1$d] Layers Added:   ", layerChangeInstance);
-            changeList += addTheLayers();
-            changeList += removeTheLayers();
-            if (doOutput) {
-                System.out.println(changeList + "\n");
-                layerChangeInstance++;
-            }
             window.build(topDownBuild(camX, camY, owningPlayerUsername));
         } catch (ConcurrentModificationException ignore) {
         }// Cuz it'll be fixed next time probs.
@@ -364,6 +353,14 @@ public class ImageOrg implements java.io.Serializable {
     }
 
     public Layer topDownBuild(int camX, int camY, String owningPlayerUsername) {
+        boolean doOutput = toAdd.size() > 0 || toRemove.size() > 0;
+        String changeList = String.format("- Org -\n[%1$d] Layers Added:   ", layerChangeInstance);
+        changeList += addTheLayers();
+        changeList += removeTheLayers();
+        if (doOutput) {
+            System.out.println(changeList + "\n");
+            layerChangeInstance++;
+        }
         Layer fullImage = new Layer(new String[screenH()][screenW()]);
         fullImage.clear(roomBackground);
         int camYtoBe = camX;
@@ -375,21 +372,23 @@ public class ImageOrg implements java.io.Serializable {
             for (int col = 0; col < maxW; col++) {
                 for (int ii = layers.size(); ii > 0; ii--) { //At each coordinate, goes through all layers until an opaque space is found
                     Layer layer = layers.get(ii - 1);
-                    int xPos = row - layer.getX();
-                    int yPos = col - layer.getY(); //Math done to find out what portion of the layer corresponds with the screen coordinate
-                    if (layer.getCamOb()) {
-                        xPos += camX;
-                        yPos += camY;
-                    }
-                    SpecialText found = layer.getSpecTxt(xPos, yPos); //Gets SpecialText from derived layer coordinate
-                    String input = found.getStr(); //Gets string from SpecialText to make code easier to read
-                    if (found.isSignificant() && (layer.getRelaventPlayerUsername() == null || layer.getRelaventPlayerUsername().equals(owningPlayerUsername))) { //If the SpecialText isn't blank
-                        if ("ñ".equals(input)) { //If space found was opaque
-                            fullImage.setSpecTxt(row, col, new SpecialText(" "));
-                        } else { //Otherwise, place found SpecialText
-                            fullImage.setSpecTxt(row, col, found);
+                    if (layer != null) {
+                        int xPos = row - layer.getX();
+                        int yPos = col - layer.getY(); //Math done to find out what portion of the layer corresponds with the screen coordinate
+                        if (layer.getCamOb()) {
+                            xPos += camX;
+                            yPos += camY;
                         }
-                        ii = 0; //Ends search at the coordinate and moves onto the next coordinate
+                        SpecialText found = layer.getSpecTxt(xPos, yPos); //Gets SpecialText from derived layer coordinate
+                        String input = found.getStr(); //Gets string from SpecialText to make code easier to read
+                        if (found.isSignificant() && (layer.getRelaventPlayerUsername() == null || layer.getRelaventPlayerUsername().equals(owningPlayerUsername))) { //If the SpecialText isn't blank
+                            if ("ñ".equals(input)) { //If space found was opaque
+                                fullImage.setSpecTxt(row, col, new SpecialText(" "));
+                            } else { //Otherwise, place found SpecialText
+                                fullImage.setSpecTxt(row, col, found);
+                            }
+                            ii = 0; //Ends search at the coordinate and moves onto the next coordinate
+                        }
                     }
                 }
             }
