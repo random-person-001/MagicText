@@ -175,8 +175,8 @@ class MainMenu {
                         clearIPAddress();
                     }
                     if (cursorY == 12){ //Runs client connection based on entered ip address
-                        System.out.println("Requesting connection to Sourcery Text server at \"192.168.0.250\"");
-                        starter.doNetworkClient("192.168.0.250");
+                        System.out.println("Requesting connection to Sourcery Text server at \""+ipString+"\"");
+                        starter.doNetworkClient(ipString);
                     }
                     if (cursorY == 13){ //Go back to multiplayer top menu.
                         clearIPAddress();

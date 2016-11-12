@@ -62,7 +62,7 @@ public class GameInstance {
         return null;
     }
 
-    PlayerKeyPressListener requestNewPlayer(){
+    Player requestNewPlayer(){
         Player noob = new Player(playerList.get(0).orgo, playerList.size());
         try {
             NetworkerServer server = new NetworkerServer(noob);
@@ -72,8 +72,7 @@ public class GameInstance {
         }
         noob.frozen = false;
         noob.roomName = "TutorialBasement";
-        PlayerKeyPressListener kl = new PlayerKeyPressListener(noob);
         playerList.add(noob);
-        return kl;
+        return noob;
     }
 }

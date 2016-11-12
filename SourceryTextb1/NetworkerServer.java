@@ -12,7 +12,7 @@ import java.util.TimerTask;
  * Created by riley on 05-Nov-2016.
  */
 public class NetworkerServer {
-    private int PORT = 8792;
+    private int PORT = 8793;
     private ServerSocket serverSocket;
     private Updater updaterTask = new Updater();
     private Socket server = new Socket();

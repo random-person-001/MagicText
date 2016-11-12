@@ -1,5 +1,6 @@
 package SourceryTextb1;
 
+import SourceryTextb1.GameObjects.Player;
 import SourceryTextb1.GameObjects.PlayerKeyPressListener;
 
 import java.io.IOException;
@@ -20,12 +21,11 @@ public class SlaveGameInstance {
 
     public void runGameAsSlaveTo(GameInstance master) {
         masterInstance = master;
-        PlayerKeyPressListener kl = masterInstance.requestNewPlayer();
-        org.getWindow().txtArea.addKeyListener(kl);
-        kl.player.setRealOrg(org);
-        System.out.println(kl.getPlayerUsername());
+        Player me = masterInstance.requestNewPlayer();
+        //org.getWindow().txtArea.addKeyListener(kl);
+        System.out.println(me.getUsername());
         try {
-            NetworkerServer networkerServer = new NetworkerServer(kl.player);
+            NetworkerServer networkerServer = new NetworkerServer(me);
             networkerServer.doTimerSend();
         } catch (IOException e) {
             e.printStackTrace();

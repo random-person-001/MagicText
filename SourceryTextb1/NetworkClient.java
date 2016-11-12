@@ -13,7 +13,7 @@ import java.util.TimerTask;
  * Created by riley on 05-Nov-2016.
  */
 public class NetworkClient {
-    private int port = 8792;
+    private int port = 8793;
     private Window w = null;
     private Socket client = null;
     private ObjectInputStream in = null;
