@@ -161,11 +161,12 @@ class MainMenu {
                     }
                     if (cursorY == 6){ //Jumps to ip address submenu
                         Layer ipSetLayer = new Layer(Art.strToArray(new Art().ipSetMenu,true), "IP_ENTER_MENU", 10, 10);
-                        org.addLayer(ipSetLayer);
                         
-                        for (int ii = 0 ; ii < 13; ii++){
-                            org.editLayer(String.valueOf(ipString.charAt(ii)), "IP_ENTER_MENU", 0, 11+ii);
+                        for (int ii = 0 ; ii < ipString.length(); ii++){
+                            ipSetLayer.setStr(0, ii+11, String.valueOf(ipString.charAt(ii)))  ;
                         }
+
+                        org.addLayer(ipSetLayer);
                         settingIP = true;
                         cursorY = 10;
                         cursorX = 10;
@@ -184,7 +185,6 @@ class MainMenu {
                         starter.doNetworkClient(ipString);
                     }
                     if (cursorY == 13){ //Go back to multiplayer top menu.
-                        clearIPAddress();
                         org.removeLayer("IP_ENTER_MENU");
                         settingIP = false;
                         cursorY = 5;

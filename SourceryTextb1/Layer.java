@@ -23,6 +23,8 @@ public class Layer implements java.io.Serializable {
     private boolean importance = false;
     private String owningPlayerUsername;
 
+    public String imageOrgOperation;
+
 
     // Layers should be any size
 
