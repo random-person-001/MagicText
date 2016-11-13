@@ -234,7 +234,7 @@ public class Player extends Mortal implements java.io.Serializable {
     @Override
     public void update() {
         if (frozen || dead) { // Should be first, so other things don't try to happen first
-            System.out.println("Not Updating " + username);
+            //System.out.println("Not Updating " + username);
             try {
                 if (dead) {
                     onDeath();

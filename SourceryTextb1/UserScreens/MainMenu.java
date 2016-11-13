@@ -81,8 +81,7 @@ class MainMenu {
                         starter.newGame(1);
                     }
                     if (cursorY == 10) {
-                        org.editLayer(" ", "MAIN_MENU", cursorY, 24);
-                        org.removeLayer("MAIN_MENU");
+                        //org.editLayer(" ", "MAIN_MENU", cursorY, 24);
                         Layer multiplayerLayer = new Layer(Art.strToArray(new Art().multiplayerMenu,true), "MULTIPLAYER_MENU");
                         org.addLayer(multiplayerLayer);
                         window.txtArea.addKeyListener(keyInputter); // Cuz we removed it before
@@ -106,10 +105,12 @@ class MainMenu {
                     if (cursorY == 13) {
                         System.exit(0);
                     }
+                    /*
                     if (!finished) {
                         org.addLayer(orig);
                         window.txtArea.addKeyListener(keyInputter);
                     }
+                    */
                     keyCode = 0;
             }
             keyCode = 0;

@@ -246,14 +246,14 @@ class Inventory implements java.io.Serializable {
         menuID = EXIT;
         infoLayer.clear();
         selectorLayer.clear();
-        org.removeLayer(topMenuLayer);
-        org.removeLayer(quitMenuLayer);
-        org.removeLayer(itemsMenuLayer);
-        org.removeLayer(equipMenuLayer);
-        org.removeLayer(taterMenuLayer);
-        org.removeLayer(spellsMenuLayer);
-        org.removeLayer(infoLayer);
-        org.removeLayer(selectorLayer);
+        org.removeLayer("top" + player.getUsername());
+        org.removeLayer("quit" + player.getUsername());
+        org.removeLayer("items" + player.getUsername());
+        org.removeLayer("equip" + player.getUsername());
+        org.removeLayer("tater" + player.getUsername());
+        org.removeLayer("spells" + player.getUsername());
+        org.removeLayer("invInfo" + player.getUsername());
+        org.removeLayer("selector" + player.getUsername());
         player.resetMovement();
     }
 
@@ -744,8 +744,8 @@ class Inventory implements java.io.Serializable {
     private class MenuTimer extends TimerTask{
         public void run(){
             if (menuID == EXIT){
-                org.removeLayer(selectorLayer);
-                org.removeLayer(topMenuLayer);
+                org.removeLayer("selector");
+                org.removeLayer("invInfo");
                 player.frozen = false;
                 player.resetMovement();
                 System.out.println("Exiting menu through top menu....");
