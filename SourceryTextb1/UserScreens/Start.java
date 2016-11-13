@@ -328,12 +328,12 @@ public class Start {
             for (int i=1; i<numPlayers; i++) {
                 System.out.println("Adding multiplayer player #"+i);
                 SlaveGameInstance instance = new SlaveGameInstance(master);
-                new Timer().schedule(new TimerTask() {
+                new Thread(new Runnable() {
                     @Override
                     public void run() {
                         instance.runGameAsSlave();
                     }
-                }, 110);
+                }).start();
             }
 
             // Only return from method when game finished.
