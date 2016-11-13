@@ -162,6 +162,10 @@ class MainMenu {
                     if (cursorY == 6){ //Jumps to ip address submenu
                         Layer ipSetLayer = new Layer(Art.strToArray(new Art().ipSetMenu,true), "IP_ENTER_MENU", 10, 10);
                         org.addLayer(ipSetLayer);
+                        
+                        for (int ii = 0 ; ii < 13; ii++){
+                            org.editLayer(String.valueOf(ipString.charAt(ii)), "IP_ENTER_MENU", 0, 11+ii);
+                        }
                         settingIP = true;
                         cursorY = 10;
                         cursorX = 10;
