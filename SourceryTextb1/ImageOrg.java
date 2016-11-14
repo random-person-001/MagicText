@@ -20,11 +20,11 @@ public class ImageOrg implements java.io.Serializable {
     private Window window;
     private ArrayList<Layer> layers = new ArrayList<>();
     private ArrayList<Layer> importantLayers = new ArrayList<>();
-    private ArrayList<Layer> toAdd = new ArrayList<>();
-    private ArrayList<Layer> toRemove = new ArrayList<>();
 
     private ArrayList<Layer> operationList = new ArrayList<>();
+    private ArrayList<Layer> operationBuffer = new ArrayList<>();
     private boolean layerOpLock = false;
+    private int layerOpWait = 0; //Integer representing the amount of non-doLayerOperations actions are being currently executed
 
     private int camX = 0;
     private int camY = 0;
@@ -56,9 +56,6 @@ public class ImageOrg implements java.io.Serializable {
     public ArrayList<Layer> getLayers(){
         return layers;
     }
-    public void setLayers(ArrayList<Layer> setLayers){
-        layers = setLayers;
-    }
 
     public void resetClock() {
         try {
@@ -83,78 +80,19 @@ public class ImageOrg implements java.io.Serializable {
      * @param lay a Layer to be known about by everything
      */
     public void addLayer(Layer lay) {
+        while(layerOpLock){
+            try{
+                Thread.sleep(5);
+            } catch (InterruptedException e){
+                e.printStackTrace();
+            }
+        }
         lay.imageOrgOperation = "add";
         operationList.add(lay);
     }
 
-    private String addTheLayers() {
-        return addTheLayers(true);
-    }
-
-    private String addTheLayers(boolean reorderImportant) {
-        String addList = "";
-        for (Layer lay : toAdd) {
-            if (!lay.getImportance())
-                layers.add(lay);
-            else
-                importantLayers.add(lay);
-            addList += lay.getName() + " ";
-            //System.out.println("Adding: " + lay.getName());
-        }
-        //if (reorderImportant && !toAdd.isEmpty()) {
-        //    moveImportantLayersUp();
-        //}
-        toAdd.clear();
-        return addList;
-    }
-
-    private String removeTheLayers() {
-        String output = String.format("\n[%1$d] Layers Removed: ", layerChangeInstance);
-        for (Layer lay : toRemove) {
-            layers.remove(lay);
-            output += lay.getName() + " ";
-        }
-        toRemove.clear();
-        return output;
-    }
-
     public boolean getDebug() {
         return debugGame;
-    }
-
-    /**
-     * Reorder the list of layers to observe each one's <>importance</>  Probably doesn't work yet!
-     */
-    private void updateOrder() {
-        //throw new OperationNotSupportedException
-        for (Layer get : layers) {
-            if (get.getImportance()) {
-                //System.out.println("Moving: " + get.getName() + " (from " + layers.indexOf(get) + " of " + layers.size() + ")");
-                removeLayer(get.getName());
-                addLayer(get);
-            }
-        }
-    }
-
-    /**
-     * Example bubble sorter, for writing updateOrder() off of
-     *
-     * @param x array to sort
-     */
-    public void sortArray(int[] x) {
-        boolean swapped = true;
-        while (swapped) {
-            swapped = false;
-            for (int i = 1; i < x.length; i++) {
-                int temp = 0;
-                if (x[i - 1] > x[i]) {
-                    temp = x[i - 1];
-                    x[i - 1] = x[i];
-                    x[i] = temp;
-                    swapped = true;
-                }
-            }
-        }
     }
 
     /**
@@ -171,14 +109,20 @@ public class ImageOrg implements java.io.Serializable {
                 e.printStackTrace();
             }
         }
-        for (Layer lay1 : layers){
-            if (lay1 != null && lay1.getName().equals(layerName))
+        for (int i = layers.size() - 1; i >= 0; i--) {
+            Layer lay1 = layers.get(i);
+            if (lay1 != null && lay1.getName().equals(layerName)) {
                 return lay1;
+            }
         }
-        for (Layer lay2 : importantLayers){
-            if (lay2 != null && lay2.getName().equals(layerName))
+        for (int i = importantLayers.size() - 1; i >= 0; i--) {
+            Layer lay2 = importantLayers.get(i);
+            if (lay2 != null && lay2.getName().equals(layerName)) {
+                
                 return lay2;
+            }
         }
+        
         return null;
     }
 
@@ -188,30 +132,67 @@ public class ImageOrg implements java.io.Serializable {
      * @param layerName what the Layer's name is
      */
     public void removeLayer(String layerName) {
-        while(layerOpLock){
-            try {
-                Thread.sleep(5);
-            } catch (InterruptedException e){
-                e.printStackTrace();
-            }
-        }
+        ArrayList<Layer> opStack = operationList;
+        if (layerOpLock)
+            opStack = operationBuffer;
         boolean layerFound = false;
-        for (Layer get : layers) {
+        
+        for (int i = layers.size() - 1; i >= 0; i--) {
+            Layer get = layers.get(i);
             if (get.nameMatches(layerName)) {
                 get.imageOrgOperation = "remove";
-                operationList.add(get);
+                opStack.add(get);
                 layerFound = true;
             }
         }
-        for (Layer get : importantLayers) {
+        for (int i = importantLayers.size() - 1; i >= 0; i--) {
+            Layer get = importantLayers.get(i);
             if (get.nameMatches(layerName)) {
                 get.imageOrgOperation = "remove";
-                operationList.add(get);
+                opStack.add(get);
                 layerFound = true;
             }
         }
+        
         if (!layerFound)
             System.out.printf("Layer not found for remove: \"%1$s\"\n", layerName);
+    }
+
+    public void removeLayer(Layer layer) {
+        removeLayer(layer.getName());
+    }
+
+    /**
+     * Change the importance of a layer by its String name.
+     *
+     * @param layerName what the Layer's name is
+     */
+    public void setLayerImportance(String layerName, boolean set) {
+        ArrayList<Layer> opStack = operationList;
+        if (layerOpLock)
+            opStack = operationBuffer;
+        boolean layerFound = false;
+        for (int i = layers.size() - 1; i >= 0; i--) {
+            Layer get = layers.get(i);
+            if (get.nameMatches(layerName)) {
+                get.imageOrgOperation = "importance";
+                get.setImportance(set);
+                opStack.add(get);
+                layerFound = true;
+            }
+        }
+        for (int i = importantLayers.size() - 1; i >= 0; i--) {
+            Layer get = importantLayers.get(i);
+            if (get.nameMatches(layerName)) {
+                get.imageOrgOperation = "importance";
+                get.setImportance(set);
+                opStack.add(get);
+                layerFound = true;
+            }
+        }
+        
+        if (!layerFound)
+            System.out.printf("Layer not found for importance change: \"%1$s\"\n", layerName);
     }
 
     /**
@@ -233,6 +214,17 @@ public class ImageOrg implements java.io.Serializable {
                     importantLayers.remove(op);
                     if (doOutput) opManifest += (String.format(": - %1$s ", op.getName()));
                     break;
+                case "importance":
+                    if (op.getImportance()){
+                        layers.remove(op);
+                        importantLayers.add(op);
+                        if (doOutput) opManifest += (String.format(": ↑ %1$s ", op.getName()));
+                    } else {
+                        layers.add(op);
+                        importantLayers.remove(op);
+                        if (doOutput) opManifest += (String.format(": ↓ %1$s ", op.getName()));
+                    }
+                    break;
                 default: //Should never happen, but it's here in case it does.
                     System.out.printf("A null layer operation! (\"%1$s\")", op.getName());
                     break;
@@ -240,6 +232,8 @@ public class ImageOrg implements java.io.Serializable {
         }
         layerOpLock = false;
         operationList.clear();
+        operationList.addAll(operationBuffer);
+        operationBuffer.clear();
         if (doOutput) {
             System.out.println(opManifest + "\n");
             layerChangeInstance++;
@@ -255,10 +249,8 @@ public class ImageOrg implements java.io.Serializable {
      * @param x         the X coordinate which you want to change something at
      */
     public void editLayer(String input, String layerName, int y, int x) {
-        int loc = getPosLayer(layerName);
-        if (loc != -1) {
-            editLayer(input, layers.get(loc), y, x);
-        }
+        SpecialText translate = new SpecialText(input);
+        editLayer(translate, layerName, y, x);
     }
 
     /**
@@ -286,7 +278,7 @@ public class ImageOrg implements java.io.Serializable {
     public void editLayer(SpecialText input, String layerName, int y, int x) {
         Layer get = getLayer(layerName);
         if (get != null)
-            editLayer(input, get, y, x);
+            get.setSpecTxt(y, x, input);
         else
             System.out.printf("Null Layer called: \"%1$s\"\n", layerName);
     }
@@ -333,23 +325,6 @@ public class ImageOrg implements java.io.Serializable {
 
     public int getCamY() {
         return camY;
-    }
-
-    /**
-     * Specifying a Layer name (String), return the index of that layer
-     *
-     * @param layerName string that the Layer calls its own
-     * @return index of the Layer you're looking for
-     */
-    public int getPosLayer(String layerName) {
-        int result = -1;
-        for (int id = 0; id < layers.size(); id++) {
-            Layer get = layers.get(id);
-            if (get != null && get.nameMatches(layerName)) {
-                result = id;
-            }
-        }
-        return result;
     }
 
     /**
@@ -412,6 +387,8 @@ public class ImageOrg implements java.io.Serializable {
     public Layer topDownBuild(int camX, int camY, String owningPlayerUsername, Color foregroundColor) {
         //Update layer order to minimize nonexistant layers
         doLayerOperations();
+        //printLayers();
+        //System.out.println(layerOpWait);
 
         ArrayList<Layer> allLayers = layers;
         allLayers.addAll(importantLayers);
@@ -485,7 +462,7 @@ public class ImageOrg implements java.io.Serializable {
     }
 
     public void printLayers() {
-        System.out.print("Current layers: ");
+        System.out.printf("Current layers (Size: %1$d) ", layers.size());
         for (int ii = 0; ii < layers.size(); ii++) {
             System.out.print(layers.get(ii).getName());
             if (ii != layers.size() - 1) {
@@ -494,10 +471,6 @@ public class ImageOrg implements java.io.Serializable {
                 System.out.print("\n");
             }
         }
-    }
-
-    public void removeLayer(Layer layer) {
-        layers.remove(layer);
     }
 
     public String getOwningPlayerUsername() {

@@ -592,12 +592,7 @@ public class Room implements java.io.Serializable{
                 System.out.println("Binding to " + usernameToShowTo);
             }
             // Also make them not go over the textbox
-            Layer playerLayer = org.getLayer(p.getLayerName());
-            if (playerLayer != null)
-                org.getLayer(p.getLayerName()).setImportance(false);
-
-            Layer iconLayer = org.getLayer(p.getLayerName());
-            if (iconLayer != null) iconLayer.setImportance(false);
+            org.setLayerImportance(p.getLayerName(), false);
         }
 
         resume = false;
@@ -704,9 +699,7 @@ public class Room implements java.io.Serializable{
                 setObjsPause(false);
                 org.removeLayer("Dialog");
                 for (Player p : players){ // Remake the player layers important.
-                    Layer iconLayer = org.getLayer(p.getLayerName());
-                    if (iconLayer != null)
-                        iconLayer.setImportance(true);
+                    org.setLayerImportance(p.getLayerName(), true);
                 }
                 if (messageQueue.size() > 0){
                     messageQueue.remove(messageQueue.get(0));

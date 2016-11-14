@@ -219,7 +219,7 @@ class Inventory implements java.io.Serializable {
         System.out.println("Bringing up menu...");
         org = player.orgo; // Update the org (cuz it changes based on room now)
         player.frozen = true;
-        org.getLayers().stream().filter(lay -> lay.name.contains("playerLayer")).forEach(lay -> lay.setImportance(false));
+        org.getLayers().stream().filter(lay -> lay.getName().contains("playerLayer")).forEach(lay -> org.setLayerImportance(lay.getName(), false));
         //player.room.setObjsPause(true);
 
         updateCursor = true;
@@ -555,12 +555,12 @@ class Inventory implements java.io.Serializable {
     private void dispInt(int value, int x, int y, boolean includeZero, Color txtColor) {
         String disp = String.valueOf(value);
         if (!disp.equals("0") || includeZero) {
-            org.editLayer(new SpecialText(String.valueOf(disp.charAt(0)), txtColor), equipMenuLayer, y, x);
+            org.editLayer(new SpecialText(String.valueOf(disp.charAt(0)), txtColor), equipMenuLayer.getName(), y, x);
         } else {
-            org.editLayer(" ", equipMenuLayer, y, x);
+            org.editLayer(" ", equipMenuLayer.getName(), y, x);
         }
         if (disp.length() > 1) {
-            org.editLayer(new SpecialText(String.valueOf(disp.charAt(1)), txtColor), equipMenuLayer, y, x + 1);
+            org.editLayer(new SpecialText(String.valueOf(disp.charAt(1)), txtColor), equipMenuLayer.getName(), y, x + 1);
         }
     }
 
@@ -671,11 +671,11 @@ class Inventory implements java.io.Serializable {
         int iter = 0;
         for (int iii = 0; iii < text.length(); iii++) {
             SpecialText toPut = new SpecialText(String.valueOf(text.charAt(iii)), toDrawWith);
-            org.editLayer(toPut, infoLayer, yStart, xStart + iii);
+            org.editLayer(toPut, infoLayer.getName(), yStart, xStart + iii);
             iter++;
         }
         for (int iif = iter; iif < maxLength; iif++){ //Fixes string by concatenating blank spaces until maxLength
-            org.editLayer(" ", infoLayer, yStart, xStart + iif);
+            org.editLayer(" ", infoLayer.getName(), yStart, xStart + iif);
         }
     }
 
@@ -749,7 +749,7 @@ class Inventory implements java.io.Serializable {
                 player.frozen = false;
                 player.resetMovement();
                 System.out.println("Exiting menu through top menu....");
-                org.getLayers().stream().filter(lay -> lay.name.contains("playerLayer")).forEach(lay -> lay.setImportance(true));
+                org.getLayers().stream().filter(lay -> lay.name.contains("playerLayer")).forEach(lay -> org.setLayerImportance(lay.getName(), true));
                 player.room.setObjsPause(false);
                 menuID = NEUTRAL;
             } else {

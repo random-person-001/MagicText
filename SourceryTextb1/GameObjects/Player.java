@@ -197,15 +197,16 @@ public class Player extends Mortal implements java.io.Serializable {
     private void addPlayerLayers() {
         // Add hud layer
         System.out.println("Adding HUD for " + username);
-        Layer HUDd = new Layer(new String[1][70], "HUD_of_" + username, false, true);
-        HUDd.setImportance(true);
+        String hudLayerName = "HUD_OF_" + username;
+        Layer HUDd = new Layer(new String[1][70], hudLayerName, false, true);
+        orgo.setLayerImportance(hudLayerName, true);
         HUDd.setOwningPlayerUsername(username);
         orgo.addLayer(HUDd);
         hud.setLayerName(HUDd.name);
 
         // Add player layer
         Layer playerLayer = new Layer(new String[3][3], layerName);
-        playerLayer.setImportance(true);
+        orgo.setLayerImportance(layerName, true);
         orgo.addLayer(playerLayer);
 
         // Add aim display layer
