@@ -15,6 +15,7 @@ import SourceryTextb1.Rooms.Room;
 import java.io.IOException;
 import java.util.*;
 import java.awt.Color;
+import java.util.concurrent.RunnableFuture;
 
 /**
  * Main class of MagicText, where everything starts.
@@ -317,23 +318,13 @@ public class Start {
             player.roomName = "TutorialBasement";
             playerList.add(player);
             GameInstance master = new GameInstance(initializeZone1Rooms(player),player);
-            new Timer().schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    master.runGame();
-                }
-            }, 310);
+            new Thread(master::runGame).start();
 
             // For multiplayer
             for (int i=1; i<numPlayers; i++) {
                 System.out.println("Adding multiplayer player #"+i);
                 SlaveGameInstance instance = new SlaveGameInstance(master);
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        instance.runGameAsSlave();
-                    }
-                }).start();
+                new Thread(instance::runGameAsSlave).start();
             }
 
             // Only return from method when game finished.
@@ -351,9 +342,6 @@ public class Start {
         }
 
         void buildGame(Player imported){
-            //roomID = imported.roomName;
-            //System.out.println(Start.roomID);
-            Player player = imported;
             playerList = new ArrayList<>();
             playerList.add(imported);
             imported.orgo.setWindow(Start.game); // hopefully doesn't kill anything
@@ -361,8 +349,8 @@ public class Start {
             org = imported.orgo;
             org.resetClock();
             org.printLayers();
-            player.resumeFromSave();
-            GameInstance i = new GameInstance(initializeZone1Rooms(player), player);
+            imported.resumeFromSave();
+            GameInstance i = new GameInstance(initializeZone1Rooms(imported), imported);
             i.runGame();
         }
 
