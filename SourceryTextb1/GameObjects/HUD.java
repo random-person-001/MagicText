@@ -50,7 +50,7 @@ class HUD implements java.io.Serializable {
         setupTimer(100);
     }
 
-    void setOrgo(ImageOrg newOrg){
+    void setOrg(ImageOrg newOrg){
         orgo = newOrg;
     }
 

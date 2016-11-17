@@ -29,6 +29,9 @@ public class IceCaves extends Room{
         while (exitCode.equals("")){
             try {
                 Thread.sleep(20);
+                if (play.getY() == 37){
+                    setNewRoom("SnowyPeak", play, 8, 179);
+                }
                 if (count == 0){
                     if (playo.getX() == 109 && playo.getY() == 10) {
                         queueMessage(new FlavorText("Most capital letters (ex: A, B, C..) out in\n the world have flavor text \n accessible through the 'F' key", ""));

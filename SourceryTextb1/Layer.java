@@ -329,6 +329,14 @@ public class Layer implements java.io.Serializable {
         }
     }
 
+    public String toString(){
+        String output = name;
+        output += " (" + imageOrgOperation + ")";
+        return output;
+    }
+
+    public boolean equals(Object other){ return name == ((Layer)other).getName(); }
+
     public void setX(int x) {
         xPos = x;
     }

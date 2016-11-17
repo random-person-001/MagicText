@@ -127,7 +127,7 @@ public class Player extends Mortal implements java.io.Serializable {
         tracker = new ItemTracker();
 
         hud = new HUD(this);
-        hud.setOrgo(orgo);
+        hud.setOrg(orgo);
         resumeFromSave();
     }
 
@@ -185,12 +185,12 @@ public class Player extends Mortal implements java.io.Serializable {
         // Clean up from old room
         orgo.removeLayer(layerName);
         orgo.removeLayer(aimDispName);
-        orgo.removeLayer("HUD_of_" + username);
+        //orgo.setLayerImportance("HUD_of_" + username, true);
         //Set new room
         room = newRoom;
         //Update everybody's orgs
         orgo = room.org;
-        hud.setOrgo(orgo);
+        hud.setOrg(orgo);
         // Add the player layers to this room
         addPlayerLayers();
         if (hasLocalWindow) {
@@ -206,10 +206,10 @@ public class Player extends Mortal implements java.io.Serializable {
         // Add hud layer
         System.out.println("Adding HUD for " + username);
         String hudLayerName = "HUD_OF_" + username;
-        Layer HUDd = new Layer(new String[1][70], hudLayerName, false, true);
-        orgo.setLayerImportance(hudLayerName, true);
+        Layer HUDd = new Layer(new String[1][70], hudLayerName, 0, 0, false, true, true);
         HUDd.setOwningPlayerUsername(username);
         orgo.addLayer(HUDd);
+
         hud.setLayerName(HUDd.name);
 
         // Add player layer

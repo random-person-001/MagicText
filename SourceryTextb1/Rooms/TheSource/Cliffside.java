@@ -36,14 +36,6 @@ public class Cliffside extends Room {
                     // ^ This should be an item in The Mines of Mementos
                     count++;
                 }
-                if (baseLayer.getStr(play.getY(), play.getX()).equals(".")){ // Walking the critical edge
-                    play.subtractHealth(1, "Do.  Not.  Walk.  The critical edge.");
-                    if (!warnedOfEdge) {
-                        compactTextBox("Don't walk the critical edge!", "", false, play.getUsername());
-                        warnedOfEdge = true;
-                    }
-                }
-                enemies.forEach(this::checkMortalBelowEdge); // OK, intelliJ.  Sure.
                 if (play.getY() < 1 && play.getX() < 20){
                     setNewRoom("SourcePit", play, 42, 57);
                 }
@@ -60,20 +52,6 @@ public class Cliffside extends Room {
             }
         }
         return exitCode;
-    }
-
-    private void checkMortalBelowEdge(Mortal m){
-        int numberOfDotsAbove = 0;
-        for (int i=0; i<m.getY(); i++){
-            if (baseLayer.getStr(i, m.getX()).equals(".")){
-                System.out.println("You're below the edge");
-                numberOfDotsAbove ++;
-            }
-        }
-        if (numberOfDotsAbove % 2 == 1) {
-            m.goTo(m.getX(), m.getY() + 2);
-            m.subtractHealth(3, "You fell off of a cliff!");
-        }
     }
 
     /**
