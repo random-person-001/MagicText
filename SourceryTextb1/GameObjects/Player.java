@@ -98,7 +98,7 @@ public class Player extends Mortal implements java.io.Serializable {
     int screenRedness = 0;
     int screenYellowness = 0;
     private boolean hasLocalWindow;
-    private NetworkerServer networkerServer;
+    private NetworkServer networkServer;
 
     // Fabulous mode variables
     public boolean fabulousMode = false;
@@ -132,12 +132,12 @@ public class Player extends Mortal implements java.io.Serializable {
     }
 
     /**
-     * Initialize a new NetworkerServer and start its doTimerSend() method, which sends display information to clients.
+     * Initialize a new NetworkServer and start its doTimerSend() method, which sends display information to clients.
      */
     void testSendOverNetwork() {
         try {
-            networkerServer = new NetworkerServer(this);
-            networkerServer.doTimerSend();
+            networkServer = new NetworkServer(this);
+            networkServer.doTimerSend();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -148,7 +148,7 @@ public class Player extends Mortal implements java.io.Serializable {
      */
     void cancelSendOverNetwork(){
         try {
-            networkerServer.disconnect();
+            networkServer.disconnect();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -615,11 +615,7 @@ public class Player extends Mortal implements java.io.Serializable {
      * the level next to you.
      */
     private void textBoxQuery() {
-        room.queryForText(getX() - 1, getY(), username);
-        room.queryForText(getX() + 1, getY(), username);
-        room.queryForText(getX(), getY() - 1, username);
-        room.queryForText(getX(), getY() + 1, username);
-        room.queryForText(getX(), getY(), username);
+        room.inspectAt(x, y, this);
     }
 
     private void newCastSpell(Item spell) {
@@ -699,7 +695,7 @@ public class Player extends Mortal implements java.io.Serializable {
     }
 
     /**
-     * This is the place where incoming key events go from faraway windows.  This method is called by the NetworkerServer.
+     * This is the place where incoming key events go from faraway windows.  This method is called by the NetworkServer.
      * This method runs even when the player is paused or frozen, as the network stops for no-one.
      * @param event a KeyEvent that occurred on the window pertaining to this player.
      */

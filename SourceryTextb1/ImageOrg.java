@@ -226,40 +226,41 @@ public class ImageOrg implements java.io.Serializable {
         String opManifest = String.format("- Org -\n[%1$d] Layer Op's", layerChangeInstance);
 
         for (Layer op : operationList){ //Now for the actual layer operations; works like a stack
-            switch(op.imageOrgOperation){
-                case "add": //If the layer in question should be added
-                    if (op.getImportance() && !importantLayerExists(op.getName())) {
-                        System.out.println("SIR, we have a new refined guest, called " + op.getName());
-                        importantLayers.add(op);
-                    }
-                    else if (!op.getImportance() && !unimportantLayerExists(op.getName())) {
-                        layers.add(op);
-                    }
-                    opManifest += (String.format(": + %1$s ", op.getName()));
-                    break;
-                case "remove": //If the layer in question shouuld be removed
-                    layers.remove(op);
-                    importantLayers.remove(op);
-                    opManifest += (String.format(": - %1$s ", op.getName()));
-                    break;
-                case "importance":
-                    if (op.getImportance()){
-                        layers.remove(op);
-                        if (!importantLayers.contains(op)) {
+            if (op != null) {
+                switch (op.imageOrgOperation) {
+                    case "add": //If the layer in question should be added
+                        if (op.getImportance() && !importantLayerExists(op.getName())) {
+                            System.out.println("SIR, we have a new refined guest, called " + op.getName());
                             importantLayers.add(op);
-                        }
-                        opManifest += (String.format(": ↑ %1$s ", op.getName()));
-                    } else {
-                        if (!layers.contains(op)) {
+                        } else if (!op.getImportance() && !unimportantLayerExists(op.getName())) {
                             layers.add(op);
                         }
+                        opManifest += (String.format(": + %1$s ", op.getName()));
+                        break;
+                    case "remove": //If the layer in question shouuld be removed
+                        layers.remove(op);
                         importantLayers.remove(op);
-                        opManifest += (String.format(": ↓ %1$s ", op.getName()));
-                    }
-                    break;
-                default: //Should never happen, but it's here in case it does.
-                    System.out.printf("A null layer operation! (\"%1$s\")", op.getName());
-                    break;
+                        opManifest += (String.format(": - %1$s ", op.getName()));
+                        break;
+                    case "importance":
+                        if (op.getImportance()) {
+                            layers.remove(op);
+                            if (!importantLayers.contains(op)) {
+                                importantLayers.add(op);
+                            }
+                            opManifest += (String.format(": ↑ %1$s ", op.getName()));
+                        } else {
+                            if (!layers.contains(op)) {
+                                layers.add(op);
+                            }
+                            importantLayers.remove(op);
+                            opManifest += (String.format(": ↓ %1$s ", op.getName()));
+                        }
+                        break;
+                    default: //Should never happen, but it's here in case it does.
+                        System.out.printf("A null layer operation! (\"%1$s\")", op.getName());
+                        break;
+                }
             }
         }
         layerOpLock = false;
@@ -446,7 +447,6 @@ public class ImageOrg implements java.io.Serializable {
     private Layer topDownBuild(int camX, int camY, String owningPlayerUsername, Color foregroundColor, boolean fabulousMode, int fabulousLocIndex, int fabulousColorIndex) {
         //Update layer order to minimize nonexistant layers
         doLayerOperations();
-        //System.out.println(layerOpWait);
 
         ArrayList<Layer> allLayers = (ArrayList<Layer>)layers.clone();
         allLayers.addAll(importantLayers);

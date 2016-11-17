@@ -10,7 +10,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * Connects to a NetworkerServer and places the ColoredTextMatrix it recives on its own window.  Uses TCP.
+ * Connects to a NetworkServer and places the ColoredTextMatrix it recives on its own window.  Uses TCP.
  * Created by riley on 05-Nov-2016.
  */
 public class NetworkClient {

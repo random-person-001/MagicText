@@ -11,7 +11,7 @@ import java.util.TimerTask;
 /** Receives connections from a NetworkClient and sends them ColoredTextMatrices periodically.
  * Created by riley on 05-Nov-2016.
  */
-public class NetworkerServer {
+public class NetworkServer {
     private int PORT = 8793;
     private ServerSocket serverSocket;
     private Updater updaterTask = new Updater();
@@ -25,7 +25,7 @@ public class NetworkerServer {
      * @param playery the Player who the display should be centered on
      * @throws IOException
      */
-    public NetworkerServer(Player playery) throws IOException {
+    public NetworkServer(Player playery) throws IOException {
         player = playery;
         serverSocket = new ServerSocket(PORT);
         serverSocket.setSoTimeout(60 * 1000);
@@ -38,7 +38,7 @@ public class NetworkerServer {
     public void doTimerSend() throws IOException {
         connect();
         new Timer().scheduleAtFixedRate(updaterTask, 4, 50);
-        new Timer().scheduleAtFixedRate(inputReceiver, 8, 50);
+        new Thread(this::keyReadLoop).start();
     }
 
     /**
@@ -75,12 +75,25 @@ public class NetworkerServer {
     }
 
     /**
+     * Start doing a loop that reads the mey input from the client.
+     */
+    private void keyReadLoop(){
+        try {
+            while (true) {
+                readKeys();
+            }
+        } catch (IOException | ClassNotFoundException e){
+            e.printStackTrace();
+        }
+    }
+
+    /**
      * Recieve keys that were pressed on a window far away and sent over the network, and tell the Player about them.
      * @throws IOException
      * @throws ClassNotFoundException
      */
     private void readKeys() throws IOException, ClassNotFoundException {
-        KeyEvent e = (KeyEvent) in.readObject();
+        KeyEvent e = (KeyEvent) in.readObject(); //Execution should hang 'in limbo' until some input comes through
         if (e != null){
             System.out.println("Client pressed: " + KeyEvent.getKeyText(e.getKeyCode()));
             player.fireKeyEvent(e);
@@ -92,7 +105,7 @@ public class NetworkerServer {
         public void run() {
             Layer fullImage = player.orgo.topDownBuild(player);
             try {
-                out.flush();
+                //out.flush();
                 sendImage(fullImage);
             } catch (SocketException e) {
                 System.out.println("The other side probably disconnected (SocketException).");

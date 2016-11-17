@@ -19,8 +19,8 @@ public class SlaveGameInstance {
         Player me = masterInstance.requestNewPlayer();
         System.out.println(me.getUsername());
         try {
-            NetworkerServer networkerServer = new NetworkerServer(me);
-            networkerServer.doTimerSend();
+            NetworkServer networkServer = new NetworkServer(me);
+            networkServer.doTimerSend();
         } catch (IOException e) {
             e.printStackTrace();
         }

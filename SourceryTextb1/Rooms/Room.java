@@ -16,6 +16,7 @@ import SourceryTextb1.GameObjects.*;
 import SourceryTextb1.Window;
 
 import static java.awt.Color.*;
+import static java.lang.StrictMath.abs;
 
 /**
  * @author Jared
@@ -539,11 +540,25 @@ public class Room implements java.io.Serializable{
     /**
      * Mainly used by the player to check for nearby planted text
      */
-    public void queryForText(int testX, int testY, String username){
+    private void queryForText(int testX, int testY, String username){
         for (FlavorText text : flavorTexts){
             text.textIfCorrectSpot(testX, testY, username);
         }
     }
+    
+    public void inspectAt(int testX, int testY, Player observer){
+        queryForText(testX, testY, observer.getUsername());
+        specialInspect(testX, testY, observer);
+    }
+
+    /**
+     * Override for special interactions within a room
+     * @param x x loc of inspection
+     * @param y y loc of inspection
+     * @param inspector Player who is inspecting
+     */
+    protected void specialInspect(int x, int y, Player inspector) {}
+    
 
     public void compactTextBox(String text, String speaker, boolean helpful) {
         compactTextBox(text, speaker,  helpful, null);
@@ -675,7 +690,7 @@ public class Room implements java.io.Serializable{
         }
 
         void textIfCorrectSpot(int testX, int testY, String username){
-            if (x == testX && y == testY){
+            if (abs(x - testX) + abs(y - testY) <= 1){
                 doMessage(username);
             }
         }

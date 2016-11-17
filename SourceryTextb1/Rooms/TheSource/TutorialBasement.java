@@ -135,17 +135,6 @@ public class TutorialBasement extends Room {
     }
 
     /**
-     * Maybe something like this would be good to simplify the showing of messages in levels.
-     */
-    private void showTextToPlayerIfAppropriate(){
-        for (Player p : players){
-            // Something about an incrament - maybe stored in each Player?
-            //  TODO Hey, as long as we're at it and predefined this, the whole method could be moved to player.
-            queryForText(p.getX(), p.getY(), p.getUsername());
-        }
-    }
-
-    /**
      * Everything that self-updates and can be paused (and acts nonexistent during paused) should go here.
      */
     @Override
