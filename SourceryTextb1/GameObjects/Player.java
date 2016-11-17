@@ -100,6 +100,11 @@ public class Player extends Mortal implements java.io.Serializable {
     private boolean hasLocalWindow;
     private NetworkerServer networkerServer;
 
+    // Fabulous mode variables
+    public boolean fabulousMode = true;
+    public int fabulousLocIndex = 1;
+    public int fabulousColorIndex = 0;
+
     /**
      * Initialize a whole lotta variables.
      *
@@ -188,6 +193,9 @@ public class Player extends Mortal implements java.io.Serializable {
         hud.setOrgo(orgo);
         // Add the player layers to this room
         addPlayerLayers();
+        if (hasLocalWindow) {
+            orgo.setDefaultPlayer(this);
+        }
     }
 
     public void restartTimer(){
@@ -223,7 +231,6 @@ public class Player extends Mortal implements java.io.Serializable {
      */
     @Override
     public void goTo(int newX, int newY) {
-        //orgo.editLayer(" ", layerName, y, x);
         x = newX;
         y = newY;
         graphicUpdate();
@@ -234,6 +241,7 @@ public class Player extends Mortal implements java.io.Serializable {
      */
     @Override
     public void update() {
+        updateFabulousness();
         if (frozen || dead) { // Should be first, so other things don't try to happen first
             //System.out.println("Not Updating " + username);
             try {
@@ -359,7 +367,7 @@ public class Player extends Mortal implements java.io.Serializable {
     }
 
     private void reportPos() {
-        System.out.println("\nPlayer X: " + x + "(" + orgo.getCamX() + ")" + "\nPlayer Y: " + y + "(" + orgo.getCamY() + ")" + "\nPaused?: " + paused + "\n");
+        System.out.println("\nPlayer X: " + x + "\nPlayer Y: " + y + "\nPaused?: " + paused + "\n");
     }
 
     /**
@@ -422,6 +430,20 @@ public class Player extends Mortal implements java.io.Serializable {
     }
 
     /**
+     * Increment variables relating to fab mode if needed.
+     */
+    private void updateFabulousness(){
+        if (fabulousMode){
+            fabulousLocIndex++;
+            if (fabulousLocIndex > 75){
+                fabulousLocIndex = 1;
+                fabulousColorIndex++;
+                if (fabulousColorIndex >= 7) fabulousColorIndex = 0;
+            }
+        }
+    }
+
+    /**
      * Update the Player symbol and all the graphic things
      */
     private void graphicUpdate() {
@@ -437,10 +459,6 @@ public class Player extends Mortal implements java.io.Serializable {
 
             foregroundColor = new Color(255, opposite, yellowNumber);
             //orgo.getWindow().txtArea.setForeground(new Color(255, opposite, yellowNumber)); // old way
-        }
-        if (hasLocalWindow) {
-            orgo.setCam(getX() - 22, getY() - 11);
-            orgo.imageForeground = foregroundColor;
         }
 
         SpecialText playerIcon;
@@ -458,10 +476,22 @@ public class Player extends Mortal implements java.io.Serializable {
         orgo.editLayer(playerIcon, layerName, 1, 1);
         Layer iconLayer = orgo.getLayer(layerName);
         if (iconLayer != null) iconLayer.setPos(y-1, x-1);
-        if (hasLocalWindow) {
-            orgo.setCam(getX() - 22, getY() - 11);
-            orgo.imageForeground = foregroundColor;
-        }
+    }
+
+    /**
+     * Used by ImageOrg's buildImage.
+     * @return where the camera ought to be
+     */
+    public int getCamX(){
+        return getX() - 22;
+    }
+
+    /**
+     * Used by ImageOrg's buildImage.
+     * @return where the camera ought to be
+     */
+    public int getCamY(){
+        return getY() - 11;
     }
 
     private void move(int direction) {

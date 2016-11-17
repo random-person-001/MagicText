@@ -5,6 +5,8 @@
  */
 package SourceryTextb1;
 
+import SourceryTextb1.GameObjects.Player;
+
 import java.awt.*;
 import java.util.*;
 
@@ -30,10 +32,9 @@ public class ImageOrg implements java.io.Serializable {
 
     public Color roomBackground = Color.BLACK;
 
-    /**
-     * Only for Player 1
-     */
-    public Color imageForeground = null;
+    //Fabulous colors!
+    private Color[] fabulousColorWheel = {new Color(255, 100, 100), new Color(255, 100, 255), new Color(100, 100, 255), new Color(100, 255, 255),
+            new Color( 80, 255, 120), new Color(255, 255, 100), new Color(255, 150,  75)};
 
     //FrameTimer frameTimerInstance = new FrameTimer();
     private Timer drawTimer = new Timer();
@@ -41,10 +42,20 @@ public class ImageOrg implements java.io.Serializable {
     final int orgSerial = (int) (Math.random() * 10000);
     private String owningPlayerUsername = null;
 
+    private Player defaultPlayer = null; // Will be changed when enter
+
     public ImageOrg(Window game) {
         //drawTimer.scheduleAtFixedRate(frameTimerInstance, 0, 50); //20 fps lock
         resetClock();
         window = game;
+    }
+
+    /**
+     * Set the default player, ie the player that the ImageOrg will build for in its timer
+     * @param player
+     */
+    public void setDefaultPlayer(Player player){
+        defaultPlayer = player;
     }
 
     public void setOwningPlayerUsername(String newOwningPlayerUsername){
@@ -331,14 +342,6 @@ public class ImageOrg implements java.io.Serializable {
         camX = x;
     }
 
-    public int getCamX() {
-        return camX;
-    }
-
-    public int getCamY() {
-        return camY;
-    }
-
     /**
      * Specifying a Layer name (String), return the whether the layer exists
      *
@@ -379,10 +382,14 @@ public class ImageOrg implements java.io.Serializable {
     private int layerChangeInstance = 1;
 
     private void newSendImage() {
+        Layer fullImage;
         try {
-            window.build(topDownBuild(camX, camY, owningPlayerUsername, imageForeground));
-            //if (imageForeground != null)
-                //System.out.println(imageForeground.toString());
+            if (defaultPlayer == null){
+                fullImage = topDownBuild();
+            } else {
+                fullImage = topDownBuild(defaultPlayer);
+            }
+            window.build(fullImage);
         } catch (ConcurrentModificationException e) {
             e.printStackTrace();
             System.out.println("[ImageOrg] Concurrent Modification error while building image!");
@@ -396,7 +403,25 @@ public class ImageOrg implements java.io.Serializable {
         return 46;
     }
 
-    public Layer topDownBuild(int camX, int camY, String owningPlayerUsername, Color foregroundColor) {
+    /**
+     * Build a layer with default, normal parameters, like starting at (0,0) with no owningPlayerUsername, a white foreground, and no fabulous mode on.
+     * @return what should go on the screen
+     */
+    private Layer topDownBuild() {
+        return topDownBuild(camX, camY, null, Color.WHITE, false, 0, 0); // All the default things
+    }
+    /**
+     * Build a layer with display parameters read from a player
+     * @return what should go on the screen
+     */
+    Layer topDownBuild(Player focusOn) {
+        return topDownBuild(focusOn.getCamX(), focusOn.getCamY(), focusOn.getUsername(), focusOn.foregroundColor, focusOn.fabulousMode, focusOn.fabulousLocIndex, focusOn.fabulousColorIndex);
+    }
+    /**
+     * Build a layer with parameters specified, for other methods to override
+     * @return what should go on the screen
+     */
+    private Layer topDownBuild(int camX, int camY, String owningPlayerUsername, Color foregroundColor, boolean fabulousMode, int fabulousLocIndex, int fabulousColorIndex) {
         //Update layer order to minimize nonexistant layers
         doLayerOperations();
         //System.out.println(layerOpWait);
@@ -428,7 +453,14 @@ public class ImageOrg implements java.io.Serializable {
                             if ("ñ".equals(input)) { //If space found was opaque
                                 fullImage.setSpecTxt(row, col, new SpecialText(" "));
                             } else { //Otherwise, place found SpecialText
-                                fullImage.setSpecTxt(row, col, found);
+                                SpecialText toPlace = new SpecialText(found.getStr(), found.foregroundColor, found.backgroundColor);
+                                if (foregroundColor != null && foregroundColor != Color.WHITE){
+                                    toPlace.setInfluencedForegroundColor(foregroundColor);
+                                }
+                                if (fabulousMode && Math.abs((row + col) - fabulousLocIndex) <= 7) { // Fabulous mode accommodations
+                                    toPlace.setInfluencedForegroundColor(fabulousColorWheel[fabulousColorIndex]);
+                                }
+                                fullImage.setSpecTxt(row, col, toPlace);
                             }
                             ii = 0; //Ends search at the coordinate and moves onto the next coordinate
                         }
@@ -436,11 +468,9 @@ public class ImageOrg implements java.io.Serializable {
                 }
             }
         }
-        if (foregroundColor != null && foregroundColor != Color.WHITE){
-            fullImage.influenceAll(foregroundColor);
-        }
         return fullImage;
     }
+
 
     /**
      * For the Player and stuff to be able to attach its key bindings (and change colors).

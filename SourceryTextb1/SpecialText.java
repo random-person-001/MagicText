@@ -39,13 +39,20 @@ public class SpecialText implements java.io.Serializable{
 
     /**
      * Returns the foreground color accented by another one.
-     * @param modifier The color that is influencing the base foreground color.
+     * @param modifier The color that is influencing the base foreground color. (can be null)
      */
     public Color makeInfluencedForegroundColor (Color modifier){
         return makeInfluencedForegroundColor(modifier, false);
     }
 
+    public void setInfluencedForegroundColor (Color modifier){
+        foregroundColor = makeInfluencedForegroundColor(modifier, false);
+    }
+
     public Color makeInfluencedForegroundColor (Color modifier, boolean debug){
+        if (modifier == null){
+            return foregroundColor;
+        }
         float redModifier = (float)modifier.getRed() / 255;
         float greenModifier = (float)modifier.getGreen() / 255;
         float blueModifier = (float)modifier.getBlue() / 255;

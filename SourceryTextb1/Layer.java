@@ -323,8 +323,8 @@ public class Layer implements java.io.Serializable {
         for (int c = 0; c < getColumns(); c++){
             for (int r = 0; r < getRows(); r++){
                 SpecialText get = getSpecTxt(r,c);
-                Color newColor = get.makeInfluencedForegroundColor(flavor);
-                self[r][c] = new SpecialText(get.getStr(), newColor, get.getBackgroundColor());
+                get.setInfluencedForegroundColor(flavor);
+                self[r][c] = get;
             }
         }
     }

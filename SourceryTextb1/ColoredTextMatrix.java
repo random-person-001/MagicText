@@ -11,16 +11,7 @@ import static java.lang.Math.abs;
  * Created by Jared on 9/25/2016.
  */
 public class ColoredTextMatrix extends JPanel{
-
     public SpecialText[][] text = new SpecialText[46][28];
-    protected Color overallForeGround = Color.WHITE;
-
-    //Fabulous colors!
-    private Color[] fabulousColorWheel = {new Color(255, 100, 100), new Color(255, 100, 255), new Color(100, 100, 255), new Color(100, 255, 255),
-                                          new Color( 80, 255, 120), new Color(255, 255, 100), new Color(255, 150,  75)};
-    private int fabulousColorIndex = 0;
-    private int fabulousLocIndex = 1;
-    public boolean fabulousMode = false;
 
     int HOR_SEPARATION = 9;
     int VER_SEPARATION = 16;
@@ -85,27 +76,11 @@ public class ColoredTextMatrix extends JPanel{
     }
 
     private Color retrieveColor(SpecialText input, int row, int col){
-        if (fabulousMode && abs((row + col) - fabulousLocIndex) <= 7){
-            return fabulousColorWheel[fabulousColorIndex];
-        } else {
-            return input.makeInfluencedForegroundColor(overallForeGround);
-        }
-    }
-
-    public void setOverallForeGround (Color set){
-        overallForeGround = set;
+        return input.foregroundColor;
     }
 
     private class frameResetTimer extends TimerTask {
         public void run(){
-            if (fabulousMode){
-                fabulousLocIndex++;
-                if (fabulousLocIndex > 75){
-                    fabulousLocIndex = 1;
-                    fabulousColorIndex++;
-                    if (fabulousColorIndex >= 7) fabulousColorIndex = 0;
-                }
-            }
             repaint();
         }
     }

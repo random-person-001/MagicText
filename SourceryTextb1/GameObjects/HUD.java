@@ -338,11 +338,11 @@ class HUD implements java.io.Serializable {
             player.getInventory().testKit();
             showResponse("Items given!");
         }else if (command.contains("fabulous off")) {
-            player.orgo.getWindow().txtArea.fabulousMode = false;
-            showResponse("FABULOUS POWERS DISABLED? (for 1st player)");
+            player.fabulousMode = false;
+            showResponse("FABULOUS POWERS DISABLED?");
         }else if (command.contains("fabulous on")) {
-            player.orgo.getWindow().txtArea.fabulousMode = true;
-            showResponse("FABULOUS POWERS ENABLED! (for 1st player)");
+            player.fabulousMode = true;
+            showResponse("FABULOUS POWERS ENABLED!");
         }else if (command.contains("unpause")) {
             player.setPause(false);
             showResponse("Player upaused!");

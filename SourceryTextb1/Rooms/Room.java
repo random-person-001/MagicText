@@ -589,7 +589,7 @@ public class Room implements java.io.Serializable{
             }
         }
 
-        setObjsPause(true);
+        //setObjsPause(true);  Unnecessary feature that interferes with fabulous mode
         org.addLayer(txtBox);
 
         // only bind to relavent user.
@@ -597,6 +597,7 @@ public class Room implements java.io.Serializable{
             if (p.getUsername().equals(usernameToShowTo)){
                 System.out.println("Binding to " + usernameToShowTo);
             }
+            p.frozen = true;
             // Also make them not go over the textbox
             org.setLayerImportance(p.getLayerName(), false);
         }
@@ -702,10 +703,11 @@ public class Room implements java.io.Serializable{
         public void run(){
             if (resume){
                 cancel();
-                setObjsPause(false);
+                //setObjsPause(false);
                 org.removeLayer("Dialog");
                 for (Player p : players){ // Remake the player layers important.
                     org.setLayerImportance(p.getLayerName(), true);
+                    p.frozen = false;
                 }
                 if (messageQueue.size() > 0){
                     messageQueue.remove(messageQueue.get(0));
@@ -714,72 +716,6 @@ public class Room implements java.io.Serializable{
                     messageQueue.get(0).output();
                 }
             }
-        }
-    }
-
-
-}
-
-
-/**
- * A selector thing for listening to and selecting one of the few options on the Options menu of the oldish pause screen
- */
-class OptionsSelector extends KeyAdapter implements java.io.Serializable {
-    private ImageOrg org;
-    boolean resume = false;
-    private int ii = 0;
-
-    OptionsSelector(ImageOrg o) {
-        org = o;
-    }
-
-
-    @Override
-    public void keyPressed(KeyEvent event) {
-        char ch = event.getKeyChar();
-        if (ch == 'i') {
-            System.out.println("I was pressed.");
-            int i = Font.PLAIN;
-            ii++;
-            if (ii > 2) {
-                ii = 0;
-            }
-            if (ii == 0) {
-                i = Font.PLAIN;
-            } else if (ii == 1) {
-                i = Font.ITALIC;
-            } else if (ii == 2) {
-                i = Font.BOLD;
-            }
-            String font = "Monospaced";
-            Font f = new Font(font, i, 15);
-            org.getWindow().txtArea.setFont(f);
-        }
-        if (ch == 'c') {
-            System.out.println("c was pressed.");
-            Color c = org.getWindow().txtArea.getBackground();
-
-            if (c.equals(BLACK)) {
-                org.getWindow().txtArea.setBackground(DARK_GRAY);
-
-            } else if (c.equals(DARK_GRAY)) {
-                org.getWindow().txtArea.setBackground(LIGHT_GRAY);
-
-            } else if (c.equals(LIGHT_GRAY)) {
-                org.getWindow().txtArea.setBackground(GREEN);
-
-            } else if (c.equals(GREEN)) {
-                org.getWindow().txtArea.setBackground(CYAN);
-
-            } else if (c.equals(CYAN)) {
-                org.getWindow().txtArea.setBackground(BLACK);
-            }
-        }
-        if (event.getKeyCode() == KeyEvent.VK_ESCAPE) {
-            resume = true;
-        }
-        if (event.getKeyCode() == KeyEvent.VK_ENTER) {
-            resume = true;
         }
     }
 }
