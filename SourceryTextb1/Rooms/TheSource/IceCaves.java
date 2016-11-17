@@ -49,10 +49,12 @@ public class IceCaves extends Room{
             addMortal(yeti);
         }
 
-        Item snowballSpell = new Item("FluffySnowball", "Ice Spell;\n\nA ball of fluffy snow.\n\nHTHe snowball itself is\n very cold, so it will\n slow enemies that are hit.", "FSwBl", "spell", true);
+        Item snowballSpell = new Item("FluffSnowball", "Ice Spell;\n\nA ball of fluffy snow.\n\nThe snowball itself is\n very cold, so it will\n slow enemies that are hit.", "FSwBl", "spell", true);
         snowballSpell.dmgSpellDefine(1, 6, 2, "ice", new SpecialText("o", new Color(191, 249, 255)), new SpecialText("o", new Color(191, 249, 255)), false);
-        DroppedItem gSnowball = new DroppedItem(this, "Found a new spell: FluffySnowball!", snowballSpell, 0,0);
+        DroppedItem gSnowball = new DroppedItem(this, "Found a new spell: FluffySnowball!", snowballSpell, 21, 3);
         super.addObject(gSnowball);
+
+        addMagicPotato(24, 1);
     }
 
     @Override

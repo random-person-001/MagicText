@@ -493,6 +493,12 @@ public class Room implements java.io.Serializable{
         return result;
     }
 
+    protected void addMagicPotato(int x, int y){
+        Item magicTater = new Item("Magic Potato","How lucky! This eccentric\n potato can permanently\n increase either your\n Max HP or Max Mana.\n\nNOTE: it's permanent!", "item");
+        DroppedItem gTater =  new DroppedItem(this, "You found a hidden magic potato!", magicTater, x, y);
+        addObject(gTater);
+    }
+
     /**
      * Initialize some universal layers and stuff.  Generally call this at the end of setting up a room, lest the
      * spells, player, and HUD layers be placed below others.

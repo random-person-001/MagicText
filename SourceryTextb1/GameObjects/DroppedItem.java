@@ -38,9 +38,9 @@ public class  DroppedItem extends GameObject{
         // Ensure that we have layers for everyone
         for (Player p : room.players){
             // players who haven't picked me up AND we don't have a layer for them already
-            if (!playersWhoPickedMeUp.contains(p.getUsername()) && orgo.layerExists(layerName+p.getUsername())){
+            if (!(playersWhoPickedMeUp.contains(p.getUsername()) || orgo.layerExists(layerName+p.getUsername()))){
                 // should make a new layer for that specific player to see
-                Layer newLayer = new Layer(new String[1][1], layerName+p.getUsername(), y, x, true, true, true);
+                Layer newLayer = new Layer(new String[1][1], layerName+p.getUsername(), y, x, true, true, false);
                 newLayer.setStr(0, 0, "!");
                 newLayer.setOwningPlayerUsername(p.getUsername());
                 orgo.addLayer(newLayer);
