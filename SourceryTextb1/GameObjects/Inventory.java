@@ -92,6 +92,10 @@ class Inventory implements java.io.Serializable {
         infoLayer = new Layer(new String[22][46], "invInfo" + player.getUsername(), 0, 0, false, false);
         infoLayer.setOwningPlayerUsername(p.getUsername());
 
+        submenuColoring(spellsMenuLayer);
+        submenuColoring(itemsMenuLayer);
+        submenuColoring(equipMenuLayer);
+
         /*
         spells.add(new Item("Spark","Arcane Spell;\nFires a spark of energy.\n\n\"All great fires start\n with small sparks\"", "Spark", player, "spell"));
         spells.add(new Item("Fireball","Fire Spell;\nUse your imagination", "FrBll", player, "spell"));
@@ -107,6 +111,11 @@ class Inventory implements java.io.Serializable {
 
         player.armor = equip.get(0);
         player.defineStats();
+    }
+
+    public void submenuColoring(Layer toColor){
+        for (int ii = 9 ; ii >= 0 ; ii--)
+            toColor.findAndReplace(new SpecialText(String.valueOf(ii)), new SpecialText(String.valueOf(ii), new Color(30, 30, 30)));
     }
 
     /**
@@ -205,9 +214,9 @@ class Inventory implements java.io.Serializable {
         if (Character.isDigit(c) && (menuID == SPELLS || menuID == ITEMS || menuID == EQUIP)){
             int number = Integer.valueOf(String.valueOf(c));
             if (number != 0){
-                selectYChange = (2*(number-1) + 3) - cursorY;
+                selectYChange = (2*(number-1) + 2) - cursorY;
             } else {
-                selectYChange = 21 - cursorY;
+                selectYChange = 20 - cursorY;
             }
             System.out.println(c);
         }
@@ -374,9 +383,7 @@ class Inventory implements java.io.Serializable {
         loopAtMenuEnd();
         genericItemListing(spells);
         //cursorX = 31;
-
-        checkNewPage();
-        int index = cursorY - 3 + ((page - 1) * 16);
+        int index = calcIndex();
         if (index < spells.size() && cursorY < 19) {
             if (pressedS) {
                 player.spell1 = spells.get(index);
@@ -402,6 +409,7 @@ class Inventory implements java.io.Serializable {
             infoLayer.clear();
             jumpToNewMenu(topMenuLayer, TOP, spellsMenuLayer, 28);
         }
+        checkNewPage();
     }
 
     /**
@@ -418,7 +426,6 @@ class Inventory implements java.io.Serializable {
             }
 
         }
-        checkNewPage();
         int index = calcIndex();
         if (index < items.size() && cursorY < 19) {
             if (pressedA) {
@@ -434,6 +441,7 @@ class Inventory implements java.io.Serializable {
                 }
             }
         }
+        checkNewPage();
     }
 
     /**

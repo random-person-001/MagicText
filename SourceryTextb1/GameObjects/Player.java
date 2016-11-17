@@ -101,7 +101,7 @@ public class Player extends Mortal implements java.io.Serializable {
     private NetworkerServer networkerServer;
 
     // Fabulous mode variables
-    public boolean fabulousMode = true;
+    public boolean fabulousMode = false;
     public int fabulousLocIndex = 1;
     public int fabulousColorIndex = 0;
 
