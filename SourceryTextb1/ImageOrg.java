@@ -5,8 +5,6 @@
  */
 package SourceryTextb1;
 
-import com.sun.org.apache.xpath.internal.SourceTree;
-
 import java.awt.*;
 import java.util.*;
 
@@ -21,10 +19,10 @@ public class ImageOrg implements java.io.Serializable {
     private ArrayList<Layer> layers = new ArrayList<>();
     private ArrayList<Layer> importantLayers = new ArrayList<>();
 
-    private ArrayList<Layer> operationList = new ArrayList<>();
-    private ArrayList<Layer> operationBuffer = new ArrayList<>();
+    private ArrayList<Layer> operationList1 = new ArrayList<>();
+    private ArrayList<Layer> operationList2 = new ArrayList<>();
     private boolean layerOpLock = false;
-    private int layerOpWait = 0; //Integer representing the amount of non-doLayerOperations actions are being currently executed
+    private boolean useOpList2 = false;
 
     private int camX = 0;
     private int camY = 0;
@@ -87,8 +85,7 @@ public class ImageOrg implements java.io.Serializable {
                 e.printStackTrace();
             }
         }
-        lay.imageOrgOperation = "add";
-        operationList.add(lay);
+        addOp(lay, "add");
     }
 
     public boolean getDebug() {
@@ -126,22 +123,28 @@ public class ImageOrg implements java.io.Serializable {
         return null;
     }
 
+    private void addOp(Layer op, String type) {
+        //System.out.println("Adding layer " + op.getName());
+        op.imageOrgOperation = type;
+        if (!useOpList2){
+            operationList1.add(op);
+        } else {
+            operationList2.add(op);
+        }
+    }
+
     /**
      * Remove a layer by its String name.
      *
      * @param layerName what the Layer's name is
      */
     public void removeLayer(String layerName) {
-        ArrayList<Layer> opStack = operationList;
-        if (layerOpLock)
-            opStack = operationBuffer;
         boolean layerFound = false;
         
         for (int i = layers.size() - 1; i >= 0; i--) {
             Layer get = layers.get(i);
             if (get.nameMatches(layerName)) {
-                get.imageOrgOperation = "remove";
-                opStack.add(get);
+                addOp(get, "remove");
                 layerFound = true;
             }
         }
@@ -149,7 +152,7 @@ public class ImageOrg implements java.io.Serializable {
             Layer get = importantLayers.get(i);
             if (get.nameMatches(layerName)) {
                 get.imageOrgOperation = "remove";
-                opStack.add(get);
+                addOp(get, "remove");
                 layerFound = true;
             }
         }
@@ -168,25 +171,20 @@ public class ImageOrg implements java.io.Serializable {
      * @param layerName what the Layer's name is
      */
     public void setLayerImportance(String layerName, boolean set) {
-        ArrayList<Layer> opStack = operationList;
-        if (layerOpLock)
-            opStack = operationBuffer;
         boolean layerFound = false;
         for (int i = layers.size() - 1; i >= 0; i--) {
             Layer get = layers.get(i);
             if (get.nameMatches(layerName)) {
-                get.imageOrgOperation = "importance";
                 get.setImportance(set);
-                opStack.add(get);
+                addOp(get, "importance");
                 layerFound = true;
             }
         }
         for (int i = importantLayers.size() - 1; i >= 0; i--) {
             Layer get = importantLayers.get(i);
             if (get.nameMatches(layerName)) {
-                get.imageOrgOperation = "importance";
                 get.setImportance(set);
-                opStack.add(get);
+                addOp(get, "importance");
                 layerFound = true;
             }
         }
@@ -200,8 +198,18 @@ public class ImageOrg implements java.io.Serializable {
      */
     private void doLayerOperations(){
         layerOpLock = true;
+        ArrayList<Layer> operationList;
+        if (!useOpList2){
+            operationList = operationList1;
+        } else {
+            operationList = operationList2;
+        }
+
+        useOpList2 = !useOpList2;
+
         boolean doOutput = operationList.size() > 0;  //Stuff for the extremely useful output of layer changes
         String opManifest = String.format("- Org -\n[%1$d] Layer Op's", layerChangeInstance);
+
         for (Layer op : operationList){ //Now for the actual layer operations; works like a stack
             switch(op.imageOrgOperation){
                 case "add": //If the layer in question should be added
@@ -232,8 +240,6 @@ public class ImageOrg implements java.io.Serializable {
         }
         layerOpLock = false;
         operationList.clear();
-        operationList.addAll(operationBuffer);
-        operationBuffer.clear();
         if (doOutput) {
             System.out.println(opManifest + "\n");
             layerChangeInstance++;
@@ -467,10 +473,9 @@ public class ImageOrg implements java.io.Serializable {
             System.out.print(layers.get(ii).getName());
             if (ii != layers.size() - 1) {
                 System.out.print(", ");
-            } else {
-                System.out.print("\n");
             }
         }
+        System.out.print("\n");
     }
 
     public String getOwningPlayerUsername() {
