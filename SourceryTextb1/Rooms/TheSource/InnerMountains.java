@@ -58,7 +58,7 @@ public class InnerMountains extends Room {
     public void addItems(){
         int[][] carrotLocs = {{18,32},{44,28},{21,15},{22,22},{48,14}};
         for (int[] coord : carrotLocs){
-            Item carrot = new Item("Carrot", "For some reason,\n they only grow\n in the mountains.\n\nNobody really know why.", playo, "item");
+            Item carrot = new Item("Carrot", "For some reason,\n they only grow\n in the mountains.\n\nNobody really know why.", "item");
             carrot.healItemDefine(6, 3);
             DroppedItem gCarrot = new DroppedItem(this, "You picked a carrot!", carrot, coord[0], coord[1]);
             addObject(gCarrot);

@@ -42,18 +42,16 @@ public class Item implements java.io.Serializable {
     private int armor, hpBoost, allBoost, arcBoost, fireBoost, iceBoost, darkBoost = 0;
     private boolean alting;
     private boolean pathfinds = false;
-    private Player player;
 
     public boolean isDmgSpell = false;
 
-    public Item(String theName, String theDesc, Player play) {
+    public Item(String theName, String theDesc) {
         name = theName;
         description = theDesc;
-        player = play;
     }
 
-    public Item(String theName, String theDesc, Player play, String type) {
-        this(theName, theDesc, play);
+    public Item(String theName, String theDesc, String type) {
+        this(theName, theDesc);
         switch (type) {
             case "spell":
                 itemType = 1;
@@ -67,13 +65,13 @@ public class Item implements java.io.Serializable {
         }
     }
 
-    public Item(String theName, String theDesc, String theIcon, Player play, String type) {
-        this(theName, theDesc, play, type);
+    public Item(String theName, String theDesc, String theIcon, String type) {
+        this(theName, theDesc, type);
         icon = theIcon;
     }
 
-    public Item(String theName, String theDesc, String theIcon, Player play, String type, boolean isAlting) {
-        this(theName, theDesc, theIcon, play, type);
+    public Item(String theName, String theDesc, String theIcon, String type, boolean isAlting) {
+        this(theName, theDesc, theIcon, type);
         alting = isAlting;
     }
 
@@ -235,7 +233,7 @@ public class Item implements java.io.Serializable {
      * @return the items's long description.  Includes the exclusive description as well as cost, range, damage, etc
      * if applicable.
      */
-    public String getDesc() {
+    public String getDesc(Player player) {
         switch (displayMode.toLowerCase()) {
             case "blank":
                 return description;

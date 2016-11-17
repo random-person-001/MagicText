@@ -90,10 +90,10 @@ public class Player extends Mortal implements java.io.Serializable {
     public boolean dead = false;
     private int hurtColor = 0;
 
-    Item spell1 = new Item("None", "", this);
-    Item spell2 = new Item("None", "", this);
-    Item weapon = new Item("None", "", this);
-    Item armor = new Item("None", "", this);
+    Item spell1 = new Item("None", "");
+    Item spell2 = new Item("None", "");
+    Item weapon = new Item("None", "");
+    Item armor = new Item("None", "");
 
     int screenRedness = 0;
     int screenYellowness = 0;
@@ -664,7 +664,7 @@ public class Player extends Mortal implements java.io.Serializable {
     void addPotato(int amount) {
         for (int ii = 0; ii < amount; ii++) {
             inv.addItem(new Item("Magic Potato", "A magically enhanced potato\n\nCan be used to either" +
-                    "\n permanently increase\n your max health or\n max mana by 5.", this, "item"));
+                    "\n permanently increase\n your max health or\n max mana by 5.", "item"));
         }
     }
 

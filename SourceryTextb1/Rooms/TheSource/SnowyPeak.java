@@ -50,6 +50,9 @@ public class SnowyPeak extends Room {
                 if (play.getX() == 0) {
                     setNewRoom("InnerMountains", play, 64, 14);
                 }
+                if (play.getX() == 179 && play.getY() == 6){
+                    setNewRoom("IceCaves", play, 39, 36);
+                }
             } catch (InterruptedException ignored) {}
         }
         return exitCode;

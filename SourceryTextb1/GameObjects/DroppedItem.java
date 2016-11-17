@@ -10,7 +10,7 @@ import java.util.List;
  * A dropped item that will put itself in the player's inventory when stepped on.
  * Created by riley on 13-Jun-2016.
  */
-public class DroppedItem extends GameObject{
+public class  DroppedItem extends GameObject{
     private List<String> playersWhoPickedMeUp; // their usernames
     private Item me;
     private String pickUpMessage;
@@ -40,7 +40,7 @@ public class DroppedItem extends GameObject{
             // players who haven't picked me up AND we don't have a layer for them already
             if (!playersWhoPickedMeUp.contains(p.getUsername()) && orgo.layerExists(layerName+p.getUsername())){
                 // should make a new layer for that specific player to see
-                Layer newLayer = new Layer(new String[1][1], layerName+p.getUsername(), y, x, true, true, false);
+                Layer newLayer = new Layer(new String[1][1], layerName+p.getUsername(), y, x, true, true, true);
                 newLayer.setStr(0, 0, "!");
                 newLayer.setOwningPlayerUsername(p.getUsername());
                 orgo.addLayer(newLayer);
@@ -61,8 +61,9 @@ public class DroppedItem extends GameObject{
                 }
             }
         }
-        if (time % 3000 == 0){
+        if (time >= 3000){
             longUpdate();
+            resetTime();
         }
     }
 

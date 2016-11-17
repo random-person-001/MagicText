@@ -59,7 +59,7 @@ public class SourceCaves extends Room{
             addMortal(roughBill);
         }
 
-        Item magicTater = new Item("Magic Potato","How lucky! This eccentric\n potato can permanently\n increase either your\n Max HP or Max Mana.\n\nNOTE: it's permanent!", playo, "item");
+        Item magicTater = new Item("Magic Potato","How lucky! This eccentric\n potato can permanently\n increase either your\n Max HP or Max Mana.\n\nNOTE: it's permanent!", "item");
         DroppedItem gTater =  new DroppedItem(this, "You found a hidden magic potato!", magicTater, 25, 57);
         super.addObject(gTater);
     }

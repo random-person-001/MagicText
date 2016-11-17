@@ -10,9 +10,7 @@ import SourceryTextb1.Rooms.Room;
 import SourceryTextb1.SpecialText;
 
 import java.awt.*;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Arrays;
@@ -396,7 +394,7 @@ class HUD implements java.io.Serializable {
         } else if (command.contains("make") && command.contains("sandwich")) {
             if (command.contains("sudo") || promptChar.equals("#")) {
                 showResponse("Ok, fine, I'll make you a sandwich.");
-                Item sandwichItem = new Item("Sandwich", "Using your awesome\n knowledge of commandline-\n fu, you convinced the\n computer to make you this.", "~", player, "item");
+                Item sandwichItem = new Item("Sandwich", "Using your awesome\n knowledge of commandline-\n fu, you convinced the\n computer to make you this.", "~", "item");
                 DroppedItem sandwichDrop = new DroppedItem(room, "Here's your sandwich", sandwichItem, player.getX(), player.getY());
                 room.addObject(sandwichDrop);
             } else {
@@ -473,7 +471,7 @@ class HUD implements java.io.Serializable {
                 room.hurtSomethingAt(x, y, 1000, "You were zapped by your own lightning!\nNext time, be more careful" +
                         "with \nthe command line.");
 
-                Item ashItem = new Item("Ash", "You struck down a \n bolt of lightning, \n which left only this\n behind.", "~", player, "item");
+                Item ashItem = new Item("Ash", "You struck down a \n bolt of lightning, \n which left only this\n behind.", "~", "item");
                 DroppedItem ashDrop = new DroppedItem(room, "Ow!  The ashes of your smote\n enemies are still hot!", ashItem, x, y);
                 room.addObject(ashDrop);
                 showResponse("1000 damage zapped at x=" + x + " y=" + y);

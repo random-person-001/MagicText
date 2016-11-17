@@ -69,6 +69,7 @@ public class Start {
         rooms.put("BanditFortress", new BanditFortress(player));
         rooms.put("InnerMountains", new InnerMountains(player));
         rooms.put("SnowyPeak", new SnowyPeak(player));
+        rooms.put("IceCaves", new IceCaves(player));
         rooms.forEach((s, room) -> room.startup());
         rooms.forEach((s, room) -> room.setObjsPause(true));
         return rooms;

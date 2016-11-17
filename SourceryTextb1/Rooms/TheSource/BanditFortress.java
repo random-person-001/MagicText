@@ -69,7 +69,7 @@ public class BanditFortress extends Room{
         }
 
         Item magicTater = new Item("Illicit Magic Potato","How lucky! This eccentric\n potato can permanently\n " +
-                "increase either your\n Max HP or Max Mana.\n\nNOTE: it's permanent.\nYou got this illicitly.", playo, "item");
+                "increase either your\n Max HP or Max Mana.\n\nNOTE: it's permanent.\nYou got this illicitly.", "item");
         DroppedItem gTater =  new DroppedItem(this, "You found a magic potato.  Cheater.", magicTater, 51, 19);
         super.addObject(gTater);
 
