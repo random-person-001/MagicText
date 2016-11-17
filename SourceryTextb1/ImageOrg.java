@@ -52,7 +52,9 @@ public class ImageOrg implements java.io.Serializable {
     }
 
     public ArrayList<Layer> getLayers(){
-        return layers;
+        ArrayList<Layer> result = (ArrayList<Layer>)layers.clone();
+        result.addAll(importantLayers);
+        return result;
     }
 
     public void resetClock() {
@@ -215,22 +217,26 @@ public class ImageOrg implements java.io.Serializable {
                 case "add": //If the layer in question should be added
                     if (op.getImportance()) importantLayers.add(op);
                     else layers.add(op);
-                    if (doOutput) opManifest += (String.format(": + %1$s ", op.getName()));
+                    opManifest += (String.format(": + %1$s ", op.getName()));
                     break;
                 case "remove": //If the layer in question shouuld be removed
                     layers.remove(op);
                     importantLayers.remove(op);
-                    if (doOutput) opManifest += (String.format(": - %1$s ", op.getName()));
+                    opManifest += (String.format(": - %1$s ", op.getName()));
                     break;
                 case "importance":
                     if (op.getImportance()){
                         layers.remove(op);
-                        importantLayers.add(op);
-                        if (doOutput) opManifest += (String.format(": ↑ %1$s ", op.getName()));
+                        if (!importantLayers.contains(op)) {
+                            importantLayers.add(op);
+                        }
+                        opManifest += (String.format(": ↑ %1$s ", op.getName()));
                     } else {
-                        layers.add(op);
+                        if (!layers.contains(op)) {
+                            layers.add(op);
+                        }
                         importantLayers.remove(op);
-                        if (doOutput) opManifest += (String.format(": ↓ %1$s ", op.getName()));
+                        opManifest += (String.format(": ↓ %1$s ", op.getName()));
                     }
                     break;
                 default: //Should never happen, but it's here in case it does.
@@ -286,7 +292,7 @@ public class ImageOrg implements java.io.Serializable {
         if (get != null)
             get.setSpecTxt(y, x, input);
         else
-            System.out.printf("Null Layer called: \"%1$s\"\n", layerName);
+            System.out.printf("Null Layer called (editLayer): \"%1$s\"\n", layerName);
     }
 
     /**
@@ -366,7 +372,7 @@ public class ImageOrg implements java.io.Serializable {
             }
         }
         for (Layer get : remove) {
-            layers.remove(get);
+            removeLayer(get.getName());
         }
     }
 
@@ -393,10 +399,9 @@ public class ImageOrg implements java.io.Serializable {
     public Layer topDownBuild(int camX, int camY, String owningPlayerUsername, Color foregroundColor) {
         //Update layer order to minimize nonexistant layers
         doLayerOperations();
-        //printLayers();
         //System.out.println(layerOpWait);
 
-        ArrayList<Layer> allLayers = layers;
+        ArrayList<Layer> allLayers = (ArrayList<Layer>)layers.clone();
         allLayers.addAll(importantLayers);
         //Actually render image
         Layer fullImage = new Layer(new String[screenH()][screenW()]);
@@ -484,14 +489,18 @@ public class ImageOrg implements java.io.Serializable {
 
     private class FrameTimer extends TimerTask {
 
-        long lastRunNano = 0;
+        long lastRunMs = 0;
 
         FrameTimer() {
-            lastRunNano = System.nanoTime();
+            lastRunMs = System.nanoTime();
         }
 
         public void run() {
+            //printLayers();
+            lastRunMs = System.currentTimeMillis();
             newSendImage();
+            if (System.currentTimeMillis() - lastRunMs > 3)
+                System.out.printf("Time to compile image (notably long): %1$dms\n", System.currentTimeMillis() - lastRunMs);
         }
     }
 }

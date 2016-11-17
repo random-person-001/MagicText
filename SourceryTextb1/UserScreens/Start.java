@@ -309,6 +309,7 @@ public class Start {
         }
 
         void newGame(int numPlayers){
+            System.out.println("[-]\n\\/\\/\\/\\/\\/\\/\\\n  CREATING NEW GAME\n\\/\\/\\/\\/\\/\\/\\\n");
             if (numPlayers < 1){
                 return;
             }
@@ -328,6 +329,7 @@ public class Start {
             }
 
             // Only return from method when game finished.
+            /*
             while (true){
                 try {
                     Thread.sleep(1000);
@@ -339,6 +341,7 @@ public class Start {
                     return;
                 }
             }
+            */
         }
 
         void buildGame(Player imported){

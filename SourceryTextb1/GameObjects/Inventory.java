@@ -219,7 +219,11 @@ class Inventory implements java.io.Serializable {
         System.out.println("Bringing up menu...");
         org = player.orgo; // Update the org (cuz it changes based on room now)
         player.frozen = true;
-        org.getLayers().stream().filter(lay -> lay.getName().contains("playerLayer")).forEach(lay -> org.setLayerImportance(lay.getName(), false));
+
+        for (Layer lay : org.getLayers()){
+            if (lay.getName().contains("playerLayer"))
+                org.setLayerImportance(lay.getName(), false);
+        }
         //player.room.setObjsPause(true);
 
         updateCursor = true;
