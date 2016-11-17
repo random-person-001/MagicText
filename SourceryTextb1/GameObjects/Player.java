@@ -123,7 +123,7 @@ public class Player extends Mortal implements java.io.Serializable {
         layerName = "playerLayer-" + username;
         aimDispName += username;
 
-        inv = new Inventory(orgo, this, orgo.getWindow());
+        inv = new Inventory(orgo, this);
         tracker = new ItemTracker();
 
         hud = new HUD(this);

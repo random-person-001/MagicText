@@ -67,11 +67,12 @@ class Inventory implements java.io.Serializable {
         return cursorY;
     }
 
-    Inventory(ImageOrg orgo, Player p, Window window) {
+    Inventory(ImageOrg orgo, Player p) {
         org = orgo;
         player = p;
         spellsMenuLayer = new Layer(Art.strToArray(new Art().spellsMenu), "spells" + player.getUsername(), 1, 0, false, true);
         spellsMenuLayer.setOwningPlayerUsername(p.getUsername());
+        spellsMenuLayer.findAndReplace(new SpecialText(","), new SpecialText("_", new Color(15, 15, 17), new Color(20, 20, 25)));
         selectedSpellsLayer = new Layer(new String[22][47], "selectedSpells" + player.getUsername(), false);
         selectedSpellsLayer.setOwningPlayerUsername(p.getUsername());
         topMenuLayer = new Layer(Art.strToArray(new Art().topMenu), "top" + player.getUsername(), 1, 27, false, true);
@@ -80,8 +81,10 @@ class Inventory implements java.io.Serializable {
         quitMenuLayer.setOwningPlayerUsername(p.getUsername());
         itemsMenuLayer = new Layer(Art.strToArray(new Art().itemsMenu), "items" + player.getUsername(), 1, 0, false, true);
         itemsMenuLayer.setOwningPlayerUsername(p.getUsername());
+        itemsMenuLayer.findAndReplace(new SpecialText(","), new SpecialText("_", new Color(15, 15, 15), new Color(20, 20, 20)));
         equipMenuLayer = new Layer(Art.strToArray(new Art().equipMenu), "equip" + player.getUsername(), 1, 0, false, true);
         equipMenuLayer.setOwningPlayerUsername(p.getUsername());
+        equipMenuLayer.findAndReplace(new SpecialText(","), new SpecialText("_", new Color(15, 17, 15), new Color(20, 25, 20)));
         taterMenuLayer = new Layer(Art.strToArray(new Art().taterMenu), "tater" + player.getUsername(), 1, 27, false, true);
         taterMenuLayer.setOwningPlayerUsername(p.getUsername());
         selectorLayer = new Layer(new String[22][46], "selector" + player.getUsername(), 0, 0, false, false);
@@ -175,7 +178,7 @@ class Inventory implements java.io.Serializable {
         Item item7 = new Item("Witch Scarf", "A scarf imbued with witch\n magic, granting the user\n increased dark and ice\n magic power\n\nIt smells like flowers.\n\n+1 Ice Spell Damage\n+2 Dark Spell Damage\n+1 Defense\n+3 Max Health", "equip");
         item7.setEquipvals(1, 3, 0, 0, 0, 2, 2, "weapon");
         equip.add(item7);
-        for (int ii = 0; ii < 4; ii++) {
+        for (int ii = 0; ii < 24; ii++) {
             Item item4 = new Item("Carrot", "For some reason,\n they only grow\n in the mountains.\n\nNobody really know why.", "items");
             item4.healItemDefine(6, 3);
             items.add(item4);
@@ -230,6 +233,8 @@ class Inventory implements java.io.Serializable {
         menuID = TOP;
         cursorY = 2;
         cursorX = 28;
+
+        pressedA = false;
 
         selectorLayer.clear();
         selectorLayer.setStr(cursorY,cursorX, ">");
@@ -317,16 +322,16 @@ class Inventory implements java.io.Serializable {
         if (pressedA) {
             switch (cursorY) {
                 case 2:
-                    jumpToNewMenu(spellsMenuLayer, SPELLS, topMenuLayer, 31);
-                    cursorY = 3;
+                    jumpToNewMenu(spellsMenuLayer, SPELLS, topMenuLayer, 30);
+                    cursorY = 2;
                     break;
                 case 3:
-                    jumpToNewMenu(itemsMenuLayer, ITEMS, topMenuLayer, 31);
-                    cursorY = 3;
+                    jumpToNewMenu(itemsMenuLayer, ITEMS, topMenuLayer, 30);
+                    cursorY = 2;
                     break;
                 case 4:
-                    jumpToNewMenu(equipMenuLayer, EQUIP, topMenuLayer, 31);
-                    cursorY = 3;
+                    jumpToNewMenu(equipMenuLayer, EQUIP, topMenuLayer, 30);
+                    cursorY = 2;
                     break;
                 case 5:
                     jumpToNewMenu(quitMenuLayer, QUIT, topMenuLayer, 28);
@@ -348,15 +353,13 @@ class Inventory implements java.io.Serializable {
      */
     private void jumpToNewMenu(Layer goTo, int newID, Layer from, int newXIndex) {
         //selectorLayer.clear();
-
+        System.out.println("Going to menu " + goTo.getName());
         org.removeLayer(from);
         selectorLayer.clear();
         infoLayer.clear();
-        org.removeLayer(selectorLayer);
-        org.removeLayer(infoLayer);
         org.addLayer(goTo);
-        org.addLayer(selectorLayer);
-        org.addLayer(infoLayer);
+        org.setLayerImportance(selectorLayer.getName(), true);
+        org.setLayerImportance(infoLayer.getName(), true);
         menuID = newID;
         updateCursor = true;
         selectXChange = newXIndex - cursorX;
@@ -395,7 +398,7 @@ class Inventory implements java.io.Serializable {
         for (int ii = 0; ii < chars.length; ii++) {
             org.editLayer(String.valueOf(chars[ii]), infoLayer, 17, 15 + ii);
         }
-        if (pressedA && cursorY == 21) {
+        if (pressedA && cursorY == 20) {
             infoLayer.clear();
             jumpToNewMenu(topMenuLayer, TOP, spellsMenuLayer, 28);
         }
@@ -410,13 +413,13 @@ class Inventory implements java.io.Serializable {
 
         //cursorX = 31;
         if (pressedA) {
-            if (cursorY == 21) {
+            if (cursorY == 20) {
                 jumpToNewMenu(topMenuLayer, TOP, itemsMenuLayer, 28);
             }
 
         }
         checkNewPage();
-        int index = cursorY - 3 + ((page - 1) * 16);
+        int index = calcIndex();
         if (index < items.size() && cursorY < 19) {
             if (pressedA) {
                 Item thing = items.get(index);
@@ -462,7 +465,7 @@ class Inventory implements java.io.Serializable {
      * Incrament page number if you pressed A and were over the right spot
      */
     private void checkNewPage() {
-        if (cursorY == 20 && pressedA) {
+        if (cursorY == 19 && pressedA) {
             page++;
             shouldRedraw = true;
         }
@@ -490,7 +493,7 @@ class Inventory implements java.io.Serializable {
      * Passed without parameters, this will default to the standard menu size, with maxima at 3 and 21.
      */
     private void loopAtMenuEnd() {
-        loopAtMenuEnd(3, 21);
+        loopAtMenuEnd(2, 20);
     }
 
     /**
@@ -513,13 +516,13 @@ class Inventory implements java.io.Serializable {
         putText(player.armor.getName(), 9, 17, armorColor);
 
         if (pressedA) {
-            int index = cursorY - 3 + ((page - 1) * 16);
-            if (index < equip.size() && cursorY < 19) {
+            int index = calcIndex();
+            if (index < equip.size() && cursorY < 18) {
                 int prevMaxHP = player.maxHealth;
                 player.equip(equip.get(index));
                 player.addHealth(player.maxHealth - prevMaxHP);
             }
-            if (cursorY == 21) {
+            if (cursorY == 20) {
                 jumpToNewMenu(topMenuLayer, TOP, equipMenuLayer, 28);
             }
         }
@@ -593,11 +596,12 @@ class Inventory implements java.io.Serializable {
             page = 1;
         }
 
-        org.editLayer(String.valueOf((int) pageReq), selectorLayer, 2, 41);
-        org.editLayer(String.valueOf(page), selectorLayer, 2, 39);
-        fillItemNames(items, 33, 3, page, highlightEquip);
+        org.editLayer(String.valueOf((int) pageReq), selectorLayer, 1, 44);
+        org.editLayer(String.valueOf(page), selectorLayer, 1, 42);
 
-        int index = cursorY - 3 + ((page - 1) * 16);
+        fillItemNames(items, 32, 2, page, highlightEquip);
+
+        int index = calcIndex();
 
         if (index != prevIndex){
             clearItemInfo();
@@ -678,7 +682,7 @@ class Inventory implements java.io.Serializable {
             iter++;
         }
         for (int iif = iter; iif < maxLength; iif++){ //Fixes string by concatenating blank spaces until maxLength
-            org.editLayer(" ", infoLayer.getName(), yStart, xStart + iif);
+            //org.editLayer(" ", infoLayer.getName(), yStart, xStart + iif);
         }
     }
 
@@ -709,6 +713,11 @@ class Inventory implements java.io.Serializable {
             org.editLayer(String.valueOf(arrThing[i]), selectedSpellsLayer.name, y, i + x);
         }
     }
+
+    private int calcIndex() {
+        return cursorY - 2 + ((page - 1) * 16);
+    }
+
 
     void fireKeyEvent(KeyEvent event) {
         int key = event.getKeyCode();
