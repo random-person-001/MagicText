@@ -55,7 +55,8 @@ public class NetworkClient {
      */
     public void attemptCancel() {
         try {
-            server.close();
+            if (server != null)
+                server.close();
         } catch (IOException e) {
             System.out.println("Cancelling the NetworkClient failed:");
             e.printStackTrace();
