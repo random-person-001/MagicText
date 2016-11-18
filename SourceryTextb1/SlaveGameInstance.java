@@ -15,6 +15,9 @@ public class SlaveGameInstance {
         masterInstance = master;
     }
 
+    /**
+     * Set up server and call run game appropriately.  Note that the player actually does
+     */
     public void runGameAsSlave() {
         Player me = masterInstance.requestNewPlayer();
         System.out.println(me.getUsername());
@@ -24,5 +27,6 @@ public class SlaveGameInstance {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        masterInstance.runGame(me);
     }
 }

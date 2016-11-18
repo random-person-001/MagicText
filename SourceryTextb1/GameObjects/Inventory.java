@@ -434,6 +434,10 @@ class Inventory implements java.io.Serializable {
                     jumpToNewMenu(taterMenuLayer, UPGRADE, itemsMenuLayer, 28);
                     potatoIndex = index;
                 }
+                if (thing.getDescMode().equals("potion")){
+                    new Potion(player.room, player, thing.getName());
+                    items.remove(thing);
+                }
                 if (thing.getDescMode().equals("healitem")){
                     player.restoreHealth(thing.healing, thing.overheal);
                     items.remove(index);

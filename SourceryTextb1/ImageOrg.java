@@ -212,6 +212,14 @@ public class ImageOrg implements java.io.Serializable {
      * Adds and removes all layers requested in a stack-like fashion.
      */
     private void doLayerOperations(){
+        while (layerOpLock) { // Only really necessary for multiplayer
+            try {
+                Thread.sleep(5);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
         layerOpLock = true;
         ArrayList<Layer> operationList;
         if (!useOpList2){

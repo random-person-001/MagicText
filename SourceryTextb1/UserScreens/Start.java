@@ -321,7 +321,7 @@ public class Start {
             player.roomName = "TutorialBasement";
             playerList.add(player);
             GameInstance master = new GameInstance(initializeZone1Rooms(player),player);
-            new Thread(master::runGame).start();
+            new Thread(() -> master.runGame(player)).start();
 
             // For multiplayer
             for (int i=1; i<numPlayers; i++) {
@@ -356,7 +356,7 @@ public class Start {
             org.printLayers();
             imported.resumeFromSave();
             GameInstance i = new GameInstance(initializeZone1Rooms(imported), imported);
-            i.runGame();
+            i.runGame(imported);
         }
 
         public void run(){

@@ -28,38 +28,26 @@ public class GameInstance {
         PlayerKeyPressListener kl = new PlayerKeyPressListener(protaganist);
         protaganist.orgo.setOwningPlayerUsername(protaganist.getUsername());
         protaganist.orgo.getWindow().txtArea.addKeyListener(kl);
-    }
-
-    public void runGame(){
         protaganist.orgo.terminateClock();
-        for (Player p : playerList) {
-            new Timer().schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    while (!p.roomName.equals("die")) {
-                        System.out.println("Entering the room '" + p.roomName + "'");
-                        zone1Rooms.get(p.roomName).enter(p);
-                    }
-                    System.out.println(p.getUsername() + " has DIED.  Oh, no, not again.");
-                }
-            }, 10);
-        }
-        protaganist.orgo.removeAllButPlayer();
-        protaganist.orgo.getWindow().txtArea.setForeground(Color.WHITE);
-        protaganist.orgo.setCam(0,0);
     }
 
     /**
-     * @param username which player
-     * @return a list of layers in the room which that player is in
+     * Run this in a new thread for each player.
+     * @param p
      */
-    ArrayList<Layer> getLayersOf (String username){
-        for (Player p : playerList){
-            if (p.getUsername().equals(username)){
-                return p.orgo.getLayers();
+    public void runGame(Player p){
+        System.out.println("[GameInstance] beginning game running for " + p.getUsername());
+        while (!p.roomName.equals("die")) {
+            System.out.println("Entering the room '" + p.roomName + "'");
+            Room r = zone1Rooms.get(p.roomName);
+            if (r != null) {
+                r.enter(p);
+            } else {
+                System.out.println("Unregistered room name! " + p.roomName);
+                p.roomName = "die";
             }
         }
-        return null;
+        System.out.println(p.getUsername() + " has DIED.  Oh, no, not again.");
     }
 
     Player requestNewPlayer(){
