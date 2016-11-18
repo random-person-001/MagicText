@@ -10,9 +10,8 @@ import java.util.Random;
  * Create a new spell.  Attributes such as its character representation, damage, and range can be customized.
  * Created by riley on 13-Jun-2016.
  *
- * TODO : passing a layer name in the constructors is useless!  We should either not pretend it does anything or remove the misleading feature
  */
-public class Spell extends GameObject{
+public class Spell extends GameObject {
     private Random rand = new Random();
     private String name = "Generic";
     private int range = -1;

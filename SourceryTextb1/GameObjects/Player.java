@@ -34,36 +34,21 @@ import java.io.ObjectOutputStream;
  */
 public class Player extends Mortal implements java.io.Serializable {
     private String username = System.getProperty("user.name");
-    //private PlayerKeypressListener playerKeyListener;// = new PlayerKeypressListener(this);
     private Inventory inv;
-    private ItemTracker tracker;
     private HUD hud;
     public String roomName = ""; //Extremely important when we implement saving.
-
-    public Color foregroundColor = Color.WHITE;
+    private NetworkServer networkServer; // Only used in multiplayer
+    private boolean hasLocalWindow;
 
     private boolean shouldNewInv = false;
-    public boolean frozen = false; //This gets changed by a room upon beginning the level
+    private String lastPainMessage = "None";
+    public boolean dead = false;
 
     //Convenience variables
     private final int UP = 0;
     private final int DOWN = 1;
     private final int LEFT = 2;
     private final int RIGHT = 3;
-
-    boolean upPressed, downPressed, leftPressed, rightPressed, spacePressed = false;
-    boolean swimming = false;
-    int waterEntry = 0;
-    private int movecount = 0;
-    boolean ludicrousSpeed = false;
-
-    private int orientation = UP;
-    private boolean orientationLocked = false;
-    private String aimDispName = "aimDisp";
-
-    private Color restingBackground = Color.black;
-    boolean isGhost = false;
-    private String lastPainMessage = "None";
 
     // CONSTANT STATS
     int baseMaxHP = 20;
@@ -79,6 +64,17 @@ public class Player extends Mortal implements java.io.Serializable {
     private float sprintVelocity = 1;
     private float sprintAcceleration = 0.9f;
 
+    boolean upPressed, downPressed, leftPressed, rightPressed, spacePressed = false;
+    boolean swimming = false;
+    int waterEntry = 0;
+    private int movecount = 0;
+    boolean ludicrousSpeed = false;
+    private int orientation = UP;
+    private boolean orientationLocked = false;
+    private String aimDispName = "aimDisp";
+    public boolean frozen = false;
+    boolean isGhost = false;
+
     int allSpellBoost = 0;
     int arcSpellBoost = 0;
     int fireSpellBoost = 0;
@@ -87,23 +83,20 @@ public class Player extends Mortal implements java.io.Serializable {
     private int healBoost, durBoost, rangeBoost, armorHealthBoost = 0;
     //NO MORE STATS
 
-    public boolean dead = false;
-    private int hurtColor = 0;
 
     Item spell1 = new Item("None", "");
     Item spell2 = new Item("None", "");
     Item weapon = new Item("None", "");
     Item armor = new Item("None", "");
 
-    int screenRedness = 0;
-    int screenYellowness = 0;
-    private boolean hasLocalWindow;
-    private NetworkServer networkServer;
-
     // Fabulous mode variables
     public boolean fabulousMode = false;
     public int fabulousLocIndex = 1;
     public int fabulousColorIndex = 0;
+    int screenRedness = 0;
+    int screenYellowness = 0;
+    public Color foregroundColor = Color.WHITE;
+
 
     /**
      * Initialize a whole lotta variables.
@@ -124,7 +117,6 @@ public class Player extends Mortal implements java.io.Serializable {
         aimDispName += username;
 
         inv = new Inventory(orgo, this);
-        tracker = new ItemTracker();
 
         hud = new HUD(this);
         hud.setOrg(orgo);
@@ -159,7 +151,7 @@ public class Player extends Mortal implements java.io.Serializable {
      */
     public void resumeFromSave() {
         //orgo.getWindow().addKeyListener(playerKeyListener); // Add key listeners.
-        setupForNewRoom();
+        //setupForNewRoom();
         setupTimer(20);
         orgo.resetClock();
     }
@@ -458,7 +450,6 @@ public class Player extends Mortal implements java.io.Serializable {
             //System.out.printf("Screen yellow factor: %1$d, (%2$d --> %3$d)\n", screenYellowness, opposite, yellowNumber);
 
             foregroundColor = new Color(255, opposite, yellowNumber);
-            //orgo.getWindow().txtArea.setForeground(new Color(255, opposite, yellowNumber)); // old way
         }
 
         SpecialText playerIcon;
@@ -641,7 +632,7 @@ public class Player extends Mortal implements java.io.Serializable {
                 switch (spell.getName()) {
                     case "Heal":
                         if (mana >= spell.cost) {
-                            restoreHealth(8);
+                            restoreHealth(spell.healing);
                             spendMana(spell.cost);
                         }
                         break;
