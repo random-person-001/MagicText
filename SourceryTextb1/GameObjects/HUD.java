@@ -81,11 +81,10 @@ class HUD implements java.io.Serializable {
     /**
      * Place a character on the layer, one over from where the last one was placed. (a fairly specialized fn)
      *
-     * @param newChar a single-char long String to place in the Layer at the nexBulidIndext spot.
+     * @param newChar a single-char long String to place in the Layer at the next BuildIndex spot.
      */
     private void putChar(String newChar) {
-        orgo.editLayer(newChar, layerName, 0, xBulidIndex);
-        xBulidIndex++;
+        putChar(new SpecialText(newChar));
     }
 
     private void putChar(SpecialText newChar) {

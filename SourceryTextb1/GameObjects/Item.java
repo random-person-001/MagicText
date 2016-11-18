@@ -255,6 +255,8 @@ public class Item implements java.io.Serializable {
                 return description + "\n\nRestores " + String.valueOf(healing) + " Health\nOverheal: " + String.valueOf(overheal) + "\nCost: " + String.valueOf(cost);
             case "healitem":
                 return description + "\n\nRestores " + String.valueOf(healing) + " Health\nOverheal: " + String.valueOf(overheal);
+            case "potion":
+                return description + "\n\nIt's a potion.  Yay.\n";
             case "buff":
                 return description + "\n\nDuration: " + String.valueOf(duration) + " Seconds\nCost: " + String.valueOf(cost);
             default:
