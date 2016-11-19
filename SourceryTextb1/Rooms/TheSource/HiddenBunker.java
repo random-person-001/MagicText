@@ -71,6 +71,8 @@ public class HiddenBunker extends Room {
         }
     }
 
+    boolean[] keysTaken = {false, false, false, false};
+
     @Override
     protected void specialInspect(int x, int y, Player inspector){
         if (x == 24 && y == 29){
@@ -133,6 +135,25 @@ public class HiddenBunker extends Room {
             org.editLayer("", "HiddenBunkerLayer", 11, 130);
             removeFromBaseHitMesh(130, 11);
         }
+        if (Math.abs(x - 24) + Math.abs(y - 24) <= 1 && !keysTaken[0]){
+            Item key = new Item("Bunker Key 1","A key to a door in\n the hidden bunker found\n in the mountains.\n\nThere is an inscription\n on the key:\n\n\'Need more plunder,\n hide key\'","item");
+            inspector.addItem(key);
+            queueMessage(new FlavorText("You found a key!","").setViewerUsername(inspector.getUsername()));
+            keysTaken[0] = true;
+        }
+
+        if (Math.abs(x - 69) + Math.abs(y - 30) <= 1 && !keysTaken[1]){
+            Item key = new Item("Bunker Key 2","A key to a door in\n the hidden bunker found\n in the mountains.\n\nThere is an inscription\n on the key:\n\n\'Mike need to shower\'","item");
+            inspector.addItem(key);
+            queueMessage(new FlavorText("You found a key!","").setViewerUsername(inspector.getUsername()));
+            keysTaken[1] = true;
+        }
+        if (Math.abs(x - 54) + Math.abs(y - 4) <= 1 && !keysTaken[2]){
+            Item key = new Item("Bunker Key 3","A key to a door in\n the hidden bunker found\n in the mountains.\n\nThere is an inscription\n on the key:\n\n\'Fondant\n Fondant\n Fondant\'","item");
+            inspector.addItem(key);
+            queueMessage(new FlavorText("You found a key!","").setViewerUsername(inspector.getUsername()));
+            keysTaken[2] = true;
+        }
     }
 
     @Override
@@ -146,13 +167,22 @@ public class HiddenBunker extends Room {
 
         Art arty = new Art();
         String[][] base = Art.strToArray(arty.hiddenBunker);
-        String[] solids = {"#","|","-","%","$","8"};
+        String[] solids = {"#","|","-","%","8"};
         addToBaseHitMesh(base, solids);
         Layer lay1 = new Layer(base, "HiddenBunkerLayer");
         lay1.influenceAll(new Color(175, 175, 175));
         highlightFlavorText(lay1);
         org.addLayer(lay1);
 
+        int[][] layerInfo ={{5, 10, 23, 21}, {7, 15, 8, 47}, {3, 3, 12, 91},
+                            {10, 18, 6, 95}, {3, 1, 12, 94}, {7, 17, 28, 92},
+                            {5, 6, 23, 121}, {6, 3, 22, 127}, {11, 11, 0, 125}};
+        for (int ii = 0; ii < 9; ii++){
+            Layer newCloak = new Layer(new String[layerInfo[ii][0]][layerInfo[ii][1]], ("Cloak" + (ii+1)), layerInfo[ii][2], layerInfo[ii][3], true, true, true);
+            newCloak.clear();
+            org.addLayer(newCloak);
+        }
+        /*
         Layer cloak1 = new Layer(new String[5][10], "Cloak1", 23, 21, true, true, true);
         cloak1.clear();
         org.addLayer(cloak1);
@@ -188,9 +218,14 @@ public class HiddenBunker extends Room {
         Layer cloak9 = new Layer(new String[11][11], "Cloak9", 0, 125, true, true, true);
         cloak9.clear();
         org.addLayer(cloak9);
+        */
 
         OneWayDoor secretDoor = new OneWayDoor(true, 92, 13, this, org);
+        addObject(secretDoor);
         OneWayDoor normalDoor = new OneWayDoor(false, 133, 31, this, org);
+        addObject(normalDoor);
+
+
 
         //addItems();
 

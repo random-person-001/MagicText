@@ -666,7 +666,7 @@ public class Player extends Mortal implements java.io.Serializable {
         return spell1.getIcon();
     }
 
-    void addItem(Item input) {
+    public void addItem(Item input) {
         inv.addItem(input);
     }
 
