@@ -19,6 +19,7 @@ class Potion extends GameObject {
         room = roomy;
         name = namey;
         setupTimer(50);
+        setPlayer.fabulousMode = true;
     }
 
     public void update(){
@@ -42,6 +43,7 @@ class Potion extends GameObject {
                 }
                 if (getTime() > 40*1000){ // burnout time
                     cancelTimer();
+                    caster.fabulousMode = true;
                 }
                 break;
         }
