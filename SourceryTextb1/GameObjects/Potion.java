@@ -27,7 +27,7 @@ class Potion extends GameObject {
         System.out.println("potion updating");
         switch (name) {
             // Garlic potato chip hurts everything near you.
-            case "OnionPotatoChip":
+            case "SC&OPotatoChip":
                 int r = 5; // Range (radius)
                 int d = 10; // Damage (max, at center)
                 for (int xi = -r; xi <= r; xi++) {

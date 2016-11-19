@@ -31,22 +31,41 @@ public class OneWayDoor extends GameObject{
         setupTimer(150);
     }
 
-    private void selfDestruct(){
-        room.splashMessage("The one way door opened!","");
-        orgo.removeLayer(layerName);
+    private void openDoor(){
+        if (!showedMessage) {
+            room.splashMessage("The one way door opened!", "");
+            showedMessage = true;
+        }
+        orgo.editLayer(" ", layerName, 0, 0);
         room.removeFromObjHitMesh(x,y);
-        room.removeObject(this);
-        cancelTimer();
     }
+
+    private void closeDoor(){
+        if (facingLeft)
+            orgo.editLayer("{", layerName, 0, 0);
+        else
+            orgo.editLayer("}", layerName, 0, 0);
+        room.addToObjHitMesh(x, y);
+        showedMessage = false;
+    }
+
+    private boolean showedMessage = false;
 
     @Override
     public void update(){
         for (Player player : room.players) {
-            if (facingLeft && player.getX() == x + 1 && player.getY() == y) {
-                selfDestruct();
-            }
-            if (!facingLeft && player.getX() == x - 1 && player.getY() == y) {
-                selfDestruct();
+            if (player.getY() == y) {
+                if (facingLeft) { //Left-facing doors
+                    if (player.getX() == x + 1)
+                        openDoor();
+                    if (player.getX() < x)
+                        closeDoor();
+                } else {          //Right-facing doors
+                    if (player.getX() == x - 1)
+                        openDoor();
+                    if (player.getX() > x)
+                        closeDoor();
+                }
             }
         }
     }
