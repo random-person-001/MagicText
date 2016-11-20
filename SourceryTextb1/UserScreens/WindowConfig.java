@@ -14,22 +14,19 @@ import java.util.TimerTask;
  * Created by riley on 12-Jun-2016.
  */
 class WindowConfig {
-
+    private Navigator keyListener;
     private Window window;
     public ImageOrg org;
 
     boolean doContinue = false;
     boolean resume = false;
-    private boolean firstTime = true;
 
     private int windowHeight = 500;
     private int windowWidth =  500;
-    private String OS = System.getProperty("os.name").toLowerCase();
 
     WindowConfig(ImageOrg orgo){
          window = orgo.getWindow();
          org = orgo;
-         //System.getProperties().list(System.out);  // Aw, cool!
     }
 
     /**
@@ -43,34 +40,14 @@ class WindowConfig {
         doContinue = false;
         setSize(windowWidth, windowHeight);
 
-        /*
-        if (firstTime) {
-            if (OS.contains("nix") || OS.contains("nux")) {
-                keyPressed('2');
-            } else if (OS.contains("win")) {
-                keyPressed('1');
-            } else if (OS.contains("mac")) {
-                System.out.println("Hello Mac user.");
-            }
-            firstTime = false;
-        }
-        */
-
         if (interactable) {
             Art arty = new Art();
             String[][] base = Art.strToArray(arty.configBox);
             Layer lay = new Layer(base, "helpful");
             org.addLayer(lay);
 
-            System.out.println("WinCnfg: layer added");
-
-            Navigator keyListener = new Navigator(this);
+            keyListener = new Navigator(this);
             window.txtArea.addKeyListener(keyListener); // Add key listeners.
-
-            System.out.println("WinCnfg: keyListener created");
-
-            Timer update = new Timer();
-            update.schedule(new StopListener(keyListener), 0, 100);
         }
         else{
             exit();
@@ -120,26 +97,12 @@ class WindowConfig {
         window.setSize(width, height);
     }
 
-    private void exit(){
+    void exit(){
+        window.txtArea.removeKeyListener(keyListener);
         org.removeLayer("helpful");
         doContinue = true;
+        resume = true;
     }
-
-    private class StopListener extends TimerTask {
-        Navigator listen;
-
-        private StopListener(Navigator navi){
-            listen = navi;
-        }
-
-        public void run(){
-            if (resume){
-                window.txtArea.removeKeyListener(listen);
-                exit();
-            }
-        }
-    }
-
 }
 
 
@@ -168,7 +131,7 @@ class Navigator extends KeyAdapter {
             cnfg.keyPressed('æ');
         }
         if (key == KeyEvent.VK_ESCAPE || key == KeyEvent.VK_ENTER) {
-            cnfg.resume = true;
+            cnfg.exit();
         }
     }
 }
