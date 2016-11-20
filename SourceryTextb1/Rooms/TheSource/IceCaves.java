@@ -19,7 +19,7 @@ public class IceCaves extends Room{
 
     public IceCaves(Player player){
         super(player);
-        strRoomName = "SourceCaves";
+        strRoomName = "IceCaves";
     }
 
     @Override

@@ -32,7 +32,7 @@ public class HiddenBunker extends Room {
 
     public HiddenBunker(Player player){
         super(player);
-        strRoomName = "InnerMountains";
+        strRoomName = "HiddenBunker";
     }
 
     @Override

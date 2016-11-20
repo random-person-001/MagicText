@@ -57,7 +57,7 @@ public class Start {
     }
 
     /**
-     * @return a hashmap of all the levels in Zone 1, initialized, NOT startuped, paused, and paired with their string.
+     * @return a hashmap of all the levels in Zone 1, initialized, startuped, paused, and paired with their string.
      * representation.
      */
     private static HashMap<String, Room> initializeZone1Rooms(Player player) {
