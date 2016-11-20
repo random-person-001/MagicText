@@ -119,6 +119,18 @@ public class Layer implements java.io.Serializable {
         //System.out.printf("Layer Created! I am %1s, whose opacity is %2$b\n", name, opaque);
     }
 
+    public Layer(SpecialText[][] assign, String inkey, int xSet, int ySet, boolean camOb, boolean opacity, boolean important) {
+        self = assign;
+        name = inkey;
+        cameraObedient = camOb;
+        opaque = opacity;
+        importance = important;
+
+        xPos = xSet;
+        yPos = ySet;
+        //System.out.printf("Layer Created! I am %1s, whose opacity is %2$b\n", name, opaque);
+    }
+
     public void setCamOb(boolean set) {  // JARED, I'M WORKING ON THIS
         cameraObedient = set;
     }
@@ -339,6 +351,14 @@ public class Layer implements java.io.Serializable {
                 self[r][c] = get;
             }
         }
+    }
+
+    /**
+     * Returns a duplicate layer
+     */
+
+    public Layer createDuplicate(){
+        return new Layer(self, name, xPos, yPos, cameraObedient, opaque, importance);
     }
 
     public String toString(){
