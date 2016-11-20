@@ -234,14 +234,14 @@ public class Player extends Mortal implements java.io.Serializable {
     @Override
     public void update() {
         updateFabulousness();
-        if (frozen || dead) { // Should be first, so other things don't try to happen first
+        if (frozen || dead || room == null) { // Should be first, so other things don't try to happen first
             //System.out.println("Not Updating " + username);
             try {
                 if (dead) {
                     onDeath();
                 }
                 orgo.editLayer(" ", layerName, y, x);
-            } catch (IndexOutOfBoundsException ignored) {}
+            } catch (IndexOutOfBoundsException | NullPointerException ignored) {}
         } else {
             if (shouldNewInv) {
                 System.out.println("Opening inventory");
@@ -712,9 +712,11 @@ public class Player extends Mortal implements java.io.Serializable {
             } else {
                 keyPressed(event.getKeyChar());
             }
-            inv.fireKeyEvent(event);
-            room.fireKeyEvent(event, getUsername());
-            hud.fireKeyEvent(event);
+            if (room != null) { // Player can be initialized for a bit before being placed into the room
+                inv.fireKeyEvent(event);
+                room.fireKeyEvent(event, getUsername());
+                hud.fireKeyEvent(event);
+            }
         }
         else if (event.toString().contains("KEY_RELEASED")) {
             if (event.getKeyCode() == KeyEvent.VK_UP) {
