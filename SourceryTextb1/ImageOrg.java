@@ -138,6 +138,11 @@ public class ImageOrg implements java.io.Serializable {
         return null;
     }
 
+    /**
+     * Adds a layer to the operation list.
+     * @param op The layer destined to be operated on
+     * @param type String describing what operation needs to be done on a layer
+     */
     private void addOp(Layer op, String type) {
         //System.out.println("Adding layer " + op.getName());
         Layer toAdd = op.createDuplicate();

@@ -6,10 +6,7 @@
 package SourceryTextb1.Rooms.TheSource;
 
 import SourceryTextb1.Art;
-import SourceryTextb1.GameObjects.DroppedItem;
-import SourceryTextb1.GameObjects.Item;
-import SourceryTextb1.GameObjects.OneWayDoor;
-import SourceryTextb1.GameObjects.Player;
+import SourceryTextb1.GameObjects.*;
 import SourceryTextb1.GameObjects.TheSource.Wolf;
 import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
@@ -71,7 +68,7 @@ public class HiddenBunker extends Room {
         }
     }
 
-    boolean[] keysTaken = {false, false, false, false};
+    boolean[] keysTaken = {false, false, false, false, false};
 
     @Override
     protected void specialInspect(int x, int y, Player inspector){
@@ -154,6 +151,18 @@ public class HiddenBunker extends Room {
             queueMessage(new FlavorText("You found a key!","").setViewerUsername(inspector.getUsername()));
             keysTaken[2] = true;
         }
+        if (Math.abs(x - 125) + Math.abs(y - 25) <= 1 && !keysTaken[3]){
+            Item key = new Item("Bunker Key 4","A key to a door in\n the hidden bunker found\n in the mountains.\n\nThere is an inscription\n on the key:\n\n\'Down with Carlson\'","item");
+            inspector.addItem(key);
+            queueMessage(new FlavorText("You found a key!","").setViewerUsername(inspector.getUsername()));
+            keysTaken[3] = true;
+        }
+        if (Math.abs(x - 134) + Math.abs(y - 24) <= 1 && !keysTaken[4]){
+            Item key = new Item("Tunnel Key","A key to a secret passageway\n deep in the mountains\n\nThere is an inscription\n on the key:\n\n\'DO NOT LOSE\'","item");
+            inspector.addItem(key);
+            queueMessage(new FlavorText("You found a key!","").setViewerUsername(inspector.getUsername()));
+            keysTaken[4] = true;
+        }
     }
 
     @Override
@@ -188,7 +197,13 @@ public class HiddenBunker extends Room {
         OneWayDoor normalDoor = new OneWayDoor(false, 133, 31, this, org);
         addObject(normalDoor);
 
-
+        int[][] lockedDoorLocs = {{32, 30}, {51, 27}, {77, 11}, {106, 2}};
+        for (int ii = 0; ii < lockedDoorLocs.length; ii++){
+            LockedDoor door = new LockedDoor("Bunker Key " + (ii + 1), 100, lockedDoorLocs[ii][0], lockedDoorLocs[ii][1], this, org);
+            addObject(door);
+        }
+        LockedDoor tunnelDoor = new LockedDoor("Tunnel Key", 100, 133, 9, this, org);
+        addObject(tunnelDoor);
 
         //addItems();
 
