@@ -12,7 +12,7 @@ import java.util.TimerTask;
  */
 public class ColoredTextMatrix extends JPanel {
     public SpecialText[][] text = new SpecialText[46][28];
-    private boolean recentlyResized = false;
+    private int marginDisplayTimer = 0;
 
     private int HOR_SEPARATION = 9;
     private int VER_SEPARATION = 16;
@@ -28,7 +28,7 @@ public class ColoredTextMatrix extends JPanel {
         addComponentListener(new ComponentResizeListener());
 
         Timer timing = new Timer("ColoredTextTimer");
-        timing.scheduleAtFixedRate(new frameResetTimer(), 25, 25);
+        timing.scheduleAtFixedRate(new frameResetTimer(), 25, 25); //40 frames a second
     }
 
     private class ComponentResizeListener implements ComponentListener {
@@ -57,7 +57,7 @@ public class ColoredTextMatrix extends JPanel {
     private void recalculate(){
         HOR_SEPARATION = getWidth() / 46; //Calculates horizontal and vertical separation of the letters
         VER_SEPARATION = (getHeight() / 28); //Intentionally wrong
-        int adjustedVerSep = (int)((float)VER_SEPARATION * (9f/16)); //Adjusts horizontal separation if too big for vertical.
+        int adjustedVerSep = (int)((float)VER_SEPARATION * (9f/15)); //Adjusts horizontal separation if too big for vertical.
         if (HOR_SEPARATION > adjustedVerSep){
             HOR_SEPARATION = adjustedVerSep;
             HOR_MARGIN = (getWidth() - (HOR_SEPARATION*46)) / 2; //Sets a margin to center display in the screen
@@ -69,7 +69,7 @@ public class ColoredTextMatrix extends JPanel {
         CHAR_HEIGHT = CHAR_SIZE + 1;
 
         setFont(new Font("Monospaced", Font.PLAIN, CHAR_SIZE));
-        recentlyResized = true; // Used to redraw grey lines at edges of the useful area of the window
+        marginDisplayTimer = 120; // Used to redraw grey lines at edges of the useful area of the window
     }
 
     @Override
@@ -78,13 +78,6 @@ public class ColoredTextMatrix extends JPanel {
         g.setColor(Color.BLACK);
         g.fillRect(0,0, getWidth(), getHeight());
 
-        if (recentlyResized && HOR_MARGIN > 0) {
-            int secondX = HOR_MARGIN + (HOR_SEPARATION * 46);
-            g.setColor(new Color(30, 30, 30));
-            g.drawLine(HOR_MARGIN - 1, 0, HOR_MARGIN - 1, getHeight());
-            g.drawLine(secondX, 0, secondX, getHeight());
-            recentlyResized = false;
-        }
         //recalculate(); // See the difference it makes by uncommenting - my unscientific methods measured around a thirdish difference
 
         for (int col = 0; col < text.length; col++){ //Draws the highlighting / backgrounds first, then the foreground
@@ -97,6 +90,15 @@ public class ColoredTextMatrix extends JPanel {
                     g.drawString(get.getStr(), (col * HOR_SEPARATION) + HOR_MARGIN, (row * VER_SEPARATION) + CHAR_SIZE);
                 }
             }
+        }
+
+        if (marginDisplayTimer > 0 && HOR_MARGIN > 0) {
+            int secondX = HOR_MARGIN + (HOR_SEPARATION * 46);
+            int marginColor = (marginDisplayTimer < 15) ? marginDisplayTimer * 3 : 45;
+            g.setColor(new Color(marginColor, marginColor, marginColor));
+            g.drawLine(HOR_MARGIN - 1, 0, HOR_MARGIN - 1, getHeight());
+            g.drawLine(secondX, 0, secondX, getHeight());
+            marginDisplayTimer--;
         }
     }
 
