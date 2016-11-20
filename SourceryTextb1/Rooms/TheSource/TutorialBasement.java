@@ -169,11 +169,6 @@ public class TutorialBasement extends Room {
         DroppedItem gStaff =  new DroppedItem(this, "You found a weapon: Broken Staff!", brokenStaff, 90, 15);
         super.addObject(gStaff);
 
-        Item potion = new Item ("SC&OPotatoChip", "This variety of magic\n potato chip is flavored\n with sour cream and onions\n\nIt makes your breath so bad\n it hurts nearby enemies.\n\nStinky.", "item");
-        potion.setDescMode("potion");
-        DroppedItem dPotion =  new DroppedItem(this, "You found a potion!", potion, 19, 29);
-        super.addObject(dPotion);
-
         //Item magicTater = new Item ("Magic Potato","How lucky! This eccentric\n potato can permanently\n increase either your\n Max HP or Max Mana.\n\nNOTE: it's permanent.", playo, "item");
         //DroppedItem gTater =  new DroppedItem(this, org, "You found a magic potato!", magicTater, "drops6", 20, 31);
         //super.addObject(gTater);

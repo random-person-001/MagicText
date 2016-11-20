@@ -437,6 +437,7 @@ class Inventory implements java.io.Serializable {
                 if (thing.getDescMode().equals("potion")){
                     new Potion(player.room, player, thing.getName());
                     items.remove(thing);
+                    shouldRedraw = true;
                 }
                 if (thing.getDescMode().equals("healitem")){
                     player.restoreHealth(thing.healing, thing.overheal);

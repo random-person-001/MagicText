@@ -29,21 +29,21 @@ class Potion extends GameObject {
         switch (name) {
             // Garlic potato chip hurts everything near you.
             case "SC&OPotatoChip":
-                int r = 5; // Range (radius)
-                int d = 10; // Damage (max, at center)
+                int r = 4; // Range (radius)
+                int d = 4; // Damage (max, at center)
                 for (int xi = -r; xi <= r; xi++) {
                     for (int yi = -r; yi <= r; yi++) {
                         float xDamageMult = abs(abs(xi) - r) / (float) r; // 0 to 1, peaking when xi=0 (center)
                         float yDamageMult = abs(abs(yi) - r) / (float) r;
                         int totalDamage = (int) (d * .5 * (xDamageMult + yDamageMult));
                         room.hurtSomethingAt(xi + x, yi + y, totalDamage, "Jeez, killed yourself with an Potion!", true);
-                        System.out.println(x + xi + " " + (yi + y) + " given " + totalDamage + " damage");
+                        //System.out.println(x + xi + " " + (yi + y) + " given " + totalDamage + " damage");
                     }
-                    System.out.println();
+                    //System.out.println();
                 }
-                if (getTime() > 40*1000){ // burnout time
+                if (getTime() > 20*1000){ // burnout time
                     cancelTimer();
-                    caster.fabulousMode = true;
+                    caster.fabulousMode = false;
                 }
                 break;
         }

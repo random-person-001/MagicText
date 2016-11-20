@@ -80,6 +80,11 @@ public class Cliffside extends Room {
             WeakTower t = new WeakTower(org, this, towerLoc[0], towerLoc[1]);
             addMortal(t);
         }
+
+        Item potion = new Item ("SC&OPotatoChip", "This variety of magic\n potato chip is flavored\n with sour cream and onions\n\nIt makes your breath so bad\n it hurts nearby enemies.\n\nStinky.", "item");
+        potion.setDescMode("potion");
+        DroppedItem dPotion =  new DroppedItem(this, "You found a potion!", potion, 58, 7);
+        super.addObject(dPotion);
     }
 
     @Override
