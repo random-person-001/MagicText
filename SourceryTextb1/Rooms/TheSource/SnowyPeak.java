@@ -47,8 +47,8 @@ public class SnowyPeak extends Room {
             try {
                 Thread.sleep(50);
 
-                if (play.getX() == 0) {
-                    setNewRoom("InnerMountains", play, 64, 14);
+                if (play.getX() <= 0) {
+                    setNewRoom("InnerMountains", play, 14, 64);
                 }
                 if (play.getX() == 179 && play.getY() == 6){
                     setNewRoom("IceCaves", play, 36, 39);

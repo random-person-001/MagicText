@@ -580,6 +580,7 @@ public class Room implements java.io.Serializable{
             txtBox = new Layer(Art.strToArray(artsedo.textBox), "Dialog", 13, 0, false, true);
         }
         txtBox.setOwningPlayerUsername(usernameToShowTo);
+        txtBox.setImportance(true);
         System.out.println(usernameToShowTo);
 
         for (int ii = 0; ii < speaker.length(); ii++) {
