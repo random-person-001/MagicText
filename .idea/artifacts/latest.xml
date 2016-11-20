@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="latest">
+    <output-path>$PROJECT_DIR$/jarOutput</output-path>
+    <root id="archive" name="latest.jar">
+      <element id="module-output" name="MagicText" />
+    </root>
+  </artifact>
+</component>
