@@ -182,43 +182,6 @@ public class HiddenBunker extends Room {
             newCloak.clear();
             org.addLayer(newCloak);
         }
-        /*
-        Layer cloak1 = new Layer(new String[5][10], "Cloak1", 23, 21, true, true, true);
-        cloak1.clear();
-        org.addLayer(cloak1);
-
-        Layer cloak2 = new Layer(new String[7][15], "Cloak2", 8, 47, true, true, true);
-        cloak2.clear();
-        org.addLayer(cloak2);
-
-        Layer cloak3 = new Layer(new String[3][3], "Cloak3", 12, 91, true, true, true);
-        cloak3.clear();
-        org.addLayer(cloak3);
-
-        Layer cloak4 = new Layer(new String[10][18], "Cloak4", 6, 95, true, true, true);
-        cloak4.clear();
-        org.addLayer(cloak4);
-
-        Layer cloak5 = new Layer(new String[3][1], "Cloak5", 12, 94, true, true, true);
-        cloak5.clear();
-        org.addLayer(cloak5);
-
-        Layer cloak6 = new Layer(new String[7][17], "Cloak6", 28, 92, true, true, true);
-        cloak6.clear();
-        org.addLayer(cloak6);
-
-        Layer cloak7 = new Layer(new String[5][6], "Cloak7", 23, 121, true, true, true);
-        cloak7.clear();
-        org.addLayer(cloak7);
-
-        Layer cloak8 = new Layer(new String[6][3], "Cloak8", 22, 127, true, true, true);
-        cloak8.clear();
-        org.addLayer(cloak8);
-
-        Layer cloak9 = new Layer(new String[11][11], "Cloak9", 0, 125, true, true, true);
-        cloak9.clear();
-        org.addLayer(cloak9);
-        */
 
         OneWayDoor secretDoor = new OneWayDoor(true, 92, 13, this, org);
         addObject(secretDoor);
