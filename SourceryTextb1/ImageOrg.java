@@ -140,11 +140,12 @@ public class ImageOrg implements java.io.Serializable {
 
     private void addOp(Layer op, String type) {
         //System.out.println("Adding layer " + op.getName());
-        op.imageOrgOperation = type;
+        Layer toAdd = op.createDuplicate();
+        toAdd.imageOrgOperation = type;
         if (!useOpList2){
-            operationList1.add(op);
+            operationList1.add(toAdd);
         } else {
-            operationList2.add(op);
+            operationList2.add(toAdd);
         }
     }
 
@@ -166,7 +167,6 @@ public class ImageOrg implements java.io.Serializable {
         for (int i = importantLayers.size() - 1; i >= 0; i--) {
             Layer get = importantLayers.get(i);
             if (get.nameMatches(layerName)) {
-                get.imageOrgOperation = "remove";
                 addOp(get, "remove");
                 layerFound = true;
             }
