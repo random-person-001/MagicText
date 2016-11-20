@@ -23,9 +23,7 @@ class Inventory implements java.io.Serializable {
     private int cursorY = 2;
     private int cursorX = 28;
 
-    private int selectYChange = 0;
-    private int selectXChange = 0;
-    private boolean updateCursor = false;
+    private int pageChange = 0;
 
     private int prevIndex = 0;
     private int potatoIndex = 0;
@@ -87,7 +85,7 @@ class Inventory implements java.io.Serializable {
         equipMenuLayer.findAndReplace(new SpecialText(","), new SpecialText("_", new Color(15, 17, 15), new Color(20, 25, 20)));
         taterMenuLayer = new Layer(Art.strToArray(new Art().taterMenu), "tater" + player.getUsername(), 1, 27, false, true);
         taterMenuLayer.setOwningPlayerUsername(p.getUsername());
-        selectorLayer = new Layer(new String[22][46], "selector" + player.getUsername(), 0, 0, false, false);
+        selectorLayer = new Layer(new String[1][1], "selector" + player.getUsername(), 0, 0, false, false);
         selectorLayer.setOwningPlayerUsername(p.getUsername());
         infoLayer = new Layer(new String[22][46], "invInfo" + player.getUsername(), 0, 0, false, false);
         infoLayer.setOwningPlayerUsername(p.getUsername());
@@ -113,7 +111,7 @@ class Inventory implements java.io.Serializable {
         player.defineStats();
     }
 
-    public void submenuColoring(Layer toColor){
+    private void submenuColoring(Layer toColor){
         for (int ii = 9 ; ii >= 0 ; ii--)
             toColor.findAndReplace(new SpecialText(String.valueOf(ii)), new SpecialText(String.valueOf(ii), new Color(30, 30, 30)));
     }
@@ -200,13 +198,18 @@ class Inventory implements java.io.Serializable {
      * @param c which character you have pressed on the board
      */
     void keyPressed(char c) {
-        //org.editLayer(" ", selectorLayer, cursorY, cursorX);
         switch (c) {
-            case '©': // Up
-                selectYChange--;
+            case '↑': // Up
+                cursorY--;
                 break;
-            case '®': // Down
-                selectYChange++;
+            case '↓': // Down
+                cursorY++;
+                break;
+            case '←':
+                pageChange--;
+                break;
+            case '→':
+                pageChange++;
                 break;
             default:
                 break;
@@ -214,13 +217,12 @@ class Inventory implements java.io.Serializable {
         if (Character.isDigit(c) && (menuID == SPELLS || menuID == ITEMS || menuID == EQUIP)){
             int number = Integer.valueOf(String.valueOf(c));
             if (number != 0){
-                selectYChange = (2*(number-1) + 2) - cursorY;
+                cursorY = (2*(number-1) + 2);
             } else {
-                selectYChange = 20 - cursorY;
+                cursorY = 20;
             }
             System.out.println(c);
         }
-        //org.editLayer(">", selectorLayer, cursorY, cursorX);
     }
 
     /**
@@ -237,16 +239,14 @@ class Inventory implements java.io.Serializable {
         }
         //player.room.setObjsPause(true);
 
-        updateCursor = true;
-
         menuID = TOP;
         cursorY = 2;
         cursorX = 28;
 
         pressedA = false;
 
-        selectorLayer.clear();
-        selectorLayer.setStr(cursorY,cursorX, ">");
+        selectorLayer.setStr(0,0, ">");
+        selectorLayer.setPos(cursorY, cursorX);
         org.addLayer(topMenuLayer);
         org.addLayer(selectorLayer);
         org.addLayer(infoLayer);
@@ -262,7 +262,6 @@ class Inventory implements java.io.Serializable {
     void exitAllMenus() {
         menuID = EXIT;
         infoLayer.clear();
-        selectorLayer.clear();
         org.removeLayer("top" + player.getUsername());
         org.removeLayer("quit" + player.getUsername());
         org.removeLayer("items" + player.getUsername());
@@ -285,6 +284,7 @@ class Inventory implements java.io.Serializable {
         switch (menuType) {
             case TOP:
                 operateTopMenu();
+                pageChange = 0;
                 break;
             case SPELLS:
                 operateSpellsMenu();
@@ -297,28 +297,19 @@ class Inventory implements java.io.Serializable {
                 break;
             case QUIT:
                 operateQuitMenu();
+                pageChange = 0;
                 break;
             case UPGRADE:
                 operateUpgradeMenu();
+                pageChange = 0;
                 break;
         }
         pressedA = false;
         pressedS = false;
         pressedD = false;
 
-        if (selectYChange != 0 || selectXChange != 0 || updateCursor) {
-            org.editLayer(" ", selectorLayer, cursorY, cursorX);
-            cursorY += selectYChange;
-            cursorX += selectXChange;
-            org.editLayer(">", selectorLayer, cursorY, cursorX);
-            selectYChange = 0;
-            selectXChange = 0;
-            if (updateCursor){
-                System.out.println("Cursor update!");
-            }
-            updateCursor = false;
-        }
-        //System.out.println(String.format("Time to process menu: %1$dmcs",(System.nanoTime() - beginNano) / 1000));
+        Layer cursorLayer = org.getLayer(selectorLayer.getName());
+        if (cursorLayer != null) cursorLayer.setPos(cursorY, cursorX);
     }
 
     /**
@@ -361,19 +352,14 @@ class Inventory implements java.io.Serializable {
      * @param from  the string name of the layer you came from (so it can be removed)
      */
     private void jumpToNewMenu(Layer goTo, int newID, Layer from, int newXIndex) {
-        //selectorLayer.clear();
         System.out.println("Going to menu " + goTo.getName());
         org.removeLayer(from);
-        selectorLayer.clear();
         infoLayer.clear();
         org.addLayer(goTo);
         org.setLayerImportance(selectorLayer.getName(), true);
         org.setLayerImportance(infoLayer.getName(), true);
         menuID = newID;
-        updateCursor = true;
-        selectXChange = newXIndex - cursorX;
-        //org.editLayer(" ", selectorLayer, cursorY, cursorX);
-        //System.out.println(selectXChange);
+        cursorX = newXIndex;
     }
 
     /**
@@ -409,7 +395,7 @@ class Inventory implements java.io.Serializable {
             infoLayer.clear();
             jumpToNewMenu(topMenuLayer, TOP, spellsMenuLayer, 28);
         }
-        checkNewPage();
+        checkNewPage(spells);
     }
 
     /**
@@ -446,7 +432,7 @@ class Inventory implements java.io.Serializable {
                 }
             }
         }
-        checkNewPage();
+        checkNewPage(items);
     }
 
     /**
@@ -475,11 +461,28 @@ class Inventory implements java.io.Serializable {
     }
 
     /**
-     * Incrament page number if you pressed A and were over the right spot
+     * Increment page number if you pressed A and were over the right spot
      */
-    private void checkNewPage() {
+    private void checkNewPage(ArrayList<Item> itemList) {
         if (cursorY == 19 && pressedA) {
             page++;
+            shouldRedraw = true;
+        }
+        if (pageChange != 0){
+            page += pageChange;
+            pageChange = 0;
+            shouldRedraw = true;
+        }
+        double maxPage = Math.ceil((double)itemList.size() / 16);
+        if (maxPage == 0) {
+            maxPage = 1;
+        }
+        if (page > maxPage) {
+            page = 1;
+            shouldRedraw = true;
+        }
+        if (page < 1){
+            page = (int)maxPage;
             shouldRedraw = true;
         }
     }
@@ -491,12 +494,12 @@ class Inventory implements java.io.Serializable {
      * @param maxAllowedYCoord maximum allowed Y coordinate before looping
      */
     private void loopAtMenuEnd(int minAllowedYCoord, int maxAllowedYCoord) {
-        if (cursorY + selectYChange <= minAllowedYCoord - 1) {
-            selectYChange = maxAllowedYCoord - cursorY;
+        if (cursorY <= minAllowedYCoord - 1) {
+            cursorY = maxAllowedYCoord;
             System.out.println("Below the min allowed coord, buddy.");
         }
-        if (cursorY + selectYChange>= maxAllowedYCoord + 1) {
-            selectYChange = minAllowedYCoord - cursorY;
+        if (cursorY>= maxAllowedYCoord + 1) {
+            cursorY = minAllowedYCoord;
             System.out.println("Over the max allowed coord, buddy.");
         }
     }
@@ -539,7 +542,7 @@ class Inventory implements java.io.Serializable {
                 jumpToNewMenu(topMenuLayer, TOP, equipMenuLayer, 28);
             }
         }
-        checkNewPage();
+        checkNewPage(equip);
     }
 
     /**
@@ -592,25 +595,18 @@ class Inventory implements java.io.Serializable {
     }
 
     private void genericItemListing(ArrayList<Item> items, boolean highlightEquip) {
-        double pageReq = Math.ceil((double) items.size() / 16);
 
         if (shouldRedraw){
-            //org.getLayer(selectorLayer).clear();
             infoLayer.clear();
             //clearItemInfo();
             shouldRedraw = false;
         }
-
-
+        double pageReq = Math.ceil((double) items.size() / 16);
         if (pageReq == 0) {
             pageReq = 1;
         }
-        if (page > pageReq) {
-            page = 1;
-        }
-
-        org.editLayer(String.valueOf((int) pageReq), selectorLayer, 1, 44);
-        org.editLayer(String.valueOf(page), selectorLayer, 1, 42);
+        org.editLayer(String.valueOf((int) pageReq), infoLayer.getName(), 1, 44);
+        org.editLayer(String.valueOf(page), infoLayer.getName(), 1, 42);
 
         fillItemNames(items, 32, 2, page, highlightEquip);
 
@@ -626,7 +622,7 @@ class Inventory implements java.io.Serializable {
         }
         prevIndex = index;
 
-        if (index < items.size() && cursorY + selectYChange < 19) {
+        if (index < items.size() && cursorY < 19) {
             fillInfoText(items.get(index).getDesc(player), 1, 1);
         }
     }
@@ -735,16 +731,16 @@ class Inventory implements java.io.Serializable {
     void fireKeyEvent(KeyEvent event) {
         int key = event.getKeyCode();
         if (key == KeyEvent.VK_UP) {
-            keyPressed('©');
+            keyPressed('↑');
         }
         if (key == KeyEvent.VK_DOWN) {
-            keyPressed('®');
+            keyPressed('↓');
         }
         if (key == KeyEvent.VK_LEFT) {
-            keyPressed('µ');
+            keyPressed('←');
         }
         if (key == KeyEvent.VK_RIGHT) {
-            keyPressed('æ');
+            keyPressed('→');
         }
         if (Character.isDigit(event.getKeyChar())) {
             keyPressed(event.getKeyChar());
