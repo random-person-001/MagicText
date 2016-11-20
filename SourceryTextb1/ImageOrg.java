@@ -481,7 +481,7 @@ public class ImageOrg implements java.io.Serializable {
                         String input = found.getStr(); //Gets string from SpecialText to make code easier to read
                         if (found.isSignificant() && (layer.getRelaventPlayerUsername() == null || layer.getRelaventPlayerUsername().equals(owningPlayerUsername))) { //If the SpecialText isn't blank
                             if ("ñ".equals(input)) { //If space found was opaque
-                                fullImage.setSpecTxt(row, col, new SpecialText(" "));
+                                fullImage.setSpecTxt(row, col, new SpecialText(" ", Color.WHITE, found.getBackgroundColor()));
                             } else { //Otherwise, place found SpecialText
                                 SpecialText toPlace = new SpecialText(found.getStr(), found.foregroundColor, found.backgroundColor);
                                 if (foregroundColor != null && foregroundColor != Color.WHITE){

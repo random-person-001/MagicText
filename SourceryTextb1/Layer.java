@@ -316,9 +316,21 @@ public class Layer implements java.io.Serializable {
     }
 
     /**
-     * Influences the color of all SpecialText in the layer
+     * Sets (not influences) the background color of all SpecialText in the layer
      */
+    public void setAllBg (Color flavor){
+        for (int c = 0; c < getColumns(); c++){
+            for (int r = 0; r < getRows(); r++){
+                SpecialText get = getSpecTxt(r,c);
+                get.backgroundColor = (flavor);
+                self[r][c] = get;
+            }
+        }
+    }
 
+    /**
+     * Influences the foreground color of all SpecialText in the layer
+     */
     public void influenceAll (Color flavor){
         for (int c = 0; c < getColumns(); c++){
             for (int r = 0; r < getRows(); r++){
