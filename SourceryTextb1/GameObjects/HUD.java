@@ -227,6 +227,7 @@ class HUD implements java.io.Serializable {
                 consoleEntryProg++;
                 if (consoleEntryProg >= 3) {
                     player.frozen = true;
+                    player.getInventory().inCmdLine = true;
                 }
             } else {
                 consoleEntryProg = 0;
@@ -278,7 +279,7 @@ class HUD implements java.io.Serializable {
      * >icbm [?] (x) (y) [d] [r] : splash damage about x, y. Use -r before params if relative location. d=damage, r=radius
      * >import antigravity : open default web browser and navigate to relevant xkcd (353)
      * >jumpto (level name) : set the Room's exitCode string to what follows.
-     * >layer : print all the layers to sout.
+     * >layer : print all the layers.
      * >lightning (x) (y) : strike a bunch of damage to a specified location.  Leaves hot ashes behind.
      * >ludicrous | fast : toggle player's ludicrousSpeed, which makes you move very very fast.  Ghosting recommended.
      * >ls | pwd : currently not developed.  Later will tell the name of current room.
@@ -561,6 +562,7 @@ class HUD implements java.io.Serializable {
         nextCommand = "";
         consoleEntryProg = 0;
         player.frozen = false;
+        player.getInventory().inCmdLine = false;
     }
 
     /**

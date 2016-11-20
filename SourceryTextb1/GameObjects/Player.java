@@ -473,9 +473,7 @@ public class Player extends Mortal implements java.io.Serializable {
      * Used by ImageOrg's buildImage.
      * @return where the camera ought to be
      */
-    public int getCamX(){
-        return getX() - 22;
-    }
+    public int getCamX(){ return getX() - 22; }
 
     /**
      * Used by ImageOrg's buildImage.

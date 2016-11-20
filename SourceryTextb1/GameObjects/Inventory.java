@@ -30,6 +30,8 @@ class Inventory implements java.io.Serializable {
 
     private boolean shouldRedraw = true;
 
+    public boolean inCmdLine = false;
+
     private final int NEUTRAL = -1;
     private final int TOP = 1;
     private final int SPELLS = 2;
@@ -729,36 +731,38 @@ class Inventory implements java.io.Serializable {
 
 
     void fireKeyEvent(KeyEvent event) {
-        int key = event.getKeyCode();
-        if (key == KeyEvent.VK_UP) {
-            keyPressed('↑');
-        }
-        if (key == KeyEvent.VK_DOWN) {
-            keyPressed('↓');
-        }
-        if (key == KeyEvent.VK_LEFT) {
-            keyPressed('←');
-        }
-        if (key == KeyEvent.VK_RIGHT) {
-            keyPressed('→');
-        }
-        if (Character.isDigit(event.getKeyChar())) {
-            keyPressed(event.getKeyChar());
-        }
-        if (key == 'A' || key == KeyEvent.VK_ENTER) {
-            pressedA = true;
-        }
-        if (key == 'S') {
-            pressedS = true;
-        }
-        if (key == 'D') {
-            pressedD = true;
-        }
-        if (key == '\\') {
-            System.out.println(getY());
-        }
-        if (key == KeyEvent.VK_ESCAPE || event.getKeyChar() == 'w') {
-            exitAllMenus();
+        if (!inCmdLine) {
+            int key = event.getKeyCode();
+            if (key == KeyEvent.VK_UP) {
+                keyPressed('↑');
+            }
+            if (key == KeyEvent.VK_DOWN) {
+                keyPressed('↓');
+            }
+            if (key == KeyEvent.VK_LEFT) {
+                keyPressed('←');
+            }
+            if (key == KeyEvent.VK_RIGHT) {
+                keyPressed('→');
+            }
+            if (Character.isDigit(event.getKeyChar())) {
+                keyPressed(event.getKeyChar());
+            }
+            if (key == 'A' || key == KeyEvent.VK_ENTER) {
+                pressedA = true;
+            }
+            if (key == 'S') {
+                pressedS = true;
+            }
+            if (key == 'D') {
+                pressedD = true;
+            }
+            if (key == '\\') {
+                System.out.println(getY());
+            }
+            if (key == KeyEvent.VK_ESCAPE || event.getKeyChar() == 'w') {
+                exitAllMenus();
+            }
         }
     }
 
@@ -772,7 +776,7 @@ class Inventory implements java.io.Serializable {
                 System.out.println("Exiting menu through top menu....");
                 org.getLayers().stream().filter(lay -> lay.name.contains("playerLayer")).forEach(lay -> org.setLayerImportance(lay.getName(), true));
                 player.room.setObjsPause(false);
-                menuID = NEUTRAL;
+                cancel();
             } else {
                 newUpdateSelector(menuID);
             }
