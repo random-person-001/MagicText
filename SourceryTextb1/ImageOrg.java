@@ -571,7 +571,7 @@ public class ImageOrg implements java.io.Serializable {
             //printLayers();
             lastRunMs = System.currentTimeMillis();
             newSendImage();
-            if (System.currentTimeMillis() - lastRunMs > 3)
+            if (System.currentTimeMillis() - lastRunMs > 5)
                 System.out.printf("Time to compile image (notably long): %1$dms\n", System.currentTimeMillis() - lastRunMs);
         }
     }

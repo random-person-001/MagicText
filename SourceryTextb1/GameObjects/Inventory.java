@@ -62,6 +62,7 @@ class Inventory implements java.io.Serializable {
     private Color armorColor = new Color(200, 255, 255);
 
     private Color healingColor = new Color(225, 255, 125);
+    private Color potionColor = new Color(255, 185, 100);
 
     int getY() {
         return cursorY;
@@ -169,13 +170,13 @@ class Inventory implements java.io.Serializable {
      */
 
     void testKit(){
-        Item item1 = new Item("InitiateTome", "A book full of dark rituals\n\nNewcomers to dark magic are\n handed this book to study.\n\nYes, it's a textbook.\n\n+3 Dark Spell Damage", "equip");
+        Item item1 = new Item("InitiateTome", "A book full of dark rituals\n\nNewcomers to dark magic are\n handed this book to study.\n\nYes, it's a textbook.\n\n+3 Dark Spell Damage", "equipment");
         item1.setEquipvals(0, 0, 0, 0, 0, 0, 3, "weapon");
         equip.add(item1);
-        Item item2 = new Item("Wool Scarf", "A fluffy scarf.\n\nWhat's not to love in\n a scarf?\n\nThey're magical, comfy, and\n fashionable!\nAwesome, right?\n\n+1 Ice Spell Damage\n+2 Defense", "equip");
+        Item item2 = new Item("Wool Scarf", "A fluffy scarf.\n\nWhat's not to love in\n a scarf?\n\nThey're magical, comfy, and\n fashionable!\nAwesome, right?\n\n+1 Ice Spell Damage\n+2 Defense", "equipment");
         item2.setEquipvals(2, 0, 0, 0, 0, 1, 0, "weapon");
         equip.add(item2);
-        Item item3 = new Item("Stat Bomb", "It does everything!\n\nDon't actually use this\n in the game.\n\n+1 To all equipment stats.", "equip");
+        Item item3 = new Item("Stat Bomb", "It does everything!\n\nDon't actually use this\n in the game.\n\n+1 To all equipment stats.", "equipment");
         item3.setEquipvals(1, 1, 1, 1, 1, 1, 1, "weapon");
         equip.add(item3);
         Item item5 = new Item("NeodymNeedle", "Arcane spell;\n\nA neodymium needle.\n\nIt is so magnetic it will\n fly around walls to hit\n enemies; no aim required.", "NeoNd", "spell", true);
@@ -184,11 +185,15 @@ class Inventory implements java.io.Serializable {
         Item item6 = new Item("Evil Powers", "Dark Spell;\n\nYou're not sure what it is\n exactly, but it has the\n word 'power' in its name,\n so it must be good,\n right?", "EvlPw", "spell", true);
         item6.dmgSpellDefine(1, 8, 2, "dark", new SpecialText("*", new Color(155, 55, 155)), new SpecialText("*", new Color(255, 55, 255)), false);
         spells.add(item6);
-        Item item7 = new Item("Witch Scarf", "A scarf imbued with witch\n magic, granting the user\n increased dark and ice\n magic power\n\nIt smells like flowers.\n\n+1 Ice Spell Damage\n+2 Dark Spell Damage\n+1 Defense\n+3 Max Health", "equip");
+        Item item7 = new Item("Witch Scarf", "A scarf imbued with witch\n magic, granting the user\n increased dark and ice\n magic power\n\nIt smells like flowers.\n\n+1 Ice Spell Damage\n+2 Dark Spell Damage\n+1 Defense\n+3 Max Health", "equipment");
         item7.setEquipvals(1, 3, 0, 0, 0, 2, 2, "weapon");
         equip.add(item7);
+        Item potion = new Item ("MagicTaterChip", "A singular potato chip made\n with magic potatoes.\n\nEating this chip will\n restore hp over time\n (4hp/s + 10 overheal!)", "item");
+        potion.setDescMode("potion");
+        potion.setDuration(30*1000);
+        items.add(potion);
         for (int ii = 0; ii < 24; ii++) {
-            Item item4 = new Item("Carrot", "For some reason,\n they only grow\n in the mountains.\n\nNobody really know why.", "items");
+            Item item4 = new Item("Carrot", "For some reason,\n they only grow\n in the mountains.\n\nNobody really know why.", "item");
             item4.healItemDefine(6, 3);
             items.add(item4);
         }
@@ -427,7 +432,7 @@ class Inventory implements java.io.Serializable {
                     potatoIndex = index;
                 }
                 if (thing.getDescMode().equals("potion")){
-                    new Potion(player.room, player, thing.getName());
+                    new Potion(player.room, player, thing.getName(), thing.getDuration());
                     items.remove(thing);
                     shouldRedraw = true;
                 }
@@ -673,6 +678,10 @@ class Inventory implements java.io.Serializable {
             }
             if (toDraw.getDescMode().equals("healitem")){
                 drawWith = healingColor;
+            }
+
+            if (toDraw.getDescMode().equals("potion")){
+                drawWith = potionColor;
             }
             String itemName = toDraw.getName();
             putText(itemName, startX, startY + ii, drawWith);

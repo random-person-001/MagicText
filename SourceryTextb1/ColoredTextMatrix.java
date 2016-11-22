@@ -26,9 +26,6 @@ public class ColoredTextMatrix extends JPanel {
         setFocusable(true);
         setFont(new Font("Monospaced", Font.PLAIN, CHAR_SIZE));
         addComponentListener(new ComponentResizeListener());
-
-        Timer timing = new Timer("ColoredTextTimer");
-        timing.scheduleAtFixedRate(new frameResetTimer(), 25, 25); //40 frames a second
     }
 
     private class ComponentResizeListener implements ComponentListener {
@@ -99,12 +96,6 @@ public class ColoredTextMatrix extends JPanel {
             g.drawLine(HOR_MARGIN - 1, 0, HOR_MARGIN - 1, getHeight());
             g.drawLine(secondX, 0, secondX, getHeight());
             marginDisplayTimer--;
-        }
-    }
-
-    private class frameResetTimer extends TimerTask {
-        public void run(){
-            repaint();
         }
     }
 }

@@ -53,19 +53,26 @@ public class HiddenBunker extends Room {
      */
     @Override
     public void addItems(){
-        int[][] carrotLocs = {{18,32},{44,28},{21,15},{22,22},{48,14}};
-        for (int[] coord : carrotLocs){
-            Item carrot = new Item("Carrot", "For some reason,\n they only grow\n in the mountains.\n\nNobody really know why.", "item");
-            carrot.healItemDefine(6, 3);
-            DroppedItem gCarrot = new DroppedItem(this, "You picked a carrot!", carrot, coord[0], coord[1]);
-            addObject(gCarrot);
-        }
+        Item potion = new Item ("MagicTaterChip", "A singular potato chip made\n with magic potatoes.\n\nEating this chip will\n restore hp over time\n (4hp/s + 10 overheal!)", "item");
+        potion.setDescMode("potion");
+        potion.setDuration(30*1000);
+        DroppedItem dPotion = new DroppedItem(this, "You found a potato chip!", potion, 53, 11);
+        addObject(dPotion);
 
-        int[][] wolfLocs = {{39,31},{44,29},{23,21},{27,16}};
-        for (int[] coord : wolfLocs){
-            Wolf puppy = new Wolf(org, this, coord[0], coord[1]);
-            addMortal(puppy);
-        }
+        Item item1 = new Item("InitiateTome", "A book full of dark rituals\n\nNewcomers to dark magic are\n handed this book to study.\n\nYes, it's a textbook.\n\n+3 Dark Spell Damage", "equipment");
+        item1.setEquipvals(0, 0, 0, 0, 0, 0, 3, "weapon");
+        DroppedItem dBook = new DroppedItem(this, "You found an item: Initiate Tome!", item1, 110, 4);
+        addObject(dBook);
+
+        DroppedItem dPotion2 = new DroppedItem(this, "You found a potato chip!", potion, 113, 30);
+        addObject(dPotion2);
+
+        addMagicPotato(108, 2);
+
+        Item item6 = new Item("Evil Powers", "Dark Spell;\n\nYou're not sure what it is\n exactly, but it has the\n word 'power' in its name,\n so it must be good,\n right?", "EvlPw", "spell", true);
+        item6.dmgSpellDefine(1, 8, 2, "dark", new SpecialText("*", new Color(155, 55, 155)), new SpecialText("*", new Color(255, 55, 255)), false);
+        DroppedItem dSpell = new DroppedItem(this, "You found a spell: Evil Powers!", item6, 55, 9);
+        addObject(dSpell);
     }
 
     boolean[] keysTaken = {false, false, false, false, false};
@@ -176,11 +183,26 @@ public class HiddenBunker extends Room {
 
         Art arty = new Art();
         String[][] base = Art.strToArray(arty.hiddenBunker);
-        String[] solids = {"#","|","-","%","8"};
+        String[] solids = {"#","|","-","%","8","$"};
         addToBaseHitMesh(base, solids);
+
         Layer lay1 = new Layer(base, "HiddenBunkerLayer");
-        lay1.influenceAll(new Color(175, 175, 175));
         highlightFlavorText(lay1);
+
+        lay1.findAndReplace(new SpecialText("#"), new SpecialText("#", new Color(175, 175, 175), new Color(25, 25, 25)));
+        lay1.findAndReplace(new SpecialText("%"), new SpecialText("%", new Color(175, 175, 175), new Color(20, 20, 20)));
+
+        lay1.findAndReplace(new SpecialText("$"), new SpecialText("$", new Color(225, 175, 75)));
+
+        Color goldColor = new Color(200, 175, 75);
+        lay1.findAndReplace(new SpecialText("8"), new SpecialText("O", goldColor), 20);
+        lay1.findAndReplace(new SpecialText("8"), new SpecialText("%", goldColor), 20);
+        lay1.findAndReplace(new SpecialText("8"), new SpecialText("#", goldColor), 20);
+        lay1.findAndReplace(new SpecialText("8"), new SpecialText("&", goldColor), 20);
+        lay1.findAndReplace(new SpecialText("8"), new SpecialText("*", goldColor), 20);
+        lay1.findAndReplace(new SpecialText("8"), new SpecialText("G", goldColor), 20);
+        lay1.findAndReplace(new SpecialText("8"), new SpecialText("8", goldColor));
+
         org.addLayer(lay1);
 
         int[][] layerInfo ={{5, 10, 23, 21}, {7, 15, 8, 47}, {3, 3, 12, 91},
@@ -205,7 +227,7 @@ public class HiddenBunker extends Room {
         LockedDoor tunnelDoor = new LockedDoor("Tunnel Key", 100, 133, 9, this, org);
         addObject(tunnelDoor);
 
-        //addItems();
+        addItems();
 
         genericRoomInitialize();
     }

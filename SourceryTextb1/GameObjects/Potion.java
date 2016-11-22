@@ -12,22 +12,28 @@ class Potion extends GameObject {
     //private Random rand = new Random();
     private String name = "Generic";
     private Player caster;
+    private int duration = 0;
 
-    Potion(Room roomy, Player setPlayer, String namey){
+    Potion(Room roomy, Player setPlayer, String namey, int effectTime){
         strClass = "Potion";
         caster = setPlayer;
         room = roomy;
         name = namey;
+        duration = effectTime;
         setupTimer(50);
         setPlayer.fabulousMode = true;
     }
 
     public void update(){
+        if (getTime() >= duration){
+            cancelTimer();
+            caster.fabulousMode = false;
+        }
         x = caster.getX();
         y = caster.getY();
         System.out.println("potion updating");
         switch (name) {
-            // Garlic potato chip hurts everything near you.
+            // Sour Cream & Onion potato chip hurts everything near you.
             case "SC&OPotatoChip":
                 int r = 4; // Range (radius)
                 int d = 4; // Damage (max, at center)
@@ -41,9 +47,12 @@ class Potion extends GameObject {
                     }
                     //System.out.println();
                 }
-                if (getTime() > 20*1000){ // burnout time
-                    cancelTimer();
-                    caster.fabulousMode = false;
+                break;
+            case "MagicTaterChip":
+                if (getTime() % 250 == 0){
+                    caster.restoreHealth(1, 10);
+                } else {
+                    System.out.println(getTime());
                 }
                 break;
         }

@@ -605,7 +605,7 @@ public class Room implements java.io.Serializable{
             }
         }
         txtBox.influenceAll(new Color(183, 199, 237));
-        txtBox.setAllBg(new Color(4, 2, 27));
+        txtBox.setAllBg(new Color(0, 0, 15));
 
         //setObjsPause(true);  Unnecessary feature that interferes with fabulous mode
         org.addLayer(txtBox);

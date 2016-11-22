@@ -80,9 +80,10 @@ public class Cliffside extends Room {
             addMortal(t);
         }
 
-        Item potion = new Item ("SC&OPotatoChip", "This variety of magic\n potato chip is flavored\n with sour cream and onions\n\nIt makes your breath so bad\n it hurts nearby enemies.\n\nStinky.", "item");
+        Item potion = new Item ("SC&OPotatoChip", "This variety of magic\n potato chip is flavored\n with sour cream and onions\n\nIt makes your breath so bad\n it hurts nearby enemies.", "item");
         potion.setDescMode("potion");
-        DroppedItem dPotion =  new DroppedItem(this, "You found a potion!", potion, 58, 7);
+        potion.setDuration(20*1000);
+        DroppedItem dPotion =  new DroppedItem(this, "You found a potato chip!", potion, 58, 7);
         super.addObject(dPotion);
     }
 

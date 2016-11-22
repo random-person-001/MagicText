@@ -62,6 +62,9 @@ public class Item implements java.io.Serializable {
             case "equipment":
                 itemType = 3;
                 break;
+            case "equip":
+                itemType = 3;
+                break;
         }
     }
 
@@ -225,6 +228,8 @@ public class Item implements java.io.Serializable {
         duration = to;
     }
 
+    public int getDuration() { return duration; }
+
     public String getName() {
         return name;
     }
@@ -256,7 +261,7 @@ public class Item implements java.io.Serializable {
             case "healitem":
                 return description + "\n\nRestores " + String.valueOf(healing) + " Health\nOverheal: " + String.valueOf(overheal);
             case "potion":
-                return description + "\n\nOne time use: press A or\nENTER to drink\n\n";
+                return description + "\n\nOne time use: press A or\nENTER to consume\n\nDuration: " + String.valueOf(duration / 1000) + "s";
             case "buff":
                 return description + "\n\nDuration: " + String.valueOf(duration) + " Seconds\nCost: " + String.valueOf(cost);
             default:
