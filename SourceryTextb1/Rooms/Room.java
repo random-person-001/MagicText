@@ -184,6 +184,7 @@ public class Room implements java.io.Serializable{
 
     protected void setNewRoom(String newID, Player player, int playerY, int playerX){
         if (exitCode.equals("")) {
+            removeFromObjHitMesh(player.getX(), player.getY());
             player.goTo(playerX, playerY);
             exitCode = newID;
         }
@@ -599,12 +600,13 @@ public class Room implements java.io.Serializable{
                 newLineAdjust = ii + 1;
                 System.out.println("Found newline.");
             } else if (String.valueOf(text.charAt(ii)).equals("ĩ")) {
-                txtBox.setSpecTxt(line, ii + 1 - newLineAdjust, new SpecialText("#", new Color(175, 215, 245), new Color(175, 215, 245)));
+                txtBox.setSpecTxt(line, ii + 1 - newLineAdjust, new SpecialText("#"));
+                //, new Color(175, 215, 245), new Color(175, 215, 245)
             } else {
                 txtBox.setStr(line, ii + 1 - newLineAdjust, String.valueOf(text.charAt(ii)));
             }
         }
-        txtBox.influenceAll(new Color(183, 199, 237));
+        //txtBox.influenceAll(new Color(183, 199, 237));
         txtBox.setAllBg(new Color(0, 0, 15));
 
         //setObjsPause(true);  Unnecessary feature that interferes with fabulous mode

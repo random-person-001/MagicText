@@ -7,6 +7,7 @@ package SourceryTextb1.Rooms.TheSource;
 
 import SourceryTextb1.Art;
 import SourceryTextb1.GameObjects.*;
+import SourceryTextb1.GameObjects.TheSource.Bandit;
 import SourceryTextb1.GameObjects.TheSource.Wolf;
 import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
@@ -40,8 +41,8 @@ public class HiddenBunker extends Room {
         while (exitCode.equals("")){
             try {
                 Thread.sleep(20);
-                if (play.getX() == 0){
-                    setNewRoom("SourceCaves", play, 15, 1);
+                if (play.getY() == 36){
+                    setNewRoom("SourceCaves", play, 2, 190);
                 }
             } catch (InterruptedException ignored) {}
         }
@@ -73,6 +74,12 @@ public class HiddenBunker extends Room {
         item6.dmgSpellDefine(1, 8, 2, "dark", new SpecialText("*", new Color(155, 55, 155)), new SpecialText("*", new Color(255, 55, 255)), false);
         DroppedItem dSpell = new DroppedItem(this, "You found a spell: Evil Powers!", item6, 55, 9);
         addObject(dSpell);
+
+        int[][] locs = {{63, 30}, {66, 32}, {37, 11}, {40, 7}, {43, 2}, {84, 9}, {82, 18}, {87, 16}, {132, 12}, {135, 13}, {119, 14}, {136, 19}};
+        for (int ii = 0 ; ii < locs.length ; ii++){
+            Bandit enemy = new Bandit(org, this, locs[ii][0], locs[ii][1]);
+            addMortal(enemy);
+        }
     }
 
     boolean[] keysTaken = {false, false, false, false, false};
@@ -176,10 +183,10 @@ public class HiddenBunker extends Room {
     public void startup(){
         ititHitMeshes();
 
-        String[] signWords = {"Because carrots are a healthy snack,\n all carrots growing here are\n available to the general public",
-                "Eating food can restore health\n beyond your maximum health\nThis is called \"Overhealing\"",
-                "The Mountain Range Committee considers\n those who don't eat food regularly\n to be malnourished."};
-        //plantText(new FlavorText(8, 38, signWords,"A Sign"));
+        String[] signWords = {"ATTENTION NEW RECRUITS\n in order to ward off robbers\n from taking our stuff,",
+                "Keys and various goods are\n kept behind hidden doors.\nWithout those keys,",
+                "You can't get to our\n valuable stuff!","Note: to open a door,\n simply rest your hand on\n the wall to move it out of the way"};
+        plantText(new FlavorText(8, 30, signWords,"A Floor Plaque"));
 
         Art arty = new Art();
         String[][] base = Art.strToArray(arty.hiddenBunker);
@@ -193,6 +200,8 @@ public class HiddenBunker extends Room {
         lay1.findAndReplace(new SpecialText("%"), new SpecialText("%", new Color(175, 175, 175), new Color(20, 20, 20)));
 
         lay1.findAndReplace(new SpecialText("$"), new SpecialText("$", new Color(225, 175, 75)));
+
+        lay1.findAndReplace(new SpecialText("C"), new SpecialText(" ", null, new Color(43, 38, 33)));
 
         Color goldColor = new Color(200, 175, 75);
         lay1.findAndReplace(new SpecialText("8"), new SpecialText("O", goldColor), 20);
@@ -226,6 +235,9 @@ public class HiddenBunker extends Room {
         }
         LockedDoor tunnelDoor = new LockedDoor("Tunnel Key", 100, 133, 9, this, org);
         addObject(tunnelDoor);
+
+        WaterPool testingPool = new WaterPool(this, new Layer(Art.strToArray(arty.hiddenBunkerWater), "Water!", true, false), org, 80, 10);
+        addObject(testingPool);
 
         addItems();
 

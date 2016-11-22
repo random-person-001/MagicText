@@ -33,8 +33,8 @@ public class SourceCaves extends Room{
                 if (play.getY() <= 0){
                     setNewRoom("Cliffside", play, 31, 134);
                 }
-                if (play.getY() == 1 && play.getX() == 230) {
-                    setNewRoom("BanditFortress", play, 64, 134);
+                if (play.getY() == 1 && play.getX() >= 190 && play.getX() <= 191) {
+                    setNewRoom("HiddenBunker", play, 35, 5);
                 }
                 if (count == 0){
                     if (playo.getX() == 109 && playo.getY() == 10) {
@@ -62,11 +62,13 @@ public class SourceCaves extends Room{
 
     @Override
     public void startup(){
+        roomWidth = 420; //Accidental, I swear!
+
         ititHitMeshes();
 
         Art arty = new Art();
         String[][] base = Art.strToArray(arty.sourceCaves);
-        String[] solids = {"#"};
+        String[] solids = {"#","H","-"};
         addToBaseHitMesh(base, solids);
         Layer lay1 = new Layer(base, "Base");
         lay1.findAndReplace(new SpecialText("#"), new SpecialText(";", new Color(45,39,35), new Color(43, 38, 33)));
@@ -75,6 +77,8 @@ public class SourceCaves extends Room{
 
         lay1.findAndReplace(new SpecialText("1"), new SpecialText(" ", null, new Color(30, 30, 30)));
         lay1.findAndReplace(new SpecialText("2"), new SpecialText(" ", null, new Color(20, 20, 20)));
+
+        lay1.findAndReplace(new SpecialText("H"), new SpecialText("#", new Color(175, 175, 175), new Color(25, 25, 25)));
 
         org.addLayer(lay1);
 
