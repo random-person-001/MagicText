@@ -5,6 +5,7 @@ import SourceryTextb1.GameObjects.DroppedItem;
 import SourceryTextb1.GameObjects.Item;
 import SourceryTextb1.GameObjects.Player;
 import SourceryTextb1.GameObjects.TheSource.Bandit;
+import SourceryTextb1.GameObjects.TheSource.Ghost;
 import SourceryTextb1.GameObjects.TheSource.Spider;
 import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
@@ -50,14 +51,27 @@ public class SourceCaves extends Room{
 
     @Override
     public void addItems(){
-        Spider itsyBitsy = new Spider(this, 31, 11);
-        addMortal(itsyBitsy);
+        int[][] ghostStations = {{99,53},{195,42},{208,43},{212,48},{241,47},{253,51},{154,11}}; // X and Y are NOT switched.
+        for (int[] station : ghostStations) {
+            Ghost spookyScary = new Ghost(this, station[0], station[1]); // X and Y NOT switched.  I'm really NOT sorry.
+            addMortal(spookyScary);
+        }
 
-        int[][] banditStations = {{13,105},{13, 117},{1,137},{5,144},{3,185},{5, 232},{5, 233},{2,227}}; // X and Y are switched.
+
+        int[][] spiderStations = {{102,19},{104,18},{103,18},{105,17},{93,12},{74,14},{50,8},{32,11},{19,20},{84,26},
+                {87,23},{75,29},{46,55},{62,52},{197,47},{227,42},{225,52},{237,43},{242,54},{249,45},{249,55},{259,47},
+                {283,42},{271,39},{275,34},{284,31},{293,8},{262,12},{254,13},{243,12},{233,14},{224,12}}; // X and Y are switched.
+        for (int[] station : spiderStations) {
+            Spider itsyBitsy = new Spider(this, station[0], station[1]); // X and Y switched.  I'm really sorry.
+            addMortal(itsyBitsy);
+        }
+        /*
+        int[][] banditStations = {}; // X and Y are switched.
         for (int[] station : banditStations) {
-            Bandit roughBill = new Bandit(org, this, station[1], station[0]); // X and Y switched.  I'm really sorry.
+            Bandit roughBill = new Bandit(org, this, station[0], station[1]); // X and Y switched.  I'm really sorry.
             addMortal(roughBill);
         }
+        */
     }
 
     @Override
