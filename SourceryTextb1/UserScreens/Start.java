@@ -30,10 +30,7 @@ public class Start {
 
     public static void main(String[] args) throws InterruptedException {
         game = new Window();
-        Layer base = new Layer(new String[game.maxH()][game.maxW()], "base");
         org = new ImageOrg(game);
-
-        org.addLayer(base);
 
         if (doDemo) {
             Player player = new Player(org,0);
@@ -132,6 +129,7 @@ public class Start {
         lay1.setStr(10, 23, "@");
         org.addLayer(lay1);
         Thread.sleep(750);
+        org.printLayers();
 
         for (int eff = 0; eff < 40; eff++) {
             game.txtArea.setBackground(new Color(eff, eff, eff, 255));

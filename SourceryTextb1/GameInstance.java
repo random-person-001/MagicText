@@ -106,9 +106,13 @@ public class GameInstance {
                 System.out.println("[GameInstance] zoneNumber read in switchZones()! ("+to+")");
         }
         for (Player p : playerList){
+            if (p.room != null) {
+                p.room.exitCode = startingRoomName;
+            }
             p.roomName = startingRoomName;
             p.setZoneNumber(to);
             p.goTo(0,0);
+            System.out.println("set " + p.getUsername() + "'s zone to " + zoneNumber + " and room name to " + startingRoomName);
         }
     }
 
