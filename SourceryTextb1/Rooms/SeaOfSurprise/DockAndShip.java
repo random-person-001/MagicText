@@ -16,8 +16,6 @@ import java.util.ConcurrentModificationException;
 public class DockAndShip extends Room {
     private String[][] dock;
     private Layer docky;
-    private int maxW;
-    private int maxH;
 
     public DockAndShip(Player player){
         super(player);
@@ -26,6 +24,9 @@ public class DockAndShip extends Room {
 
     @Override
     protected String loop(Player play){
+        if (play.getX() == 0 && play.getY() == 0){
+            play.goTo(66,50);
+        }
         int count = 0;
         int timer = 0;
         while (exitCode.equals("")){
@@ -40,18 +41,18 @@ public class DockAndShip extends Room {
                     count++;
                 }
                 timer++;
-                if (timer > 200 && timer < 1000 && timer % 10 == 0){
-                    System.out.println("Moving one");
+                if (timer > 1000 && timer < 1800 && timer % 10 == 0){
+                    //System.out.println("Moving one");
                     Layer docky = org.getLayer("Dock");
                     docky.setX(docky.getX()+1);
                     docky.setY(docky.getY()+1);
-                    System.out.println(docky.getX());
+                    //System.out.println(docky.getX());
                     dockUpdate();
                     try {
                         for (Mortal m : enemies) {
                             if (m.getX() > 42) {
                                 m.goTo(m.getX() + 1, m.getY() + 1);
-                                if (m.getX() > maxW || m.getY() > maxH) { //Later, this might be good to put in Enemy.checkDead()
+                                if (m.getX() > roomWidth || m.getY() > roomHeight) { //Later, this might be good to put in Enemy.checkDead()
                                     m.subtractHealth(30, "You were not long for this world. \n You *Were* told to get on the ship.");
                                 }
                                 if (count == 1 && m.strClass.equals("Player")) {
@@ -68,7 +69,7 @@ public class DockAndShip extends Room {
                     }
                 }
                 if (timer > 2000){
-                    System.out.println("It's been a long while.");
+                    //System.out.println("It's been a long while.");
                 }
 
             } catch (InterruptedException ignored) {}

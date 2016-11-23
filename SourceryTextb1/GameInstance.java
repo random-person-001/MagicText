@@ -3,6 +3,7 @@ package SourceryTextb1;
 import SourceryTextb1.GameObjects.Player;
 import SourceryTextb1.GameObjects.PlayerKeyPressListener;
 import SourceryTextb1.Rooms.Room;
+import SourceryTextb1.Rooms.SeaOfSurprise.DockAndShip;
 import SourceryTextb1.Rooms.TheSource.*;
 
 import java.util.*;
@@ -17,11 +18,7 @@ public class GameInstance {
     private Player protaganist;
     private List<Player> playerList;
     private int zoneNumber;
-    private HashMap<String, Room> zone1Rooms;
-    private HashMap<String, Room> zone2Rooms;
-    private HashMap<String, Room> zone3Rooms;
-    private HashMap<String, Room> zone4Rooms;
-    private HashMap<String, Room> zone5Rooms;
+    private HashMap<String, Room> thisZoneRooms;
     private boolean inMiddleOfSwitchingEveryonesZones = false;
 
     public GameInstance(Player protaganistSet){
@@ -38,37 +35,14 @@ public class GameInstance {
 
     /**
      * Run this in a new thread for each player.
-     * @param p
+     * @param p zees player
      */
     public void runGame(Player p){
         System.out.println("[GameInstance] beginning game running for " + p.getUsername());
         while (!p.roomName.equals("die")) {
-            System.out.println("Entering the room '" + p.roomName + "'");
-            Room r = null;
-            switch (zoneNumber){
-                case 1:
-                    if (zone1Rooms.containsKey(p.roomName))
-                        r = zone1Rooms.get(p.roomName);
-                    break;
-                case 2:
-                    if (zone2Rooms.containsKey(p.roomName))
-                        r = zone2Rooms.get(p.roomName);
-                    break;
-                case 3:
-                    r = zone3Rooms.get(p.roomName);
-                    break;
-                case 4:
-                    r = zone4Rooms.get(p.roomName);
-                    break;
-                case 5:
-                    r = zone5Rooms.get(p.roomName);
-                    break;
-                default:
-                    System.out.println("[GameInstance] Somebody set an invalid zoneNumber!  Irrecoverable, dieing!");
-                    p.dead = true;
-                    return;
-            }
-            if (r != null) {
+            System.out.println(p.getUsername() + " entering the room '" + p.roomName + "'" + " in Zone " + zoneNumber);
+            if (thisZoneRooms.containsKey(p.roomName)){
+                Room r = thisZoneRooms.get(p.roomName);
                 // Normal entering of a room without zone changes
                 r.enter(p);
             }
@@ -77,10 +51,7 @@ public class GameInstance {
                 // This does all the fancy zone switching.
                 inMiddleOfSwitchingEveryonesZones = true;
                 zoneNumber = Integer.valueOf(Character.toString(p.roomName.charAt(p.roomName.length()-1)));
-                for (Player eachPlayer: playerList){
-                    eachPlayer.room.exitCode = p.roomName;
-                    eachPlayer.roomName = p.roomName; // This will trigger an exit of their current room.
-                }
+                System.out.println("Player " + p.getUsername() + " initializing a zone change to Zone " + zoneNumber);
                 switchZones();
                 try {
                     Thread.sleep(70); // Way enough time for all the rooms to cycle through and finish up.
@@ -89,6 +60,7 @@ public class GameInstance {
             }
             else if (inMiddleOfSwitchingEveryonesZones){
                 // Somebody else is taking care of making our roomName and everything change, so we can sit back and relax.
+                System.out.println("Somebody else is doing zone changes -- from " + p.getUsername());
                 try {
                     Thread.sleep(10);
                 } catch (InterruptedException e) {
@@ -96,7 +68,7 @@ public class GameInstance {
                 }
             }
             else {
-                // Not a normal room within this zone or a zone-change-room-name
+                // Not a normal room within this zone or a zone-changing room name
                 System.out.println("Unregistered room name! " + p.roomName + " (zone "+zoneNumber+")");
                 p.roomName = "die";
             }
@@ -114,25 +86,21 @@ public class GameInstance {
         String startingRoomName = "Define me in GameInstance.switchZones()";
         switch (to){
             case 1:
-                zone1Rooms = initializeZone1Rooms(protaganist);
+                thisZoneRooms = initializeZone1Rooms(protaganist);
                 startingRoomName = "TutorialBasement";
                 break;
             case 2:
-                zone1Rooms = null; // Is there a better way to free up memory?
-                zone2Rooms = initializeZone2Rooms(protaganist);
-                startingRoomName = "ForestPath";
+                thisZoneRooms = initializeZone2Rooms(protaganist);
+                startingRoomName = "DockAndShip";
                 break;
             case 3:
-                zone2Rooms = null;
-                zone3Rooms = initializeZone3Rooms(protaganist);
+                thisZoneRooms = initializeZone3Rooms(protaganist);
                 break;
             case 4:
-                zone3Rooms = null;
-                zone4Rooms = initializeZone4Rooms(protaganist);
+                thisZoneRooms = initializeZone4Rooms(protaganist);
                 break;
             case 5:
-                zone4Rooms = null;
-                zone5Rooms = initializeZone5Rooms(protaganist);
+                thisZoneRooms = initializeZone5Rooms(protaganist);
                 break;
             default:
                 System.out.println("[GameInstance] zoneNumber read in switchZones()! ("+to+")");
@@ -180,6 +148,7 @@ public class GameInstance {
         HashMap<String, Room> rooms = new HashMap<>();
 
         // Add rooms here
+        rooms.put("DockAndShip", new DockAndShip(player));
 
         rooms.forEach((s, room) -> room.startup());
         rooms.forEach((s, room) -> room.setObjsPause(true));

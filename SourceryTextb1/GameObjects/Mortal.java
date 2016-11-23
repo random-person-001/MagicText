@@ -56,7 +56,8 @@ public class Mortal extends GameObject implements java.io.Serializable{
 
     public void subtractHealth(int amountLost, String message){
         if (strClass.equals("Player") ){
-            int damage = (amountLost - ((Player)this).defense);
+            Player meAsPlayer = (Player) this;
+            int damage = (amountLost - meAsPlayer.defense);
             if (damage < 1) {
                 damage = 1;
             }
@@ -64,7 +65,7 @@ public class Mortal extends GameObject implements java.io.Serializable{
             if (health < 0){
                 health = 0;
             }
-            ((Player)this).screenRedness = Math.max((int)((1 - ((float)health / maxHealth)) * 255),50);
+            meAsPlayer.screenRedness = Math.max((int)((1 - ((float)health / maxHealth)) * 255),50);
             //System.out.println(String.format("Setting redness: %1$d (%2$f)", room.playo.screenRedness, 1 - ((float)health / maxHealth)));
         } else if (dmgIcon.getStr().equals("")){ //Prevents spam
             health -= amountLost;
@@ -125,10 +126,11 @@ public class Mortal extends GameObject implements java.io.Serializable{
         if (health > newMax){
             health = newMax;
         }
-        if (strClass.contains("Player") && !room.getPlayer().paused.get()){
-            int toSet = (int)(((float)addHP / room.getPlayer().maxHealth) * 150);
+        if (strClass.contains("Player")){
+            Player meAsPlayer = (Player) this;
+            int toSet = (int)(((float)addHP / meAsPlayer.maxHealth) * 150);
             if (toSet > 100) toSet = 100;
-            ((Player) this).screenYellowness = toSet;
+            meAsPlayer.screenYellowness = toSet;
         }
     }
 

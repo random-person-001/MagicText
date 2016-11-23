@@ -35,18 +35,20 @@ public class Ghost extends Mortal{
     @Override
     public void update() {
         Mortal closestGoodGuy = getClosestGoodGuy();
-        int dist = Math.abs(x - closestGoodGuy.getX()) + Math.abs(y - closestGoodGuy.getY());
-        if (dist <= 1 && attackCooldown <= 0) {
-            closestGoodGuy.subtractHealth(4);
-            attackCooldown = 5;
+        if (closestGoodGuy != null) {
+            int dist = Math.abs(x - closestGoodGuy.getX()) + Math.abs(y - closestGoodGuy.getY());
+            if (dist <= 1 && attackCooldown <= 0) {
+                closestGoodGuy.subtractHealth(4);
+                attackCooldown = 5;
+            }
+            if (dist <= 5 && followDist == 1) {
+                followDist = 35;
+                isRevealed = true;
+            }
+            if (getHealth() < 30) isRevealed = true;
+            if (attackCooldown > 0) attackCooldown--;
+            pathToPos(followDist, closestGoodGuy.getX(), closestGoodGuy.getY());
         }
-        if (dist <= 5 && followDist == 1) {
-            followDist = 35;
-            isRevealed = true;
-        }
-        if (getHealth() < 30) isRevealed = true;
-        if (attackCooldown > 0) attackCooldown--;
-        pathToPos(followDist, closestGoodGuy.getX(), closestGoodGuy.getY());
         if (isRevealed)
             setDispIcon(new SpecialText("G", new Color(217, 184, 184)));
         else

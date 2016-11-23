@@ -293,8 +293,9 @@ class HUD implements java.io.Serializable {
      * >stop lan | cancel network : stop being a server and sending client ColoredTextMatrices
      * >sudo : enter sudo mode
      * >sudo make me a sandwich : evoke submissive response from computer.  Also enter sudo mode
-     * >testkit : Gives player the test kit.
-     * >unfreeze : sets frozen to off for player (in the case it is forgotten somehow)     *
+     * >switch zone (new zone number) : go to a new zone!
+     * >testkit : Gives player the test kit. (lots of items)
+     * >unfreeze : sets frozen to off for player (in the case it is forgotten somehow)
      * >unghost : Re-enables players checking for walls
      * >unpause : set Player's paused to false
      * </p>
@@ -315,6 +316,7 @@ class HUD implements java.io.Serializable {
             authing = false;
             if (command.trim().length() == 2 && command.contains("42")) {
                 promptChar = "#";
+                player.addPotato(1);
                 showResponse("#Authentication successful!#");
                 if (nextCommand.length() > 0 && !nextCommand.startsWith("su") && !nextCommand.contains("sudo")){ // avoid too much recursion
                     command = nextCommand;
@@ -542,6 +544,19 @@ class HUD implements java.io.Serializable {
         }
         else if (command.contains("layer")){
             orgo.printLayers();
+        }
+        else if (command.contains("switch zone")){
+            command = command.trim().toLowerCase();
+            if (command.length() < "switch zone".length()){
+                showResponse("Please specify the zone, within [1, 5] | x is an int"); // Math notation: [1,5] means 1 <= x <= 5
+            }
+            else {
+                int newZone = getParameters(command.substring("switch zone".length()))[0];
+                if (1 <= newZone && newZone <= 7){
+                    player.roomName = "switch to zone " + newZone;
+                    player.room.exitCode = "switch to zone " + newZone;
+                }
+            }
         }
         else if (command.length() > 0){
             showResponse("Command '" + command + "' not recognised.  Check your spelling or " +

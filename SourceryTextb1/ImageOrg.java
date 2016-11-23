@@ -48,6 +48,7 @@ public class ImageOrg implements java.io.Serializable {
         //drawTimer.scheduleAtFixedRate(frameTimerInstance, 0, 50); //20 fps lock
         resetClock();
         window = game;
+        System.out.println("ImageOrg " + orgSerial + " instansiated");
     }
 
     /**
@@ -69,18 +70,18 @@ public class ImageOrg implements java.io.Serializable {
     }
 
     public void resetClock() {
-        System.out.println("[ImageOrg] Timer restarted, layer op's: (1) " + operationList1 + " (2) " + operationList2);
+        System.out.println("[ImageOrg " + orgSerial + "] Timer restarted, layer op's: (1) " + operationList1 + " (2) " + operationList2);
         doLayerOperations();
         printLayers();
-        try {
+        if (drawTimer != null) {
             drawTimer.cancel();
-        } catch (NullPointerException ignore) {
         }
         drawTimer = new Timer();
         drawTimer.scheduleAtFixedRate(new FrameTimer(), 0, 50); //20 fps lock
     }
 
     public void terminateClock() {
+        System.out.println("[ImageOrg " + orgSerial + "] timer cancelled");
         if (drawTimer != null) {
             drawTimer.cancel();
             drawTimer.purge();
@@ -421,8 +422,10 @@ public class ImageOrg implements java.io.Serializable {
         Layer fullImage;
         try {
             if (defaultPlayer == null){
+                //System.out.println("[ImageOrg " + orgSerial + "] TopDownBuild on nobody");
                 fullImage = topDownBuild();
             } else {
+                //System.out.println("[ImageOrg " + orgSerial + "] TopDownBuild on " + defaultPlayer.getUsername());
                 fullImage = topDownBuild(defaultPlayer);
             }
             window.build(fullImage);
@@ -559,6 +562,10 @@ public class ImageOrg implements java.io.Serializable {
         return owningPlayerUsername;
     }
 
+    public Player getDefaultPlayer() {
+        return defaultPlayer;
+    }
+
     private class FrameTimer extends TimerTask {
 
         long lastRunMs = 0;
@@ -571,7 +578,7 @@ public class ImageOrg implements java.io.Serializable {
             //printLayers();
             lastRunMs = System.currentTimeMillis();
             newSendImage();
-            if (System.currentTimeMillis() - lastRunMs > 5)
+            if (System.currentTimeMillis() - lastRunMs > 10)
                 System.out.printf("Time to compile image (notably long): %1$dms\n", System.currentTimeMillis() - lastRunMs);
         }
     }

@@ -121,7 +121,9 @@ public class Player extends Mortal implements java.io.Serializable {
 
         hud = new HUD(this);
         hud.setOrg(orgo);
-        resumeFromSave();
+        setupTimer(20);
+        orgo.setDefaultPlayer(this);
+        //resumeFromSave();
     }
 
     /**
@@ -148,12 +150,11 @@ public class Player extends Mortal implements java.io.Serializable {
     }
 
     /**
-     * Set things up that don't get carried between saves, ex timers and ?keylisteners?
+     * Set things up that don't get carried between saves, ex timers
      */
     public void resumeFromSave() {
         //orgo.getWindow().addKeyListener(playerKeyListener); // Add key listeners.
         //setupForNewRoom();
-        setupTimer(20);
         orgo.resetClock();
     }
 
@@ -186,9 +187,6 @@ public class Player extends Mortal implements java.io.Serializable {
         hud.setOrg(orgo);
         // Add the player layers to this room
         addPlayerLayers();
-        if (hasLocalWindow) {
-            orgo.setDefaultPlayer(this);
-        }
     }
 
     public void restartTimer(){
