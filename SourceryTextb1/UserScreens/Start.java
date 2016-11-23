@@ -56,26 +56,6 @@ public class Start {
         }
     }
 
-    /**
-     * @return a hashmap of all the levels in Zone 1, initialized, startuped, paused, and paired with their string.
-     * representation.
-     */
-    private static HashMap<String, Room> initializeZone1Rooms(Player player) {
-        HashMap<String, Room> rooms = new HashMap<>();
-        rooms.put("TutorialBasement", new TutorialBasement(player));
-        rooms.put("SourcePit", new SourcePit(player));
-        rooms.put("Cliffside", new Cliffside(player));
-        rooms.put("SourceCaves", new SourceCaves(player));
-        rooms.put("BanditFortress", new BanditFortress(player));
-        rooms.put("InnerMountains", new InnerMountains(player));
-        rooms.put("SnowyPeak", new SnowyPeak(player));
-        rooms.put("IceCaves", new IceCaves(player));
-        rooms.put("HiddenBunker", new HiddenBunker(player));
-        rooms.forEach((s, room) -> room.startup());
-        rooms.forEach((s, room) -> room.setObjsPause(true));
-        return rooms;
-    }
-
     private static void introText(String text, int offset, int line){
         System.out.println("Writing: " + text);
         for (int ii = 0; ii < text.length(); ii++){
@@ -320,7 +300,7 @@ public class Start {
             org.setOwningPlayerUsername(player.getUsername());
             player.roomName = "TutorialBasement";
             playerList.add(player);
-            GameInstance master = new GameInstance(initializeZone1Rooms(player),player);
+            GameInstance master = new GameInstance(player);
             new Thread(() -> master.runGame(player)).start();
 
             // For multiplayer
@@ -355,7 +335,7 @@ public class Start {
             org.resetClock();
             org.printLayers();
             imported.resumeFromSave();
-            GameInstance i = new GameInstance(initializeZone1Rooms(imported), imported);
+            GameInstance i = new GameInstance(imported);
             i.runGame(imported);
         }
 

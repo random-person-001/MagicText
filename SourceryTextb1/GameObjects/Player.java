@@ -37,6 +37,7 @@ public class Player extends Mortal implements java.io.Serializable {
     private Inventory inv;
     private HUD hud;
     public String roomName = ""; //Extremely important when we implement saving.
+    private int zoneNumber = 1; // Needed for saving
     private NetworkServer networkServer; // Only used in multiplayer
     private boolean hasLocalWindow;
 
@@ -729,5 +730,19 @@ public class Player extends Mortal implements java.io.Serializable {
                 spacePressed = false;
             }
         }
+    }
+
+    /**
+     * @return which zone this Player is in!
+     */
+    public int getZoneNumber() {
+        return zoneNumber;
+    }
+
+    /**
+     * Move on to a new Zone?  Call this in GameInstance.java so saving doesn't break!
+     */
+    public void setZoneNumber(int newZoneNumber) {
+        zoneNumber = newZoneNumber;
     }
 }

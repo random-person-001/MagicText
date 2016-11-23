@@ -15,7 +15,6 @@ import SourceryTextb1.SpecialText;
  * Created by riley on 15-Jun-2016.
  */
 public class Cliffside extends Room {
-    private Layer baseLayer;
 
     public Cliffside(Player player) {
         super(player);
@@ -24,7 +23,7 @@ public class Cliffside extends Room {
 
     protected String loop(Player play) {
         int count = 0;
-        while (exitCode.equals("")) {
+        while (exitCode.equals("") && play.roomName == strRoomName) {
             try {
                 Thread.sleep(20);
 
@@ -93,7 +92,7 @@ public class Cliffside extends Room {
         String[][] base = Art.strToArray(arty.mountainPlace);
         String[] solids = {":", "^", "#",".","0","o"};
         addToBaseHitMesh(base, solids);
-        baseLayer = new Layer(base, "backgronud");
+        Layer baseLayer = new Layer(base, "backgronud");
         Art coloring = new Art();
         baseLayer.influenceAll(coloring.mountainPallette1);
         baseLayer.findAndReplace(new SpecialText("0",coloring.mountainPallette1), new SpecialText("O", coloring.mountainPallette2));
