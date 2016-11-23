@@ -345,12 +345,18 @@ public class Start {
         }
 
         void doIntro(){
-            try {
-                System.out.println("Starting intro...");
-                intro();
-            } catch (InterruptedException e) {
-                System.out.println("Intro interrupted.");
-            }
+            System.out.println("Starting intro...");
+            (new Thread() {
+                public void run() {
+                    try {
+                        intro();
+                        System.out.println("Intro finished.");
+                        new MainMenu(org, game, self);
+                    } catch (InterruptedException e) {
+                        System.out.println("Intro interrupted.");
+                    }
+                }
+            }).start(); // I think this should be the only thread in the program at this point, all others should have fallen through
         }
 
         void doNetworkClient(String serverName) {

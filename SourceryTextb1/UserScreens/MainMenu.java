@@ -56,33 +56,11 @@ class MainMenu {
 
     private void onEnterPressedDuringTop() {
         org.removeLayer("MAIN_MENU");
-        /* Org display testing (finding where intro is weird)
-        Layer check0 = new Layer(Art.strToArray(new Art().spark), "check0");
-        check0.setX(1);
-        check0.setY(5);
-        org.addLayer(check0);
-        */
 
         window.txtArea.removeKeyListener(keyInputter); // Same as below  \/
         menuID = EXIT_MENU; // In most cases.  If going to multiplayer menu, we'll change it again.
 
         if (cursorY == 8) {
-            /* Org display testing
-            waitAMomentAndUpdateCursor();
-            Layer check1 = new Layer(Art.strToArray(new Art().oldBook), "check1");
-            org.addLayer(check1);
-            org.printLayers();
-            waitAMomentAndUpdateCursor();
-            try {
-                Thread.sleep(8000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            waitAMomentAndUpdateCursor();
-            org.printLayers();
-            //starter.doIntro();
-            cursorY = 10;
-            */
             starter.doIntro();
         }
         if (cursorY == 9) {
