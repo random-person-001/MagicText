@@ -4,10 +4,6 @@ import SourceryTextb1.GameObjects.Player;
 import SourceryTextb1.GameObjects.PlayerKeyPressListener;
 import SourceryTextb1.Rooms.Room;
 import SourceryTextb1.Rooms.TheSource.*;
-import SourceryTextb1.Rooms.SeaOfSurprise.*;
-import SourceryTextb1.Rooms.MinesOfMementos.*;
-import SourceryTextb1.Rooms.ForestOfFondant.*;
-import SourceryTextb1.Rooms.CavernsOfCliffhangers.*;
 
 import java.util.*;
 import java.util.List;
@@ -48,13 +44,15 @@ public class GameInstance {
         System.out.println("[GameInstance] beginning game running for " + p.getUsername());
         while (!p.roomName.equals("die")) {
             System.out.println("Entering the room '" + p.roomName + "'");
-            Room r;
+            Room r = null;
             switch (zoneNumber){
                 case 1:
-                    r = zone1Rooms.get(p.roomName);
+                    if (zone1Rooms.containsKey(p.roomName))
+                        r = zone1Rooms.get(p.roomName);
                     break;
                 case 2:
-                    r = zone2Rooms.get(p.roomName);
+                    if (zone2Rooms.containsKey(p.roomName))
+                        r = zone2Rooms.get(p.roomName);
                     break;
                 case 3:
                     r = zone3Rooms.get(p.roomName);
@@ -74,14 +72,14 @@ public class GameInstance {
                 // Normal entering of a room without zone changes
                 r.enter(p);
             }
-            else if (p.roomName.contains("switch to zone") || !inMiddleOfSwitchingEveryonesZones){
+            else if (p.roomName.contains("switch to zone") && !inMiddleOfSwitchingEveryonesZones){
                 // The first person to switch zones executes this; other Players won't but rather execute the next block.
                 // This does all the fancy zone switching.
                 inMiddleOfSwitchingEveryonesZones = true;
-                        zoneNumber = Integer.valueOf(Character.toString(p.roomName.charAt(p.roomName.length()-1)));
+                zoneNumber = Integer.valueOf(Character.toString(p.roomName.charAt(p.roomName.length()-1)));
                 for (Player eachPlayer: playerList){
-                    eachPlayer.room.exitCode = "switch to zone " + zoneNumber;
-                    eachPlayer.roomName = "switch to zone " + zoneNumber; // This will trigger an exit of their current room.
+                    eachPlayer.room.exitCode = p.roomName;
+                    eachPlayer.roomName = p.roomName; // This will trigger an exit of their current room.
                 }
                 switchZones();
                 try {
@@ -142,6 +140,7 @@ public class GameInstance {
         for (Player p : playerList){
             p.roomName = startingRoomName;
             p.setZoneNumber(to);
+            p.goTo(0,0);
         }
     }
 
@@ -178,8 +177,14 @@ public class GameInstance {
     }
 
     private HashMap<String, Room> initializeZone2Rooms(Player player) {
-        System.out.println("[GameInstance] no classes are specified yet in initializeZone2Rooms(): Bad things will happen");
-        return null;
+        HashMap<String, Room> rooms = new HashMap<>();
+
+        // Add rooms here
+
+        rooms.forEach((s, room) -> room.startup());
+        rooms.forEach((s, room) -> room.setObjsPause(true));
+        //System.out.println("[GameInstance] no classes are specified yet in initializeZone2Rooms(): Bad things will happen");
+        return rooms;
     }
 
     private HashMap<String, Room> initializeZone3Rooms(Player player) {
