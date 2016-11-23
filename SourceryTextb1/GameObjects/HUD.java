@@ -72,10 +72,12 @@ class HUD implements java.io.Serializable {
     public void update() {  // Edit layer acts after stuff.
         spell1Name = convertIcon(player.getPrimarySpell());
         spell2Name = convertIcon(player.getSecondarySpell());
-
-        orgo.editLayer(" ", layerName, 0, 45);
         xBulidIndex = 0;
-        drawLayer();
+
+        if (player.room != null) {
+            orgo.editLayer(" ", layerName, 0, 45);
+            drawLayer();
+        }
     }
 
     /**

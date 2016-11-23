@@ -20,7 +20,7 @@ public class SlaveGameInstance {
      */
     public void runGameAsSlave() {
         Player me = masterInstance.requestNewPlayer();
-        System.out.println(me.getUsername());
+        System.out.println(me.getUsername() + " instantiated.  Now waiting for a connection for them...");
         try {
             NetworkServer networkServer = new NetworkServer(me);
             networkServer.doTimerSend();

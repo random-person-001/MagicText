@@ -123,6 +123,7 @@ public class Player extends Mortal implements java.io.Serializable {
         hud.setOrg(orgo);
         setupTimer(20);
         orgo.setDefaultPlayer(this);
+        orgo.setOwningPlayerUsername(username);
         //resumeFromSave();
     }
 
@@ -238,8 +239,9 @@ public class Player extends Mortal implements java.io.Serializable {
             try {
                 if (dead) {
                     onDeath();
+                } else if (room != null) {
+                    orgo.editLayer(" ", layerName, y, x);
                 }
-                orgo.editLayer(" ", layerName, y, x);
             } catch (IndexOutOfBoundsException | NullPointerException ignored) {}
         } else {
             if (shouldNewInv) {
