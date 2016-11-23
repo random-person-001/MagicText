@@ -32,7 +32,7 @@ public class GameObject implements java.io.Serializable{
     updateTimer updateTimerInstance;
     public String strClass = "None";
     public ImageOrg orgo;
-    protected Room room;
+    public Room room;
     transient Timer timer;
     public int frequency;
     
