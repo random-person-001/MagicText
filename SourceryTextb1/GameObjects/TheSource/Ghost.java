@@ -1,7 +1,6 @@
 package SourceryTextb1.GameObjects.TheSource;
 
 import SourceryTextb1.GameObjects.Mortal;
-import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
 import SourceryTextb1.SpecialText;
@@ -17,14 +16,14 @@ public class Ghost extends Mortal{
     private boolean isRevealed = false;
 
     public Ghost(Room theRoom, int xStart, int yStart) {
-        super.strClass = "Bandit";
+        super.strClass = "Ghost";
         orgo = theRoom.org;
         room = theRoom;
         layerName = room.makeUniqueLayerName(super.strClass);
 
         x = xStart;
         y = yStart;
-        setHealth(30);
+        setHealth(25);
         orgo.addLayer(new Layer(new String[1][1], layerName, y, x));
 
         setupTimer(300); // Maybe the player should check this instead
@@ -38,7 +37,7 @@ public class Ghost extends Mortal{
         if (closestGoodGuy != null) {
             int dist = Math.abs(x - closestGoodGuy.getX()) + Math.abs(y - closestGoodGuy.getY());
             if (dist <= 1 && attackCooldown <= 0) {
-                closestGoodGuy.subtractHealth(4);
+                closestGoodGuy.subtractHealth(5);
                 attackCooldown = 5;
             }
             if (dist <= 5 && followDist == 1) {

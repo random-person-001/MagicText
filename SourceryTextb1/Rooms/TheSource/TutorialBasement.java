@@ -158,13 +158,13 @@ public class TutorialBasement extends Room {
         super.addObject(gHeal);
 
         Item fireGlove = new Item("Pyro Glove", "A glove that's on fire!\n\nPyromancers are quite the\n adventurous people, and so" +
-                "\n these gloves became very\n commonplace\n\n+2 Fire Spell Damage", "equipment");
+                "\n these gloves became very\n commonplace", "equipment");
         fireGlove.setEquipvals(0, 0, 0, 0, 2, 0 ,0, "weapon");
         DroppedItem gGlove =  new DroppedItem(this, "You found a weapon: Pyro Glove!", fireGlove, 85, 15);
         super.addObject(gGlove);
 
         Item brokenStaff = new Item ("Broken Staff","A staff crafted by a\n dirt-poor student of\n The Magic Academy.\n\nMade of spare wood\n" +
-                " and frayed ropes, it's\n no surprise that it\n already snapped in two\n\n+1 (All) Spell Damage", "equipment");
+                " and frayed ropes, it's\n no surprise that it\n already snapped in two", "equipment");
         brokenStaff.setEquipvals(0, 0, 1, 0, 0, 0 ,0, "weapon");
         DroppedItem gStaff =  new DroppedItem(this, "You found a weapon: Broken Staff!", brokenStaff, 90, 15);
         super.addObject(gStaff);

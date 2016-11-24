@@ -71,7 +71,7 @@ public class PolarBear extends Mortal {
     @Override
     public void onDeath(){
         if (hasKey){
-            Item keyDrop = new Item("WitchHut Key", "With polar bears runnin'\n around, it's a good idea\n to lock yourself in a hut.", "item");
+            Item keyDrop = new Item("Witch Hut Key", "With polar bears runnin'\n around, it's a good idea\n to lock yourself in a hut.", "item");
             DroppedItem theDrop = new DroppedItem(room, "You found a key!", keyDrop, originalX, originalY);
             room.addObject(theDrop);
         }

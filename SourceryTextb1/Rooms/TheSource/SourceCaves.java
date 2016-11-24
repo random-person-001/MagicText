@@ -65,13 +65,19 @@ public class SourceCaves extends Room{
             Spider itsyBitsy = new Spider(this, station[0], station[1]); // X and Y switched.  I'm really sorry.
             addMortal(itsyBitsy);
         }
-        /*
-        int[][] banditStations = {}; // X and Y are switched.
+
+        int[][] banditStations = {{81,21},{75,24},{69,22},{64,33},{56,33},{172,34},{183,34},{181,35},{176,7},{177,10},{184,3}}; // X and Y are switched.
         for (int[] station : banditStations) {
             Bandit roughBill = new Bandit(org, this, station[0], station[1]); // X and Y switched.  I'm really sorry.
             addMortal(roughBill);
         }
-        */
+
+        addMagicPotato(26, 57);
+
+        Item furCoat = new Item("Fur Coat","A fluffy and warm\n fur coat.\n\nThe coat is huge, and the \n envy of all during\n the winter.","equipment");
+        furCoat.setEquipvals(0,5,0,0,0,0,0,"armor");
+        DroppedItem dCoat = new DroppedItem(this, "You found... a fur coat? In a cave?",furCoat, 413, 3);
+        addObject(dCoat);
     }
 
     @Override

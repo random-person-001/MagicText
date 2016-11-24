@@ -60,7 +60,7 @@ public class HiddenBunker extends Room {
         DroppedItem dPotion = new DroppedItem(this, "You found a potato chip!", potion, 53, 11);
         addObject(dPotion);
 
-        Item item1 = new Item("InitiateTome", "A book full of dark rituals\n\nNewcomers to dark magic are\n handed this book to study.\n\nYes, it's a textbook.\n\n+3 Dark Spell Damage", "equipment");
+        Item item1 = new Item("InitiateTome", "A book full of dark rituals\n\nNewcomers to dark magic are\n handed this book to study.\n\nYes, it's a textbook.", "equipment");
         item1.setEquipvals(0, 0, 0, 0, 0, 0, 3, "weapon");
         DroppedItem dBook = new DroppedItem(this, "You found an item: Initiate Tome!", item1, 110, 4);
         addObject(dBook);

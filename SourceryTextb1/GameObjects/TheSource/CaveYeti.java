@@ -22,7 +22,7 @@ public class CaveYeti extends Mortal {
     private int originalY;
 
     public CaveYeti(ImageOrg orga, Room theRoom, int xStart, int yStart) {
-        super.strClass = "Bandit";
+        super.strClass = "CaveYeti";
         orgo = orga;
         room = theRoom;
         layerName = room.makeUniqueLayerName(super.strClass);

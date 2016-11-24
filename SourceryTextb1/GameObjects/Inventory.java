@@ -105,7 +105,7 @@ class Inventory implements java.io.Serializable {
                 "\n and thus travels very far.", "ShKnf", player, "spell"));
         */
         equip.add(new Item("Dusty Robe", "Dust is baked into this\n old robe.\n\nThe newest students at\n The Magic Academy get\n only hand-me-downs. As a" +
-                "\n result, they are usually\n really, really old.\n\n+2 Defense", "equip"));
+                "\n result, they are usually\n really, really old.", "equip"));
         equip.get(0).setEquipvals(2, 0, 0, 0, 0, 0, 0, "armor");
 
         //items.add(new Item("Magic Potato","A magically enhanced potato\n\nCan be used to either\n permanently increase\n your max health or\n max mana by 5.", player, "item"));
@@ -170,13 +170,13 @@ class Inventory implements java.io.Serializable {
      */
 
     void testKit(){
-        Item item1 = new Item("InitiateTome", "A book full of dark rituals\n\nNewcomers to dark magic are\n handed this book to study.\n\nYes, it's a textbook.\n\n+3 Dark Spell Damage", "equipment");
+        Item item1 = new Item("InitiateTome", "A book full of dark rituals\n\nNewcomers to dark magic are\n handed this book to study.\n\nYes, it's a textbook.", "equipment");
         item1.setEquipvals(0, 0, 0, 0, 0, 0, 3, "weapon");
         equip.add(item1);
-        Item item2 = new Item("Wool Scarf", "A fluffy scarf.\n\nWhat's not to love in\n a scarf?\n\nThey're magical, comfy, and\n fashionable!\nAwesome, right?\n\n+1 Ice Spell Damage\n+2 Defense", "equipment");
+        Item item2 = new Item("Wool Scarf", "A fluffy scarf.\n\nWhat's not to love in\n a scarf?\n\nThey're magical, comfy, and\n fashionable!\nAwesome, right?", "equipment");
         item2.setEquipvals(2, 0, 0, 0, 0, 1, 0, "weapon");
         equip.add(item2);
-        Item item3 = new Item("Stat Bomb", "It does everything!\n\nDon't actually use this\n in the game.\n\n+1 To all equipment stats.", "equipment");
+        Item item3 = new Item("Stat Bomb", "It does everything!\nBut don't actually use this\n in the game.", "equipment");
         item3.setEquipvals(1, 1, 1, 1, 1, 1, 1, "weapon");
         equip.add(item3);
         Item item5 = new Item("NeodymNeedle", "Arcane spell;\n\nA neodymium needle.\n\nIt is so magnetic it will\n fly around walls to hit\n enemies; no aim required.", "NeoNd", "spell", true);
@@ -185,7 +185,7 @@ class Inventory implements java.io.Serializable {
         Item item6 = new Item("Evil Powers", "Dark Spell;\n\nYou're not sure what it is\n exactly, but it has the\n word 'power' in its name,\n so it must be good,\n right?", "EvlPw", "spell", true);
         item6.dmgSpellDefine(1, 8, 2, "dark", new SpecialText("*", new Color(155, 55, 155)), new SpecialText("*", new Color(255, 55, 255)), false);
         spells.add(item6);
-        Item item7 = new Item("Witch Scarf", "A scarf imbued with witch\n magic, granting the user\n increased dark and ice\n magic power\n\nIt smells like flowers.\n\n+1 Ice Spell Damage\n+2 Dark Spell Damage\n+1 Defense\n+3 Max Health", "equipment");
+        Item item7 = new Item("Witch Scarf", "A scarf imbued with witch\n magic, granting the user\n increased dark and ice\n magic power\n\nIt smells like flowers.", "equipment");
         item7.setEquipvals(1, 3, 0, 0, 0, 2, 2, "weapon");
         equip.add(item7);
         Item potion = new Item ("MagicTaterChip", "A singular potato chip made\n with magic potatoes.\n\nEating this chip will\n restore hp over time\n (4hp/s + 10 overheal!)", "item");
@@ -706,7 +706,7 @@ class Inventory implements java.io.Serializable {
             iter++;
         }
         for (int iif = iter; iif < maxLength; iif++){ //Fixes string by concatenating blank spaces until maxLength
-            //org.editLayer(" ", infoLayer.getName(), yStart, xStart + iif);
+            org.editLayer(" ", infoLayer.getName(), yStart, xStart + iif);
         }
     }
 

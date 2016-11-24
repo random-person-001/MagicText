@@ -212,6 +212,7 @@ public class Item implements java.io.Serializable {
         iceBoost = iceBoostTo;
         darkBoost = darkBoostTo;
         setEquipType(equipTypeTo);
+        displayMode = "equipment";
     }
 
     public void setHeal(int to) {
@@ -264,6 +265,16 @@ public class Item implements java.io.Serializable {
                 return description + "\n\nOne time use: press A or\nENTER to consume\n\nDuration: " + String.valueOf(duration / 1000) + "s";
             case "buff":
                 return description + "\n\nDuration: " + String.valueOf(duration) + " Seconds\nCost: " + String.valueOf(cost);
+            case "equipment":
+                String finalDesc = description + "\n\n";
+                if (armor > 0) finalDesc += (String.format("+%1$d Defense\n", armor));
+                if (hpBoost > 0) finalDesc += (String.format("+%1$d Max Health\n", hpBoost));
+                if (allBoost > 0) finalDesc += (String.format("+%1$d (All) Spell Damage\n", allBoost));
+                if (arcBoost > 0) finalDesc += (String.format("+%1$d Arcane Spell Damage\n", arcBoost));
+                if (fireBoost > 0) finalDesc += (String.format("+%1$d Fire Spell Damage\n", fireBoost));
+                if (iceBoost > 0) finalDesc += (String.format("+%1$d Ice Spell Damage\n", iceBoost));
+                if (darkBoost > 0) finalDesc += (String.format("+%1$d Dark Spell Damage\n", darkBoost));
+                return finalDesc;
             default:
                 return description + "\n\nINVALID DISPLAY MODE: \n  \"" + displayMode + "\"";
         }
