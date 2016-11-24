@@ -92,7 +92,7 @@ public class BanditFortress extends Room{
 
         Art arty = new Art();
         String[][] base = Art.strToArray(arty.banditFortress);
-        String[] solids = {":", "w","m","#","R","G"};
+        String[] solids = {":", "w","m","#","R","G","/"};
         addToBaseHitMesh(base, solids);
         Layer lay1 = new Layer(base, "Base");
         org.addLayer(lay1);

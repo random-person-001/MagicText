@@ -1203,39 +1203,39 @@ public class Art implements java.io.Serializable{
 
 
     public String banditFortress =
-            "                                                                                                                                        \n" +
+                    "                                                                                                                                        \n" +
                     "                                                                                                                                        \n" +
                     "                                        :                     :                                                                         \n" +
                     "                                        :                     :                                                                         \n" +
                     "                                        :                     :                                                                         \n" +
-                    "                                         :                   :                                 :   :                                    \n" +
-                    "                                          ::::::       ::::::                                  :   :                                    \n" +
-                    "                                                :     :                                        :   :                                    \n" +
-                    "                                                :     :                                        :   :                                    \n" +
-                    "                                                :     :                                        :   :                                    \n" +
-                    "                                         :::::::::   :::::::::                                 :   :                                    \n" +
-                    "                                       ::                     ::                               :   :                                    \n" +
-                    "                                      :                         :                              :   :                                    \n" +
-                    "                                     :                           :                             :   :                                    \n" +
-                    "                                    :           :::::::           :        ::::::::::::::::::::    :                                    \n" +
-                    "                                   :         :::       :::         :       :                      :                                     \n" +
-                    "                                  :        ::             ::        :::::::                :::::::                                      \n" +
-                    "                                  :       :                 :                              :                                            \n" +
+                    "                                         :                   :                                                                          \n" +
+                    "                                          ::::::       ::::::                                                                           \n" +
+                    "                                                :     :                                 /   /                                           \n" +
+                    "                                                :     :                                /---/                                            \n" +
+                    "                                                :     :                               /---/                                             \n" +
+                    "                                         :::::::::   :::::::::                       /---/                                              \n" +
+                    "                                       ::                     ::                    /---/                                               \n" +
+                    "                                      :                         :                  /---/                                                \n" +
+                    "                                     :                           :                /---/                                                 \n" +
+                    "                                    :           :::::::           :        ::::::/---/:::::                                             \n" +
+                    "                                   :   B     :::       :::         :       :T              :                                            \n" +
+                    "                                  :        ::             ::        :::::::                :                                            \n" +
+                    "                                  :       :                 :                       T      :                                            \n" +
                     "                                  :      :                   :      :::::::::::::::::::::::                                             \n" +
-                    "                                  :      :                   :      :                                                                   \n" +
+                    "                                  :      :                   :B     :                                                                   \n" +
                     "                                  :      :                   :      :                                                                   \n" +
                     "                                  :       :                 :       :                                                                   \n" +
                     "                                  :        ::             ::        :                                                                   \n" +
                     "                                   :         :::       :::         :                                                                    \n" +
-                    "                                    :           :::::::           :                                                                     \n" +
-                    "                                     :             G             :                                                                      \n" +
+                    "                                    :           :::::::    B      :                                                                     \n" +
+                    "                                     :             B             :                                                                      \n" +
                     "                                      :                        :::::::::::::::::::                                                      \n" +
                     "                                       ::::                                       :                                                     \n" +
                     "                                           :::::::::::::::::::::::::::::::::::    :                                                     \n" +
                     "                                                                              :   :                                                     \n" +
                     "                                                                       wwwww:::   :::wwwww                                              \n" +
                     "                                                                      w     w :   : w     w                                             \n" +
-                    "                                                                      w                   w                                             \n" +
+                    "                                                                      w   B T       T B   w                                             \n" +
                     "                                                                      w     w:     :w     w                                             \n" +
                     "         wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww   wwwwwwwwwwwwwwwwww                                    \n" +
                     "        w                                                                     :   :                 w                                   \n" +
@@ -1246,61 +1246,61 @@ public class Art implements java.io.Serializable{
                     "   w      :                                     :                             :   :                      w                              \n" +
                     "   w       ::                                 ::                              :   :                       w                             \n" +
                     "   w         :::::::::   :::::::::::::::::::::                                :   :                        w                            \n" +
-                    "   w                  : :                                       ::::::::::::::    :                         w                           \n" +
-                    "   w                  : :                                      :                  :                          w                          \n" +
+                    "   w                  :T:                                       ::::::::::::::T   :                         w                           \n" +
+                    "   w                  :T:                                      :                  :                          w                          \n" +
                     "   w            ::::::   ::::::                                :                  :                           w                         \n" +
-                    "   w           :               :                               :    ::::::::::::::                             w                        \n" +
+                    "   w           :   B       B   :                               :   T::::::::::::::                             w                        \n" +
                     "   w            ::::::   ::::::                                :   :                                            w                       \n" +
-                    "   w                  : :                                      :   :                                             w                      \n" +
-                    "   w                  : :                                      :   :                                              w                     \n" +
+                    "   w                  :T:                                      :   :                                             w                      \n" +
+                    "   w                  :T:                                      :   :                                              w                     \n" +
                     "   w          ::::::::   :::::::::::::::::::::::::::::::::::::::   :::::::::::::::::::::::                         w                    \n" +
                     "   w        ::                                                                            ::                        w                   \n" +
-                    "   w       :                                                                                :                       w                   \n" +
+                    "   w       :                                              R                                 :                       w                   \n" +
                     "   w       :                                                mmmmmmmmmmm                     :                       w                   \n" +
                     "   w      :   mmmmmmmm      mmmmmmmm     mmmmmmmm           mmmmmmmmmmm          mm          :                      w                   \n" +
                     "   w      :   mmmmmmmm      mmmmmmmm     mmmmmmmm                              mmmmmm       m:                      w                   \n" +
-                    "   w      :                                                                    mmmmmm     mmm:                      w                   \n" +
+                    "   w      :                               B             B                      mmmmmm     mmm:                      w                   \n" +
                     "   w      :                                                 mmmmmmmmmmm          mm       mmm:                      w                   \n" +
-                    "   w      :     mmmmmmmm      mmmmmmmm      mmmmmmmm        mmmmmmmmmmm                     m:                      w                   \n" +
-                    "   w      :     mmmmmmmm      mmmmmmmm      mmmmmmmm                           mm             ::::::::              wwwww               \n" +
-                    "   w      :                                                                  mmmmmm                   ::::::::      w    w              \n" +
-                    "   w      :                                                 mmmmmmmmmmm      mmmmmm     mm   ::::::::         ::::::ww   w              \n" +
-                    "   w      :       mmmmmmmm      mmmmmmmm      mmmmmmmm      mmmmmmmmmmm        mm     mmmmmm:        ::::::::          ww :::::         \n" +
-                    "   w       :      mmmmmmmm      mmmmmmmm      mmmmmmmm                                mmmmmm:                :::::::w          :::::::::\n" +
-                    "   w       :                                                                            mm  :                       ww ww ::::          \n" +
-                    "   w        ::                                                                            ::                        w    w    ::::::::::\n" +
-                    "   w          ::::::::::      ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::                          wwwww               \n" +
+                    "   w      :     mmmmmmmm      mmmmmmmm      mmmmmmmm        mmmmmmmmmmm         R           m:                      w                   \n" +
+                    "   w      :     mmmmmmmm      mmmmmmmm      mmmmmmmm                           mm             ::::::::              w                   \n" +
+                    "   w      :                                                                  mmmmmm                   ::::::::      w CCCC              \n" +
+                    "   w      :                R                    B           mmmmmmmmmmm      mmmmmm     mm   ::::::::         ::::::wCC  CCCC           \n" +
+                    "   w      :       mmmmmmmm      mmmmmmmm      mmmmmmmm      mmmmmmmmmmm        mm     mmmmmm:        ::::::::               CCCCCCCC    \n" +
+                    "   w       :      mmmmmmmm      mmmmmmmm      mmmmmmmm      B                         mmmmmm:                :::::::w  CCC         CCCCC\n" +
+                    "   w       :                                                                            mm  :                       wCC   CCCC          \n" +
+                    "   w        ::                                                                            ::                        w         CCC  CCCCC\n" +
+                    "   w          ::::::::::      ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::                          w           CCCC    \n" +
                     "   w                    :    :                                                                                     w                    \n" +
-                    "   w                    :    :  :::::::::::                                                                       w                     \n" +
-                    "    w                    :  : ::           :::                                                                   w                      \n" +
-                    "     w                   :  ::                :                                                                 w                       \n" +
-                    "      w                  :                    :                                                                w                        \n" +
-                    "       w                 :  ::                :                                                               w                         \n" +
-                    "        w                :  : ::           :::                                                               w                          \n" +
-                    "         w               :  :   :::::::::::                                                                 w                           \n" +
-                    "          w              :   :                                                                             w                            \n" +
-                    "           w             :    :                                                                           w                             \n" +
-                    "            w            :     :                                                                         w                              \n" +
-                    "             w            :     :::::::::::::::::::::::::::                                             w                               \n" +
+                    "   w                    :    :                                                                                    w                     \n" +
+                    "    w                    :  :                                                                                    w                      \n" +
+                    "     w                   :  :                                                                                   w                       \n" +
+                    "      w                  :  :                                                                                  w                        \n" +
+                    "       w                 :  :                                                                                 w                         \n" +
+                    "        w                :  :    ::::::                                                                      w                          \n" +
+                    "         w               :  :   :  B   :                                                                    w                           \n" +
+                    "          w              :  :::: B    B :                                                                  w                            \n" +
+                    "           w             :          B  :                                                                  w                             \n" +
+                    "            w            :   ::::::::::                                                                  w                              \n" +
+                    "             w            :   :::::::::::::::::::::::::::::                                             w                               \n" +
                     "              w            :                               :::                                         w                                \n" +
                     "               w            :                                 :::                                     w                                 \n" +
                     "                w            :                                   :::                                 w                                  \n" +
-                    "                 w            :::::::::::::::::::::::::::  R        :::                             w                                   \n" +
+                    "                 w            :::::::::::::::::::::::::::           :::                             w                                   \n" +
                     "                  w                                      :::           ::                          w                                    \n" +
                     "                   w                                        ::           :                        w                                     \n" +
-                    "                    w                                        :   w w w   :                       w                                      \n" +
-                    "                     wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww w wwwwwwwwwwwwwwwwwwwwwwwwwwww                                       \n" +
-                    "                                                        w     w::     ::w     w                                                         \n" +
+                    "                    w                                        :           :                       w                                      \n" +
+                    "                     wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww   wwwwwwwwwwwwwwwwwwwwwwwwwwww                                       \n" +
+                    "                                                        w    Bw::     ::wB    w                                                         \n" +
                     "                                                        w                     w                                                         \n" +
                     "                                                        w     w:::   :::w     w                                                         \n" +
-                    "                                                         wwwww    : :    wwwww                                                          \n" +
-                    "                                                                  : :                                                                   \n" +
-                    "                                                                  : :                                                                   \n" +
-                    "                                                             :::::R ::::::                                                              \n" +
-                    "                                                            :             :                                                             \n" +
+                    "                                                         wwwww   :   :   wwwww                                                          \n" +
+                    "                                                                 :   :                                                                  \n" +
+                    "                                                                 :   :                                                                  \n" +
+                    "                                                             ::::     ::::                                                              \n" +
+                    "                                                            :  T   B   T  :                                                             \n" +
                     "                                                           :               :                                                            \n" +
                     "                                                           :               :                                                            \n" +
-                    "                                                            :             :                                                             \n" +
+                    "                                                            :  T       T  :                                                             \n" +
                     "                                                             :::       :::                                                              \n" +
                     "                                                                :     :                                                                 \n" +
                     "                                                                 :   :                                                                  \n" +

@@ -14,7 +14,7 @@ import java.awt.*;
  * Created by riley on 31-Aug-2016
  */
 public class Bandit extends Mortal {
-    private int followDist = 6;
+    private int followDist = 8;
 
     public Bandit(ImageOrg orga, Room theRoom, int xStart, int yStart) {
         super.strClass = "Bandit";
