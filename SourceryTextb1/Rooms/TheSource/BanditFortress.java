@@ -53,26 +53,23 @@ public class BanditFortress extends Room{
     public void addItems(){
         ititHitMeshes();
 
-        Spider itsyBitsy = new Spider(this, 39, 39);
-        addMortal(itsyBitsy);
-
-        int[][] banditStations = {{67,95},{30,71},{35,72},{34,70},{18,64}};
+        int[][] banditStations = {{35,74},{33,75},{38,75},{36,76},{61,87},{73,87},{67,94},{19,46},
+                {27,46},{42,56},{48,61},{56,56},{60,63},{74,32},{86,32},{51,25},{59,24},{62,19},{39,15}};
         for (int[] station : banditStations) {
             Bandit roughBill = new Bandit(org, this, station[0], station[1]);
             addMortal(roughBill);
         }
 
-        int[][] towerLocs = {{18,46},{29,46},{81,45},{64,44},{72,88},{62,88},{76,15},{90,17},{48,6},{54,6},{76,32},{84,32}};
+        int[][] towerLocs = {};
         for (int[] towerLoc : towerLocs) {
             WeakTower t = new WeakTower(org, this, towerLoc[0], towerLoc[1]);
             addMortal(t);
         }
 
-        Item magicTater = new Item("Illicit Magic Potato","How lucky! This eccentric\n potato can permanently\n " +
+        Item magicTater = new Item("Magic Potato","How lucky! This eccentric\n potato can permanently\n " +
                 "increase either your\n Max HP or Max Mana.\n\nNOTE: it's permanent.\nYou got this illicitly.", "item");
         DroppedItem gTater =  new DroppedItem(this, "You found a magic potato.  Cheater.", magicTater, 51, 19);
         super.addObject(gTater);
-
     }
 
     @Override
@@ -92,9 +89,10 @@ public class BanditFortress extends Room{
 
         Art arty = new Art();
         String[][] base = Art.strToArray(arty.banditFortress);
-        String[] solids = {":", "w","m","#","R","G","/"};
+        String[] solids = {":","w","m","#","/"};
         addToBaseHitMesh(base, solids);
         Layer lay1 = new Layer(base, "Base");
+        highlightFlavorText(lay1);
         org.addLayer(lay1);
 
         genericRoomInitialize();

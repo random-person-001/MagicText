@@ -77,12 +77,20 @@ public class ColoredTextMatrix extends JPanel {
 
         //recalculate(); // See the difference it makes by uncommenting - my unscientific methods measured around a thirdish difference
 
-        for (int col = 0; col < text.length; col++){ //Draws the highlighting / backgrounds first, then the foreground
+        for (int col = 0; col < text.length; col++){ //Draws the highlighting / backgrounds first, so that it does not draw over any characters whatsoever
             for (int row = 0; row < text[0].length; row++){
                 SpecialText get = text[col][row];
                 if (get != null){
                     g.setColor(get.backgroundColor);
-                    g.fillRect((col * HOR_SEPARATION) + HOR_MARGIN, (row * VER_SEPARATION) + (CHAR_SIZE / 5), CHAR_WIDTH, CHAR_HEIGHT);
+                    g.fillRect((col * HOR_SEPARATION) + HOR_MARGIN, (row * VER_SEPARATION) + (CHAR_SIZE / 4), CHAR_WIDTH, CHAR_HEIGHT);
+                }
+            }
+        }
+
+        for (int col = 0; col < text.length; col++){ //Draws the text after doing the background
+            for (int row = 0; row < text[0].length; row++){
+                SpecialText get = text[col][row];
+                if (get != null){
                     g.setColor(get.foregroundColor);
                     g.drawString(get.getStr(), (col * HOR_SEPARATION) + HOR_MARGIN, (row * VER_SEPARATION) + CHAR_SIZE);
                 }
