@@ -9,8 +9,6 @@ import java.awt.*;
 /**
  */
 public class PathingObj extends Mortal {
-    int followDist = 30;
-    int attackRange = 5;
 
     public PathingObj(Room theRoom, int xStart, int yStart) {
         super.strClass = "PathingObj";
@@ -31,8 +29,6 @@ public class PathingObj extends Mortal {
         attack.setHostility(true);
         rangedInit(5, 5, 5, 25, attack);
     }
-
-    boolean shouldBeWaiting = false;
 
     @Override
     public void update() {

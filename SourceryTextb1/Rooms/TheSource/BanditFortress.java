@@ -5,6 +5,7 @@ import SourceryTextb1.GameObjects.DroppedItem;
 import SourceryTextb1.GameObjects.Item;
 import SourceryTextb1.GameObjects.Player;
 import SourceryTextb1.GameObjects.TheSource.Bandit;
+import SourceryTextb1.GameObjects.TheSource.RangedBandit;
 import SourceryTextb1.GameObjects.TheSource.Spider;
 import SourceryTextb1.GameObjects.TheSource.WeakTower;
 import SourceryTextb1.Layer;
@@ -60,10 +61,17 @@ public class BanditFortress extends Room{
             addMortal(roughBill);
         }
 
-        int[][] towerLocs = {};
+        int[][] towerLocs = {{76,15},{84,17},{76,32},{84,32},{78,43},{67,46},{23,43},{23,44},{23,48},{23,49},{63,94},
+                             {71,94},{71,97},{63,97}};
         for (int[] towerLoc : towerLocs) {
             WeakTower t = new WeakTower(org, this, towerLoc[0], towerLoc[1]);
             addMortal(t);
+        }
+
+        int[][] rangedLocs = {{58,52},{80,58},{27,61},{69,65}};
+        for (int[] rangedLoc : rangedLocs) {
+            RangedBandit ranger = new RangedBandit (this, rangedLoc[0], rangedLoc[1]);
+            addMortal(ranger);
         }
 
         Item magicTater = new Item("Magic Potato","How lucky! This eccentric\n potato can permanently\n " +
