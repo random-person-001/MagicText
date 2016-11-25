@@ -17,14 +17,14 @@ import SourceryTextb1.SpecialText;
 import java.awt.*;
 
 /**
- * A place to begin a tutorial, guiding you through stuff.
- * @author 119184
+ * A place to begin a the game, guiding you through the basics of the game and starting you off.
+ * @author jared
  *
+ * This is the starting point of gameplay.
  *
  * What Generally Happens Here:
- *
- *      > The player familiarizes with the player-controlled character and learns how to navigate a text-based environment
- *      (Hence the pile of junk)
+ *      > You familiarize yourself with your character and learn how to navigate a text-based environment
+ *      > You learn the basics of the game, like using the menu.
  *      > An innocent pot of petunias is murdered by you, only because the developers felt like playing a cruel god
  *      > Some starter spells are aquired
  */
