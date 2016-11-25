@@ -94,7 +94,7 @@ public class InnerMountains extends Room {
         highlightFlavorText(lay1);
         org.addLayer(lay1);
 
-        ititHitMeshes(lay1);
+        initHitMeshes(lay1);
         String[] solids = {";",":","^","O","o","S","R"};
         addToBaseHitMesh(base, solids);
 

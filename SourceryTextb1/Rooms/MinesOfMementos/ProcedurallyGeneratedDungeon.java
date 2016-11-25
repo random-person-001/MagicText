@@ -41,7 +41,7 @@ public class ProcedurallyGeneratedDungeon extends Room {
 
     @Override
     public void startup() {
-        //ititHitMeshes();
+        //initHitMeshes();
         playo.goTo(5, 5);
         //String[][] base = Art.strToArray(arty.largeBoat);
         //String[] solids = {"|","-","\\", "/","_","="};

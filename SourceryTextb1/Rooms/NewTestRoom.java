@@ -7,7 +7,6 @@ package SourceryTextb1.Rooms;
 
 import SourceryTextb1.Art;
 import SourceryTextb1.GameObjects.*;
-import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
 
 /**
@@ -49,7 +48,7 @@ public class NewTestRoom extends Room {
         Layer lay1 = new Layer(base, "Test", 0, 0, true, false, false);
         org.addLayer(lay1);
 
-        ititHitMeshes(lay1);
+        initHitMeshes(lay1);
         for (Player p : players) {
             p.goTo(7, 5);
         }

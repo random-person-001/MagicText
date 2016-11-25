@@ -8,7 +8,6 @@ package SourceryTextb1.Rooms.TheSource;
 import SourceryTextb1.Art;
 import SourceryTextb1.GameObjects.*;
 import SourceryTextb1.GameObjects.TheSource.Bandit;
-import SourceryTextb1.GameObjects.TheSource.Wolf;
 import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
 import SourceryTextb1.SpecialText;
@@ -213,7 +212,7 @@ public class HiddenBunker extends Room {
 
         org.addLayer(lay1);
 
-        ititHitMeshes(lay1);
+        initHitMeshes(lay1);
         String[] solids = {"#","|","-","%","8","$"};
         addToBaseHitMesh(base, solids);
 

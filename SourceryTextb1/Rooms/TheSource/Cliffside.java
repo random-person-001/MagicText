@@ -98,7 +98,7 @@ public class Cliffside extends Room {
         baseLayer.findAndReplace(new SpecialText(",",coloring.mountainPallette1), new SpecialText(",", coloring.mountainPallette2));
         org.addLayer(baseLayer);
 
-        ititHitMeshes(baseLayer);
+        initHitMeshes(baseLayer);
 
         addItems();
         String[] solids = {":", "^", "#",".","0","o"};

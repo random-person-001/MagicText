@@ -213,10 +213,10 @@ public class TutorialBasement extends Room {
         Layer lay1 = new Layer(base, "Test", 0, 0, true, false, false);
         org.addLayer(lay1);
 
-        ititHitMeshes(lay1);
+        initHitMeshes(lay1);
         String[] solids = {"|","-","0","/",",","#","%","$","'"};
         addToBaseHitMesh(base, solids);
-        
+
         addItems();
 
         //org.roomBackground = new Color(15, 60, 15);

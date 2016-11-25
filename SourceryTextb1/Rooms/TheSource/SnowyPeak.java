@@ -6,14 +6,11 @@
 package SourceryTextb1.Rooms.TheSource;
 
 import SourceryTextb1.Art;
-import SourceryTextb1.GameObjects.DroppedItem;
-import SourceryTextb1.GameObjects.Item;
 import SourceryTextb1.GameObjects.LockedDoor;
 import SourceryTextb1.GameObjects.Player;
 import SourceryTextb1.GameObjects.TheSource.PolarBear;
 import SourceryTextb1.GameObjects.TheSource.Snowflake;
 import SourceryTextb1.GameObjects.TheSource.Wolf;
-import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
 import SourceryTextb1.SpecialText;
@@ -96,7 +93,7 @@ public class SnowyPeak extends Room {
         highlightFlavorText(lay1);
         org.addLayer(lay1);
 
-        ititHitMeshes(lay1);
+        initHitMeshes(lay1);
         String[] solids = {"0","o","O","W","#","\\","-","S"};
         addToBaseHitMesh(base, solids);
 

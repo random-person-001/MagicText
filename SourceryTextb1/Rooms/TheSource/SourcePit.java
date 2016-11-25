@@ -98,7 +98,7 @@ public class SourcePit extends Room {
         highlightFlavorText(lay1);
         org.addLayer(lay1);
 
-        ititHitMeshes(lay1);
+        initHitMeshes(lay1);
         String[] solids = {".",",",":",";","^","_","#","'","D","X"};
         addToBaseHitMesh(base, solids);
 

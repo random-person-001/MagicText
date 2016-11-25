@@ -7,7 +7,6 @@ import SourceryTextb1.GameObjects.OneWayDoor;
 import SourceryTextb1.GameObjects.Player;
 import SourceryTextb1.GameObjects.TheSource.Bandit;
 import SourceryTextb1.GameObjects.TheSource.RangedBandit;
-import SourceryTextb1.GameObjects.TheSource.Spider;
 import SourceryTextb1.GameObjects.TheSource.WeakTower;
 import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
@@ -103,7 +102,7 @@ public class BanditFortress extends Room{
         highlightFlavorText(lay1);
         org.addLayer(lay1);
 
-        ititHitMeshes(lay1);
+        initHitMeshes(lay1);
 
         addItems();
         String[] solids = {":","w","m","#","/"};

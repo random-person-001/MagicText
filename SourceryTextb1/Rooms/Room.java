@@ -480,7 +480,7 @@ public class Room implements java.io.Serializable{
      * try to define their location as solid before the arrays for solid things are set up (which is what this does).
      * @param baseLayer The Layer whose size and dimension defines the room's boundaries
      */
-    protected void ititHitMeshes(Layer baseLayer) {
+    protected void initHitMeshes(Layer baseLayer) {
         baseHitMesh = new boolean[baseLayer.getRows()][baseLayer.getColumns()];
         objHitMesh = new boolean[baseLayer.getRows()][baseLayer.getColumns()];
         emptyAllHitMeshes();

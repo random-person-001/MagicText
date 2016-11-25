@@ -87,7 +87,7 @@ public class IceCaves extends Room{
 
         org.addLayer(lay1);
 
-        ititHitMeshes(lay1);
+        initHitMeshes(lay1);
         String[] solids = {"#"};
         addToBaseHitMesh(base, solids);
 

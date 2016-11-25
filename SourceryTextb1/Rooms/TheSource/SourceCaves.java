@@ -104,7 +104,7 @@ public class SourceCaves extends Room{
 
         org.addLayer(lay1);
 
-        ititHitMeshes(lay1);
+        initHitMeshes(lay1);
         String[] solids = {"#","H","-"};
         addToBaseHitMesh(base, solids);
 

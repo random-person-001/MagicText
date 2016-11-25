@@ -92,7 +92,7 @@ public class DockAndShip extends Room {
         Layer lay1 = new Layer(base, "Boat");
         org.addLayer(lay1);
 
-        ititHitMeshes(lay1);
+        initHitMeshes(lay1);
         playo.goTo(72,51);
 
         dock = Art.strToArray(arty.dock);
