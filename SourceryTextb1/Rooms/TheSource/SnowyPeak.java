@@ -21,19 +21,17 @@ import SourceryTextb1.SpecialText;
 import java.util.Random;
 
 /**
- * The inner mountains area, filled with carrots and the fork in the road between the snowy peak and the bandit fortress
+ * A Snowy Mountain Peak, where there's an entrance to a witch hut and a dangerous Polar Bear in the way of the rather pretty Ice Caves
  * @author Jared
  *
  * So Far:
- *  > You have been introduced to the backstory
- *  > You've mastered the Tutorial Basement
+ *  > You done a fair amount of zone 1
+ *  > You came through the InnerMountains
  *
  * What Generally Happens Here:
- *  > The owner of the house is sitting at the edge of the hole. He convinces you to put the world back in order.
- *  > Then you move on to the next level, where a cloned witch has an identity crisis!
+ *  > You battle a dangerous Polar Bear!
+ *  > Upon its defeat, you get the key to the Witch Hut, which you can now get to to solve a puzzle.
  */
-
-
 public class SnowyPeak extends Room {
 
     public SnowyPeak(Player player){
