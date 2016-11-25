@@ -568,18 +568,40 @@ public class ImageOrg implements java.io.Serializable {
 
     private class FrameTimer extends TimerTask {
 
+        final int TIMELIST_SIZE = 20;
+        final int TOLERANCE = 3;
         long lastRunMs = 0;
+        int[] compileTimes = new int[TIMELIST_SIZE];
+        int timeTablePointer = 0;
+
+        private float averageTimes(){
+            int total = 0;
+            for (int i : compileTimes){
+                total += i;
+            }
+            return (float)total / TIMELIST_SIZE;
+        }
 
         FrameTimer() {
             lastRunMs = System.nanoTime();
+            for (int ii = 0; ii < TIMELIST_SIZE; ii++){
+                compileTimes[ii] = 10; //Not TIMELIST_SIZE
+            }
         }
 
         public void run() {
             //printLayers();
             lastRunMs = System.currentTimeMillis();
             newSendImage();
-            if (System.currentTimeMillis() - lastRunMs > 10)
-                System.out.printf("Time to compile image (notably long): %1$dms\n", System.currentTimeMillis() - lastRunMs);
+            long diff = System.currentTimeMillis() - lastRunMs;
+            float avg = averageTimes();
+            if (diff > Math.ceil(avg) + TOLERANCE) {
+                System.out.printf("Time to compile image (notably long): %1$dms (avg %2$f)\n", System.currentTimeMillis() - lastRunMs, avg);
+            }
+
+            compileTimes[timeTablePointer] = (int)diff;
+            timeTablePointer++; //Increments pointer and loops if too large
+            if (timeTablePointer == TIMELIST_SIZE) timeTablePointer = 0;
         }
     }
 }
