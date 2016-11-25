@@ -12,7 +12,14 @@ import SourceryTextb1.SpecialText;
 import java.awt.*;
 
 /**
- * Caves!  Exciting!
+ * A Pretty Ice Cave!  Exciting!
+ *
+ * You come here via the Snowy Peak
+ *
+ * Here, you:
+ *  > Look at pretty scenery while yetis maul you
+ *  > Return with a magic poatoe and a snowball spell - if you survive
+ *
  * Created by riley on 01-Sep-2016.
  */
 public class IceCaves extends Room{
