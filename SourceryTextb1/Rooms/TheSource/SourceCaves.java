@@ -15,6 +15,12 @@ import java.awt.*;
 
 /**
  * Caves!  Exciting!
+ *
+ * You generally come here via the Cliffside
+ *
+ * Here, you:
+ *  > battle scary ghosts and spiders and bandits
+ *  > find an entrance to the Hidden Bunker of the bandits
  * Created by riley on 01-Sep-2016.
  */
 public class SourceCaves extends Room{
