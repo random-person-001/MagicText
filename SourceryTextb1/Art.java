@@ -1218,9 +1218,9 @@ public class Art implements java.io.Serializable{
                     "                                      :                         :                  /---/                                                \n" +
                     "                                     :                           :                /---/                                                 \n" +
                     "                                    :           :::::::           :        ::::::/---/:::::                                             \n" +
-                    "                                   :         :::       :::         :       :T              :                                            \n" +
+                    "                                   :         :::       :::         :       :               :                                            \n" +
                     "                                  :        ::             ::        :::::::                :                                            \n" +
-                    "                                  :       :                 :                       T      :                                            \n" +
+                    "                                  :       :                 :                              :                                            \n" +
                     "                                  :      :                   :      :::::::::::::::::::::::                                             \n" +
                     "                                  :      :                   :      :                                                                   \n" +
                     "                                  :      :                   :      :                                                                   \n" +
@@ -1235,7 +1235,7 @@ public class Art implements java.io.Serializable{
                     "                                                                              :   :                                                     \n" +
                     "                                                                       wwwww:::   :::wwwww                                              \n" +
                     "                                                                      w     w :   : w     w                                             \n" +
-                    "                                                                      w     T       T     w                                             \n" +
+                    "                                                                      w                   w                                             \n" +
                     "                                                                      w     w:     :w     w                                             \n" +
                     "         wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww   wwwwwwwwwwwwwwwwww                                    \n" +
                     "        w                                                                     :   :                 w                                   \n" +
@@ -1246,25 +1246,25 @@ public class Art implements java.io.Serializable{
                     "   w      :                                     :                             :   :                      w                              \n" +
                     "   w       ::                                 ::                              :   :                       w                             \n" +
                     "   w         :::::::::   :::::::::::::::::::::                                :   :                        w                            \n" +
-                    "   w                  :T:                                       ::::::::::::::T   :                         w                           \n" +
-                    "   w                  :T:                                      :                  :                          w                          \n" +
+                    "   w                  : :                                       ::::::::::::::    :                         w                           \n" +
+                    "   w                  : :                                      :                  :                          w                          \n" +
                     "   w            ::::::   ::::::                                :                  :                           w                         \n" +
-                    "   w           :               :                               :   T::::::::::::::                             w                        \n" +
+                    "   w           :               :                               :    ::::::::::::::                             w                        \n" +
                     "   w            ::::::   ::::::                                :   :                                            w                       \n" +
-                    "   w                  :T:                                      :   :                                             w                      \n" +
-                    "   w                  :T:                                      :   :                                              w                     \n" +
+                    "   w                  : :                                      :   :                                             w                      \n" +
+                    "   w                  : :                                      :   :                                              w                     \n" +
                     "   w          ::::::::   :::::::::::::::::::::::::::::::::::::::   :::::::::::::::::::::::                         w                    \n" +
                     "   w        ::                                                                            ::                        w                   \n" +
-                    "   w       :                                              R                                 :                       w                   \n" +
+                    "   w       :                                                                                :                       w                   \n" +
                     "   w       :                                                mmmmmmmmmmm                     :                       w                   \n" +
                     "   w      :   mmmmmmmm      mmmmmmmm     mmmmmmmm           mmmmmmmmmmm          mm          :                      w                   \n" +
                     "   w      :   mmmmmmmm      mmmmmmmm     mmmmmmmm                              mmmmmm       m:                      w                   \n" +
                     "   w      :                                                                    mmmmmm     mmm:                      w                   \n" +
                     "   w      :                                                 mmmmmmmmmmm          mm       mmm:                      w                   \n" +
-                    "   w      :     mmmmmmmm      mmmmmmmm      mmmmmmmm        mmmmmmmmmmm         R           m:                      w                   \n" +
+                    "   w      :     mmmmmmmm      mmmmmmmm      mmmmmmmm        mmmmmmmmmmm                     m:                      w                   \n" +
                     "   w      :     mmmmmmmm      mmmmmmmm      mmmmmmmm                           mm             ::::::::              w                   \n" +
                     "   w      :                                                                  mmmmmm                   ::::::::      w CCCC              \n" +
-                    "   w      :                R                                mmmmmmmmmmm      mmmmmm     mm   ::::::::         ::::::wCC  CCCC           \n" +
+                    "   w      :                                                 mmmmmmmmmmm      mmmmmm     mm   ::::::::         ::::::wCC  CCCC           \n" +
                     "   w      :       mmmmmmmm      mmmmmmmm      mmmmmmmm      mmmmmmmmmmm        mm     mmmmmm:        ::::::::               CCCCCCCC    \n" +
                     "   w       :      mmmmmmmm      mmmmmmmm      mmmmmmmm                                mmmmmm:                :::::::w  CCC         CCCCC\n" +
                     "   w       :                                                                            mm  :                       wCC   CCCC          \n" +
@@ -1297,10 +1297,10 @@ public class Art implements java.io.Serializable{
                     "                                                                 :   :                                                                  \n" +
                     "                                                                 :   :                                                                  \n" +
                     "                                                             ::::     ::::                                                              \n" +
-                    "                                                            :  T       T  :                                                             \n" +
+                    "                                                            :             :                                                             \n" +
                     "                                                           :               :                                                            \n" +
                     "                                                           :               :                                                            \n" +
-                    "                                                            :  T       T  :                                                             \n" +
+                    "                                                            :             :                                                             \n" +
                     "                                                             :::       :::                                                              \n" +
                     "                                                                :     :                                                                 \n" +
                     "                                                                 :   :                                                                  \n" +

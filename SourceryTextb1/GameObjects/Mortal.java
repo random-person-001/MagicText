@@ -1,5 +1,6 @@
 package SourceryTextb1.GameObjects;
 
+import SourceryTextb1.Layer;
 import SourceryTextb1.SpecialText;
 
 import java.awt.*;
@@ -312,6 +313,8 @@ public class Mortal extends GameObject implements java.io.Serializable{
             //System.out.println(rangedCounter);
             if (rangedCounter == 0){
                 acquireTarget(target);
+                Layer iconLayer = orgo.getLayer(layerName);
+                if (iconLayer != null) iconLayer.setPos(y, x);
             }
             if (rangedCounter == rangedPreShotDelay){
                 int damage = rangedAttack.getDamage();

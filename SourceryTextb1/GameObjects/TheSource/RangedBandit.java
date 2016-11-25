@@ -14,12 +14,13 @@ import java.awt.*;
 public class RangedBandit extends Mortal {
     public RangedBandit (Room theRoom, int startX, int startY){
         super.strClass = "RangedBandit";
-        layerName = "pathLayer";
+
         room = theRoom;
         orgo = room.org;
         x = startX;
         y = startY;
-        setHealth(20);
+        setHealth(18);
+        layerName = room.makeUniqueLayerName(strClass);
         orgo.addLayer(new Layer(new String[1][1], layerName, y, x));
         setupTimer(200);
 
@@ -35,8 +36,9 @@ public class RangedBandit extends Mortal {
 
     @Override
     public void update() {
-        Layer iconLayer = orgo.getLayer(layerName);
-        if (iconLayer != null) iconLayer.setPos(y, x);
-        orgo.editLayer("R", layerName, 0, 0);
+        //Layer iconLayer = orgo.getLayer(layerName);
+        //if (iconLayer != null) iconLayer.setPos(y, x);
+
+        setDispIcon(new SpecialText("R", new Color(255, 160, 200)));
     }
 }

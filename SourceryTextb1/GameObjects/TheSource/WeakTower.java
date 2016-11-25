@@ -7,6 +7,8 @@ import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
 import SourceryTextb1.SpecialText;
 
+import java.awt.*;
+
 
 /**
  * A dangerous bandit!
@@ -52,7 +54,7 @@ public class WeakTower extends Mortal {
         } else {
             System.out.println("WeakTower could not find a nearest good guy :(");
         }
-        orgo.editLayer("T", layerName, 0, 0);
+        setDispIcon(new SpecialText("T", new Color(255, 200, 160)));
     }
 
     @Override
