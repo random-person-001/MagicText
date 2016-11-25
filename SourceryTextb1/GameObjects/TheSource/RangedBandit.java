@@ -13,7 +13,7 @@ import java.awt.*;
  */
 public class RangedBandit extends Mortal {
     public RangedBandit (Room theRoom, int startX, int startY){
-        super.strClass = "PathingObj";
+        super.strClass = "RangedBandit";
         layerName = "pathLayer";
         room = theRoom;
         orgo = room.org;
@@ -23,9 +23,11 @@ public class RangedBandit extends Mortal {
         orgo.addLayer(new Layer(new String[1][1], layerName, y, x));
         setupTimer(200);
 
+        /*  I don't think this is needed.  --Riley
         Layer testTarget = new Layer(new String[1][1], "TestingLayer");
         testTarget.setSpecTxt(0,0,new SpecialText("+", Color.BLACK, Color.WHITE));
-
+        */
+        
         Spell attack = new Spell (room, 0, 0, 0, 5, 10, new SpecialText("|"), new SpecialText("-"), false);
         attack.setHostility(true);
         rangedInit(5, 5, 5, 25, attack);
