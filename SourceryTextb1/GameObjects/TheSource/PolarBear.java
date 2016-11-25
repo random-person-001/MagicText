@@ -23,7 +23,7 @@ public class PolarBear extends Mortal {
     private int originalY;
 
     public PolarBear(ImageOrg orga, Room theRoom, int xStart, int yStart, boolean giveKey) {
-        super.strClass = "Bandit";
+        super.strClass = "PolarBear";
         orgo = orga;
         room = theRoom;
         layerName = room.makeUniqueLayerName(super.strClass);
