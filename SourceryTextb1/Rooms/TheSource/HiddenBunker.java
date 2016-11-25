@@ -16,16 +16,18 @@ import SourceryTextb1.SpecialText;
 import java.awt.*;
 
 /**
- * The inner mountains area, filled with carrots and the fork in the road between the snowy peak and the bandit fortress
+ * A hidden bunker!  How exciting!  So many rooms hidden, and locked doors.
  * @author Jared
  *
  * So Far:
- *  > You have been introduced to the backstory
- *  > You've mastered the Tutorial Basement
+ *  > You've done most of the rooms in this zone
  *
  * What Generally Happens Here:
- *  > The owner of the house is sitting at the edge of the hole. He convinces you to put the world back in order.
- *  > Then you move on to the next level, where a cloned witch has an identity crisis!
+ *  > You get a lot of practice using the inspect key to open doors
+ *  > You get a couple of valauble items, and some evil spells
+ *  > You reveal rooms that where hidden before your eyes with inspect
+ *  > You pick amongst lots of loot to find the couple of keys to unlock doors to the rest of the level
+ *  > There's some one way doors and a water pool
  */
 
 
