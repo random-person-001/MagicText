@@ -14,7 +14,7 @@ public class Snowflake extends GameObject {
     private String layerName;
 
     public Snowflake(ImageOrg orgSet, Room creator, int setX, int setY){
-        strClass = "snowflake";
+        strClass = "Snowflake";
 
         room = creator;
         orgo = orgSet;
