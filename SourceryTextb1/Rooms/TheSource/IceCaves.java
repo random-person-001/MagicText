@@ -69,12 +69,9 @@ public class IceCaves extends Room{
 
     @Override
     public void startup(){
-        ititHitMeshes();
 
         Art arty = new Art();
         String[][] base = Art.strToArray(arty.iceCave);
-        String[] solids = {"#"};
-        addToBaseHitMesh(base, solids);
         Layer lay1 = new Layer(base, "Base");
         lay1.findAndReplace(new SpecialText("#"), new SpecialText("/", new Color(15, 119, 145), new Color(14, 113, 140))  , 25);
         lay1.findAndReplace(new SpecialText("#"), new SpecialText(" ", null                , new Color(14, 113, 140)));
@@ -89,6 +86,10 @@ public class IceCaves extends Room{
         lay1.findAndReplace(new SpecialText("4"), new SpecialText(" ", null, new Color(0, 73, 97)));
 
         org.addLayer(lay1);
+
+        ititHitMeshes(lay1);
+        String[] solids = {"#"};
+        addToBaseHitMesh(base, solids);
 
         org.roomBackground = new Color(14, 113, 140);
 

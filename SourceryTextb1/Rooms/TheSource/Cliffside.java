@@ -57,7 +57,6 @@ public class Cliffside extends Room {
      */
     @Override
     public void addItems(){
-        ititHitMeshes();
 
         int[][] locs = {{106, 115}, {14, 17}};
         for (int ii = 0 ; ii < locs[0].length ; ii++){
@@ -88,10 +87,9 @@ public class Cliffside extends Room {
 
     @Override
     public void startup() {
-        addItems();
+
         String[][] base = Art.strToArray(arty.mountainPlace);
-        String[] solids = {":", "^", "#",".","0","o"};
-        addToBaseHitMesh(base, solids);
+
         Layer baseLayer = new Layer(base, "backgronud");
         Art coloring = new Art();
         baseLayer.influenceAll(coloring.mountainPallette1);
@@ -99,6 +97,12 @@ public class Cliffside extends Room {
         baseLayer.findAndReplace(new SpecialText("o",coloring.mountainPallette1), new SpecialText("o", coloring.mountainPallette2));
         baseLayer.findAndReplace(new SpecialText(",",coloring.mountainPallette1), new SpecialText(",", coloring.mountainPallette2));
         org.addLayer(baseLayer);
+
+        ititHitMeshes(baseLayer);
+
+        addItems();
+        String[] solids = {":", "^", "#",".","0","o"};
+        addToBaseHitMesh(base, solids);
 
         genericRoomInitialize();
     }

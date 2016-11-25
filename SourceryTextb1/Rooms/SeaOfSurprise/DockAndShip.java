@@ -85,13 +85,15 @@ public class DockAndShip extends Room {
 
     @Override
     public void startup(){
-        ititHitMeshes();
-        playo.goTo(72,51);
+
         String[][] base = Art.strToArray(arty.largeBoat);
         String[] solids = {"|","-","\\", "/","_","="};
         addToBaseHitMesh(base, solids);
         Layer lay1 = new Layer(base, "Boat");
         org.addLayer(lay1);
+
+        ititHitMeshes(lay1);
+        playo.goTo(72,51);
 
         dock = Art.strToArray(arty.dock);
         String[] docksolids = {"|","-","_"};

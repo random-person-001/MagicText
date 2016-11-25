@@ -3,6 +3,7 @@ package SourceryTextb1.Rooms.TheSource;
 import SourceryTextb1.Art;
 import SourceryTextb1.GameObjects.DroppedItem;
 import SourceryTextb1.GameObjects.Item;
+import SourceryTextb1.GameObjects.OneWayDoor;
 import SourceryTextb1.GameObjects.Player;
 import SourceryTextb1.GameObjects.TheSource.Bandit;
 import SourceryTextb1.GameObjects.TheSource.RangedBandit;
@@ -52,7 +53,6 @@ public class BanditFortress extends Room{
 
     @Override
     public void addItems(){
-        ititHitMeshes();
 
         int[][] banditStations = {{35,74},{33,75},{38,75},{36,76},{61,87},{73,87},{67,94},{19,46},
                 {27,46},{42,56},{48,61},{56,56},{60,63},{74,32},{86,32},{51,25},{59,24},{62,19},{39,15}};
@@ -61,7 +61,7 @@ public class BanditFortress extends Room{
             addMortal(roughBill);
         }
 
-        int[][] towerLocs = {{76,15},{84,17},{76,32},{84,32},{78,43},{67,46},{23,43},{23,44},{23,48},{23,49},{63,94},
+        int[][] towerLocs = {{76,15},{84,17},{76,32},{84,32},{78,43},{67,46},{23,41},{23,50},{63,94},
                              {71,94},{71,97},{63,97}};
         for (int[] towerLoc : towerLocs) {
             WeakTower t = new WeakTower(org, this, towerLoc[0], towerLoc[1]);
@@ -78,17 +78,18 @@ public class BanditFortress extends Room{
                 "increase either your\n Max HP or Max Mana.\n\nNOTE: it's permanent.\nYou got this illicitly.", "item");
         DroppedItem gTater =  new DroppedItem(this, "You found a magic potato.  Cheater.", magicTater, 51, 19);
         super.addObject(gTater);
+
+        OneWayDoor bunkerEntrance = new OneWayDoor(true, 94, 60, this, org);
+        addObject(bunkerEntrance);
     }
 
     @Override
     public void startup(){
 
-        addItems();
-
         String[] rockText1 = {"You've passed safely through the walls of \n the fortress!  Unfortunately, many more\n bandits lie inside.  Be careful."};
         plantText(new Room.FlavorText(59, 82, rockText1, ""));
 
-        String[] rockText2 = {"The immense, strong walls of the bandit   \n fortress tower before you.  This may be\n a long shot, whatever you're to do here."};
+        String[] rockText2 = {"The immBanense, strong walls of the bandit   \n fortress tower before you.  This may be\n a long shot, whatever you're to do here."};
         plantText(new Room.FlavorText(67, 94, rockText2, ""));
 
         String[] byFountain = {"Phew!  So many bandits!  Thankfully, it  \n only gets worse from here on out.  The \n Bandit King lies ahead, ugly and brutal.",
@@ -97,11 +98,16 @@ public class BanditFortress extends Room{
 
         Art arty = new Art();
         String[][] base = Art.strToArray(arty.banditFortress);
-        String[] solids = {":","w","m","#","/"};
-        addToBaseHitMesh(base, solids);
+
         Layer lay1 = new Layer(base, "Base");
         highlightFlavorText(lay1);
         org.addLayer(lay1);
+
+        ititHitMeshes(lay1);
+
+        addItems();
+        String[] solids = {":","w","m","#","/"};
+        addToBaseHitMesh(base, solids);
 
         genericRoomInitialize();
     }

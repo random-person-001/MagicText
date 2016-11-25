@@ -90,12 +90,8 @@ public class SourceCaves extends Room{
     public void startup(){
         roomWidth = 420; //Accidental, I swear!
 
-        ititHitMeshes();
-
         Art arty = new Art();
         String[][] base = Art.strToArray(arty.sourceCaves);
-        String[] solids = {"#","H","-"};
-        addToBaseHitMesh(base, solids);
         Layer lay1 = new Layer(base, "Base");
         lay1.findAndReplace(new SpecialText("#"), new SpecialText(";", new Color(45,39,35), new Color(43, 38, 33)));
         lay1.findAndReplace(new SpecialText(";", new Color(45,39,35), new Color(43, 38, 33)), new SpecialText(" ", null, new Color(43, 38, 33)), 25);
@@ -107,6 +103,10 @@ public class SourceCaves extends Room{
         lay1.findAndReplace(new SpecialText("H"), new SpecialText("#", new Color(175, 175, 175), new Color(25, 25, 25)));
 
         org.addLayer(lay1);
+
+        ititHitMeshes(lay1);
+        String[] solids = {"#","H","-"};
+        addToBaseHitMesh(base, solids);
 
         Layer exitLayer = new Layer(new String[2][2], "exit", 0, 61);
         exitLayer.setSpecTxt(0, 0, new SpecialText(" ", null, new Color(100, 100, 90)));

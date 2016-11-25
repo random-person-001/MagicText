@@ -72,7 +72,7 @@ public class InnerMountains extends Room {
 
     @Override
     public void startup(){
-        ititHitMeshes();
+
 
         String[] signWords = {"Because carrots are a healthy snack,\n all carrots growing here are\n available to the general public",
                 "Eating food can restore health\n beyond your maximum health\nThis is called \"Overhealing\"",
@@ -83,8 +83,6 @@ public class InnerMountains extends Room {
 
         Art arty = new Art();
         String[][] base = Art.strToArray(arty.innerMountains);
-        String[] solids = {";",":","^","O","o","S","R"};
-        addToBaseHitMesh(base, solids);
         Layer lay1 = new Layer(base, "Test");
         Art coloring = new Art();
         lay1.influenceAll(coloring.mountainPallette1);
@@ -95,6 +93,10 @@ public class InnerMountains extends Room {
         lay1.findAndReplace(new SpecialText(".",coloring.mountainPallette1), new SpecialText(".", coloring.mountainPallette2));
         highlightFlavorText(lay1);
         org.addLayer(lay1);
+
+        ititHitMeshes(lay1);
+        String[] solids = {";",":","^","O","o","S","R"};
+        addToBaseHitMesh(base, solids);
 
         addItems();
 

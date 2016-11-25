@@ -82,16 +82,12 @@ public class SnowyPeak extends Room {
 
     @Override
     public void startup(){
-        roomWidth = 250;
-        ititHitMeshes();
-
         String[] signWords = {"WARNING:\n Polar bears ahead.\n RUN AWAY if one attacks you!","However, they are known for stealing\n keys and whatnot.\nGetting them back is not recommended though"};
         plantText(new FlavorText(114, 9, signWords,"A Sign"));
 
         Art arty = new Art();
         String[][] base = Art.strToArray(arty.snowyPeak);
-        String[] solids = {"0","o","O","W","#","\\","-","S"};
-        addToBaseHitMesh(base, solids);
+
         Layer lay1 = new Layer(base, "Test");
         Art coloring = new Art();
         lay1.influenceAll(coloring.mtnPeakPallette1);
@@ -99,6 +95,10 @@ public class SnowyPeak extends Room {
         lay1.findAndReplace(new SpecialText("-",coloring.mtnPeakPallette1), new SpecialText("-"));
         highlightFlavorText(lay1);
         org.addLayer(lay1);
+
+        ititHitMeshes(lay1);
+        String[] solids = {"0","o","O","W","#","\\","-","S"};
+        addToBaseHitMesh(base, solids);
 
         addItems();
 

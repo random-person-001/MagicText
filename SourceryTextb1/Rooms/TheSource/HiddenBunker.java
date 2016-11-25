@@ -183,7 +183,6 @@ public class HiddenBunker extends Room {
 
     @Override
     public void startup(){
-        ititHitMeshes();
 
         String[] signWords = {"ATTENTION NEW RECRUITS\n in order to ward off robbers\n from taking our stuff,",
                 "Keys and various goods are\n kept behind hidden doors.\nWithout those keys,",
@@ -192,8 +191,6 @@ public class HiddenBunker extends Room {
 
         Art arty = new Art();
         String[][] base = Art.strToArray(arty.hiddenBunker);
-        String[] solids = {"#","|","-","%","8","$"};
-        addToBaseHitMesh(base, solids);
 
         Layer lay1 = new Layer(base, "HiddenBunkerLayer");
         highlightFlavorText(lay1);
@@ -215,6 +212,10 @@ public class HiddenBunker extends Room {
         lay1.findAndReplace(new SpecialText("8"), new SpecialText("8", goldColor));
 
         org.addLayer(lay1);
+
+        ititHitMeshes(lay1);
+        String[] solids = {"#","|","-","%","8","$"};
+        addToBaseHitMesh(base, solids);
 
         int[][] layerInfo ={{5, 10, 23, 21}, {7, 15, 8, 47}, {3, 3, 12, 91},
                             {10, 18, 6, 95}, {3, 1, 12, 94}, {7, 17, 28, 92},

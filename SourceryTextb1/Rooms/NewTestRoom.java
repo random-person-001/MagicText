@@ -41,10 +41,6 @@ public class NewTestRoom extends Room {
 
     @Override
     public void startup(){
-        ititHitMeshes();
-        for (Player p : players) {
-            p.goTo(7, 5);
-        }
 
         Art arty = new Art();
         String[][] base = Art.strToArray(arty.testRoom);
@@ -52,6 +48,11 @@ public class NewTestRoom extends Room {
         addToBaseHitMesh(base, solids);
         Layer lay1 = new Layer(base, "Test", 0, 0, true, false, false);
         org.addLayer(lay1);
+
+        ititHitMeshes(lay1);
+        for (Player p : players) {
+            p.goTo(7, 5);
+        }
 
         PathingObj pathor = new PathingObj(this, 18, 7);
         addMortal(pathor);

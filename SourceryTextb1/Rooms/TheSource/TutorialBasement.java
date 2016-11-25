@@ -139,7 +139,6 @@ public class TutorialBasement extends Room {
      */
     @Override
     public void addItems(){
-        ititHitMeshes();
 
         Item dartSpell = new Item ("Astral Dart", "Arcane Spell;\nFires a small bolt of\n pure stardust.", "AstDt", "spell", false);
         dartSpell.dmgSpellDefine(2, 9, 2, "arcane", new SpecialText("|", new Color(162, 137, 225)), new SpecialText("-", new Color(162, 137, 225)));
@@ -205,17 +204,20 @@ public class TutorialBasement extends Room {
 
     @Override
     public void startup(){
-        addItems();
 
         FlavorText playerStart = new FlavorText(20, 29, "You start here!", "");
         plantText(playerStart);
 
         Art arty = new Art();
         String[][] base = Art.strToArray(arty.tutForest);
-        String[] solids = {"|","-","0","/",",","#","%","$","'"};
-        addToBaseHitMesh(base, solids);
         Layer lay1 = new Layer(base, "Test", 0, 0, true, false, false);
         org.addLayer(lay1);
+
+        ititHitMeshes(lay1);
+        String[] solids = {"|","-","0","/",",","#","%","$","'"};
+        addToBaseHitMesh(base, solids);
+        
+        addItems();
 
         //org.roomBackground = new Color(15, 60, 15);
 
