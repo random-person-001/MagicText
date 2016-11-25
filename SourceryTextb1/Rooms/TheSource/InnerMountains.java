@@ -23,8 +23,7 @@ import SourceryTextb1.SpecialText;
  *  > You've mastered the Tutorial Basement
  *
  * What Generally Happens Here:
- *  > The owner of the house is sitting at the edge of the hole. He convinces you to put the world back in order.
- *  > Then you move on to the next level, where a cloned witch has an identity crisis!
+ *  > You eat a bunch of carrots and fight some monsters.  Nothing too interesting.
  */
 
 
