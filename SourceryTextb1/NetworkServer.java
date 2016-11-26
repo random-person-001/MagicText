@@ -32,7 +32,9 @@ public class NetworkServer {
     }
 
     /**
-     * Find a client and start a task to periodically send them display data
+     * Connect to a client and start threads to periodically send them display data
+     * The method waits until a client makes a connection, and then returns after 
+     *  starting some threads to take care of IO business
      * @throws IOException when it's feeling down
      */
     public void doTimerSend() throws IOException {
@@ -42,7 +44,9 @@ public class NetworkServer {
     }
 
     /**
-     * Connect to a client who asks nicely
+     * Connect to a client who asks nicely.
+     * More specifically, accept a connection.  Note that the method will hang until either a client 
+     * makes a request, or until it times out after a long time. 
      * @throws IOException
      */
     private void connect() throws IOException {
