@@ -44,7 +44,7 @@ public class Ghost extends Mortal{
                 followDist = 35;
                 isRevealed = true;
             }
-            if (getHealth() < 30) isRevealed = true;
+            if (getHealth() < maxHealth) isRevealed = true;
             if (attackCooldown > 0) attackCooldown--;
             pathToPos(followDist, closestGoodGuy.getX(), closestGoodGuy.getY());
         }

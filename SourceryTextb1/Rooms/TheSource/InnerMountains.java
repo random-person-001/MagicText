@@ -45,6 +45,9 @@ public class InnerMountains extends Room {
                 if (play.getX() == 65){
                     setNewRoom("SnowyPeak", play, 15, 1);
                 }
+                if (play.getY() == 0){
+                    setNewRoom("BanditFortress", play, 103, 67);
+                }
             } catch (InterruptedException ignored) {}
         }
         return exitCode;

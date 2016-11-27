@@ -10,6 +10,9 @@ import SourceryTextb1.GameObjects.TheSource.RangedBandit;
 import SourceryTextb1.GameObjects.TheSource.WeakTower;
 import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
+import SourceryTextb1.SpecialText;
+
+import java.awt.*;
 
 /**
  * A Fortress!  Exciting!
@@ -33,10 +36,10 @@ public class BanditFortress extends Room{
             try {
                 Thread.sleep(20);
                 if (play.getY() >= 104){
-                    setNewRoom("Cliffside", play, 5, 5);
+                    setNewRoom("InnerMountains", play, 1, 24);
                 }
                 if (play.getX() >= 135){
-                    setNewRoom("SourceCaves", play, 1, 231);
+                    setNewRoom("HiddenBunker", play, 1, 128);
                 }
                 if (count == 0){
                     if (play.getX() == 109 && play.getY() == 10) {
@@ -100,12 +103,13 @@ public class BanditFortress extends Room{
 
         Layer lay1 = new Layer(base, "Base");
         highlightFlavorText(lay1);
+        lay1.findAndReplace(new SpecialText("C"), new SpecialText(" ", null, new Color(43, 38, 33)));
         org.addLayer(lay1);
 
         initHitMeshes(lay1);
 
         addItems();
-        String[] solids = {":","w","m","#","/"};
+        String[] solids = {":","w","m","#","/","C"};
         addToBaseHitMesh(base, solids);
 
         genericRoomInitialize();

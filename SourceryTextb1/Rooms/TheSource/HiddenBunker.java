@@ -45,6 +45,9 @@ public class HiddenBunker extends Room {
                 if (play.getY() == 36){
                     setNewRoom("SourceCaves", play, 2, 190);
                 }
+                if (play.getY() == 0){
+                    setNewRoom("BanditFortress", play, 64, 134);
+                }
             } catch (InterruptedException ignored) {}
         }
         return exitCode;
@@ -213,7 +216,8 @@ public class HiddenBunker extends Room {
         org.addLayer(lay1);
 
         initHitMeshes(lay1);
-        String[] solids = {"#","|","-","%","8","$"};
+
+        String[] solids = {"#","|","-","%","8","$","C"};
         addToBaseHitMesh(base, solids);
 
         int[][] layerInfo ={{5, 10, 23, 21}, {7, 15, 8, 47}, {3, 3, 12, 91},

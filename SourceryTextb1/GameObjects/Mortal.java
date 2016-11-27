@@ -15,7 +15,7 @@ import static java.lang.StrictMath.abs;
 public class Mortal extends GameObject implements java.io.Serializable{
     protected String layerName;
     private int health = 10;
-    int maxHealth = 50;
+    protected int maxHealth = 50;
     private int attack = 0;
     private String deathMessage = "Unknown";
     private boolean isGoodGuy = false;
@@ -101,9 +101,14 @@ public class Mortal extends GameObject implements java.io.Serializable{
         subtractHealth(amountLost, "You died.");
     }
 
+    /**
+     * Sets the mortal's health and maximum health to a specified number
+     *  Usually used for a mortal's constructor to set its max hp
+     * @param newHealth the new health of the mortal
+     */
     public void setHealth(int newHealth){
         health = newHealth;
-        if (maxHealth > newHealth) maxHealth = newHealth;
+        maxHealth = newHealth;
     }
 
     /**
