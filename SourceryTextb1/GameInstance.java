@@ -27,7 +27,7 @@ public class GameInstance {
         playerList = new ArrayList<>();
         playerList.add(protaganist);
         PlayerKeyPressListener kl = new PlayerKeyPressListener(protaganist);
-        protaganist.orgo.setOwningPlayerUsername(protaganist.getUsername());
+        protaganist.orgo.setDefaultPlayer(protaganist);
         protaganist.orgo.getWindow().txtArea.addKeyListener(kl);
         protaganist.orgo.terminateClock();
         switchZones(); // Initialize zone one to start

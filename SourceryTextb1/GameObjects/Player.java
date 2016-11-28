@@ -122,8 +122,6 @@ public class Player extends Mortal implements java.io.Serializable {
         hud = new HUD(this);
         hud.setOrg(orgo);
         setupTimer(20);
-        orgo.setDefaultPlayer(this);
-        orgo.setOwningPlayerUsername(username);
         //resumeFromSave();
     }
 

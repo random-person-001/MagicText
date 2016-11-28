@@ -38,10 +38,7 @@ public class ImageOrg implements java.io.Serializable {
 
     //FrameTimer frameTimerInstance = new FrameTimer();
     private Timer drawTimer = new Timer();
-
     final int orgSerial = (int) (Math.random() * 10000);
-    private String owningPlayerUsername = null;
-
     private Player defaultPlayer = null; // Will be changed when enter
 
     public ImageOrg(Window game) {
@@ -57,10 +54,6 @@ public class ImageOrg implements java.io.Serializable {
      */
     public void setDefaultPlayer(Player player){
         defaultPlayer = player;
-    }
-
-    public void setOwningPlayerUsername(String newOwningPlayerUsername){
-        owningPlayerUsername = newOwningPlayerUsername;
     }
 
     public ArrayList<Layer> getLayers(){
@@ -422,10 +415,10 @@ public class ImageOrg implements java.io.Serializable {
         Layer fullImage;
         try {
             if (defaultPlayer == null){
-                //System.out.println("[ImageOrg " + orgSerial + "] TopDownBuild on nobody");
+                System.out.println("[ImageOrg " + orgSerial + "] TopDownBuild on nobody");
                 fullImage = topDownBuild();
             } else {
-                //System.out.println("[ImageOrg " + orgSerial + "] TopDownBuild on " + defaultPlayer.getUsername());
+                System.out.println("[ImageOrg " + orgSerial + "] TopDownBuild on " + defaultPlayer.getUsername());
                 fullImage = topDownBuild(defaultPlayer);
             }
             window.build(fullImage);
@@ -463,6 +456,7 @@ public class ImageOrg implements java.io.Serializable {
     private Layer topDownBuild(int camX, int camY, String owningPlayerUsername, Color foregroundColor, boolean fabulousMode, int fabulousLocIndex, int fabulousColorIndex) {
         //Update layer order to minimize nonexistant layers
         doLayerOperations();
+        System.out.println("ImageOrg building image for " + owningPlayerUsername);
 
         ArrayList<Layer> allLayers = (ArrayList<Layer>)layers.clone();
         allLayers.addAll(importantLayers);
@@ -556,10 +550,6 @@ public class ImageOrg implements java.io.Serializable {
             }
         }
         System.out.print("\n");
-    }
-
-    public String getOwningPlayerUsername() {
-        return owningPlayerUsername;
     }
 
     public Player getDefaultPlayer() {
