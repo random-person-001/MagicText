@@ -40,7 +40,7 @@ class HUD implements java.io.Serializable {
     private Player player;
     private ImageOrg orgo;
     private int xBulidIndex = 0;
-    private Timer timer;
+    private transient Timer timer;
     private boolean inCmd = false;
 
     HUD(Player playerSet) {
