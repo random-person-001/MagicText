@@ -395,8 +395,8 @@ public class Art implements java.io.Serializable{
             "|                         Window Config      |\n" +
             "|                         Quit               |\n" +
             "|                                            |\n" +
-            "|    Hey Jared, do you have any idea why     |\n" +
-            "|      the Introduction doesn't work?        |\n" +
+            "|                                            |\n" +
+            "|                                            |\n" +
             "|                                            |\n" +
             "|                                            |\n" +
             "|                                            |\n" +
