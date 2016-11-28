@@ -21,7 +21,7 @@ public class Layer implements java.io.Serializable {
     private int xPos = 0;
     private int yPos = 0;
     private boolean importance = false;
-    private String owningPlayerUsername;
+    private String owningPlayerUsername = null;
 
     public String imageOrgOperation;
 
@@ -42,8 +42,10 @@ public class Layer implements java.io.Serializable {
         return owningPlayerUsername;
     }
 
-    public void setOwningPlayerUsername(String newOwningPlayerUsername) {
+    public Layer setOwningPlayerUsername(String newOwningPlayerUsername) { // It returns this Layer because of compactness in the createDuplicate method.
         owningPlayerUsername = newOwningPlayerUsername;
+        //System.out.println("Layer " + name + " relevant username changed to " + newOwningPlayerUsername);
+        return this;
     }
 
     /**
@@ -358,7 +360,7 @@ public class Layer implements java.io.Serializable {
      */
 
     public Layer createDuplicate(){
-        return new Layer(self, name, xPos, yPos, cameraObedient, opaque, importance);
+        return new Layer(self, name, xPos, yPos, cameraObedient, opaque, importance).setOwningPlayerUsername(owningPlayerUsername);
     }
 
     public String toString(){

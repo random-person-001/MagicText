@@ -415,10 +415,10 @@ public class ImageOrg implements java.io.Serializable {
         Layer fullImage;
         try {
             if (defaultPlayer == null){
-                System.out.println("[ImageOrg " + orgSerial + "] TopDownBuild on nobody");
+                //System.out.println("[ImageOrg " + orgSerial + "] TopDownBuild on nobody");
                 fullImage = topDownBuild();
             } else {
-                System.out.println("[ImageOrg " + orgSerial + "] TopDownBuild on " + defaultPlayer.getUsername());
+                //System.out.println("[ImageOrg " + orgSerial + "] TopDownBuild on " + defaultPlayer.getUsername());
                 fullImage = topDownBuild(defaultPlayer);
             }
             window.build(fullImage);
@@ -456,7 +456,6 @@ public class ImageOrg implements java.io.Serializable {
     private Layer topDownBuild(int camX, int camY, String owningPlayerUsername, Color foregroundColor, boolean fabulousMode, int fabulousLocIndex, int fabulousColorIndex) {
         //Update layer order to minimize nonexistant layers
         doLayerOperations();
-        System.out.println("ImageOrg building image for " + owningPlayerUsername);
 
         ArrayList<Layer> allLayers = (ArrayList<Layer>)layers.clone();
         allLayers.addAll(importantLayers);

@@ -295,7 +295,6 @@ public class Start {
             }
             playerList = new ArrayList<>();
             Player player = new Player(org,0);
-            org.setDefaultPlayer(player);
             player.roomName = "TutorialBasement";
             playerList.add(player);
             GameInstance master = new GameInstance(player);
