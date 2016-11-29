@@ -7,6 +7,7 @@ package SourceryTextb1.UserScreens;
 
 import SourceryTextb1.*;
 import SourceryTextb1.GameObjects.Player;
+import SourceryTextb1.GameObjects.PlayerKeyPressListener;
 import SourceryTextb1.GameObjects.TheSource.Troll;
 import SourceryTextb1.Rooms.TheSource.*;
 import SourceryTextb1.Rooms.NewTestRoom;
@@ -33,7 +34,7 @@ public class Start {
         org = new ImageOrg(game);
 
         if (doDemo) {
-            Player player = new Player(org,0);
+            Player player = new Player(null, org,0);
             player.goTo(4,4);
             playerList = new ArrayList<>();
             playerList.add(player);
@@ -293,11 +294,10 @@ public class Start {
             if (numPlayers < 1){
                 return;
             }
-            playerList = new ArrayList<>();
-            Player player = new Player(org,0);
+            Player player = new Player(null, org,0);
             player.roomName = "TutorialBasement";
-            playerList.add(player);
             GameInstance master = new GameInstance(player);
+            player.setGameInstance(master);
             new Thread(() -> master.runGame(player)).start();
 
             // For multiplayer
@@ -323,17 +323,37 @@ public class Start {
             */
         }
 
-        void buildGame(Player imported){
-            playerList = new ArrayList<>();
-            playerList.add(imported);
-            imported.orgo.setWindow(Start.game); // hopefully doesn't kill anything
+        void buildGame(GameInstance instance){
+            Player imported = instance.getProtaganist();
+            //System.out.println(instance.getProtaganist().orgo.getWindow().serial);
+            //instance.newWin();
+            //System.out.println(instance.getProtaganist().orgo.getWindow().serial);
+            if (imported.getHasLocalWindow()) {
+                System.out.println("Has local window, adding listener");
+                PlayerKeyPressListener kl = new PlayerKeyPressListener(imported);
+                game.txtArea.addKeyListener(kl);
+            }
+            imported.orgo.setWindow(game); // hopefully doesn't kill anything
             org.terminateClock();
+            //System.out.println("Waiting");
+            //try {
+            //    Thread.sleep(300);
+            //} catch (InterruptedException e) {
+            //    e.printStackTrace();
+            //}
+            //System.out.println("Done waiting");
             org = imported.orgo;
-            org.resetClock();
-            org.printLayers();
-            imported.resumeFromSave();
-            GameInstance i = new GameInstance(imported);
-            i.runGame(imported);
+            imported.orgo.resetClock();
+            //System.out.println("Waiting");
+            //try {
+            //    Thread.sleep(300);
+            //} catch (InterruptedException e) {
+            //    e.printStackTrace();
+            //}
+            //System.out.println("Done waiting");
+            imported.orgo.printLayers();
+            //imported.resumeFromSave();
+            instance.runGame(imported);
         }
 
         public void run(){

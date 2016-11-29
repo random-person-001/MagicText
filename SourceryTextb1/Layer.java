@@ -9,7 +9,7 @@ import java.awt.*;
 import java.util.Random;
 
 /**
- * A class that is essentially a convenience method for working with two dimensional String arrays.
+ * A class that is essentially a convenience method for working with two dimensional SpecialText arrays.
  *
  * @author 119184
  */
@@ -363,13 +363,27 @@ public class Layer implements java.io.Serializable {
         return new Layer(self, name, xPos, yPos, cameraObedient, opaque, importance).setOwningPlayerUsername(owningPlayerUsername);
     }
 
-    public String toString(){
+    public String getNameAndOperation(){
         String output = name;
         output += " (" + imageOrgOperation + ")";
         return output;
     }
 
     public boolean equals(Object other){ return name == ((Layer)other).getName(); }
+
+    /**
+     * @return what the Layer looks like (without background)
+     */
+    public String getStr(){
+        String toReturn = "";
+        for (SpecialText[] row : self) {
+            for (SpecialText txt: row) {
+                toReturn += txt.getStr();
+            }
+            toReturn += "\n";
+        }
+        return toReturn;
+    }
 
     public void setX(int x) {
         xPos = x;

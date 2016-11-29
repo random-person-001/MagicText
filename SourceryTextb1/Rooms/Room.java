@@ -6,16 +6,13 @@
 package SourceryTextb1.Rooms;
 
 import java.awt.*;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.*;
 import java.util.List;
 
 import SourceryTextb1.*;
 import SourceryTextb1.GameObjects.*;
-import SourceryTextb1.Window;
 
-import static java.awt.Color.*;
 import static java.lang.StrictMath.abs;
 
 /**
