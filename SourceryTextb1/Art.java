@@ -726,6 +726,13 @@ public class Art implements java.io.Serializable{
             "|                                           |\n" +
             "#-ENTER-to-continue-------------------------#\n";
 
+    public String textBoxQuestion =
+            "#-------------------------------------------#\n" +
+            "|                                           |\n" +
+            "|                                           |\n" +
+            "#-------------------------------------------#\n" +
+            "   > NO      YES                             \n";
+
 
     public String usefulTipBkgdNyay =
                     "<\\><><><><><><><><><><><><><><><><><\\>\n" +

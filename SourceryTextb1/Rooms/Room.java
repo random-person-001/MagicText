@@ -43,6 +43,7 @@ public class Room implements java.io.Serializable{
 
     protected boolean isPaused = false;
     private boolean resume = true;
+    private boolean changingAnswer = false;
 
 
     /**
@@ -626,7 +627,52 @@ public class Room implements java.io.Serializable{
         resume = false;
 
         Timer listenTick = new Timer();
-        TextBoxListener listen = new TextBoxListener();
+        TextBoxListener listen = new TextBoxListener(false);
+        listenTick.scheduleAtFixedRate(listen, 100, 100);
+    }
+
+    public void questionTextBox(String text, String usernameToShowTo, int questionID){
+        Art artsedo = new Art();
+        Layer txtBox = new Layer(Art.strToArray(artsedo.textBoxQuestion), "Dialog", 13, 0, false, true);
+
+        txtBox.setOwningPlayerUsername(usernameToShowTo);
+        txtBox.setImportance(true);
+        System.out.println(usernameToShowTo);
+
+        int line = 1;
+        int newLineAdjust = 0;
+        for (int ii = 0; ii < text.length(); ii++) {
+            if (text.charAt(ii) == '\n') {
+                line++;
+                newLineAdjust = ii + 1;
+                System.out.println("Found newline.");
+            } else if (String.valueOf(text.charAt(ii)).equals("ĩ")) {
+                txtBox.setSpecTxt(line, ii + 1 - newLineAdjust, new SpecialText("#"));
+                //, new Color(175, 215, 245), new Color(175, 215, 245)
+            } else {
+                txtBox.setStr(line, ii + 1 - newLineAdjust, String.valueOf(text.charAt(ii)));
+            }
+        }
+        //txtBox.influenceAll(new Color(183, 199, 237));
+        txtBox.setAllBg(new Color(0, 0, 15));
+
+        //setObjsPause(true);  Unnecessary feature that interferes with fabulous mode
+        org.addLayer(txtBox);
+
+        // only bind to relavent user.
+        for (Player p : players){
+            if (p.getUsername().equals(usernameToShowTo)){
+                System.out.println("Binding to " + usernameToShowTo);
+            }
+            p.frozen = true;
+            // Also make them not go over the textbox
+            org.setLayerImportance(p.getLayerName(), false);
+        }
+
+        resume = false;
+
+        Timer listenTick = new Timer();
+        TextBoxListener listen = new TextBoxListener(true);
         listenTick.scheduleAtFixedRate(listen, 100, 100);
     }
 
@@ -641,6 +687,9 @@ public class Room implements java.io.Serializable{
         if (event.getKeyCode() == KeyEvent.VK_ENTER) {
             resume = true;
         }
+        if (event.getKeyCode() == KeyEvent.VK_LEFT || event.getKeyCode() == KeyEvent.VK_RIGHT) {
+            changingAnswer = true;
+        }
     }
 
     public class FlavorText implements java.io.Serializable {
@@ -651,6 +700,8 @@ public class Room implements java.io.Serializable{
         int y;
 
         boolean isHelpful = false;
+
+        boolean isQuestion = false;
 
         public FlavorText(int xLoc, int yLoc, String[] theMessage, String theSpeaker){
             x = xLoc;
@@ -687,6 +738,15 @@ public class Room implements java.io.Serializable{
             speaker = theSpeaker;
         }
 
+        public FlavorText(String theMessage, boolean setQuestion){
+            x = 0;
+            y = 0;
+            String[] messageArray = new String[1];
+            messageArray[0] = theMessage;
+            messages = messageArray;
+            isQuestion = setQuestion;
+        }
+
         public int getX(){
             return x;
         }
@@ -711,7 +771,10 @@ public class Room implements java.io.Serializable{
         }
 
         void output(){
-            compactTextBox(messages[0], speaker, isHelpful, usernameOfPlayer);
+            if (isQuestion)
+                questionTextBox(messages[0], usernameOfPlayer, 0);
+            else
+                compactTextBox(messages[0], speaker, isHelpful, usernameOfPlayer);
         }
 
         public FlavorText setViewerUsername(String usernameOfPlayer) {
@@ -721,6 +784,9 @@ public class Room implements java.io.Serializable{
     }
 
     private class TextBoxListener extends TimerTask {
+        public boolean isQuestion = false;
+        public boolean choosingYes = false;
+
         public void run(){
             if (resume){
                 cancel();
@@ -737,6 +803,24 @@ public class Room implements java.io.Serializable{
                     messageQueue.get(0).output();
                 }
             }
+            if (changingAnswer){
+                if (isQuestion) {
+                    if (!choosingYes) {
+                        org.editLayer(" ", "Dialog", 4, 3);
+                        org.editLayer(">", "Dialog", 4, 11);
+                        choosingYes = true;
+                    } else {
+                        org.editLayer(" ", "Dialog", 4, 11);
+                        org.editLayer(">", "Dialog", 4, 3);
+                        choosingYes = false;
+                    }
+                }
+                changingAnswer = false;
+            }
+        }
+
+        public TextBoxListener (boolean stateOfBeingQuestion){
+            isQuestion = stateOfBeingQuestion;
         }
     }
 }
