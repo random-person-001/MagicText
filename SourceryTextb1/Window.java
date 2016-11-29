@@ -27,7 +27,6 @@ public class Window extends JFrame {
 
         c.add(txtArea);
         c.validate();
-        setBackground(Color.CYAN);
 
         txtArea.repaint();
     }

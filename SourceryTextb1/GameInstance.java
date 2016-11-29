@@ -41,7 +41,6 @@ public class GameInstance implements java.io.Serializable {
         System.out.println("[GameInstance] beginning game running for " + p.getUsername());
         while (!p.roomName.equals("die")) {
             System.out.println(p.getUsername() + " entering the room '" + p.roomName + "'" + " in Zone " + zoneNumber);
-            newWin();
             if (thisZoneRooms.containsKey(p.roomName)){
                 Room r = thisZoneRooms.get(p.roomName);
                 // Normal entering of a room without zone changes
@@ -115,15 +114,6 @@ public class GameInstance implements java.io.Serializable {
             p.goTo(0,0);
             System.out.println("set " + p.getUsername() + "'s zone to " + zoneNumber + " and room name to " + startingRoomName);
         }
-    }
-
-    // Testing method
-    public void newWin(){
-        Window w = new Window();
-        System.out.println("Created window w/serial " + w.serial);
-        setWindow(w);
-        w.txtArea.addKeyListener(new PlayerKeyPressListener(protaganist));
-        w.build(protaganist.orgo.topDownBuild(protaganist));
     }
 
     /**

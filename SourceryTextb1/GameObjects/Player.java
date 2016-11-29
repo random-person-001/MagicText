@@ -157,6 +157,7 @@ public class Player extends Mortal implements java.io.Serializable {
     public void resumeFromSave() {
         //orgo.getWindow().txtArea.addKeyListener(new PlayerKeyPressListener(this)); // Add key listeners.
         //orgo.resetClock();
+        hud.setupTimer();
     }
 
     public String getUsername(){

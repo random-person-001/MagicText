@@ -16,13 +16,11 @@ public class PlayerKeyPressListener extends KeyAdapter {
 
     @Override
     public void keyPressed(KeyEvent event) {
-        System.out.println(event.getKeyChar());
         player.fireKeyEvent(event);
     }
 
     @Override
     public void keyReleased(KeyEvent event) {
-        System.out.println(event.getKeyChar());
         player.fireKeyEvent(event);
     }
 }

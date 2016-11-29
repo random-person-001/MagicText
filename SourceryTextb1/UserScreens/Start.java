@@ -325,35 +325,17 @@ public class Start {
 
         void buildGame(GameInstance instance){
             Player imported = instance.getProtaganist();
-            //System.out.println(instance.getProtaganist().orgo.getWindow().serial);
-            //instance.newWin();
-            //System.out.println(instance.getProtaganist().orgo.getWindow().serial);
+            imported.orgo.setWindow(game); // hopefully doesn't kill anything
+            org.terminateClock();
+            org = imported.orgo;
+            org.resetClock();
+            imported.resumeFromSave();
             if (imported.getHasLocalWindow()) {
                 System.out.println("Has local window, adding listener");
                 PlayerKeyPressListener kl = new PlayerKeyPressListener(imported);
                 game.txtArea.addKeyListener(kl);
             }
-            imported.orgo.setWindow(game); // hopefully doesn't kill anything
-            org.terminateClock();
-            //System.out.println("Waiting");
-            //try {
-            //    Thread.sleep(300);
-            //} catch (InterruptedException e) {
-            //    e.printStackTrace();
-            //}
-            //System.out.println("Done waiting");
-            org = imported.orgo;
-            imported.orgo.resetClock();
-            //System.out.println("Waiting");
-            //try {
-            //    Thread.sleep(300);
-            //} catch (InterruptedException e) {
-            //    e.printStackTrace();
-            //}
-            //System.out.println("Done waiting");
-            imported.orgo.printLayers();
-            //imported.resumeFromSave();
-            instance.runGame(imported);
+            new Thread(() -> instance.runGame(imported)).start();
         }
 
         public void run(){
