@@ -631,7 +631,7 @@ public class Room implements java.io.Serializable{
         listenTick.scheduleAtFixedRate(listen, 100, 100);
     }
 
-    public void questionTextBox(String text, String usernameToShowTo, int questionID){
+    public void questionTextBox(String text, String usernameToShowTo, int qID){
         Art artsedo = new Art();
         Layer txtBox = new Layer(Art.strToArray(artsedo.textBoxQuestion), "Dialog", 13, 0, false, true);
 
@@ -672,8 +672,20 @@ public class Room implements java.io.Serializable{
         resume = false;
 
         Timer listenTick = new Timer();
-        TextBoxListener listen = new TextBoxListener(true);
+        TextBoxListener listen = new TextBoxListener(true, qID, usernameToShowTo);
         listenTick.scheduleAtFixedRate(listen, 100, 100);
+    }
+
+    /**
+     * Override with custom code for each room that poses a question
+     */
+    public void respondToQuestion (int qID, Player respondTo){}
+
+    private void doQuestionResponse (int qID, String userName){
+        for (Player player : players){
+            if (userName.equals(player.getUsername()))
+                respondToQuestion(qID, player);
+        }
     }
 
     public void splashMessage(String message, String speaker){
@@ -702,6 +714,7 @@ public class Room implements java.io.Serializable{
         boolean isHelpful = false;
 
         boolean isQuestion = false;
+        int questionID = 0;
 
         public FlavorText(int xLoc, int yLoc, String[] theMessage, String theSpeaker){
             x = xLoc;
@@ -738,13 +751,14 @@ public class Room implements java.io.Serializable{
             speaker = theSpeaker;
         }
 
-        public FlavorText(String theMessage, boolean setQuestion){
+        public FlavorText(String theMessage, boolean setQuestion, int qID){
             x = 0;
             y = 0;
             String[] messageArray = new String[1];
             messageArray[0] = theMessage;
             messages = messageArray;
             isQuestion = setQuestion;
+            questionID = qID;
         }
 
         public int getX(){
@@ -772,7 +786,7 @@ public class Room implements java.io.Serializable{
 
         void output(){
             if (isQuestion)
-                questionTextBox(messages[0], usernameOfPlayer, 0);
+                questionTextBox(messages[0], usernameOfPlayer, questionID);
             else
                 compactTextBox(messages[0], speaker, isHelpful, usernameOfPlayer);
         }
@@ -786,6 +800,10 @@ public class Room implements java.io.Serializable{
     private class TextBoxListener extends TimerTask {
         public boolean isQuestion = false;
         public boolean choosingYes = false;
+
+        public String playerName;
+
+        public int questionID = 0;
 
         public void run(){
             if (resume){
@@ -802,6 +820,8 @@ public class Room implements java.io.Serializable{
                 if (messageQueue.size() >= 1){
                     messageQueue.get(0).output();
                 }
+                if (isQuestion && choosingYes)
+                    doQuestionResponse(questionID, playerName);
             }
             if (changingAnswer){
                 if (isQuestion) {
@@ -821,6 +841,12 @@ public class Room implements java.io.Serializable{
 
         public TextBoxListener (boolean stateOfBeingQuestion){
             isQuestion = stateOfBeingQuestion;
+        }
+
+        public TextBoxListener (boolean stateOfBeingQuestion, int qID, String userName){
+            isQuestion = stateOfBeingQuestion;
+            questionID = qID;
+            playerName = userName;
         }
     }
 }

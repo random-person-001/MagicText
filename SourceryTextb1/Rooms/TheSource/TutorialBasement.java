@@ -57,7 +57,7 @@ public class TutorialBasement extends Room {
                 if (count == 0){
                     queueMessage(new FlavorText("You've woken up in a basement somewhere.\nWoah, there's now lots of text everywhere!", "", true).setViewerUsername(play.getUsername()));
                     queueMessage(new FlavorText("You should explore the basement!\nUse the arrow keys to navigate the place.", "").setViewerUsername(play.getUsername()));
-                    queueMessage(new FlavorText("Test question?", true).setViewerUsername(play.getUsername()));
+                    queueMessage(new FlavorText("Want some pie??", true, 0).setViewerUsername(play.getUsername()));
                     count++;
                 }
                 if (count == 1 && play.getX() == 5 && play.getY() == 23){
@@ -133,6 +133,15 @@ public class TutorialBasement extends Room {
             } catch (InterruptedException ignored) {}
         }
         return exitCode;
+    }
+
+    @Override
+    public void respondToQuestion (int qID, Player respondTo){
+        if (qID == 0){
+            Item pie = new Item ("Pie","A delicious pie for\n expressing a need to eat\n pie.", "item");
+            pie.healItemDefine(10, 10);
+            respondTo.addItem(pie);
+        }
     }
 
     /**
