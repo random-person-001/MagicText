@@ -38,8 +38,6 @@ class MainMenu {
     private int cursorY = 9;
     private int ipSetXPos = 11 + 10;
 
-    private boolean runningGame = false; // Doing game
-
     MainMenu(ImageOrg orgo) {
         org = orgo;
         window = orgo.getWindow();
@@ -62,12 +60,10 @@ class MainMenu {
 
         if (cursorY == 8) {
             starter.doIntro();
-            runningGame = true;
         }
         if (cursorY == 9) {
             System.out.println("\n\nNEW GAME!!!\n\n");
             starter.newGame(1);
-            runningGame = true;
         }
         if (cursorY == 10) {
             Layer multiplayerLayer = new Layer(Art.strToArray(new Art().multiplayerMenu), "MULTIPLAYER_MENU");
@@ -78,7 +74,7 @@ class MainMenu {
             waitAMomentAndUpdateCursor();
         }
         if (cursorY == 11 && loadGame()) {
-            runningGame = true;
+            System.out.println("Multiplayer game.  Yay.");
         }
         if (cursorY == 12) {
             System.exit(0);
@@ -157,7 +153,6 @@ class MainMenu {
             window.txtArea.removeKeyListener(keyInputter);
             System.out.println("New multiplayer game made!");
             starter.newGame(2);
-            runningGame = true;
         }
         if (cursorY == 6) { //Jumps to ip address submenu
             org.editLayer(" ", "MULTIPLAYER_MENU", cursorY, 24);
@@ -184,9 +179,7 @@ class MainMenu {
         }
         if (cursorY == 12) { //Runs client connection based on entered ip address
             System.out.println("Requesting connection to Sourcery Text server at \"" + ipString + "\"");
-            runningGame = true;
             starter.doNetworkClient(ipString); // Thread waits here until game finishes
-            runningGame = false;
         }
         if (cursorY == 13) { //Go back to multiplayer top menu.
             org.editLayer(" ", "MULTIPLAYER_MENU", cursorY, 10);
@@ -216,12 +209,10 @@ class MainMenu {
      * menu or not.
      */
     private void onEnterPressed(){
-        if (!runningGame){
-            if (menuID == TOP_MENU){
-                onEnterPressedDuringTop();
-            } else {
-                onEnterPressedDuringMultiplayer();
-            }
+        if (menuID == TOP_MENU){
+            onEnterPressedDuringTop();
+        } else {
+            onEnterPressedDuringMultiplayer();
         }
     }
 
@@ -282,26 +273,21 @@ class MainMenu {
         @Override
         public void keyPressed(KeyEvent e) {
             int input = e.getKeyCode();
-            if (!runningGame){
-                switch (input) {
-                    case KeyEvent.VK_UP:
-                        keyCode = UP;
-                        onPressArrow();
-                        break;
-                    case KeyEvent.VK_DOWN:
-                        keyCode = DOWN;
-                        onPressArrow();
-                        break;
-                    case KeyEvent.VK_ENTER:
-                        keyCode = ENTER;
-                        onEnterPressed();
-                        break;
-                    default:
-                        onGenericKeyPressed(e);
-                }
-            }
-            else {
-                System.out.println("[MainMenu] key pressed");
+            switch (input) {
+                case KeyEvent.VK_UP:
+                    keyCode = UP;
+                    onPressArrow();
+                    break;
+                case KeyEvent.VK_DOWN:
+                    keyCode = DOWN;
+                    onPressArrow();
+                    break;
+                case KeyEvent.VK_ENTER:
+                    keyCode = ENTER;
+                    onEnterPressed();
+                    break;
+                default:
+                    onGenericKeyPressed(e);
             }
             keyChar = e.getKeyChar();
         }
