@@ -4,8 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * Created by Jared on 9/25/2016.
@@ -24,6 +22,7 @@ public class ColoredTextMatrix extends JPanel {
     ColoredTextMatrix() {
         setOpaque(true);
         setFocusable(true);
+        recalculate();
         setFont(new Font("Monospaced", Font.PLAIN, CHAR_SIZE));
         addComponentListener(new ComponentResizeListener());
     }

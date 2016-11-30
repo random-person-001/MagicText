@@ -14,7 +14,7 @@ import java.util.List;
  * is happening, the other instances are SlaveGameInstances.
  * Created by riley on 02-Oct-2016, expanded significantly to accommodate zone switching on 22-Nov-2016
  */
-public class GameInstance {
+public class GameInstance implements java.io.Serializable {
     private Player protaganist;
     private List<Player> playerList;
     private int zoneNumber;
@@ -60,7 +60,7 @@ public class GameInstance {
             }
             else if (inMiddleOfSwitchingEveryonesZones){
                 // Somebody else is taking care of making our roomName and everything change, so we can sit back and relax.
-                System.out.println("Somebody else is doing zone changes -- from " + p.getUsername());
+                System.out.println("[GameInstance.runGame() for + "+p.getUsername()+"] Somebody else is doing zone changes");
                 try {
                     Thread.sleep(10);
                 } catch (InterruptedException e) {
@@ -69,7 +69,7 @@ public class GameInstance {
             }
             else {
                 // Not a normal room within this zone or a zone-changing room name
-                System.out.println("Unregistered room name! " + p.roomName + " (zone "+zoneNumber+")");
+                System.out.println("[GameInstance.runGame() for + "+p.getUsername()+"] Unregistered room name! (zone "+zoneNumber+")");
                 p.roomName = "die";
             }
         }
@@ -120,7 +120,7 @@ public class GameInstance {
      * @return a new instance of Player, all set up to go!
      */
     Player requestNewPlayer(){
-        Player noob = new Player(playerList.get(0).orgo, playerList.size());
+        Player noob = new Player(this, playerList.get(0).orgo, playerList.size());
         noob.frozen = false;
         noob.roomName = "TutorialBasement";
         playerList.add(noob);
@@ -173,5 +173,14 @@ public class GameInstance {
     private HashMap<String, Room> initializeZone5Rooms(Player player) {
         System.out.println("[GameInstance] no classes are specified yet in initializeZone5Rooms(): Bad things will happen");
         return null;
+    }
+
+    public Player getProtaganist(){
+        return protaganist;
+    }
+
+    public void setWindow(Window window) {
+        thisZoneRooms.forEach((s, room) -> room.org.setWindow(window));
+        protaganist.orgo.setWindow(window);
     }
 }

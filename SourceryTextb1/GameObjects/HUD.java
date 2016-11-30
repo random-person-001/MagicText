@@ -42,12 +42,13 @@ class HUD implements java.io.Serializable {
     private int xBulidIndex = 0;
     private transient Timer timer;
     private boolean inCmd = false;
+    private int updateInterval = 100; // ms
 
     HUD(Player playerSet) {
         player = playerSet;
         orgo = player.orgo;
         layerName = "HUD_of_" + player.getUsername();
-        setupTimer(100);
+        setupTimer();
     }
 
     void setOrg(ImageOrg newOrg){
@@ -538,6 +539,7 @@ class HUD implements java.io.Serializable {
             showResponse("Collected " + n + " items around the level!");
         } else if (command.equals("ser test") || command.contains("save")){
             showResponse("Running save dialog");
+            exitCommandLine();
             if (player.saveGame()) { // returns true on success
                 showResponse("Saved!");
             }else{
@@ -683,11 +685,11 @@ class HUD implements java.io.Serializable {
     }
 
     // Timer methods same as from GameObject.java
-    public void setupTimer(int theFrequency){
+    public void setupTimer(){
         cancelTimer();
         timer = new Timer();
-        updateTimer updateTimerInstance = new updateTimer(theFrequency);
-        timer.scheduleAtFixedRate(updateTimerInstance, theFrequency, theFrequency);
+        UpdateTimer updateTimerInstance = new UpdateTimer(updateInterval);
+        timer.scheduleAtFixedRate(updateTimerInstance, 0, updateInterval);
     }
 
     /**
@@ -713,10 +715,10 @@ class HUD implements java.io.Serializable {
         }
     }
 
-    private class updateTimer extends TimerTask implements java.io.Serializable {
+    private class UpdateTimer extends TimerTask implements java.io.Serializable {
         int freq;
 
-        updateTimer(int frequency){
+        UpdateTimer(int frequency){
             freq = frequency;
         }
 
@@ -726,10 +728,9 @@ class HUD implements java.io.Serializable {
     }
 
     private void cancelTimer(){
-        try {
+        if (timer != null) {
             timer.cancel();
             timer.purge();
         }
-        catch (NullPointerException ignore){}
     }
 }

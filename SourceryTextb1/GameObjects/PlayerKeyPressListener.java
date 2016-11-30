@@ -11,10 +11,7 @@ public class PlayerKeyPressListener extends KeyAdapter {
 
     public PlayerKeyPressListener(Player p) {
         player = p;
-    }
-
-    public String getPlayerUsername(){
-        return player.getUsername();
+        System.out.println("Key press listener instantiated for " + p.getUsername());
     }
 
     @Override

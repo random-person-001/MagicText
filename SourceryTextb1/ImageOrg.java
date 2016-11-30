@@ -17,7 +17,7 @@ import java.util.*;
  * @author 119184
  */
 public class ImageOrg implements java.io.Serializable {
-    private Window window;
+    private transient Window window;
     private ArrayList<Layer> layers = new ArrayList<>();
     private ArrayList<Layer> importantLayers = new ArrayList<>();
 
@@ -63,7 +63,12 @@ public class ImageOrg implements java.io.Serializable {
     }
 
     public void resetClock() {
-        System.out.println("[ImageOrg " + orgSerial + "] Timer restarted, layer op's: (1) " + operationList1 + " (2) " + operationList2);
+        if (window != null) {
+            System.out.println("[ImageOrg " + orgSerial + " for Window " + window.serial + "] Timer restarted, layer op's: (1) " + operationList1 + " (2) " + operationList2);
+        }
+        else {
+            System.out.println("[ImageOrg " + orgSerial + "] Timer restarted, layer op's: (1) " + operationList1 + " (2) " + operationList2);
+        }
         doLayerOperations();
         printLayers();
         if (drawTimer != null) {

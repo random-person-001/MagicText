@@ -26,6 +26,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.util.ConcurrentModificationException;
 
 /**
  * Player-controlled protagonist
@@ -33,11 +34,12 @@ import java.io.ObjectOutputStream;
  * @author Riley
  */
 public class Player extends Mortal implements java.io.Serializable {
+    private GameInstance gameInstance; // Only used for saving.
+    public String roomName = ""; // important for saving implementation.
+    private int zoneNumber = 1; // Needed for saving
     private String username = System.getProperty("user.name");
     private Inventory inv;
     private HUD hud;
-    public String roomName = ""; //Extremely important when we implement saving.
-    private int zoneNumber = 1; // Needed for saving
     private NetworkServer networkServer; // Only used in multiplayer
     private boolean hasLocalWindow;
 
@@ -104,7 +106,8 @@ public class Player extends Mortal implements java.io.Serializable {
      *
      * @param theOrg the ImageOrg(anizer)
      */
-    public Player(ImageOrg theOrg, int playerNumber) {
+    public Player(GameInstance gameInstance, ImageOrg theOrg, int playerNumber) {
+        this.gameInstance = gameInstance;
         hasLocalWindow = (playerNumber == 0);
         setHealth(baseMaxHP);
         makeGoodGuy(); // Set good-guy-ness to true.
@@ -152,13 +155,17 @@ public class Player extends Mortal implements java.io.Serializable {
      * Set things up that don't get carried between saves, ex timers
      */
     public void resumeFromSave() {
-        //orgo.getWindow().addKeyListener(playerKeyListener); // Add key listeners.
-        //setupForNewRoom();
-        orgo.resetClock();
+        //orgo.getWindow().txtArea.addKeyListener(new PlayerKeyPressListener(this)); // Add key listeners.
+        //orgo.resetClock();
+        hud.setupTimer();
     }
 
     public String getUsername(){
         return username;
+    }
+
+    public boolean getHasLocalWindow() {
+        return hasLocalWindow;
     }
 
     public void setupForNewRoom() {
@@ -373,6 +380,10 @@ public class Player extends Mortal implements java.io.Serializable {
      * @return whether the saving was successful
      */
     boolean saveGame(){
+        if (gameInstance == null){
+            System.out.println("Player.gameInstance is null; cannot save");
+            return false;
+        }
         orgo.terminateClock();
         System.out.println("Running serialization test...");
         String path;
@@ -398,15 +409,16 @@ public class Player extends Mortal implements java.io.Serializable {
             FileOutputStream fileOut =
                     new FileOutputStream(path);
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
-            out.writeObject(room.playo);
+            System.out.println("Writing, please wait...");
+            out.writeObject(gameInstance);
             out.close();
             fileOut.close();
             System.out.printf("Serialized Player data is saved in " + path);
             orgo.resetClock();
             return true;
-        }catch(IOException i)
+        }catch(IOException | ConcurrentModificationException e)
         {
-            i.printStackTrace();
+            e.printStackTrace();
             orgo.resetClock();
             return false;
         }
@@ -709,7 +721,7 @@ public class Player extends Mortal implements java.io.Serializable {
             } else {
                 keyPressed(event.getKeyChar());
             }
-            if (room != null) { // Player can be initialized for a bit before being placed into the room
+            if (room != null) { // Player is sometimes initialized for a bit before being placed into the room
                 inv.fireKeyEvent(event);
                 room.fireKeyEvent(event, getUsername());
                 hud.fireKeyEvent(event);
@@ -742,5 +754,9 @@ public class Player extends Mortal implements java.io.Serializable {
      */
     public void setZoneNumber(int newZoneNumber) {
         zoneNumber = newZoneNumber;
+    }
+
+    public void setGameInstance(GameInstance gameInstance) {
+        this.gameInstance = gameInstance;
     }
 }

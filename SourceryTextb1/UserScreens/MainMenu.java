@@ -270,9 +270,9 @@ class MainMenu {
             System.out.println("Attempting to open");
             FileInputStream fileIn = new FileInputStream(save);
             ObjectInputStream in = new ObjectInputStream(fileIn);
-            Player loadedPlayer = (Player)in.readObject();
-            System.out.println("Player read");
-            starter.buildGame(loadedPlayer);
+            GameInstance instance= (GameInstance)in.readObject();
+            System.out.println("Game instance read");
+            starter.buildGame(instance);
             System.out.println("Game built");
             in.close();
             fileIn.close();

@@ -6,8 +6,6 @@
 package SourceryTextb1;
 
 import java.awt.*;
-import java.util.List;
-import java.util.TimerTask;
 import javax.swing.*;
 
 
@@ -15,10 +13,13 @@ import javax.swing.*;
  * @author 119184
  */
 public class Window extends JFrame {
-    public ColoredTextMatrix txtArea = new ColoredTextMatrix();
+    public ColoredTextMatrix txtArea;
     private Container c = getContentPane();
+    public int serial = (int) (Math.random()*1000);
 
     public Window() {
+        setVisible(true);
+        txtArea = new ColoredTextMatrix();
         setBounds(100, 100, 412, 412);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Sourcery Text  -  an alphanumeric misadventure");
@@ -27,7 +28,7 @@ public class Window extends JFrame {
         c.add(txtArea);
         c.validate();
 
-        setVisible(true);
+        txtArea.repaint();
     }
 
     /**
@@ -73,6 +74,7 @@ public class Window extends JFrame {
                 }
             }
         }
+        //System.out.println(fullImage.getStr());
         txtArea.repaint();
     }
 }
