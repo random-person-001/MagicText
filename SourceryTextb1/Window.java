@@ -61,7 +61,7 @@ public class Window extends JFrame {
      * is a ColoredTextMatrix.
      * @param fullImage the 28x46 Layer that is the final result of rendering and should be placed onto the screen
      */
-    void build(Layer fullImage) {
+    public void build(Layer fullImage) {
         for (int row = 0; row < 28; row++) { // Used to be 20
             for (int col = 0; col < 46; col++) { // Used to be 50
                 SpecialText s  = fullImage.getSpecTxt(row, col);

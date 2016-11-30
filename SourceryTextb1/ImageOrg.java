@@ -42,10 +42,9 @@ public class ImageOrg implements java.io.Serializable {
     private Player defaultPlayer = null; // Will be changed when enter
 
     public ImageOrg(Window game) {
-        //drawTimer.scheduleAtFixedRate(frameTimerInstance, 0, 50); //20 fps lock
-        resetClock();
-        window = game;
         System.out.println("ImageOrg " + orgSerial + " instansiated");
+        window = game;
+        resetClock();
     }
 
     /**
@@ -444,14 +443,14 @@ public class ImageOrg implements java.io.Serializable {
      * Build a layer with default, normal parameters, like starting at (0,0) with no owningPlayerUsername, a white foreground, and no fabulous mode on.
      * @return what should go on the screen
      */
-    private Layer topDownBuild() {
+    public Layer topDownBuild() {
         return topDownBuild(camX, camY, null, Color.WHITE, false, 0, 0); // All the default things
     }
     /**
      * Build a layer with display parameters read from a player
      * @return what should go on the screen
      */
-    Layer topDownBuild(Player focusOn) {
+    public Layer topDownBuild(Player focusOn) {
         return topDownBuild(focusOn.getCamX(), focusOn.getCamY(), focusOn.getUsername(), focusOn.foregroundColor, focusOn.fabulousMode, focusOn.fabulousLocIndex, focusOn.fabulousColorIndex);
     }
     /**

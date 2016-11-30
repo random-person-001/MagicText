@@ -427,7 +427,9 @@ public class Player extends Mortal implements java.io.Serializable {
 
     @Override
     public void onDeath() {
-        room.compactTextBox(lastPainMessage, "An ominous voice from above", false);
+        //room.compactTextBox(lastPainMessage, "An ominous voice from above", false);
+        hud.cancelTimer();
+        inv.cancelTimer();
         dead = true;
         room.exitCode = "die";
     }

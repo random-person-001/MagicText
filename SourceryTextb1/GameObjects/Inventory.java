@@ -19,6 +19,7 @@ class Inventory implements java.io.Serializable {
 
     private Player player;
     private ImageOrg org;
+    private Timer timer = new Timer("InventoryTimer");
     //Cursor stuff
     private int cursorY = 2;
     private int cursorX = 28;
@@ -258,7 +259,6 @@ class Inventory implements java.io.Serializable {
         org.addLayer(selectorLayer);
         org.addLayer(infoLayer);
 
-        Timer timer = new Timer();
         timer.scheduleAtFixedRate(new MenuTimer(), 10 , 99);
     }
 
@@ -266,7 +266,8 @@ class Inventory implements java.io.Serializable {
      * Exits the entire inventory menu thing.
      * (Cleans up all the layers that may have been made, and then sets menuID to EXIT)
      */
-    void exitAllMenus() {
+    private void exitAllMenus() {
+        cancelTimer();
         menuID = EXIT;
         infoLayer.clear();
         org.removeLayer("top" + player.getUsername());
@@ -278,6 +279,10 @@ class Inventory implements java.io.Serializable {
         org.removeLayer("invInfo" + player.getUsername());
         org.removeLayer("selector" + player.getUsername());
         player.resetMovement();
+    }
+
+    void cancelTimer(){
+        timer.cancel();
     }
 
     /**

@@ -727,7 +727,7 @@ class HUD implements java.io.Serializable {
         }
     }
 
-    private void cancelTimer(){
+    void cancelTimer(){
         if (timer != null) {
             timer.cancel();
             timer.purge();

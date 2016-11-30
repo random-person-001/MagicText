@@ -131,53 +131,15 @@ public class Room implements java.io.Serializable{
         player.roomName = exit;
         removeMortal(player);
         players.remove(player);
+        player.frozen = true;
+        System.out.println(exit);
+        System.out.println(exitCode);
 
         if (players.size() == 0) {
             System.out.println("No more players in " + strRoomName);
             org.terminateClock();
             setObjsPause(true);
-            if (exit.equals("die")) { // in a moment, pause everything so the player sees their grave mistake
-                timedCancelAfter(3000);
-            }
         }
-        System.out.println(exit);
-        System.out.println(exitCode);
-        player.frozen = true;
-    }
-
-
-    /**
-     * After a time, all objects' timers will cancel.
-     * @param msDelay delay (ms) after which the room will generally stop
-     */
-    private void timedCancelAfter(int msDelay) {
-        System.out.println("Hi.  I'm a timer");
-        new Timer().schedule(new TimerTask() {
-            public void run() {
-                System.out.println("\n\n(Actually not) CANCELLING STUFFFFFF\n\n");
-                //for (GameObject o : objs){
-                //    removeObject(o);
-                //}
-            }
-        }, msDelay);
-    }
-
-    /**
-     * Set room variables and stuff.
-     * @param player you know what
-     */
-    protected void constructor(Player player){
-        playo = player;
-        // Make a new imageOrg for this level, looking at the same Window as the last one did
-        org = new ImageOrg(player.orgo.getWindow());
-        // So it doesn't draw over other things.  It'll be restarted as needed later.
-        org.terminateClock();
-        // Boring stuff
-        roomHeight = org.getWindow().maxH();
-        roomWidth = org.getWindow().maxW();
-
-        Layer spells = new Layer(new String[roomHeight][roomWidth], "Spellz", true);
-        org.addLayer(spells);
     }
 
     protected void setNewRoom(String newID, Player player, int playerY, int playerX){

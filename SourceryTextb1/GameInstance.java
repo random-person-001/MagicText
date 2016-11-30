@@ -6,6 +6,7 @@ import SourceryTextb1.Rooms.Room;
 import SourceryTextb1.Rooms.SeaOfSurprise.DockAndShip;
 import SourceryTextb1.Rooms.TheSource.*;
 
+import java.awt.*;
 import java.util.*;
 import java.util.List;
 
@@ -77,6 +78,15 @@ public class GameInstance implements java.io.Serializable {
         }
         p.dead = true;
         System.out.println(p.getUsername() + " has DIED.  Oh, no, not again.");
+        Layer lastSight = p.orgo.topDownBuild(p);
+        lastSight.influenceAll(Color.RED);
+        p.orgo.getWindow().build(lastSight);
+        try {
+            Thread.sleep(4000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        p.orgo.getWindow().dispose(); // Kill this window
     }
 
     /**
