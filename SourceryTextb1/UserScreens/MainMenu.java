@@ -73,8 +73,16 @@ class MainMenu {
             cursorY = 9;
             waitAMomentAndUpdateCursor();
         }
-        if (cursorY == 11 && loadGame()) {
-            System.out.println("Multiplayer game.  Yay.");
+        if (cursorY == 11) {
+            if (loadGame()){
+                System.out.println("success!");
+            }
+            else {
+                org.addLayer(new Layer(Art.strToArray(new Art().mainMenu), "MAIN_MENU"));
+                window.txtArea.addKeyListener(keyInputter); // Same as below  \/
+                menuID = TOP_MENU; // In most cases.  If going to multiplayer menu, we'll change it again.
+                waitAMomentAndUpdateCursor();
+            }
         }
         if (cursorY == 12) {
             System.exit(0);
@@ -290,6 +298,7 @@ class MainMenu {
                     onGenericKeyPressed(e);
             }
             keyChar = e.getKeyChar();
+            System.out.println(e.getKeyChar());
         }
     }
 }
