@@ -392,8 +392,8 @@ public class Art implements java.io.Serializable{
             "|   |  +--  |   |         New Game           |\n" +
             "|   |  |   / \\  |         Multiplayer        |\n" +
             "|   |  +-- | |  |         Load Game          |\n" +
-            "|                         Window Config      |\n" +
             "|                         Quit               |\n" +
+            "|                                            |\n" +
             "|                                            |\n" +
             "|                                            |\n" +
             "|                                            |\n" +

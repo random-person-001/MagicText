@@ -99,7 +99,7 @@ class MainMenu {
         switch (menuID) {
             case TOP_MENU:
                 org.editLayer(" ", "MAIN_MENU", oldCursorY, 24);
-                loopAtMenuEnd(8, 13);
+                loopAtMenuEnd(8, 12);
                 org.editLayer("*", "MAIN_MENU", cursorY, 24);
                 break;
             case MULTIPLAYER_MENU:
