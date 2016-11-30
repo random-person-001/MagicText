@@ -27,6 +27,8 @@ public class GameInstance implements java.io.Serializable {
         playerList = new ArrayList<>();
         playerList.add(protaganist);
         PlayerKeyPressListener kl = new PlayerKeyPressListener(protaganist);
+        System.out.println(protaganist.orgo == null);
+        System.out.println(protaganist.orgo.toString());
         protaganist.orgo.setDefaultPlayer(protaganist);
         protaganist.orgo.getWindow().txtArea.addKeyListener(kl);
         protaganist.orgo.terminateClock();

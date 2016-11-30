@@ -1,7 +1,9 @@
 package SourceryTextb1.UserScreens;
 
-import SourceryTextb1.*;
-import SourceryTextb1.GameObjects.Player;
+import SourceryTextb1.Art;
+import SourceryTextb1.GameInstance;
+import SourceryTextb1.ImageOrg;
+import SourceryTextb1.Layer;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -19,8 +21,7 @@ import java.io.*;
 class MainMenu {
     private ImageOrg org;
     private SourceryTextb1.Window window;
-    private Start.StartCheck starter;
-    private WindowConfig wincnfg;
+    private StartMethods starter;
     private KeyInput keyInputter;
     private int keyCode = 0;
     private final int UP = 1;
@@ -39,11 +40,10 @@ class MainMenu {
 
     private boolean finished = false;
 
-    MainMenu(ImageOrg orgo, SourceryTextb1.Window theWindow, Start.StartCheck start) {
+    MainMenu(ImageOrg orgo) {
         org = orgo;
-        window = theWindow;
-        starter = start;
-        wincnfg = new WindowConfig(orgo);
+        window = orgo.getWindow();
+        starter = new StartMethods(org);
 
         keyInputter = new KeyInput();
         window.txtArea.addKeyListener(keyInputter);
@@ -79,17 +79,6 @@ class MainMenu {
             finished = true;
         }
         if (cursorY == 12) {
-            // Do window size adjustment, interactively, and wait until it is done
-            wincnfg.config(true);
-            while (!wincnfg.doContinue) {
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        if (cursorY == 13) {
             System.exit(0);
         }
     }

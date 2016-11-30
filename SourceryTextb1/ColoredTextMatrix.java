@@ -36,6 +36,8 @@ public class ColoredTextMatrix extends JPanel {
         public void componentResized(ComponentEvent e) {
             //System.out.println("Window resized!");
             recalculate();
+            String message = "w="+getWidth()+" h="+getHeight();
+            System.out.println(message);
         }
 
         // These aren't important; it refused to run by throwing errors until I implemented these.

@@ -20,7 +20,7 @@ public class Window extends JFrame {
     public Window() {
         setVisible(true);
         txtArea = new ColoredTextMatrix();
-        setBounds(100, 100, 412, 412);
+        setBounds(100, 100, 561, 586);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Sourcery Text  -  an alphanumeric misadventure");
         setResizable(true);
