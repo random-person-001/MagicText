@@ -12,11 +12,11 @@ import SourceryTextb1.SpecialText;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.net.URI;
 
 import static java.lang.Math.abs;
 
@@ -51,11 +51,11 @@ class HUD implements java.io.Serializable {
         setupTimer();
     }
 
-    void setOrg(ImageOrg newOrg){
+    void setOrg(ImageOrg newOrg) {
         orgo = newOrg;
     }
 
-    void setLayerName(String newLayerName){
+    void setLayerName(String newLayerName) {
         layerName = newLayerName;
     }
 
@@ -130,21 +130,21 @@ class HUD implements java.io.Serializable {
                 for (int ii = 0; ii < 10; ii++) {
                     int fillPoint = (int) Math.ceil(((float) player.getHealth() / (float) player.maxHealth) * 10);
                     if (fillPoint > 10 && ii < fillPoint - 10) {
-                        putChar(new SpecialText("#", new Color (200, 255, 200), new Color(40, 40, 0)));
+                        putChar(new SpecialText("#", new Color(200, 255, 200), new Color(40, 40, 0)));
                     } else if (ii < fillPoint) {
-                        putChar(new SpecialText("+", new Color (200, 255, 200), new Color(0, 25, 0)));
+                        putChar(new SpecialText("+", new Color(200, 255, 200), new Color(0, 25, 0)));
                     } else {
                         putChar("_");
                     }
                 }
                 putChar("]");
                 if (!healthBig) putChar(" ");
-                putChar(new SpecialText("S", new Color (255, 255, 200)));
+                putChar(new SpecialText("S", new Color(255, 255, 200)));
 
                 // Spell 1
                 putChar("(");
                 for (int ii = 0; ii < 5; ii++) {
-                    if (player.swimming){
+                    if (player.swimming) {
                         putChar(new SpecialText("-", new Color(255, 50, 50), new Color(25, 10, 10)));
                     } else {
                         if (spell1Name[ii] == null)
@@ -154,7 +154,7 @@ class HUD implements java.io.Serializable {
                     }
                 }
                 putChar(")");
-                putChar(new SpecialText("D", new Color (255, 255, 200)));
+                putChar(new SpecialText("D", new Color(255, 255, 200)));
 
                 // Spell 2
                 putChar("(");
@@ -192,9 +192,9 @@ class HUD implements java.io.Serializable {
                 for (int ii = 0; ii < 10; ii++) {
                     int fillPoint = (int) Math.ceil(((float) player.mana / (float) player.maxMana) * 10);
                     if (ii < fillPoint) {
-                        putChar(new SpecialText("=", new Color (200, 200, 255), new Color(0, 0, 30)));
+                        putChar(new SpecialText("=", new Color(200, 200, 255), new Color(0, 0, 30)));
                     } else if (ii < (int) Math.ceil(((float) (2000 - player.manaWait) / 2000.0f) * 10)) {
-                        putChar(new SpecialText("_", new Color (100, 100, 125), new Color(0, 0, 15)));
+                        putChar(new SpecialText("_", new Color(100, 100, 125), new Color(0, 0, 15)));
                     } else {
                         putChar(" ");
                     }
@@ -221,7 +221,8 @@ class HUD implements java.io.Serializable {
                 }
                 cursorBlinkTimer++;
             }
-        } catch (NullPointerException ignore){}
+        } catch (NullPointerException ignore) {
+        }
     }
 
     private void keyPressed(char key) {
@@ -237,7 +238,7 @@ class HUD implements java.io.Serializable {
             }
         } else if (Character.isLetterOrDigit(key) || key == ' ' || key == '-' || key == '&') {
             command += key;
-        } else if (key == '~'){
+        } else if (key == '~') {
             command = "ghost && catch all && goto 118 4 && jumpto Cliffside";
         }
     }
@@ -302,8 +303,8 @@ class HUD implements java.io.Serializable {
      * >unghost : Re-enables players checking for walls
      * >unpause : set Player's paused to false
      * </p>
-     *     Tip: to execute a bunch of commands after each other, use '&&' in between them.  Also, you can type a command
-     *     after 'sudo' to execute that command with root privileges, however there isn't much difference anymore :(
+     * Tip: to execute a bunch of commands after each other, use '&&' in between them.  Also, you can type a command
+     * after 'sudo' to execute that command with root privileges, however there isn't much difference anymore :(
      */
 
     private void processCommand() {
@@ -321,7 +322,7 @@ class HUD implements java.io.Serializable {
                 promptChar = "#";
                 player.addPotato(1);
                 showResponse("#Authentication successful!#");
-                if (nextCommand.length() > 0 && !nextCommand.startsWith("su") && !nextCommand.contains("sudo")){ // avoid too much recursion
+                if (nextCommand.length() > 0 && !nextCommand.startsWith("su") && !nextCommand.contains("sudo")) { // avoid too much recursion
                     command = nextCommand;
                     executeNextCommand = true;
                 }
@@ -336,34 +337,34 @@ class HUD implements java.io.Serializable {
             showResponse("Authentication: what's six by nine?");
             authing = true;
             return;
-        }else if (command.contains("unfreeze")) {
+        } else if (command.contains("unfreeze")) {
             player.frozen = false;
             showResponse("Player unfrozen!");
-        }else if (command.contains("testkit")) {
+        } else if (command.contains("testkit")) {
             player.getInventory().testKit();
             showResponse("Items given!");
-        }else if (command.contains("fabulous off")) {
+        } else if (command.contains("fabulous off")) {
             player.fabulousMode = false;
             showResponse("FABULOUS POWERS DISABLED?");
-        }else if (command.contains("fabulous on")) {
+        } else if (command.contains("fabulous on")) {
             player.fabulousMode = true;
             showResponse("FABULOUS POWERS ENABLED!");
-        }else if (command.contains("unpause")) {
+        } else if (command.contains("unpause")) {
             player.setPause(false);
             showResponse("Player upaused!");
-        }else if (command.contains("unghost")) {
+        } else if (command.contains("unghost")) {
             player.isGhost = false;
             showResponse("Player now obeys walls again!");
         } else if (command.contains("ghost")) {
             player.isGhost = true;
             showResponse("Player is now a ghost.");
-        }else if (command.contains("reset") && command.contains("time")) {
+        } else if (command.contains("reset") && command.contains("time")) {
             player.restartTimer();
             showResponse("Called Player.restartTimer()");
-        }else if (command.contains("network") || command.contains("lan")) {
+        } else if (command.contains("network") || command.contains("lan")) {
             player.testSendOverNetwork();
             showResponse("Called Player.testSendOverNetwork()");
-        }else if ((command.contains("cancel") || command.contains("stop")) && (command.contains("network") || command.contains("lan"))) {
+        } else if ((command.contains("cancel") || command.contains("stop")) && (command.contains("network") || command.contains("lan"))) {
             player.cancelSendOverNetwork();
             showResponse("Called Player.cancelSendOverNetwork()");
         } else if (command.contains("addhp ") && command.length() > 6) {
@@ -375,7 +376,7 @@ class HUD implements java.io.Serializable {
             player.addPotato(amountToGive);
             showResponse(String.format("Giving the player %1$d potato(es)", amountToGive));
         } else if (command.contains("fast") || command.contains("ludicr")) {
-            player.ludicrousSpeed = ! player.ludicrousSpeed;
+            player.ludicrousSpeed = !player.ludicrousSpeed;
             showResponse("Toggling ludicrous speed to " + ((player.ludicrousSpeed) ? "on" : "off"));
         } else if (command.contains("set red ") && command.length() > 8) {
             player.screenRedness = Integer.valueOf(command.substring(8));
@@ -454,8 +455,8 @@ class HUD implements java.io.Serializable {
         } else if (command.contains("goto ")) {
             command = command.substring(5);
             boolean relative = false;
-            if (command.contains("r")){
-                command = command.substring(2+command.indexOf("r"));
+            if (command.contains("r")) {
+                command = command.substring(2 + command.indexOf("r"));
                 relative = true;
             }
             int[] p = getNParameters(command, 2);
@@ -524,11 +525,11 @@ class HUD implements java.io.Serializable {
             int startX = player.getX();
             int startY = player.getY();
             int n = 0; // counter of collected items, to show off.
-            for (int i=0; i < room.objs.size(); i++){
+            for (int i = 0; i < room.objs.size(); i++) {
                 System.out.println(i);
                 GameObject o = room.objs.get(i);
                 // TP to dropped object position, wait for it to be picked up.
-                if (o.strClass.equals("DroppedItem")){
+                if (o.strClass.equals("DroppedItem")) {
                     n++;  // we found another item!
                     System.out.println("Found dropped object");
                     player.goTo(o.getX(), o.getY());
@@ -537,39 +538,34 @@ class HUD implements java.io.Serializable {
             }
             player.goTo(startX, startY);
             showResponse("Collected " + n + " items around the level!");
-        } else if (command.equals("ser test") || command.contains("save")){
+        } else if (command.equals("ser test") || command.contains("save")) {
             showResponse("Running save dialog");
             exitCommandLine();
             if (player.saveGame()) { // returns true on success
                 showResponse("Saved!");
-            }else{
+            } else {
                 showResponse("There was a problem saving.");
             }
-        }
-        else if (command.contains("layer")){
+        } else if (command.contains("layer")) {
             orgo.printLayers();
-        }
-        else if (command.contains("switch zone")){
+        } else if (command.contains("switch zone")) {
             command = command.trim().toLowerCase();
-            if (command.length() < "switch zone".length()){
+            if (command.length() < "switch zone".length()) {
                 showResponse("Please specify the zone, within [1, 5] | x is an int"); // Math notation: [1,5] means 1 <= x <= 5
-            }
-            else {
+            } else {
                 int newZone = getParameters(command.substring("switch zone".length()))[0];
-                if (1 <= newZone && newZone <= 7){
+                if (1 <= newZone && newZone <= 7) {
                     player.roomName = "switch to zone " + newZone;
                     player.room.exitCode = "switch to zone " + newZone;
                 }
             }
-        }
-        else if (command.length() > 0){
+        } else if (command.length() > 0) {
             showResponse("Command '" + command + "' not recognised.  Check your spelling or " +
                     "request it as a new feature.");
         }
-        if (!executeNextCommand){
+        if (!executeNextCommand) {
             exitCommandLine();
-        }
-        else {
+        } else {
             command = nextCommand;
             nextCommand = "";
             processCommand();
@@ -685,7 +681,7 @@ class HUD implements java.io.Serializable {
     }
 
     // Timer methods same as from GameObject.java
-    public void setupTimer(){
+    public void setupTimer() {
         cancelTimer();
         timer = new Timer();
         UpdateTimer updateTimerInstance = new UpdateTimer(updateInterval);
@@ -695,6 +691,7 @@ class HUD implements java.io.Serializable {
     /**
      * Rather than putting its own network-incompatible key listener on a window, the player (who gets things from network)
      * calls this.
+     *
      * @param event KeyEvent that the relevant player performed
      */
     void fireKeyEvent(KeyEvent event) {
@@ -704,7 +701,7 @@ class HUD implements java.io.Serializable {
             orgo.clearLayer(layerName);
             System.out.println("Proc cmd..");
             processCommand();
-        } else if (key == KeyEvent.VK_ESCAPE){
+        } else if (key == KeyEvent.VK_ESCAPE) {
             exitCommandLine();
         } else if (consoleEntryProg >= 3 && key == KeyEvent.VK_BACK_SPACE) {
             orgo.editLayer(" ", layerName, 0, command.length() + 3);
@@ -718,16 +715,16 @@ class HUD implements java.io.Serializable {
     private class UpdateTimer extends TimerTask implements java.io.Serializable {
         int freq;
 
-        UpdateTimer(int frequency){
+        UpdateTimer(int frequency) {
             freq = frequency;
         }
 
-        public void run(){
+        public void run() {
             update();
         }
     }
 
-    void cancelTimer(){
+    void cancelTimer() {
         if (timer != null) {
             timer.cancel();
             timer.purge();

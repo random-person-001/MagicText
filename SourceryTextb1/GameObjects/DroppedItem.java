@@ -10,13 +10,13 @@ import java.util.List;
  * A dropped item that will put itself in the player's inventory when stepped on.
  * Created by riley on 13-Jun-2016.
  */
-public class  DroppedItem extends GameObject{
+public class DroppedItem extends GameObject {
     private List<String> playersWhoPickedMeUp; // their usernames
     private Item me;
     private String pickUpMessage;
     private String layerName = "Riley says that empty droppedItems should not be a thing";
 
-    public DroppedItem(Room roomy, String messageOnPickup, Item dropped, int setx, int sety){
+    public DroppedItem(Room roomy, String messageOnPickup, Item dropped, int setx, int sety) {
         strClass = "DroppedItem";
         room = roomy;
         playersWhoPickedMeUp = new ArrayList<>();
@@ -34,13 +34,13 @@ public class  DroppedItem extends GameObject{
     /**
      * Updates the layers for new players.  Only necessary to call every less often, probably.
      */
-    private void longUpdate (){
+    private void longUpdate() {
         // Ensure that we have layers for everyone
-        for (Player p : room.players){
+        for (Player p : room.players) {
             // players who haven't picked me up AND we don't have a layer for them already
-            if (!(playersWhoPickedMeUp.contains(p.getUsername()) || orgo.layerExists(layerName+p.getUsername()))){
+            if (!(playersWhoPickedMeUp.contains(p.getUsername()) || orgo.layerExists(layerName + p.getUsername()))) {
                 // should make a new layer for that specific player to see
-                Layer newLayer = new Layer(new String[1][1], layerName+p.getUsername(), y, x, true, true, false);
+                Layer newLayer = new Layer(new String[1][1], layerName + p.getUsername(), y, x, true, true, false);
                 newLayer.setStr(0, 0, "!");
                 newLayer.setOwningPlayerUsername(p.getUsername());
                 orgo.addLayer(newLayer);
@@ -49,31 +49,31 @@ public class  DroppedItem extends GameObject{
     }
 
     @Override
-    public void update(){
+    public void update() {
         for (Player player : room.players) {
             if (x == player.getX() && y == player.getY() && !playersWhoPickedMeUp.contains(player.getUsername())) {
                 player.addItem(me);
                 playersWhoPickedMeUp.add(player.getUsername());
-                orgo.removeLayer(layerName+player.getUsername());
+                orgo.removeLayer(layerName + player.getUsername());
                 if (!pickUpMessage.equals("None") || pickUpMessage.equals("")) {
                     System.out.println("Picking up: " + me.getName());
                     room.compactTextBox(pickUpMessage, "", false, player.getUsername());
                 }
             }
         }
-        if (time >= 3000){
+        if (time >= 3000) {
             longUpdate();
             resetTime();
         }
     }
 
     @Override
-    public void selfCleanup(){
+    public void selfCleanup() {
         try {
             System.out.println("DroppedItem self clean!");
             orgo.editLayer(" ", layerName, 0, 0);
             orgo.getLayers().stream().filter(l -> l.name.contains(layerName)).forEach(l -> orgo.removeLayer(layerName));
+        } catch (NullPointerException ignore) {
         }
-        catch (NullPointerException ignore){}
     }
 }

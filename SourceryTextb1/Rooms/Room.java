@@ -5,20 +5,23 @@
 */
 package SourceryTextb1.Rooms;
 
+import SourceryTextb1.Art;
+import SourceryTextb1.GameObjects.*;
+import SourceryTextb1.ImageOrg;
+import SourceryTextb1.Layer;
+import SourceryTextb1.SpecialText;
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.*;
 import java.util.List;
-
-import SourceryTextb1.*;
-import SourceryTextb1.GameObjects.*;
 
 import static java.lang.StrictMath.abs;
 
 /**
  * @author Jared
  */
-public class Room implements java.io.Serializable{
+public class Room implements java.io.Serializable {
     public ImageOrg org;
     protected Art arty = new Art();
     public List<GameObject> objs = new ArrayList<>();
@@ -45,9 +48,10 @@ public class Room implements java.io.Serializable{
 
     /**
      * Set room variables and stuff.
+     *
      * @param player you know what
      */
-    protected Room(Player player){
+    protected Room(Player player) {
         playo = player;
         // Make a new imageOrg for this level, looking at the same Window as the last one did
         org = new ImageOrg(player.orgo.getWindow());
@@ -70,10 +74,10 @@ public class Room implements java.io.Serializable{
      * @param username a String by which the desired Player identifies
      * @return the Player in the room if there is one with the username, else null
      */
-    public Player getPlayer(String username){
-        for (Player p : players){
-            if (p.getUsername().equals(username)){
-                return  p;
+    public Player getPlayer(String username) {
+        for (Player p : players) {
+            if (p.getUsername().equals(username)) {
+                return p;
             }
         }
         return null;
@@ -82,10 +86,11 @@ public class Room implements java.io.Serializable{
     /**
      * OVERRIDE THIS
      * Run a loop, doing things, until the player should go to a new room.
-     * @return the room name to go to next
+     *
      * @param play
+     * @return the room name to go to next
      */
-    protected String loop(Player play){
+    protected String loop(Player play) {
         return "You were supposed to override this, dummy.";
     }
 
@@ -106,7 +111,7 @@ public class Room implements java.io.Serializable{
     /**
      * Enter the room. IE, start loops and stuff now.
      */
-    public void enter(Player player){
+    public void enter(Player player) {
         org.resetClock();
         setObjsPause(false);
         addMortal(player);
@@ -123,8 +128,9 @@ public class Room implements java.io.Serializable{
 
     /**
      * Thing to be called at the end of enter() after things are done.  Needs work for multiplayer.
+     *
      * @param player a Player that left
-     * @param exit the String of what room they're trying to go to now.
+     * @param exit   the String of what room they're trying to go to now.
      */
     private void takeCareOfPlayerLeavingRoom(Player player, String exit) {
         exitCode = ""; // For next time!
@@ -142,7 +148,7 @@ public class Room implements java.io.Serializable{
         }
     }
 
-    protected void setNewRoom(String newID, Player player, int playerY, int playerX){
+    protected void setNewRoom(String newID, Player player, int playerY, int playerX) {
         if (exitCode.equals("")) {
             removeFromObjHitMesh(player.getX(), player.getY());
             player.goTo(playerX, playerY);
@@ -161,7 +167,7 @@ public class Room implements java.io.Serializable{
      */
     public boolean hurtSomethingAt(int x, int y, int damage, String killMessage, boolean fromPlayer) {
         for (Mortal e : enemies) {
-            if (!fromPlayer){
+            if (!fromPlayer) {
                 System.out.println("~ I see a hostile spell! ~");
                 if (e.getX() == x && e.getY() == y) {
                     e.subtractHealth(damage, killMessage);
@@ -175,7 +181,7 @@ public class Room implements java.io.Serializable{
         return false;
     }
 
-    public boolean hurtSomethingAt(int x, int y, int damage, String killMessage){
+    public boolean hurtSomethingAt(int x, int y, int damage, String killMessage) {
         return hurtSomethingAt(x, y, damage, killMessage, false);
     }
 
@@ -199,8 +205,8 @@ public class Room implements java.io.Serializable{
      * Colors all SpecialTexts in a layer that corresponds to FlavorText in room an bright aqua blue
      */
 
-    protected void highlightFlavorText(Layer roomBase){
-        for (FlavorText txt : flavorTexts){
+    protected void highlightFlavorText(Layer roomBase) {
+        for (FlavorText txt : flavorTexts) {
             SpecialText toEdit = roomBase.getSpecTxt(txt.getY() + roomBase.getY(), txt.getX() + roomBase.getX());
             toEdit = new SpecialText(toEdit.getStr(), new Color(175, 235, 255), toEdit.getBackgroundColor());
             roomBase.setSpecTxt(txt.getY() + roomBase.getY(), txt.getX() + roomBase.getX(), toEdit);
@@ -216,11 +222,11 @@ public class Room implements java.io.Serializable{
     private void flushObjListChanges() {
         flushObjListChanges(20);
     }
-    private void flushObjListChanges(int triesLeftBeforeGivingUp){
-        if (triesLeftBeforeGivingUp <= 0){
+
+    private void flushObjListChanges(int triesLeftBeforeGivingUp) {
+        if (triesLeftBeforeGivingUp <= 0) {
             return;
-        }
-        else{
+        } else {
             triesLeftBeforeGivingUp--;
         }
         try {
@@ -305,12 +311,12 @@ public class Room implements java.io.Serializable{
 
     /**
      * Makes a unique name for an object to use when making a new Layer.
-     *
+     * <p>
      * Uses both time and random numbers to create a string that is very likely to be unique.
      * (0.000001% collision chance per object)
      */
 
-    public String makeUniqueLayerName(String strClass){
+    public String makeUniqueLayerName(String strClass) {
         String output = strClass;
         output += ":";
         output += String.valueOf(Math.round(Math.random() * 1000));
@@ -415,8 +421,8 @@ public class Room implements java.io.Serializable{
                     if (picture[i][j].equals(solidChar)) {
                         addToBaseHitMesh(j + x, i + y);
                     }
+                } catch (NullPointerException | ArrayIndexOutOfBoundsException ignored) {
                 }
-                catch (NullPointerException | ArrayIndexOutOfBoundsException ignored) {}
             }
         }
     }
@@ -437,6 +443,7 @@ public class Room implements java.io.Serializable{
     /**
      * Initialize the hit meshes of the room.  Generally call this at the beginning of setting up a room, lest objects
      * try to define their location as solid before the arrays for solid things are set up (which is what this does).
+     *
      * @param baseLayer The Layer whose size and dimension defines the room's boundaries
      */
     protected void initHitMeshes(Layer baseLayer) {
@@ -445,20 +452,20 @@ public class Room implements java.io.Serializable{
         emptyAllHitMeshes();
     }
 
-    public boolean checkForWater (int x, int y){
+    public boolean checkForWater(int x, int y) {
         boolean result = false;
-        for (GameObject obj : objs){
-            if (obj.strClass.equals("WaterPool")){
-                WaterPool pool = (WaterPool)obj;
-                result |= pool.isWaterHere(x,y);
+        for (GameObject obj : objs) {
+            if (obj.strClass.equals("WaterPool")) {
+                WaterPool pool = (WaterPool) obj;
+                result |= pool.isWaterHere(x, y);
             }
         }
         return result;
     }
 
-    protected void addMagicPotato(int x, int y){
-        Item magicTater = new Item("Magic Potato","How lucky! This eccentric\n potato can permanently\n increase either your\n Max HP or Max Mana.\n\nNOTE: it's permanent!", "item");
-        DroppedItem gTater =  new DroppedItem(this, "You found a hidden magic potato!", magicTater, x, y);
+    protected void addMagicPotato(int x, int y) {
+        Item magicTater = new Item("Magic Potato", "How lucky! This eccentric\n potato can permanently\n increase either your\n Max HP or Max Mana.\n\nNOTE: it's permanent!", "item");
+        DroppedItem gTater = new DroppedItem(this, "You found a hidden magic potato!", magicTater, x, y);
         addObject(gTater);
     }
 
@@ -466,12 +473,13 @@ public class Room implements java.io.Serializable{
      * Initialize some universal layers and stuff.  Generally call this at the end of setting up a room, lest the
      * spells, player, and HUD layers be placed below others.
      */
-    protected void genericRoomInitialize() {}
+    protected void genericRoomInitialize() {
+    }
 
     /**
      * @param newPlayers a list of Players that the Room's 'players' variable should be set to
      */
-    public void setPlayers(List<Player> newPlayers){
+    public void setPlayers(List<Player> newPlayers) {
         players = newPlayers;
     }
 
@@ -485,52 +493,58 @@ public class Room implements java.io.Serializable{
     /**
      * Puts a message on the queue for display
      */
-    protected void queueMessage(FlavorText message){
+    protected void queueMessage(FlavorText message) {
         messageQueue.add(message);
         System.out.println("MESSAGE STACK SIZE: " + messageQueue.size());
-        if (messageQueue.size() == 1){
+        if (messageQueue.size() == 1) {
             messageQueue.get(0).output();
         }
     }
 
     /**
      * 'Plants' a message at a location, specified by the message given.
+     *
      * @param thing
      */
-    protected void plantText(FlavorText thing){ flavorTexts.add(thing); }
+    protected void plantText(FlavorText thing) {
+        flavorTexts.add(thing);
+    }
 
     /**
      * Mainly used by the player to check for nearby planted text
      */
-    private void queryForText(int testX, int testY, String username){
-        for (FlavorText text : flavorTexts){
+    private void queryForText(int testX, int testY, String username) {
+        for (FlavorText text : flavorTexts) {
             text.textIfCorrectSpot(testX, testY, username);
         }
     }
-    
-    public void inspectAt(int testX, int testY, Player observer){
+
+    public void inspectAt(int testX, int testY, Player observer) {
         queryForText(testX, testY, observer.getUsername());
         specialInspect(testX, testY, observer);
     }
 
     /**
      * Override for special interactions within a room
-     * @param x x loc of inspection
-     * @param y y loc of inspection
+     *
+     * @param x         x loc of inspection
+     * @param y         y loc of inspection
      * @param inspector Player who is inspecting
      */
-    protected void specialInspect(int x, int y, Player inspector) {}
-    
+    protected void specialInspect(int x, int y, Player inspector) {
+    }
+
 
     public void compactTextBox(String text, String speaker, boolean helpful) {
-        compactTextBox(text, speaker,  helpful, null);
+        compactTextBox(text, speaker, helpful, null);
     }
 
     /**
      * Draw a smallish text box at the bottom of the screen, waiting for enter to be pressed to dismiss it.
-     *  @param text    a string, with appropriate newlines, to show
-     * @param speaker Who said it?  Do tell!
-     * @param helpful whether the box ought to give instructions on its own dismissal
+     *
+     * @param text             a string, with appropriate newlines, to show
+     * @param speaker          Who said it?  Do tell!
+     * @param helpful          whether the box ought to give instructions on its own dismissal
      * @param usernameToShowTo if not null, show this to only the Player with that username.
      */
     public void compactTextBox(String text, String speaker, boolean helpful, String usernameToShowTo) {
@@ -574,8 +588,8 @@ public class Room implements java.io.Serializable{
         org.addLayer(txtBox);
 
         // only bind to relavent user.
-        for (Player p : players){
-            if (p.getUsername().equals(usernameToShowTo)){
+        for (Player p : players) {
+            if (p.getUsername().equals(usernameToShowTo)) {
                 System.out.println("Binding to " + usernameToShowTo);
             }
             p.frozen = true;
@@ -590,7 +604,7 @@ public class Room implements java.io.Serializable{
         listenTick.scheduleAtFixedRate(listen, 100, 100);
     }
 
-    public void questionTextBox(String text, String usernameToShowTo, int qID){
+    public void questionTextBox(String text, String usernameToShowTo, int qID) {
         Art artsedo = new Art();
         Layer txtBox = new Layer(Art.strToArray(artsedo.textBoxQuestion), "Dialog", 13, 0, false, true);
 
@@ -619,8 +633,8 @@ public class Room implements java.io.Serializable{
         org.addLayer(txtBox);
 
         // only bind to relavent user.
-        for (Player p : players){
-            if (p.getUsername().equals(usernameToShowTo)){
+        for (Player p : players) {
+            if (p.getUsername().equals(usernameToShowTo)) {
                 System.out.println("Binding to " + usernameToShowTo);
             }
             p.frozen = true;
@@ -638,16 +652,17 @@ public class Room implements java.io.Serializable{
     /**
      * Override with custom code for each room that poses a question
      */
-    public void respondToQuestion (int qID, Player respondTo){}
+    public void respondToQuestion(int qID, Player respondTo) {
+    }
 
-    private void doQuestionResponse (int qID, String userName){
-        for (Player player : players){
+    private void doQuestionResponse(int qID, String userName) {
+        for (Player player : players) {
             if (userName.equals(player.getUsername()))
                 respondToQuestion(qID, player);
         }
     }
 
-    public void splashMessage(String message, String speaker){
+    public void splashMessage(String message, String speaker) {
         queueMessage(new FlavorText(message, speaker));
     }
 
@@ -666,7 +681,7 @@ public class Room implements java.io.Serializable{
     public class FlavorText implements java.io.Serializable {
         String usernameOfPlayer;
         String[] messages = {""};
-        String speaker =  "";
+        String speaker = "";
         int x;
         int y;
 
@@ -675,14 +690,14 @@ public class Room implements java.io.Serializable{
         boolean isQuestion = false;
         int questionID = 0;
 
-        public FlavorText(int xLoc, int yLoc, String[] theMessage, String theSpeaker){
+        public FlavorText(int xLoc, int yLoc, String[] theMessage, String theSpeaker) {
             x = xLoc;
             y = yLoc;
             messages = theMessage;
             speaker = theSpeaker;
         }
 
-        public FlavorText(int xLoc, int yLoc, String theMessage, String theSpeaker){
+        public FlavorText(int xLoc, int yLoc, String theMessage, String theSpeaker) {
             x = xLoc;
             y = yLoc;
             String[] messageArray = new String[1];
@@ -691,7 +706,7 @@ public class Room implements java.io.Serializable{
             speaker = theSpeaker;
         }
 
-        public FlavorText(String theMessage, String theSpeaker, boolean helpful){
+        public FlavorText(String theMessage, String theSpeaker, boolean helpful) {
             x = 0;
             y = 0;
             String[] messageArray = new String[1];
@@ -701,7 +716,7 @@ public class Room implements java.io.Serializable{
             isHelpful = helpful;
         }
 
-        public FlavorText(String theMessage, String theSpeaker){
+        public FlavorText(String theMessage, String theSpeaker) {
             x = 0;
             y = 0;
             String[] messageArray = new String[1];
@@ -710,7 +725,7 @@ public class Room implements java.io.Serializable{
             speaker = theSpeaker;
         }
 
-        public FlavorText(String theMessage, boolean setQuestion, int qID){
+        public FlavorText(String theMessage, boolean setQuestion, int qID) {
             x = 0;
             y = 0;
             String[] messageArray = new String[1];
@@ -720,21 +735,21 @@ public class Room implements java.io.Serializable{
             questionID = qID;
         }
 
-        public int getX(){
+        public int getX() {
             return x;
         }
 
-        public int getY(){
+        public int getY() {
             return y;
         }
 
-        void textIfCorrectSpot(int testX, int testY, String username){
-            if (abs(x - testX) + abs(y - testY) <= 1){
+        void textIfCorrectSpot(int testX, int testY, String username) {
+            if (abs(x - testX) + abs(y - testY) <= 1) {
                 doMessage(username);
             }
         }
 
-        void doMessage(String username){
+        void doMessage(String username) {
             for (String message : messages) {
                 //System.out.println("STACKING FOLLOWING MESSAGE:\n " + message);
                 FlavorText panel = new FlavorText(x, y, message, speaker);
@@ -743,7 +758,7 @@ public class Room implements java.io.Serializable{
             }
         }
 
-        void output(){
+        void output() {
             if (isQuestion)
                 questionTextBox(messages[0], usernameOfPlayer, questionID);
             else
@@ -764,25 +779,25 @@ public class Room implements java.io.Serializable{
 
         public int questionID = 0;
 
-        public void run(){
-            if (resume){
+        public void run() {
+            if (resume) {
                 cancel();
                 //setObjsPause(false);
                 org.removeLayer("Dialog");
-                for (Player p : players){ // Remake the player layers important.
+                for (Player p : players) { // Remake the player layers important.
                     org.setLayerImportance(p.getLayerName(), true);
                     p.frozen = false;
                 }
-                if (messageQueue.size() > 0){
+                if (messageQueue.size() > 0) {
                     messageQueue.remove(messageQueue.get(0));
                 }
-                if (messageQueue.size() >= 1){
+                if (messageQueue.size() >= 1) {
                     messageQueue.get(0).output();
                 }
                 if (isQuestion && choosingYes)
                     doQuestionResponse(questionID, playerName);
             }
-            if (changingAnswer){
+            if (changingAnswer) {
                 if (isQuestion) {
                     if (!choosingYes) {
                         org.editLayer(" ", "Dialog", 4, 3);
@@ -798,11 +813,11 @@ public class Room implements java.io.Serializable{
             }
         }
 
-        public TextBoxListener (boolean stateOfBeingQuestion){
+        public TextBoxListener(boolean stateOfBeingQuestion) {
             isQuestion = stateOfBeingQuestion;
         }
 
-        public TextBoxListener (boolean stateOfBeingQuestion, int qID, String userName){
+        public TextBoxListener(boolean stateOfBeingQuestion, int qID, String userName) {
             isQuestion = stateOfBeingQuestion;
             questionID = qID;
             playerName = userName;

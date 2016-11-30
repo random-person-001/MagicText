@@ -16,30 +16,30 @@ import java.io.IOException;
 public class StartMethods {
     private ImageOrg org;
 
-    public StartMethods (ImageOrg org){
+    public StartMethods(ImageOrg org) {
         this.org = org;
     }
 
-    void newGame(int numPlayers){
+    void newGame(int numPlayers) {
         System.out.println("[-]\n\\/\\/\\/\\/\\/\\/\\\n  CREATING NEW GAME\n\\/\\/\\/\\/\\/\\/\\\n");
-        if (numPlayers < 1){
+        if (numPlayers < 1) {
             return;
         }
-        Player player = new Player(null, org,0);
+        Player player = new Player(null, org, 0);
         player.roomName = "TutorialBasement";
         GameInstance master = new GameInstance(player);
         player.setGameInstance(master);
         new Thread(() -> master.runGame(player)).start();
 
         // For multiplayer
-        for (int i=1; i<numPlayers; i++) {
-            System.out.println("Adding multiplayer player #"+i);
+        for (int i = 1; i < numPlayers; i++) {
+            System.out.println("Adding multiplayer player #" + i);
             SlaveGameInstance instance = new SlaveGameInstance(master);
             new Thread(instance::runGameAsSlave).start();
         }
     }
 
-    void buildGame(GameInstance instance){
+    void buildGame(GameInstance instance) {
         Player imported = instance.getProtaganist();
         imported.orgo.setWindow(org.getWindow()); // hopefully doesn't kill anything
         org.terminateClock();
@@ -55,7 +55,7 @@ public class StartMethods {
         new Thread(() -> instance.runGame(imported)).start();
     }
 
-    void doIntro(){
+    void doIntro() {
         System.out.println("Starting intro...");
         (new Thread() {
             public void run() {
@@ -80,7 +80,7 @@ public class StartMethods {
         }
     }
 
-    private void intro() throws InterruptedException{
+    private void intro() throws InterruptedException {
         Window window = org.getWindow();
         window.txtArea.setBackground(Color.BLACK);
         Layer lay1 = new Layer(new String[23][46], "Intro1");
@@ -237,9 +237,9 @@ public class StartMethods {
         window.txtArea.setBackground(Color.BLACK);
     }
 
-    private void introText(String text, int offset, int line){
+    private void introText(String text, int offset, int line) {
         System.out.println("Writing: " + text);
-        for (int ii = 0; ii < text.length(); ii++){
+        for (int ii = 0; ii < text.length(); ii++) {
             org.getLayer("Intro3").setStr(line, ii + offset, String.valueOf(text.charAt(ii)));
         }
     }

@@ -10,7 +10,7 @@ import java.awt.*;
 /**
  * Created by Jared on 22-Nov-16.
  */
-public class Ghost extends Mortal{
+public class Ghost extends Mortal {
     private int followDist = 1;
 
     private boolean isRevealed = false;
@@ -55,7 +55,7 @@ public class Ghost extends Mortal{
     }
 
     @Override
-    public void onDeath(){
+    public void onDeath() {
         orgo.removeLayer(layerName);
     }
 }

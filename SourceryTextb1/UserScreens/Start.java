@@ -23,14 +23,15 @@ public class Start {
         ImageOrg org = new ImageOrg(game);
 
         if (doDemo) {
-            Player player = new Player(null, org,0);
-            player.goTo(4,4);
+            Player player = new Player(null, org, 0);
+            player.goTo(4, 4);
             NewTestRoom rooma = new NewTestRoom(player);
             org.removeAllButPlayer();
             player.setRoom(rooma);
             rooma.startup();
             rooma.enter(player);
-            while (rooma.enemies.size() > 0){}
+            while (rooma.enemies.size() > 0) {
+            }
         } else {
             while (true) {
                 // Cleanup, possibly from last game

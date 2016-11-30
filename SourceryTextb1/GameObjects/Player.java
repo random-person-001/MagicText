@@ -17,10 +17,9 @@ package SourceryTextb1.GameObjects;
 import SourceryTextb1.*;
 import SourceryTextb1.Rooms.Room;
 
-import javax.swing.JFileChooser;
+import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import java.awt.Color;
-import java.awt.Component;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -143,7 +142,7 @@ public class Player extends Mortal implements java.io.Serializable {
     /**
      * Attempt to cancel the sending of the display data over network. (stops an earlier instance of calling testSendOverNetwork())
      */
-    void cancelSendOverNetwork(){
+    void cancelSendOverNetwork() {
         try {
             networkServer.disconnect();
         } catch (IOException e) {
@@ -160,7 +159,7 @@ public class Player extends Mortal implements java.io.Serializable {
         hud.setupTimer();
     }
 
-    public String getUsername(){
+    public String getUsername() {
         return username;
     }
 
@@ -195,7 +194,7 @@ public class Player extends Mortal implements java.io.Serializable {
         addPlayerLayers();
     }
 
-    public void restartTimer(){
+    public void restartTimer() {
         setupTimer(20);
     }
 
@@ -247,7 +246,8 @@ public class Player extends Mortal implements java.io.Serializable {
                 } else if (room != null) {
                     orgo.editLayer(" ", layerName, y, x);
                 }
-            } catch (IndexOutOfBoundsException | NullPointerException ignored) {}
+            } catch (IndexOutOfBoundsException | NullPointerException ignored) {
+            }
         } else {
             if (shouldNewInv) {
                 System.out.println("Opening inventory");
@@ -271,23 +271,23 @@ public class Player extends Mortal implements java.io.Serializable {
         }
     }
 
-    private void doMovement(){
+    private void doMovement() {
         int movespeed = 5;
         boolean spendingManaToSprint = false;
-        if (swimming)       movespeed = 7;
-        if (isGhost)        movespeed = 1;
+        if (swimming) movespeed = 7;
+        if (isGhost) movespeed = 1;
         if (ludicrousSpeed) movespeed = 0;
-        if (spacePressed && mana > 0){
+        if (spacePressed && mana > 0) {
             if (swimming) {
                 movespeed -= 3;
             } else {
-                movespeed -= (int)sprintVelocity;
+                movespeed -= (int) sprintVelocity;
             }
             spendingManaToSprint = true;
         } else {
             sprintVelocity = 1;
         }
-        if (slowedTimer > 0){
+        if (slowedTimer > 0) {
             movespeed *= 2;
         }
         if (movecount == 0) {
@@ -329,7 +329,7 @@ public class Player extends Mortal implements java.io.Serializable {
     /**
      * Simply put, it resets the button press booleans so that the player doesn't confusingly drift around without input
      */
-    public void resetMovement(){
+    public void resetMovement() {
         upPressed = false;
         downPressed = false;
         leftPressed = false;
@@ -338,9 +338,10 @@ public class Player extends Mortal implements java.io.Serializable {
     }
 
     private boolean hadLocked = false;
+
     private void aimDispUpdate() {
-        if (orientationLocked && !hadLocked){
-            switch (orientation){
+        if (orientationLocked && !hadLocked) {
+            switch (orientation) {
                 case UP:
                     orgo.editLayer("+", layerName, 0, 1);
                     break;
@@ -355,7 +356,7 @@ public class Player extends Mortal implements java.io.Serializable {
                     break;
             }
             hadLocked = true;
-        } else if (!orientationLocked && hadLocked){
+        } else if (!orientationLocked && hadLocked) {
             orgo.editLayer(" ", layerName, 1, 0);
             orgo.editLayer(" ", layerName, 0, 1);
             orgo.editLayer(" ", layerName, 1, 2);
@@ -377,10 +378,11 @@ public class Player extends Mortal implements java.io.Serializable {
 
     /**
      * Writes a .sav file (of the serialized Player) to a user-defined directory
+     *
      * @return whether the saving was successful
      */
-    boolean saveGame(){
-        if (gameInstance == null){
+    boolean saveGame() {
+        if (gameInstance == null) {
             System.out.println("Player.gameInstance is null; cannot save");
             return false;
         }
@@ -392,10 +394,11 @@ public class Player extends Mortal implements java.io.Serializable {
         FileNameExtensionFilter filter = new FileNameExtensionFilter(
                 "Sourcery Text Saves", "sav");
         chooser.setFileFilter(filter);
-        int returnVal = chooser.showSaveDialog(new Component(){});
+        int returnVal = chooser.showSaveDialog(new Component() {
+        });
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             path = chooser.getSelectedFile().getPath();
-            if (!path.endsWith(".sav")){ // Add .sav to file if user didn't.
+            if (!path.endsWith(".sav")) { // Add .sav to file if user didn't.
                 path += ".sav";
             }
             System.out.println("You chose to save the file to: " + path);
@@ -404,8 +407,7 @@ public class Player extends Mortal implements java.io.Serializable {
             return false;
         }
 
-        try
-        {
+        try {
             FileOutputStream fileOut =
                     new FileOutputStream(path);
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
@@ -416,8 +418,7 @@ public class Player extends Mortal implements java.io.Serializable {
             System.out.printf("Serialized Player data is saved in " + path);
             orgo.resetClock();
             return true;
-        }catch(IOException | ConcurrentModificationException e)
-        {
+        } catch (IOException | ConcurrentModificationException e) {
             e.printStackTrace();
             orgo.resetClock();
             return false;
@@ -437,10 +438,10 @@ public class Player extends Mortal implements java.io.Serializable {
     /**
      * Increment variables relating to fab mode if needed.
      */
-    private void updateFabulousness(){
-        if (fabulousMode){
+    private void updateFabulousness() {
+        if (fabulousMode) {
             fabulousLocIndex++;
-            if (fabulousLocIndex > 75){
+            if (fabulousLocIndex > 75) {
                 fabulousLocIndex = 1;
                 fabulousColorIndex++;
                 if (fabulousColorIndex >= 7) fabulousColorIndex = 0;
@@ -452,14 +453,14 @@ public class Player extends Mortal implements java.io.Serializable {
      * Update the Player symbol and all the graphic things
      */
     private void graphicUpdate() {
-        if (screenRedness > 0 || screenYellowness > 0){
-            if (screenRedness > 0) screenRedness --;
+        if (screenRedness > 0 || screenYellowness > 0) {
+            if (screenRedness > 0) screenRedness--;
             //This means that higher levels of redness depletes faster
             if (screenRedness > 200) screenRedness--;
             if (screenRedness > 100) screenRedness--;
             if (screenYellowness > 0) screenYellowness--;
             int opposite = 255 - screenRedness;
-            int yellowNumber = (int)(opposite * (1-((float)screenYellowness/100)));
+            int yellowNumber = (int) (opposite * (1 - ((float) screenYellowness / 100)));
             //System.out.printf("Screen yellow factor: %1$d, (%2$d --> %3$d)\n", screenYellowness, opposite, yellowNumber);
 
             foregroundColor = new Color(255, opposite, yellowNumber);
@@ -467,32 +468,35 @@ public class Player extends Mortal implements java.io.Serializable {
 
         SpecialText playerIcon;
         if (!swimming)
-            playerIcon = new SpecialText("@",new Color (150, 255, 100));
+            playerIcon = new SpecialText("@", new Color(150, 255, 100));
         else {
             if (waterEntry == 2)
                 playerIcon = new SpecialText("u", new Color(255, 255, 255), new Color(70, 70, 200));
-            else if (waterEntry == 1){
+            else if (waterEntry == 1) {
                 playerIcon = new SpecialText("Y", new Color(255, 255, 255), new Color(70, 70, 200));
-            }
-            else
+            } else
                 playerIcon = new SpecialText("@", new Color(100, 150, 255), new Color(65, 65, 200));
         }
         orgo.editLayer(playerIcon, layerName, 1, 1);
         Layer iconLayer = orgo.getLayer(layerName);
-        if (iconLayer != null) iconLayer.setPos(y-1, x-1);
+        if (iconLayer != null) iconLayer.setPos(y - 1, x - 1);
     }
 
     /**
      * Used by ImageOrg's buildImage.
+     *
      * @return where the camera ought to be
      */
-    public int getCamX(){ return getX() - 22; }
+    public int getCamX() {
+        return getX() - 22;
+    }
 
     /**
      * Used by ImageOrg's buildImage.
+     *
      * @return where the camera ought to be
      */
-    public int getCamY(){
+    public int getCamY() {
         return getY() - 11;
     }
 
@@ -559,13 +563,13 @@ public class Player extends Mortal implements java.io.Serializable {
 
     //   Where the spell boost variables are used, the corresponding expression should be used instead. --Riley
     void defineStats() {
-        defense =          armor.getEquipVals()[0] + weapon.getEquipVals()[0];
+        defense = armor.getEquipVals()[0] + weapon.getEquipVals()[0];
         armorHealthBoost = armor.getEquipVals()[1] + weapon.getEquipVals()[1];
-        allSpellBoost =    armor.getEquipVals()[2] + weapon.getEquipVals()[2];
-        arcSpellBoost =    armor.getEquipVals()[3] + weapon.getEquipVals()[3];
-        fireSpellBoost =   armor.getEquipVals()[4] + weapon.getEquipVals()[4];
-        iceSpellBoost =    armor.getEquipVals()[5] + weapon.getEquipVals()[5];
-        darkSpellBoost =   armor.getEquipVals()[6] + weapon.getEquipVals()[6];
+        allSpellBoost = armor.getEquipVals()[2] + weapon.getEquipVals()[2];
+        arcSpellBoost = armor.getEquipVals()[3] + weapon.getEquipVals()[3];
+        fireSpellBoost = armor.getEquipVals()[4] + weapon.getEquipVals()[4];
+        iceSpellBoost = armor.getEquipVals()[5] + weapon.getEquipVals()[5];
+        darkSpellBoost = armor.getEquipVals()[6] + weapon.getEquipVals()[6];
 
         super.maxHealth = baseMaxHP + armorHealthBoost;
 
@@ -699,26 +703,22 @@ public class Player extends Mortal implements java.io.Serializable {
     /**
      * This is the place where incoming key events go from faraway windows.  This method is called by the NetworkServer.
      * This method runs even when the player is paused or frozen, as the network stops for no-one.
+     *
      * @param event a KeyEvent that occurred on the window pertaining to this player.
      */
     public void fireKeyEvent(KeyEvent event) {
-        if (event.toString().contains("KEY_PRESSED")){
+        if (event.toString().contains("KEY_PRESSED")) {
             if (event.getKeyCode() == KeyEvent.VK_UP) {
-                upPressed =  true;
-            }
-            else if (event.getKeyCode() == KeyEvent.VK_DOWN) {
-                downPressed =  true;
-            }
-            else if (event.getKeyCode() == KeyEvent.VK_LEFT) {
-                leftPressed =  true;
-            }
-            else if (event.getKeyCode() == KeyEvent.VK_RIGHT) {
-                rightPressed =  true;
-            }
-            else if (event.getKeyCode() == KeyEvent.VK_SPACE) {
+                upPressed = true;
+            } else if (event.getKeyCode() == KeyEvent.VK_DOWN) {
+                downPressed = true;
+            } else if (event.getKeyCode() == KeyEvent.VK_LEFT) {
+                leftPressed = true;
+            } else if (event.getKeyCode() == KeyEvent.VK_RIGHT) {
+                rightPressed = true;
+            } else if (event.getKeyCode() == KeyEvent.VK_SPACE) {
                 spacePressed = true;
-            }
-            else if (event.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            } else if (event.getKeyCode() == KeyEvent.VK_ESCAPE) {
                 keyPressed('\'');
             } else {
                 keyPressed(event.getKeyChar());
@@ -728,8 +728,7 @@ public class Player extends Mortal implements java.io.Serializable {
                 room.fireKeyEvent(event, getUsername());
                 hud.fireKeyEvent(event);
             }
-        }
-        else if (event.toString().contains("KEY_RELEASED")) {
+        } else if (event.toString().contains("KEY_RELEASED")) {
             if (event.getKeyCode() == KeyEvent.VK_UP) {
                 upPressed = false;
             } else if (event.getKeyCode() == KeyEvent.VK_DOWN) {

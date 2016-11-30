@@ -6,44 +6,47 @@
 package SourceryTextb1.Rooms;
 
 import SourceryTextb1.Art;
-import SourceryTextb1.GameObjects.*;
+import SourceryTextb1.GameObjects.PathingObj;
+import SourceryTextb1.GameObjects.Player;
 import SourceryTextb1.Layer;
 
 /**
  * A room to test code in
- * @author 119184
  *
- * What Generally Happens Here:
- *      > The player can interact with an experimental environment
+ * @author 119184
+ *         <p>
+ *         What Generally Happens Here:
+ *         > The player can interact with an experimental environment
  */
 
 
 public class NewTestRoom extends Room {
 
 
-    public NewTestRoom(Player player){
+    public NewTestRoom(Player player) {
         super(player);
     }
 
-    protected String loop(Player play){
+    protected String loop(Player play) {
 
-        while (exitCode.equals("")){
+        while (exitCode.equals("")) {
             try {
                 Thread.sleep(20);
-                if (play.getHealth() <= 0){
+                if (play.getHealth() <= 0) {
                     exitCode = "die";
                 }
-            } catch (InterruptedException ignored) {}
+            } catch (InterruptedException ignored) {
+            }
         }
         return exitCode;
     }
 
     @Override
-    public void startup(){
+    public void startup() {
 
         Art arty = new Art();
         String[][] base = Art.strToArray(arty.testRoom);
-        String[] solids = {"|","-","0","#"};
+        String[] solids = {"|", "-", "0", "#"};
         addToBaseHitMesh(base, solids);
         Layer lay1 = new Layer(base, "Test", 0, 0, true, false, false);
         org.addLayer(lay1);

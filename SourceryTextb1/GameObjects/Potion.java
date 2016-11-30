@@ -14,7 +14,7 @@ class Potion extends GameObject {
     private Player caster;
     private int duration = 0;
 
-    Potion(Room roomy, Player setPlayer, String namey, int effectTime){
+    Potion(Room roomy, Player setPlayer, String namey, int effectTime) {
         strClass = "Potion";
         caster = setPlayer;
         room = roomy;
@@ -24,8 +24,8 @@ class Potion extends GameObject {
         setPlayer.fabulousMode = true;
     }
 
-    public void update(){
-        if (getTime() >= duration){
+    public void update() {
+        if (getTime() >= duration) {
             cancelTimer();
             caster.fabulousMode = false;
         }
@@ -49,7 +49,7 @@ class Potion extends GameObject {
                 }
                 break;
             case "MagicTaterChip":
-                if (getTime() % 250 == 0){
+                if (getTime() % 250 == 0) {
                     caster.restoreHealth(1, 10);
                 } else {
                     System.out.println(getTime());

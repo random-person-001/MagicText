@@ -22,7 +22,7 @@ public class GameInstance implements java.io.Serializable {
     private HashMap<String, Room> thisZoneRooms;
     private boolean inMiddleOfSwitchingEveryonesZones = false;
 
-    public GameInstance(Player protaganistSet){
+    public GameInstance(Player protaganistSet) {
         protaganist = protaganistSet;
         zoneNumber = protaganist.getZoneNumber();
         playerList = new ArrayList<>();
@@ -38,41 +38,40 @@ public class GameInstance implements java.io.Serializable {
 
     /**
      * Run this in a new thread for each player.
+     *
      * @param p zees player
      */
-    public void runGame(Player p){
+    public void runGame(Player p) {
         System.out.println("[GameInstance] beginning game running for " + p.getUsername());
         while (!p.roomName.equals("die")) {
             System.out.println(p.getUsername() + " entering the room '" + p.roomName + "'" + " in Zone " + zoneNumber);
-            if (thisZoneRooms.containsKey(p.roomName)){
+            if (thisZoneRooms.containsKey(p.roomName)) {
                 Room r = thisZoneRooms.get(p.roomName);
                 // Normal entering of a room without zone changes
                 r.enter(p);
-            }
-            else if (p.roomName.contains("switch to zone") && !inMiddleOfSwitchingEveryonesZones){
+            } else if (p.roomName.contains("switch to zone") && !inMiddleOfSwitchingEveryonesZones) {
                 // The first person to switch zones executes this; other Players won't but rather execute the next block.
                 // This does all the fancy zone switching.
                 inMiddleOfSwitchingEveryonesZones = true;
-                zoneNumber = Integer.valueOf(Character.toString(p.roomName.charAt(p.roomName.length()-1)));
+                zoneNumber = Integer.valueOf(Character.toString(p.roomName.charAt(p.roomName.length() - 1)));
                 System.out.println("Player " + p.getUsername() + " initializing a zone change to Zone " + zoneNumber);
                 switchZones();
                 try {
                     Thread.sleep(70); // Way enough time for all the rooms to cycle through and finish up.
-                } catch (InterruptedException ignore) {}
+                } catch (InterruptedException ignore) {
+                }
                 inMiddleOfSwitchingEveryonesZones = false;
-            }
-            else if (inMiddleOfSwitchingEveryonesZones){
+            } else if (inMiddleOfSwitchingEveryonesZones) {
                 // Somebody else is taking care of making our roomName and everything change, so we can sit back and relax.
-                System.out.println("[GameInstance.runGame() for + "+p.getUsername()+"] Somebody else is doing zone changes");
+                System.out.println("[GameInstance.runGame() for + " + p.getUsername() + "] Somebody else is doing zone changes");
                 try {
                     Thread.sleep(10);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-            }
-            else {
+            } else {
                 // Not a normal room within this zone or a zone-changing room name
-                System.out.println("[GameInstance.runGame() for + "+p.getUsername()+"] Unregistered room name! (zone "+zoneNumber+")");
+                System.out.println("[GameInstance.runGame() for + " + p.getUsername() + "] Unregistered room name! (zone " + zoneNumber + ")");
                 p.roomName = "die";
             }
         }
@@ -93,10 +92,10 @@ public class GameInstance implements java.io.Serializable {
      * Initialize the rooms in the new zone and kill the old to free memory.  Also set all players to be in the new zone.
      * Assumes that the new zone number has been set as zoneNumber.
      */
-    private void switchZones(){
+    private void switchZones() {
         int to = zoneNumber;
         String startingRoomName = "Define me in GameInstance.switchZones()";
-        switch (to){
+        switch (to) {
             case 1:
                 thisZoneRooms = initializeZone1Rooms(protaganist);
                 startingRoomName = "TutorialBasement";
@@ -115,15 +114,15 @@ public class GameInstance implements java.io.Serializable {
                 thisZoneRooms = initializeZone5Rooms(protaganist);
                 break;
             default:
-                System.out.println("[GameInstance] zoneNumber read in switchZones()! ("+to+")");
+                System.out.println("[GameInstance] zoneNumber read in switchZones()! (" + to + ")");
         }
-        for (Player p : playerList){
+        for (Player p : playerList) {
             if (p.room != null) {
                 p.room.exitCode = startingRoomName;
             }
             p.roomName = startingRoomName;
             p.setZoneNumber(to);
-            p.goTo(0,0);
+            p.goTo(0, 0);
             System.out.println("set " + p.getUsername() + "'s zone to " + zoneNumber + " and room name to " + startingRoomName);
         }
     }
@@ -131,7 +130,7 @@ public class GameInstance implements java.io.Serializable {
     /**
      * @return a new instance of Player, all set up to go!
      */
-    Player requestNewPlayer(){
+    Player requestNewPlayer() {
         Player noob = new Player(this, playerList.get(0).orgo, playerList.size());
         noob.frozen = false;
         noob.roomName = "TutorialBasement";
@@ -187,7 +186,7 @@ public class GameInstance implements java.io.Serializable {
         return null;
     }
 
-    public Player getProtaganist(){
+    public Player getProtaganist() {
         return protaganist;
     }
 

@@ -1,11 +1,15 @@
 package SourceryTextb1.GameObjects;
 
-import SourceryTextb1.*;
-import SourceryTextb1.Window;
+import SourceryTextb1.Art;
+import SourceryTextb1.ImageOrg;
+import SourceryTextb1.Layer;
+import SourceryTextb1.SpecialText;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 /**
@@ -115,8 +119,8 @@ class Inventory implements java.io.Serializable {
         player.defineStats();
     }
 
-    private void submenuColoring(Layer toColor){
-        for (int ii = 9 ; ii >= 0 ; ii--)
+    private void submenuColoring(Layer toColor) {
+        for (int ii = 9; ii >= 0; ii--)
             toColor.findAndReplace(new SpecialText(String.valueOf(ii)), new SpecialText(String.valueOf(ii), new Color(30, 30, 30)));
     }
 
@@ -141,11 +145,12 @@ class Inventory implements java.io.Serializable {
 
     /**
      * Returns an item based upon the name of what you're looking for.
+     *
      * @param invSection use "items", "spells", "equip" (It isn't case-sensitive, which should mitigate some human error)
      */
-    Item getItem(String name, String invSection){
+    Item getItem(String name, String invSection) {
         ArrayList<Item> list;
-        switch (invSection.toLowerCase()){
+        switch (invSection.toLowerCase()) {
             case "items":
                 list = items;
                 break;
@@ -158,8 +163,8 @@ class Inventory implements java.io.Serializable {
             default:
                 return null;
         }
-        for (Item it : list){
-            if (it.getName().equals(name)){
+        for (Item it : list) {
+            if (it.getName().equals(name)) {
                 return it;
             }
         }
@@ -170,7 +175,7 @@ class Inventory implements java.io.Serializable {
      * Gives player a bunch of items to probably be added later
      */
 
-    void testKit(){
+    void testKit() {
         Item item1 = new Item("InitiateTome", "A book full of dark rituals\n\nNewcomers to dark magic are\n handed this book to study.\n\nYes, it's a textbook.", "equipment");
         item1.setEquipvals(0, 0, 0, 0, 0, 0, 3, "weapon");
         equip.add(item1);
@@ -189,9 +194,9 @@ class Inventory implements java.io.Serializable {
         Item item7 = new Item("Witch Scarf", "A scarf imbued with witch\n magic, granting the user\n increased dark and ice\n magic power\n\nIt smells like flowers.", "equipment");
         item7.setEquipvals(1, 3, 0, 0, 0, 2, 2, "weapon");
         equip.add(item7);
-        Item potion = new Item ("MagicTaterChip", "A singular potato chip made\n with magic potatoes.\n\nEating this chip will\n restore hp over time\n (4hp/s + 10 overheal!)", "item");
+        Item potion = new Item("MagicTaterChip", "A singular potato chip made\n with magic potatoes.\n\nEating this chip will\n restore hp over time\n (4hp/s + 10 overheal!)", "item");
         potion.setDescMode("potion");
-        potion.setDuration(30*1000);
+        potion.setDuration(30 * 1000);
         items.add(potion);
         for (int ii = 0; ii < 24; ii++) {
             Item item4 = new Item("Carrot", "For some reason,\n they only grow\n in the mountains.\n\nNobody really know why.", "item");
@@ -222,10 +227,10 @@ class Inventory implements java.io.Serializable {
             default:
                 break;
         }
-        if (Character.isDigit(c) && (menuID == SPELLS || menuID == ITEMS || menuID == EQUIP)){
+        if (Character.isDigit(c) && (menuID == SPELLS || menuID == ITEMS || menuID == EQUIP)) {
             int number = Integer.valueOf(String.valueOf(c));
-            if (number != 0){
-                cursorY = (2*(number-1) + 2);
+            if (number != 0) {
+                cursorY = (2 * (number - 1) + 2);
             } else {
                 cursorY = 20;
             }
@@ -241,7 +246,7 @@ class Inventory implements java.io.Serializable {
         org = player.orgo; // Update the org (cuz it changes based on room now)
         player.frozen = true;
 
-        for (Layer lay : org.getLayers()){
+        for (Layer lay : org.getLayers()) {
             if (lay.getName().contains("playerLayer"))
                 org.setLayerImportance(lay.getName(), false);
         }
@@ -253,13 +258,13 @@ class Inventory implements java.io.Serializable {
 
         pressedA = false;
 
-        selectorLayer.setStr(0,0, ">");
+        selectorLayer.setStr(0, 0, ">");
         selectorLayer.setPos(cursorY, cursorX);
         org.addLayer(topMenuLayer);
         org.addLayer(selectorLayer);
         org.addLayer(infoLayer);
 
-        timer.scheduleAtFixedRate(new MenuTimer(), 10 , 99);
+        timer.scheduleAtFixedRate(new MenuTimer(), 10, 99);
     }
 
     /**
@@ -281,7 +286,7 @@ class Inventory implements java.io.Serializable {
         player.resetMovement();
     }
 
-    void cancelTimer(){
+    void cancelTimer() {
         timer.cancel();
     }
 
@@ -432,16 +437,16 @@ class Inventory implements java.io.Serializable {
         if (index < items.size() && cursorY < 19) {
             if (pressedA) {
                 Item thing = items.get(index);
-                if (thing.getName().equals("Magic Potato")){
+                if (thing.getName().equals("Magic Potato")) {
                     jumpToNewMenu(taterMenuLayer, UPGRADE, itemsMenuLayer, 28);
                     potatoIndex = index;
                 }
-                if (thing.getDescMode().equals("potion")){
+                if (thing.getDescMode().equals("potion")) {
                     new Potion(player.room, player, thing.getName(), thing.getDuration());
                     items.remove(thing);
                     shouldRedraw = true;
                 }
-                if (thing.getDescMode().equals("healitem")){
+                if (thing.getDescMode().equals("healitem")) {
                     player.restoreHealth(thing.healing, thing.overheal);
                     items.remove(index);
                     shouldRedraw = true;
@@ -460,7 +465,7 @@ class Inventory implements java.io.Serializable {
         //cursorX = 28;
 
         if (pressedA) {
-            switch (cursorY){
+            switch (cursorY) {
                 case 4:
                     player.baseMaxHP += 5;
                     player.setHealth(player.baseMaxHP);
@@ -484,12 +489,12 @@ class Inventory implements java.io.Serializable {
             page++;
             shouldRedraw = true;
         }
-        if (pageChange != 0){
+        if (pageChange != 0) {
             page += pageChange;
             pageChange = 0;
             shouldRedraw = true;
         }
-        double maxPage = Math.ceil((double)itemList.size() / 16);
+        double maxPage = Math.ceil((double) itemList.size() / 16);
         if (maxPage == 0) {
             maxPage = 1;
         }
@@ -497,8 +502,8 @@ class Inventory implements java.io.Serializable {
             page = 1;
             shouldRedraw = true;
         }
-        if (page < 1){
-            page = (int)maxPage;
+        if (page < 1) {
+            page = (int) maxPage;
             shouldRedraw = true;
         }
     }
@@ -514,7 +519,7 @@ class Inventory implements java.io.Serializable {
             cursorY = maxAllowedYCoord;
             System.out.println("Below the min allowed coord, buddy.");
         }
-        if (cursorY>= maxAllowedYCoord + 1) {
+        if (cursorY >= maxAllowedYCoord + 1) {
             cursorY = minAllowedYCoord;
             System.out.println("Over the max allowed coord, buddy.");
         }
@@ -570,9 +575,9 @@ class Inventory implements java.io.Serializable {
 
         if (pressedA) {
             if (cursorY == 2) {
-                jumpToNewMenu(topMenuLayer, TOP, quitMenuLayer,28);
+                jumpToNewMenu(topMenuLayer, TOP, quitMenuLayer, 28);
             }
-            if (cursorY == 3){
+            if (cursorY == 3) {
                 player.saveGame();
                 jumpToNewMenu(topMenuLayer, TOP, quitMenuLayer, 28);
             }
@@ -604,6 +609,7 @@ class Inventory implements java.io.Serializable {
 
     /**
      * Show the listing for all the item-item-items (like, Item.java that aren't spells or equipment)
+     *
      * @param items dem array-list of you-know-what!
      */
     private void genericItemListing(ArrayList<Item> items) {
@@ -612,7 +618,7 @@ class Inventory implements java.io.Serializable {
 
     private void genericItemListing(ArrayList<Item> items, boolean highlightEquip) {
 
-        if (shouldRedraw){
+        if (shouldRedraw) {
             infoLayer.clear();
             //clearItemInfo();
             shouldRedraw = false;
@@ -628,11 +634,11 @@ class Inventory implements java.io.Serializable {
 
         int index = calcIndex();
 
-        if (index != prevIndex){
+        if (index != prevIndex) {
             clearItemInfo();
             System.out.println(String.format("Prev Index: %d vs. %d", prevIndex, index));
         }
-        if (pressedS || pressedD){
+        if (pressedS || pressedD) {
             infoLayer.clear();
             System.out.println("Clearing infoLayer...");
         }
@@ -643,9 +649,9 @@ class Inventory implements java.io.Serializable {
         }
     }
 
-    private void clearItemInfo(){
-        for (int ix = 0; ix < 29; ix++){
-            for(int iy = 0; iy < 13; iy++){
+    private void clearItemInfo() {
+        for (int ix = 0; ix < 29; ix++) {
+            for (int iy = 0; iy < 13; iy++) {
                 org.editLayer(" ", infoLayer, iy, ix);
             }
         }
@@ -673,19 +679,19 @@ class Inventory implements java.io.Serializable {
         for (int ii = 0; ii < pageSize; ii++) {
             Item toDraw = items.get(ii + pageOffset);
             Color drawWith = Color.WHITE;
-            if (highilghtEquip){
-                if (toDraw.equals(player.armor)){
+            if (highilghtEquip) {
+                if (toDraw.equals(player.armor)) {
                     drawWith = armorColor;
                 } else if
-                    (toDraw.equals(player.weapon)){
+                        (toDraw.equals(player.weapon)) {
                     drawWith = weaponColor;
                 }
             }
-            if (toDraw.getDescMode().equals("healitem")){
+            if (toDraw.getDescMode().equals("healitem")) {
                 drawWith = healingColor;
             }
 
-            if (toDraw.getDescMode().equals("potion")){
+            if (toDraw.getDescMode().equals("potion")) {
                 drawWith = potionColor;
             }
             String itemName = toDraw.getName();
@@ -695,11 +701,12 @@ class Inventory implements java.io.Serializable {
 
     /**
      * In the selector layer, incrementally place a text starting at an X,Y coordinate
-     *  @param text a string to be displayed
-     * @param xStart    starting X coordinate
-     * @param yStart    Y coordinate
+     *
+     * @param text   a string to be displayed
+     * @param xStart starting X coordinate
+     * @param yStart Y coordinate
      */
-    private void putText(String text, int xStart, int yStart, Color toDrawWith){
+    private void putText(String text, int xStart, int yStart, Color toDrawWith) {
         putText(text, xStart, yStart, toDrawWith, 12);
     }
 
@@ -710,7 +717,7 @@ class Inventory implements java.io.Serializable {
             org.editLayer(toPut, infoLayer.getName(), yStart, xStart + iii);
             iter++;
         }
-        for (int iif = iter; iif < maxLength; iif++){ //Fixes string by concatenating blank spaces until maxLength
+        for (int iif = iter; iif < maxLength; iif++) { //Fixes string by concatenating blank spaces until maxLength
             org.editLayer(" ", infoLayer.getName(), yStart, xStart + iif);
         }
     }
@@ -784,9 +791,9 @@ class Inventory implements java.io.Serializable {
         }
     }
 
-    private class MenuTimer extends TimerTask{
-        public void run(){
-            if (menuID == EXIT){
+    private class MenuTimer extends TimerTask {
+        public void run() {
+            if (menuID == EXIT) {
                 org.removeLayer("selector");
                 org.removeLayer("invInfo");
                 player.frozen = false;

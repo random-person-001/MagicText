@@ -4,15 +4,15 @@ import SourceryTextb1.Layer;
 import SourceryTextb1.SpecialText;
 
 import java.awt.*;
-import java.util.*;
-
-import static java.lang.StrictMath.abs;
+import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Base object (to extend) for Enemies
  * Created by riley on 12-Jun-2016.
  */
-public class Mortal extends GameObject implements java.io.Serializable{
+public class Mortal extends GameObject implements java.io.Serializable {
     protected String layerName;
     private int health = 10;
     protected int maxHealth = 50;
@@ -24,6 +24,7 @@ public class Mortal extends GameObject implements java.io.Serializable{
     protected int r(int max) {
         return r(max, 0);
     }
+
     protected int r(int max, int min) {
         return rand.nextInt((max - min) + 1) + min;
     }
@@ -37,42 +38,42 @@ public class Mortal extends GameObject implements java.io.Serializable{
      * Mortal-specific stuff for updates.  Checks death and runs onDeath() when appropriate
      */
     @Override
-    public void backgroundUpdate(){
-        if (checkDeath()){
+    public void backgroundUpdate() {
+        if (checkDeath()) {
             onDeath();
         }
-        if (isRanged){
+        if (isRanged) {
             rangedUpdate();
         }
         if (slowedTimer > 0) slowedTimer--;
     }
 
-    public String getLayerName(){
+    public String getLayerName() {
         return layerName;
     }
 
-    public int getHealth(){
+    public int getHealth() {
         return health;
     }
 
-    public void subtractHealth(int amountLost, String message){
-        if (strClass.equals("Player") ){
+    public void subtractHealth(int amountLost, String message) {
+        if (strClass.equals("Player")) {
             Player meAsPlayer = (Player) this;
             int damage = (amountLost - meAsPlayer.defense);
             if (damage < 1) {
                 damage = 1;
             }
             health -= damage;
-            if (health < 0){
+            if (health < 0) {
                 health = 0;
             }
-            meAsPlayer.screenRedness = Math.max((int)((1 - ((float)health / maxHealth)) * 255),50);
+            meAsPlayer.screenRedness = Math.max((int) ((1 - ((float) health / maxHealth)) * 255), 50);
             //System.out.println(String.format("Setting redness: %1$d (%2$f)", room.playo.screenRedness, 1 - ((float)health / maxHealth)));
-        } else if (dmgIcon.getStr().equals("")){ //Prevents spam
+        } else if (dmgIcon.getStr().equals("")) { //Prevents spam
             health -= amountLost;
-            int percentHealth = (int)(((float)health / maxHealth) * 10);
+            int percentHealth = (int) (((float) health / maxHealth) * 10);
             if (health > 0) {
-                dmgIcon = new SpecialText(String.valueOf(percentHealth), new Color(255, 100 + (percentHealth*10), 90));
+                dmgIcon = new SpecialText(String.valueOf(percentHealth), new Color(255, 100 + (percentHealth * 10), 90));
             } else {
                 dmgIcon = new SpecialText("X", new Color(255, 90, 70));
             }
@@ -85,11 +86,15 @@ public class Mortal extends GameObject implements java.io.Serializable{
     /**
      * Sets display icon, factoring in whether or not it should display the damage percentage
      */
-    protected void setDispIcon (String icon){ setDispIcon(new SpecialText(icon));}
+    protected void setDispIcon(String icon) {
+        setDispIcon(new SpecialText(icon));
+    }
 
-    protected void setDispIcon(SpecialText icon){ setDispIcon(icon, 0, 0);}
+    protected void setDispIcon(SpecialText icon) {
+        setDispIcon(icon, 0, 0);
+    }
 
-    protected void setDispIcon(SpecialText icon, int x, int y){
+    protected void setDispIcon(SpecialText icon, int x, int y) {
         if (icon.getStr().length() != 1 || dmgIcon.getStr().equals("")) {
             orgo.editLayer(icon, layerName, y, x);
         } else {
@@ -97,16 +102,17 @@ public class Mortal extends GameObject implements java.io.Serializable{
         }
     }
 
-    public void subtractHealth(int amountLost){
+    public void subtractHealth(int amountLost) {
         subtractHealth(amountLost, "You died.");
     }
 
     /**
      * Sets the mortal's health and maximum health to a specified number
-     *  Usually used for a mortal's constructor to set its max hp
+     * Usually used for a mortal's constructor to set its max hp
+     *
      * @param newHealth the new health of the mortal
      */
-    public void setHealth(int newHealth){
+    public void setHealth(int newHealth) {
         health = newHealth;
         maxHealth = newHealth;
     }
@@ -114,49 +120,56 @@ public class Mortal extends GameObject implements java.io.Serializable{
     /**
      * Should not be used in most cases!
      */
-    public void addHealth(int toAdd){
+    public void addHealth(int toAdd) {
         health += toAdd;
         System.out.println("RAW ADDING HEALTH: " + toAdd);
     }
 
-    public void restoreHealth( int addHP){
+    public void restoreHealth(int addHP) {
         restoreHealth(addHP, 0);
     }
 
-    public void restoreHealth (int addHP, int maxOverHeal) {
+    public void restoreHealth(int addHP, int maxOverHeal) {
         health += addHP;
         int newMax = maxHealth + maxOverHeal;
-        if (newMax > maxHealth * 2){
+        if (newMax > maxHealth * 2) {
             newMax = maxHealth * 2;
         }
-        if (health > newMax){
+        if (health > newMax) {
             health = newMax;
         }
-        if (strClass.contains("Player")){
+        if (strClass.contains("Player")) {
             Player meAsPlayer = (Player) this;
-            int toSet = (int)(((float)addHP / meAsPlayer.maxHealth) * 150);
+            int toSet = (int) (((float) addHP / meAsPlayer.maxHealth) * 150);
             if (toSet > 100) toSet = 100;
             meAsPlayer.screenYellowness = toSet;
         }
     }
 
-    public int getAttack(){
+    public int getAttack() {
         return attack;
     }
-    public void setAttack(int newAttack){
+
+    public void setAttack(int newAttack) {
         attack = newAttack;
     }
 
-    protected boolean isGoodGuy(){ return isGoodGuy; }
-    void makeGoodGuy(){ isGoodGuy = true; }
+    protected boolean isGoodGuy() {
+        return isGoodGuy;
+    }
+
+    void makeGoodGuy() {
+        isGoodGuy = true;
+    }
 
     private boolean checkDeath() {
-        if (getHealth() <= 0){
+        if (getHealth() <= 0) {
             room.removeMortal(this);
             updateTimerInstance.cancel();
             try {
                 orgo.editLayer(" ", layerName, y, x);
-            }catch (NullPointerException ignore){}
+            } catch (NullPointerException ignore) {
+            }
             orgo.removeLayer(layerName);
             return true;
         }
@@ -167,7 +180,7 @@ public class Mortal extends GameObject implements java.io.Serializable{
      * Override this method to put fun stuff (like drops) to happen once you die.  Timer cancelling and putting
      * a space where the Mortal used to be and removing it from room is already taken care of; don't worry be happy
      */
-    public void onDeath(){
+    public void onDeath() {
     }
 
     public void goTo(int newX, int newY) {
@@ -176,7 +189,7 @@ public class Mortal extends GameObject implements java.io.Serializable{
         y = newY;
     }
 
-    protected Mortal getClosestGoodGuy(){
+    protected Mortal getClosestGoodGuy() {
         int closest = 50000000;
         Mortal closestM = null;
         for (Mortal m : room.enemies) {
@@ -188,34 +201,34 @@ public class Mortal extends GameObject implements java.io.Serializable{
         return closestM;
     }
 
-    protected void pathToPos(int followDist, int gotoX, int gotoY){
+    protected void pathToPos(int followDist, int gotoX, int gotoY) {
         pathToPos(followDist, gotoX, gotoY, layerName);
     }
 
     protected boolean atPathLoc = false;
 
-    protected void refinedPathToPos(int followDist, int gotoX, int gotoY){
-        if (Math.abs(x - gotoX) + Math.abs(y - gotoY) <= 1){
+    protected void refinedPathToPos(int followDist, int gotoX, int gotoY) {
+        if (Math.abs(x - gotoX) + Math.abs(y - gotoY) <= 1) {
             //System.out.printf("Jumping to %1$d,%2$d (dif: %3$d,%4$d, curr: %5$d,%6$d)\n", gotoX, gotoY, x - gotoX, y - gotoY, x, y);
             atPathLoc = true;
-            room.removeFromObjHitMesh(x,y);
+            room.removeFromObjHitMesh(x, y);
             x = gotoX;
             y = gotoY;
-            room.addToObjHitMesh(x,y);
+            room.addToObjHitMesh(x, y);
         } else {
             pathToPos(followDist, gotoX, gotoY);
             atPathLoc = false;
         }
     }
 
-    protected void rangedPathfinding(Mortal target, int attackRange, int followDist){
+    protected void rangedPathfinding(Mortal target, int attackRange, int followDist) {
         int xdif = target.getX() - x;
         int ydif = target.getY() - y;
-        if (xdif == 0 && ydif == 0){
+        if (xdif == 0 && ydif == 0) {
             return;
         }
-        if (Math.abs(ydif) > Math.abs(xdif)){
-            if (ydif < 0){
+        if (Math.abs(ydif) > Math.abs(xdif)) {
+            if (ydif < 0) {
                 int dist = raycastDistance(target.getX(), target.getY(), attackRange, "down");
                 //orgo.getLayer("TestingLayer").setPos(target.getY() + dist, target.getX());
                 refinedPathToPos(followDist, target.getX(), target.getY() + dist);
@@ -225,7 +238,7 @@ public class Mortal extends GameObject implements java.io.Serializable{
                 refinedPathToPos(followDist, target.getX(), target.getY() - dist);
             }
         } else {
-            if (xdif < 0){
+            if (xdif < 0) {
                 int dist = raycastDistance(target.getX(), target.getY(), attackRange, "right");
                 //orgo.getLayer("TestingLayer").setPos(target.getY(), target.getX() + dist);
                 refinedPathToPos(followDist, target.getX() + dist, target.getY());
@@ -237,14 +250,14 @@ public class Mortal extends GameObject implements java.io.Serializable{
         }
     }
 
-    protected int raycastDistance(int startX, int startY, int maxDist, String direction){
+    protected int raycastDistance(int startX, int startY, int maxDist, String direction) {
         int total = 0;
         int currX = startX;
         int currY = startY;
-        for (int ii = 0; ii < maxDist ; ii++){
-            switch (direction){
+        for (int ii = 0; ii < maxDist; ii++) {
+            switch (direction) {
                 case "up":
-                    if (!room.isPlaceSolid(currX, currY - 1)){
+                    if (!room.isPlaceSolid(currX, currY - 1)) {
                         total++;
                         currY--;
                     } else {
@@ -252,7 +265,7 @@ public class Mortal extends GameObject implements java.io.Serializable{
                     }
                     break;
                 case "down":
-                    if (!room.isPlaceSolid(currX, currY + 1)){
+                    if (!room.isPlaceSolid(currX, currY + 1)) {
                         total++;
                         currY++;
                     } else {
@@ -260,7 +273,7 @@ public class Mortal extends GameObject implements java.io.Serializable{
                     }
                     break;
                 case "left":
-                    if (!room.isPlaceSolid(currX - 1, currY)){
+                    if (!room.isPlaceSolid(currX - 1, currY)) {
                         total++;
                         currX--;
                     } else {
@@ -268,7 +281,7 @@ public class Mortal extends GameObject implements java.io.Serializable{
                     }
                     break;
                 case "right":
-                    if (!room.isPlaceSolid(currX + 1, currY)){
+                    if (!room.isPlaceSolid(currX + 1, currY)) {
                         total++;
                         currX++;
                     } else {
@@ -289,7 +302,7 @@ public class Mortal extends GameObject implements java.io.Serializable{
 
     protected int rangedCounter;
 
-    protected void rangedInit(int preShotDelay, int postShotDelay, int attackRange, int followDist, Spell weapon){
+    protected void rangedInit(int preShotDelay, int postShotDelay, int attackRange, int followDist, Spell weapon) {
         rangedAttack = weapon;
         rangedPreShotDelay = preShotDelay;
         rangedPostShotDelay = postShotDelay;
@@ -300,28 +313,28 @@ public class Mortal extends GameObject implements java.io.Serializable{
     }
 
     private int setOr = -1;
-    protected void rangedUpdate(){
+
+    protected void rangedUpdate() {
         //System.out.println("I'm alive");
 
         Mortal target = getClosestGoodGuy();
         //rangedPathfinding(target, attackingRange, followingDist);
 
 
-        if (rangedCounter == rangedPostShotDelay + rangedPreShotDelay){ //Done shooting
+        if (rangedCounter == rangedPostShotDelay + rangedPreShotDelay) { //Done shooting
             if (!atPathLoc) {
                 //System.out.println("Pathing....");
                 rangedPathfinding(target, attackingRange, followingDist);
-            }
-            else
+            } else
                 rangedCounter = 0;
         } else {
             //System.out.println(rangedCounter);
-            if (rangedCounter == 0){
+            if (rangedCounter == 0) {
                 acquireTarget(target);
                 Layer iconLayer = orgo.getLayer(layerName);
                 if (iconLayer != null) iconLayer.setPos(y, x);
             }
-            if (rangedCounter == rangedPreShotDelay){
+            if (rangedCounter == rangedPreShotDelay) {
                 int damage = rangedAttack.getDamage();
                 int range = rangedAttack.getRange();
                 SpecialText anim1 = rangedAttack.getAnim1();
@@ -343,16 +356,24 @@ public class Mortal extends GameObject implements java.io.Serializable{
         }
     }
 
-    private void acquireTarget (Mortal target){
-        if (target.getX() == x && target.getY() < y) { setOr = 0; }
-        if (target.getX() == x && target.getY() > y) { setOr = 1; }
-        if (target.getX() < x && target.getY() == y) { setOr = 2; }
-        if (target.getX() > x && target.getY() == y) { setOr = 3; }
+    private void acquireTarget(Mortal target) {
+        if (target.getX() == x && target.getY() < y) {
+            setOr = 0;
+        }
+        if (target.getX() == x && target.getY() > y) {
+            setOr = 1;
+        }
+        if (target.getX() < x && target.getY() == y) {
+            setOr = 2;
+        }
+        if (target.getX() > x && target.getY() == y) {
+            setOr = 3;
+        }
     }
 
     private class dmgTimer extends TimerTask {
         @Override
-        public void run(){
+        public void run() {
             dmgIcon = new SpecialText("");
         }
     }

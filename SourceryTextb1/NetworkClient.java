@@ -33,10 +33,9 @@ public class NetworkClient {
         System.out.println("Connecting to " + serverName + " on port " + port);
         try {
             server = new Socket(serverName, port);
-        }
-        catch (ConnectException e){
-            System.out.println("Could not connect Sourcerery Text server "+serverName+" port "+port+"; therefore " +
-                    "nullpointers will be thrown.  Are you sure the server is up and running?" );
+        } catch (ConnectException e) {
+            System.out.println("Could not connect Sourcerery Text server " + serverName + " port " + port + "; therefore " +
+                    "nullpointers will be thrown.  Are you sure the server is up and running?");
             server = null;
             return;
         }
@@ -67,16 +66,17 @@ public class NetworkClient {
 
     /**
      * Get the image and put it on the window
+     *
      * @throws IOException
      * @throws ClassNotFoundException
      */
     private void receiveImage() throws IOException, ClassNotFoundException {
-        if (in == null){
+        if (in == null) {
             System.out.println("Input stream is null; aborting reading ColoredTextMatrix attempt");
             return;
         }
-        Layer l = (Layer)in.readObject();
-        if (l!=null) {
+        Layer l = (Layer) in.readObject();
+        if (l != null) {
             System.out.println("Received image!");
             w.build(l);
         } else {
@@ -86,14 +86,15 @@ public class NetworkClient {
 
     /**
      * Send a KeyEvent to the server of the game.
+     *
      * @param event a KeyEvent that occurred on this window
      */
     private void sendKey(KeyEvent event) throws IOException {
-        if (out != null){
+        if (out != null) {
             System.out.println("You pressed a key.  I'll try to send it over.");
             out.writeObject(event);
-        }else {
-            System.out.println("Bro, I would send this juicy key event ("+event.toString()+") to Kathmandu or wherever" +
+        } else {
+            System.out.println("Bro, I would send this juicy key event (" + event.toString() + ") to Kathmandu or wherever" +
                     " my fellow Sourcery Text server is, but the output stream is just really null right now.");
         }
     }
@@ -101,7 +102,7 @@ public class NetworkClient {
     /**
      * Send keypresses to the Client
      */
-    private class MultiplayerKeyListener extends KeyAdapter{
+    private class MultiplayerKeyListener extends KeyAdapter {
         public void keyPressed(KeyEvent event) {
             try {
                 sendKey(event);
@@ -111,6 +112,7 @@ public class NetworkClient {
                 e.printStackTrace();
             }
         }
+
         public void keyReleased(KeyEvent event) {
             keyPressed(event); //Does same thing anyway
         }

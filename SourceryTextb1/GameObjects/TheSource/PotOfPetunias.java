@@ -12,7 +12,7 @@ import SourceryTextb1.Rooms.Room;
 public class PotOfPetunias extends Mortal {
 //    private boolean sentMessageBefore = false;
 
-    public PotOfPetunias (ImageOrg org, Room theRoom, int setX, int setY){
+    public PotOfPetunias(ImageOrg org, Room theRoom, int setX, int setY) {
         strClass = "PotOfPetunias";
         orgo = org;
         room = theRoom;
@@ -22,7 +22,7 @@ public class PotOfPetunias extends Mortal {
         y = setY;
 
         Layer potLayer = new Layer(new String[1][1], layerName, y, x);
-        potLayer.setStr(0,0,"V");
+        potLayer.setStr(0, 0, "V");
         org.addLayer(potLayer);
 
         setHealth(1);
@@ -30,7 +30,7 @@ public class PotOfPetunias extends Mortal {
         setupTimer(100);
     }
 
-    public void update(){
+    public void update() {
         orgo.editLayer("<span color='#cc0000'>V</span>", layerName, y, x);
 //  if (room.playo.x + 3 == x && room.playo.y == y && !sentMessageBefore) {
 //            room.infoMessage(orgo, "It appears you have come across an enemy.  It is suggested that you chose to be " +

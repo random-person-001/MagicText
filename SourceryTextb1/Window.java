@@ -5,8 +5,8 @@
  */
 package SourceryTextb1;
 
-import java.awt.*;
 import javax.swing.*;
+import java.awt.*;
 
 
 /**
@@ -15,7 +15,7 @@ import javax.swing.*;
 public class Window extends JFrame {
     public ColoredTextMatrix txtArea;
     private Container c = getContentPane();
-    public int serial = (int) (Math.random()*1000);
+    public int serial = (int) (Math.random() * 1000);
 
     public Window() {
         setVisible(true);
@@ -59,12 +59,13 @@ public class Window extends JFrame {
     /**
      * Place the temporary idea of what should be on the screen (fullImage) onto the actual display, the txtArea that
      * is a ColoredTextMatrix.
+     *
      * @param fullImage the 28x46 Layer that is the final result of rendering and should be placed onto the screen
      */
     public void build(Layer fullImage) {
         for (int row = 0; row < 28; row++) { // Used to be 20
             for (int col = 0; col < 46; col++) { // Used to be 50
-                SpecialText s  = fullImage.getSpecTxt(row, col);
+                SpecialText s = fullImage.getSpecTxt(row, col);
                 if (s != null && s.toString() != null) {
                     if (!s.toString().equals("")) {
                         txtArea.text[col][row] = s;

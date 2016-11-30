@@ -106,6 +106,7 @@ public class Item implements java.io.Serializable {
 
     /**
      * Alternate version of dmgSpellDefine with SpecialText instead of strings
+     *
      * @param toD   damage
      * @param toR   range
      * @param toC   cost
@@ -132,12 +133,13 @@ public class Item implements java.io.Serializable {
     }
 
 
-
     public boolean getAlting() {
         return alting;
     }
 
-    public boolean getPathfinding() { return pathfinds; }
+    public boolean getPathfinding() {
+        return pathfinds;
+    }
 
     public void setAnim(String s1, String s2) {
         animation1 = new SpecialText(s1);
@@ -219,7 +221,7 @@ public class Item implements java.io.Serializable {
         healing = to;
     }
 
-    public void healItemDefine(int to, int over){
+    public void healItemDefine(int to, int over) {
         healing = to;
         overheal = over;
         displayMode = "healitem";
@@ -229,7 +231,9 @@ public class Item implements java.io.Serializable {
         duration = to;
     }
 
-    public int getDuration() { return duration; }
+    public int getDuration() {
+        return duration;
+    }
 
     public String getName() {
         return name;

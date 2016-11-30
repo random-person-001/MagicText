@@ -8,12 +8,12 @@ import SourceryTextb1.Rooms.Room;
  * What it says on the tin.
  * Created by Jared on 09-Sep-16.
  */
-public class OneWayDoor extends GameObject{
+public class OneWayDoor extends GameObject {
     private boolean facingLeft = false;
     private String layerName;
     public String strClass = "One-wayDoor";
 
-    public OneWayDoor(boolean isLefty, int xSet, int ySet, Room creator, ImageOrg org){
+    public OneWayDoor(boolean isLefty, int xSet, int ySet, Room creator, ImageOrg org) {
         facingLeft = isLefty;
         super.room = creator;
         super.orgo = org;
@@ -21,26 +21,26 @@ public class OneWayDoor extends GameObject{
         x = xSet;
         y = ySet;
         Layer icon = new Layer(new String[1][1], layerName, y, x);
-        if (facingLeft){
-            icon.setStr(0,0,"{");
+        if (facingLeft) {
+            icon.setStr(0, 0, "{");
         } else {
-            icon.setStr(0,0,"}");
+            icon.setStr(0, 0, "}");
         }
         orgo.addLayer(icon);
-        room.addToObjHitMesh(x,y);
+        room.addToObjHitMesh(x, y);
         setupTimer(150);
     }
 
-    private void openDoor(){
+    private void openDoor() {
         if (!showedMessage) {
             room.splashMessage("The one way door opened!", "");
             showedMessage = true;
         }
         orgo.editLayer(" ", layerName, 0, 0);
-        room.removeFromObjHitMesh(x,y);
+        room.removeFromObjHitMesh(x, y);
     }
 
-    private void closeDoor(){
+    private void closeDoor() {
         if (facingLeft)
             orgo.editLayer("{", layerName, 0, 0);
         else
@@ -52,7 +52,7 @@ public class OneWayDoor extends GameObject{
     private boolean showedMessage = false;
 
     @Override
-    public void update(){
+    public void update() {
         for (Player player : room.players) {
             if (player.getY() == y) {
                 if (facingLeft) { //Left-facing doors

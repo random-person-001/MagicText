@@ -8,12 +8,10 @@ import SourceryTextb1.Rooms.Room;
 
 import java.util.Random;
 
-import static java.lang.StrictMath.abs;
-
 /**
  * Created by riley on 17-Jun-2016.
  */
-public class SmallPiranha extends Mortal{
+public class SmallPiranha extends Mortal {
     private static Random rand = new Random();
     private int moveFrq = 20; //Higher is slower
     private DroppedItem itemOnDrop;
@@ -46,7 +44,7 @@ public class SmallPiranha extends Mortal{
             int newY = y;
             if (orgo.getDebug())
                 System.out.println("Not good place yet");
-            if (r(5)>1){ /// Most of the time go towards closest good guy
+            if (r(5) > 1) { /// Most of the time go towards closest good guy
                 Mortal m = getClosestGoodGuy();
                 if (r(1) == 0 && x != m.getX())
                     newX += (x < m.getX()) ? 1 : -1;
@@ -54,7 +52,7 @@ public class SmallPiranha extends Mortal{
                     newY += (y < m.getY()) ? 1 : -1;
                 if (orgo.getDebug())
                     System.out.println("Going towards good guy");
-            } else if (r(8)>1){
+            } else if (r(8) > 1) {
                 Mortal m = closestGoodGuy;
                 if (r(1) == 0 && x != m.getX())
                     newX += (x < m.getX()) ? 1 : -1;
@@ -62,8 +60,7 @@ public class SmallPiranha extends Mortal{
                     newY += (y < m.getY()) ? 1 : -1;
                 if (orgo.getDebug())
                     System.out.println("Going towards player");
-            }
-            else if (r(moveFrq) < 1) {
+            } else if (r(moveFrq) < 1) {
                 if (orgo.getDebug())
                     System.out.println("Moving randomly");
                 if (r(1) < 0) {
@@ -93,7 +90,7 @@ public class SmallPiranha extends Mortal{
     }
 
     @Override
-    public void onDeath(){
+    public void onDeath() {
         orgo.removeLayer(layerName);
         if (orgo.getDebug()) {
             System.out.println("AAAAAaaaack, a piranha died.");

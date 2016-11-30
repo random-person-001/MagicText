@@ -1,11 +1,11 @@
 package SourceryTextb1.Rooms.SeaOfSurprise;
 
+import SourceryTextb1.Art;
 import SourceryTextb1.GameObjects.Mortal;
 import SourceryTextb1.GameObjects.Player;
 import SourceryTextb1.GameObjects.TheSource.Spider;
 import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
-import SourceryTextb1.Art;
 
 import java.util.ConcurrentModificationException;
 
@@ -17,35 +17,35 @@ public class DockAndShip extends Room {
     private String[][] dock;
     private Layer docky;
 
-    public DockAndShip(Player player){
+    public DockAndShip(Player player) {
         super(player);
         strRoomName = "DockAndShip";
     }
 
     @Override
-    protected String loop(Player play){
-        if (play.getX() == 0 && play.getY() == 0){
-            play.goTo(66,50);
+    protected String loop(Player play) {
+        if (play.getX() == 0 && play.getY() == 0) {
+            play.goTo(66, 50);
         }
         int count = 0;
         int timer = 0;
-        while (exitCode.equals("")){
+        while (exitCode.equals("")) {
             try {
                 Thread.sleep(20);
-                if (count == 0){
+                if (count == 0) {
                     compactTextBox("You should probs get on the ship!", "A Passerby", false);
                     count++;
                 }
-                if (count == 1 && playo.getX() == 23 && playo.getY() == 1){
+                if (count == 1 && playo.getX() == 23 && playo.getY() == 1) {
                     compactTextBox("Ahoy!  This is the front of the ship. \n ", "Seagull", false);
                     count++;
                 }
                 timer++;
-                if (timer > 1000 && timer < 1800 && timer % 10 == 0){
+                if (timer > 1000 && timer < 1800 && timer % 10 == 0) {
                     //System.out.println("Moving one");
                     Layer docky = org.getLayer("Dock");
-                    docky.setX(docky.getX()+1);
-                    docky.setY(docky.getY()+1);
+                    docky.setX(docky.getX() + 1);
+                    docky.setY(docky.getY() + 1);
                     //System.out.println(docky.getX());
                     dockUpdate();
                     try {
@@ -61,47 +61,49 @@ public class DockAndShip extends Room {
                                 }
                             }
                         }
-                    } catch (ConcurrentModificationException ignored){}
-                    for (int i = 43; i<46; i++){ // Just needed the first time, but whatevs.
+                    } catch (ConcurrentModificationException ignored) {
+                    }
+                    for (int i = 43; i < 46; i++) { // Just needed the first time, but whatevs.
                         addToBaseHitMesh(42, i);
                         addToBaseHitMesh(43, i); // So you can't walk off the side
                         org.editLayer("|", "Boat", i, 42);
                     }
                 }
-                if (timer > 2000){
+                if (timer > 2000) {
                     //System.out.println("It's been a long while.");
                 }
 
-            } catch (InterruptedException ignored) {}
+            } catch (InterruptedException ignored) {
+            }
         }
         return exitCode;
     }
 
-    private void dockUpdate(){
+    private void dockUpdate() {
         clearObjHitMesh();
-        String[] docksolids = {"|","-","_"};
+        String[] docksolids = {"|", "-", "_"};
         addToObjHitMesh(dock, docksolids, docky.getY(), docky.getX());
     }
 
     @Override
-    public void startup(){
+    public void startup() {
 
         String[][] base = Art.strToArray(arty.largeBoat);
-        String[] solids = {"|","-","\\", "/","_","="};
+        String[] solids = {"|", "-", "\\", "/", "_", "="};
         addToBaseHitMesh(base, solids);
         Layer lay1 = new Layer(base, "Boat");
         org.addLayer(lay1);
 
         initHitMeshes(lay1);
-        playo.goTo(72,51);
+        playo.goTo(72, 51);
 
         dock = Art.strToArray(arty.dock);
-        String[] docksolids = {"|","-","_"};
+        String[] docksolids = {"|", "-", "_"};
         addToObjHitMesh(dock, docksolids, 40, 27);
         docky = new Layer(dock, "Dock", 27, 40);
         org.addLayer(docky);
 
-        for (int i = 43; i<46; i++){
+        for (int i = 43; i < 46; i++) {
             removeFromObjHitMesh(42, i);
             org.editLayer("X", "Boat", i, 42);
         }
@@ -119,12 +121,12 @@ public class DockAndShip extends Room {
         genericRoomInitialize();
     }
 
-    private void makeSpiderAt(int x, int y){
+    private void makeSpiderAt(int x, int y) {
         Spider spidey = new Spider(this, x, y);
         addMortal(spidey);
     }
 
-    private void makePiranahAt(int x, int y){
-        makeSpiderAt(x,y);
+    private void makePiranahAt(int x, int y) {
+        makeSpiderAt(x, y);
     }
 }

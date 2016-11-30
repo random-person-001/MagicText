@@ -11,7 +11,7 @@ import java.io.IOException;
 public class SlaveGameInstance {
     private GameInstance masterInstance;
 
-    public SlaveGameInstance(GameInstance master){
+    public SlaveGameInstance(GameInstance master) {
         masterInstance = master;
     }
 

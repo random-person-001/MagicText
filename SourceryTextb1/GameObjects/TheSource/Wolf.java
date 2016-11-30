@@ -25,7 +25,7 @@ public class Wolf extends Mortal {
         x = xStart;
         y = yStart;
         setHealth(10);
-        Layer wolfLayer = new Layer(new String[1][1],layerName, y, x);
+        Layer wolfLayer = new Layer(new String[1][1], layerName, y, x);
         orgo.addLayer(wolfLayer);
 
         setupTimer(550);
@@ -41,14 +41,13 @@ public class Wolf extends Mortal {
                 closestGoodGuy.subtractHealth(3);
             }
             pathToPos(followDist, closestGoodGuy.getX(), closestGoodGuy.getY());
-        }
-        else {
+        } else {
             System.out.println("Wolf in " + room.strRoomName + " couldn't find player to hunt");
         }
     }
 
     @Override
-    public void onDeath(){
+    public void onDeath() {
         orgo.removeLayer(layerName);
         /*
         if (room.getCountOf("Wolf") == 0){

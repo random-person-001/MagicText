@@ -21,64 +21,65 @@ import java.awt.*;
  * Player Y: 103
  * Created by riley on 01-Sep-2016.
  */
-public class BanditFortress extends Room{
+public class BanditFortress extends Room {
 
-    public BanditFortress(Player player){
+    public BanditFortress(Player player) {
         super(player);
         strRoomName = "BanditFortress";
     }
 
     @Override
-    protected String loop(Player play){
+    protected String loop(Player play) {
         int count = 0;
 
-        while (exitCode.equals("")){
+        while (exitCode.equals("")) {
             try {
                 Thread.sleep(20);
-                if (play.getY() >= 104){
+                if (play.getY() >= 104) {
                     setNewRoom("InnerMountains", play, 1, 24);
                 }
-                if (play.getX() >= 135){
+                if (play.getX() >= 135) {
                     setNewRoom("HiddenBunker", play, 1, 128);
                 }
-                if (count == 0){
+                if (count == 0) {
                     if (play.getX() == 109 && play.getY() == 10) {
                         queueMessage(new Room.FlavorText("Most capital letters (ex: A, B, C..) out in\n the world have flavor text \n accessible through the 'F' key", ""));
                     }
                     count++;
                 }
 
-            } catch (InterruptedException ignored) {}
+            } catch (InterruptedException ignored) {
+            }
         }
         return exitCode;
     }
 
     @Override
-    public void addItems(){
+    public void addItems() {
 
-        int[][] banditStations = {{35,74},{33,75},{38,75},{36,76},{61,87},{73,87},{67,94},{19,46},
-                {27,46},{42,56},{48,61},{56,56},{60,63},{74,32},{86,32},{51,25},{59,24},{62,19},{39,15}};
+        int[][] banditStations = {{35, 74}, {33, 75}, {38, 75}, {36, 76}, {61, 87}, {73, 87}, {67, 94}, {19, 46},
+                {27, 46}, {42, 56}, {48, 61}, {56, 56}, {60, 63}, {74, 32}, {86, 32}, {51, 25}, {59, 24}, {62, 19}, {39, 15}};
         for (int[] station : banditStations) {
             Bandit roughBill = new Bandit(org, this, station[0], station[1]);
             addMortal(roughBill);
         }
 
-        int[][] towerLocs = {{76,15},{84,17},{76,32},{84,32},{78,43},{67,46},{23,41},{23,50},{63,94},
-                             {71,94},{71,97},{63,97}};
+        int[][] towerLocs = {{76, 15}, {84, 17}, {76, 32}, {84, 32}, {78, 43}, {67, 46}, {23, 41}, {23, 50}, {63, 94},
+                {71, 94}, {71, 97}, {63, 97}};
         for (int[] towerLoc : towerLocs) {
             WeakTower t = new WeakTower(org, this, towerLoc[0], towerLoc[1]);
             addMortal(t);
         }
 
-        int[][] rangedLocs = {{58,52},{80,58},{27,61},{69,65}};
+        int[][] rangedLocs = {{58, 52}, {80, 58}, {27, 61}, {69, 65}};
         for (int[] rangedLoc : rangedLocs) {
-            RangedBandit ranger = new RangedBandit (this, rangedLoc[0], rangedLoc[1]);
+            RangedBandit ranger = new RangedBandit(this, rangedLoc[0], rangedLoc[1]);
             addMortal(ranger);
         }
 
-        Item magicTater = new Item("Magic Potato","How lucky! This eccentric\n potato can permanently\n " +
+        Item magicTater = new Item("Magic Potato", "How lucky! This eccentric\n potato can permanently\n " +
                 "increase either your\n Max HP or Max Mana.\n\nNOTE: it's permanent.\nYou got this illicitly.", "item");
-        DroppedItem gTater =  new DroppedItem(this, "You found a magic potato.  Cheater.", magicTater, 51, 19);
+        DroppedItem gTater = new DroppedItem(this, "You found a magic potato.  Cheater.", magicTater, 51, 19);
         super.addObject(gTater);
 
         OneWayDoor bunkerEntrance = new OneWayDoor(true, 94, 60, this, org);
@@ -86,7 +87,7 @@ public class BanditFortress extends Room{
     }
 
     @Override
-    public void startup(){
+    public void startup() {
 
         String[] rockText1 = {"You've passed safely through the walls of \n the fortress!  Unfortunately, many more\n bandits lie inside.  Be careful."};
         plantText(new Room.FlavorText(59, 82, rockText1, ""));
@@ -109,7 +110,7 @@ public class BanditFortress extends Room{
         initHitMeshes(lay1);
 
         addItems();
-        String[] solids = {":","w","m","#","/","C"};
+        String[] solids = {":", "w", "m", "#", "/", "C"};
         addToBaseHitMesh(base, solids);
 
         genericRoomInitialize();

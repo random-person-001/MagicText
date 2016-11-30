@@ -8,7 +8,7 @@ import SourceryTextb1.Rooms.Room;
  * A locked door!  Needs a key (or lock picking) to unlock
  * Created by Jared on 17-Sep-16.
  */
-public class LockedDoor extends GameObject{
+public class LockedDoor extends GameObject {
     private String layerName;
     public String strClass = "LockedDoor";
     private boolean willMessage = true;
@@ -16,7 +16,7 @@ public class LockedDoor extends GameObject{
     protected int lockpickDifficulty = 10;
     protected String keyName = "";
 
-    public LockedDoor(String nameOfKey, int difficulty, int xSet, int ySet, Room creator, ImageOrg org){
+    public LockedDoor(String nameOfKey, int difficulty, int xSet, int ySet, Room creator, ImageOrg org) {
         keyName = nameOfKey;
         lockpickDifficulty = difficulty;
         super.room = creator;
@@ -25,22 +25,22 @@ public class LockedDoor extends GameObject{
         x = xSet;
         y = ySet;
         Layer icon = new Layer(new String[1][1], layerName, y, x);
-        icon.setStr(0,0,":");
+        icon.setStr(0, 0, ":");
         orgo.addLayer(icon);
-        room.addToObjHitMesh(x,y);
+        room.addToObjHitMesh(x, y);
         setupTimer(150);
     }
 
-    private void selfDestruct(){
-        room.splashMessage("The locked door opened!","");
+    private void selfDestruct() {
+        room.splashMessage("The locked door opened!", "");
         orgo.removeLayer(layerName);
-        room.removeFromObjHitMesh(x,y);
+        room.removeFromObjHitMesh(x, y);
         room.removeObject(this);
         cancelTimer();
     }
 
     @Override
-    public void update(){
+    public void update() {
         for (Player player : room.players) {
             if (Math.abs(player.getX() - x) == 1 && player.getY() == y) {
                 if (player.getInventory().getItem(keyName, "items") != null) {

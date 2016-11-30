@@ -6,8 +6,6 @@ import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
 
-import java.util.Random;
-
 import static java.lang.StrictMath.abs;
 
 
@@ -46,13 +44,13 @@ public class Troll extends Mortal {
             int newX = x;
             int newY = y;
             System.out.println("Not good place yet");
-            if (distanceTo(closestGoodGuy) < 10 && r(15)>1){ /// Most of the time go towards player
+            if (distanceTo(closestGoodGuy) < 10 && r(15) > 1) { /// Most of the time go towards player
                 if (r(1) == 0 && x != closestGoodGuy.getX())
                     newX += (x < closestGoodGuy.getX()) ? 1 : -1;
                 else if (closestGoodGuy.getY() != y)
                     newY += (y < closestGoodGuy.getY()) ? 1 : -1;
                 System.out.println("Going towards player");
-            }else if (r(moveFrq) < 1) {
+            } else if (r(moveFrq) < 1) {
                 System.out.println("Moving randomly");
                 if (r(1) < 0) {
                     newX += r(2) - 1;
@@ -81,7 +79,7 @@ public class Troll extends Mortal {
     }
 
     @Override
-    public void onDeath(){
+    public void onDeath() {
         orgo.removeLayer(layerName);
         System.out.println("AAAAAaaaack, a troll died.");
         //room.addObject(itemOnDrop);

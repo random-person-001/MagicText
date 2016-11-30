@@ -12,7 +12,7 @@ import java.awt.*;
  * Created by Jared on 24-Nov-16.
  */
 public class RangedBandit extends Mortal {
-    public RangedBandit (Room theRoom, int startX, int startY){
+    public RangedBandit(Room theRoom, int startX, int startY) {
         super.strClass = "RangedBandit";
 
         room = theRoom;
@@ -28,8 +28,8 @@ public class RangedBandit extends Mortal {
         Layer testTarget = new Layer(new String[1][1], "TestingLayer");
         testTarget.setSpecTxt(0,0,new SpecialText("+", Color.BLACK, Color.WHITE));
         */
-        
-        Spell attack = new Spell (room, 0, 0, 0, 5, 10, new SpecialText("|"), new SpecialText("-"), false);
+
+        Spell attack = new Spell(room, 0, 0, 0, 5, 10, new SpecialText("|"), new SpecialText("-"), false);
         attack.setHostility(true);
         rangedInit(5, 5, 5, 25, attack);
     }

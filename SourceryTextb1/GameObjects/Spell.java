@@ -9,7 +9,6 @@ import java.util.Random;
 /**
  * Create a new spell.  Attributes such as its character representation, damage, and range can be customized.
  * Created by riley on 13-Jun-2016.
- *
  */
 public class Spell extends GameObject {
     private Random rand = new Random();
@@ -34,16 +33,18 @@ public class Spell extends GameObject {
      * "Spark",   5        4       X       x
      * "Flame"    9        5       M       m
      * "Wanderer" 9        9*      W       w
+     *
      * @param theRoom the Room
-     * @param setX X starting point
-     * @param setY Y starting point
-     * @param setOr integer orientation.  0: up  1:down  2:left  3:right
+     * @param setX    X starting point
+     * @param setY    Y starting point
+     * @param setOr   integer orientation.  0: up  1:down  2:left  3:right
      */
-    public Spell(Room theRoom, int setX, int setY, int setOr, int setDmg, int setRng, SpecialText set1, SpecialText set2, boolean alting, boolean tracking){
+    public Spell(Room theRoom, int setX, int setY, int setOr, int setDmg, int setRng, SpecialText set1, SpecialText set2, boolean alting, boolean tracking) {
         this(theRoom, setX, setY, setOr, setDmg, setRng, set1, set2, alting);
         enemySeeking = tracking;
     }
-    public Spell(Room theRoom, int setX, int setY, int setOr, int setDmg, int setRng, SpecialText set1, SpecialText set2, boolean alting){
+
+    public Spell(Room theRoom, int setX, int setY, int setOr, int setDmg, int setRng, SpecialText set1, SpecialText set2, boolean alting) {
         strClass = "Spell";
         room = theRoom;
         orgo = room.org;
@@ -53,7 +54,7 @@ public class Spell extends GameObject {
 
         layerName = room.makeUniqueLayerName("Spell");
         Layer effect = new Layer(new String[1][1], layerName);
-        effect.setStr(0,0, " ");
+        effect.setStr(0, 0, " ");
         effect.setPos(y, x);
         orgo.addLayer(effect);
 
@@ -68,19 +69,31 @@ public class Spell extends GameObject {
         setupTimer(30);
     }
 
-    public void setHostility(boolean set){ isHostile = set;}
+    public void setHostility(boolean set) {
+        isHostile = set;
+    }
 
-    public int getDamage(){ return damage; }
+    public int getDamage() {
+        return damage;
+    }
 
-    public int getRange(){ return range; }
+    public int getRange() {
+        return range;
+    }
 
-    public SpecialText getAnim1(){ return char1; }
+    public SpecialText getAnim1() {
+        return char1;
+    }
 
-    public SpecialText getAnim2(){ return char2; }
+    public SpecialText getAnim2() {
+        return char2;
+    }
 
-    public boolean getAlting(){ return dispAlting; }
+    public boolean getAlting() {
+        return dispAlting;
+    }
 
-    public void setName(String newName){
+    public void setName(String newName) {
         name = newName;
         /*
         switch (name){
@@ -126,7 +139,7 @@ public class Spell extends GameObject {
         */
     }
 
-    public void define(int damage, int range, SpecialText charOne, SpecialText charTwo){
+    public void define(int damage, int range, SpecialText charOne, SpecialText charTwo) {
         setKillMessage("You died!");
         setDamage(damage);
         setRange(range);
@@ -134,19 +147,23 @@ public class Spell extends GameObject {
         setChar2(charTwo);
     }
 
-    public void setChar1(SpecialText newChar1){
+    public void setChar1(SpecialText newChar1) {
         char1 = newChar1;
     }
-    public void setChar2(SpecialText newChar2){
+
+    public void setChar2(SpecialText newChar2) {
         char2 = newChar2;
     }
-    public void setDamage(int newDamage){
+
+    public void setDamage(int newDamage) {
         damage = newDamage;
     }
-    public void setRange(int newRange){
+
+    public void setRange(int newRange) {
         range = newRange;
     }
-    public void setKillMessage(String newKillMessage){
+
+    public void setKillMessage(String newKillMessage) {
         killMessage = newKillMessage;
     }
 
@@ -164,7 +181,7 @@ public class Spell extends GameObject {
             Mortal target = getClosestBadGuy(range);
             if (target != null) {
                 pathToPos(range, target.getX(), target.getY(), layerName, false);
-                if (Math.abs(target.getX() - x) + Math.abs(target.getY() - y) <= 1){
+                if (Math.abs(target.getX() - x) + Math.abs(target.getY() - y) <= 1) {
                     target.subtractHealth(damage, killMessage);
                     hitSomeOne = true;
                 }
@@ -194,17 +211,17 @@ public class Spell extends GameObject {
 
         if (!hitSomeOne)
             hitSomeOne = room.hurtSomethingAt(x, y, damage, killMessage, !isHostile);
-        if (room.isPlaceSolid(x,y) || hitSomeOne || range == 0){
+        if (room.isPlaceSolid(x, y) || hitSomeOne || range == 0) {
             orgo.editLayer(" ", layerName, 0, 0);
             orgo.removeLayer(layerName);
             room.removeObject(this);
         }
-        if (range > 0){
-            range --;
+        if (range > 0) {
+            range--;
         }
     }
 
-    protected void doMovement(){
+    protected void doMovement() {
         switch (orientation) {
             case 0:
                 y -= 1;
@@ -234,6 +251,7 @@ public class Spell extends GameObject {
     int r(int max) {
         return r(max, 0);
     }
+
     int r(int max, int min) {
         return rand.nextInt((max - min) + 1) + min;
     }

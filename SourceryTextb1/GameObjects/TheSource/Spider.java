@@ -1,7 +1,5 @@
 package SourceryTextb1.GameObjects.TheSource;
 
-import SourceryTextb1.GameObjects.DroppedItem;
-import SourceryTextb1.GameObjects.Item;
 import SourceryTextb1.GameObjects.Mortal;
 import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
@@ -45,7 +43,7 @@ public class Spider extends Mortal {
     }
 
     @Override
-    public void onDeath(){
+    public void onDeath() {
         orgo.removeLayer(layerName);
     }
 }

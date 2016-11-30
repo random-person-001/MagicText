@@ -22,10 +22,10 @@ public class PathingObj extends Mortal {
         setupTimer(200);
 
         Layer testTarget = new Layer(new String[1][1], "TestingLayer");
-        testTarget.setSpecTxt(0,0,new SpecialText("+", Color.BLACK, Color.WHITE));
+        testTarget.setSpecTxt(0, 0, new SpecialText("+", Color.BLACK, Color.WHITE));
         //orgo.addLayer(testTarget);
 
-        Spell attack = new Spell (room, 0, 0, 0, 3, 10, new SpecialText("%"), new SpecialText("%"), false);
+        Spell attack = new Spell(room, 0, 0, 0, 3, 10, new SpecialText("%"), new SpecialText("%"), false);
         attack.setHostility(true);
         rangedInit(5, 5, 5, 25, attack);
     }

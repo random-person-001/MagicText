@@ -30,35 +30,41 @@ public class ColoredTextMatrix extends JPanel {
     private class ComponentResizeListener implements ComponentListener {
         /**
          * // Now is a great time to recalculate display variables!
+         *
          * @param e something I don't care about
          */
         @Override
         public void componentResized(ComponentEvent e) {
             //System.out.println("Window resized!");
             recalculate();
-            String message = "w="+getWidth()+" h="+getHeight();
+            String message = "w=" + getWidth() + " h=" + getHeight();
             System.out.println(message);
         }
 
         // These aren't important; it refused to run by throwing errors until I implemented these.
         @Override
-        public void componentMoved(ComponentEvent componentEvent) {}
+        public void componentMoved(ComponentEvent componentEvent) {
+        }
+
         @Override
-        public void componentShown(ComponentEvent componentEvent) {}
+        public void componentShown(ComponentEvent componentEvent) {
+        }
+
         @Override
-        public void componentHidden(ComponentEvent componentEvent) {}
+        public void componentHidden(ComponentEvent componentEvent) {
+        }
     }
 
     /**
      * Recalculate all of the display stuff, to call during window resizing (when it changes)
      */
-    private void recalculate(){
+    private void recalculate() {
         HOR_SEPARATION = getWidth() / 46; //Calculates horizontal and vertical separation of the letters
         VER_SEPARATION = (getHeight() / 28); //Intentionally wrong
-        int adjustedVerSep = (int)((float)VER_SEPARATION * (9f/15)); //Adjusts horizontal separation if too big for vertical.
-        if (HOR_SEPARATION > adjustedVerSep){
+        int adjustedVerSep = (int) ((float) VER_SEPARATION * (9f / 15)); //Adjusts horizontal separation if too big for vertical.
+        if (HOR_SEPARATION > adjustedVerSep) {
             HOR_SEPARATION = adjustedVerSep;
-            HOR_MARGIN = (getWidth() - (HOR_SEPARATION*46)) / 2; //Sets a margin to center display in the screen
+            HOR_MARGIN = (getWidth() - (HOR_SEPARATION * 46)) / 2; //Sets a margin to center display in the screen
         } else {
             HOR_MARGIN = 0;
         }
@@ -71,27 +77,27 @@ public class ColoredTextMatrix extends JPanel {
     }
 
     @Override
-    public void paintComponent (Graphics g){
+    public void paintComponent(Graphics g) {
         //float startTime = System.currentTimeMillis();
         g.setColor(Color.BLACK);
-        g.fillRect(0,0, getWidth(), getHeight());
+        g.fillRect(0, 0, getWidth(), getHeight());
 
         //recalculate(); // See the difference it makes by uncommenting - my unscientific methods measured around a thirdish difference
 
-        for (int col = 0; col < text.length; col++){ //Draws the highlighting / backgrounds first, so that it does not draw over any characters whatsoever
-            for (int row = 0; row < text[0].length; row++){
+        for (int col = 0; col < text.length; col++) { //Draws the highlighting / backgrounds first, so that it does not draw over any characters whatsoever
+            for (int row = 0; row < text[0].length; row++) {
                 SpecialText get = text[col][row];
-                if (get != null){
+                if (get != null) {
                     g.setColor(get.backgroundColor);
                     g.fillRect((col * HOR_SEPARATION) + HOR_MARGIN, (row * VER_SEPARATION) + (CHAR_SIZE / 4), CHAR_WIDTH, CHAR_HEIGHT);
                 }
             }
         }
 
-        for (int col = 0; col < text.length; col++){ //Draws the text after doing the background
-            for (int row = 0; row < text[0].length; row++){
+        for (int col = 0; col < text.length; col++) { //Draws the text after doing the background
+            for (int row = 0; row < text[0].length; row++) {
                 SpecialText get = text[col][row];
-                if (get != null){
+                if (get != null) {
                     g.setColor(get.foregroundColor);
                     g.drawString(get.getStr(), (col * HOR_SEPARATION) + HOR_MARGIN, (row * VER_SEPARATION) + CHAR_SIZE);
                 }

@@ -286,7 +286,9 @@ public class Layer implements java.io.Serializable {
      * Make the layer completely empty strings
      */
 
-    public void clear(){ clear(Color.BLACK); }
+    public void clear() {
+        clear(Color.BLACK);
+    }
 
     public void clear(Color usedBackgrnd) {
         for (int row = 0; row < getRows(); row++) {
@@ -299,13 +301,14 @@ public class Layer implements java.io.Serializable {
 
     /**
      * Finds all SpecialTexts in layer and replaces it with another.
-     * @param find SpecialText to find
+     *
+     * @param find        SpecialText to find
      * @param replacement SpecialText to replace with
      */
     public void findAndReplace(SpecialText find, SpecialText replacement) {
-        for (int c = 0; c < getColumns(); c++){
-            for (int r = 0; r < getRows(); r++){
-                if (getSpecTxt(r,c).equals(find)) {
+        for (int c = 0; c < getColumns(); c++) {
+            for (int r = 0; r < getRows(); r++) {
+                if (getSpecTxt(r, c).equals(find)) {
                     setSpecTxt(r, c, replacement);
                 }
             }
@@ -314,15 +317,16 @@ public class Layer implements java.io.Serializable {
 
     /**
      * Finds all SpecialTexts in layer and replaces it with another.
-     * @param find SpecialText to find
+     *
+     * @param find        SpecialText to find
      * @param replacement SpecialText to replace with
-     * @param chance the chance (in 100) of each tile to be swapped
+     * @param chance      the chance (in 100) of each tile to be swapped
      */
     public void findAndReplace(SpecialText find, SpecialText replacement, int chance) {
         Random rand = new Random();
-        for (int c = 0; c < getColumns(); c++){
-            for (int r = 0; r < getRows(); r++){
-                if (getSpecTxt(r,c).equals(find) && rand.nextInt(100) <= chance) {
+        for (int c = 0; c < getColumns(); c++) {
+            for (int r = 0; r < getRows(); r++) {
+                if (getSpecTxt(r, c).equals(find) && rand.nextInt(100) <= chance) {
                     setSpecTxt(r, c, replacement);
                 }
             }
@@ -332,10 +336,10 @@ public class Layer implements java.io.Serializable {
     /**
      * Sets (not influences) the background color of all SpecialText in the layer
      */
-    public void setAllBg (Color flavor){
-        for (int c = 0; c < getColumns(); c++){
-            for (int r = 0; r < getRows(); r++){
-                SpecialText get = getSpecTxt(r,c);
+    public void setAllBg(Color flavor) {
+        for (int c = 0; c < getColumns(); c++) {
+            for (int r = 0; r < getRows(); r++) {
+                SpecialText get = getSpecTxt(r, c);
                 get.backgroundColor = (flavor);
                 self[r][c] = get;
             }
@@ -345,10 +349,10 @@ public class Layer implements java.io.Serializable {
     /**
      * Influences the foreground color of all SpecialText in the layer
      */
-    public void influenceAll (Color flavor){
-        for (int c = 0; c < getColumns(); c++){
-            for (int r = 0; r < getRows(); r++){
-                SpecialText get = getSpecTxt(r,c);
+    public void influenceAll(Color flavor) {
+        for (int c = 0; c < getColumns(); c++) {
+            for (int r = 0; r < getRows(); r++) {
+                SpecialText get = getSpecTxt(r, c);
                 get.setInfluencedForegroundColor(flavor);
                 self[r][c] = get;
             }
@@ -359,25 +363,27 @@ public class Layer implements java.io.Serializable {
      * Returns a duplicate layer
      */
 
-    public Layer createDuplicate(){
+    public Layer createDuplicate() {
         return new Layer(self, name, xPos, yPos, cameraObedient, opaque, importance).setOwningPlayerUsername(owningPlayerUsername);
     }
 
-    public String getNameAndOperation(){
+    public String getNameAndOperation() {
         String output = name;
         output += " (" + imageOrgOperation + ")";
         return output;
     }
 
-    public boolean equals(Object other){ return name == ((Layer)other).getName(); }
+    public boolean equals(Object other) {
+        return name == ((Layer) other).getName();
+    }
 
     /**
      * @return what the Layer looks like (without background)
      */
-    public String getStr(){
+    public String getStr() {
         String toReturn = "";
         for (SpecialText[] row : self) {
-            for (SpecialText txt: row) {
+            for (SpecialText txt : row) {
                 toReturn += txt.getStr();
             }
             toReturn += "\n";

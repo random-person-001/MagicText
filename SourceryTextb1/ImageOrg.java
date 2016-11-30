@@ -34,7 +34,7 @@ public class ImageOrg implements java.io.Serializable {
 
     //Fabulous colors!
     private Color[] fabulousColorWheel = {new Color(255, 100, 100), new Color(255, 100, 255), new Color(100, 100, 255), new Color(100, 255, 255),
-            new Color( 80, 255, 120), new Color(255, 255, 100), new Color(255, 150,  75)};
+            new Color(80, 255, 120), new Color(255, 255, 100), new Color(255, 150, 75)};
 
     //FrameTimer frameTimerInstance = new FrameTimer();
     private Timer drawTimer = new Timer();
@@ -49,14 +49,15 @@ public class ImageOrg implements java.io.Serializable {
 
     /**
      * Set the default player, ie the player that the ImageOrg will build for in its timer
+     *
      * @param player
      */
-    public void setDefaultPlayer(Player player){
+    public void setDefaultPlayer(Player player) {
         defaultPlayer = player;
     }
 
-    public ArrayList<Layer> getLayers(){
-        ArrayList<Layer> result = (ArrayList<Layer>)layers.clone();
+    public ArrayList<Layer> getLayers() {
+        ArrayList<Layer> result = (ArrayList<Layer>) layers.clone();
         result.addAll(importantLayers);
         return result;
     }
@@ -64,8 +65,7 @@ public class ImageOrg implements java.io.Serializable {
     public void resetClock() {
         if (window != null) {
             System.out.println("[ImageOrg " + orgSerial + " for Window " + window.serial + "] Timer restarted, layer op's: (1) " + operationList1 + " (2) " + operationList2);
-        }
-        else {
+        } else {
             System.out.println("[ImageOrg " + orgSerial + "] Timer restarted, layer op's: (1) " + operationList1 + " (2) " + operationList2);
         }
         doLayerOperations();
@@ -92,10 +92,10 @@ public class ImageOrg implements java.io.Serializable {
      * @param lay a Layer to be known about by everything
      */
     public void addLayer(Layer lay) {
-        while(layerOpLock){
-            try{
+        while (layerOpLock) {
+            try {
                 Thread.sleep(5);
-            } catch (InterruptedException e){
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
@@ -113,7 +113,7 @@ public class ImageOrg implements java.io.Serializable {
      * @return that Layer
      */
     public Layer getLayer(String layerName) {
-        while(layerOpLock){
+        while (layerOpLock) {
             try {
                 Thread.sleep(5);
             } catch (InterruptedException e) {
@@ -129,7 +129,7 @@ public class ImageOrg implements java.io.Serializable {
         for (int i = importantLayers.size() - 1; i >= 0; i--) {
             Layer lay2 = importantLayers.get(i);
             if (lay2 != null && lay2.getName().equals(layerName)) {
-                
+
                 return lay2;
             }
         }
@@ -138,14 +138,15 @@ public class ImageOrg implements java.io.Serializable {
 
     /**
      * Adds a layer to the operation list.
-     * @param op The layer destined to be operated on
+     *
+     * @param op   The layer destined to be operated on
      * @param type String describing what operation needs to be done on a layer
      */
     private void addOp(Layer op, String type) {
         //System.out.println("Adding layer " + op.getName());
         Layer toAdd = op.createDuplicate();
         toAdd.imageOrgOperation = type;
-        if (!useOpList2){
+        if (!useOpList2) {
             operationList1.add(toAdd);
         } else {
             operationList2.add(toAdd);
@@ -159,7 +160,7 @@ public class ImageOrg implements java.io.Serializable {
      */
     public void removeLayer(String layerName) {
         boolean layerFound = false;
-        
+
         for (int i = layers.size() - 1; i >= 0; i--) {
             Layer get = layers.get(i);
             if (get.nameMatches(layerName)) {
@@ -174,7 +175,7 @@ public class ImageOrg implements java.io.Serializable {
                 layerFound = true;
             }
         }
-        
+
         if (!layerFound)
             System.out.printf("Layer not found for remove: \"%1$s\"\n", layerName);
     }
@@ -206,7 +207,7 @@ public class ImageOrg implements java.io.Serializable {
                 layerFound = true;
             }
         }
-        
+
         if (!layerFound)
             System.out.printf("Layer not found for importance change: \"%1$s\"\n", layerName);
     }
@@ -214,7 +215,7 @@ public class ImageOrg implements java.io.Serializable {
     /**
      * Adds and removes all layers requested in a stack-like fashion.
      */
-    private void doLayerOperations(){
+    private void doLayerOperations() {
         while (layerOpLock) { // Only really necessary for multiplayer
             try {
                 Thread.sleep(5);
@@ -225,7 +226,7 @@ public class ImageOrg implements java.io.Serializable {
 
         layerOpLock = true;
         ArrayList<Layer> operationList;
-        if (!useOpList2){
+        if (!useOpList2) {
             operationList = operationList1;
         } else {
             operationList = operationList2;
@@ -236,7 +237,7 @@ public class ImageOrg implements java.io.Serializable {
         boolean doOutput = operationList.size() > 0;  //Stuff for the extremely useful output of layer changes
         String opManifest = String.format("- Org -\n[%1$d] Layer Op's", layerChangeInstance);
 
-        for (Layer op : operationList){ //Now for the actual layer operations; works like a stack
+        for (Layer op : operationList) { //Now for the actual layer operations; works like a stack
             if (op != null) {
                 switch (op.imageOrgOperation) {
                     case "add": //If the layer in question should be added
@@ -298,10 +299,10 @@ public class ImageOrg implements java.io.Serializable {
     /**
      * Edit a single element of a Layer's array of strings.  Don't get X and Y mixed up.
      *
-     * @param input     what it should be now
-     * @param lay       the actual Layer you want changed
-     * @param y         the Y coordinate which you want to change something at
-     * @param x         the X coordinate which you want to change something at
+     * @param input what it should be now
+     * @param lay   the actual Layer you want changed
+     * @param y     the Y coordinate which you want to change something at
+     * @param x     the X coordinate which you want to change something at
      */
     public void editLayer(String input, Layer lay, int y, int x) {
         if (!(y > lay.getRows() || y < 0 || x > lay.getColumns() || x < 0)) {
@@ -312,10 +313,10 @@ public class ImageOrg implements java.io.Serializable {
     /**
      * Edit a single element of a Layer's array of strings.  Don't get X and Y mixed up.
      *
-     * @param input what it should be now, a SpecialText!
+     * @param input     what it should be now, a SpecialText!
      * @param layerName The name of the layer you want to edit
-     * @param y     the row (Y coordinate) which you want to change something at
-     * @param x     the column (X coordinate) which you want to change something at
+     * @param y         the row (Y coordinate) which you want to change something at
+     * @param x         the column (X coordinate) which you want to change something at
      */
     public void editLayer(SpecialText input, String layerName, int y, int x) {
         Layer get = getLayer(layerName);
@@ -368,10 +369,10 @@ public class ImageOrg implements java.io.Serializable {
      * @return boolean of the layer's existence
      */
     public boolean layerExists(String layerName) {
-        while (layerOpLock){
-            try{
+        while (layerOpLock) {
+            try {
                 Thread.sleep(5);
-            } catch (InterruptedException e){
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
@@ -418,7 +419,7 @@ public class ImageOrg implements java.io.Serializable {
     private void newSendImage() {
         Layer fullImage;
         try {
-            if (defaultPlayer == null){
+            if (defaultPlayer == null) {
                 //System.out.println("[ImageOrg " + orgSerial + "] TopDownBuild on nobody");
                 fullImage = topDownBuild();
             } else {
@@ -435,33 +436,39 @@ public class ImageOrg implements java.io.Serializable {
     private int screenH() {
         return 28;
     }
+
     private int screenW() {
         return 46;
     }
 
     /**
      * Build a layer with default, normal parameters, like starting at (0,0) with no owningPlayerUsername, a white foreground, and no fabulous mode on.
+     *
      * @return what should go on the screen
      */
     public Layer topDownBuild() {
         return topDownBuild(camX, camY, null, Color.WHITE, false, 0, 0); // All the default things
     }
+
     /**
      * Build a layer with display parameters read from a player
+     *
      * @return what should go on the screen
      */
     public Layer topDownBuild(Player focusOn) {
         return topDownBuild(focusOn.getCamX(), focusOn.getCamY(), focusOn.getUsername(), focusOn.foregroundColor, focusOn.fabulousMode, focusOn.fabulousLocIndex, focusOn.fabulousColorIndex);
     }
+
     /**
      * Build a layer with parameters specified, for other methods to override
+     *
      * @return what should go on the screen
      */
     private Layer topDownBuild(int camX, int camY, String owningPlayerUsername, Color foregroundColor, boolean fabulousMode, int fabulousLocIndex, int fabulousColorIndex) {
         //Update layer order to minimize nonexistant layers
         doLayerOperations();
 
-        ArrayList<Layer> allLayers = (ArrayList<Layer>)layers.clone();
+        ArrayList<Layer> allLayers = (ArrayList<Layer>) layers.clone();
         allLayers.addAll(importantLayers);
         //Actually render image
         Layer fullImage = new Layer(new String[screenH()][screenW()]);
@@ -489,7 +496,7 @@ public class ImageOrg implements java.io.Serializable {
                                 fullImage.setSpecTxt(row, col, new SpecialText(" ", Color.WHITE, found.getBackgroundColor()));
                             } else { //Otherwise, place found SpecialText
                                 SpecialText toPlace = new SpecialText(found.getStr(), found.foregroundColor, found.backgroundColor);
-                                if (foregroundColor != null && foregroundColor != Color.WHITE){
+                                if (foregroundColor != null && foregroundColor != Color.WHITE) {
                                     toPlace.setInfluencedForegroundColor(foregroundColor);
                                 }
                                 if (fabulousMode && Math.abs((row + col) - fabulousLocIndex) <= 7) { // Fabulous mode accommodations
@@ -525,6 +532,7 @@ public class ImageOrg implements java.io.Serializable {
 
     /**
      * Wipe a layer clean
+     *
      * @param layName string of layer
      */
     public void clearLayer(String layName) {
@@ -567,17 +575,17 @@ public class ImageOrg implements java.io.Serializable {
         int[] compileTimes = new int[TIMELIST_SIZE];
         int timeTablePointer = 0;
 
-        private float averageTimes(){
+        private float averageTimes() {
             int total = 0;
-            for (int i : compileTimes){
+            for (int i : compileTimes) {
                 total += i;
             }
-            return (float)total / TIMELIST_SIZE;
+            return (float) total / TIMELIST_SIZE;
         }
 
         FrameTimer() {
             lastRunMs = System.nanoTime();
-            for (int ii = 0; ii < TIMELIST_SIZE; ii++){
+            for (int ii = 0; ii < TIMELIST_SIZE; ii++) {
                 compileTimes[ii] = 10; //Not TIMELIST_SIZE
             }
         }
@@ -592,7 +600,7 @@ public class ImageOrg implements java.io.Serializable {
                 System.out.printf("Time to compile image (notably long): %1$dms (avg %2$f)\n", System.currentTimeMillis() - lastRunMs, avg);
             }
 
-            compileTimes[timeTablePointer] = (int)diff;
+            compileTimes[timeTablePointer] = (int) diff;
             timeTablePointer++; //Increments pointer and loops if too large
             if (timeTablePointer == TIMELIST_SIZE) timeTablePointer = 0;
         }

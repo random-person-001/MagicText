@@ -1,13 +1,15 @@
 package SourceryTextb1.Rooms.TheSource;
 
-import SourceryTextb1.GameObjects.*;
+import SourceryTextb1.Art;
+import SourceryTextb1.GameObjects.DroppedItem;
+import SourceryTextb1.GameObjects.Item;
+import SourceryTextb1.GameObjects.Player;
 import SourceryTextb1.GameObjects.TheSource.Bandit;
 import SourceryTextb1.GameObjects.TheSource.Spider;
 import SourceryTextb1.GameObjects.TheSource.WeakTower;
 import SourceryTextb1.GameObjects.TheSource.Wolf;
 import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
-import SourceryTextb1.Art;
 import SourceryTextb1.SpecialText;
 
 /**
@@ -34,16 +36,16 @@ public class Cliffside extends Room {
                     // ^ This should be an item in The Mines of Mementos
                     count++;
                 }
-                if (play.getY() < 1 && play.getX() < 20){
+                if (play.getY() < 1 && play.getX() < 20) {
                     setNewRoom("SourcePit", play, 42, 57);
                 }
-                if (play.getY() < 1 && play.getX() > 20){
+                if (play.getY() < 1 && play.getX() > 20) {
                     setNewRoom("InnerMountains", play, 44, 11);
                 }
-                if (play.getY() >= 32){
+                if (play.getY() >= 32) {
                     setNewRoom("SourceCaves", play, 1, 62);
                 }
-                if (play.getX() >= 146){
+                if (play.getX() >= 146) {
                     setNewRoom("BanditFortress", play, 103, 67);
                 }
             } catch (InterruptedException ignored) {
@@ -56,10 +58,10 @@ public class Cliffside extends Room {
      * Everything that self-updates and can be paused (and acts nonexistent during paused) should go here.
      */
     @Override
-    public void addItems(){
+    public void addItems() {
 
         int[][] locs = {{106, 115}, {14, 17}};
-        for (int ii = 0 ; ii < locs[0].length ; ii++){
+        for (int ii = 0; ii < locs[0].length; ii++) {
             Wolf wolf = new Wolf(org, this, locs[0][ii], locs[1][ii]);
             addMortal(wolf);
         }
@@ -78,10 +80,10 @@ public class Cliffside extends Room {
             addMortal(t);
         }
 
-        Item potion = new Item ("SC&OPotatoChip", "This variety of magic\n potato chip is flavored\n with sour cream and onions\n\nIt makes your breath so bad\n it hurts nearby enemies.", "item");
+        Item potion = new Item("SC&OPotatoChip", "This variety of magic\n potato chip is flavored\n with sour cream and onions\n\nIt makes your breath so bad\n it hurts nearby enemies.", "item");
         potion.setDescMode("potion");
-        potion.setDuration(20*1000);
-        DroppedItem dPotion =  new DroppedItem(this, "You found a potato chip!", potion, 58, 7);
+        potion.setDuration(20 * 1000);
+        DroppedItem dPotion = new DroppedItem(this, "You found a potato chip!", potion, 58, 7);
         super.addObject(dPotion);
     }
 
@@ -93,15 +95,15 @@ public class Cliffside extends Room {
         Layer baseLayer = new Layer(base, "backgronud");
         Art coloring = new Art();
         baseLayer.influenceAll(coloring.mountainPallette1);
-        baseLayer.findAndReplace(new SpecialText("0",coloring.mountainPallette1), new SpecialText("O", coloring.mountainPallette2));
-        baseLayer.findAndReplace(new SpecialText("o",coloring.mountainPallette1), new SpecialText("o", coloring.mountainPallette2));
-        baseLayer.findAndReplace(new SpecialText(",",coloring.mountainPallette1), new SpecialText(",", coloring.mountainPallette2));
+        baseLayer.findAndReplace(new SpecialText("0", coloring.mountainPallette1), new SpecialText("O", coloring.mountainPallette2));
+        baseLayer.findAndReplace(new SpecialText("o", coloring.mountainPallette1), new SpecialText("o", coloring.mountainPallette2));
+        baseLayer.findAndReplace(new SpecialText(",", coloring.mountainPallette1), new SpecialText(",", coloring.mountainPallette2));
         org.addLayer(baseLayer);
 
         initHitMeshes(baseLayer);
 
         addItems();
-        String[] solids = {":", "^", "#",".","0","o"};
+        String[] solids = {":", "^", "#", ".", "0", "o"};
         addToBaseHitMesh(base, solids);
 
         genericRoomInitialize();

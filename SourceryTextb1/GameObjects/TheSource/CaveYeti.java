@@ -1,7 +1,5 @@
 package SourceryTextb1.GameObjects.TheSource;
 
-import SourceryTextb1.GameObjects.DroppedItem;
-import SourceryTextb1.GameObjects.Item;
 import SourceryTextb1.GameObjects.Mortal;
 import SourceryTextb1.ImageOrg;
 import SourceryTextb1.Layer;
@@ -55,7 +53,7 @@ public class CaveYeti extends Mortal {
     }
 
     @Override
-    public void onDeath(){
+    public void onDeath() {
         orgo.removeLayer(layerName);
     }
 }

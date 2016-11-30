@@ -74,13 +74,12 @@ class MainMenu {
             waitAMomentAndUpdateCursor();
         }
         if (cursorY == 11) {
-            if (loadGame()){
+            if (loadGame()) {
                 System.out.println("success!");
-            }
-            else {
+            } else {
                 org.addLayer(new Layer(Art.strToArray(new Art().mainMenu), "MAIN_MENU"));
-                window.txtArea.addKeyListener(keyInputter); // Same as below  \/
-                menuID = TOP_MENU; // In most cases.  If going to multiplayer menu, we'll change it again.
+                window.txtArea.addKeyListener(keyInputter);
+                menuID = TOP_MENU;
                 waitAMomentAndUpdateCursor();
             }
         }
@@ -200,9 +199,10 @@ class MainMenu {
 
     /**
      * Generally, when a key is pressed during the IP entering submenu, call this.
+     *
      * @param event the KeyEvent generated
      */
-    private void onKeyPressedDuringIP(KeyEvent event){
+    private void onKeyPressedDuringIP(KeyEvent event) {
         keyChar = event.getKeyChar();
         if (cursorY == 10 && (keyChar == '.' || Character.isDigit(keyChar)) && ipSetXPos < 24) {
             ipString += keyChar;
@@ -216,8 +216,8 @@ class MainMenu {
      * Generic case for pressing enter; splits flow off into the different methods according to whether in multiplayer
      * menu or not.
      */
-    private void onEnterPressed(){
-        if (menuID == TOP_MENU){
+    private void onEnterPressed() {
+        if (menuID == TOP_MENU) {
             onEnterPressedDuringTop();
         } else {
             onEnterPressedDuringMultiplayer();
@@ -226,10 +226,11 @@ class MainMenu {
 
     /**
      * Call when a non-arrow, non-enter key is pressed.
+     *
      * @param e which key
      */
     private void onGenericKeyPressed(KeyEvent e) {
-        if (menuID == IP_ENTERING_MENU){
+        if (menuID == IP_ENTERING_MENU) {
             onKeyPressedDuringIP(e);
         }
     }
@@ -246,14 +247,15 @@ class MainMenu {
         onPressArrow(); // This is the graphic update stuff for the cursor
     }
 
-    private boolean loadGame(){
+    private boolean loadGame() {
         File save;
         JFileChooser chooser = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter(
                 "Sourcery Text Saves", "sav");
         chooser.setFileFilter(filter);
-        int returnVal = chooser.showOpenDialog(new Component(){});
-        if(returnVal == JFileChooser.APPROVE_OPTION) {
+        int returnVal = chooser.showOpenDialog(new Component() {
+        });
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
             System.out.println("You chose to open this file: " +
                     chooser.getSelectedFile().getName());
             save = chooser.getSelectedFile();
@@ -263,13 +265,13 @@ class MainMenu {
             System.out.println("Attempting to open");
             FileInputStream fileIn = new FileInputStream(save);
             ObjectInputStream in = new ObjectInputStream(fileIn);
-            GameInstance instance= (GameInstance)in.readObject();
+            GameInstance instance = (GameInstance) in.readObject();
             System.out.println("Game instance read");
             starter.buildGame(instance);
             System.out.println("Game built");
             in.close();
             fileIn.close();
-        } catch (IOException | ClassNotFoundException | java.lang.Error e){
+        } catch (IOException | ClassNotFoundException | java.lang.Error e) {
             System.out.println("Something went wrong :(");
             e.printStackTrace();
             return false;

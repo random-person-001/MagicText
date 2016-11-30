@@ -1,8 +1,10 @@
 package SourceryTextb1.GameObjects.TheSource;
 
 import SourceryTextb1.GameObjects.GameObject;
-import SourceryTextb1.*;
+import SourceryTextb1.ImageOrg;
+import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
+import SourceryTextb1.SpecialText;
 
 import java.util.Random;
 
@@ -13,7 +15,7 @@ public class Snowflake extends GameObject {
 
     private String layerName;
 
-    public Snowflake(ImageOrg orgSet, Room creator, int setX, int setY){
+    public Snowflake(ImageOrg orgSet, Room creator, int setX, int setY) {
         strClass = "Snowflake";
 
         room = creator;
@@ -29,10 +31,10 @@ public class Snowflake extends GameObject {
         setupTimer(175);
     }
 
-    public void update(){
+    public void update() {
         x--;
         y++;
-        if (x < 0){
+        if (x < 0) {
             Random randal = new Random();
             y = 0;
             x = randal.nextInt(room.roomWidth);
@@ -41,7 +43,7 @@ public class Snowflake extends GameObject {
         if (iconLayer != null) iconLayer.setPos(y, x);
     }
 
-    public void selfCleanup(){
+    public void selfCleanup() {
         orgo.removeLayer(layerName);
     }
 

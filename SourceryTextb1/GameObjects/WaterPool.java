@@ -11,21 +11,21 @@ import java.util.Random;
 /**
  * Created by Jared on 10/1/2016.
  */
-public class WaterPool extends GameObject{
+public class WaterPool extends GameObject {
     private Layer puddle;
     private boolean[][] puddleData;
 
-    private int [] waveXs;
-    private int [] waveYs; //Welcome to wavey's, how can I take your order?
-    private int [] waveTimers;
+    private int[] waveXs;
+    private int[] waveYs; //Welcome to wavey's, how can I take your order?
+    private int[] waveTimers;
 
-    public WaterPool(Room creator, Layer set, ImageOrg org, int xSet, int ySet){
+    public WaterPool(Room creator, Layer set, ImageOrg org, int xSet, int ySet) {
         puddle = set;
         int puddleSize = 0;
         puddleData = new boolean[puddle.getColumns()][puddle.getRows()];
-        for (int c = 0; c < puddle.getColumns(); c++){
-            for (int r = 0; r < puddle.getRows(); r++){
-                if (puddle.getStr(r,c).equals("W")) {
+        for (int c = 0; c < puddle.getColumns(); c++) {
+            for (int r = 0; r < puddle.getRows(); r++) {
+                if (puddle.getStr(r, c).equals("W")) {
                     puddleData[c][r] = true;
                     puddle.setSpecTxt(r, c, new SpecialText(" ", null, new Color(65, 65, 200)));
                     puddleSize++;
@@ -39,9 +39,9 @@ public class WaterPool extends GameObject{
 
         String debugOutput = "[Water] Boolean matrix:\n";
 
-        for (int r = 0; r < puddleData[0].length; r++){
-            for (int c = 0; c < puddleData.length ; c++){
-                if (puddleData[c][r]){
+        for (int r = 0; r < puddleData[0].length; r++) {
+            for (int c = 0; c < puddleData.length; c++) {
+                if (puddleData[c][r]) {
                     debugOutput += "~";
                 } else {
                     debugOutput += "#";
@@ -63,18 +63,18 @@ public class WaterPool extends GameObject{
     }
 
     //int iter = 0;
-    public void update(){
+    public void update() {
         // Waves move across surface
         Random rand = new Random();
-        for (int ii = 0; ii < waveTimers.length ; ii++){
-            if (waveTimers[ii] == 0){ //Checks for every wave if it supposed to 'despawn'
-                if (puddleData[waveXs[ii]][waveYs[ii]]){ //First off removes the wave from where it is now
+        for (int ii = 0; ii < waveTimers.length; ii++) {
+            if (waveTimers[ii] == 0) { //Checks for every wave if it supposed to 'despawn'
+                if (puddleData[waveXs[ii]][waveYs[ii]]) { //First off removes the wave from where it is now
                     puddle.setSpecTxt(waveYs[ii], waveXs[ii], new SpecialText(" ", null, new Color(65, 65, 200)));
                 }
                 waveTimers[ii] = rand.nextInt(6) + 2; //Then gives the wave a new (pseudo-random) time to wait before 'despawning' again
                 waveXs[ii] = rand.nextInt(puddleData.length); //Creates new x and y coords for pool
                 waveYs[ii] = rand.nextInt(puddleData[0].length);
-                if (puddleData[waveXs[ii]][waveYs[ii]]){ //Checks if new location is in the pool
+                if (puddleData[waveXs[ii]][waveYs[ii]]) { //Checks if new location is in the pool
                     puddle.setSpecTxt(waveYs[ii], waveXs[ii], new SpecialText("~", new Color(0, 117, 200), new Color(65, 65, 200)));
                 }
             } else {
@@ -101,6 +101,7 @@ public class WaterPool extends GameObject{
 
     /**
      * Returns if there is water at a given x and y coordinate
+     *
      * @param absX "absolute X" as in x,y of rooms.
      * @param absY "absolute Y" (see above)
      */
