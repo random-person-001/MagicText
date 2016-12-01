@@ -14,42 +14,34 @@ import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
 import SourceryTextb1.SpecialText;
 
+import java.awt.*;
+
 /**
  * The inner mountains area, filled with carrots and the fork in the road between the snowy peak and the bandit fortress
  *
  * @author Jared
  *         <p>
  *         So Far:
- *         > You have been introduced to the backstory
- *         > You've mastered the Tutorial Basement
+ *         > You have ventured far into the mountains, ready for your ultimate confrontation with the bandits
+ *         > Collected some loot; usually ready to take on fortress
  *         <p>
  *         What Generally Happens Here:
- *         > You eat a bunch of carrots and fight some monsters.  Nothing too interesting.
- *         > You decide to go either to Snowy Peak or the Bandit Fortress (Snowy Peak winds up being a dead-end)
+ *         > You fight your way through the bandits and walk up to the hall of The King of the Bandits
  */
 
 
-public class InnerMountains extends Room {
+public class HallOfBanditKing extends Room {
 
-    public InnerMountains(Player player) {
+    public HallOfBanditKing(Player player) {
         super(player);
-        strRoomName = "InnerMountains";
+        strRoomName = "HallOfBanditKing";
     }
 
     @Override
     protected String loop(Player play) {
         while (exitCode.equals("")) {
             try {
-                Thread.sleep(20);
-                if (play.getY() == 46) {
-                    setNewRoom("Cliffside", play, 1, 137);
-                }
-                if (play.getX() == 65) {
-                    setNewRoom("SnowyPeak", play, 15, 1);
-                }
-                if (play.getY() == 0) {
-                    setNewRoom("BanditFortress", play, 103, 67);
-                }
+                Thread.sleep(200);
             } catch (InterruptedException ignored) {
             }
         }
@@ -79,20 +71,12 @@ public class InnerMountains extends Room {
     @Override
     public void startup() {
 
-
-        String[] signWords = {"Because carrots are a healthy snack,\n all carrots growing here are\n available to the general public",
-                "Eating food can restore health\n beyond your maximum health\nThis is called \"Overhealing\"",
-                "The Mountain Range Committee considers\n those who don't eat food regularly\n to be malnourished."};
-        plantText(new FlavorText(8, 38, signWords, "A Sign"));
-
-        plantText(new FlavorText(39, 18, "<- Bandit Fortress\n   Snowy Peak      ->", "A Sign"));
-
         Art arty = new Art();
-        String[][] base = Art.strToArray(arty.innerMountains);
-        Layer lay1 = new Layer(base, "Test");
+        String[][] base = Art.strToArray(arty.banditKingHall);
+        Layer lay1 = new Layer(base, "RoomLayer");
         Art coloring = new Art();
         lay1.influenceAll(coloring.mountainPallette1);
-        lay1.findAndReplace(new SpecialText("R", coloring.mountainPallette1), new SpecialText(":", coloring.mtnPeakPallette1));
+        lay1.findAndReplace(new SpecialText("#", coloring.mountainPallette1), new SpecialText("#", new Color(175, 175, 175), new Color(25, 25, 25)));
         lay1.findAndReplace(new SpecialText("o", coloring.mountainPallette1), new SpecialText("o", coloring.mountainPallette2));
         lay1.findAndReplace(new SpecialText("O", coloring.mountainPallette1), new SpecialText("O", coloring.mountainPallette2));
         lay1.findAndReplace(new SpecialText("0", coloring.mountainPallette1), new SpecialText("0", coloring.mountainPallette2));
@@ -101,10 +85,10 @@ public class InnerMountains extends Room {
         org.addLayer(lay1);
 
         initHitMeshes(lay1);
-        String[] solids = {";", ":", "^", "O", "o", "S", "R"};
+        String[] solids = {";", ":", "^", "O", "o", "O", "#","_","\\","/","|"};
         addToBaseHitMesh(base, solids);
 
-        addItems();
+        //addItems();
 
         genericRoomInitialize();
     }
