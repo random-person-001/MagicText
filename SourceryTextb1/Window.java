@@ -21,8 +21,14 @@ public class Window extends JFrame {
     public Window() {
         setVisible(true);
         txtArea = new ColoredTextMatrix();
-        setBounds(100, 100, 561, 586);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+        int width = gd.getDisplayMode().getWidth() / 4;
+        int height = gd.getDisplayMode().getHeight() / 2;
+
+        setBounds(100, 100, width, height);
+
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sourcery Text  -  an alphanumeric misadventure");
         setResizable(true);
 
