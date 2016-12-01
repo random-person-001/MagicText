@@ -7,6 +7,7 @@ package SourceryTextb1;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyListener;
 
 
 /**
@@ -77,5 +78,13 @@ public class Window extends JFrame {
         }
         //System.out.println(fullImage.getStr());
         txtArea.repaint();
+    }
+
+    /**
+     * "Formally" adds a keyListener with a request of focus in the window to ensure the keyListener can hear
+     */
+    public void formalAddKeyListener(KeyListener toAdd){
+        txtArea.requestFocusInWindow();
+        txtArea.addKeyListener(toAdd);
     }
 }
