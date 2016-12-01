@@ -155,6 +155,7 @@ public class GameInstance implements java.io.Serializable {
         rooms.put("SnowyPeak", new SnowyPeak(player));
         rooms.put("IceCaves", new IceCaves(player));
         rooms.put("HiddenBunker", new HiddenBunker(player));
+        rooms.put("HallOfBanditKing", new HallOfBanditKing(player));
         rooms.forEach((s, room) -> room.startup());
         rooms.forEach((s, room) -> room.setObjsPause(true));
         return rooms;
