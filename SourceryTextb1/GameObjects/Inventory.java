@@ -272,7 +272,6 @@ class Inventory implements java.io.Serializable {
      * (Cleans up all the layers that may have been made, and then sets menuID to EXIT)
      */
     private void exitAllMenus() {
-        cancelTimer();
         menuID = EXIT;
         infoLayer.clear();
         org.removeLayer("top" + player.getUsername());
@@ -284,10 +283,15 @@ class Inventory implements java.io.Serializable {
         org.removeLayer("invInfo" + player.getUsername());
         org.removeLayer("selector" + player.getUsername());
         player.resetMovement();
+        player.frozen = false;
+        player.room.setObjsPause(false);
     }
 
     void cancelTimer() {
-        timer.cancel();
+        if (timer != null) {
+            timer.cancel();
+            timer.purge();
+        }
     }
 
     /**
@@ -796,11 +800,9 @@ class Inventory implements java.io.Serializable {
             if (menuID == EXIT) {
                 org.removeLayer("selector");
                 org.removeLayer("invInfo");
-                player.frozen = false;
-                player.resetMovement();
                 System.out.println("Exiting menu through top menu....");
                 org.getLayers().stream().filter(lay -> lay.name.contains("playerLayer")).forEach(lay -> org.setLayerImportance(lay.getName(), true));
-                player.room.setObjsPause(false);
+                exitAllMenus();
                 cancel();
             } else {
                 newUpdateSelector(menuID);
