@@ -78,8 +78,6 @@ Cool things that could be included:
 
 What do you think, Jared?
 
-
-TODO> Make the window the same size (or contain the same amount of text) across different OSs
   * I actually would like to see if we could make it a bit bigger, for a more immersive experience than just a sixth
         of the screen
 

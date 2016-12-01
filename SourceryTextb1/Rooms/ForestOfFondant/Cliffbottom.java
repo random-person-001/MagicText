@@ -61,6 +61,7 @@ public class Cliffbottom extends Room {
         Color shadowTreeGreen = new Color(29, 120, 19);
         Color normalGrass = new Color(72, 150, 69);
         Color otherGrass = new Color(66, 150, 58);
+        //Color dirt = new Color(0, 0, 0);
         Color dirt = new Color(106, 112, 56);
         Color deepWater4 = new Color(21, 47, 145);
         Color deepWater3 = new Color(24, 67, 145);
