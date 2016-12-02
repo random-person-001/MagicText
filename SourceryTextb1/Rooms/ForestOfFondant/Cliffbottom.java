@@ -26,7 +26,7 @@ public class Cliffbottom extends Room {
         play.goTo(206,63);
 
         while (exitCode.equals("")) {
-            if (play.getY() >= roomHeight-2) {
+            if (play.getY() >= 270) {
                 setNewRoom("switch to zone 1", play, 0, 0);
             }
             try {
@@ -141,7 +141,7 @@ public class Cliffbottom extends Room {
         String[] solids = {"t","h"};
         addToBaseHitMesh(base, solids);
 
-        //org.roomBackground = dirt;
+        org.roomBackground = rock2;
 
         addItems();
 
