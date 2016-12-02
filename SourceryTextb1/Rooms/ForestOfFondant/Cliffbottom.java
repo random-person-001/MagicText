@@ -56,6 +56,14 @@ public class Cliffbottom extends Room {
     }
 
     @Override
+    protected void specialInspect(int x, int y, Player inspector) {
+        if (x == 196 && y == 39) {
+            org.removeLayer("veil");
+            removeFromBaseHitMesh(196, 39);
+        }
+    }
+
+    @Override
     public void startup() {
         Color lightTreeGreen = new Color(27, 145, 17);
         Color shadowTreeGreen = new Color(29, 120, 19);
@@ -81,33 +89,49 @@ public class Cliffbottom extends Room {
 
         Art arty = new Art();
         String[][] base = Art.strToArray(arty.forest);
-        Layer lay1 = new Layer(base, "Base");
+        Layer forestBackground = new Layer(base, "Base");
 
-        lay1.findAndReplace(new SpecialText("t"), new SpecialText(".", otherGrass, lightTreeGreen), 20);
-        lay1.findAndReplace(new SpecialText("t"), new SpecialText(" ", lightTreeGreen, lightTreeGreen));
-        lay1.findAndReplace(new SpecialText("h"), new SpecialText(" ", shadowTreeGreen, shadowTreeGreen));
-        lay1.findAndReplace(new SpecialText(" "), new SpecialText(".", otherGrass, dirt), 15);
-        lay1.findAndReplace(new SpecialText(" "), new SpecialText("_", normalGrass, dirt), 15);
-        lay1.findAndReplace(new SpecialText(" "), new SpecialText(" ", null, dirt));
+        Layer forestVeil = new Layer(Art.strToArray(arty.forestVeil), "veil");
+        forestVeil.setX(37);
+        forestVeil.setY(132);
 
-        lay1.findAndReplace(new SpecialText("r"), new SpecialText("o", rock1, rock2), 30);
-        lay1.findAndReplace(new SpecialText("r"), new SpecialText("O", rock2, rock2), 30);
-        lay1.findAndReplace(new SpecialText("r"), new SpecialText("O", rock3, rock2));
 
-        lay1.findAndReplace(new SpecialText("w"), new SpecialText("~", deepWater2, deepWater1), 10);
-        lay1.findAndReplace(new SpecialText("w"), new SpecialText(" ", deepWater1, deepWater1));
+        forestVeil.findAndReplace(new SpecialText("t"), new SpecialText("o", normalGrass, lightTreeGreen), 17);
+        forestVeil.findAndReplace(new SpecialText("t"), new SpecialText("o", otherGrass, lightTreeGreen), 17);
+        forestVeil.findAndReplace(new SpecialText("t"), new SpecialText("O", otherGrass, lightTreeGreen), 17);
+        forestVeil.findAndReplace(new SpecialText("t"), new SpecialText("0", otherGrass, lightTreeGreen), 17);
+        forestVeil.findAndReplace(new SpecialText("t"), new SpecialText(" ", lightTreeGreen, lightTreeGreen));
+        forestVeil.findAndReplace(new SpecialText("h"), new SpecialText(" ", shadowTreeGreen, shadowTreeGreen));
 
-        lay1.findAndReplace(new SpecialText("4"), new SpecialText(" ", deepWater4, deepWater4));
-        lay1.findAndReplace(new SpecialText("3"), new SpecialText(" ", deepWater3, deepWater3));
-        lay1.findAndReplace(new SpecialText("2"), new SpecialText(" ", deepWater2, deepWater2));
-        lay1.findAndReplace(new SpecialText("1"), new SpecialText(" ", deepWater1, deepWater1));
+        forestBackground.findAndReplace(new SpecialText("t"), new SpecialText("o", normalGrass, lightTreeGreen), 17);
+        forestBackground.findAndReplace(new SpecialText("t"), new SpecialText("o", otherGrass, lightTreeGreen), 17);
+        forestBackground.findAndReplace(new SpecialText("t"), new SpecialText("O", otherGrass, lightTreeGreen), 17);
+        forestBackground.findAndReplace(new SpecialText("t"), new SpecialText("0", otherGrass, lightTreeGreen), 17);
+        forestBackground.findAndReplace(new SpecialText("t"), new SpecialText(" ", lightTreeGreen, lightTreeGreen));
+        forestBackground.findAndReplace(new SpecialText("h"), new SpecialText(" ", shadowTreeGreen, shadowTreeGreen));
 
-        lay1.findAndReplace(new SpecialText("d"), new SpecialText(":", sand2, sand3), 20);
-        lay1.findAndReplace(new SpecialText("d"), new SpecialText(" ", sand3, sand3));
-        lay1.findAndReplace(new SpecialText("f"), new SpecialText(".", sand3, sand2), 15);
-        lay1.findAndReplace(new SpecialText("f"), new SpecialText(" ", sand2, sand2));
-        lay1.findAndReplace(new SpecialText("g"), new SpecialText("~", dirt, sand1), 15);
-        lay1.findAndReplace(new SpecialText("g"), new SpecialText(" ", sand1, sand1));
+        forestBackground.findAndReplace(new SpecialText(" "), new SpecialText(".", otherGrass, dirt), 15);
+        forestBackground.findAndReplace(new SpecialText(" "), new SpecialText("_", normalGrass, dirt), 15);
+        forestBackground.findAndReplace(new SpecialText(" "), new SpecialText(" ", null, dirt));
+
+        forestBackground.findAndReplace(new SpecialText("r"), new SpecialText("o", rock1, rock2), 30);
+        forestBackground.findAndReplace(new SpecialText("r"), new SpecialText("O", rock2, rock2), 30);
+        forestBackground.findAndReplace(new SpecialText("r"), new SpecialText("O", rock3, rock2));
+
+        forestBackground.findAndReplace(new SpecialText("w"), new SpecialText("~", deepWater2, deepWater1), 10);
+        forestBackground.findAndReplace(new SpecialText("w"), new SpecialText(" ", deepWater1, deepWater1));
+
+        forestBackground.findAndReplace(new SpecialText("4"), new SpecialText(" ", deepWater4, deepWater4));
+        forestBackground.findAndReplace(new SpecialText("3"), new SpecialText(" ", deepWater3, deepWater3));
+        forestBackground.findAndReplace(new SpecialText("2"), new SpecialText(" ", deepWater2, deepWater2));
+        forestBackground.findAndReplace(new SpecialText("1"), new SpecialText(" ", deepWater1, deepWater1));
+
+        forestBackground.findAndReplace(new SpecialText("d"), new SpecialText(":", sand2, sand3), 20);
+        forestBackground.findAndReplace(new SpecialText("d"), new SpecialText(" ", sand3, sand3));
+        forestBackground.findAndReplace(new SpecialText("f"), new SpecialText(".", sand3, sand2), 15);
+        forestBackground.findAndReplace(new SpecialText("f"), new SpecialText(" ", sand2, sand2));
+        forestBackground.findAndReplace(new SpecialText("g"), new SpecialText("~", dirt, sand1), 15);
+        forestBackground.findAndReplace(new SpecialText("g"), new SpecialText(" ", sand1, sand1));
 
 
         /*
@@ -136,12 +160,14 @@ public class Cliffbottom extends Room {
         lay1.findAndReplace(new SpecialText("g"), new SpecialText(".", sand1));
          */
 
-        org.addLayer(lay1);
-        initHitMeshes(lay1);
+        org.addLayer(forestBackground);
+        initHitMeshes(forestBackground);
         String[] solids = {"t","h"};
         addToBaseHitMesh(base, solids);
+        addToBaseHitMesh(196, 39); // Hiding the kiosk area
+        org.addLayer(forestVeil);
 
-        org.roomBackground = rock2;
+        org.roomBackground = dirt;
 
         addItems();
 
