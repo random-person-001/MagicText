@@ -23,7 +23,7 @@ public class Cliffbottom extends Room {
 
     @Override
     protected String loop(Player play) {
-        play.goTo(206,63);
+        play.goTo(206,103);
 
         while (exitCode.equals("")) {
             if (play.getY() >= 270) {
@@ -48,10 +48,10 @@ public class Cliffbottom extends Room {
 
         Item berries = new Item("Suspicious Berries", "You found these red\n berries while exploring \n a forest, but they\n look, well, suspicous. \n You can try to eat \n them if you want.", "item");
         berries.healItemDefine(-10, 0); // It hurts you
-        DroppedItem dBerries = new DroppedItem(this, "You found some berries!", berries, 13, 36);
+        DroppedItem dBerries = new DroppedItem(this, "You found some berries!", berries, 130, 98);
         addObject(dBerries);
 
-        Bandit loner = new Bandit(org, this, 12, 37); // X and Y switched.  I'm really sorry.
+        Bandit loner = new Bandit(org, this, 129, 99);
         addMortal(loner);
     }
 
@@ -59,7 +59,10 @@ public class Cliffbottom extends Room {
     protected void specialInspect(int x, int y, Player inspector) {
         if (x == 196 && y == 39) {
             org.removeLayer("veil");
-            removeFromBaseHitMesh(196, 39);
+            removeFromBaseHitMesh(196, 38);
+        }
+        if (x == 201 && y == 47) {
+            // talk to Sven
         }
     }
 
@@ -90,7 +93,11 @@ public class Cliffbottom extends Room {
         Art arty = new Art();
         String[][] base = Art.strToArray(arty.forest);
         Layer forestBackground = new Layer(base, "Base");
-
+        
+        Layer kiosk = new Layer(Art.strToArray(arty.forestKiosk), "kiosk");
+        kiosk.setX(47);
+        kiosk.setY(141);
+        
         Layer forestVeil = new Layer(Art.strToArray(arty.forestVeil), "veil");
         forestVeil.setX(37);
         forestVeil.setY(132);
@@ -160,11 +167,12 @@ public class Cliffbottom extends Room {
         lay1.findAndReplace(new SpecialText("g"), new SpecialText(".", sand1));
          */
 
+        org.addLayer(kiosk);
         org.addLayer(forestBackground);
         initHitMeshes(forestBackground);
         String[] solids = {"t","h"};
         addToBaseHitMesh(base, solids);
-        addToBaseHitMesh(196, 39); // Hiding the kiosk area
+        addToBaseHitMesh(196, 38); // Hiding the kiosk area
         org.addLayer(forestVeil);
 
         org.roomBackground = dirt;
