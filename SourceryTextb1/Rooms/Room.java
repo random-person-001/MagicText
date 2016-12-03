@@ -44,6 +44,7 @@ public class Room implements java.io.Serializable {
     protected boolean isPaused = false;
     private boolean resume = true;
     private boolean changingAnswer = false;
+    private boolean[][] waterMesh;
 
 
     /**
@@ -438,6 +439,11 @@ public class Room implements java.io.Serializable {
                 objHitMesh[i][j] = false;
             }
         }
+        for (int i = 0; i < waterMesh.length; i++) {
+            for (int j = 0; j < waterMesh[0].length; j++) {
+                waterMesh[i][j] = false;
+            }
+        }
     }
 
     /**
@@ -447,12 +453,30 @@ public class Room implements java.io.Serializable {
      * @param baseLayer The Layer whose size and dimension defines the room's boundaries
      */
     protected void initHitMeshes(Layer baseLayer) {
+        waterMesh =  new boolean[baseLayer.getColumns()][baseLayer.getRows()]; // Flipped around, it looks easier
         baseHitMesh = new boolean[baseLayer.getRows()][baseLayer.getColumns()];
         objHitMesh = new boolean[baseLayer.getRows()][baseLayer.getColumns()];
         emptyAllHitMeshes();
     }
 
+    public void addWaterAt(int x, int y){
+        if (x<waterMesh.length && x >= 0 && y < waterMesh[0].length && y >= 0) {
+            waterMesh[x][y] = true;
+        }
+        else {
+            System.out.println("[Room adding water] cannot add water at " + x + ", " + y +
+                    "; maxes are " + waterMesh.length + " and " + waterMesh[0].length);
+        }
+    }
+
     public boolean checkForWater(int x, int y) {
+        if (x<waterMesh.length && x >= 0 && y < waterMesh[0].length && y >= 0) {
+            return waterMesh[x][y];
+        }
+        else {
+            return false;
+        }
+        /*
         boolean result = false;
         for (GameObject obj : objs) {
             if (obj.strClass.equals("WaterPool")) {
@@ -461,6 +485,7 @@ public class Room implements java.io.Serializable {
             }
         }
         return result;
+        */
     }
 
     protected void addMagicPotato(int x, int y) {

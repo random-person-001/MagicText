@@ -70,12 +70,12 @@ public class Player extends Mortal implements java.io.Serializable {
     boolean swimming = false;
     int waterEntry = 0;
     private int movecount = 0;
-    boolean ludicrousSpeed = false;
+    public boolean ludicrousSpeed = false;
     private int orientation = UP;
     private boolean orientationLocked = false;
     private String aimDispName = "aimDisp";
     public boolean frozen = false;
-    boolean isGhost = false;
+    public boolean isGhost = false;
 
     int allSpellBoost = 0;
     int arcSpellBoost = 0;
@@ -464,6 +464,17 @@ public class Player extends Mortal implements java.io.Serializable {
             //System.out.printf("Screen yellow factor: %1$d, (%2$d --> %3$d)\n", screenYellowness, opposite, yellowNumber);
 
             foregroundColor = new Color(255, opposite, yellowNumber);
+        }
+
+        if (room != null) {
+            if (room.checkForWater(getX(), getY())) {
+                if (!swimming) {
+                    waterEntry = 2;
+                    swimming = true;
+                }
+            } else {
+                swimming = false;
+            }
         }
 
         SpecialText playerIcon;

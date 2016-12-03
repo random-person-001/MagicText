@@ -1,18 +1,21 @@
 package SourceryTextb1.Rooms.ForestOfFondant;
 
 import SourceryTextb1.Art;
-import SourceryTextb1.GameObjects.DroppedItem;
-import SourceryTextb1.GameObjects.Item;
-import SourceryTextb1.GameObjects.Player;
+import SourceryTextb1.GameObjects.ForestOfFondant.Alligator;
 import SourceryTextb1.GameObjects.TheSource.Bandit;
-import SourceryTextb1.Layer;
-import SourceryTextb1.Rooms.Room;
+import SourceryTextb1.GameObjects.DroppedItem;
+import SourceryTextb1.GameObjects.Player;
+import SourceryTextb1.GameObjects.Item;
+import SourceryTextb1.GameObjects.WaterPool;
 import SourceryTextb1.SpecialText;
+import SourceryTextb1.Rooms.Room;
+import SourceryTextb1.Layer;
 
 import java.awt.*;
 
 /**
  * The landing Room for zone 2
+ * You find Sven here, and a fondant grove.  Also, there's a river and a dock.
  * Created by riley on 30-Nov-2016.
  */
 public class Cliffbottom extends Room {
@@ -27,6 +30,9 @@ public class Cliffbottom extends Room {
 
         while (exitCode.equals("")) {
             if (play.getY() >= 270) {
+                setNewRoom("switch to zone 1", play, 0, 0);
+            }
+            if (play.getY() <= 1) {
                 setNewRoom("switch to zone 1", play, 0, 0);
             }
             try {
@@ -45,23 +51,30 @@ public class Cliffbottom extends Room {
             addMortal(yeti);
         }
         */
+        //int[][] allyLocs = {{97, 100}, {97, 102}, {97, 104}, {97, 106}, {101, 99}, {101, 101}, {101, 103}, {101, 105}
+        //        , {100, 98}, {100, 100}, {100, 102}, {100, 104}, {98, 111}};
+        int[][] allyLocs2 = {{195, 100}, {216, 102}, {217, 114}, {141, 115}, {134, 102}, {131, 97}, {169, 98}, {184, 100}};
+        for (int[] coord : allyLocs2) {
+            Alligator ally = new Alligator(this, coord[0], coord[1]);
+            addMortal(ally);
+        }
 
         Item berries = new Item("Suspicious Berries", "You found these red\n berries while exploring \n a forest, but they\n look, well, suspicous. \n You can try to eat \n them if you want.", "item");
         berries.healItemDefine(-10, 0); // It hurts you
-        DroppedItem dBerries = new DroppedItem(this, "You found some berries!", berries, 130, 98);
+        DroppedItem dBerries = new DroppedItem(this, "You found some berries!", berries, 130, 108);
         addObject(dBerries);
 
-        Bandit loner = new Bandit(org, this, 129, 99);
+        Bandit loner = new Bandit(org, this, 129, 109);
         addMortal(loner);
     }
 
     @Override
     protected void specialInspect(int x, int y, Player inspector) {
-        if (x == 196 && y == 39) {
+        if (x == 183 && y == 49) {
             org.removeLayer("veil");
-            removeFromBaseHitMesh(196, 38);
+            removeFromBaseHitMesh(183, 50);
         }
-        if (x == 201 && y == 47) {
+        if (x == 211 && y == 47) {
             // talk to Sven
         }
     }
@@ -75,10 +88,6 @@ public class Cliffbottom extends Room {
         //Color dirt = new Color(0, 0, 0);
         //Color dirt = new Color(44, 46, 23);
         Color dirt = new Color(29, 31, 15);
-        Color deepWater4 = new Color(21, 47, 145);
-        Color deepWater3 = new Color(24, 67, 145);
-        Color deepWater2 = new Color(19, 91, 145);
-        Color deepWater1 = new Color(19, 103, 145);
 
         Color sand3 = new Color(221, 192, 89);
         Color sand2 = new Color(158, 168, 72);
@@ -88,18 +97,24 @@ public class Cliffbottom extends Room {
         Color rock2 = new Color(74, 69, 64);
         Color rock3 = new Color(87, 77, 72);
 
+        Color dock1 = new Color(67, 45, 23);
+        Color dock2 = new Color(39, 26, 13);
 
 
         Art arty = new Art();
         String[][] base = Art.strToArray(arty.forest);
         Layer forestBackground = new Layer(base, "Base");
-        
+
+        Layer forestRiver = new Layer(Art.strToArray(arty.forestRiver), "river");
+        forestRiver.setX(54);
+        forestRiver.setY(0);
+
         Layer kiosk = new Layer(Art.strToArray(arty.forestKiosk), "kiosk");
-        kiosk.setX(47);
+        kiosk.setX(57);
         kiosk.setY(141);
         
         Layer forestVeil = new Layer(Art.strToArray(arty.forestVeil), "veil");
-        forestVeil.setX(37);
+        forestVeil.setX(47);
         forestVeil.setY(132);
 
 
@@ -125,13 +140,12 @@ public class Cliffbottom extends Room {
         forestBackground.findAndReplace(new SpecialText("r"), new SpecialText("O", rock2, rock2), 30);
         forestBackground.findAndReplace(new SpecialText("r"), new SpecialText("O", rock3, rock2));
 
-        forestBackground.findAndReplace(new SpecialText("w"), new SpecialText("~", deepWater2, deepWater1), 10);
-        forestBackground.findAndReplace(new SpecialText("w"), new SpecialText(" ", deepWater1, deepWater1));
-
-        forestBackground.findAndReplace(new SpecialText("4"), new SpecialText(" ", deepWater4, deepWater4));
-        forestBackground.findAndReplace(new SpecialText("3"), new SpecialText(" ", deepWater3, deepWater3));
-        forestBackground.findAndReplace(new SpecialText("2"), new SpecialText(" ", deepWater2, deepWater2));
-        forestBackground.findAndReplace(new SpecialText("1"), new SpecialText(" ", deepWater1, deepWater1));
+        /*
+        forestRiver.findAndReplace(new SpecialText("4"), new SpecialText(" ", deepWater4, deepWater4));
+        forestRiver.findAndReplace(new SpecialText("3"), new SpecialText(" ", deepWater3, deepWater3));
+        forestRiver.findAndReplace(new SpecialText("2"), new SpecialText(" ", deepWater2, deepWater2));
+        forestRiver.findAndReplace(new SpecialText("1"), new SpecialText(" ", deepWater1, deepWater1));
+*/
 
         forestBackground.findAndReplace(new SpecialText("d"), new SpecialText(":", sand2, sand3), 20);
         forestBackground.findAndReplace(new SpecialText("d"), new SpecialText(" ", sand3, sand3));
@@ -140,6 +154,9 @@ public class Cliffbottom extends Room {
         forestBackground.findAndReplace(new SpecialText("g"), new SpecialText("~", dirt, sand1), 15);
         forestBackground.findAndReplace(new SpecialText("g"), new SpecialText(" ", sand1, sand1));
 
+        forestBackground.findAndReplace(new SpecialText("j"), new SpecialText("_", dock1, dock2));
+        forestBackground.findAndReplace(new SpecialText("k"), new SpecialText(".", dock1, dock2), 30);
+        forestBackground.findAndReplace(new SpecialText("k"), new SpecialText(" ", dock1, dock2));
 
         /*
         A more text based theme, without backgrounds.
@@ -167,13 +184,28 @@ public class Cliffbottom extends Room {
         lay1.findAndReplace(new SpecialText("g"), new SpecialText(".", sand1));
          */
 
-        org.addLayer(kiosk);
         org.addLayer(forestBackground);
+        org.addLayer(forestRiver);
+        org.addLayer(kiosk);
         initHitMeshes(forestBackground);
-        String[] solids = {"t","h"};
+        String[] solids = {"t", "h", "r"};
         addToBaseHitMesh(base, solids);
-        addToBaseHitMesh(196, 38); // Hiding the kiosk area
+        addToBaseHitMesh(183, 50); // Hiding the kiosk area
+        addToObjHitMesh(120, 97); // Dock
+        addToObjHitMesh(120, 98);
+        addToObjHitMesh(120, 99);
+        addToObjHitMesh(120, 100);
+        addToObjHitMesh(120, 101); // river
         org.addLayer(forestVeil);
+
+        WaterPool wp1 = new WaterPool(this, forestRiver, "1", 1);
+        WaterPool wp2 = new WaterPool(this, forestRiver, "2", 2);
+        WaterPool wp3 = new WaterPool(this, forestRiver, "3", 3);
+        WaterPool wp4 = new WaterPool(this, forestRiver, "4", 4);
+        addObject(wp1);
+        addObject(wp2);
+        addObject(wp3);
+        addObject(wp4);
 
         org.roomBackground = dirt;
 

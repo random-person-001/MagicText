@@ -244,7 +244,7 @@ public class HiddenBunker extends Room {
         LockedDoor tunnelDoor = new LockedDoor("Tunnel Key", 100, 133, 9, this, org);
         addObject(tunnelDoor);
 
-        WaterPool testingPool = new WaterPool(this, new Layer(Art.strToArray(arty.hiddenBunkerWater), "Water!", true, false), org, 80, 10);
+        WaterPool testingPool = new WaterPool(this, new Layer(Art.strToArray(arty.hiddenBunkerWater), "Water!", true, false), 80, 10);
         addObject(testingPool);
 
         addItems();

@@ -132,6 +132,12 @@ public class TutorialBasement extends Room {
                 if (play.getX() > 132) {
                     setNewRoom("SourcePit", play, 10, 109);
                 }
+                if (play.getX() == 20 && play.getY() == 32) {
+                    play.isGhost = true;
+                    play.ludicrousSpeed = true;
+                    play.restoreHealth(400, 294);
+                    setNewRoom("switch to zone 2", play, 0, 0);
+                }
 
             } catch (InterruptedException ignored) {
             }
@@ -211,7 +217,7 @@ public class TutorialBasement extends Room {
         //Enable this to play around with water
 
         Art art = new Art();
-        WaterPool testingPool = new WaterPool(this, new Layer(Art.strToArray(art.tutWaterPool), "Water!", true, false), org, 3, 31);
+        WaterPool testingPool = new WaterPool(this, new Layer(Art.strToArray(art.tutWaterPool), "Water!", true, false), 3, 31);
         addObject(testingPool);
 
     }
