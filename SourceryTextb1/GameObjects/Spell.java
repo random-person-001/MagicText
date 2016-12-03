@@ -16,6 +16,8 @@ public class Spell extends GameObject {
     private int range = -1;
     private SpecialText char1 = new SpecialText("X");
     private SpecialText char2 = new SpecialText("x");
+    private boolean onChar1 = true;
+
     private int damage = 10;
     private String killMessage = "You were electrocuted by a rouge spell";
 
@@ -193,10 +195,12 @@ public class Spell extends GameObject {
         }
 
         if (dispAlting) {
-            if (x % 2 == 0 ^ y % 2 == 0) { //A really clever way to alternate between two characters ('^' means XOR)
+            if (onChar1) { //A really clever way to alternate between two characters ('^' means XOR)
                 orgo.editLayer(char1, layerName, 0, 0);
+                onChar1 = false;
             } else {
                 orgo.editLayer(char2, layerName, 0, 0);
+                onChar1 = true;
             }
         } else {
             if (orientation <= 1) { //Orientation-sensitive display

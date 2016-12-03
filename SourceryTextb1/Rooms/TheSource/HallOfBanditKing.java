@@ -9,6 +9,7 @@ import SourceryTextb1.Art;
 import SourceryTextb1.GameObjects.DroppedItem;
 import SourceryTextb1.GameObjects.Item;
 import SourceryTextb1.GameObjects.Player;
+import SourceryTextb1.GameObjects.TheSource.Bandit;
 import SourceryTextb1.GameObjects.TheSource.FallingBeehive;
 import SourceryTextb1.GameObjects.TheSource.Wolf;
 import SourceryTextb1.Layer;
@@ -18,16 +19,17 @@ import SourceryTextb1.SpecialText;
 import java.awt.*;
 
 /**
- * The inner mountains area, filled with carrots and the fork in the road between the snowy peak and the bandit fortress
+ * Here stands the King of the Bandits, a rich and powerful man who blocks your exit through the mountains.
  *
  * @author Jared
  *         <p>
  *         So Far:
- *         > You have ventured far into the mountains, ready for your ultimate confrontation with the bandits
- *         > Collected some loot; usually ready to take on fortress
+ *         > Your adventures in the mountains are coming to a close
+ *         > You have broken through the defenses at the Bandit Fortress
  *         <p>
  *         What Generally Happens Here:
- *         > You fight your way through the bandits and walk up to the hall of The King of the Bandits
+ *         > You fight a boss
+ *         > You can also kick down a beehive to skip the fight
  */
 
 
@@ -38,11 +40,22 @@ public class HallOfBanditKing extends Room {
         strRoomName = "HallOfBanditKing";
     }
 
+    private boolean kingLastWordsSpoken = false; //Plot twist: they aren't actually his last words
+
     @Override
     protected String loop(Player play) {
         while (exitCode.equals("")) {
             try {
                 Thread.sleep(200);
+                if (getMortalCountOf("Bandit") == 0 && !kingLastWordsSpoken){
+                    for (Player winner : players){
+                        queueMessage(new FlavorText("NO! I...I cant lose!\n That's impossible!","Bandit King").setViewerUsername(winner.getUsername()));
+                        queueMessage(new FlavorText("What do you want from me?\n Money? Power? Bragging rights?","Bandit King").setViewerUsername(winner.getUsername()));
+                        queueMessage(new FlavorText("What? You just want to...pass through?\n After practically destroying my empire?","Bandit King").setViewerUsername(winner.getUsername()));
+                        queueMessage(new FlavorText("Just... go on.\nGet out of here!\nGet out of my sight!","Bandit King").setViewerUsername(winner.getUsername()));
+                        kingLastWordsSpoken = true;
+                    }
+                }
             } catch (InterruptedException ignored) {
             }
         }
@@ -54,7 +67,8 @@ public class HallOfBanditKing extends Room {
      */
     @Override
     public void addItems() {
-
+        Bandit notBanditKing = new Bandit(org, this, 37, 55);
+        addMortal(notBanditKing);
     }
 
     @Override
@@ -95,7 +109,7 @@ public class HallOfBanditKing extends Room {
         String[] solids = {";", ":", "^", "O", "o", "O", "#","_","\\","/","|","8"};
         addToBaseHitMesh(base, solids);
 
-        //addItems();
+        addItems();
 
         genericRoomInitialize();
     }

@@ -203,6 +203,22 @@ public class Room implements java.io.Serializable {
     }
 
     /**
+     * A convenience method for discovering the number of a class are left
+     *
+     * @param className the String by which the class identifies (GameObject.strClass)
+     * @return how many there are in the room's list
+     */
+    public int getMortalCountOf(String className) {
+        int count = 0;
+        for (Mortal o : enemies) {
+            if (o.strClass.equals(className)) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    /**
      * Colors all SpecialTexts in a layer that corresponds to FlavorText in room an bright aqua blue
      */
 
@@ -476,7 +492,7 @@ public class Room implements java.io.Serializable {
         else {
             return false;
         }
-        /*
+        /*  THIS ACTUALLY WORKS FOR MULTIPLE WATER POOLS!!! (But it's also a bit slower)
         boolean result = false;
         for (GameObject obj : objs) {
             if (obj.strClass.equals("WaterPool")) {
