@@ -9,7 +9,7 @@ import java.awt.*;
 import java.util.Random;
 
 /**
- * A tree that you can burn down.
+ * A Class that handles making trees (technically, certain SpecialTexts) of a Layer flammable.
  * Created by riley on 02-Dec-2016.
  */
 public class FlammableTree extends GameObject {
@@ -20,6 +20,7 @@ public class FlammableTree extends GameObject {
     private Random rand = new Random();
     private int [][] treeData;
     private String layerName;
+    private int chanceOfSpreadingInEachDirection = 22;
     public FlammableTree(Room room, Layer layWithTrees, SpecialText[] treeChars) {
         this.room = room;
         super.strClass = "FlammableTree";
@@ -48,6 +49,19 @@ public class FlammableTree extends GameObject {
             if (treeLayer != null) {
                 room.removeFromBaseHitMesh(x + treeLayer.getX(), y + treeLayer.getY());
                 treeData[x-treeLayer.getY()][y-treeLayer.getX()] = 1;
+                // Maybe start a forest fire...
+                if (r(100) <= chanceOfSpreadingInEachDirection){
+                    burn(x+1, y);
+                }
+                if (r(100) <= chanceOfSpreadingInEachDirection){
+                    burn(x-1, y);
+                }
+                if (r(100) <= chanceOfSpreadingInEachDirection){
+                    burn(x, y+1);
+                }
+                if (r(100) <= chanceOfSpreadingInEachDirection){
+                    burn(x, y-1);
+                }
             }
         }
     }
