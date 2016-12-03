@@ -113,16 +113,16 @@ public class Player extends Mortal implements java.io.Serializable {
         super.maxHealth = baseMaxHP + armorHealthBoost;
         super.strClass = "Player";
         System.out.println("\nNEW PLAYER\n");
-        orgo = theOrg;
+        org = theOrg;
         username += playerNumber;
 
         layerName = "playerLayer-" + username;
         aimDispName += username;
 
-        inv = new Inventory(orgo, this);
+        inv = new Inventory(org, this);
 
         hud = new HUD(this);
-        hud.setOrg(orgo);
+        hud.setOrg(org);
         setupTimer(20);
         //resumeFromSave();
     }
@@ -154,8 +154,8 @@ public class Player extends Mortal implements java.io.Serializable {
      * Set things up that don't get carried between saves, ex timers
      */
     public void resumeFromSave() {
-        //orgo.getWindow().txtArea.addKeyListener(new PlayerKeyPressListener(this)); // Add key listeners.
-        //orgo.resetClock();
+        //org.getWindow().txtArea.addKeyListener(new PlayerKeyPressListener(this)); // Add key listeners.
+        //org.resetClock();
         hud.setupTimer();
     }
 
@@ -182,14 +182,14 @@ public class Player extends Mortal implements java.io.Serializable {
      */
     public void setRoom(Room newRoom) {
         // Clean up from old room
-        orgo.removeLayer(layerName);
-        orgo.removeLayer(aimDispName);
-        //orgo.setLayerImportance("HUD_of_" + username, true);
+        org.removeLayer(layerName);
+        org.removeLayer(aimDispName);
+        //org.setLayerImportance("HUD_of_" + username, true);
         //Set new room
         room = newRoom;
         //Update everybody's orgs
-        orgo = room.org;
-        hud.setOrg(orgo);
+        org = room.org;
+        hud.setOrg(org);
         // Add the player layers to this room
         addPlayerLayers();
     }
@@ -204,19 +204,19 @@ public class Player extends Mortal implements java.io.Serializable {
         String hudLayerName = "HUD_OF_" + username;
         Layer HUDd = new Layer(new String[1][70], hudLayerName, 0, 0, false, true, true);
         HUDd.setOwningPlayerUsername(username);
-        orgo.addLayer(HUDd);
+        org.addLayer(HUDd);
 
         hud.setLayerName(HUDd.name);
 
         // Add player layer
         Layer playerLayer = new Layer(new String[3][3], layerName);
-        orgo.setLayerImportance(layerName, true);
-        orgo.addLayer(playerLayer);
+        org.setLayerImportance(layerName, true);
+        org.addLayer(playerLayer);
 
         // Add aim display layer
         Layer aimDispLayer = new Layer(new String[1][1], aimDispName);
         aimDispLayer.setOwningPlayerUsername(username);
-        orgo.addLayer(aimDispLayer);
+        org.addLayer(aimDispLayer);
     }
 
     /**
@@ -244,7 +244,7 @@ public class Player extends Mortal implements java.io.Serializable {
                 if (dead) {
                     onDeath();
                 } else if (room != null) {
-                    orgo.editLayer(" ", layerName, y, x);
+                    org.editLayer(" ", layerName, y, x);
                 }
             } catch (IndexOutOfBoundsException | NullPointerException ignored) {
             }
@@ -343,24 +343,24 @@ public class Player extends Mortal implements java.io.Serializable {
         if (orientationLocked && !hadLocked) {
             switch (orientation) {
                 case UP:
-                    orgo.editLayer("+", layerName, 0, 1);
+                    org.editLayer("+", layerName, 0, 1);
                     break;
                 case DOWN:
-                    orgo.editLayer("+", layerName, 2, 1);
+                    org.editLayer("+", layerName, 2, 1);
                     break;
                 case LEFT:
-                    orgo.editLayer("+", layerName, 1, 0);
+                    org.editLayer("+", layerName, 1, 0);
                     break;
                 case RIGHT:
-                    orgo.editLayer("+", layerName, 1, 2);
+                    org.editLayer("+", layerName, 1, 2);
                     break;
             }
             hadLocked = true;
         } else if (!orientationLocked && hadLocked) {
-            orgo.editLayer(" ", layerName, 1, 0);
-            orgo.editLayer(" ", layerName, 0, 1);
-            orgo.editLayer(" ", layerName, 1, 2);
-            orgo.editLayer(" ", layerName, 2, 1);
+            org.editLayer(" ", layerName, 1, 0);
+            org.editLayer(" ", layerName, 0, 1);
+            org.editLayer(" ", layerName, 1, 2);
+            org.editLayer(" ", layerName, 2, 1);
             hadLocked = false;
         }
     }
@@ -386,7 +386,7 @@ public class Player extends Mortal implements java.io.Serializable {
             System.out.println("Player.gameInstance is null; cannot save");
             return false;
         }
-        orgo.terminateClock();
+        org.terminateClock();
         System.out.println("Running serialization test...");
         String path;
         JFileChooser chooser = new JFileChooser();
@@ -403,7 +403,7 @@ public class Player extends Mortal implements java.io.Serializable {
             }
             System.out.println("You chose to save the file to: " + path);
         } else {
-            orgo.resetClock();
+            org.resetClock();
             return false;
         }
 
@@ -416,11 +416,11 @@ public class Player extends Mortal implements java.io.Serializable {
             out.close();
             fileOut.close();
             System.out.printf("Serialized Player data is saved in " + path);
-            orgo.resetClock();
+            org.resetClock();
             return true;
         } catch (IOException | ConcurrentModificationException e) {
             e.printStackTrace();
-            orgo.resetClock();
+            org.resetClock();
             return false;
         }
     }
@@ -488,8 +488,8 @@ public class Player extends Mortal implements java.io.Serializable {
             } else
                 playerIcon = new SpecialText("@", new Color(100, 150, 255), new Color(65, 65, 200));
         }
-        orgo.editLayer(playerIcon, layerName, 1, 1);
-        Layer iconLayer = orgo.getLayer(layerName);
+        org.editLayer(playerIcon, layerName, 1, 1);
+        Layer iconLayer = org.getLayer(layerName);
         if (iconLayer != null) iconLayer.setPos(y - 1, x - 1);
     }
 
@@ -514,7 +514,7 @@ public class Player extends Mortal implements java.io.Serializable {
     private void move(int direction) {
         if (!paused.get()) {
             try {
-                //orgo.editLayer(" ", layerName, y, x);
+                //org.editLayer(" ", layerName, y, x);
                 room.removeFromObjHitMesh(x, y);
             } catch (IndexOutOfBoundsException e) {
                 return;

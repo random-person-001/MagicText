@@ -18,14 +18,14 @@ public class WeakTower extends Mortal {
 
     public WeakTower(ImageOrg orga, Room theRoom, int xStart, int yStart) {
         super.strClass = "WeakTower";
-        orgo = orga;
+        org = orga;
         room = theRoom;
         layerName = room.makeUniqueLayerName(super.strClass);
 
         x = xStart;
         y = yStart;
         setHealth(7);
-        orgo.addLayer(new Layer(new String[1][1], layerName, y, x));
+        org.addLayer(new Layer(new String[1][1], layerName, y, x));
 
         setupTimer(666);
     }
@@ -59,6 +59,6 @@ public class WeakTower extends Mortal {
 
     @Override
     public void onDeath() {
-        orgo.removeLayer(layerName);
+        org.removeLayer(layerName);
     }
 }

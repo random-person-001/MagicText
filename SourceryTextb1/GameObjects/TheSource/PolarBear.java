@@ -24,14 +24,14 @@ public class PolarBear extends Mortal {
 
     public PolarBear(ImageOrg orga, Room theRoom, int xStart, int yStart, boolean giveKey) {
         super.strClass = "PolarBear";
-        orgo = orga;
+        org = orga;
         room = theRoom;
         layerName = room.makeUniqueLayerName(super.strClass);
 
         x = xStart;
         y = yStart;
         setHealth(50);
-        orgo.addLayer(new Layer(new String[1][1], layerName, y, x));
+        org.addLayer(new Layer(new String[1][1], layerName, y, x));
 
         hasKey = giveKey;
         originalX = xStart;
@@ -75,6 +75,6 @@ public class PolarBear extends Mortal {
             DroppedItem theDrop = new DroppedItem(room, "You found a key!", keyDrop, originalX, originalY);
             room.addObject(theDrop);
         }
-        orgo.removeLayer(layerName);
+        org.removeLayer(layerName);
     }
 }

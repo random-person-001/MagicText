@@ -29,11 +29,11 @@ public class GameInstance implements java.io.Serializable {
         playerList = new ArrayList<>();
         playerList.add(protaganist);
         PlayerKeyPressListener kl = new PlayerKeyPressListener(protaganist);
-        System.out.println(protaganist.orgo == null);
-        System.out.println(protaganist.orgo.toString());
-        protaganist.orgo.setDefaultPlayer(protaganist);
-        protaganist.orgo.getWindow().txtArea.addKeyListener(kl);
-        protaganist.orgo.terminateClock();
+        System.out.println(protaganist.org == null);
+        System.out.println(protaganist.org.toString());
+        protaganist.org.setDefaultPlayer(protaganist);
+        protaganist.org.getWindow().txtArea.addKeyListener(kl);
+        protaganist.org.terminateClock();
         switchZones(); // Initialize zone one to start
     }
 
@@ -78,15 +78,15 @@ public class GameInstance implements java.io.Serializable {
         }
         p.dead = true;
         System.out.println(p.getUsername() + " has DIED.  Oh, no, not again.");
-        Layer lastSight = p.orgo.topDownBuild(p);
+        Layer lastSight = p.org.topDownBuild(p);
         lastSight.influenceAll(Color.RED);
-        p.orgo.getWindow().build(lastSight);
+        p.org.getWindow().build(lastSight);
         try {
             Thread.sleep(4000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        p.orgo.getWindow().dispose(); // Kill this window
+        p.org.getWindow().dispose(); // Kill this window
     }
 
     /**
@@ -132,7 +132,7 @@ public class GameInstance implements java.io.Serializable {
      * @return a new instance of Player, all set up to go!
      */
     Player requestNewPlayer() {
-        Player noob = new Player(this, playerList.get(0).orgo, playerList.size());
+        Player noob = new Player(this, playerList.get(0).org, playerList.size());
         noob.frozen = false;
         noob.roomName = "TutorialBasement";
         playerList.add(noob);
@@ -195,6 +195,6 @@ public class GameInstance implements java.io.Serializable {
 
     public void setWindow(Window window) {
         thisZoneRooms.forEach((s, room) -> room.org.setWindow(window));
-        protaganist.orgo.setWindow(window);
+        protaganist.org.setWindow(window);
     }
 }

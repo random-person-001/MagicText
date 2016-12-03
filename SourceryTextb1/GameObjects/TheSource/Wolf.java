@@ -18,7 +18,7 @@ public class Wolf extends Mortal {
 
     public Wolf(ImageOrg orga, Room theRoom, int xStart, int yStart) {
         super.strClass = "Wolf";
-        orgo = orga;
+        org = orga;
         room = theRoom;
         layerName = room.makeUniqueLayerName(super.strClass);
 
@@ -26,7 +26,7 @@ public class Wolf extends Mortal {
         y = yStart;
         setHealth(10);
         Layer wolfLayer = new Layer(new String[1][1], layerName, y, x);
-        orgo.addLayer(wolfLayer);
+        org.addLayer(wolfLayer);
 
         setupTimer(550);
     }
@@ -48,7 +48,7 @@ public class Wolf extends Mortal {
 
     @Override
     public void onDeath() {
-        orgo.removeLayer(layerName);
+        org.removeLayer(layerName);
         /*
         if (room.getCountOf("Wolf") == 0){
             room.splashMessage("Fhweh!  Those wolves were mean!\nHeal yourself, and brace for the road ahead.", "God");

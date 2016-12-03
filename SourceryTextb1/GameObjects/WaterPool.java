@@ -57,7 +57,7 @@ public class WaterPool extends GameObject {
         room = creator;
         x = xSet;
         y = ySet;
-        orgo = room.org;
+        org = room.org;
 
         puddle = set;
         int puddleSize = 0;
@@ -92,7 +92,7 @@ public class WaterPool extends GameObject {
         System.out.println(debugOutput);
 
         puddle.setPos(y, x);
-        orgo.addLayer(puddle);
+        org.addLayer(puddle);
 
         super.strClass = "WaterPool";
 

@@ -21,14 +21,14 @@ public class CaveYeti extends Mortal {
 
     public CaveYeti(ImageOrg orga, Room theRoom, int xStart, int yStart) {
         super.strClass = "CaveYeti";
-        orgo = orga;
+        org = orga;
         room = theRoom;
         layerName = room.makeUniqueLayerName(super.strClass);
 
         x = xStart;
         y = yStart;
         setHealth(30);
-        orgo.addLayer(new Layer(new String[1][1], layerName, y, x));
+        org.addLayer(new Layer(new String[1][1], layerName, y, x));
 
         originalX = xStart;
         originalY = yStart;
@@ -54,6 +54,6 @@ public class CaveYeti extends Mortal {
 
     @Override
     public void onDeath() {
-        orgo.removeLayer(layerName);
+        org.removeLayer(layerName);
     }
 }

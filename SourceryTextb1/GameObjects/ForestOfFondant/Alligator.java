@@ -17,14 +17,14 @@ public class Alligator extends Mortal {
 
     public Alligator (Room theRoom, int xStart, int yStart) {
         super.strClass = "Alligator";
-        orgo = theRoom.org;
+        org = theRoom.org;
         room = theRoom;
         layerName = room.makeUniqueLayerName(super.strClass);
 
         x = xStart;
         y = yStart;
         setHealth(27);
-        orgo.addLayer(new Layer(new String[1][1], layerName, y, x));
+        org.addLayer(new Layer(new String[1][1], layerName, y, x));
 
         setupTimer(200);
     }
@@ -53,6 +53,6 @@ public class Alligator extends Mortal {
 
     @Override
     public void onDeath() {
-        orgo.removeLayer(layerName);
+        org.removeLayer(layerName);
     }
 }

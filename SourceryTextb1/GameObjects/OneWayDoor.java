@@ -16,7 +16,7 @@ public class OneWayDoor extends GameObject {
     public OneWayDoor(boolean isLefty, int xSet, int ySet, Room creator, ImageOrg org) {
         facingLeft = isLefty;
         super.room = creator;
-        super.orgo = org;
+        super.org = org;
         layerName = room.makeUniqueLayerName(strClass);
         x = xSet;
         y = ySet;
@@ -26,7 +26,7 @@ public class OneWayDoor extends GameObject {
         } else {
             icon.setStr(0, 0, "}");
         }
-        orgo.addLayer(icon);
+        this.org.addLayer(icon);
         room.addToObjHitMesh(x, y);
         setupTimer(150);
     }
@@ -36,15 +36,15 @@ public class OneWayDoor extends GameObject {
             room.splashMessage("The one way door opened!", "");
             showedMessage = true;
         }
-        orgo.editLayer(" ", layerName, 0, 0);
+        org.editLayer(" ", layerName, 0, 0);
         room.removeFromObjHitMesh(x, y);
     }
 
     private void closeDoor() {
         if (facingLeft)
-            orgo.editLayer("{", layerName, 0, 0);
+            org.editLayer("{", layerName, 0, 0);
         else
-            orgo.editLayer("}", layerName, 0, 0);
+            org.editLayer("}", layerName, 0, 0);
         room.addToObjHitMesh(x, y);
         showedMessage = false;
     }

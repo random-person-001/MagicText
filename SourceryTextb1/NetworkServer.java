@@ -117,7 +117,7 @@ public class NetworkServer {
     private class Updater extends TimerTask {
         @Override
         public void run() {
-            Layer fullImage = player.orgo.topDownBuild(player);
+            Layer fullImage = player.org.topDownBuild(player);
             try {
                 //out.flush();
                 sendImage(fullImage);

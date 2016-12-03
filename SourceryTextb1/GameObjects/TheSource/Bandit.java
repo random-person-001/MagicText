@@ -18,14 +18,14 @@ public class Bandit extends Mortal {
 
     public Bandit(ImageOrg orga, Room theRoom, int xStart, int yStart) {
         super.strClass = "Bandit";
-        orgo = orga;
+        org = orga;
         room = theRoom;
         layerName = room.makeUniqueLayerName(super.strClass);
 
         x = xStart;
         y = yStart;
         setHealth(15);
-        orgo.addLayer(new Layer(new String[1][1], layerName, y, x));
+        org.addLayer(new Layer(new String[1][1], layerName, y, x));
 
         setupTimer(600); // Maybe the player should check this instead
     }
@@ -50,6 +50,6 @@ public class Bandit extends Mortal {
 
     @Override
     public void onDeath() {
-        orgo.removeLayer(layerName);
+        org.removeLayer(layerName);
     }
 }

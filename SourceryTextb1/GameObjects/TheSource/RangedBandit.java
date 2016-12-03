@@ -16,12 +16,12 @@ public class RangedBandit extends Mortal {
         super.strClass = "RangedBandit";
 
         room = theRoom;
-        orgo = room.org;
+        org = room.org;
         x = startX;
         y = startY;
         setHealth(18);
         layerName = room.makeUniqueLayerName(strClass);
-        orgo.addLayer(new Layer(new String[1][1], layerName, y, x));
+        org.addLayer(new Layer(new String[1][1], layerName, y, x));
         setupTimer(200);
 
         /*  I don't think this is needed.  --Riley
@@ -36,7 +36,7 @@ public class RangedBandit extends Mortal {
 
     @Override
     public void update() {
-        //Layer iconLayer = orgo.getLayer(layerName);
+        //Layer iconLayer = org.getLayer(layerName);
         //if (iconLayer != null) iconLayer.setPos(y, x);
 
         setDispIcon(new SpecialText("R", new Color(255, 160, 200)));

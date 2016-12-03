@@ -18,14 +18,14 @@ public class SmallPiranha extends Mortal {
 
     public SmallPiranha(ImageOrg orga, Room theRoom, int xStart, int yStart, DroppedItem itemToDrop) {
         super.strClass = "SmallPiranha";
-        orgo = orga;
+        org = orga;
         room = theRoom;
         itemOnDrop = itemToDrop;
         layerName = room.makeUniqueLayerName(super.strClass);
         x = xStart;
         y = yStart;
         setHealth(20);
-        orgo.addLayer(new Layer(new String[1][1], layerName));
+        org.addLayer(new Layer(new String[1][1], layerName));
     }
 
     public void setMoveFrq(int newfrq) {
@@ -42,7 +42,7 @@ public class SmallPiranha extends Mortal {
         while (!goodPlace) {
             int newX = x;
             int newY = y;
-            if (orgo.getDebug())
+            if (org.getDebug())
                 System.out.println("Not good place yet");
             if (r(5) > 1) { /// Most of the time go towards closest good guy
                 Mortal m = getClosestGoodGuy();
@@ -50,7 +50,7 @@ public class SmallPiranha extends Mortal {
                     newX += (x < m.getX()) ? 1 : -1;
                 else if (m.getY() != y)
                     newY += (y < m.getY()) ? 1 : -1;
-                if (orgo.getDebug())
+                if (org.getDebug())
                     System.out.println("Going towards good guy");
             } else if (r(8) > 1) {
                 Mortal m = closestGoodGuy;
@@ -58,10 +58,10 @@ public class SmallPiranha extends Mortal {
                     newX += (x < m.getX()) ? 1 : -1;
                 else if (m.getY() != y)
                     newY += (y < m.getY()) ? 1 : -1;
-                if (orgo.getDebug())
+                if (org.getDebug())
                     System.out.println("Going towards player");
             } else if (r(moveFrq) < 1) {
-                if (orgo.getDebug())
+                if (org.getDebug())
                     System.out.println("Moving randomly");
                 if (r(1) < 0) {
                     newX += r(2) - 1;
@@ -81,7 +81,7 @@ public class SmallPiranha extends Mortal {
                 return;
             }
         }
-        orgo.editLayer("<span color='#cc0000'>p</span>", layerName, 0, 0);
+        org.editLayer("<span color='#cc0000'>p</span>", layerName, 0, 0);
         room.addMortal(this);
 
         if (distanceTo(closestGoodGuy) <= 3) {
@@ -91,8 +91,8 @@ public class SmallPiranha extends Mortal {
 
     @Override
     public void onDeath() {
-        orgo.removeLayer(layerName);
-        if (orgo.getDebug()) {
+        org.removeLayer(layerName);
+        if (org.getDebug()) {
             System.out.println("AAAAAaaaack, a piranha died.");
         }
         room.addObject(itemOnDrop);

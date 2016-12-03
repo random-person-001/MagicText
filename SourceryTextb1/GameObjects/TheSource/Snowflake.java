@@ -19,14 +19,14 @@ public class Snowflake extends GameObject {
         strClass = "Snowflake";
 
         room = creator;
-        orgo = orgSet;
+        org = orgSet;
         x = setX;
         y = setY;
         layerName = creator.makeUniqueLayerName(strClass);
         Layer flakeLayer = new Layer(new String[1][1], layerName, y, x);
 
         flakeLayer.setSpecTxt(0, 0, new SpecialText("."));
-        orgo.addLayer(flakeLayer);
+        org.addLayer(flakeLayer);
 
         setupTimer(175);
     }
@@ -39,12 +39,12 @@ public class Snowflake extends GameObject {
             y = 0;
             x = randal.nextInt(room.roomWidth);
         }
-        Layer iconLayer = orgo.getLayer(layerName);
+        Layer iconLayer = org.getLayer(layerName);
         if (iconLayer != null) iconLayer.setPos(y, x);
     }
 
     public void selfCleanup() {
-        orgo.removeLayer(layerName);
+        org.removeLayer(layerName);
     }
 
 }

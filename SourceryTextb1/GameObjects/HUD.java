@@ -46,7 +46,7 @@ class HUD implements java.io.Serializable {
 
     HUD(Player playerSet) {
         player = playerSet;
-        orgo = player.orgo;
+        orgo = player.org;
         layerName = "HUD_of_" + player.getUsername();
         setupTimer();
     }

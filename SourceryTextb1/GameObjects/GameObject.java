@@ -30,7 +30,7 @@ import static java.lang.StrictMath.abs;
 public class GameObject implements java.io.Serializable {
     updateTimer updateTimerInstance;
     public String strClass = "None";
-    public ImageOrg orgo;
+    public ImageOrg org;
     public Room room;
     transient Timer timer;
     public int frequency;
@@ -48,7 +48,7 @@ public class GameObject implements java.io.Serializable {
     public void sendDisplayData(String layerName, Layer image, int x, int y) {
         for (int row = 0; row < image.getRows(); row++) {
             for (int col = 0; col < image.getColumns(); col++) {
-                orgo.editLayer(image.getStr(row, col), layerName, y, x);
+                org.editLayer(image.getStr(row, col), layerName, y, x);
             }
         }
     }
@@ -133,7 +133,7 @@ public class GameObject implements java.io.Serializable {
             if (pt.getCntr() == stepsNeeded - 1 && pt.getCntr() != 0 && abs(pt.getX() - x) <= 1 && abs(pt.getY() - y) <= 1) {
                 x = pt.getX();
                 y = pt.getY();
-                Layer selfLayer = orgo.getLayer(layerName);
+                Layer selfLayer = org.getLayer(layerName);
                 if (selfLayer != null)
                     selfLayer.setPos(y, x);
                 break;
@@ -158,7 +158,7 @@ public class GameObject implements java.io.Serializable {
                 if (pt.getCntr() == ii - 1 && spreadPathPts(pt.getX(), pt.getY(), x, y, goalX, goalY, ii)) {
                     return ii;
                 } else {
-                    //orgo.editLayer(String.valueOf(pt.getCntr()).substring(0,1), "Test", pt.getY(), pt.getX());
+                    //org.editLayer(String.valueOf(pt.getCntr()).substring(0,1), "Test", pt.getY(), pt.getX());
                 }
             }
             pathPts.addAll(newPts);

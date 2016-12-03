@@ -96,9 +96,9 @@ public class Mortal extends GameObject implements java.io.Serializable {
 
     protected void setDispIcon(SpecialText icon, int x, int y) {
         if (icon.getStr().length() != 1 || dmgIcon.getStr().equals("")) {
-            orgo.editLayer(icon, layerName, y, x);
+            org.editLayer(icon, layerName, y, x);
         } else {
-            orgo.editLayer(dmgIcon, layerName, y, x);
+            org.editLayer(dmgIcon, layerName, y, x);
         }
     }
 
@@ -167,10 +167,10 @@ public class Mortal extends GameObject implements java.io.Serializable {
             room.removeMortal(this);
             updateTimerInstance.cancel();
             try {
-                orgo.editLayer(" ", layerName, y, x);
+                org.editLayer(" ", layerName, y, x);
             } catch (NullPointerException ignore) {
             }
-            orgo.removeLayer(layerName);
+            org.removeLayer(layerName);
             return true;
         }
         return false;
@@ -184,7 +184,7 @@ public class Mortal extends GameObject implements java.io.Serializable {
     }
 
     public void goTo(int newX, int newY) {
-        orgo.editLayer(" ", layerName, y, x);
+        org.editLayer(" ", layerName, y, x);
         x = newX;
         y = newY;
     }
@@ -230,21 +230,21 @@ public class Mortal extends GameObject implements java.io.Serializable {
         if (Math.abs(ydif) > Math.abs(xdif)) {
             if (ydif < 0) {
                 int dist = raycastDistance(target.getX(), target.getY(), attackRange, "down");
-                //orgo.getLayer("TestingLayer").setPos(target.getY() + dist, target.getX());
+                //org.getLayer("TestingLayer").setPos(target.getY() + dist, target.getX());
                 refinedPathToPos(followDist, target.getX(), target.getY() + dist);
             } else {
                 int dist = raycastDistance(target.getX(), target.getY(), attackRange, "up");
-                //orgo.getLayer("TestingLayer").setPos(target.getY() - dist, target.getX());
+                //org.getLayer("TestingLayer").setPos(target.getY() - dist, target.getX());
                 refinedPathToPos(followDist, target.getX(), target.getY() - dist);
             }
         } else {
             if (xdif < 0) {
                 int dist = raycastDistance(target.getX(), target.getY(), attackRange, "right");
-                //orgo.getLayer("TestingLayer").setPos(target.getY(), target.getX() + dist);
+                //org.getLayer("TestingLayer").setPos(target.getY(), target.getX() + dist);
                 refinedPathToPos(followDist, target.getX() + dist, target.getY());
             } else {
                 int dist = raycastDistance(target.getX(), target.getY(), attackRange, "left");
-                //orgo.getLayer("TestingLayer").setPos(target.getY(), target.getX() - dist);
+                //org.getLayer("TestingLayer").setPos(target.getY(), target.getX() - dist);
                 refinedPathToPos(followDist, target.getX() - dist, target.getY());
             }
         }
@@ -331,7 +331,7 @@ public class Mortal extends GameObject implements java.io.Serializable {
             //System.out.println(rangedCounter);
             if (rangedCounter == 0) {
                 acquireTarget(target);
-                Layer iconLayer = orgo.getLayer(layerName);
+                Layer iconLayer = org.getLayer(layerName);
                 if (iconLayer != null) iconLayer.setPos(y, x);
             }
             if (rangedCounter == rangedPreShotDelay) {

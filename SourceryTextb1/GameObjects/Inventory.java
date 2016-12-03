@@ -243,7 +243,7 @@ class Inventory implements java.io.Serializable {
      */
     void newShow() {
         System.out.println("Bringing up menu...");
-        org = player.orgo; // Update the org (cuz it changes based on room now)
+        org = player.org; // Update the org (cuz it changes based on room now)
         player.frozen = true;
 
         for (Layer lay : org.getLayers()) {

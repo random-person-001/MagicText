@@ -19,11 +19,11 @@ public class Spider extends Mortal {
         super.strClass = "Spider";
         room = theRoom;
         layerName = room.makeUniqueLayerName(super.strClass);
-        orgo = room.org;
+        org = room.org;
         x = xStart;
         y = yStart;
         setHealth(8);
-        orgo.addLayer(new Layer(new String[1][1], layerName, y, x));
+        org.addLayer(new Layer(new String[1][1], layerName, y, x));
 
         setupTimer(750);
     }
@@ -44,6 +44,6 @@ public class Spider extends Mortal {
 
     @Override
     public void onDeath() {
-        orgo.removeLayer(layerName);
+        org.removeLayer(layerName);
     }
 }

@@ -21,14 +21,14 @@ public class FallingBeehive extends GameObject {
         y = startY;
         realY = startY;
         room = container;
-        orgo = room.org;
+        org = room.org;
 
         layerName = room.makeUniqueLayerName("Beehive");
 
         Layer iconLayer = new Layer (new String[1][1],layerName, y, x);
         iconLayer.setSpecTxt(0,0, new SpecialText("8", new Color(200, 200, 75)));
 
-        orgo.addLayer(iconLayer);
+        org.addLayer(iconLayer);
 
         setupTimer(50);
     }
@@ -50,7 +50,7 @@ public class FallingBeehive extends GameObject {
 
             y = (int) realY; // 'y' is just an impostor
 
-            Layer iconLayer = orgo.getLayer(layerName);
+            Layer iconLayer = org.getLayer(layerName);
             if (iconLayer != null) iconLayer.setPos(y, x);
         } else {
             if (getTime() > 250 && beesInside > 0){

@@ -14,16 +14,16 @@ public class PathingObj extends Mortal {
         super.strClass = "PathingObj";
         layerName = "pathLayer";
         room = theRoom;
-        orgo = room.org;
+        org = room.org;
         x = xStart;
         y = yStart;
         setHealth(20);
-        orgo.addLayer(new Layer(new String[1][1], layerName, y, x));
+        org.addLayer(new Layer(new String[1][1], layerName, y, x));
         setupTimer(200);
 
         Layer testTarget = new Layer(new String[1][1], "TestingLayer");
         testTarget.setSpecTxt(0, 0, new SpecialText("+", Color.BLACK, Color.WHITE));
-        //orgo.addLayer(testTarget);
+        //org.addLayer(testTarget);
 
         Spell attack = new Spell(room, 0, 0, 0, 3, 10, new SpecialText("%"), new SpecialText("%"), false);
         attack.setHostility(true);
@@ -47,8 +47,8 @@ public class PathingObj extends Mortal {
             rangedPathfinding(getClosestGoodGuy(), attackRange, followDist);
             */
 
-        Layer iconLayer = orgo.getLayer(layerName);
+        Layer iconLayer = org.getLayer(layerName);
         if (iconLayer != null) iconLayer.setPos(y, x);
-        orgo.editLayer("O", layerName, 0, 0);
+        org.editLayer("O", layerName, 0, 0);
     }
 }

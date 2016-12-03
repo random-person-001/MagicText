@@ -14,7 +14,7 @@ public class PotOfPetunias extends Mortal {
 
     public PotOfPetunias(ImageOrg org, Room theRoom, int setX, int setY) {
         strClass = "PotOfPetunias";
-        orgo = org;
+        this.org = org;
         room = theRoom;
         layerName = "Petunias";
 
@@ -31,9 +31,9 @@ public class PotOfPetunias extends Mortal {
     }
 
     public void update() {
-        orgo.editLayer("<span color='#cc0000'>V</span>", layerName, y, x);
+        org.editLayer("<span color='#cc0000'>V</span>", layerName, y, x);
 //  if (room.playo.x + 3 == x && room.playo.y == y && !sentMessageBefore) {
-//            room.infoMessage(orgo, "It appears you have come across an enemy.  It is suggested that you chose to be " +
+//            room.infoMessage(org, "It appears you have come across an enemy.  It is suggested that you chose to be " +
 //                    "the survivor in this encounter.  Remember, A is lock orientation and S is fire.  Good luck.");
 //            sentMessageBefore = true;
 //

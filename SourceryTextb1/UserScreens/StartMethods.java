@@ -41,10 +41,10 @@ public class StartMethods {
 
     void buildGame(GameInstance instance) {
         Player imported = instance.getProtaganist();
-        imported.orgo.setWindow(org.getWindow()); // hopefully doesn't kill anything
+        imported.org.setWindow(org.getWindow()); // hopefully doesn't kill anything
         org.terminateClock();
 
-        org = imported.orgo; // Now we switch orgs out.
+        org = imported.org; // Now we switch orgs out.
         org.resetClock();
         imported.resumeFromSave();
         if (imported.getHasLocalWindow()) {

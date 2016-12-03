@@ -20,7 +20,7 @@ public class DroppedItem extends GameObject {
         strClass = "DroppedItem";
         room = roomy;
         playersWhoPickedMeUp = new ArrayList<>();
-        orgo = roomy.org;
+        org = roomy.org;
         pickUpMessage = messageOnPickup;
         me = dropped;
         x = setx;
@@ -38,12 +38,12 @@ public class DroppedItem extends GameObject {
         // Ensure that we have layers for everyone
         for (Player p : room.players) {
             // players who haven't picked me up AND we don't have a layer for them already
-            if (!(playersWhoPickedMeUp.contains(p.getUsername()) || orgo.layerExists(layerName + p.getUsername()))) {
+            if (!(playersWhoPickedMeUp.contains(p.getUsername()) || org.layerExists(layerName + p.getUsername()))) {
                 // should make a new layer for that specific player to see
                 Layer newLayer = new Layer(new String[1][1], layerName + p.getUsername(), y, x, true, true, false);
                 newLayer.setStr(0, 0, "!");
                 newLayer.setOwningPlayerUsername(p.getUsername());
-                orgo.addLayer(newLayer);
+                org.addLayer(newLayer);
             }
         }
     }
@@ -54,7 +54,7 @@ public class DroppedItem extends GameObject {
             if (x == player.getX() && y == player.getY() && !playersWhoPickedMeUp.contains(player.getUsername())) {
                 player.addItem(me);
                 playersWhoPickedMeUp.add(player.getUsername());
-                orgo.removeLayer(layerName + player.getUsername());
+                org.removeLayer(layerName + player.getUsername());
                 if (!pickUpMessage.equals("None") || pickUpMessage.equals("")) {
                     System.out.println("Picking up: " + me.getName());
                     room.compactTextBox(pickUpMessage, "", false, player.getUsername());
@@ -71,8 +71,8 @@ public class DroppedItem extends GameObject {
     public void selfCleanup() {
         try {
             System.out.println("DroppedItem self clean!");
-            orgo.editLayer(" ", layerName, 0, 0);
-            orgo.getLayers().stream().filter(l -> l.name.contains(layerName)).forEach(l -> orgo.removeLayer(layerName));
+            org.editLayer(" ", layerName, 0, 0);
+            org.getLayers().stream().filter(l -> l.name.contains(layerName)).forEach(l -> org.removeLayer(layerName));
         } catch (NullPointerException ignore) {
         }
     }

@@ -49,7 +49,7 @@ public class Spell extends GameObject {
     public Spell(Room theRoom, int setX, int setY, int setOr, int setDmg, int setRng, SpecialText set1, SpecialText set2, boolean alting) {
         strClass = "Spell";
         room = theRoom;
-        orgo = room.org;
+        org = room.org;
 
         x = setX;
         y = setY;
@@ -58,14 +58,14 @@ public class Spell extends GameObject {
         Layer effect = new Layer(new String[1][1], layerName);
         effect.setStr(0, 0, " ");
         effect.setPos(y, x);
-        orgo.addLayer(effect);
+        org.addLayer(effect);
 
         orientation = setOr;
 
         define(setDmg, setRng, set1, set2);
         dispAlting = alting;
 
-        if (orgo.getDebug())
+        if (org.getDebug())
             System.out.println(name + " spell cast!");
 
         setupTimer(30);
@@ -171,7 +171,7 @@ public class Spell extends GameObject {
 
     @Override
     public void update() {
-        //orgo.editLayer(" ", layerName, 0, 0);
+        //org.editLayer(" ", layerName, 0, 0);
 
         if (orientation >= 0 && orientation <= 3) {
             //System.out.println("A spell is traveling normally... (" + x + "," + y + ")");
@@ -196,28 +196,28 @@ public class Spell extends GameObject {
 
         if (dispAlting) {
             if (onChar1) { //A really clever way to alternate between two characters ('^' means XOR)
-                orgo.editLayer(char1, layerName, 0, 0);
+                org.editLayer(char1, layerName, 0, 0);
                 onChar1 = false;
             } else {
-                orgo.editLayer(char2, layerName, 0, 0);
+                org.editLayer(char2, layerName, 0, 0);
                 onChar1 = true;
             }
         } else {
             if (orientation <= 1) { //Orientation-sensitive display
-                orgo.editLayer(char1, layerName, 0, 0);
+                org.editLayer(char1, layerName, 0, 0);
             } else {
-                orgo.editLayer(char2, layerName, 0, 0);
+                org.editLayer(char2, layerName, 0, 0);
             }
         }
 
-        Layer iconLayer = orgo.getLayer(layerName);
+        Layer iconLayer = org.getLayer(layerName);
         if (iconLayer != null) iconLayer.setPos(y, x);
 
         if (!hitSomeOne)
             hitSomeOne = room.hurtSomethingAt(x, y, damage, killMessage, !isHostile);
         if (room.isPlaceSolid(x, y) || hitSomeOne || range == 0) {
-            orgo.editLayer(" ", layerName, 0, 0);
-            orgo.removeLayer(layerName);
+            org.editLayer(" ", layerName, 0, 0);
+            org.removeLayer(layerName);
             room.removeObject(this);
         }
         if (range > 0) {

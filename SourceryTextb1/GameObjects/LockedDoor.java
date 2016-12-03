@@ -20,20 +20,20 @@ public class LockedDoor extends GameObject {
         keyName = nameOfKey;
         lockpickDifficulty = difficulty;
         super.room = creator;
-        super.orgo = org;
+        super.org = org;
         layerName = room.makeUniqueLayerName(strClass);
         x = xSet;
         y = ySet;
         Layer icon = new Layer(new String[1][1], layerName, y, x);
         icon.setStr(0, 0, ":");
-        orgo.addLayer(icon);
+        this.org.addLayer(icon);
         room.addToObjHitMesh(x, y);
         setupTimer(150);
     }
 
     private void selfDestruct() {
         room.splashMessage("The locked door opened!", "");
-        orgo.removeLayer(layerName);
+        org.removeLayer(layerName);
         room.removeFromObjHitMesh(x, y);
         room.removeObject(this);
         cancelTimer();

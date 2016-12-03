@@ -19,14 +19,14 @@ public class Troll extends Mortal {
 
     public Troll(ImageOrg orga, Room theRoom, int xStart, int yStart, DroppedItem itemToDrop) {
         super.strClass = "Troll";
-        orgo = orga;
+        org = orga;
         room = theRoom;
         itemOnDrop = itemToDrop;
         layerName = room.makeUniqueLayerName(super.strClass);
         x = xStart;
         y = yStart;
         setHealth(20);
-        orgo.addLayer(new Layer(new String[1][1], layerName));
+        org.addLayer(new Layer(new String[1][1], layerName));
     }
 
     public void setMoveFrq(int newfrq) {
@@ -70,7 +70,7 @@ public class Troll extends Mortal {
                 return;
             }
         }
-        orgo.editLayer("T", layerName, 0, 0);
+        org.editLayer("T", layerName, 0, 0);
         room.removeMortal(this);
 
         if (abs(closestGoodGuy.getY() - y) <= 3 && abs(closestGoodGuy.getX() - x) <= 3) {
@@ -80,7 +80,7 @@ public class Troll extends Mortal {
 
     @Override
     public void onDeath() {
-        orgo.removeLayer(layerName);
+        org.removeLayer(layerName);
         System.out.println("AAAAAaaaack, a troll died.");
         //room.addObject(itemOnDrop);
     }

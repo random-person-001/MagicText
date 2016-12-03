@@ -17,14 +17,14 @@ public class Ghost extends Mortal {
 
     public Ghost(Room theRoom, int xStart, int yStart) {
         super.strClass = "Ghost";
-        orgo = theRoom.org;
+        org = theRoom.org;
         room = theRoom;
         layerName = room.makeUniqueLayerName(super.strClass);
 
         x = xStart;
         y = yStart;
         setHealth(25);
-        orgo.addLayer(new Layer(new String[1][1], layerName, y, x));
+        org.addLayer(new Layer(new String[1][1], layerName, y, x));
 
         setupTimer(300); // Maybe the player should check this instead
     }
@@ -56,6 +56,6 @@ public class Ghost extends Mortal {
 
     @Override
     public void onDeath() {
-        orgo.removeLayer(layerName);
+        org.removeLayer(layerName);
     }
 }
