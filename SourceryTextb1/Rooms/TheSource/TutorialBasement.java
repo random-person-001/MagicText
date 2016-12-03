@@ -137,6 +137,9 @@ public class TutorialBasement extends Room {
                     play.isGhost = true;
                     play.ludicrousSpeed = true;
                     play.restoreHealth(400, 294);
+                    Item fireSpell = new Item("Fireball", "Fire Spell;\nUse your imagination.", "FrBll", "spell", true);
+                    fireSpell.dmgSpellDefine(4, 7, 0, "fire", new SpecialText("6", new Color(255, 200, 0)), new SpecialText("9", new Color(255, 150, 0)));
+                    play.addItem(fireSpell);
                     setNewRoom("switch to zone 2", play, 0, 0);
                 }
 

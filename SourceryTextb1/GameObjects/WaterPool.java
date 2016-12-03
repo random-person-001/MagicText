@@ -77,6 +77,7 @@ public class WaterPool extends GameObject {
         waveYs = new int[waveCount];
         waveTimers = new int[waveCount];
 
+        /*
         String debugOutput = "[Water] Boolean matrix:\n";
 
         for (int r = 0; r < puddleData[0].length; r++) {
@@ -90,7 +91,7 @@ public class WaterPool extends GameObject {
             debugOutput += "\n";
         }
         System.out.println(debugOutput);
-
+*/
         puddle.setPos(y, x);
         org.addLayer(puddle);
 

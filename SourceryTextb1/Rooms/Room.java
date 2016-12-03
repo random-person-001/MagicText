@@ -419,11 +419,16 @@ public class Room implements java.io.Serializable {
         }
     }
 
-    protected void removeFromBaseHitMesh(int x, int y) {
-        baseHitMesh[y][x] = false;
+    public void removeFromBaseHitMesh(int x, int y) {
+        if (x<baseHitMesh[0].length && x >= 0 && y < baseHitMesh.length && y >= 0) {
+            baseHitMesh[y][x] = false;
+        } else {
+            System.out.println("[Room] can't remove point " + x + " " + y + " from base hit mesh.  Size is " +
+                    baseHitMesh[0].length + " by " + baseHitMesh.length);
+        }
     }
 
-    protected void addToBaseHitMesh(int x, int y) {
+    public void addToBaseHitMesh(int x, int y) {
         baseHitMesh[y][x] = true;
     }
 

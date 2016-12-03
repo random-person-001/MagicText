@@ -1,5 +1,6 @@
 package SourceryTextb1.GameObjects;
 
+import SourceryTextb1.GameObjects.ForestOfFondant.FlammableTree;
 import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
 import SourceryTextb1.SpecialText;
@@ -25,6 +26,7 @@ public class Spell extends GameObject {
     private int orientation = 0;
     private boolean dispAlting = false;
     private boolean enemySeeking = false;
+    private boolean isFire = false;
 
     private boolean isHostile = false;
 
@@ -69,6 +71,10 @@ public class Spell extends GameObject {
             System.out.println(name + " spell cast!");
 
         setupTimer(30);
+    }
+
+    void makeFireSpell(){
+        isFire = true;
     }
 
     public void setHostility(boolean set) {
@@ -219,6 +225,14 @@ public class Spell extends GameObject {
             org.editLayer(" ", layerName, 0, 0);
             org.removeLayer(layerName);
             room.removeObject(this);
+            if (room.isPlaceSolid(x, y) && isFire){ // Special considerations for burning down forests
+                System.out.println("[Spell] (a fire one) checking if ended cuz of flammable tree");
+                for (GameObject o : room.objs){
+                    if (o.strClass == "FlammableTree"){
+                        ((FlammableTree)o).burn(x,y);
+                    }
+                }
+            }
         }
         if (range > 0) {
             range--;
