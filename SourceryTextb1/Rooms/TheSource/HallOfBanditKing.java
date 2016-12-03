@@ -9,6 +9,7 @@ import SourceryTextb1.Art;
 import SourceryTextb1.GameObjects.DroppedItem;
 import SourceryTextb1.GameObjects.Item;
 import SourceryTextb1.GameObjects.Player;
+import SourceryTextb1.GameObjects.TheSource.FallingBeehive;
 import SourceryTextb1.GameObjects.TheSource.Wolf;
 import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
@@ -53,18 +54,23 @@ public class HallOfBanditKing extends Room {
      */
     @Override
     public void addItems() {
-        int[][] carrotLocs = {{18, 32}, {44, 28}, {21, 15}, {22, 22}, {48, 14}};
-        for (int[] coord : carrotLocs) {
-            Item carrot = new Item("Carrot", "For some reason,\n they only grow\n in the mountains.\n\nNobody really know why.", "item");
-            carrot.healItemDefine(6, 3);
-            DroppedItem gCarrot = new DroppedItem(this, "You picked a carrot!", carrot, coord[0], coord[1]);
-            addObject(gCarrot);
-        }
 
-        int[][] wolfLocs = {{39, 31}, {44, 29}, {23, 21}, {27, 16}};
-        for (int[] coord : wolfLocs) {
-            Wolf puppy = new Wolf(org, this, coord[0], coord[1]);
-            addMortal(puppy);
+    }
+
+    @Override
+    protected void specialInspect(int x, int y, Player inspector){
+        if (x == 38 && y == 2){
+            queueMessage(new FlavorText("Knock down the beehive?", true, 0).setViewerUsername(inspector.getUsername()));
+        }
+    }
+
+    @Override
+    public void respondToQuestion(int qID, Player respondTo) {
+        if (qID == 0) {
+            FallingBeehive wheee = new FallingBeehive(this, 37, 2);
+            addObject(wheee);
+            removeFromBaseHitMesh(37, 2);
+            org.editLayer("", "RoomLayer", 2, 37);
         }
     }
 
@@ -81,11 +87,12 @@ public class HallOfBanditKing extends Room {
         lay1.findAndReplace(new SpecialText("O", coloring.mountainPallette1), new SpecialText("O", coloring.mountainPallette2));
         lay1.findAndReplace(new SpecialText("0", coloring.mountainPallette1), new SpecialText("0", coloring.mountainPallette2));
         lay1.findAndReplace(new SpecialText(".", coloring.mountainPallette1), new SpecialText(".", coloring.mountainPallette2));
+        lay1.findAndReplace(new SpecialText("8", coloring.mountainPallette1), new SpecialText("8", new Color(200, 200, 75)));
         highlightFlavorText(lay1);
         org.addLayer(lay1);
 
         initHitMeshes(lay1);
-        String[] solids = {";", ":", "^", "O", "o", "O", "#","_","\\","/","|"};
+        String[] solids = {";", ":", "^", "O", "o", "O", "#","_","\\","/","|","8"};
         addToBaseHitMesh(base, solids);
 
         //addItems();

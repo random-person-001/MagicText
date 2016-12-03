@@ -9,6 +9,7 @@ import SourceryTextb1.Art;
 import SourceryTextb1.GameObjects.DroppedItem;
 import SourceryTextb1.GameObjects.Item;
 import SourceryTextb1.GameObjects.Player;
+import SourceryTextb1.GameObjects.TheSource.FallingBeehive;
 import SourceryTextb1.GameObjects.TheSource.PotOfPetunias;
 import SourceryTextb1.GameObjects.TheSource.Spider;
 import SourceryTextb1.GameObjects.WaterPool;
@@ -212,6 +213,11 @@ public class TutorialBasement extends Room {
         Item testKey = new Item ("testKey","This key opens a door\n\nAin't that neat!", playo, "item");
         DroppedItem gKey = new DroppedItem(this, org, "You found a key!", testKey, 10, 29);
         addObject(gKey);
+        */
+
+        /*
+        FallingBeehive wheeeeeee = new FallingBeehive(this, 25, 25);
+        addObject(wheeeeeee);
         */
 
         //Enable this to play around with water
