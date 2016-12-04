@@ -169,7 +169,6 @@ public class Room implements java.io.Serializable {
     public boolean hurtSomethingAt(int x, int y, int damage, String killMessage, boolean fromPlayer) {
         for (Mortal e : enemies) {
             if (!fromPlayer) {
-                System.out.println("~ I see a hostile spell! ~");
                 if (e.getX() == x && e.getY() == y) {
                     e.subtractHealth(damage, killMessage);
                     return true;

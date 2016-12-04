@@ -13,14 +13,14 @@ import java.util.Random;
  * Created by riley on 02-Dec-2016.
  */
 public class FlammableTree extends GameObject {
-    Color[] stagesOfFire = {new Color(222, 101, 0), new Color(222, 138, 0), new Color(222, 202, 0), new Color(222, 61, 24),
+    Color[] stagesOfFire = {new Color(184, 222, 85), new Color(222, 138, 0), new Color(222, 202, 0), new Color(222, 61, 24),
             new Color(167, 83, 1), new Color(106, 48, 0), new Color(70, 44, 31), new Color(40, 40, 40)};
     String[] charactersOfFire = {"W", "M", "w", "m", "_", "w", ".", " "};
 
     private Random rand = new Random();
-    private int [][] treeData;
+    private int [][] treeData; // -1=no tree   0=pristine tree   1-7=various stages of burning
     private String layerName;
-    private int chanceOfSpreadingInEachDirection = 22;
+    private int chanceOfSpreadingInEachDirection = 10; //  40;
     public FlammableTree(Room room, Layer layWithTrees, SpecialText[] treeChars) {
         this.room = room;
         super.strClass = "FlammableTree";
@@ -44,12 +44,20 @@ public class FlammableTree extends GameObject {
     }
 
     public void burn(int x, int y) {
-        if (x >= 0 && x < treeData.length && y >= 0 && y < treeData[0].length && treeData[x][y] == 0) {
-            Layer treeLayer = room.org.getLayer(layerName);
-            if (treeLayer != null) {
-                room.removeFromBaseHitMesh(x + treeLayer.getX(), y + treeLayer.getY());
-                treeData[x-treeLayer.getY()][y-treeLayer.getX()] = 1;
-                // Maybe start a forest fire...
+        Layer treeLayer = room.org.getLayer(layerName);
+        if (treeLayer != null) {
+            int relativeY = y-treeLayer.getX();
+            int relativeX = x-treeLayer.getY();
+            int maxRelX = treeData.length;
+            int maxRelY = treeData[0].length;
+            boolean withinBounds = relativeX >= 0 && relativeX < maxRelX && relativeY >= 0 && relativeY < maxRelY;
+            //System.out.println("[FlammableTree] attempting (abs " + x + ", " + y + ") rel " + relativeX + ", " + relativeY + " for " + layerName +
+            //        " | max relative = " + maxRelX + ", " + maxRelY + ", so " + withinBounds );
+            if (withinBounds && treeData[relativeX][relativeY] == 0) {
+                //System.out.println("And it burns!");
+                room.removeFromBaseHitMesh(x,y);
+                treeData[relativeX][relativeY] = 1;
+                // Maybe start a forest fire!
                 if (r(100) <= chanceOfSpreadingInEachDirection){
                     burn(x+1, y);
                 }
@@ -88,6 +96,9 @@ public class FlammableTree extends GameObject {
                     dispChar = ".";
                 else
                     dispChar = " ";
+            }
+            if (currentState < 3){
+                room.hurtSomethingAt(dataC + treeLayer.getY(), dataR + treeLayer.getX(),2,"You were burnt to a crisp");
             }
             SpecialText newSpTxt = new SpecialText(dispChar, stagesOfFire[currentState], stagesOfFire[currentState + 1]);
             room.org.editLayer(newSpTxt, layerName, dataR, dataC);

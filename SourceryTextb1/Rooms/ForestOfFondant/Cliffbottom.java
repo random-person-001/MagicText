@@ -115,14 +115,6 @@ public class Cliffbottom extends Room {
         forestVeil.setX(47);
         forestVeil.setY(132);
 
-
-        forestVeil.findAndReplace(new SpecialText("t"), new SpecialText("o", normalGrass, lightTreeGreen), 17);
-        forestVeil.findAndReplace(new SpecialText("t"), new SpecialText("o", otherGrass, lightTreeGreen), 17);
-        forestVeil.findAndReplace(new SpecialText("t"), new SpecialText("O", otherGrass, lightTreeGreen), 17);
-        forestVeil.findAndReplace(new SpecialText("t"), new SpecialText("0", otherGrass, lightTreeGreen), 17);
-        forestVeil.findAndReplace(new SpecialText("t"), new SpecialText(" ", lightTreeGreen, lightTreeGreen));
-        forestVeil.findAndReplace(new SpecialText("h"), new SpecialText(" ", shadowTreeGreen, shadowTreeGreen));
-
         SpecialText[] trees = { new SpecialText("o", normalGrass, lightTreeGreen),  // Cuz the burnable forest wants to know them
                 new SpecialText("o", otherGrass, lightTreeGreen), new SpecialText("O", otherGrass, lightTreeGreen),
                 new SpecialText("0", otherGrass, lightTreeGreen), new SpecialText(" ", lightTreeGreen, lightTreeGreen),
@@ -133,6 +125,12 @@ public class Cliffbottom extends Room {
         forestBackground.findAndReplace(new SpecialText("t"), trees[3], 17);
         forestBackground.findAndReplace(new SpecialText("t"), trees[4]);
         forestBackground.findAndReplace(new SpecialText("h"), trees[5]);
+        forestVeil.findAndReplace(new SpecialText("t"), trees[0], 17);
+        forestVeil.findAndReplace(new SpecialText("t"), trees[1], 17);
+        forestVeil.findAndReplace(new SpecialText("t"), trees[2], 17);
+        forestVeil.findAndReplace(new SpecialText("t"), trees[3], 17);
+        forestVeil.findAndReplace(new SpecialText("t"), trees[4]);
+        forestVeil.findAndReplace(new SpecialText("h"), trees[5]);
 
         forestBackground.findAndReplace(new SpecialText(" "), new SpecialText(".", otherGrass, dirt), 15);
         forestBackground.findAndReplace(new SpecialText(" "), new SpecialText("_", normalGrass, dirt), 15);
@@ -193,8 +191,10 @@ public class Cliffbottom extends Room {
         addToObjHitMesh(120, 101); // river
         org.addLayer(forestVeil);
 
-        FlammableTree ft = new FlammableTree(this, forestBackground, trees);
-        addObject(ft);
+        FlammableTree ft2 = new FlammableTree(this, forestVeil, trees);
+        addObject(ft2);
+        FlammableTree ft1 = new FlammableTree(this, forestBackground, trees);
+        addObject(ft1);
         WaterPool wp1 = new WaterPool(this, forestRiver, "1", 1);
         WaterPool wp2 = new WaterPool(this, forestRiver, "2", 2);
         WaterPool wp3 = new WaterPool(this, forestRiver, "3", 3);
