@@ -11,6 +11,7 @@ import static java.lang.Math.abs;
 class Potion extends GameObject {
     //private Random rand = new Random();
     private String name = "Generic";
+    private boolean firstUpdate = true;
     private Player caster;
     private int duration = 0;
 
@@ -26,8 +27,7 @@ class Potion extends GameObject {
 
     public void update() {
         if (getTime() >= duration) {
-            cancelTimer();
-            caster.fabulousMode = false;
+            onCancel();
         }
         x = caster.getX();
         y = caster.getY();
@@ -55,6 +55,47 @@ class Potion extends GameObject {
                     System.out.println(getTime());
                 }
                 break;
+            case "dillTaterChip":
+                if (firstUpdate) {
+                    while (caster.frozen){
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException ignore) {}
+                    }
+                    room.changeTimerSpeedsBy(10f);
+                }
+                break;
+            case "fondantChunk":
+                if (firstUpdate) {
+                    while (caster.frozen){
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException ignore) {}
+                    }
+                    room.changeTimerSpeedsBy(.3f);
+                }
+                break;
+            case "fondantHunk":
+                if (firstUpdate) {
+                    while (caster.frozen){
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException ignore) {}
+                    }
+                    room.changeTimerSpeedsBy(.05f);
+                }
+                break;
+        }
+        firstUpdate = false;
+    }
+
+    private void onCancel(){
+        cancelTimer();
+        caster.fabulousMode = false;
+        switch (name){
+            case "fondantChunk": // fall through
+            case "dillTaterChip":
+                room.changeTimerSpeedsBy(1f);
         }
     }
 }

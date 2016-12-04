@@ -29,6 +29,7 @@ public class DroppedItem extends GameObject {
             layerName = room.makeUniqueLayerName(super.strClass) + "-";
             setupTimer(100);
         }
+        time = 3000; // Do a long update immediately
     }
 
     /**

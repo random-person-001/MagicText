@@ -33,7 +33,8 @@ public class GameObject implements java.io.Serializable {
     public ImageOrg org;
     public Room room;
     transient Timer timer;
-    public int frequency;
+    public int targetUpdateInterval;
+    public int currentUpdateInterval = targetUpdateInterval; // Almost always == target one.  Temporal dilation sometimes changes this, though
 
     protected int x;
     protected int y;
@@ -239,19 +240,32 @@ public class GameObject implements java.io.Serializable {
         }
     }
 
-    public void setupTimer(int theFrequency) {
+    public void setupTimer(){
         cancelTimer();
-        frequency = theFrequency;
         timer = new Timer();
-        updateTimerInstance = new updateTimer(frequency);
-        timer.scheduleAtFixedRate(updateTimerInstance, frequency, frequency);
+        updateTimerInstance = new updateTimer(currentUpdateInterval);
+        timer.scheduleAtFixedRate(updateTimerInstance, currentUpdateInterval, currentUpdateInterval);
+    }
+    public void setupTimer(int theFrequency) {
+        targetUpdateInterval = theFrequency;
+        currentUpdateInterval = theFrequency;
+        setupTimer();
+    }
+
+    /**
+     * Are you a potion?  Do you want to speed up or slow down the game?  Call this weird method now!
+     * @param intervalMultiplier a coefficient for targetUpdateInterval (the delay in the timer between update() calls)
+     */
+    public void setTimerToWeirdFrequency(float intervalMultiplier){
+        currentUpdateInterval = (int) (targetUpdateInterval * intervalMultiplier);
+        currentUpdateInterval = (currentUpdateInterval > 0) ? currentUpdateInterval : 1;
+        setupTimer();
     }
 
     public void cancelTimer() {
-        try {
+        if (timer != null){
             timer.cancel();
             timer.purge();
-        } catch (NullPointerException ignore) {
         }
     }
 

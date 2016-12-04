@@ -56,6 +56,9 @@ public class HallOfBanditKing extends Room {
                         kingLastWordsSpoken = true;
                     }
                 }
+                if (play.getX() == 37 && play.getY() == 27){
+
+                }
             } catch (InterruptedException ignored) {
             }
         }
@@ -76,6 +79,9 @@ public class HallOfBanditKing extends Room {
         if (x == 38 && y == 2){
             queueMessage(new FlavorText("Knock down the beehive?", true, 0).setViewerUsername(inspector.getUsername()));
         }
+        if (x == 37 && y == 27) {
+            queueMessage(new FlavorText("Jump off the cliff to your fate beyond?", true, 1).setViewerUsername(inspector.getUsername()));
+        }
     }
 
     @Override
@@ -85,6 +91,10 @@ public class HallOfBanditKing extends Room {
             addObject(wheee);
             removeFromBaseHitMesh(37, 2);
             org.editLayer("", "RoomLayer", 2, 37);
+        }
+        if (qID == 1) {
+            respondTo.roomName = "switch to zone 2";
+            exitCode = "switch to zone 2";
         }
     }
 

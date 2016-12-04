@@ -202,6 +202,19 @@ public class Room implements java.io.Serializable {
     }
 
     /**
+     * Are you a potion?  Do you want to speed up or slow down the game?  Call this weird method now!
+     * @param intervalMultiplier a coefficient for targetUpdateInterval (the delay in the timer between update() calls)
+     */
+    public void changeTimerSpeedsBy(float intervalMultiplier){
+        for (GameObject object : objs){
+            object.setTimerToWeirdFrequency(intervalMultiplier);
+        }
+        for (Mortal morry : enemies){
+            morry.setTimerToWeirdFrequency(intervalMultiplier);
+        }
+    }
+
+    /**
      * A convenience method for discovering the number of a class are left
      *
      * @param className the String by which the class identifies (GameObject.strClass)
@@ -270,7 +283,7 @@ public class Room implements java.io.Serializable {
             for (GameObject obj : objs) {
                 try {
                     if (set) obj.cancelTimer();
-                    else obj.setupTimer(obj.frequency);
+                    else obj.setupTimer();
                 } catch (NullPointerException e) {
                     System.out.println("[Room.java: setObjsPause(): caught nullpointer!  Probably Not Good!");
                     e.printStackTrace();
@@ -279,7 +292,7 @@ public class Room implements java.io.Serializable {
             for (Mortal m : enemies) {
                 try {
                     if (set) m.cancelTimer();
-                    else m.setupTimer(m.frequency);
+                    else m.setupTimer();
                 } catch (NullPointerException e) {
                     System.out.println("[Room.java: setObjsPause(): caught nullpointer!  Probably Not Good!");
                     e.printStackTrace();

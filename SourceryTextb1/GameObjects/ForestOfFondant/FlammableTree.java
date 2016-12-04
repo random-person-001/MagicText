@@ -24,7 +24,6 @@ public class FlammableTree extends GameObject {
     public FlammableTree(Room room, Layer layWithTrees, SpecialText[] treeChars) {
         this.room = room;
         super.strClass = "FlammableTree";
-        super.frequency = 100;
         layerName = layWithTrees.getName();
         treeData = new int [layWithTrees.getColumns()][layWithTrees.getRows()];
         for (int c = 0; c < layWithTrees.getColumns(); c++) {
@@ -40,7 +39,7 @@ public class FlammableTree extends GameObject {
                 }
             }
         }
-        setupTimer(super.frequency);
+        setupTimer(100);
     }
 
     public void burn(int x, int y) {

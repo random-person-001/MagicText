@@ -203,6 +203,13 @@ public class TutorialBasement extends Room {
         //Spider spoidur = new Spider(this, 15, 29);
         addMortal(spoidur);
 
+
+        Item potion = new Item("SC&OPotatoChip", "This variety of magic\n potato chip is flavored\n with sour cream and onions\n\nIt makes your breath so bad\n it hurts nearby enemies.", "item");
+        potion.setDescMode("potion");
+        potion.setDuration(20 * 1000);
+        DroppedItem dPotion = new DroppedItem(this, "You found a potato chip!", potion, 5, 7);
+        super.addObject(dPotion);
+
         /*
         PathingObj obj = new PathingObj(this, 15, 29);
         addMortal(obj);

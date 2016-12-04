@@ -24,7 +24,7 @@ public class Cliffbottom extends Room {
 
     @Override
     protected String loop(Player play) {
-        play.goTo(206,103);
+        play.goTo(206,113);
 
         while (exitCode.equals("")) {
             if (play.getY() >= 270) {
@@ -64,6 +64,17 @@ public class Cliffbottom extends Room {
 
         Bandit loner = new Bandit(org, this, 129, 109);
         addMortal(loner);
+
+
+        Item dillChip = new Item("dillTaterChip", "It slows down your \n perception of time \n so you can meditate \n on your decisions!", "item");
+        dillChip.setDuration(60 * 1000);
+        dillChip.setDescMode("potion");
+        super.addObject(new DroppedItem(this, "Oooh, lucky!\n You found a dill potato chip!", dillChip, 121, 100));
+
+        Item fondantChunk = new Item("fondantChunk", "It puts the world in a\n sugar rush!\n Feels like the day after\n Halloween ", "item");
+        fondantChunk.setDuration(30 * 1000);
+        fondantChunk.setDescMode("potion");
+        super.addObject(new DroppedItem(this, "Oooh, lucky!\n You found a chunk of fondant!\n But beware: eating it will make \n you super hyper.", fondantChunk, 203, 24));
     }
 
     @Override
