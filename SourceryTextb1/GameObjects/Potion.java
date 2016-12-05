@@ -2,6 +2,8 @@ package SourceryTextb1.GameObjects;
 
 import SourceryTextb1.Rooms.Room;
 
+import java.util.List;
+
 import static java.lang.Math.abs;
 
 /**
@@ -25,6 +27,7 @@ class Potion extends GameObject {
         setPlayer.fabulousMode = true;
     }
 
+    ///@Override
     public void update() {
         if (getTime() >= duration) {
             onCancel();
@@ -48,14 +51,14 @@ class Potion extends GameObject {
                     //System.out.println();
                 }
                 break;
-            case "MagicTaterChip":
+            case "MagicTaterChip": // Keeps your health up
                 if (getTime() % 250 == 0) {
                     caster.restoreHealth(1, 10);
                 } else {
                     System.out.println(getTime());
                 }
                 break;
-            case "dillTaterChip":
+            case "dillTaterChip": // Slows everything down
                 if (firstUpdate) {
                     while (caster.frozen){
                         try {
@@ -65,7 +68,7 @@ class Potion extends GameObject {
                     room.changeTimerSpeedsBy(10f);
                 }
                 break;
-            case "fondantChunk":
+            case "fondantChunk": // Speeds everything up
                 if (firstUpdate) {
                     while (caster.frozen){
                         try {
@@ -75,7 +78,7 @@ class Potion extends GameObject {
                     room.changeTimerSpeedsBy(.3f);
                 }
                 break;
-            case "fondantHunk":
+            case "fondantHunk": // Like fondantChunk, but even worse.  Probably fatal.
                 if (firstUpdate) {
                     while (caster.frozen){
                         try {
@@ -85,6 +88,37 @@ class Potion extends GameObject {
                     room.changeTimerSpeedsBy(.05f);
                 }
                 break;
+            /*
+            case "wrinkleInTime": // Slows down time for things near you
+                if (firstUpdate) {
+                    while (caster.frozen){
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException ignore) {}
+                    }
+                    int range = 4; // Range (radius)
+                    float max = 6; // Time dilation (max, at center)
+                    for (int xi = -range; xi <= range; xi++) {
+                        for (int yi = -range; yi <= range; yi++) {
+                            float xDamageMult = abs(abs(xi) - range) / (float) range; // 0 to 1, peaking when xi=0 (center)
+                            float yDamageMult = abs(abs(yi) - range) / (float) range;
+                            float coeff = (max * .5f * (xDamageMult + yDamageMult));
+                            System.out.println(coeff);
+                            if (coeff < 1) coeff = 1;
+                            //List<GameObject> objectsHere = room.getObjectsAt(xi + x, yi + y);
+                            List<GameObject> objectsHere = room.objs;
+                            if (objectsHere.size() > 0) {
+                                for (GameObject object : objectsHere) {
+                                    if (!object.strClass.equals("Player")) {
+                                        object.setTimerToWeirdFrequency(coeff);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                break;
+                */
         }
         firstUpdate = false;
     }
@@ -93,6 +127,7 @@ class Potion extends GameObject {
         cancelTimer();
         caster.fabulousMode = false;
         switch (name){
+            //case "wrinkleInTime": // Fall through
             case "fondantChunk": // fall through
             case "dillTaterChip":
                 room.changeTimerSpeedsBy(1f);

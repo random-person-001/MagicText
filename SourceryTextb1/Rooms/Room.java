@@ -736,6 +736,26 @@ public class Room implements java.io.Serializable {
         }
     }
 
+    /*
+     * @param x x coord of query
+     * @param y y coord of query
+     * @return all registered GameObjects at a coordinate
+     *
+    public List<GameObject> getObjectsAt(int x, int y) {
+        List<GameObject> toReturn = new ArrayList<>();
+        for (GameObject object : objs){
+            if (object.getX() == x && object.getY() == y){
+                toReturn.add(object);
+            }
+        }
+        for (Mortal object : enemies){
+            if (object.getX() == x && object.getY() == y){
+                toReturn.add(object);
+            }
+        }
+        return toReturn;
+    }*/
+
     public class FlavorText implements java.io.Serializable {
         String usernameOfPlayer;
         String[] messages = {""};
