@@ -246,6 +246,7 @@ public class GameObject implements java.io.Serializable {
         updateTimerInstance = new updateTimer(currentUpdateInterval);
         timer.scheduleAtFixedRate(updateTimerInstance, currentUpdateInterval, currentUpdateInterval);
     }
+
     public void setupTimer(int theFrequency) {
         targetUpdateInterval = theFrequency;
         currentUpdateInterval = theFrequency;
@@ -257,9 +258,12 @@ public class GameObject implements java.io.Serializable {
      * @param intervalMultiplier a coefficient for targetUpdateInterval (the delay in the timer between update() calls)
      */
     public void setTimerToWeirdFrequency(float intervalMultiplier){
+        int oldInterval = currentUpdateInterval; // Cuz will probs change
         currentUpdateInterval = (int) (targetUpdateInterval * intervalMultiplier);
         currentUpdateInterval = (currentUpdateInterval > 0) ? currentUpdateInterval : 1;
-        setupTimer();
+        if (oldInterval != currentUpdateInterval) {
+            setupTimer();
+        }
     }
 
     public void cancelTimer() {

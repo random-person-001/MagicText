@@ -34,10 +34,9 @@ class Potion extends GameObject {
         }
         x = caster.getX();
         y = caster.getY();
-        System.out.println("potion updating");
+        //System.out.println("potion updating");
         switch (name) {
-            // Sour Cream & Onion potato chip hurts everything near you.
-            case "SC&OPotatoChip":
+            case "SC&OPotatoChip": // Sour Cream & Onion potato chip hurts everything near you.
                 int r = 4; // Range (radius)
                 int d = 4; // Damage (max, at center)
                 for (int xi = -r; xi <= r; xi++) {
@@ -88,37 +87,30 @@ class Potion extends GameObject {
                     room.changeTimerSpeedsBy(.05f);
                 }
                 break;
-            /*
             case "wrinkleInTime": // Slows down time for things near you
                 if (firstUpdate) {
-                    while (caster.frozen){
+                    while (caster.frozen) {
                         try {
                             Thread.sleep(1000);
-                        } catch (InterruptedException ignore) {}
+                        } catch (InterruptedException ignore) {
+                        }
                     }
-                    int range = 4; // Range (radius)
-                    float max = 6; // Time dilation (max, at center)
-                    for (int xi = -range; xi <= range; xi++) {
-                        for (int yi = -range; yi <= range; yi++) {
-                            float xDamageMult = abs(abs(xi) - range) / (float) range; // 0 to 1, peaking when xi=0 (center)
-                            float yDamageMult = abs(abs(yi) - range) / (float) range;
-                            float coeff = (max * .5f * (xDamageMult + yDamageMult));
-                            System.out.println(coeff);
-                            if (coeff < 1) coeff = 1;
-                            //List<GameObject> objectsHere = room.getObjectsAt(xi + x, yi + y);
-                            List<GameObject> objectsHere = room.objs;
-                            if (objectsHere.size() > 0) {
-                                for (GameObject object : objectsHere) {
-                                    if (!object.strClass.equals("Player")) {
-                                        object.setTimerToWeirdFrequency(coeff);
-                                    }
-                                }
+                }
+                int range = 6; // Range (radius) (actual effective radius is one less)
+                float max = 4f; // Time dilation (max, at center)
+                for (int xi = -range; xi <= range; xi++) {
+                    for (int yi = -range; yi <= range; yi++) {
+                        float coeff = max;
+                        if (abs(xi) >= range-1 || abs(yi) >= range-1) coeff = 1; // restore normalicy at fringes
+                        List<GameObject> objectsHere = room.getObjectsAt(xi + x, yi + y);
+                        for (GameObject object : objectsHere) {
+                            if (!object.strClass.equals("Player")) {
+                                object.setTimerToWeirdFrequency(coeff);
                             }
                         }
                     }
                 }
                 break;
-                */
         }
         firstUpdate = false;
     }
@@ -127,7 +119,7 @@ class Potion extends GameObject {
         cancelTimer();
         caster.fabulousMode = false;
         switch (name){
-            //case "wrinkleInTime": // Fall through
+            case "wrinkleInTime": // Fall through
             case "fondantChunk": // fall through
             case "dillTaterChip":
                 room.changeTimerSpeedsBy(1f);

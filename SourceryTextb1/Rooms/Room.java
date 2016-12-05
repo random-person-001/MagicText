@@ -198,6 +198,11 @@ public class Room implements java.io.Serializable {
                 count++;
             }
         }
+        for (Mortal o : enemies) {
+            if (o.strClass.equals(className)) {
+                count++;
+            }
+        }
         return count;
     }
 
@@ -277,6 +282,7 @@ public class Room implements java.io.Serializable {
      * @param set whether to pause (true) or unpause (false)
      */
     public void setObjsPause(boolean set) {
+        System.out.println("Changing room pause setting");
         flushObjListChanges();
         isPaused = set;
         try {
@@ -509,16 +515,6 @@ public class Room implements java.io.Serializable {
         else {
             return false;
         }
-        /*  THIS ACTUALLY WORKS FOR MULTIPLE WATER POOLS!!! (But it's also a bit slower)
-        boolean result = false;
-        for (GameObject obj : objs) {
-            if (obj.strClass.equals("WaterPool")) {
-                WaterPool pool = (WaterPool) obj;
-                result |= pool.isWaterHere(x, y);
-            }
-        }
-        return result;
-        */
     }
 
     protected void addMagicPotato(int x, int y) {
@@ -736,11 +732,11 @@ public class Room implements java.io.Serializable {
         }
     }
 
-    /*
+    /**
      * @param x x coord of query
      * @param y y coord of query
      * @return all registered GameObjects at a coordinate
-     *
+     */
     public List<GameObject> getObjectsAt(int x, int y) {
         List<GameObject> toReturn = new ArrayList<>();
         for (GameObject object : objs){
@@ -754,7 +750,7 @@ public class Room implements java.io.Serializable {
             }
         }
         return toReturn;
-    }*/
+    }
 
     public class FlavorText implements java.io.Serializable {
         String usernameOfPlayer;

@@ -75,12 +75,12 @@ public class Cliffbottom extends Room {
         fondantChunk.setDuration(30 * 1000);
         fondantChunk.setDescMode("potion");
         super.addObject(new DroppedItem(this, "Oooh, lucky! You found a chunk of fondant!\n But -   BEWARE:\n eating it will make you super hyper.", fondantChunk, 203, 24));
-/*
+
         Item perriwinkle = new Item("wrinkleInTime", "Distorts spacetime in a \n bubble around you, so \n nearby entities slow down \n in your perception of time", "item");
         perriwinkle.setDuration(60 * 1000);
         perriwinkle.setDescMode("potion");
-        super.addObject(new DroppedItem(this, "Oooh, lucky! You found a potion that locally \n distorts spacetime.", perriwinkle, 206,113));
-        */
+        super.addObject(new DroppedItem(this, "Oooh, lucky! You found a potion that locally \n distorts spacetime.", perriwinkle, 135, 57));
+
     }
 
     @Override
