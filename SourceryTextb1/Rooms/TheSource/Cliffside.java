@@ -4,10 +4,7 @@ import SourceryTextb1.Art;
 import SourceryTextb1.GameObjects.DroppedItem;
 import SourceryTextb1.GameObjects.Item;
 import SourceryTextb1.GameObjects.Player;
-import SourceryTextb1.GameObjects.TheSource.Bandit;
-import SourceryTextb1.GameObjects.TheSource.Spider;
-import SourceryTextb1.GameObjects.TheSource.WeakTower;
-import SourceryTextb1.GameObjects.TheSource.Wolf;
+import SourceryTextb1.GameObjects.TheSource.*;
 import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
 import SourceryTextb1.SpecialText;
@@ -73,6 +70,9 @@ public class Cliffside extends Room {
         addMortal(john);
         Bandit jack = new Bandit(org, this, 135, 13);
         addMortal(jack);
+
+        Thief johnathan = new Thief(org, this, 21, 10);
+        addMortal(johnathan);
 
         int[][] towerLocs = {{124, 14}, {130, 18}, {130, 8}, {140, 16}};
         for (int[] towerLoc : towerLocs) {
