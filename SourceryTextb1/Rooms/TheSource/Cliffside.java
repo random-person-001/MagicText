@@ -22,7 +22,7 @@ public class Cliffside extends Room {
 
     protected String loop(Player play) {
         int count = 0;
-        while (exitCode.equals("") && play.roomName == strRoomName) {
+        while (exitCode.equals("")) {
             try {
                 Thread.sleep(20);
 

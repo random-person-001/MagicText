@@ -633,6 +633,11 @@ public class Player extends Mortal implements java.io.Serializable {
      */
     private void textBoxQuery() {
         room.inspectAt(x, y, this);
+
+        room.inspectAt(x+1, y, this);
+        room.inspectAt(x-1, y, this);
+        room.inspectAt(x, y+1, this);
+        room.inspectAt(x, y-1, this);
     }
 
     private void newCastSpell(Item spell) {
@@ -695,6 +700,36 @@ public class Player extends Mortal implements java.io.Serializable {
 
     public void addItem(Item input) {
         inv.addItem(input);
+    }
+
+    /**
+     * Take away a random item of a certain type
+     * @param itemType what the Item.type should be:
+     *                  1: spell
+     *                  2: normal item
+     *                  3: equipment
+     */
+    public Item removeRandomItem(String itemType) {
+        int type;
+        switch (itemType.toLowerCase()){
+            case "spell":
+                type = 1;
+                break;
+            case "item":
+                type = 2;
+                break;
+            case "equip":
+                type = 3;
+                break;
+            case "any":
+                type = -1;
+                break;
+            default:
+                System.out.println("[Player.removeRandomItem] bad parameter: " + itemType + "; acceptable inputs are" +
+                        "spell, item, equip, or any.");
+                return null;
+        }
+        return inv.removeRandomItem(type);
     }
 
     String getSecondarySpell() {

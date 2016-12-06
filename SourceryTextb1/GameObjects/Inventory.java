@@ -8,6 +8,7 @@ import SourceryTextb1.SpecialText;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -141,6 +142,58 @@ class Inventory implements java.io.Serializable {
                 equip.add(input);
                 break;
         }
+    }
+
+    private Random rand = new Random();
+
+    protected int r(int max) {
+        return r(max, 0);
+    }
+
+    protected int r(int max, int min) {
+        return rand.nextInt((max - min) + 1) + min;
+    }
+
+    /**
+     * Take away a random item of a certain type
+     * @param itemType what the Item.type should be:
+     *                  1: spell
+     *                  2: normal item
+     *                  3: equipment
+     * @return the item that was removed
+     */
+    Item removeRandomItem(int itemType) {
+        Item item = null;
+        int index;
+        switch (itemType) {
+            case 1:
+                if (spells.size() > 0) {
+                    index = r(spells.size()-1);
+                    item = spells.get(index);
+                    spells.remove(index);
+                }
+                break;
+            case 2:
+                if (items.size() > 0) {
+                    index = r(items.size() - 1);
+                    item = items.get(index);
+                    items.remove(index);
+                }
+                break;
+            case 3:
+                if (equip.size() > 0) {
+                    index = (equip.size() - 1);
+                    item = equip.get(index);
+                    equip.remove(index);
+                }
+                break;
+            case -1: // any type
+                item = removeRandomItem(r(1,3)); // will only recurse once
+                break;
+            default:
+                System.out.println("[Inventory.removeRandomItem] bad input: " + itemType + "; should be -1, 1, 2, or 3");
+        }
+        return item;
     }
 
     /**
