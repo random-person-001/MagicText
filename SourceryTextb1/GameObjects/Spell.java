@@ -59,7 +59,7 @@ public class Spell extends GameObject {
         layerName = room.makeUniqueLayerName("Spell");
         Layer effect = new Layer(new String[1][1], layerName);
         effect.setStr(0, 0, " ");
-        effect.setPos(y, x);
+        effect.setPos(x, y);
         org.addLayer(effect);
 
         orientation = setOr;
@@ -217,7 +217,7 @@ public class Spell extends GameObject {
         }
 
         Layer iconLayer = org.getLayer(layerName);
-        if (iconLayer != null) iconLayer.setPos(y, x);
+        if (iconLayer != null) iconLayer.setPos(x, y);
 
         if (!hitSomeOne)
             hitSomeOne = room.hurtSomethingAt(x, y, damage, killMessage, !isHostile);

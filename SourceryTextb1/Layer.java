@@ -18,8 +18,8 @@ public class Layer implements java.io.Serializable {
     public String name = "";
     private boolean opaque = false;
     private boolean cameraObedient = true;
-    private int xPos = 0;
     private int yPos = 0;
+    private int xPos = 0;
     private boolean importance = false;
     private String owningPlayerUsername = null;
 
@@ -72,8 +72,8 @@ public class Layer implements java.io.Serializable {
      */
     public Layer(String[][] assign, String inkey, int xSet, int ySet) {
         this(assign, inkey);
-        xPos = xSet;
-        yPos = ySet;
+        yPos = xSet;
+        xPos = ySet;
     }
 
     /**
@@ -101,23 +101,17 @@ public class Layer implements java.io.Serializable {
     }
 
     public Layer(String[][] assign, String inkey, int xSet, int ySet, boolean camOb, boolean opacity) {
-        this(assign, inkey);
-        cameraObedient = camOb;
-        opaque = opacity;
+        this(assign, inkey, camOb, opacity);
 
-        xPos = xSet;
         yPos = ySet;
+        xPos = xSet;
         //System.out.printf("Layer Created! I am %1s, whose opacity is %2$b\n", name, opaque);
     }
 
     public Layer(String[][] assign, String inkey, int xSet, int ySet, boolean camOb, boolean opacity, boolean important) {
-        this(assign, inkey);
-        cameraObedient = camOb;
-        opaque = opacity;
+        this(assign, inkey, xSet, ySet, camOb, opacity);
         importance = important;
 
-        xPos = xSet;
-        yPos = ySet;
         //System.out.printf("Layer Created! I am %1s, whose opacity is %2$b\n", name, opaque);
     }
 
@@ -128,8 +122,8 @@ public class Layer implements java.io.Serializable {
         opaque = opacity;
         importance = important;
 
-        xPos = xSet;
         yPos = ySet;
+        xPos = xSet;
         //System.out.printf("Layer Created! I am %1s, whose opacity is %2$b\n", name, opaque);
     }
 
@@ -162,12 +156,12 @@ public class Layer implements java.io.Serializable {
         return self[0].length;
     }
 
-    public int getX() {
-        return xPos;
-    }
-
     public int getY() {
         return yPos;
+    }
+
+    public int getX() {
+        return xPos;
     }
 
     /**
@@ -177,8 +171,8 @@ public class Layer implements java.io.Serializable {
      * @param newY a new Y coordinate to start at
      */
     public void setPos(int newX, int newY) {
-        xPos = newX;
         yPos = newY;
+        xPos = newX;
     }
 
     /**
@@ -391,11 +385,11 @@ public class Layer implements java.io.Serializable {
         return toReturn;
     }
 
-    public void setX(int x) {
-        xPos = x;
-    }
-
     public void setY(int y) {
         yPos = y;
+    }
+
+    public void setX(int x) {
+        xPos = x;
     }
 }

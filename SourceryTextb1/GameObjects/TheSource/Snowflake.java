@@ -40,7 +40,7 @@ public class Snowflake extends GameObject {
             x = randal.nextInt(room.roomWidth);
         }
         Layer iconLayer = org.getLayer(layerName);
-        if (iconLayer != null) iconLayer.setPos(y, x);
+        if (iconLayer != null) iconLayer.setPos(x, y);
     }
 
     public void selfCleanup() {

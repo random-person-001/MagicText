@@ -490,7 +490,7 @@ public class Player extends Mortal implements java.io.Serializable {
         }
         org.editLayer(playerIcon, layerName, 1, 1);
         Layer iconLayer = org.getLayer(layerName);
-        if (iconLayer != null) iconLayer.setPos(y - 1, x - 1);
+        if (iconLayer != null) iconLayer.setPos(x - 1, y - 1);
     }
 
     /**

@@ -45,8 +45,8 @@ public class FlammableTree extends GameObject {
     public void burn(int x, int y) {
         Layer treeLayer = room.org.getLayer(layerName);
         if (treeLayer != null) {
-            int relativeY = y-treeLayer.getX();
-            int relativeX = x-treeLayer.getY();
+            int relativeY = y-treeLayer.getY();
+            int relativeX = x-treeLayer.getX();
             int maxRelX = treeData.length;
             int maxRelY = treeData[0].length;
             boolean withinBounds = relativeX >= 0 && relativeX < maxRelX && relativeY >= 0 && relativeY < maxRelY;

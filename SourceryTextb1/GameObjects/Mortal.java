@@ -230,21 +230,21 @@ public class Mortal extends GameObject implements java.io.Serializable {
         if (Math.abs(ydif) > Math.abs(xdif)) {
             if (ydif < 0) {
                 int dist = raycastDistance(target.getX(), target.getY(), attackRange, "down");
-                //org.getLayer("TestingLayer").setPos(target.getY() + dist, target.getX());
+                //org.getLayer("TestingLayer").setPos(target.getX() + dist, target.getY());
                 refinedPathToPos(followDist, target.getX(), target.getY() + dist);
             } else {
                 int dist = raycastDistance(target.getX(), target.getY(), attackRange, "up");
-                //org.getLayer("TestingLayer").setPos(target.getY() - dist, target.getX());
+                //org.getLayer("TestingLayer").setPos(target.getX() - dist, target.getY());
                 refinedPathToPos(followDist, target.getX(), target.getY() - dist);
             }
         } else {
             if (xdif < 0) {
                 int dist = raycastDistance(target.getX(), target.getY(), attackRange, "right");
-                //org.getLayer("TestingLayer").setPos(target.getY(), target.getX() + dist);
+                //org.getLayer("TestingLayer").setPos(target.getX(), target.getY() + dist);
                 refinedPathToPos(followDist, target.getX() + dist, target.getY());
             } else {
                 int dist = raycastDistance(target.getX(), target.getY(), attackRange, "left");
-                //org.getLayer("TestingLayer").setPos(target.getY(), target.getX() - dist);
+                //org.getLayer("TestingLayer").setPos(target.getX(), target.getY() - dist);
                 refinedPathToPos(followDist, target.getX() - dist, target.getY());
             }
         }
@@ -332,7 +332,7 @@ public class Mortal extends GameObject implements java.io.Serializable {
             if (rangedCounter == 0) {
                 acquireTarget(target);
                 Layer iconLayer = org.getLayer(layerName);
-                if (iconLayer != null) iconLayer.setPos(y, x);
+                if (iconLayer != null) iconLayer.setPos(x, y);
             }
             if (rangedCounter == rangedPreShotDelay) {
                 int damage = rangedAttack.getDamage();

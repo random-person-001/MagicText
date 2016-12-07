@@ -9,7 +9,6 @@ import SourceryTextb1.Art;
 import SourceryTextb1.GameObjects.DroppedItem;
 import SourceryTextb1.GameObjects.Item;
 import SourceryTextb1.GameObjects.Player;
-import SourceryTextb1.GameObjects.TheSource.FallingBeehive;
 import SourceryTextb1.GameObjects.TheSource.PotOfPetunias;
 import SourceryTextb1.GameObjects.TheSource.Spider;
 import SourceryTextb1.GameObjects.WaterPool;

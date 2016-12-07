@@ -55,7 +55,7 @@ public class FallingBeehive extends GameObject {
             y = (int) realY; // 'y' is just an impostor
 
             Layer iconLayer = org.getLayer(layerName);
-            if (iconLayer != null) iconLayer.setPos(y, x);
+            if (iconLayer != null) iconLayer.setPos(x, y);
         } else {
             if (kickOffTime > 0){
                 System.out.printf("Beehive falling time: %1$dms\n", System.currentTimeMillis() - kickOffTime);

@@ -226,7 +226,7 @@ public class HiddenBunker extends Room {
                 {10, 18, 6, 95}, {3, 1, 12, 94}, {7, 17, 28, 92},
                 {5, 6, 23, 121}, {6, 3, 22, 127}, {11, 11, 0, 125}};
         for (int ii = 0; ii < 9; ii++) {
-            Layer newCloak = new Layer(new String[layerInfo[ii][0]][layerInfo[ii][1]], ("Cloak" + (ii + 1)), layerInfo[ii][2], layerInfo[ii][3], true, true, true);
+            Layer newCloak = new Layer(new String[layerInfo[ii][0]][layerInfo[ii][1]], ("Cloak" + (ii + 1)), layerInfo[ii][3], layerInfo[ii][2], true, true, true);
             newCloak.clear();
             org.addLayer(newCloak);
         }

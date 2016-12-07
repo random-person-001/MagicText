@@ -246,9 +246,9 @@ public class Room implements java.io.Serializable {
 
     protected void highlightFlavorText(Layer roomBase) {
         for (FlavorText txt : flavorTexts) {
-            SpecialText toEdit = roomBase.getSpecTxt(txt.getY() + roomBase.getY(), txt.getX() + roomBase.getX());
+            SpecialText toEdit = roomBase.getSpecTxt(txt.getY() + roomBase.getX(), txt.getX() + roomBase.getY());
             toEdit = new SpecialText(toEdit.getStr(), new Color(175, 235, 255), toEdit.getBackgroundColor());
-            roomBase.setSpecTxt(txt.getY() + roomBase.getY(), txt.getX() + roomBase.getX(), toEdit);
+            roomBase.setSpecTxt(txt.getY() + roomBase.getX(), txt.getX() + roomBase.getY(), toEdit);
         }
     }
 
@@ -616,9 +616,9 @@ public class Room implements java.io.Serializable {
         Art artsedo = new Art();
         Layer txtBox;
         if (helpful) {
-            txtBox = new Layer(Art.strToArray(artsedo.textBoxHelpful), "Dialog", 13, 0, false, true);
+            txtBox = new Layer(Art.strToArray(artsedo.textBoxHelpful), "Dialog", 0, 13, false, true);
         } else {
-            txtBox = new Layer(Art.strToArray(artsedo.textBox), "Dialog", 13, 0, false, true);
+            txtBox = new Layer(Art.strToArray(artsedo.textBox), "Dialog", 0, 13, false, true);
         }
         txtBox.setOwningPlayerUsername(usernameToShowTo);
         txtBox.setImportance(true);
@@ -671,7 +671,7 @@ public class Room implements java.io.Serializable {
 
     public void questionTextBox(String text, String usernameToShowTo, int qID) {
         Art artsedo = new Art();
-        Layer txtBox = new Layer(Art.strToArray(artsedo.textBoxQuestion), "Dialog", 13, 0, false, true);
+        Layer txtBox = new Layer(Art.strToArray(artsedo.textBoxQuestion), "Dialog", 0, 13, false, true);
 
         txtBox.setOwningPlayerUsername(usernameToShowTo);
         txtBox.setImportance(true);
