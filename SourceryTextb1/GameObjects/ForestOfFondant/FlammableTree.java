@@ -20,7 +20,7 @@ public class FlammableTree extends GameObject {
     private Random rand = new Random();
     private int [][] treeData; // -1=no tree   0=pristine tree   1-7=various stages of burning
     private String layerName;
-    private int chanceOfSpreadingInEachDirection = 30; //  40;
+    private int chanceOfSpreadingInEachDirection = 10; //  40;
     public FlammableTree(Room room, Layer layWithTrees, SpecialText[] treeChars) {
         this.room = room;
         super.strClass = "FlammableTree";
@@ -54,22 +54,10 @@ public class FlammableTree extends GameObject {
             //        " | max relative = " + maxRelX + ", " + maxRelY + ", so " + withinBounds );
             if (withinBounds && treeData[relativeX][relativeY] == 0) {
                 //System.out.println("And it burns!");
-                room.removeFromBaseHitMesh(x,y);
+                room.removeFromBaseHitMesh(x, y);
                 treeData[relativeX][relativeY] = 1;
-                // Maybe start a forest fire!
-                if (r(100) <= chanceOfSpreadingInEachDirection){
-                    burn(x+1, y);
-                }
-                if (r(100) <= chanceOfSpreadingInEachDirection){
-                    burn(x-1, y);
-                }
-                if (r(100) <= chanceOfSpreadingInEachDirection){
-                    burn(x, y+1);
-                }
-                if (r(100) <= chanceOfSpreadingInEachDirection){
-                    burn(x, y-1);
-                }
             }
+
         }
     }
 
@@ -96,14 +84,35 @@ public class FlammableTree extends GameObject {
                 else
                     dispChar = " ";
             }
-            if (currentState < 3){
-                room.hurtSomethingAt(dataC + treeLayer.getX(), dataR + treeLayer.getY(),2,"You were burnt to a crisp");
+            if (currentState < 4){
+                int absX = dataC + treeLayer.getX();
+                int absY = dataR + treeLayer.getY();
+                room.hurtSomethingAt(absX, absY ,2,"You were burnt to a crisp");
+                // Maybe start a forest fire!
+                if (r(100) <= chanceOfSpreadingInEachDirection){
+                    burn(absX+1, absY);
+                }
+                if (r(100) <= chanceOfSpreadingInEachDirection){
+                    burn(absX-1, absY);
+                }
+                if (r(100) <= chanceOfSpreadingInEachDirection){
+                    burn(absX, absY+1);
+                }
+                if (r(100) <= chanceOfSpreadingInEachDirection){
+                    burn(absX, absY-1);
+                }
             }
             SpecialText newSpTxt = new SpecialText(dispChar, stagesOfFire[currentState], stagesOfFire[currentState + 1]);
             room.org.editLayer(newSpTxt, layerName, dataR, dataC);
+            if (r(9) <= 2 && currentState != 1 && currentState < 5){
+                treeData[dataC][dataR] --;
+            }
+            else {
+                treeData[dataC][dataR] ++;
+            }
         }
-        treeData[dataC][dataR] ++;
     }
+
 
     protected int r(int max) {
         return r(max, 0);
