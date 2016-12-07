@@ -186,8 +186,10 @@ public class GameObject implements java.io.Serializable {
         pathToPos(followDist, gotoX, gotoY, layerName, true);
     }
 
+    /**
+     * Top-level method (use this one for nearly automatic pathfinding).
+     */
     protected void pathToPos(int followDist, int gotoX, int gotoY, String layerName, boolean isSolid) {
-        //if (withinDist(gotoX, gotoY, x, y, followDist)) {
         if (isSolid)
             room.removeFromObjHitMesh(x, y);
         int stepsNeeded = createPathTo(gotoX, gotoY, followDist);
@@ -204,13 +206,16 @@ public class GameObject implements java.io.Serializable {
         }
         if (isSolid)
             room.addToObjHitMesh(x, y);
-        //}
     }
 
     private Set<PathPoint> pathPts = new HashSet<>();
     private ArrayList<PathPoint> newPts = new ArrayList<>();
     private int[][] ptMatrix;
 
+    /**
+     * Creates a long list of points that represent reachable locations within a distance (<= maxDist) of the coordinate (goalX, goalY)
+     * @return the amount of steps required to reach a point from where the object stands
+     */
     private int createPathTo(int goalX, int goalY, int maxDist) {
         pathPts.clear();
         pathPts.add(new PathPoint(goalX, goalY, 0));
@@ -218,11 +223,8 @@ public class GameObject implements java.io.Serializable {
         for (int ii = 1; ii <= maxDist; ii++) {
             newPts.clear();
             for (PathPoint pt : pathPts) {
-                if (pt.getCntr() == ii - 1 && spreadPathPts(pt.getX(), pt.getY(), x, y, goalX, goalY, ii)) {
+                if (pt.getCntr() == ii - 1 && spreadPathPts(pt.getX(), pt.getY(), x, y, ii))
                     return ii;
-                } else {
-                    //org.editLayer(String.valueOf(pt.getCntr()).substring(0,1), "Test", pt.getX(), pt.getY());
-                }
             }
             pathPts.addAll(newPts);
         }
@@ -235,22 +237,26 @@ public class GameObject implements java.io.Serializable {
         return (number < range);
     }
 
-    private boolean spreadPathPts(int pX, int pY, int sX, int sY, int gX, int gY, int counter) {
-        //if ((pX == gX && pY == gY) || (pX == gX && pY > gY) || (pX < gX && pY == gY) || (pX < gX && pY > gY)){
+    /**
+     * Takes a PathPoint already in the list and creates 4 new PathPoints placed adjacent to it
+     * @param pX x-coord of PathPoint
+     * @param pY y-coord of PathPoint
+     * @param sX x-coord of object trying to pathfind ('self-x')
+     * @param sY y-coord of object trying to pathfind ('self-y')
+     * @param counter counter integer of PathPoint
+     * @return If any point placed is adjacent to object trying to pathfind
+     */
+    private boolean spreadPathPts(int pX, int pY, int sX, int sY, int counter) {
         attemptPoint(pX - 1, pY, counter);
-        //}
-        //if ((pX == gX && pY == gY) || (pX == gX && pY < gY) || (pX > gX && pY == gY) || (pX > gX && pY < gY)){
         attemptPoint(pX + 1, pY, counter);
-        //}
-        //if ((pX == gX && pY == gY) || (pX == gX && pY < gY) || (pX < gX && pY == gY) || (pX < gX && pY < gY)){
         attemptPoint(pX, pY - 1, counter);
-        //}
-        //if ((pX == gX && pY == gY) || (pX > gX && pY == gY) || (pX == gX && pY > gY) || (pX > gX && pY > gY)){
         attemptPoint(pX, pY + 1, counter);
-        //}
         return (pX - 1 == sX && pY == sY) || (pX + 1 == sX && pY == sY) || (pX == sX && pY - 1 == sY) || (pX == sX && pY + 1 == sY);
     }
 
+    /**
+     * Only places a point if the place is open for movement
+     */
     private void attemptPoint(int x, int y, int counter) {
         if ((!room.isPlaceSolid(x, y) && !room.checkForWater(x, y))) {
             newPts.add(new PathPoint(x, y, counter));
