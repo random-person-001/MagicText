@@ -194,16 +194,20 @@ public class Room implements java.io.Serializable {
      */
     public int getCountOf(String className) {
         int count = 0;
+        String finalCount = "[Room] Object Search for " + className +":";
         for (GameObject o : objs) {
             if (o.strClass.equals(className)) {
                 count++;
             }
+            finalCount += " \'" + o.strClass + "\'";
         }
         for (Mortal o : enemies) {
             if (o.strClass.equals(className)) {
                 count++;
             }
+            finalCount += " \'" + o.strClass + "\'";
         }
+        //System.out.println(finalCount);
         return count;
     }
 
@@ -313,6 +317,7 @@ public class Room implements java.io.Serializable {
 
     public void addObject(GameObject theObj) {
         addList.add(theObj);
+        flushObjListChanges();
     }
 
     public void removeObject(GameObject obj) {

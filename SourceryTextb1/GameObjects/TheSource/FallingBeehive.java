@@ -15,6 +15,7 @@ import java.util.Random;
 
 public class FallingBeehive extends GameObject {
     public String layerName = "";
+    private long kickOffTime = 0;
 
     public FallingBeehive (Room container, int startX, int startY){
         x = startX;
@@ -23,7 +24,9 @@ public class FallingBeehive extends GameObject {
         room = container;
         org = room.org;
 
-        layerName = room.makeUniqueLayerName("Beehive");
+        super.strClass = "Beehive";
+
+        layerName = room.makeUniqueLayerName(super.strClass);
 
         Layer iconLayer = new Layer (new String[1][1],layerName, y, x);
         iconLayer.setSpecTxt(0,0, new SpecialText("8", new Color(200, 200, 75)));
@@ -31,6 +34,7 @@ public class FallingBeehive extends GameObject {
         org.addLayer(iconLayer);
 
         setupTimer(50);
+        kickOffTime = System.currentTimeMillis();
     }
 
     private float speed = 0.03f;
@@ -42,8 +46,8 @@ public class FallingBeehive extends GameObject {
         if (y < 59) {
             realY += speed; //The easy stuff
 
-            //float acceleration = 0.08f;
-            float acceleration = 0.01f;
+            float acceleration = 0.07f;
+            //float acceleration = 0.01f;
             float maxSpeed = 2;  //"terminal velocity"
             if (speed < maxSpeed)
                 speed += acceleration;
@@ -53,6 +57,10 @@ public class FallingBeehive extends GameObject {
             Layer iconLayer = org.getLayer(layerName);
             if (iconLayer != null) iconLayer.setPos(y, x);
         } else {
+            if (kickOffTime > 0){
+                System.out.printf("Beehive falling time: %1$dms\n", System.currentTimeMillis() - kickOffTime);
+                kickOffTime = 0;
+            }
             if (getTime() > 250 && beesInside > 0){
                 Random dice = new Random();
                 int randX = 2 - dice.nextInt(4);
