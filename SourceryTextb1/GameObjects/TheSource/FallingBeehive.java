@@ -51,7 +51,7 @@ public class FallingBeehive extends GameObject {
             y = (int) realY; // 'y' is just an impostor
 
             Layer iconLayer = org.getLayer(layerName);
-            if (iconLayer != null) iconLayer.setPos(y, x);
+            if (iconLayer != null) iconLayer.setPos(x, y);
         } else {
             if (getTime() > 250 && beesInside > 0){
                 Random dice = new Random();

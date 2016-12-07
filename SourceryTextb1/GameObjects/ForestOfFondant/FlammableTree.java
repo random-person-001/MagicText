@@ -45,8 +45,8 @@ public class FlammableTree extends GameObject {
     public void burn(int x, int y) {
         Layer treeLayer = room.org.getLayer(layerName);
         if (treeLayer != null) {
-            int relativeY = y-treeLayer.getX();
-            int relativeX = x-treeLayer.getY();
+            int relativeY = y-treeLayer.getY();
+            int relativeX = x-treeLayer.getX();
             int maxRelX = treeData.length;
             int maxRelY = treeData[0].length;
             boolean withinBounds = relativeX >= 0 && relativeX < maxRelX && relativeY >= 0 && relativeY < maxRelY;
@@ -97,7 +97,7 @@ public class FlammableTree extends GameObject {
                     dispChar = " ";
             }
             if (currentState < 3){
-                room.hurtSomethingAt(dataC + treeLayer.getY(), dataR + treeLayer.getX(),2,"You were burnt to a crisp");
+                room.hurtSomethingAt(dataC + treeLayer.getX(), dataR + treeLayer.getY(),2,"You were burnt to a crisp");
             }
             SpecialText newSpTxt = new SpecialText(dispChar, stagesOfFire[currentState], stagesOfFire[currentState + 1]);
             room.org.editLayer(newSpTxt, layerName, dataR, dataC);

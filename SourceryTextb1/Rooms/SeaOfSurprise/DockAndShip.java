@@ -44,9 +44,9 @@ public class DockAndShip extends Room {
                 if (timer > 1000 && timer < 1800 && timer % 10 == 0) {
                     //System.out.println("Moving one");
                     Layer docky = org.getLayer("Dock");
-                    docky.setX(docky.getX() + 1);
                     docky.setY(docky.getY() + 1);
-                    //System.out.println(docky.getX());
+                    docky.setX(docky.getX() + 1);
+                    //System.out.println(docky.getY());
                     dockUpdate();
                     try {
                         for (Mortal m : enemies) {
@@ -82,7 +82,7 @@ public class DockAndShip extends Room {
     private void dockUpdate() {
         clearObjHitMesh();
         String[] docksolids = {"|", "-", "_"};
-        addToObjHitMesh(dock, docksolids, docky.getY(), docky.getX());
+        addToObjHitMesh(dock, docksolids, docky.getX(), docky.getY());
     }
 
     @Override

@@ -483,8 +483,8 @@ public class ImageOrg implements java.io.Serializable {
                 for (int ii = allLayers.size(); ii > 0; ii--) { //At each coordinate, goes through all layers until an opaque space is found
                     Layer layer = allLayers.get(ii - 1);
                     if (layer != null) {
-                        int xPos = row - layer.getX();
-                        int yPos = col - layer.getY(); //Math done to find out what portion of the layer corresponds with the screen coordinate
+                        int xPos = row - layer.getY();
+                        int yPos = col - layer.getX(); //Math done to find out what portion of the layer corresponds with the screen coordinate
                         if (layer.getCamOb()) {
                             xPos += camX;
                             yPos += camY;

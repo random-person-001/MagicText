@@ -73,8 +73,8 @@ public class Thief extends Mortal {
             }
             room.addToObjHitMesh(x,y);
             setDispIcon(new SpecialText("t", new Color(0, 255, 138)));
-            org.getLayer(layerName).setX(y);
-            org.getLayer(layerName).setY(x);
+            org.getLayer(layerName).setY(y);
+            org.getLayer(layerName).setX(x);
         }
     }
 

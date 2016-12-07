@@ -198,7 +198,7 @@ public class GameObject implements java.io.Serializable {
                 y = pt.getY();
                 Layer selfLayer = org.getLayer(layerName);
                 if (selfLayer != null)
-                    selfLayer.setPos(y, x);
+                    selfLayer.setPos(x, y);
                 break;
             }
         }
@@ -221,7 +221,7 @@ public class GameObject implements java.io.Serializable {
                 if (pt.getCntr() == ii - 1 && spreadPathPts(pt.getX(), pt.getY(), x, y, goalX, goalY, ii)) {
                     return ii;
                 } else {
-                    //org.editLayer(String.valueOf(pt.getCntr()).substring(0,1), "Test", pt.getY(), pt.getX());
+                    //org.editLayer(String.valueOf(pt.getCntr()).substring(0,1), "Test", pt.getX(), pt.getY());
                 }
             }
             pathPts.addAll(newPts);

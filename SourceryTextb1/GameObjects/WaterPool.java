@@ -22,7 +22,7 @@ public class WaterPool extends GameObject {
     private int[] waveTimers;
 
     public WaterPool(Room creator, Layer set, String waterChar, int depth){
-        this(creator, set, set.getY(), set.getX(), waterChar);
+        this(creator, set, set.getX(), set.getY(), waterChar);
         switch (depth){
             case 1:
                 thisWaterColor = new Color(19, 103, 145);
@@ -92,7 +92,7 @@ public class WaterPool extends GameObject {
         }
         System.out.println(debugOutput);
 */
-        puddle.setPos(y, x);
+        puddle.setPos(x, y);
         org.addLayer(puddle);
 
         super.strClass = "WaterPool";

@@ -121,16 +121,16 @@ public class Cliffbottom extends Room {
         Layer forestBackground = new Layer(base, "Base");
 
         Layer forestRiver = new Layer(Art.strToArray(arty.forestRiver), "river");
-        forestRiver.setX(54);
-        forestRiver.setY(0);
+        forestRiver.setY(54);
+        forestRiver.setX(0);
 
         Layer kiosk = new Layer(Art.strToArray(arty.forestKiosk), "kiosk");
-        kiosk.setX(57);
-        kiosk.setY(141);
+        kiosk.setY(57);
+        kiosk.setX(141);
         
         Layer forestVeil = new Layer(Art.strToArray(arty.forestVeil), "veil");
-        forestVeil.setX(47);
-        forestVeil.setY(132);
+        forestVeil.setY(47);
+        forestVeil.setX(132);
 
         SpecialText[] trees = { new SpecialText("o", normalGrass, lightTreeGreen),  // Cuz the burnable forest wants to know them
                 new SpecialText("o", otherGrass, lightTreeGreen), new SpecialText("O", otherGrass, lightTreeGreen),

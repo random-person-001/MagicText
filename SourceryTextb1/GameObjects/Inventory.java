@@ -77,22 +77,22 @@ class Inventory implements java.io.Serializable {
     Inventory(ImageOrg orgo, Player p) {
         org = orgo;
         player = p;
-        spellsMenuLayer = new Layer(Art.strToArray(new Art().spellsMenu), "spells" + player.getUsername(), 1, 0, false, true, true);
+        spellsMenuLayer = new Layer(Art.strToArray(new Art().spellsMenu), "spells" + player.getUsername(), 0, 1, false, true, true);
         spellsMenuLayer.setOwningPlayerUsername(p.getUsername());
         spellsMenuLayer.findAndReplace(new SpecialText(","), new SpecialText("_", new Color(15, 15, 17), new Color(20, 20, 23)));
         selectedSpellsLayer = new Layer(new String[22][47], "selectedSpells" + player.getUsername(), 0, 0, false, false, true);
         selectedSpellsLayer.setOwningPlayerUsername(p.getUsername());
-        topMenuLayer = new Layer(Art.strToArray(new Art().topMenu), "top" + player.getUsername(), 1, 27, false, true, true);
+        topMenuLayer = new Layer(Art.strToArray(new Art().topMenu), "top" + player.getUsername(), 27, 1, false, true, true);
         topMenuLayer.setOwningPlayerUsername(p.getUsername());
-        quitMenuLayer = new Layer(Art.strToArray(new Art().quitMenu), "quit" + player.getUsername(), 1, 27, false, true, true);
+        quitMenuLayer = new Layer(Art.strToArray(new Art().quitMenu), "quit" + player.getUsername(), 27, 1, false, true, true);
         quitMenuLayer.setOwningPlayerUsername(p.getUsername());
-        itemsMenuLayer = new Layer(Art.strToArray(new Art().itemsMenu), "items" + player.getUsername(), 1, 0, false, true, true);
+        itemsMenuLayer = new Layer(Art.strToArray(new Art().itemsMenu), "items" + player.getUsername(), 0, 1, false, true, true);
         itemsMenuLayer.setOwningPlayerUsername(p.getUsername());
         itemsMenuLayer.findAndReplace(new SpecialText(","), new SpecialText("_", new Color(15, 15, 15), new Color(20, 20, 20)));
-        equipMenuLayer = new Layer(Art.strToArray(new Art().equipMenu), "equip" + player.getUsername(), 1, 0, false, true, true);
+        equipMenuLayer = new Layer(Art.strToArray(new Art().equipMenu), "equip" + player.getUsername(), 0, 1, false, true, true);
         equipMenuLayer.setOwningPlayerUsername(p.getUsername());
         equipMenuLayer.findAndReplace(new SpecialText(","), new SpecialText("_", new Color(15, 17, 15), new Color(20, 22, 20)));
-        taterMenuLayer = new Layer(Art.strToArray(new Art().taterMenu), "tater" + player.getUsername(), 1, 27, false, true, true);
+        taterMenuLayer = new Layer(Art.strToArray(new Art().taterMenu), "tater" + player.getUsername(), 27, 1, false, true, true);
         taterMenuLayer.setOwningPlayerUsername(p.getUsername());
         selectorLayer = new Layer(new String[1][1], "selector" + player.getUsername(), 0, 0, false, false, true);
         selectorLayer.setOwningPlayerUsername(p.getUsername());
@@ -312,7 +312,7 @@ class Inventory implements java.io.Serializable {
         pressedA = false;
 
         selectorLayer.setStr(0, 0, ">");
-        selectorLayer.setPos(cursorY, cursorX);
+        selectorLayer.setPos(cursorX, cursorY);
         org.addLayer(topMenuLayer);
         org.addLayer(selectorLayer);
         org.addLayer(infoLayer);
@@ -383,7 +383,7 @@ class Inventory implements java.io.Serializable {
         pressedD = false;
 
         Layer cursorLayer = org.getLayer(selectorLayer.getName());
-        if (cursorLayer != null) cursorLayer.setPos(cursorY, cursorX);
+        if (cursorLayer != null) cursorLayer.setPos(cursorX, cursorY);
     }
 
     /**
