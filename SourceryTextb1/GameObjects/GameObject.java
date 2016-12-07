@@ -85,6 +85,15 @@ public class GameObject implements java.io.Serializable {
     public void backgroundUpdate() {
     }
 
+    /**
+     * Override this to do custom actions on inspection.  The inspections x and y coord will be this object's x and y
+     * coordinates, so I figured I wouldn't bother passing that along.  For this to be called, don't forget to register
+     * with the room as an inspectable first!
+     * @param inspector the Player who inspected you
+     */
+    public void onInspect(Player inspector){
+    }
+
     public int getX() {
         return x;
     }
@@ -107,6 +116,59 @@ public class GameObject implements java.io.Serializable {
             }
         }
         return closestM;
+    }
+
+    public void setupTimer(){
+        cancelTimer();
+        timer = new Timer();
+        updateTimerInstance = new updateTimer(currentUpdateInterval);
+        timer.scheduleAtFixedRate(updateTimerInstance, currentUpdateInterval, currentUpdateInterval);
+    }
+
+    public void setupTimer(int theFrequency) {
+        targetUpdateInterval = theFrequency;
+        currentUpdateInterval = theFrequency;
+        setupTimer();
+    }
+
+    /**
+     * Are you a potion?  Do you want to speed up or slow down the game?  Call this weird method now!
+     * @param intervalMultiplier a coefficient for targetUpdateInterval (the delay in the timer between update() calls)
+     */
+    public void setTimerToWeirdFrequency(float intervalMultiplier){
+        int oldInterval = currentUpdateInterval; // Cuz will probs change
+        currentUpdateInterval = (int) (targetUpdateInterval * intervalMultiplier);
+        currentUpdateInterval = (currentUpdateInterval > 0) ? currentUpdateInterval : 1;
+        if (oldInterval != currentUpdateInterval) {
+            setupTimer();
+        }
+    }
+
+    public void cancelTimer() {
+        if (timer != null){
+            timer.cancel();
+            timer.purge();
+        }
+    }
+
+    public void setPause(boolean set) {
+        paused.set(set);
+    }
+
+    class updateTimer extends TimerTask implements java.io.Serializable {
+        int freq;
+
+        public updateTimer(int frequency) {
+            freq = frequency;
+        }
+
+        public void run() {
+            if (!paused.get()) {
+                update();
+                backgroundUpdate();
+                addTime(freq);
+            }
+        }
     }
 
     /**
@@ -167,6 +229,12 @@ public class GameObject implements java.io.Serializable {
         return 60;
     }
 
+    private boolean withinDist(int x1, int y1, int x2, int y2, int range) {
+        double number = Math.sqrt(Math.pow((x1 - x2), 2) + Math.pow((y1 - y2), 2));
+        //System.out.println(number);
+        return (number < range);
+    }
+
     private boolean spreadPathPts(int pX, int pY, int sX, int sY, int gX, int gY, int counter) {
         //if ((pX == gX && pY == gY) || (pX == gX && pY > gY) || (pX < gX && pY == gY) || (pX < gX && pY > gY)){
         attemptPoint(pX - 1, pY, counter);
@@ -187,12 +255,6 @@ public class GameObject implements java.io.Serializable {
         if ((!room.isPlaceSolid(x, y) && !room.checkForWater(x, y))) {
             newPts.add(new PathPoint(x, y, counter));
         }
-    }
-
-    private boolean withinDist(int x1, int y1, int x2, int y2, int range) {
-        double number = Math.sqrt(Math.pow((x1 - x2), 2) + Math.pow((y1 - y2), 2));
-        //System.out.println(number);
-        return (number < range);
     }
 
     private class PathPoint implements java.io.Serializable {
@@ -237,59 +299,6 @@ public class GameObject implements java.io.Serializable {
 
         int getCntr() {
             return counter;
-        }
-    }
-
-    public void setupTimer(){
-        cancelTimer();
-        timer = new Timer();
-        updateTimerInstance = new updateTimer(currentUpdateInterval);
-        timer.scheduleAtFixedRate(updateTimerInstance, currentUpdateInterval, currentUpdateInterval);
-    }
-
-    public void setupTimer(int theFrequency) {
-        targetUpdateInterval = theFrequency;
-        currentUpdateInterval = theFrequency;
-        setupTimer();
-    }
-
-    /**
-     * Are you a potion?  Do you want to speed up or slow down the game?  Call this weird method now!
-     * @param intervalMultiplier a coefficient for targetUpdateInterval (the delay in the timer between update() calls)
-     */
-    public void setTimerToWeirdFrequency(float intervalMultiplier){
-        int oldInterval = currentUpdateInterval; // Cuz will probs change
-        currentUpdateInterval = (int) (targetUpdateInterval * intervalMultiplier);
-        currentUpdateInterval = (currentUpdateInterval > 0) ? currentUpdateInterval : 1;
-        if (oldInterval != currentUpdateInterval) {
-            setupTimer();
-        }
-    }
-
-    public void cancelTimer() {
-        if (timer != null){
-            timer.cancel();
-            timer.purge();
-        }
-    }
-
-    public void setPause(boolean set) {
-        paused.set(set);
-    }
-
-    class updateTimer extends TimerTask implements java.io.Serializable {
-        int freq;
-
-        public updateTimer(int frequency) {
-            freq = frequency;
-        }
-
-        public void run() {
-            if (!paused.get()) {
-                update();
-                backgroundUpdate();
-                addTime(freq);
-            }
         }
     }
 }

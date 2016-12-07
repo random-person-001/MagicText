@@ -34,6 +34,7 @@ public class Room implements java.io.Serializable {
     public String strRoomName = "not set";
     private List<FlavorText> flavorTexts = new ArrayList<>();
     private List<FlavorText> messageQueue = new ArrayList<>();
+    private ArrayList<GameObject> inspectables = new ArrayList<>(); // gameObjects that may move but have something to say
 
     public Player playo = null;
 
@@ -547,7 +548,7 @@ public class Room implements java.io.Serializable {
     /**
      * Puts a message on the queue for display
      */
-    protected void queueMessage(FlavorText message) {
+    public void queueMessage(FlavorText message) {
         messageQueue.add(message);
         System.out.println("MESSAGE STACK SIZE: " + messageQueue.size());
         if (messageQueue.size() == 1) {
@@ -576,6 +577,11 @@ public class Room implements java.io.Serializable {
     public void inspectAt(int testX, int testY, Player observer) {
         queryForText(testX, testY, observer.getUsername());
         specialInspect(testX, testY, observer);
+        for (GameObject object : inspectables){
+            if (object.getX() == testX && object.getY() == testY){
+                object.onInspect(observer);
+            }
+        }
     }
 
     /**
@@ -750,6 +756,17 @@ public class Room implements java.io.Serializable {
             }
         }
         return toReturn;
+    }
+
+    /**
+     * If you move around but still want to be inspectable by the player, call this method so we can index you!
+     * @param gameObject
+     */
+    public void addInspectable(GameObject gameObject) {
+        if (!inspectables.contains(gameObject)) {
+            System.out.println("Adding a " + gameObject.strClass + " to list of inspectables.");
+            inspectables.add(gameObject);
+        }
     }
 
     public class FlavorText implements java.io.Serializable {
