@@ -10,6 +10,9 @@ import SourceryTextb1.GameObjects.Player;
 import SourceryTextb1.GameObjects.TheSource.Spider;
 import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
+import SourceryTextb1.SpecialText;
+
+import java.awt.*;
 
 /**
  * The initial view of the Source Pit.
@@ -92,10 +95,20 @@ public class SourcePit extends Room {
         plantText(new FlavorText(109, 9, doorLocked, ""));
 
         Art arty = new Art();
-        String[][] base = Art.strToArray(arty.sourcePit);
 
-        Layer lay1 = new Layer(base, "Test");
+        int lineLength = arty.intro2.indexOf("\n") + 1;
+        String source = arty.intro2.substring(lineLength * 3, lineLength * (3+13));
+        //System.out.println("Source: '" + source + "'");
+        Layer sourceCode = new Layer(Art.strToArray(source), "sourceCode");
+        sourceCode.influenceAll(new Color(18, 18, 18));
+        sourceCode.setPos(51,17);
+        org.addLayer(sourceCode);
+
+        String[][] base = Art.strToArray(arty.sourcePit);
+        Layer lay1 = new Layer(base, "base");
         Art coloring = new Art();
+        // The backticks are over the corners of the code layer.  Make them look like the rest of the ground
+        lay1.findAndReplace(new SpecialText("`"), new SpecialText(" ", new Color(0,0,1), new Color(0,0,1)));
         lay1.influenceAll(coloring.mountainPallette1);
         highlightFlavorText(lay1);
         org.addLayer(lay1);
