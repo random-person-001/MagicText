@@ -153,6 +153,7 @@ public class GameInstance implements java.io.Serializable {
         rooms.put("BanditFortress", new BanditFortress(player));
         rooms.put("InnerMountains", new InnerMountains(player));
         rooms.put("SnowyPeak", new SnowyPeak(player));
+        rooms.put("WitchHut", new WitchHut(player));
         rooms.put("IceCaves", new IceCaves(player));
         rooms.put("HiddenBunker", new HiddenBunker(player));
         rooms.put("HallOfBanditKing", new HallOfBanditKing(player));
