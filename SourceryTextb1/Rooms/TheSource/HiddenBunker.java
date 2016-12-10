@@ -61,7 +61,7 @@ public class HiddenBunker extends Room {
     @Override
     public void addItems() {
         Item potion = new Item("MagicTaterChip", "A singular potato chip made\n with magic potatoes.\n\nEating this chip will\n restore hp over time\n (4hp/s + 10 overheal!)", "item");
-        potion.setDescMode("potion");
+        potion.setSpellType("potion");
         potion.setDuration(30 * 1000);
         DroppedItem dPotion = new DroppedItem(this, "You found a potato chip!", potion, 53, 11);
         addObject(dPotion);

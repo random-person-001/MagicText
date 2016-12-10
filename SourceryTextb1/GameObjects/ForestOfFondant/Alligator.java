@@ -24,7 +24,7 @@ public class Alligator extends Mortal {
         x = xStart;
         y = yStart;
         setHealth(27);
-        org.addLayer(new Layer(new String[1][1], layerName, y, x));
+        org.addLayer(new Layer(new String[1][1], layerName, x, y));
 
         setupTimer(200);
     }

@@ -248,7 +248,7 @@ class Inventory implements java.io.Serializable {
         item7.setEquipvals(1, 3, 0, 0, 0, 2, 2, "weapon");
         equip.add(item7);
         Item potion = new Item("MagicTaterChip", "A singular potato chip made\n with magic potatoes.\n\nEating this chip will\n restore hp over time\n (4hp/s + 10 overheal!)", "item");
-        potion.setDescMode("potion");
+        potion.setSpellType("potion");
         potion.setDuration(30 * 1000);
         items.add(potion);
         for (int ii = 0; ii < 24; ii++) {
@@ -640,11 +640,11 @@ class Inventory implements java.io.Serializable {
             }
             if (cursorY == 4) {
                 player.saveGame();
-                player.subtractHealth(2100000000, "IT SEEMS THAT SOME ALIEN\n FORCE HAS INSTANTLY KILLED YOU."); // cleanup, with style
+                player.subtractHealth(2100000000, "IT SEEMS THAT SOME ALIEN\n FORCE HAS INSTANTLY KILLED YOU.", "arcane"); // cleanup, with style
                 exitAllMenus();
             }
             if (cursorY == 5) {
-                player.subtractHealth(2100000000, "IT SEEMS THAT SOME UNFORGIVING\n FORCE HAS INSTANTLY KILLED YOU."); // cleanup, with style
+                player.subtractHealth(2100000000, "IT SEEMS THAT SOME UNFORGIVING\n FORCE HAS INSTANTLY KILLED YOU.", "arcane"); // cleanup, with style
                 exitAllMenus();
             }
         }

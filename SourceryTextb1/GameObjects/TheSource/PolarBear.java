@@ -31,7 +31,7 @@ public class PolarBear extends Mortal {
         x = xStart;
         y = yStart;
         setHealth(50);
-        org.addLayer(new Layer(new String[1][1], layerName, y, x));
+        org.addLayer(new Layer(new String[1][1], layerName, x, y));
 
         hasKey = giveKey;
         originalX = xStart;

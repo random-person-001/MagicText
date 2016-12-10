@@ -28,7 +28,7 @@ public class CaveYeti extends Mortal {
         x = xStart;
         y = yStart;
         setHealth(30);
-        org.addLayer(new Layer(new String[1][1], layerName, y, x));
+        org.addLayer(new Layer(new String[1][1], layerName, x, y));
 
         originalX = xStart;
         originalY = yStart;

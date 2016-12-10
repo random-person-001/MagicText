@@ -24,7 +24,7 @@ public class LockedDoor extends GameObject {
         layerName = room.makeUniqueLayerName(strClass);
         x = xSet;
         y = ySet;
-        Layer icon = new Layer(new String[1][1], layerName, y, x);
+        Layer icon = new Layer(new String[1][1], layerName, x, y);
         icon.setStr(0, 0, ":");
         this.org.addLayer(icon);
         room.addToObjHitMesh(x, y);

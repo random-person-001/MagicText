@@ -53,7 +53,7 @@ public class DockAndShip extends Room {
                             if (m.getX() > 42) {
                                 m.goTo(m.getX() + 1, m.getY() + 1);
                                 if (m.getX() > roomWidth || m.getY() > roomHeight) { //Later, this might be good to put in Enemy.checkDead()
-                                    m.subtractHealth(30, "You were not long for this world. \n You *Were* told to get on the ship.");
+                                    m.subtractHealth(30, "You were not long for this world. \n You *Were* told to get on the ship.", "arcane");
                                 }
                                 if (count == 1 && m.strClass.equals("Player")) {
                                     compactTextBox("You missed the ship!  I told you not to.", "THE PASSERBY", false);
@@ -100,7 +100,7 @@ public class DockAndShip extends Room {
         dock = Art.strToArray(arty.dock);
         String[] docksolids = {"|", "-", "_"};
         addToObjHitMesh(dock, docksolids, 40, 27);
-        docky = new Layer(dock, "Dock", 27, 40);
+        docky = new Layer(dock, "Dock", 40, 27);
         org.addLayer(docky);
 
         for (int i = 43; i < 46; i++) {

@@ -44,7 +44,7 @@ class Potion extends GameObject {
                         float xDamageMult = abs(abs(xi) - r) / (float) r; // 0 to 1, peaking when xi=0 (center)
                         float yDamageMult = abs(abs(yi) - r) / (float) r;
                         int totalDamage = (int) (d * .5 * (xDamageMult + yDamageMult));
-                        room.hurtSomethingAt(xi + x, yi + y, totalDamage, "Jeez, killed yourself with an Potion!", true);
+                        room.hurtSomethingAt(xi + x, yi + y, totalDamage, "Jeez, killed yourself with an Potion!", true, "arcane");
                         //System.out.println(x + xi + " " + (yi + y) + " given " + totalDamage + " damage");
                     }
                     //System.out.println();

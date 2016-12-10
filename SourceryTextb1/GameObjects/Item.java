@@ -98,7 +98,7 @@ public class Item implements java.io.Serializable {
      */
     public void dmgSpellDefine(int toD, int toR, int toC, String dMode, SpecialText s1, SpecialText s2, boolean pathfinding) {
         setDmgRngCost(toD, toR, toC);
-        setDescMode(dMode);
+        setSpellType(dMode);
         setAnim(s1, s2);
         pathfinds = pathfinding;
         System.out.println("Am I a damage spell?: " + isDmgSpell);
@@ -116,7 +116,7 @@ public class Item implements java.io.Serializable {
      */
     public void dmgSpellDefine(int toD, int toR, int toC, String dMode, SpecialText s1, SpecialText s2) {
         setDmgRngCost(toD, toR, toC);
-        setDescMode(dMode);
+        setSpellType(dMode);
         setAnim(s1, s2);
         System.out.println("Am I a damage spell?: " + isDmgSpell);
     }
@@ -128,7 +128,7 @@ public class Item implements java.io.Serializable {
      * @param dMode  display mode
      */
     public void altSpellDefine(int toCost, String dMode) {
-        setDescMode(dMode);
+        setSpellType(dMode);
         cost = toCost;
     }
 
@@ -151,7 +151,7 @@ public class Item implements java.io.Serializable {
         animation2 = s2;
     }
 
-    public void setDescMode(String mode) {
+    public void setSpellType(String mode) {
         displayMode = mode;
     }
 

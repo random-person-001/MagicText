@@ -74,7 +74,7 @@ public class Troll extends Mortal {
         room.removeMortal(this);
 
         if (abs(closestGoodGuy.getY() - y) <= 3 && abs(closestGoodGuy.getX() - x) <= 3) {
-            closestGoodGuy.subtractHealth(3, "You know, maybe you should have listened \n when your mother told you not to \n play with trolls.");
+            closestGoodGuy.subtractHealth(3, "You know, maybe you should have listened \n when your mother told you not to \n play with trolls.", "arcane");
         }
     }
 

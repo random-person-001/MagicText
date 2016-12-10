@@ -32,9 +32,9 @@ public class GameObject implements java.io.Serializable {
     public String strClass = "None";
     public ImageOrg org;
     public Room room;
-    transient Timer timer;
-    public int targetUpdateInterval;
-    public int currentUpdateInterval = targetUpdateInterval; // Almost always == target one.  Temporal dilation sometimes changes this, though
+    private transient Timer timer;
+    private int targetUpdateInterval;
+    private int currentUpdateInterval = targetUpdateInterval; // Almost always == target one.  Temporal dilation sometimes changes this, though
 
     protected int x;
     protected int y;
@@ -106,7 +106,7 @@ public class GameObject implements java.io.Serializable {
         return abs(x - m.getX()) + abs(y - m.getY());
     }
 
-    protected Mortal getClosestBadGuy(int range) {
+    Mortal getClosestBadGuy(int range) {
         int closest = range;
         Mortal closestM = null;
         for (Mortal m : room.enemies) {
@@ -151,14 +151,14 @@ public class GameObject implements java.io.Serializable {
         }
     }
 
-    public void setPause(boolean set) {
+    void setPause(boolean set) {
         paused.set(set);
     }
 
     class updateTimer extends TimerTask implements java.io.Serializable {
         int freq;
 
-        public updateTimer(int frequency) {
+        updateTimer(int frequency) {
             freq = frequency;
         }
 

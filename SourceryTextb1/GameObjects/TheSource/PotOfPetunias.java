@@ -21,7 +21,7 @@ public class PotOfPetunias extends Mortal {
         x = setX;
         y = setY;
 
-        Layer potLayer = new Layer(new String[1][1], layerName, y, x);
+        Layer potLayer = new Layer(new String[1][1], layerName, x, y);
         potLayer.setStr(0, 0, "V");
         org.addLayer(potLayer);
 

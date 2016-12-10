@@ -106,7 +106,7 @@ public class StartMethods {
         String[][] town = Art.strToArray(arty.intro1);
         Layer lay = new Layer(town, "Intro2");
         org.addLayer(lay);
-        Layer lay2Title = new Layer(new String[3][46], "Intro2Title", 30, 0);
+        Layer lay2Title = new Layer(new String[3][46], "Intro2Title", 0, 30);
         org.addLayer(lay2Title);
         org.setCam(0, 10);
         Thread.sleep(500);

@@ -5,6 +5,7 @@ import SourceryTextb1.GameObjects.*;
 import SourceryTextb1.GameObjects.ForestOfFondant.Alligator;
 import SourceryTextb1.GameObjects.ForestOfFondant.FlammableTree;
 import SourceryTextb1.GameObjects.TheSource.Bandit;
+import SourceryTextb1.GameObjects.TheSource.SnowPatch;
 import SourceryTextb1.SpecialText;
 import SourceryTextb1.Rooms.Room;
 import SourceryTextb1.Layer;
@@ -68,17 +69,17 @@ public class Cliffbottom extends Room {
 
         Item dillChip = new Item("dillTaterChip", "It slows down your \n perception of time \n so you can meditate \n on your decisions!", "item");
         dillChip.setDuration(60 * 1000);
-        dillChip.setDescMode("potion");
+        dillChip.setSpellType("potion");
         super.addObject(new DroppedItem(this, "Oooh, lucky!\n You found a dill potato chip!", dillChip, 121, 100));
 
         Item fondantChunk = new Item("fondantChunk", "It puts the world in a\n sugar rush!\n Feels like the day after\n Halloween ", "item");
         fondantChunk.setDuration(30 * 1000);
-        fondantChunk.setDescMode("potion");
+        fondantChunk.setSpellType("potion");
         super.addObject(new DroppedItem(this, "Oooh, lucky! You found a chunk of fondant!\n But -   BEWARE:\n eating it will make you super hyper.", fondantChunk, 203, 24));
 
         Item perriwinkle = new Item("wrinkleInTime", "Distorts spacetime in a \n bubble around you, so \n nearby entities slow down \n in your perception of time", "item");
         perriwinkle.setDuration(60 * 1000);
-        perriwinkle.setDescMode("potion");
+        perriwinkle.setSpellType("potion");
         super.addObject(new DroppedItem(this, "Oooh, lucky! You found a potion that locally \n distorts spacetime.", perriwinkle, 135, 57));
 
     }
@@ -198,7 +199,7 @@ public class Cliffbottom extends Room {
         org.addLayer(forestRiver);
         org.addLayer(kiosk);
         initHitMeshes(forestBackground);
-        String[] solids = {"r"};
+        String[] solids = {"r", "t", "h"};
         addToBaseHitMesh(base, solids);
         addToBaseHitMesh(183, 50); // Hiding the kiosk area
         addToObjHitMesh(120, 97); // Dock
@@ -212,6 +213,16 @@ public class Cliffbottom extends Room {
         addObject(ft2);
         FlammableTree ft1 = new FlammableTree(this, forestBackground, trees);
         addObject(ft1);
+
+        Layer snow = new Layer(Art.strToArray(arty.testSnow), "snow", 2, 100);
+        SpecialText snow1 = new SpecialText("-", new Color(215, 230, 227), new Color(249, 249, 249));
+        SpecialText snow2 = new SpecialText(" ", null, new Color(249, 249, 249));
+        snow.findAndReplace(new SpecialText("s"), snow1, 30);
+        snow.findAndReplace(new SpecialText("s"), snow2);
+        SnowPatch sp = new SnowPatch(this, snow, new SpecialText[]{snow1, snow2});
+        addObject(sp);
+        org.addLayer(snow);
+
         WaterPool wp1 = new WaterPool(this, forestRiver, "1", 1);
         WaterPool wp2 = new WaterPool(this, forestRiver, "2", 2);
         WaterPool wp3 = new WaterPool(this, forestRiver, "3", 3);

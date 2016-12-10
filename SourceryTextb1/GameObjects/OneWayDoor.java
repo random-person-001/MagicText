@@ -20,7 +20,7 @@ public class OneWayDoor extends GameObject {
         layerName = room.makeUniqueLayerName(strClass);
         x = xSet;
         y = ySet;
-        Layer icon = new Layer(new String[1][1], layerName, y, x);
+        Layer icon = new Layer(new String[1][1], layerName, x, y);
         if (facingLeft) {
             icon.setStr(0, 0, "{");
         } else {

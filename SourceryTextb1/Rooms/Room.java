@@ -35,6 +35,7 @@ public class Room implements java.io.Serializable {
     private List<FlavorText> flavorTexts = new ArrayList<>();
     private List<FlavorText> messageQueue = new ArrayList<>();
     private ArrayList<GameObject> inspectables = new ArrayList<>(); // gameObjects that may move but have something to say
+    private ArrayList<InteractableEnvironment> interactableEnvironmentObjects = new ArrayList<>(); // things that should be notified on a spell going somewhere
 
     public Player playo = null;
 
@@ -165,25 +166,26 @@ public class Room implements java.io.Serializable {
      * @param y           the Y coord of the possible mortal
      * @param damage      how much to subtractHealth any mortals if they're there
      * @param killMessage if you are hurting a player, what do you want to be said upon their death?
+     * @param damageType 'arcane' 'fire' 'ice' etc
      * @return whether there was an mortals there, and thus whether they got subtractHealth
      */
-    public boolean hurtSomethingAt(int x, int y, int damage, String killMessage, boolean fromPlayer) {
+    public boolean hurtSomethingAt(int x, int y, int damage, String killMessage, boolean fromPlayer, String damageType) {
         for (Mortal e : enemies) {
             if (!fromPlayer) {
                 if (e.getX() == x && e.getY() == y) {
-                    e.subtractHealth(damage, killMessage);
+                    e.subtractHealth(damage, killMessage, damageType);
                     return true;
                 }
             } else if (e.getX() == x && e.getY() == y && !e.strClass.equals("Player")) {
-                e.subtractHealth(damage, killMessage);
+                e.subtractHealth(damage, killMessage, damageType);
                 return true;
             }
         }
         return false;
     }
 
-    public boolean hurtSomethingAt(int x, int y, int damage, String killMessage) {
-        return hurtSomethingAt(x, y, damage, killMessage, false);
+    public boolean hurtSomethingAt(int x, int y, int damage, String killMessage, String damageType) {
+        return hurtSomethingAt(x, y, damage, killMessage, false, damageType);
     }
 
     /**
@@ -270,10 +272,8 @@ public class Room implements java.io.Serializable {
         }
         try {
             objs.addAll(addList);
-            for (GameObject obj : removeList) {
-                objs.remove(obj);
-            }
             addList.clear();
+            objs.removeAll(removeList);
             removeList.clear();
         } catch (ConcurrentModificationException ignore) {
             flushObjListChanges(triesLeftBeforeGivingUp); // Try again
@@ -456,10 +456,6 @@ public class Room implements java.io.Serializable {
         baseHitMesh[y][x] = true;
     }
 
-    void addToBaseHitMesh(String[][] picture, String solidChar) {
-        addToBaseHitMesh(picture, solidChar, 0, 0);
-    }
-
     private void addToBaseHitMesh(String[][] picture, String solidChar, int x, int y) {
         for (int i = 0; i < picture.length; i++) {
             for (int j = 0; j < picture[0].length; j++) {
@@ -527,6 +523,16 @@ public class Room implements java.io.Serializable {
         Item magicTater = new Item("Magic Potato", "How lucky! This eccentric\n potato can permanently\n increase either your\n Max HP or Max Mana.\n\nNOTE: it's permanent!", "item");
         DroppedItem gTater = new DroppedItem(this, "You found a hidden magic potato!", magicTater, x, y);
         addObject(gTater);
+    }
+
+    public void onSpellAt(int x, int y, String type){
+        for (InteractableEnvironment object : interactableEnvironmentObjects) {
+            object.onSpellOver(x,y,type);
+        }
+    }
+
+    public void addAnInteractableEnvironment(InteractableEnvironment ie){
+        interactableEnvironmentObjects.add(ie);
     }
 
     /**

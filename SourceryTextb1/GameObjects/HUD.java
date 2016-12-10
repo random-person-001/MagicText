@@ -395,7 +395,7 @@ class HUD implements java.io.Serializable {
         } else if (command.contains("echo ")) {
             showResponse(command.substring(5));
         } else if (command.startsWith("die") || command.contains("suicide")) {
-            player.subtractHealth(1000000000, "Write with caution, for words are mightier\n than the sword");
+            player.subtractHealth(1000000000, "Write with caution, for words are mightier\n than the sword", "arcane");
             showResponse("Ok, then.  May you pass well into the next world!");
         } else if (command.contains("make") && command.contains("sandwich")) {
             if (command.contains("sudo") || promptChar.equals("#")) {
@@ -419,7 +419,7 @@ class HUD implements java.io.Serializable {
                 inv.pressedA = true; // navigate to the quit game menu programmatically
             }
         } else if (command.startsWith("jumpto ")) { // Jump to a new level (defined in the switch statement in Start.java)
-            showResponse("Going to level " + command.substring(7));
+            showResponse("Going to level " + command.substring(7).trim());
             room.exitCode = command.substring(7);
         } else if (command.startsWith("ls") || command.startsWith("pwd")) {
             showResponse("Command currently under development.  Check back later!");
@@ -475,7 +475,7 @@ class HUD implements java.io.Serializable {
                 System.out.println("X: " + x);
                 System.out.println("Y: " + y);
                 room.hurtSomethingAt(x, y, 1000, "You were zapped by your own lightning!\nNext time, be more careful" +
-                        "with \nthe command line.");
+                        "with \nthe command line.", "arcane");
 
                 Item ashItem = new Item("Ash", "You struck down a \n bolt of lightning, \n which left only this\n behind.", "~", "item");
                 DroppedItem ashDrop = new DroppedItem(room, "Ow!  The ashes of your smote\n enemies are still hot!", ashItem, x, y);
@@ -513,7 +513,7 @@ class HUD implements java.io.Serializable {
                             float xDamageMult = abs(abs(xi) - r) / (float) r; // 0 to 1, peaking when xi=0 (center)
                             float yDamageMult = abs(abs(yi) - r) / (float) r;
                             int totalDamage = (int) (d * .5 * (xDamageMult + yDamageMult));
-                            room.hurtSomethingAt(xi + x, yi + y, totalDamage, "Jeez, killed yourself with an ICBM!\n Careful!");
+                            room.hurtSomethingAt(xi + x, yi + y, totalDamage, "Jeez, killed yourself with an ICBM!\n Careful!", "arcane");
                             System.out.println(x + xi + " " + (yi + y) + " given " + totalDamage + " damage");
                         }
                         System.out.println();

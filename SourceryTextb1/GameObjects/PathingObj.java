@@ -18,14 +18,14 @@ public class PathingObj extends Mortal {
         x = xStart;
         y = yStart;
         setHealth(20);
-        org.addLayer(new Layer(new String[1][1], layerName, y, x));
+        org.addLayer(new Layer(new String[1][1], layerName, x, y));
         setupTimer(200);
 
         Layer testTarget = new Layer(new String[1][1], "TestingLayer");
         testTarget.setSpecTxt(0, 0, new SpecialText("+", Color.BLACK, Color.WHITE));
         //org.addLayer(testTarget);
 
-        Spell attack = new Spell(room, 0, 0, 0, 3, 10, new SpecialText("%"), new SpecialText("%"), false);
+        Spell attack = new Spell(room, 0, 0, 0, 3, 10, new SpecialText("%"), new SpecialText("%"), false, "arcane");
         attack.setHostility(true);
         rangedInit(5, 5, 5, 25, attack);
     }

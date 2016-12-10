@@ -24,7 +24,7 @@ public class Ghost extends Mortal {
         x = xStart;
         y = yStart;
         setHealth(25);
-        org.addLayer(new Layer(new String[1][1], layerName, y, x));
+        org.addLayer(new Layer(new String[1][1], layerName, x, y));
 
         setupTimer(300); // Maybe the player should check this instead
     }

@@ -23,7 +23,7 @@ public class Snowflake extends GameObject {
         x = setX;
         y = setY;
         layerName = creator.makeUniqueLayerName(strClass);
-        Layer flakeLayer = new Layer(new String[1][1], layerName, y, x);
+        Layer flakeLayer = new Layer(new String[1][1], layerName, x, y);
 
         flakeLayer.setSpecTxt(0, 0, new SpecialText("."));
         org.addLayer(flakeLayer);

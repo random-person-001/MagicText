@@ -1,6 +1,5 @@
 package SourceryTextb1.GameObjects;
 
-import SourceryTextb1.GameObjects.ForestOfFondant.FlammableTree;
 import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
 import SourceryTextb1.SpecialText;
@@ -29,6 +28,7 @@ public class Spell extends GameObject {
     private boolean isFire = false;
 
     private boolean isHostile = false;
+    private String type; // like 'fire' or 'arcane'
 
     /**
      * You can name and customize different spells.  Some presets are:
@@ -44,11 +44,11 @@ public class Spell extends GameObject {
      * @param setOr   integer orientation.  0: up  1:down  2:left  3:right
      */
     public Spell(Room theRoom, int setX, int setY, int setOr, int setDmg, int setRng, SpecialText set1, SpecialText set2, boolean alting, boolean tracking) {
-        this(theRoom, setX, setY, setOr, setDmg, setRng, set1, set2, alting);
+        this(theRoom, setX, setY, setOr, setDmg, setRng, set1, set2, alting, "arcane");
         enemySeeking = tracking;
     }
 
-    public Spell(Room theRoom, int setX, int setY, int setOr, int setDmg, int setRng, SpecialText set1, SpecialText set2, boolean alting) {
+    public Spell(Room theRoom, int setX, int setY, int setOr, int setDmg, int setRng, SpecialText set1, SpecialText set2, boolean alting, String type) {
         strClass = "Spell";
         room = theRoom;
         org = room.org;
@@ -73,8 +73,8 @@ public class Spell extends GameObject {
         setupTimer(30);
     }
 
-    void makeFireSpell(){
-        isFire = true;
+    public String getType(){
+        return type;
     }
 
     public void setHostility(boolean set) {
@@ -190,7 +190,7 @@ public class Spell extends GameObject {
             if (target != null) {
                 pathToPos(range, target.getX(), target.getY(), layerName, false);
                 if (Math.abs(target.getX() - x) + Math.abs(target.getY() - y) <= 1) {
-                    target.subtractHealth(damage, killMessage);
+                    target.subtractHealth(damage, killMessage, "arcane");
                     hitSomeOne = true;
                 }
             } else {
@@ -220,20 +220,13 @@ public class Spell extends GameObject {
         if (iconLayer != null) iconLayer.setPos(x, y);
 
         if (!hitSomeOne)
-            hitSomeOne = room.hurtSomethingAt(x, y, damage, killMessage, !isHostile);
+            hitSomeOne = room.hurtSomethingAt(x, y, damage, killMessage, !isHostile, type);
         if (room.isPlaceSolid(x, y) || hitSomeOne || range == 0) {
             org.editLayer(" ", layerName, 0, 0);
             org.removeLayer(layerName);
             room.removeObject(this);
-            if (room.isPlaceSolid(x, y) && isFire){ // Special considerations for burning down forests
-                System.out.println("[Spell] (a fire one) checking if ended cuz of flammable tree");
-                for (GameObject o : room.objs){
-                    if (o.strClass == "FlammableTree"){
-                        ((FlammableTree)o).burn(x,y);
-                    }
-                }
-            }
         }
+        room.onSpellAt(x, y, type);
         if (range > 0) {
             range--;
         }
@@ -272,5 +265,9 @@ public class Spell extends GameObject {
 
     int r(int max, int min) {
         return rand.nextInt((max - min) + 1) + min;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }
