@@ -840,7 +840,7 @@ public class Room implements java.io.Serializable {
         }
 
         void textIfCorrectSpot(int testX, int testY, String username) {
-            if (abs(x - testX) + abs(y - testY) <= 1) {
+            if (x == testX && y == testY) {
                 doMessage(username);
             }
         }

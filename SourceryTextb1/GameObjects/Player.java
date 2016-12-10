@@ -633,7 +633,6 @@ public class Player extends Mortal implements java.io.Serializable {
      */
     private void textBoxQuery() {
         room.inspectAt(x, y, this);
-
         room.inspectAt(x+1, y, this);
         room.inspectAt(x-1, y, this);
         room.inspectAt(x, y+1, this);
