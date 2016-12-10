@@ -72,8 +72,8 @@ public class Layer implements java.io.Serializable {
      */
     public Layer(String[][] assign, String inkey, int xSet, int ySet) {
         this(assign, inkey);
-        yPos = xSet;
-        xPos = ySet;
+        xPos = xSet;
+        yPos = ySet;
     }
 
     /**
