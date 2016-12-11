@@ -38,7 +38,7 @@ public class Item implements java.io.Serializable {
     public SpecialText animation1 = new SpecialText("%");
     public SpecialText animation2 = new SpecialText("Q");
 
-    public int damage, range, healing, overheal, duration, cost = 0;
+    public int damage, range, splashRadius, healing, overheal, duration, cost = 0;
     private int armor, hpBoost, allBoost, arcBoost, fireBoost, iceBoost, darkBoost = 0;
     private boolean alting;
     private boolean pathfinds = false;
@@ -88,19 +88,20 @@ public class Item implements java.io.Serializable {
 
     /**
      * Define a whole bunch of parameters for a damage spell
-     *
-     * @param toD   damage
+     *  @param toD   damage
      * @param toR   range
      * @param toC   cost
      * @param dMode display mode
      * @param s1    state one (animation)
      * @param s2    state two (animation)
+     * @param splashRadius make your spell a splash spell!  (non-splash spells naturally pass zero to this)
      */
-    public void dmgSpellDefine(int toD, int toR, int toC, String dMode, SpecialText s1, SpecialText s2, boolean pathfinding) {
+    public void dmgSpellDefine(int toD, int toR, int toC, String dMode, SpecialText s1, SpecialText s2, boolean pathfinding, int splashRadius) {
         setDmgRngCost(toD, toR, toC);
         setSpellType(dMode);
         setAnim(s1, s2);
         pathfinds = pathfinding;
+        this.splashRadius = splashRadius;
         System.out.println("Am I a damage spell?: " + isDmgSpell);
     }
 
@@ -282,5 +283,9 @@ public class Item implements java.io.Serializable {
             default:
                 return description + "\n\nINVALID DISPLAY MODE: \n  \"" + displayMode + "\"";
         }
+    }
+
+    public int getSplashRadius() {
+        return splashRadius;
     }
 }
