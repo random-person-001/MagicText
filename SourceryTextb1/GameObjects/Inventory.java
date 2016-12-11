@@ -244,8 +244,8 @@ class Inventory implements java.io.Serializable {
         Item item5 = new Item("NeodymNeedle", "Arcane spell;\n\nA neodymium needle.\n\nIt is so magnetic it will\n fly around walls to hit\n enemies; no aim required.", "NeoNd", "spell", true);
         item5.dmgSpellDefine(6, 20, 7, "arcane", new SpecialText("\\"), new SpecialText("/"), true, 0);
         spells.add(item5);
-        Item item5AndAHalf = new Item("Splashy!", "Arcane spell;\n\nNeodymium explosive needle\n\nIt is so magnetic it will\n fly around walls to hit\n enemies, and deal splash\n damage.", "Splash", "spell", true);
-        item5AndAHalf.dmgSpellDefine(7, 20, 0, "arcane", new SpecialText("\\"), new SpecialText("/"), true, 7);
+        Item item5AndAHalf = new Item("Fire Bomb", "Fire spell;\n\nHighly explosive throwable\n\nBoom! There goes another\n ship! So poetic!\n Deals splash damage on impact", "FireB", "spell", true);
+        item5AndAHalf.dmgSpellDefine(7, 11, 9, "fire", new SpecialText("O", new Color(191, 8, 38)), new SpecialText("o", new Color(255,156,0)), false, 5);
         spells.add(item5AndAHalf);
         Item item6 = new Item("Evil Powers", "Dark Spell;\n\nYou're not sure what it is\n exactly, but it has the\n word 'power' in its name,\n so it must be good,\n right?", "EvlPw", "spell", true);
         item6.dmgSpellDefine(1, 8, 2, "dark", new SpecialText("*", new Color(155, 55, 155)), new SpecialText("*", new Color(255, 55, 255)), false, 0);
