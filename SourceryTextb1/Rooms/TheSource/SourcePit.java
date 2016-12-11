@@ -44,7 +44,7 @@ public class SourcePit extends Room {
             try {
                 Thread.sleep(20);
                 //updateObjs(20);
-                if (play.getY() > 43) {
+                if (play.getY() > 42) {
                     setNewRoom("Cliffside", play, 1, 11);
                 }
                 if (play.getY() < 0) {
@@ -96,6 +96,7 @@ public class SourcePit extends Room {
 
         Art arty = new Art();
 
+        /*
         int lineLength = arty.intro2.indexOf("\n") + 1;
         String source = arty.intro2.substring(lineLength * 3, lineLength * (3+13));
         //System.out.println("Source: '" + source + "'");
@@ -103,6 +104,9 @@ public class SourcePit extends Room {
         sourceCode.influenceAll(new Color(18, 18, 18));
         sourceCode.setPos(51,17);
         org.addLayer(sourceCode);
+        */
+
+
 
         String[][] base = Art.strToArray(arty.sourcePit);
         Layer lay1 = new Layer(base, "base");

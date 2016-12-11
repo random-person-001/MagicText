@@ -170,6 +170,7 @@ class Inventory implements java.io.Serializable {
                 if (spells.size() > 0) {
                     index = r(spells.size()-1);
                     item = spells.get(index);
+                    player.room.splashMessage(String.format("Your %1$s spell has just been stolen!", item.getName()), "", player);
                     spells.remove(index);
                 }
                 break;
@@ -177,6 +178,7 @@ class Inventory implements java.io.Serializable {
                 if (items.size() > 0) {
                     index = r(items.size() - 1);
                     item = items.get(index);
+                    player.room.splashMessage(String.format("Your %1$s has just been stolen!", item.getName()), "", player);
                     items.remove(index);
                 }
                 break;
@@ -184,6 +186,7 @@ class Inventory implements java.io.Serializable {
                 if (equip.size() > 0) {
                     index = (equip.size() - 1);
                     item = equip.get(index);
+                    player.room.splashMessage(String.format("Your %1$s has just been stolen!", item.getName()), "", player);
                     equip.remove(index);
                 }
                 break;

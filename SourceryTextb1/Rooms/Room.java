@@ -727,8 +727,21 @@ public class Room implements java.io.Serializable {
         }
     }
 
-    public void splashMessage(String message, String speaker) {
-        queueMessage(new FlavorText(message, speaker));
+    public void splashMessage(String message, String speaker, Player viewer) {
+        queueMessage(new FlavorText(message, speaker).setViewerUsername(viewer.getUsername()));
+    }
+
+    public Player getClosestPlayerTo(int x, int y){
+        int smallestDistance = 500;
+        Player toReturn = null;
+        for (Player play : players){
+            int dist = Math.abs(play.getX() - x) + Math.abs(play.getY() - y);
+            if (dist < smallestDistance){
+                toReturn = play;
+            }
+            smallestDistance = dist;
+        }
+        return toReturn;
     }
 
     public void fireKeyEvent(KeyEvent event, String playerUsername) {

@@ -80,8 +80,7 @@ public class Thief extends Mortal {
 
     @Override
     public void onInspect(Player inspector){
-        room.compactTextBox("Hi there!  You must be a newcomer in\n these parts. Let me give you some advice:\n red things are evil. Be ruthless.",
-                "Johnathan",  false, inspector.getUsername());
+        room.splashMessage("Hi there!  You must be a newcomer in\n these parts. Let me give you some advice:\n red things are evil. Be ruthless.", "Johnathan", inspector);
         Item stolen = inspector.removeRandomItem(itemTypeToSteal);
         if (stolen != null) {
             stolenItems.add(stolen);

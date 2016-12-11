@@ -100,6 +100,9 @@ public class Player extends Mortal implements java.io.Serializable {
     public Color foregroundColor = Color.WHITE;
 
 
+    private int spellCasts = 0;
+
+
     /**
      * Initialize a whole lotta variables.
      *
@@ -366,7 +369,7 @@ public class Player extends Mortal implements java.io.Serializable {
     }
 
     private void reportPos() {
-        System.out.println("\nPlayer X: " + x + "\nPlayer Y: " + y + "\nPaused?: " + paused + "\n");
+        System.out.println("\nPlayer X: " + x + "\nPlayer Y: " + y + "\nPaused?: " + paused + "\n" + "Spell casts: " + spellCasts);
     }
 
     /**
@@ -641,6 +644,7 @@ public class Player extends Mortal implements java.io.Serializable {
 
     private void newCastSpell(Item spell) {
         if (!swimming) { //Swimming AND casting spells at the same time?!?!?! That's too much, man!
+            spellCasts++;
             if (spell.isDmgSpell) {
                 int damage = spell.damage + allSpellBoost;
                 switch (spell.getDescMode()) {

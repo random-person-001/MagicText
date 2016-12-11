@@ -32,7 +32,9 @@ public class LockedDoor extends GameObject {
     }
 
     private void selfDestruct() {
-        room.splashMessage("The locked door opened!", "");
+        Player player = room.getClosestPlayerTo(x, y);
+        if (player != null)
+            room.splashMessage("The locked door opened!", "", player);
         org.removeLayer(layerName);
         room.removeFromObjHitMesh(x, y);
         room.removeObject(this);
@@ -47,7 +49,7 @@ public class LockedDoor extends GameObject {
                     selfDestruct();
                 } else {
                     if (willMessage) {
-                        room.splashMessage("This door is locked!\n   (Key Needed: \'" + keyName + "\')", "");
+                        room.splashMessage("This door is locked!\n   (Key Needed: \'" + keyName + "\')", "", player);
                         willMessage = false;
                     }
                 }

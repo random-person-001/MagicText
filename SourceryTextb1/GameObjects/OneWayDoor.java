@@ -33,7 +33,9 @@ public class OneWayDoor extends GameObject {
 
     private void openDoor() {
         if (!showedMessage) {
-            room.splashMessage("The one way door opened!", "");
+            Player player = room.getClosestPlayerTo(x, y);
+            if (player != null)
+                room.splashMessage("The one way door opened!", "", player);
             showedMessage = true;
         }
         org.editLayer(" ", layerName, 0, 0);

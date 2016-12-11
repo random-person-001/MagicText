@@ -71,8 +71,8 @@ public class Cliffside extends Room {
         Bandit jack = new Bandit(org, this, 135, 13);
         addMortal(jack);
 
-        Thief johnathan = new Thief(org, this, 21, 10);
-        addMortal(johnathan);
+        //Thief johnathan = new Thief(org, this, 21, 10);
+        //addMortal(johnathan);
 
         int[][] towerLocs = {{124, 14}, {130, 18}, {130, 8}, {140, 16}};
         for (int[] towerLoc : towerLocs) {
