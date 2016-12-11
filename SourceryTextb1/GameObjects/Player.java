@@ -612,6 +612,9 @@ public class Player extends Mortal implements java.io.Serializable {
                 case 'd':
                     newCastSpell(spell2);
                     break;
+                case '1':
+                    //testSpell1();
+                    break;
                 case 'w':
                     shouldNewInv = true;
                     break;
@@ -675,7 +678,6 @@ public class Player extends Mortal implements java.io.Serializable {
         }
     }
 
-
     private void spendMana(int cost) {
         mana -= cost;
         int wait = 2000 - (int) (1750 * ((float) mana / (float) maxMana));
@@ -683,14 +685,15 @@ public class Player extends Mortal implements java.io.Serializable {
     }
 
     private void looseCastDmgSpell(int damage, Item spell) {
-        looseCastDmgSpell(damage, spell.range, spell.cost, spell.animation1, spell.animation2, spell.getAlting(), spell.getPathfinding(), spell.getDescMode() == "fire");
+        looseCastDmgSpell(damage, spell.range, spell.cost, spell.animation1, spell.animation2, spell.getAlting(), spell.getPathfinding(), spell.getDescMode(), spell.getSplashRadius());
     }
 
-    private void looseCastDmgSpell(int dmg, int rng, int cost, SpecialText anim1, SpecialText anim2, boolean alt, boolean tracking, boolean isFire) {
+    private void looseCastDmgSpell(int dmg, int rng, int cost, SpecialText anim1, SpecialText anim2, boolean alt, boolean tracking, String spellType, int splashRadius) {
         if (mana >= cost) {
             Spell toFire = new Spell(room, x, y, orientation, dmg, rng, anim1, anim2, alt, tracking);
-            if (isFire) toFire.makeFireSpell();
+            toFire.setType(spellType);
             toFire.setHostility(false);
+            toFire.setSplashRadius(splashRadius);
             room.addObject(toFire);
             spendMana(cost);
             //System.out.println("The damage spell fired!");
@@ -792,6 +795,17 @@ public class Player extends Mortal implements java.io.Serializable {
             }
         }
     }
+
+    /*public void testSpell1(){
+        int dmg = 10;
+        int rng = 5;
+        FancySpell toFire = new FancySpell(room, x, y, orientation, dmg, rng,
+                new SpecialText("|"), new SpecialText("-"), false, "fire");
+        toFire.makeSpiral(2, 10);
+        //toFire.makeSplash(5);
+        toFire.setObjectToCenterOn(this);
+        room.addObject(toFire);
+    }*/
 
     /**
      * @return which zone this Player is in!

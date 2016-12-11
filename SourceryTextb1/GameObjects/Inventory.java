@@ -242,16 +242,19 @@ class Inventory implements java.io.Serializable {
         item3.setEquipvals(1, 1, 1, 1, 1, 1, 1, "weapon");
         equip.add(item3);
         Item item5 = new Item("NeodymNeedle", "Arcane spell;\n\nA neodymium needle.\n\nIt is so magnetic it will\n fly around walls to hit\n enemies; no aim required.", "NeoNd", "spell", true);
-        item5.dmgSpellDefine(6, 20, 7, "arcane", new SpecialText("\\"), new SpecialText("/"), true);
+        item5.dmgSpellDefine(6, 20, 7, "arcane", new SpecialText("\\"), new SpecialText("/"), true, 0);
         spells.add(item5);
+        Item item5AndAHalf = new Item("Splashy!", "Arcane spell;\n\nNeodymium explosive needle\n\nIt is so magnetic it will\n fly around walls to hit\n enemies, and deal splash\n damage.", "Splash", "spell", true);
+        item5AndAHalf.dmgSpellDefine(7, 20, 0, "arcane", new SpecialText("\\"), new SpecialText("/"), true, 7);
+        spells.add(item5AndAHalf);
         Item item6 = new Item("Evil Powers", "Dark Spell;\n\nYou're not sure what it is\n exactly, but it has the\n word 'power' in its name,\n so it must be good,\n right?", "EvlPw", "spell", true);
-        item6.dmgSpellDefine(1, 8, 2, "dark", new SpecialText("*", new Color(155, 55, 155)), new SpecialText("*", new Color(255, 55, 255)), false);
+        item6.dmgSpellDefine(1, 8, 2, "dark", new SpecialText("*", new Color(155, 55, 155)), new SpecialText("*", new Color(255, 55, 255)), false, 0);
         spells.add(item6);
         Item item7 = new Item("Witch Scarf", "A scarf imbued with witch\n magic, granting the user\n increased dark and ice\n magic power\n\nIt smells like flowers.", "equipment");
         item7.setEquipvals(1, 3, 0, 0, 0, 2, 2, "weapon");
         equip.add(item7);
         Item potion = new Item("MagicTaterChip", "A singular potato chip made\n with magic potatoes.\n\nEating this chip will\n restore hp over time\n (4hp/s + 10 overheal!)", "item");
-        potion.setDescMode("potion");
+        potion.setSpellType("potion");
         potion.setDuration(30 * 1000);
         items.add(potion);
         for (int ii = 0; ii < 24; ii++) {
@@ -643,11 +646,11 @@ class Inventory implements java.io.Serializable {
             }
             if (cursorY == 4) {
                 player.saveGame();
-                player.subtractHealth(2100000000, "IT SEEMS THAT SOME ALIEN\n FORCE HAS INSTANTLY KILLED YOU."); // cleanup, with style
+                player.subtractHealth(2100000000, "IT SEEMS THAT SOME ALIEN\n FORCE HAS INSTANTLY KILLED YOU.", "arcane"); // cleanup, with style
                 exitAllMenus();
             }
             if (cursorY == 5) {
-                player.subtractHealth(2100000000, "IT SEEMS THAT SOME UNFORGIVING\n FORCE HAS INSTANTLY KILLED YOU."); // cleanup, with style
+                player.subtractHealth(2100000000, "IT SEEMS THAT SOME UNFORGIVING\n FORCE HAS INSTANTLY KILLED YOU.", "arcane"); // cleanup, with style
                 exitAllMenus();
             }
         }

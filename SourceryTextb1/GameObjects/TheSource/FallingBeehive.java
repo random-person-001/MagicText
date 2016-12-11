@@ -28,7 +28,7 @@ public class FallingBeehive extends GameObject {
 
         layerName = room.makeUniqueLayerName(super.strClass);
 
-        Layer iconLayer = new Layer (new String[1][1],layerName, y, x);
+        Layer iconLayer = new Layer (new String[1][1],layerName, x, y);
         iconLayer.setSpecTxt(0,0, new SpecialText("8", new Color(200, 200, 75)));
 
         org.addLayer(iconLayer);

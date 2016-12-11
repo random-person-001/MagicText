@@ -1,11 +1,12 @@
 package SourceryTextb1.GameObjects;
 
-import SourceryTextb1.GameObjects.ForestOfFondant.FlammableTree;
 import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
 import SourceryTextb1.SpecialText;
 
 import java.util.Random;
+
+import static java.lang.Math.abs;
 
 /**
  * Create a new spell.  Attributes such as its character representation, damage, and range can be customized.
@@ -18,17 +19,18 @@ public class Spell extends GameObject {
     private SpecialText char1 = new SpecialText("X");
     private SpecialText char2 = new SpecialText("x");
     private boolean onChar1 = true;
+    private int splashRadius = 0;
 
     private int damage = 10;
     private String killMessage = "You were electrocuted by a rouge spell";
 
     private String layerName;
-    private int orientation = 0;
+    protected int orientation = 0;
     private boolean dispAlting = false;
     private boolean enemySeeking = false;
-    private boolean isFire = false;
 
     private boolean isHostile = false;
+    private String type; // like 'fire' or 'arcane'
 
     /**
      * You can name and customize different spells.  Some presets are:
@@ -44,11 +46,11 @@ public class Spell extends GameObject {
      * @param setOr   integer orientation.  0: up  1:down  2:left  3:right
      */
     public Spell(Room theRoom, int setX, int setY, int setOr, int setDmg, int setRng, SpecialText set1, SpecialText set2, boolean alting, boolean tracking) {
-        this(theRoom, setX, setY, setOr, setDmg, setRng, set1, set2, alting);
+        this(theRoom, setX, setY, setOr, setDmg, setRng, set1, set2, alting, "arcane");
         enemySeeking = tracking;
     }
 
-    public Spell(Room theRoom, int setX, int setY, int setOr, int setDmg, int setRng, SpecialText set1, SpecialText set2, boolean alting) {
+    public Spell(Room theRoom, int setX, int setY, int setOr, int setDmg, int setRng, SpecialText set1, SpecialText set2, boolean alting, String type) {
         strClass = "Spell";
         room = theRoom;
         org = room.org;
@@ -63,6 +65,7 @@ public class Spell extends GameObject {
         org.addLayer(effect);
 
         orientation = setOr;
+        this.type = type;
 
         define(setDmg, setRng, set1, set2);
         dispAlting = alting;
@@ -73,8 +76,8 @@ public class Spell extends GameObject {
         setupTimer(30);
     }
 
-    void makeFireSpell(){
-        isFire = true;
+    public String getType(){
+        return type;
     }
 
     public void setHostility(boolean set) {
@@ -103,48 +106,6 @@ public class Spell extends GameObject {
 
     public void setName(String newName) {
         name = newName;
-        /*
-        switch (name){
-            case "Book":
-                setKillMessage("You managed to get murdered by an old\n book.  Not a common fate, and \n I must say I am impressed.");
-                setDamage(1);
-                setRange(3);
-                setChar1("B");
-                setChar2("b");
-                break;
-            case "Spark":
-                setKillMessage("You were electrocuted by a spark spell. \n Honestly, try harder next time.");
-                setDamage(3);
-                setRange(6);
-                setChar1("X");
-                setChar2("+");
-                break;
-            case "Flame":
-                setKillMessage("You were burnt to a crisp with a Flame spell. \n At least it is a more noble death \n than dying by a Spark, like some.");
-                setDamage(9);
-                setRange(6);
-                setChar1("M");
-                setChar2("m");
-                break;
-            case "Wanderer":
-                setKillMessage("");
-                setDamage(9);
-                setRange(9);
-                setChar1("W");
-                setChar2("w");
-                orientation = -1;
-                break;
-            case "None":
-                setKillMessage("");
-                setDamage(0);
-                setRange(0);
-                setChar1(" ");
-                setChar2(" ");
-                break;
-            default:
-                System.out.println("No default set for spells of name " + name);
-        }
-        */
     }
 
     public void define(int damage, int range, SpecialText charOne, SpecialText charTwo) {
@@ -175,29 +136,57 @@ public class Spell extends GameObject {
         killMessage = newKillMessage;
     }
 
+    public void setSplashRadius(int splashRadius){
+        this.splashRadius = splashRadius;
+    }
+
     @Override
     public void update() {
-        //org.editLayer(" ", layerName, 0, 0);
+        overridableUpdate();
+        move();
+        takeCareOfHittingStuff();
+    }
 
-        if (orientation >= 0 && orientation <= 3) {
-            //System.out.println("A spell is traveling normally... (" + x + "," + y + ")");
-        }
-
-        boolean hitSomeOne = false;
-
+    protected void move(){
         if (enemySeeking) {
             Mortal target = getClosestBadGuy(range);
             if (target != null) {
+                int oldX = x;
+                int oldY = y;
                 pathToPos(range, target.getX(), target.getY(), layerName, false);
-                if (Math.abs(target.getX() - x) + Math.abs(target.getY() - y) <= 1) {
-                    target.subtractHealth(damage, killMessage);
-                    hitSomeOne = true;
-                }
+                if (y < oldY) orientation = 0;
+                if (y > oldY) orientation = 1;
+                if (x < oldX) orientation = 2;
+                if (x > oldX) orientation = 3;
             } else {
                 doMovement();
             }
         } else {
             doMovement();
+        }
+
+        if (range > 0) {
+            range--;
+        }
+    }
+
+    protected void takeCareOfHittingStuff(){
+        boolean hitSomeOne = room.hurtSomethingAt(x, y, damage, killMessage, !isHostile, type);
+        if (enemySeeking) {
+            switch (orientation){
+                case 0:
+                    hitSomeOne |= room.hurtSomethingAt(x, y - 1, damage, killMessage, !isHostile, type);
+                    break;
+                case 1:
+                    hitSomeOne |= room.hurtSomethingAt(x, y + 1, damage, killMessage, !isHostile, type);
+                    break;
+                case 2:
+                    hitSomeOne |= room.hurtSomethingAt(x - 1, y, damage, killMessage, !isHostile, type);
+                    break;
+                case 3:
+                    hitSomeOne |= room.hurtSomethingAt(x + 1, y, damage, killMessage, !isHostile, type);
+                    break;
+            }
         }
 
         if (dispAlting) {
@@ -216,27 +205,35 @@ public class Spell extends GameObject {
             }
         }
 
+        if (room.isPlaceSolid(x, y)) {
+            onHitNonMortal();
+        }
+        if (hitSomeOne) {
+            onHitMortal();
+        }
+        if (range == 0) {
+            onRangeExhausted();
+        }
+
+        room.onSpellAt(x, y, type);
+
         Layer iconLayer = org.getLayer(layerName);
         if (iconLayer != null) iconLayer.setPos(x, y);
+    }
 
-        if (!hitSomeOne)
-            hitSomeOne = room.hurtSomethingAt(x, y, damage, killMessage, !isHostile);
-        if (room.isPlaceSolid(x, y) || hitSomeOne || range == 0) {
-            org.editLayer(" ", layerName, 0, 0);
-            org.removeLayer(layerName);
-            room.removeObject(this);
-            if (room.isPlaceSolid(x, y) && isFire){ // Special considerations for burning down forests
-                System.out.println("[Spell] (a fire one) checking if ended cuz of flammable tree");
-                for (GameObject o : room.objs){
-                    if (o.strClass == "FlammableTree"){
-                        ((FlammableTree)o).burn(x,y);
-                    }
-                }
-            }
-        }
-        if (range > 0) {
-            range--;
-        }
+    protected void overridableUpdate() {}
+
+    protected void onHitMortal(){
+        splashDamage();
+        room.removeObject(this);
+    }
+    protected void onHitNonMortal(){
+        splashDamage();
+        room.removeObject(this);
+    }
+    protected void onRangeExhausted(){
+        splashDamage();
+        room.removeObject(this);
     }
 
     protected void doMovement() {
@@ -262,15 +259,39 @@ public class Spell extends GameObject {
         }
     }
 
+    private void splashDamage() {
+        for (int xi = -splashRadius; xi <= splashRadius; xi++) {
+            for (int yi = -splashRadius; yi <= splashRadius; yi++) {
+                float xDamageMult = abs(abs(xi) - splashRadius) / (float) splashRadius; // 0 to 1, peaking when xi=0 (center)
+                float yDamageMult = abs(abs(yi) - splashRadius) / (float) splashRadius;
+                int totalDamage = (int) (damage * .5 * (xDamageMult + yDamageMult));
+                if (xi==0 && yi==0) totalDamage = 0; // We already hit the thing in the middle, earlier in the code.
+                room.hurtSomethingAt(xi + x, yi + y, totalDamage, "Hit by the splash damage of a\n spell! Better be more careful.", type);
+                //System.out.println(x + xi + " " + (yi + y) + " given " + totalDamage + " damage");
+            }
+            //System.out.println();
+        }
+    }
+
+    @Override
+    public void selfCleanup(){
+        org.editLayer(" ", layerName, 0, 0);
+        org.removeLayer(layerName);
+    }
+
     public void setAlting(boolean setTo) {
         dispAlting = setTo;
     }
 
-    int r(int max) {
+    private int r(int max) {
         return r(max, 0);
     }
 
-    int r(int max, int min) {
+    private int r(int max, int min) {
         return rand.nextInt((max - min) + 1) + min;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

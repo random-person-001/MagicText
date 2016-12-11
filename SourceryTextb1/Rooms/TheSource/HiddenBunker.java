@@ -61,7 +61,7 @@ public class HiddenBunker extends Room {
     @Override
     public void addItems() {
         Item potion = new Item("MagicTaterChip", "A singular potato chip made\n with magic potatoes.\n\nEating this chip will\n restore hp over time\n (4hp/s + 10 overheal!)", "item");
-        potion.setDescMode("potion");
+        potion.setSpellType("potion");
         potion.setDuration(30 * 1000);
         DroppedItem dPotion = new DroppedItem(this, "You found a potato chip!", potion, 53, 11);
         addObject(dPotion);
@@ -77,7 +77,7 @@ public class HiddenBunker extends Room {
         addMagicPotato(108, 2);
 
         Item item6 = new Item("Evil Powers", "Dark Spell;\n\nYou're not sure what it is\n exactly, but it has the\n word 'power' in its name,\n so it must be good,\n right?", "EvlPw", "spell", true);
-        item6.dmgSpellDefine(1, 8, 2, "dark", new SpecialText("*", new Color(155, 55, 155)), new SpecialText("*", new Color(255, 55, 255)), false);
+        item6.dmgSpellDefine(1, 8, 2, "dark", new SpecialText("*", new Color(155, 55, 155)), new SpecialText("*", new Color(255, 55, 255)), false, 0);
         DroppedItem dSpell = new DroppedItem(this, "You found a spell: Evil Powers!", item6, 55, 9);
         addObject(dSpell);
 

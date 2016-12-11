@@ -1,124 +1,68 @@
 package SourceryTextb1.GameObjects.ForestOfFondant;
 
-import SourceryTextb1.GameObjects.GameObject;
+import SourceryTextb1.GameObjects.InteractableEnvironment;
 import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
 import SourceryTextb1.SpecialText;
 
 import java.awt.*;
-import java.util.Random;
 
 /**
  * A Class that handles making trees (technically, certain SpecialTexts) of a Layer flammable.
  * Created by riley on 02-Dec-2016.
  */
-public class FlammableTree extends GameObject {
+public class FlammableTree extends InteractableEnvironment {
     private Color[] stagesOfFire = {new Color(184, 222, 85), new Color(222, 138, 0), new Color(222, 202, 0), new Color(222, 61, 24),
             new Color(167, 83, 1), new Color(106, 48, 0), new Color(70, 44, 31), new Color(40, 40, 40)};
     private String[] charactersOfFire = {"W", "M", "w", "m", "_", "w", ".", " "};
 
-    private Random rand = new Random();
-    private int [][] treeData; // -1=no tree   0=pristine tree   1-7=various stages of burning
-    private String layerName;
-    private int chanceOfSpreadingInEachDirection = 10; //  40;
     public FlammableTree(Room room, Layer layWithTrees, SpecialText[] treeChars) {
-        this.room = room;
+        super(room, layWithTrees, treeChars);
         super.strClass = "FlammableTree";
-        layerName = layWithTrees.getName();
-        treeData = new int [layWithTrees.getColumns()][layWithTrees.getRows()];
-        for (int c = 0; c < layWithTrees.getColumns(); c++) {
-            for (int r = 0; r < layWithTrees.getRows(); r++) {
-                for (SpecialText treeChar : treeChars) {
-                    if (layWithTrees.getSpecTxt(r, c).equals(treeChar)) {
-                        treeData[c][r] = 0;
-                        room.addToBaseHitMesh(c + x, r + y);
-                        break;
-                    } else {
-                        treeData[c][r] = -1;
-                    }
-                }
+        super.chanceOfSpreadingInEachDirection = 5; //  40;
+        addSpellTypesToCareAbout("fire");
+    }
+
+    protected void onCustomSpellOver(int relativeX, int relativeY) {
+        room.removeFromBaseHitMesh(relativeX, relativeY);
+    }
+
+    @Override
+    protected void advanceAnimation(int dataC, int dataR, int currentState){
+        String dispChar = charactersOfFire[currentState];
+        if (currentState == 6){
+            if (r(100)<= 30)
+                dispChar = "_";
+            else if (r(100) <= 30)
+                dispChar = ".";
+            else
+                dispChar = " ";
+        }
+        if (currentState < 4){
+            int absX = dataC + layerWithStuff.getX();
+            int absY = dataR + layerWithStuff.getY();
+            room.hurtSomethingAt(absX, absY ,2,"You were burnt to a crisp", "arcane");
+            // Maybe start a forest fire!
+            if (r(100) <= chanceOfSpreadingInEachDirection){
+                onSpellOver(absX+1, absY, "fire");
+            }
+            if (r(100) <= chanceOfSpreadingInEachDirection){
+                onSpellOver(absX-1, absY, "fire");
+            }
+            if (r(100) <= chanceOfSpreadingInEachDirection){
+                onSpellOver(absX, absY+1, "fire");
+            }
+            if (r(100) <= chanceOfSpreadingInEachDirection){
+                onSpellOver(absX, absY-1, "fire");
             }
         }
-        setupTimer(100);
-    }
-
-    public void burn(int x, int y) {
-        Layer treeLayer = room.org.getLayer(layerName);
-        if (treeLayer != null) {
-            int relativeY = y-treeLayer.getY();
-            int relativeX = x-treeLayer.getX();
-            int maxRelX = treeData.length;
-            int maxRelY = treeData[0].length;
-            boolean withinBounds = relativeX >= 0 && relativeX < maxRelX && relativeY >= 0 && relativeY < maxRelY;
-            //System.out.println("[FlammableTree] attempting (abs " + x + ", " + y + ") rel " + relativeX + ", " + relativeY + " for " + layerName +
-            //        " | max relative = " + maxRelX + ", " + maxRelY + ", so " + withinBounds );
-            if (withinBounds && treeData[relativeX][relativeY] == 0) {
-                //System.out.println("And it burns!");
-                room.removeFromBaseHitMesh(x, y);
-                treeData[relativeX][relativeY] = 1;
-            }
-
+        SpecialText newSpTxt = new SpecialText(dispChar, stagesOfFire[currentState], stagesOfFire[currentState + 1]);
+        room.org.editLayer(newSpTxt, layerName, dataR, dataC);
+        if (r(9) <= 2 && currentState != 1 && currentState < 5){
+            data[dataC][dataR] --;
         }
-    }
-
-    public void update(){
-        for (int c = 0; c < treeData.length; c++) {
-            for (int r = 0; r < treeData[0].length; r++) {
-                if (treeData[c][r] >= 1 && treeData[c][r] < 7) {
-                    advanceAnimation(c,r);
-                }
-            }
+        else {
+            data[dataC][dataR] ++;
         }
-    }
-
-    private void advanceAnimation(int dataC, int dataR){
-        Layer treeLayer = room.org.getLayer(layerName);
-        if (treeLayer != null) {
-            int currentState = treeData[dataC][dataR];
-            String dispChar = charactersOfFire[currentState];
-            if (currentState == 6){
-                if (r(100)<= 30)
-                    dispChar = "_";
-                else if (r(100) <= 30)
-                    dispChar = ".";
-                else
-                    dispChar = " ";
-            }
-            if (currentState < 4){
-                int absX = dataC + treeLayer.getX();
-                int absY = dataR + treeLayer.getY();
-                room.hurtSomethingAt(absX, absY ,2,"You were burnt to a crisp");
-                // Maybe start a forest fire!
-                if (r(100) <= chanceOfSpreadingInEachDirection){
-                    burn(absX+1, absY);
-                }
-                if (r(100) <= chanceOfSpreadingInEachDirection){
-                    burn(absX-1, absY);
-                }
-                if (r(100) <= chanceOfSpreadingInEachDirection){
-                    burn(absX, absY+1);
-                }
-                if (r(100) <= chanceOfSpreadingInEachDirection){
-                    burn(absX, absY-1);
-                }
-            }
-            SpecialText newSpTxt = new SpecialText(dispChar, stagesOfFire[currentState], stagesOfFire[currentState + 1]);
-            room.org.editLayer(newSpTxt, layerName, dataR, dataC);
-            if (r(9) <= 2 && currentState != 1 && currentState < 5){
-                treeData[dataC][dataR] --;
-            }
-            else {
-                treeData[dataC][dataR] ++;
-            }
-        }
-    }
-
-
-    protected int r(int max) {
-        return r(max, 0);
-    }
-
-    protected int r(int max, int min) {
-        return rand.nextInt((max - min) + 1) + min;
     }
 }

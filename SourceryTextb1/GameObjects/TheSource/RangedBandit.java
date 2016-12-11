@@ -21,7 +21,7 @@ public class RangedBandit extends Mortal {
         y = startY;
         setHealth(18);
         layerName = room.makeUniqueLayerName(strClass);
-        org.addLayer(new Layer(new String[1][1], layerName, y, x));
+        org.addLayer(new Layer(new String[1][1], layerName, x, y));
         setupTimer(200);
 
         /*  I don't think this is needed.  --Riley
@@ -29,7 +29,7 @@ public class RangedBandit extends Mortal {
         testTarget.setSpecTxt(0,0,new SpecialText("+", Color.BLACK, Color.WHITE));
         */
 
-        Spell attack = new Spell(room, 0, 0, 0, 5, 10, new SpecialText("|"), new SpecialText("-"), false);
+        Spell attack = new Spell(room, 0, 0, 0, 5, 10, new SpecialText("|"), new SpecialText("-"), false, "arcane");
         attack.setHostility(true);
         rangedInit(5, 5, 5, 25, attack);
     }

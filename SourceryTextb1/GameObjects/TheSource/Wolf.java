@@ -25,7 +25,7 @@ public class Wolf extends Mortal {
         x = xStart;
         y = yStart;
         setHealth(10);
-        Layer wolfLayer = new Layer(new String[1][1], layerName, y, x);
+        Layer wolfLayer = new Layer(new String[1][1], layerName, x, y);
         org.addLayer(wolfLayer);
 
         setupTimer(550);

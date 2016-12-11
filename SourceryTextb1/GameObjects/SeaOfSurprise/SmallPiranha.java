@@ -85,7 +85,7 @@ public class SmallPiranha extends Mortal {
         room.addMortal(this);
 
         if (distanceTo(closestGoodGuy) <= 3) {
-            closestGoodGuy.subtractHealth(3, "You know, maybe you should have listened \n when your mother told you not to \n play with piranhas.");
+            closestGoodGuy.subtractHealth(3, "You know, maybe you should have listened \n when your mother told you not to \n play with piranhas.", "arcane");
         }
     }
 

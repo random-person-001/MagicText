@@ -25,7 +25,7 @@ public class Bandit extends Mortal {
         x = xStart;
         y = yStart;
         setHealth(15);
-        org.addLayer(new Layer(new String[1][1], layerName, y, x));
+        org.addLayer(new Layer(new String[1][1], layerName, x, y));
 
         setupTimer(600); // Maybe the player should check this instead
     }

@@ -32,9 +32,9 @@ public class Thief extends Mortal {
         x = xStart;
         y = yStart;
         setHealth(30);
-        org.addLayer(new Layer(new String[1][1], layerName, y, x));
+        org.addLayer(new Layer(new String[1][1], layerName, x, y));
 
-        setupTimer(200); // Maybe the player should check this instead
+        setupTimer(200);
     }
 
     @Override

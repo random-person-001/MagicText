@@ -56,7 +56,7 @@ public class Mortal extends GameObject implements java.io.Serializable {
         return health;
     }
 
-    public void subtractHealth(int amountLost, String message) {
+    public void subtractHealth(int amountLost, String message, String damageType) {
         if (strClass.equals("Player")) {
             Player meAsPlayer = (Player) this;
             int damage = (amountLost - meAsPlayer.defense);
@@ -103,7 +103,7 @@ public class Mortal extends GameObject implements java.io.Serializable {
     }
 
     public void subtractHealth(int amountLost) {
-        subtractHealth(amountLost, "You died.");
+        subtractHealth(amountLost, "You died.", "arcane");
     }
 
     /**
@@ -344,7 +344,7 @@ public class Mortal extends GameObject implements java.io.Serializable {
                     acquireTarget(target);
                 if (setOr != -1) {
                     System.out.printf("[TestRanged] Orientation: %d\n", setOr);
-                    Spell toFire = new Spell(room, x, y, setOr, damage, range, anim1, anim2, alting);
+                    Spell toFire = new Spell(room, x, y, setOr, damage, range, anim1, anim2, alting, "arcane");
                     toFire.setHostility(true);
                     room.addObject(toFire);
                     setOr = -1;

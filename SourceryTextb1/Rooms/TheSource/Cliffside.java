@@ -9,6 +9,8 @@ import SourceryTextb1.Layer;
 import SourceryTextb1.Rooms.Room;
 import SourceryTextb1.SpecialText;
 
+import java.awt.*;
+
 /**
  * Some mountains, where you fight some enemies
  * Created by riley on 15-Jun-2016.
@@ -31,8 +33,11 @@ public class Cliffside extends Room {
                     queueMessage(new FlavorText("Endless rows of trees covered in sunset\n sitting beyond your view distance....", "").setViewerUsername(play.getUsername()));
                     queueMessage(new FlavorText("A picture taken here on this cliff\n would definitely make a great postcard.", "").setViewerUsername(play.getUsername()));
                     // ^ This should be an item in The Mines of Mementos
+                    queueMessage(new FlavorText("\"that gorge was carved by erosion of millions of bandits traveling along a path there - a force to be reckoned with\"", "").setViewerUsername(play.getUsername()));
                     count++;
                 }
+
+
                 if (play.getY() < 1 && play.getX() < 20) {
                     setNewRoom("SourcePit", play, 42, 57);
                 }
@@ -81,7 +86,7 @@ public class Cliffside extends Room {
         }
 
         Item potion = new Item("SC&OPotatoChip", "This variety of magic\n potato chip is flavored\n with sour cream and onions\n\nIt makes your breath so bad\n it hurts nearby enemies.", "item");
-        potion.setDescMode("potion");
+        potion.setSpellType("potion");
         potion.setDuration(20 * 1000);
         DroppedItem dPotion = new DroppedItem(this, "You found a potato chip!", potion, 58, 7);
         super.addObject(dPotion);

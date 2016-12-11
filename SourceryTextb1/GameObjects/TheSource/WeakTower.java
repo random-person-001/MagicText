@@ -25,7 +25,7 @@ public class WeakTower extends Mortal {
         x = xStart;
         y = yStart;
         setHealth(7);
-        org.addLayer(new Layer(new String[1][1], layerName, y, x));
+        org.addLayer(new Layer(new String[1][1], layerName, x, y));
 
         setupTimer(666);
     }
@@ -45,11 +45,11 @@ public class WeakTower extends Mortal {
             }
             if (Math.abs(m.getX() - getX()) <= 2) {
                 int orientation = (m.getY() - getY() > 0) ? 1 : 0;
-                room.addObject(new Spell(room, x, y, orientation, dmg, rng, anim1, anim2, alt));
+                room.addObject(new Spell(room, x, y, orientation, dmg, rng, anim1, anim2, alt, "arcane"));
             }
             if (Math.abs(m.getY() - getY()) <= 2) {
                 int orientation = (m.getX() - getX() > 0) ? 3 : 2;
-                room.addObject(new Spell(room, x, y, orientation, dmg, rng, anim1, anim2, alt));
+                room.addObject(new Spell(room, x, y, orientation, dmg, rng, anim1, anim2, alt, "arcane"));
             }
         } else {
             System.out.println("WeakTower could not find a nearest good guy :(");

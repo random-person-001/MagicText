@@ -109,7 +109,7 @@ public class SourceCaves extends Room {
         String[] solids = {"#", "H", "-"};
         addToBaseHitMesh(base, solids);
 
-        Layer exitLayer = new Layer(new String[2][2], "exit", 0, 61);
+        Layer exitLayer = new Layer(new String[2][2], "exit", 61, 0);
         exitLayer.setSpecTxt(0, 0, new SpecialText(" ", null, new Color(100, 100, 90)));
         exitLayer.setSpecTxt(0, 1, new SpecialText(" ", null, new Color(100, 100, 90)));
 

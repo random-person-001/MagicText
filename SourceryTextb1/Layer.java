@@ -65,15 +65,15 @@ public class Layer implements java.io.Serializable {
     }
 
     /**
-     * @param assign an ititial String[][] for the layer to have (can be later edited, element at a time)
+     * @param assign an initial String[][] for the layer to have (can be later edited, element at a time)
      * @param inkey  a String name for the Layer to call itself
      * @param xSet   a X starting point
      * @param ySet   a Y starting point
      */
     public Layer(String[][] assign, String inkey, int xSet, int ySet) {
         this(assign, inkey);
-        yPos = xSet;
-        xPos = ySet;
+        yPos = ySet;
+        xPos = xSet;
     }
 
     /**
