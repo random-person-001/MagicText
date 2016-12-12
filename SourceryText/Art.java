@@ -965,6 +965,20 @@ public class Art implements java.io.Serializable{
             "     |__|                                         \n" +
             "     |__|                                         \n";
 
+    public String witchHutCauldronUI =
+            "o--------------------------------------------o\n" +
+            "|  SELECTION           :  BREWING            |\n" +
+            "| > Grape of Good Hope : 1                   |\n" +
+            "|   Chichen Pizza      : 2                   |\n" +
+            "|   Gordian Nut        : 3                   |\n" +
+            "|   Sistine Apple      : 4                   |\n" +
+            "|   Mesopotato         : 5                   |\n" +
+            "|   Bering Date        : 6                   |\n" +
+            "|   CLEAR INGREDIENTS  :                     |\n" +
+            "|   BREW POTION        :                     |\n" +
+            "|   BACK                                     |\n" +
+            "o--------------------------------------------o\n";
+
     public String hiddenBunkerWater =
             "          \n" +
             "       WWW\n" +

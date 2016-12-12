@@ -58,7 +58,7 @@ public class DroppedItem extends GameObject {
                 org.removeLayer(layerName + player.getUsername());
                 if (!pickUpMessage.equals("None") || pickUpMessage.equals("")) {
                     System.out.println("Picking up: " + me.getName());
-                    room.compactTextBox(pickUpMessage, "", false, player.getUsername());
+                    room.splashMessage(pickUpMessage, "", player);
                 }
             }
         }

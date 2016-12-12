@@ -618,7 +618,7 @@ public class Room implements java.io.Serializable {
      * @param helpful          whether the box ought to give instructions on its own dismissal
      * @param usernameToShowTo if not null, show this to only the Player with that username.
      */
-    public void compactTextBox(String text, String speaker, boolean helpful, String usernameToShowTo) {
+    private void compactTextBox(String text, String speaker, boolean helpful, String usernameToShowTo) {
         Art artsedo = new Art();
         Layer txtBox;
         if (helpful) {
@@ -675,7 +675,7 @@ public class Room implements java.io.Serializable {
         listenTick.scheduleAtFixedRate(listen, 100, 100);
     }
 
-    public void questionTextBox(String text, String usernameToShowTo, int qID) {
+    private void questionTextBox(String text, String usernameToShowTo, int qID) {
         Art artsedo = new Art();
         Layer txtBox = new Layer(Art.strToArray(artsedo.textBoxQuestion), "Dialog", 0, 13, false, true);
 
@@ -737,6 +737,10 @@ public class Room implements java.io.Serializable {
         queueMessage(new FlavorText(message, speaker).setViewerUsername(viewer.getUsername()));
     }
 
+    public void splashQuestion(String message, Player viewer, int questionID) {
+        queueMessage(new FlavorText(message, true, questionID).setViewerUsername(viewer.getUsername()));
+    }
+
     public Player getClosestPlayerTo(int x, int y){
         int smallestDistance = 500;
         Player toReturn = null;
@@ -750,7 +754,7 @@ public class Room implements java.io.Serializable {
         return toReturn;
     }
 
-    public void fireKeyEvent(KeyEvent event, String playerUsername) {
+    private void genericKeyEvent (KeyEvent event){
         if (event.getKeyCode() == KeyEvent.VK_ESCAPE) {
             resume = true;
         }
@@ -760,6 +764,10 @@ public class Room implements java.io.Serializable {
         if (event.getKeyCode() == KeyEvent.VK_LEFT || event.getKeyCode() == KeyEvent.VK_RIGHT) {
             changingAnswer = true;
         }
+    }
+
+    public void fireKeyEvent(KeyEvent event) {
+        genericKeyEvent(event);
     }
 
     /**
