@@ -754,7 +754,7 @@ public class Room implements java.io.Serializable {
         return toReturn;
     }
 
-    private void genericKeyEvent (KeyEvent event){
+    protected void genericKeyEvent (KeyEvent event){
         if (event.getKeyCode() == KeyEvent.VK_ESCAPE) {
             resume = true;
         }
@@ -775,6 +775,7 @@ public class Room implements java.io.Serializable {
      * @param y y coord of query
      * @return all registered GameObjects at a coordinate
      */
+
     public List<GameObject> getObjectsAt(int x, int y) {
         List<GameObject> toReturn = new ArrayList<>();
         for (GameObject object : objs){

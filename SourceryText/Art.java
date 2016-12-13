@@ -968,7 +968,7 @@ public class Art implements java.io.Serializable{
     public String witchHutCauldronUI =
             "o--------------------------------------------o\n" +
             "|  SELECTION           :  BREWING            |\n" +
-            "| > Grape of Good Hope : 1                   |\n" +
+            "|   Grape of Good Hope : 1                   |\n" +
             "|   Chichen Pizza      : 2                   |\n" +
             "|   Gordian Nut        : 3                   |\n" +
             "|   Sistine Apple      : 4                   |\n" +

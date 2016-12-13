@@ -9,11 +9,13 @@ import SourceryText.Art;
 import SourceryText.GameObjects.DroppedItem;
 import SourceryText.GameObjects.Item;
 import SourceryText.GameObjects.Player;
+import SourceryText.GameObjects.TheSource.CauldronPuzzle;
 import SourceryText.Layer;
 import SourceryText.Rooms.Room;
 import SourceryText.SpecialText;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 
 /**
  * The initial view of the Source Pit.
@@ -94,6 +96,34 @@ public class WitchHut extends Room {
         item2.setEquipvals(2, 0, 0, 0, 0, 1, 0, "weapon");
         DroppedItem forgottenScarf = new DroppedItem(this, "You found a wool scarf!", item2, 29, 5);
         addObject(forgottenScarf);
+    }
+
+    @Override
+    protected void specialInspect(int x, int y, Player inspector) {
+        if (x == 13 && y == 6){
+            puzzler = new CauldronPuzzle(this, inspector);
+            puzzler.menuStartup();
+        }
+    }
+
+    private CauldronPuzzle puzzler = null;
+
+    @Override
+    public void fireKeyEvent(KeyEvent event) {
+        genericKeyEvent(event);
+        if (puzzler != null) {
+            switch (event.getKeyCode()){
+                case KeyEvent.VK_ENTER:
+                    puzzler.getInput("enter");
+                    break;
+                case KeyEvent.VK_UP:
+                    puzzler.getInput("up");
+                    break;
+                case KeyEvent.VK_DOWN:
+                    puzzler.getInput("down");
+                    break;
+            }
+        }
     }
 
     @Override

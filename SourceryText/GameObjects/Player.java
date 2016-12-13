@@ -778,7 +778,7 @@ public class Player extends Mortal implements java.io.Serializable {
             }
             if (room != null) { // Player is sometimes initialized for a bit before being placed into the room
                 inv.fireKeyEvent(event);
-                room.fireKeyEvent(event, getUsername());
+                room.fireKeyEvent(event);
                 hud.fireKeyEvent(event);
             }
         } else if (event.toString().contains("KEY_RELEASED")) {
