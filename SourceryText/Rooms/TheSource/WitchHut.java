@@ -101,7 +101,7 @@ public class WitchHut extends Room {
     @Override
     protected void specialInspect(int x, int y, Player inspector) {
         if (x == 13 && y == 6){
-            puzzler = new CauldronPuzzle(this, inspector);
+            puzzler.setOperator(inspector);
             puzzler.menuStartup();
         }
     }
@@ -128,15 +128,17 @@ public class WitchHut extends Room {
 
     @Override
     public void startup() {
+        puzzler = new CauldronPuzzle(this, null);
+
         Art arty = new Art();
         String[][] base = Art.strToArray(arty.witchHut);
         Layer lay1 = new Layer(base, "roomLayer");
 
         //Witches dialogue
         plantText(new FlavorText(27, 9, "One wardrobe for all of us?\n How can we live in conditions like this?", "Witch"));
-        plantText(new FlavorText(34, 6, "I want to cast a mean spell on you, but\n the spell book fell into the\n bookshelf and we can't seem to get it back.", "Witch"));
+        plantText(new FlavorText(34, 6, "I want to cast a mean spell on you, but\n the spell book fell into a\n bookshelf and we can't seem to get it back", "Witch"));
         plantText(new FlavorText(40, 6, "Who fills a whole bookshelf with history\n books? This place needs a tea cookbook\n MINIMUM.", "Witch"));
-        plantText(new FlavorText(42, 8, "I hate taking turns on the broomstick!\n It's just not right!", "Witch"));
+        plantText(new FlavorText(44, 8, "I hate taking turns on the broomstick!\n It's just not right!", "Witch"));
         plantText(new FlavorText(36, 10, "The witch over there says we're all clones\n of her, but I swear I'm the original one!\n....Says everyone.....", "Witch"));
 
         highlightFlavorText(lay1);
