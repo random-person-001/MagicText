@@ -977,6 +977,8 @@ public class Art implements java.io.Serializable{
             "|   CLEAR INGREDIENTS  :                     |\n" +
             "|   BREW POTION        :                     |\n" +
             "|   BACK                                     |\n" +
+            "o--------------------------------------------o\n" +
+            "|                                            |\n" +
             "o--------------------------------------------o\n";
 
     public String hiddenBunkerWater =
