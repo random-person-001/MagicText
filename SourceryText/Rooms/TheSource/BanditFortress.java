@@ -39,13 +39,12 @@ public class BanditFortress extends Room {
                 if (play.getX() >= 135) {
                     setNewRoom("HiddenBunker", play, 1, 128);
                 }
-                if (count == 0) {
-                    if (play.getX() == 109 && play.getY() == 10) {
-                        queueMessage(new Room.FlavorText("Most capital letters (ex: A, B, C..) out in\n the world have flavor text \n accessible through the 'F' key", ""));
-                    }
-                    count++;
+                if (play.getX() >= 87 && play.getY() <= 8) {
+                    setNewRoom("HallOfBanditKing", play, 9, 49);
                 }
-
+                if (play.getX() <= 87 && play.getY() <= 3) {
+                    setNewRoom("HallOfBanditKing", play, 72, 33);
+                }
             } catch (InterruptedException ignored) {
             }
         }
@@ -97,10 +96,17 @@ public class BanditFortress extends Room {
                 "Meanwhile, you can enjoy the beautiful\n fountain.  There's an inaccessible item\n in the middle of it.  Pretty, huh?"};
         plantText(new Room.FlavorText(51, 25, byFountain, "Talking Gargoyle"));
 
+        String[] bedrooms = {"1) No bouncing on the beds! (remember the\n Jordan incident, you don't want to end\n up like him)","2) Bedtime at 01:00, we all need our\n beauty sleep"};
+        plantText(new Room.FlavorText(90, 66, bedrooms, "\"BEDROOM RULES\""));
 
+        String[] kitchen = {"Kitchen staff: currently, more bandits have\n died from food sickness than battle. \n Shape up or see your head on a post."};
+        plantText(new Room.FlavorText(82, 49, kitchen, "Dirty Post-It note on floor"));
 
-        Color lightTreeGreen = new Color(27, 145, 17);
-        Color shadowTreeGreen = new Color(29, 120, 19);
+        String[] stables = {"Remember to let the horses eat sometimes.  \n If you want to starve things, go to  \n the torture room."};
+        plantText(new Room.FlavorText(113, 63, stables, "Horse Rules"));
+
+        Color lightTreeGreen = new Color(20, 60, 10);
+        Color shadowTreeGreen = new Color(29, 50, 19);
 
         Art arty = new Art();
         String[][] base = Art.strToArray(arty.banditFortress);
@@ -112,17 +118,21 @@ public class BanditFortress extends Room {
         lay1.findAndReplace(new SpecialText("h"), flammableTreeChars[1]);
         lay1.findAndReplace(new SpecialText("C"), new SpecialText(" ", null, new Color(43, 38, 33)));
 
-        lay1.findAndReplace(new SpecialText("m"), new SpecialText("m", new Color(40*2, 38*2, 36*2), new Color(60, 58, 56)));
-        lay1.findAndReplace(new SpecialText(":"), new SpecialText(":", new Color(40*2, 38*2, 36*2), new Color(60, 58, 56)));
-        lay1.findAndReplace(new SpecialText("#"), new SpecialText("#", new Color(110, 90, 80), new Color(50, 50, 30)));
-        lay1.findAndReplace(new SpecialText("w"), new SpecialText("#", new Color(80, 78, 56), new Color(60, 40, 48)));
+        lay1.findAndReplace(new SpecialText("m"), new SpecialText("m", new Color(40*2, 38*2, 36*2), new Color(60/2, 58/2, 56/2)));
+        lay1.findAndReplace(new SpecialText(":"), new SpecialText("#", new Color(40*2, 38*2, 36*2), new Color(60/2, 58/2, 56/2)));
+        lay1.findAndReplace(new SpecialText("#"), new SpecialText("M", new Color(110, 90, 80), new Color(50/2, 50/2, 30/2)));
+        lay1.findAndReplace(new SpecialText("w"), new SpecialText("W", new Color(80, 58, 56), new Color(60/2, 40/2, 48/2)));
+        lay1.findAndReplace(new SpecialText("o"), new SpecialText("X", new Color(120, 131, 90)));
+        lay1.findAndReplace(new SpecialText("b"), new SpecialText("b", new Color(30/2,10,100/2), new Color(70/2, 13/2, 120/2)));
+        lay1.findAndReplace(new SpecialText("/"), new SpecialText("/", new Color(80, 58, 56)));
+        lay1.findAndReplace(new SpecialText("-"), new SpecialText("-", new Color(80/2, 58/2, 56/2)));
 
         org.addLayer(lay1);
 
         initHitMeshes(lay1);
 
         addItems();
-        String[] solids = {":", "w", "m", "#", "/", "C"};
+        String[] solids = {":", "w", "m", "#", "/", "C", "o"};
         addToBaseHitMesh(base, solids);
 
         addObject(new WaterPool(this, lay1,"1", 1));
