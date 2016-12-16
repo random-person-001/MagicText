@@ -794,6 +794,9 @@ public class Player extends Mortal implements java.io.Serializable {
                 spacePressed = false;
             }
         }
+        if (frozen){
+            resetMovement();
+        }
     }
 
     /*public void testSpell1(){

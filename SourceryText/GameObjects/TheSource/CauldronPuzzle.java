@@ -6,6 +6,8 @@ import SourceryText.ImageOrg;
 import SourceryText.Layer;
 import SourceryText.Rooms.Room;
 
+import java.awt.*;
+
 /**
  * Created by Jared on 12-Dec-16.
  */
@@ -15,7 +17,7 @@ public class CauldronPuzzle {
     private ImageOrg org;
     private Player player;
 
-    private final int CORNER_X = 5;
+    private final int CORNER_X = 7;
     private final int CORNER_Y = 5;
 
     private Layer selectorLayer = new Layer(new String[1][1], "selector", CORNER_X + 2, CORNER_Y + 2, false, true, true);
@@ -31,6 +33,10 @@ public class CauldronPuzzle {
     private Layer taterLayer = new Layer(new String[1][17], "Mesopotato", CORNER_X + 7, CORNER_Y + 5, false, true, true);
     private Layer nutLayer   = new Layer(new String[1][17], "Gordian Nut", CORNER_X + 7, CORNER_Y + 6, false, true, true);
     private Layer dateLayer  = new Layer(new String[1][17], "Bering Date", CORNER_X + 7, CORNER_Y + 7, false, true, true);
+
+    private Layer[] layerStack = {grapeLayer, pizzaLayer, appleLayer, taterLayer, nutLayer, dateLayer};
+    private Layer pickedLayer;
+    private int pickedLoc;
 
     public CauldronPuzzle (Room creator, Player operator){
         container = creator;
@@ -104,20 +110,71 @@ public class CauldronPuzzle {
 
     private void enterCheck(){
         switch (selectorY){
+            case 2:
+                pickLayerAt(0);
+                break;
+            case 3:
+                pickLayerAt(1);
+                break;
+            case 4:
+                pickLayerAt(2);
+                break;
+            case 5:
+                pickLayerAt(3);
+                break;
+            case 6:
+                pickLayerAt(4);
+                break;
+            case 7:
+                pickLayerAt(5);
+                break;
             case 9:
                 org.removeLayer("selector");
                 org.removeLayer("menuLayer");
 
-                org.removeLayer(grapeLayer);
-                org.removeLayer(appleLayer);
-                org.removeLayer(pizzaLayer);
-                org.removeLayer(taterLayer);
-                org.removeLayer(nutLayer);
-                org.removeLayer(dateLayer);
+                grapeLayer = retrieveLayerFromOrg(grapeLayer);
+                appleLayer = retrieveLayerFromOrg(appleLayer);
+                pizzaLayer = retrieveLayerFromOrg(pizzaLayer);
+                taterLayer = retrieveLayerFromOrg(taterLayer);
+                nutLayer   = retrieveLayerFromOrg(nutLayer);
+                dateLayer  = retrieveLayerFromOrg(dateLayer);
                 
                 player.frozen = false;
                 inMenu = false;
                 break;
         }
+    }
+
+    private void pickLayerAt (int loc){
+        if (pickedLayer == null){
+            pickedLayer = org.getLayer(layerStack[loc].getName());
+            pickedLoc = loc;
+            pickedLayer.setAllFg(new Color(200, 200, 255));
+        } else {
+            Layer justPicked = org.getLayer(layerStack[loc].getName());
+            Layer temp = justPicked.createDuplicate(); //Layer picked just now cloned
+
+            justPicked.setPos(justPicked.getX(), pickedLayer.getY()); //Switch layer y positions
+            pickedLayer.setPos(pickedLayer.getX(), temp.getY());
+
+            layerStack[loc] = pickedLayer;
+            layerStack[pickedLoc] = temp;
+
+            justPicked.setAllFg(Color.WHITE);
+            pickedLayer.setAllFg(Color.WHITE);
+
+            pickedLayer = null;
+        }
+    }
+    
+    private Layer retrieveLayerFromOrg (Layer localLayer){
+        Layer outsideLayer = org.getLayer(localLayer.getName());
+        if (outsideLayer != null) {
+            org.removeLayer(localLayer);
+            return outsideLayer;
+        }
+        else
+            System.out.println("[Cauldron] Null layer retrieved for " + localLayer.getName());
+        return localLayer;
     }
 }
