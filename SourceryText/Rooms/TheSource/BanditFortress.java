@@ -1,10 +1,8 @@
 package SourceryText.Rooms.TheSource;
 
 import SourceryText.Art;
-import SourceryText.GameObjects.DroppedItem;
-import SourceryText.GameObjects.Item;
-import SourceryText.GameObjects.OneWayDoor;
-import SourceryText.GameObjects.Player;
+import SourceryText.GameObjects.*;
+import SourceryText.GameObjects.ForestOfFondant.FlammableTree;
 import SourceryText.GameObjects.TheSource.Bandit;
 import SourceryText.GameObjects.TheSource.RangedBandit;
 import SourceryText.GameObjects.TheSource.WeakTower;
@@ -99,12 +97,26 @@ public class BanditFortress extends Room {
                 "Meanwhile, you can enjoy the beautiful\n fountain.  There's an inaccessible item\n in the middle of it.  Pretty, huh?"};
         plantText(new Room.FlavorText(51, 25, byFountain, "Talking Gargoyle"));
 
+
+
+        Color lightTreeGreen = new Color(27, 145, 17);
+        Color shadowTreeGreen = new Color(29, 120, 19);
+
         Art arty = new Art();
         String[][] base = Art.strToArray(arty.banditFortress);
 
         Layer lay1 = new Layer(base, "Base");
         highlightFlavorText(lay1);
+        SpecialText[] flammableTreeChars = {new SpecialText(" ", null, lightTreeGreen), new SpecialText(" ", null, shadowTreeGreen)};
+        lay1.findAndReplace(new SpecialText("t"), flammableTreeChars[0]);
+        lay1.findAndReplace(new SpecialText("h"), flammableTreeChars[1]);
         lay1.findAndReplace(new SpecialText("C"), new SpecialText(" ", null, new Color(43, 38, 33)));
+
+        lay1.findAndReplace(new SpecialText("m"), new SpecialText("m", new Color(40*2, 38*2, 36*2), new Color(60, 58, 56)));
+        lay1.findAndReplace(new SpecialText(":"), new SpecialText(":", new Color(40*2, 38*2, 36*2), new Color(60, 58, 56)));
+        lay1.findAndReplace(new SpecialText("#"), new SpecialText("#", new Color(110, 90, 80), new Color(50, 50, 30)));
+        lay1.findAndReplace(new SpecialText("w"), new SpecialText("#", new Color(80, 78, 56), new Color(60, 40, 48)));
+
         org.addLayer(lay1);
 
         initHitMeshes(lay1);
@@ -112,6 +124,10 @@ public class BanditFortress extends Room {
         addItems();
         String[] solids = {":", "w", "m", "#", "/", "C"};
         addToBaseHitMesh(base, solids);
+
+        addObject(new WaterPool(this, lay1,"1", 1));
+        addObject(new WaterPool(this, lay1,"2", 2));
+        addObject(new FlammableTree(this, lay1,flammableTreeChars));
 
         genericRoomInitialize();
     }
