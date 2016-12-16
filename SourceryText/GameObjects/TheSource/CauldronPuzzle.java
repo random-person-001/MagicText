@@ -15,16 +15,22 @@ public class CauldronPuzzle {
     private ImageOrg org;
     private Player player;
 
-    private Layer selectorLayer = new Layer(new String[1][1], "selector", 2, 6, false, true, true);
+    private final int CORNER_X = 5;
+    private final int CORNER_Y = 5;
+
+    private Layer selectorLayer = new Layer(new String[1][1], "selector", CORNER_X + 2, CORNER_Y + 2, false, true, true);
     private Layer menuLayer;
 
-    private Layer entryLayer;
-
     private int selectorY = 5;
-    private String[] ingredientsAdded = new String[6];
-    private int addingPos = 0;
 
     private boolean inMenu = false;
+
+    private Layer grapeLayer = new Layer(new String[1][18], "Grape of Good Hope", CORNER_X + 7, CORNER_Y + 2, false, true, true);
+    private Layer pizzaLayer = new Layer(new String[1][17], "Chichen Pizza", CORNER_X + 7, CORNER_Y + 3, false, true, true);
+    private Layer appleLayer = new Layer(new String[1][17], "Sistine Apple", CORNER_X + 7, CORNER_Y + 4, false, true, true);
+    private Layer taterLayer = new Layer(new String[1][17], "Mesopotato", CORNER_X + 7, CORNER_Y + 5, false, true, true);
+    private Layer nutLayer   = new Layer(new String[1][17], "Gordian Nut", CORNER_X + 7, CORNER_Y + 6, false, true, true);
+    private Layer dateLayer  = new Layer(new String[1][17], "Bering Date", CORNER_X + 7, CORNER_Y + 7, false, true, true);
 
     public CauldronPuzzle (Room creator, Player operator){
         container = creator;
@@ -32,10 +38,14 @@ public class CauldronPuzzle {
         player = operator;
 
         Art artImport = new Art();
-        menuLayer = new Layer(Art.strToArray(artImport.witchHutCauldronUI), "menuLayer", 0, 4, false, true, true);
+        menuLayer = new Layer(Art.strToArray(artImport.witchHutCauldronUI), "menuLayer", CORNER_X, CORNER_Y, false, true, true);
 
-        entryLayer = new Layer(new String[6][18], "entryLayer", 27, 6, false, true, true);
-        entryLayer.clear();
+        layerInitName(grapeLayer);
+        layerInitName(pizzaLayer);
+        layerInitName(taterLayer);
+        layerInitName(appleLayer);
+        layerInitName(nutLayer);
+        layerInitName(dateLayer);
 
         selectorLayer.setStr(0,0,">");
     }
@@ -48,10 +58,26 @@ public class CauldronPuzzle {
         if (!inMenu) {
             org.addLayer(menuLayer);
             org.addLayer(selectorLayer);
-            org.addLayer(entryLayer);
+
+            org.addLayer(grapeLayer);
+            org.addLayer(appleLayer);
+            org.addLayer(pizzaLayer);
+            org.addLayer(taterLayer);
+            org.addLayer(nutLayer);
+            org.addLayer(dateLayer);
 
             player.frozen = true;
             inMenu = true;
+        }
+    }
+
+    private void layerInitName(Layer layer){
+        String writing = layer.getName();
+        char[] writingElements = writing.toCharArray();
+        int charX = 0;
+        for (char c : writingElements){
+            layer.setStr(0, charX, String.valueOf(c));
+            charX++;
         }
     }
 
@@ -63,13 +89,13 @@ public class CauldronPuzzle {
                     break;
                 case "up":
                     selectorY--;
-                    if (selectorY < 6) selectorY = 14;
-                    org.getLayer("selector").setPos(2, selectorY);
+                    if (selectorY < 2) selectorY = 9;
+                    org.getLayer("selector").setPos(CORNER_X + 2, CORNER_Y + selectorY);
                     break;
                 case "down":
                     selectorY++;
-                    if (selectorY > 14) selectorY = 6;
-                    org.getLayer("selector").setPos(2, selectorY);
+                    if (selectorY > 9) selectorY = 2;
+                    org.getLayer("selector").setPos(CORNER_X + 2, CORNER_Y + selectorY);
                     break;
             }
             //System.out.printf("[Cauldron] SelectorY: %1$d\n", selectorY);
@@ -78,53 +104,20 @@ public class CauldronPuzzle {
 
     private void enterCheck(){
         switch (selectorY){
-            case 6:
-                addIngredient("Grape of Good Hope");
-                break;
-            case 7:
-                addIngredient("Chichen Pizza");
-                break;
-            case 8:
-                addIngredient("Gordian Nut");
-                break;
             case 9:
-                addIngredient("Sistine Apple");
-                break;
-            case 10:
-                addIngredient("Mesopotato");
-                break;
-            case 11:
-                addIngredient("Bering Date");
-                break;
-            case 12:
-                addingPos = 0;
-                ingredientsAdded = new String[6];
-                org.clearLayer("entryLayer");
-                break;
-            case 14:
-                Layer grabEntries = org.getLayer("entryLayer");
-                if (grabEntries != null) entryLayer = grabEntries;
                 org.removeLayer("selector");
                 org.removeLayer("menuLayer");
-                org.removeLayer("entryLayer");
+
+                org.removeLayer(grapeLayer);
+                org.removeLayer(appleLayer);
+                org.removeLayer(pizzaLayer);
+                org.removeLayer(taterLayer);
+                org.removeLayer(nutLayer);
+                org.removeLayer(dateLayer);
+                
                 player.frozen = false;
                 inMenu = false;
                 break;
-        }
-    }
-
-    private void addIngredient(String name){
-        if (addingPos < 6) {
-            ingredientsAdded[addingPos] = name; //Add entry to data
-
-            char[] nameElements = name.toCharArray();
-            int charX = 0;
-            for (char c : nameElements) { //Display ingredient in list
-                org.editLayer(String.valueOf(c), "entryLayer", addingPos, charX);
-                charX++;
-            }
-
-            addingPos++; //Add position counter for next ingredient
         }
     }
 }
