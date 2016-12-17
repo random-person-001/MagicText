@@ -577,6 +577,13 @@ public class Room implements java.io.Serializable {
     }
 
     /**
+     * Clears out all 'planted' text
+     */
+    protected void clearPlantedText() {
+        flavorTexts.clear();
+    }
+
+    /**
      * Mainly used by the player to check for nearby planted text
      */
     private void queryForText(int testX, int testY, String username) {
@@ -586,8 +593,8 @@ public class Room implements java.io.Serializable {
     }
 
     public void inspectAt(int testX, int testY, Player observer) {
-        queryForText(testX, testY, observer.getUsername());
         specialInspect(testX, testY, observer);
+        queryForText(testX, testY, observer.getUsername());
         for (GameObject object : inspectables){
             if (object.getX() == testX && object.getY() == testY){
                 object.onInspect(observer);

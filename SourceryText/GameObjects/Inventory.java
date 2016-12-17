@@ -204,7 +204,7 @@ class Inventory implements java.io.Serializable {
      *
      * @param invSection use "items", "spells", "equip" (It isn't case-sensitive, which should mitigate some human error)
      */
-    Item getItem(String name, String invSection) {
+    public Item getItem(String name, String invSection) {
         ArrayList<Item> list;
         switch (invSection.toLowerCase()) {
             case "items":
@@ -225,6 +225,20 @@ class Inventory implements java.io.Serializable {
             }
         }
         return null;
+    }
+
+    void removeItem (String name, String type){
+        switch (type){
+            case "items":
+                items.remove(getItem(name, type));
+                break;
+            case "spells":
+                spells.remove(getItem(name, type));
+                break;
+            case "equip":
+                equip.remove(getItem(name, type));
+                break;
+        }
     }
 
     /**
@@ -250,7 +264,7 @@ class Inventory implements java.io.Serializable {
         Item item6 = new Item("Evil Powers", "Dark Spell;\n\nYou're not sure what it is\n exactly, but it has the\n word 'power' in its name,\n so it must be good,\n right?", "EvlPw", "spell", true);
         item6.dmgSpellDefine(1, 8, 2, "dark", new SpecialText("*", new Color(155, 55, 155)), new SpecialText("*", new Color(255, 55, 255)), false, 0);
         spells.add(item6);
-        Item item7 = new Item("Witch Scarf", "A scarf imbued with witch\n magic, granting the user\n increased dark and ice\n magic power\n\nIt smells like flowers.", "equipment");
+        Item item7 = new Item("Bewitched Scarf", "A scarf imbued with witch\n magic, granting the user\n increased dark and ice\n magic power\n\nIt smells like flowers.", "equipment");
         item7.setEquipvals(1, 3, 0, 0, 0, 2, 2, "weapon");
         equip.add(item7);
         Item potion = new Item("MagicTaterChip", "A singular potato chip made\n with magic potatoes.\n\nEating this chip will\n restore hp over time\n (4hp/s + 10 overheal!)", "item");
