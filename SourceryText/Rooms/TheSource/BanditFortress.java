@@ -39,8 +39,8 @@ public class BanditFortress extends Room {
                 if (play.getX() >= 135) {
                     setNewRoom("HiddenBunker", play, 1, 128);
                 }
-                if (play.getX() >= 87 && play.getY() <= 8) {
-                    setNewRoom("HallOfBanditKing", play, 9, 49);
+                if (play.getX() >= 87 && play.getY() <= 7) {
+                    setNewRoom("HallOfBanditKing", play, 8, 50);
                 }
                 if (play.getX() <= 87 && play.getY() <= 3) {
                     setNewRoom("HallOfBanditKing", play, 72, 33);

@@ -688,20 +688,20 @@ public class Art implements java.io.Serializable{
     public String banditFortress =
                     "                                                                                                                                        \n" +
                     "                                                                                                                                        \n" +
-                    "                                        :                     :                                                                         \n" +
-                    "                                        :                     :                                                                         \n" +
-                    "                                        :                     :                                                                         \n" +
-                    "                                         :                   :                                                                          \n" +
-                    "                                          ::::::       ::::::                                                                           \n" +
-                    "                                                :     :                                 /   /                                           \n" +
-                    "                                                :     :CCCCCCCCCCCCCCCCCCCC            /---/                                            \n" +
-                    "                                                :     :CCCCCCCCCCCCCCCCCtttCCC        /---/                                             \n" +
-                    "                                         :::::::::   :::CCCCCCCCCCCCCChttttttCCC     /---/                                              \n" +
-                    "                                httt   ::                     CCCCCCCChttttttCC     /---/                                               \n" +
-                    "                                hhhh  :                         CCCCCCChhhhCCC     /---/                                                \n" +
-                    "                                     :                           CCCCCCCCCCC      /---/                                                 \n" +
-                    "                                    :           :::::::           CCCCCCCCC::::::/---/:::::                                             \n" +
-                    "                                   :         :::1111111:::         CCCCCCCC:               :                                            \n" +
+                    "                                                 :   :                                                                                  \n" +
+                    "                                                c:   :c                                                                                 \n" +
+                    "                                             CCCC:   :CCCC                                                                              \n" +
+                    "                                            CCCCC:   :CCCCCC                                                                            \n" +
+                    "                                           CCCCC:     :CCCCCCC                                                                          \n" +
+                    "                                         CCCCCCC:     :CCCCCCCCCCCC                     /   /                                           \n" +
+                    "                                       CCCCCCCCC:     :CCCCCCCCCCCCCCCCCCCC            /---/                                            \n" +
+                    "                                     CCCCCCCCCCC:     :CCCCCCCCCCCCCCCCCtttCCC        /---/                                             \n" +
+                    "                                  CCCCCCC:::::::::   :::CCCCCCCCCCCCCChttttttCCC     /---/                                              \n" +
+                    "                                htttCCC::                     CCCCCCCChttttttCC     /---/                                               \n" +
+                    "                                hhhhCC:                         CCCCCCChhhhCCC     /---/                                                \n" +
+                    "                                CCCCC:                           CCCCCCCCCCC      /---/                                                 \n" +
+                    "                                 CCC:           :::::::           CCCCCCCCC::::::/---/:::::                                             \n" +
+                    "                                  C:         :::1111111:::         CCCCCCCC:               :                                            \n" +
                     "                           ttt    :       :::1112222222111:::       :::::::                :                                            \n" +
                     "                          htttt   :      ::11222222222222211::                             :                                            \n" +
                     "                           hhh    :     ::1122222221222222211::     :::::::::::::::::::::::                                             \n" +

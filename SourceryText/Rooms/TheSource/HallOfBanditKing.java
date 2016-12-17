@@ -63,6 +63,12 @@ public class HallOfBanditKing extends Room {
                     }
                     beehiveReaction = true;
                 }
+                if (play.getY() >= 9 && play.getY() <= 12){
+                    setNewRoom("BanditFortress", play,8,89);
+                }
+                if (play.getY() >= 73){
+                    setNewRoom("BanditFortress", play,4,51);
+                }
             } catch (InterruptedException ignored) {}
         }
         return exitCode;
