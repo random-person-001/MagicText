@@ -379,6 +379,10 @@ public class Player extends Mortal implements java.io.Serializable {
         return inv;
     }
 
+    public Item getItem(String itemName, String invSection){
+        return inv.getItem(itemName,invSection);
+    }
+
     /**
      * Writes a .sav file (of the serialized Player) to a user-defined directory
      *
@@ -736,6 +740,10 @@ public class Player extends Mortal implements java.io.Serializable {
                 return null;
         }
         return inv.removeRandomItem(type);
+    }
+
+    public void removeItem(String itemName, String itemType){
+        inv.removeItem(itemName, itemType);
     }
 
     String getSecondarySpell() {

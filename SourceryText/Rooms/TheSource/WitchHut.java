@@ -99,13 +99,37 @@ public class WitchHut extends Room {
         item2.setEquipvals(2, 0, 0, 0, 0, 1, 0, "weapon");
         DroppedItem forgottenScarf = new DroppedItem(this, "You found a wool scarf!", item2, 29, 5);
         addObject(forgottenScarf);
+
+        Item item7 = new Item("Bewitched Scarf", "A scarf imbued with witch\n magic, granting the user\n increased dark and ice\n magic power\n\nIt smells like flowers.", "equipment");
+        item7.setEquipvals(1, 3, 0, 0, 0, 2, 2, "weapon");
+        DroppedItem rewardScarf = new DroppedItem(this, "You found the Bewitched Scarf!", item7, 46, 10);
+        addObject(rewardScarf);
     }
+
+    private boolean cloneBusterUsed = false;
 
     @Override
     protected void specialInspect(int x, int y, Player inspector) {
-        if (x == 13 && y == 6){
+        if (x == 14 && y == 6){
             puzzler.setOperator(inspector);
             puzzler.menuStartup();
+        }
+        if (x == 7 && y == 8){
+            if (inspector.getItem("Clone Buster","items") != null) {
+                clearPlantedText();
+                int[][] witchLocs = {{27, 9}, {34, 6}, {40, 6}, {44, 8}, {36, 10}};
+                for (int[] coordPair : witchLocs) {
+                    org.editLayer(new SpecialText("_", new Color(33, 18, 5), new Color(38, 19, 6)), "roomLayer", coordPair[1], coordPair[0]);
+                    removeFromBaseHitMesh(coordPair[0], coordPair[1]);
+                }
+                String[] witchThankYouWords = {"*Gasp* You made the Clone Buster!\n Let's see if it works....", "It does! They're gone!\n Everything is normal again!\nThank you so much!"};
+                queueMessage(new FlavorText(witchThankYouWords[0], "Witch"));
+                queueMessage(new FlavorText(witchThankYouWords[1], "Witch"));
+                inspector.removeItem("Clone Buster", "items");
+                cloneBusterUsed = true;
+            } else if (cloneBusterUsed){
+                queueMessage(new FlavorText(7,8,"I can't thank you enough for\n making that spell!","Witch"));
+            }
         }
     }
 
@@ -138,9 +162,9 @@ public class WitchHut extends Room {
         Layer lay1 = new Layer(base, "roomLayer");
 
         //Witches dialogue
-        String[] mainWitchDialogue = {"Oh, finally!\n I need you pretty badly.","You see, I cloned myself.\n Then the clones decided to clone\n themselves.",
-                "Now there's too many for this little\n house of mine.","Now there is a spell you can brew\n in that cauldron over there, but I\n can't do it myself",
-                "You see, because I casted the clone spell,\n I can't undo it without undoing me!\n I need you to undo the spell","Please consult my recipes on the\nbookshelf on the wall."};
+        String[] mainWitchDialogue = {"Oh, finally! Someone else!\n I need you pretty badly.","You see, I cloned myself.\n Then the clones decided to clone\n themselves.",
+                "Now there's too many for this little\n house of mine.","However there is a spell you can brew\n in that cauldron over there, but I\n can't do it myself.",
+                "You see, because I casted the clone spell,\n I can't undo it without undoing me!\n So I need you to undo the spell","Please consult my recipes on the\n bookshelf on the wall."};
         plantText(new FlavorText(7, 8, mainWitchDialogue, "Witch"));
 
         plantText(new FlavorText(27, 9, "One wardrobe for all of us?\n How can we live in conditions like this?", "Witch"));
