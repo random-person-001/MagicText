@@ -36,7 +36,7 @@ public class WitchHut extends Room {
 
     public WitchHut(Player player) {
         super(player);
-        strRoomName = "SourcePit";
+        strRoomName = "WitchHut";
     }
 
     int fireplaceFireState = 0;
