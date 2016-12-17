@@ -135,6 +135,11 @@ public class WitchHut extends Room {
         Layer lay1 = new Layer(base, "roomLayer");
 
         //Witches dialogue
+        String[] mainWitchDialogue = {"Oh, finally!\n I need you pretty badly.","You see, I cloned myself.\n Then the clones decided to clone\n themselves.",
+                "Now there's too many for this little\n house of mine.","Now there is a spell you can brew\n in that cauldron over there, but I\n can't do it myself",
+                "You see, because I casted the clone spell,\n I can't undo it without undoing me!\n I need you to undo the spell","Please consult my recipes on the\nbookshelf on the wall."};
+        plantText(new FlavorText(7, 8, mainWitchDialogue, "Witch"));
+
         plantText(new FlavorText(27, 9, "One wardrobe for all of us?\n How can we live in conditions like this?", "Witch"));
         plantText(new FlavorText(34, 6, "I want to cast a mean spell on you, but\n the spell book fell into a\n bookshelf and we can't seem to get it back", "Witch"));
         plantText(new FlavorText(40, 6, "Who fills a whole bookshelf with history\n books? This place needs a tea cookbook\n MINIMUM.", "Witch"));
