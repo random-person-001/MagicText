@@ -48,38 +48,42 @@ public class WitchHut extends Room {
         while (exitCode.equals("")) {
             try {
                 Thread.sleep(200);
-                Layer roomLayer = org.getLayer("roomLayer");
-                if (roomLayer != null) {
-                    Color bubbleColor = new Color(50, 125, 0);
-                    Color stewColor = new Color(25, 75, 0);
-                    roomLayer.findAndReplace(new SpecialText("O", bubbleColor, stewColor), new SpecialText(" ", bubbleColor, stewColor));
-                    roomLayer.findAndReplace(new SpecialText("o", bubbleColor, stewColor), new SpecialText("O", bubbleColor, stewColor));
-                    roomLayer.findAndReplace(new SpecialText(".", bubbleColor, stewColor), new SpecialText("o", bubbleColor, stewColor));
-                    roomLayer.findAndReplace(new SpecialText(" ", bubbleColor, stewColor), new SpecialText(".", bubbleColor, stewColor), 15);
+                if (play.getY() == 13){
+                    setNewRoom("SnowyPeak", play, 7, 114);
+                } else {
+                    Layer roomLayer = org.getLayer("roomLayer");
+                    if (roomLayer != null) {
+                        Color bubbleColor = new Color(50, 125, 0);
+                        Color stewColor = new Color(25, 75, 0);
+                        roomLayer.findAndReplace(new SpecialText("O", bubbleColor, stewColor), new SpecialText(" ", bubbleColor, stewColor));
+                        roomLayer.findAndReplace(new SpecialText("o", bubbleColor, stewColor), new SpecialText("O", bubbleColor, stewColor));
+                        roomLayer.findAndReplace(new SpecialText(".", bubbleColor, stewColor), new SpecialText("o", bubbleColor, stewColor));
+                        roomLayer.findAndReplace(new SpecialText(" ", bubbleColor, stewColor), new SpecialText(".", bubbleColor, stewColor), 15);
 
-                    Color fireBkg = new Color(120, 25, 0);
-                    switch (fireplaceFireState) {
-                        case 0:
-                            roomLayer.findAndReplace(new SpecialText("w", new Color(150, 40, 0), fireBkg), new SpecialText("w", new Color(165, 70, 0), fireBkg));
-                            break;
-                        case 1:
-                            roomLayer.findAndReplace(new SpecialText("w", new Color(165, 70, 0), fireBkg), new SpecialText("W", new Color(180, 100, 0), fireBkg));
-                            break;
-                        case 2:
-                            roomLayer.findAndReplace(new SpecialText("W", new Color(180, 100, 0), fireBkg), new SpecialText("W", new Color(195, 130, 0), fireBkg));
-                            break;
-                        case 3:
-                            roomLayer.findAndReplace(new SpecialText("W", new Color(195, 130, 0), fireBkg), new SpecialText("W", new Color(180, 100, 0), fireBkg));
-                            break;
-                        case 4:
-                            roomLayer.findAndReplace(new SpecialText("W", new Color(180, 100, 0), fireBkg), new SpecialText("w", new Color(165, 70, 0), fireBkg));
-                            break;
-                        case 5:
-                            roomLayer.findAndReplace(new SpecialText("w", new Color(165, 70, 0), fireBkg), new SpecialText("w", new Color(150, 40, 0), fireBkg));
-                            break;
+                        Color fireBkg = new Color(120, 25, 0);
+                        switch (fireplaceFireState) {
+                            case 0:
+                                roomLayer.findAndReplace(new SpecialText("w", new Color(150, 40, 0), fireBkg), new SpecialText("w", new Color(165, 70, 0), fireBkg));
+                                break;
+                            case 1:
+                                roomLayer.findAndReplace(new SpecialText("w", new Color(165, 70, 0), fireBkg), new SpecialText("W", new Color(180, 100, 0), fireBkg));
+                                break;
+                            case 2:
+                                roomLayer.findAndReplace(new SpecialText("W", new Color(180, 100, 0), fireBkg), new SpecialText("W", new Color(195, 130, 0), fireBkg));
+                                break;
+                            case 3:
+                                roomLayer.findAndReplace(new SpecialText("W", new Color(195, 130, 0), fireBkg), new SpecialText("W", new Color(180, 100, 0), fireBkg));
+                                break;
+                            case 4:
+                                roomLayer.findAndReplace(new SpecialText("W", new Color(180, 100, 0), fireBkg), new SpecialText("w", new Color(165, 70, 0), fireBkg));
+                                break;
+                            case 5:
+                                roomLayer.findAndReplace(new SpecialText("w", new Color(165, 70, 0), fireBkg), new SpecialText("w", new Color(150, 40, 0), fireBkg));
+                                break;
+                        }
+                        fireplaceFireState++;
+                        if (fireplaceFireState > 5) fireplaceFireState = 0;
                     }
-                    fireplaceFireState++;
-                    if (fireplaceFireState > 5) fireplaceFireState = 0;
                 }
             } catch (InterruptedException ignored) {
             }
@@ -97,7 +101,7 @@ public class WitchHut extends Room {
         DroppedItem forgottenScarf = new DroppedItem(this, "You found a wool scarf!", item2, 29, 5);
         addObject(forgottenScarf);
 
-        Item item7 = new Item("Bewitched Scarf", "A scarf imbued with witch\n magic, granting the user\n increased dark and ice\n magic power\n\nIt smells like flowers.", "equipment");
+        Item item7 = new Item("BewitchedScarf", "A scarf imbued with witch\n magic, granting the user\n increased dark and ice\n magic power\n\nIt smells like flowers.", "equipment");
         item7.setEquipvals(1, 3, 0, 0, 0, 2, 2, "weapon");
         DroppedItem rewardScarf = new DroppedItem(this, "You found the Bewitched Scarf!", item7, 46, 10);
         addObject(rewardScarf);

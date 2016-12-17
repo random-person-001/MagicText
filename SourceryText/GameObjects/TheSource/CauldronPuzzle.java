@@ -32,13 +32,13 @@ public class CauldronPuzzle {
     private int numberOfFailures = 0;
 
     private Layer grapeLayer = new Layer(new String[1][18], "Grape of Good Hope", CORNER_X + 7, CORNER_Y + 2, false, true, true);
-    private Layer pizzaLayer = new Layer(new String[1][17], "Chichen Pizza", CORNER_X + 7, CORNER_Y + 3, false, true, true);
+    private Layer nutLayer   = new Layer(new String[1][17], "Gordian Nut", CORNER_X + 7, CORNER_Y + 3, false, true, true);
     private Layer appleLayer = new Layer(new String[1][17], "Sistine Apple", CORNER_X + 7, CORNER_Y + 4, false, true, true);
     private Layer taterLayer = new Layer(new String[1][17], "Mesopotato", CORNER_X + 7, CORNER_Y + 5, false, true, true);
-    private Layer nutLayer   = new Layer(new String[1][17], "Gordian Nut", CORNER_X + 7, CORNER_Y + 6, false, true, true);
-    private Layer dateLayer  = new Layer(new String[1][17], "Bering Date", CORNER_X + 7, CORNER_Y + 7, false, true, true);
+    private Layer dateLayer  = new Layer(new String[1][17], "Bering Date", CORNER_X + 7, CORNER_Y + 6, false, true, true);
+    private Layer pizzaLayer = new Layer(new String[1][17], "Chichen Pizza", CORNER_X + 7, CORNER_Y + 7, false, true, true);
 
-    private Layer[] layerStack = {grapeLayer, pizzaLayer, appleLayer, taterLayer, nutLayer, dateLayer};
+    private Layer[] layerStack = {grapeLayer, nutLayer, appleLayer, taterLayer, dateLayer, pizzaLayer};
     private Layer pickedLayer;
     private int pickedLoc;
 
