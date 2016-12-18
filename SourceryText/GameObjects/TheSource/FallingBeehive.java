@@ -40,7 +40,7 @@ public class FallingBeehive extends GameObject {
     private float speed = 0.03f;
     private float realY;
 
-    private int beesInside = 20;
+    public int beesInside = 20;
 
     public void update(){
         if (y < 59) {
@@ -53,6 +53,7 @@ public class FallingBeehive extends GameObject {
                 speed += acceleration;
 
             y = (int) realY; // 'y' is just an impostor
+            if (y >= 60) y = 59;
 
             Layer iconLayer = org.getLayer(layerName);
             if (iconLayer != null) iconLayer.setPos(x, y);

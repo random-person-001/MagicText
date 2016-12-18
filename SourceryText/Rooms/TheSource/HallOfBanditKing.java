@@ -8,6 +8,7 @@ package SourceryText.Rooms.TheSource;
 import SourceryText.Art;
 import SourceryText.GameObjects.Player;
 import SourceryText.GameObjects.TheSource.Bandit;
+import SourceryText.GameObjects.TheSource.BanditKing;
 import SourceryText.GameObjects.TheSource.FallingBeehive;
 import SourceryText.Layer;
 import SourceryText.Rooms.Room;
@@ -41,12 +42,15 @@ public class HallOfBanditKing extends Room {
     private boolean beehiveKnockedDown = false;
     private boolean beehiveReaction = false;
 
+    private boolean fightStarting = true;
+    private int kingIntroSeq = 0;
+
     @Override
     protected String loop(Player play) {
         while (exitCode.equals("")) {
             try {
                 Thread.sleep(200);
-                if (getMortalCountOf("Bandit") == 0 && !kingLastWordsSpoken && play.getY() >= 54 && play.getY() <= 66){
+                if (getMortalCountOf("BanditKing") == 0 && !kingLastWordsSpoken && play.getY() >= 54 && play.getY() <= 66){
                     for (Player winner : players){
                         queueMessage(new FlavorText("*Cough* *Cough*\nNo... I don't want to lose to\n a wimp like you....","Bandit King").setViewerUsername(winner.getUsername()));
                         queueMessage(new FlavorText("You don't deserve the throne...\nI DO!\nYou can't take it from me!","Bandit King").setViewerUsername(winner.getUsername()));
@@ -56,12 +60,28 @@ public class HallOfBanditKing extends Room {
                         queueMessage(new FlavorText("Just uhh, *cough* get out of here.\n Go away.","Bandit King").setViewerUsername(winner.getUsername()));
                     }
                     kingLastWordsSpoken = true;
+                    org.editLayer(" ", "RoomLayer", 53, 37);
+                    removeFromBaseHitMesh(37, 53);
                 }
                 if (getObjectsAt(37, 59).size() > 0 && beehiveKnockedDown && !beehiveReaction){
                     for (Player jerk : players){
                         queueMessage(new FlavorText("WHAT?!?! Bees!\nAaaaaaaaaaaa!\n Why do I have to be allergic to them?!?!?","Bandit King").setViewerUsername(jerk.getUsername()));
                     }
                     beehiveReaction = true;
+                }
+                if ((play.getY() >= 54 && play.getY() <= 66) || beehiveReaction){
+                    fightStarting = false;
+                }
+                if (fightStarting && play.getY() <= 71 && play.getY() > 69 && kingIntroSeq == 0){
+                    queueMessage(new FlavorText("Carlson! Is that you again?!?!\n For the last time, I do NOT want\n another update on that cat in the tree!","Bandit King").setViewerUsername(play.getUsername()));
+                    queueMessage(new FlavorText("This better be important!","Bandit King").setViewerUsername(play.getUsername()));
+                    kingIntroSeq++;
+                }
+                if (fightStarting && play.getY() > 67 && play.getY() <= 69 && kingIntroSeq == 1){
+                    queueMessage(new FlavorText("You're not Carlson! I didn't summon you!\n Who even are you? How did you get here?","Bandit King").setViewerUsername(play.getUsername()));
+                    queueMessage(new FlavorText("I can't let just some nobody walk\n here unannounced!\nPrepare to die!!!","Bandit King").setViewerUsername(play.getUsername()));
+                    getMortalListOf("BanditKing")[0].followingDist = 30;
+                    kingIntroSeq++;
                 }
                 if (play.getY() >= 9 && play.getY() <= 12){
                     setNewRoom("BanditFortress", play,8,89);
@@ -79,8 +99,12 @@ public class HallOfBanditKing extends Room {
      */
     @Override
     public void addItems() {
+        /*
         Bandit notBanditKing = new Bandit(org, this, 37, 55);
         addMortal(notBanditKing);
+        */
+        BanditKing theBanditKing = new BanditKing(this, 37, 55);
+        addMortal(theBanditKing);
     }
 
     @Override
@@ -115,7 +139,12 @@ public class HallOfBanditKing extends Room {
         String[][] base = Art.strToArray(arty.banditKingHall);
         Layer lay1 = new Layer(base, "RoomLayer");
         Art coloring = new Art();
-        lay1.influenceAll(coloring.mountainPallette1);
+
+        lay1.findAndReplace(new SpecialText(":"), new SpecialText(":", null, new Color(51, 43, 38)));
+        lay1.findAndReplace(new SpecialText(";"), new SpecialText(";", null, new Color(51, 43, 38)));
+        lay1.findAndReplace(new SpecialText("^"), new SpecialText("^", null, new Color(51, 43, 38)));
+
+        lay1.setAllFg(coloring.mountainPallette1);
         lay1.findAndReplace(new SpecialText("#", coloring.mountainPallette1), new SpecialText("#", new Color(175, 175, 175), new Color(25, 25, 25)));
         lay1.findAndReplace(new SpecialText("o", coloring.mountainPallette1), new SpecialText("o", coloring.mountainPallette2));
         lay1.findAndReplace(new SpecialText("O", coloring.mountainPallette1), new SpecialText("O", coloring.mountainPallette2));
@@ -126,7 +155,7 @@ public class HallOfBanditKing extends Room {
         org.addLayer(lay1);
 
         initHitMeshes(lay1);
-        String[] solids = {";", ":", "^", "O", "o", "O", "#","_","\\","/","|","8"};
+        String[] solids = {";", ":", "^", "O", "o", "O", "#","_","\\","/","|","8","-"};
         addToBaseHitMesh(base, solids);
 
         addItems();

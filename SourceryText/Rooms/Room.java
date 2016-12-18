@@ -243,6 +243,26 @@ public class Room implements java.io.Serializable {
     }
 
     /**
+     * A convenience method for getting all mortals of a specific name
+     *
+     * @param className the String by which the class identifies (GameObject.strClass)
+     * @return how many there are in the room's list
+     */
+    public Mortal[] getMortalListOf(String className) {
+        ArrayList<Mortal> output = new ArrayList<>();
+        for (Mortal o : enemies) {
+            if (o.strClass.equals(className)) {
+                output.add(o);
+            }
+        }
+        Mortal[] mortalOutput = new Mortal[output.size()];
+        for (int ii = 0; ii < output.size(); ii++){
+            mortalOutput[ii] = output.get(ii);
+        }
+        return mortalOutput;
+    }
+
+    /**
      * Colors all SpecialTexts in a layer that corresponds to FlavorText in room an bright aqua blue
      */
 

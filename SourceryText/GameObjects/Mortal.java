@@ -297,7 +297,7 @@ public class Mortal extends GameObject implements java.io.Serializable {
     protected int rangedPreShotDelay;
     protected int rangedPostShotDelay;
     protected int attackingRange;
-    protected int followingDist;
+    public int followingDist;
     protected boolean isRanged = false;
 
     protected int rangedCounter;
