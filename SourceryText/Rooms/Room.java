@@ -947,7 +947,7 @@ public class Room implements java.io.Serializable {
                 if (messageQueue.size() >= 1) {
                     messageQueue.get(0).output();
                 }
-                if (isQuestion && choosingYes)
+                if (isQuestion && choosingYes && playerName != null)
                     doQuestionResponse(questionID, playerName);
             }
             if (changingAnswer) {

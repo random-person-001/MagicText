@@ -21,6 +21,7 @@ public class BanditKing extends Mortal {
     public BanditKing(Room theRoom, int startX, int startY) {
         super.strClass = "BanditKing";
 
+
         room = theRoom;
         org = room.org;
         x = startX;
