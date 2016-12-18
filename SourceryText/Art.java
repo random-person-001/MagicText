@@ -26,9 +26,14 @@ public class Art implements java.io.Serializable{
 
     public Color mountainPallette1 = new Color(255, 210, 179);
     public Color mountainPallette2 = new Color(230, 230, 230);
+    public Color mountainPallette3 = new Color(130, 130, 100);
 
     public Color mtnPeakPallette1 = new Color(180, 220, 255);
     public Color mtnPeakPallette2 = new Color(0, 180, 255);
+
+    public Color wallBackground = new Color(60/2, 58/2, 56/2);
+    public Color wallForeground = new Color(40*3, 38*3, 36*3);
+    public SpecialText poundWall = new SpecialText("#", wallForeground, wallBackground);
 
     public Color forestPallete1 = new Color(80, 120, 40);
     public Color forestPallete2 = new Color(100, 240, 50);
@@ -696,26 +701,26 @@ public class Art implements java.io.Serializable{
                     "ss   sssssssrrr                       gggggggggg:     :gggggggggggggggggg          rrrss/---/s            ss                            \n" +
                     " sssssssssrrr                     gggggggggggggg:     :gggggggggggggggggggggggg      rr/---/ssss         ss              s              \n" +
                     "  ssssssrrr                 ggggggggggggggggggg::     ::ggggggggggggggggtttggggg      /---/ssssssss    ssss             ss              \n" +
-                    "  sssssrr                gggggggggggggggggggggg:::   :::gggggggggggggghttttttggg     /---/rrrsssssssssssss             ss               \n" +
-                    " ssssrrr              gggggggggghtttgggggggg               ggggggggggghttttttgg     /---/   rrrrsssssssssssss        sss       s       s\n" +
-                    " sssrr               ggggggggggghhhhgggg                       gggggggghhhhggg     /---/       rrrrrrrssssssssssssssssss      ss      s \n" +
+                    "  sssssrr                ggggggggggggggggggggggg::   ::ggggggggggggggghttttttggg     /---/rrrsssssssssssss             ss               \n" +
+                    " ssssrrr              gggggggggghtttgggggggg               ggggggggggghttttttgg     /---/   rrrrsssssssssssss        sss       s        \n" +
+                    " sssrr               ggggggggggghhhhgggg                       gggggggghhhhggg     /---/       rrrrrrrssssssssssssssssss      ss        \n" +
                     " ssrr              ggggtttgggggggggggg                           ggggggggggg      /---/              rrrrrrssssssssssssss    ss         \n" +
-                    "ssrr               gggghhhggggggggggg           :::::::           gggggggggg:::::/---/:::::               rrrsssssssssssssssss       s  \n" +
-                    "ssrr               ggggggggggggggggg         :::1111111:::         ggggggggg               :                 rrrrrrsssssssssss       s  \n" +
-                    "sssrr              ggggggggtttggggg       :::1112222222111:::                              :                       rrrrrsssssssss   ss  \n" +
-                    " ssrr               gggggghttttgggg      ::11222222222222211::                             :                            rrrsssssssssss  \n" +
-                    " sssrr               gggggghhhggggg     ::1122222221222222211::     gggggggggg:::::::::::::                                rrsssssssss  \n" +
-                    " ssssrr               ggggggggggggg     ::1122222211122222211::     gggggggggggg                                             rrssssssss \n" +
-                    "  sssrr                gggggggggggg     ::1122222221222222221::     gggggggttttgg                                              rrssssss \n" +
-                    "  sssrr                 ggggggggggg      ::11222222222222211::      gggggghtttttggg                                            rrrssss  \n" +
-                    "  ssrr                  ggggggggggg       :::1112222222111:::       ggggggghhhhggggg                                          rrssssss  \n" +
-                    "sssssrr                 gggggggggggg         :::1111111:::         gggggggggggggggg                                         rrsssssssss \n" +
-                    "  sssrr                 ggggggggggggg           :::::::           ggggggggggggggg                                          rrsssssss  ss\n" +
-                    "   sssrr               ggggggggggggggg             G             gggggggggg                                               rrssssssss    \n" +
-                    "   sssrr              gggggggggtttgggggg                        ggggggggg:::::::::                                      rrrssssssssss   \n" +
-                    "  ssssrr              gggggggghttttggggggggg                                      :                                   rrrsssssss   sss  \n" +
-                    " ssssrr                 ggggggghhhgggggggggggg::::::::::::::::::::::::::::::::    :                                 rrrsssssssss     ss \n" +
-                    "sssssrr                     gggggggggggggggggg                                :   :                                rrssssssss sss      s\n" +
+                    "ssrr               gggghhhggggggggggg           :::::::           gggggggggg:::::/---/:::::               rrrsssssssssssssssss          \n" +
+                    "ssrr               ggggggggggggggggg         :::1111111:::         ggggggggg               :                 rrrrrsssssssssss           \n" +
+                    "sssrr              ggggggggtttggggg       :::1112222222111:::                              :                    rrrssssssssssssss       \n" +
+                    " ssrr               gggggghttttgggg      ::11222222222222211::                             :                      rrssssssssssssssssss  \n" +
+                    " sssrr               gggggghhhggggg     ::1122222221222222211::     gggggggggg:::::::::::::                        rrsssssssss          \n" +
+                    " ssssrr               ggggggggggggg     ::1122222211122222211::     gggggggggggg                                    rrssssssss          \n" +
+                    "  sssrr                gggggggggggg     ::1122222221222222221::     gggggggttttgg                                   rrssssssssssss      \n" +
+                    "  sssrr                 ggggggggggg      ::11222222222222211::      gggggghtttttggg                                 rrssssssssssssssss  \n" +
+                    "  ssrr                  ggggggggggg       :::1112222222111:::       ggggggghhhhggggg                                rrssssssss       ss \n" +
+                    "sssssrr                 gggggggggggg         :::1111111:::         gggggggggggggggg                                 rrssssssssss        \n" +
+                    "  sssrr                 ggggggggggggg           :::::::           ggggggggggggggg                                  rrsssssssssssss      \n" +
+                    "   sssrr               ggggggggggggggg             G             gggggggggg                                        rrsssssss  ssssss    \n" +
+                    "   sssrr              gggggggggtttgggggg                        ggggggggg:::::::::                                 rrsssssss     ssss   \n" +
+                    "  ssssrr              gggggggghttttggggggggg                                      :                                rrssssssssss    sss  \n" +
+                    " ssssrr                 ggggggghhhgggggggggggg::::::::::::::::::::::::::::::::    :                                rrsssssss sss     ss \n" +
+                    "sssssrr                     gggggggggggggggggg                                :   :                               rrrssssssss sss      s\n" +
                     "ssssrr                            gggggggggg                           wwwww:::   :::wwwww                       rrrssssssssss   s      \n" +
                     "sssssrr                                                               w     w :   : w     w                   rrrrsssssss sssss         \n" +
                     " sssssrrr                                                             w                   w                 rrrssssssss      sss        \n" +

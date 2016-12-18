@@ -199,8 +199,10 @@ public class HiddenBunker extends Room {
         Layer lay1 = new Layer(base, "HiddenBunkerLayer");
         highlightFlavorText(lay1);
 
-        lay1.findAndReplace(new SpecialText("#"), new SpecialText("#", new Color(175, 175, 175), new Color(25, 25, 25)));
-        lay1.findAndReplace(new SpecialText("%"), new SpecialText("%", new Color(175, 175, 175), new Color(20, 20, 20)));
+        //lay1.findAndReplace(new SpecialText("#"), new SpecialText("#", new Color(175, 175, 175), new Color(25, 25, 25)));
+        lay1.findAndReplace(new SpecialText("#"), arty.poundWall);
+        //lay1.findAndReplace(new SpecialText("%"), new SpecialText("%", new Color(175, 175, 175), new Color(20, 20, 20)));
+        lay1.findAndReplace(new SpecialText("%"), new SpecialText("%", new Color(40*3, 38*3, 36*3), new Color(50/2, 48/2, 46/2)));
 
         lay1.findAndReplace(new SpecialText("$"), new SpecialText("$", new Color(225, 175, 75)));
 

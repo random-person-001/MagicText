@@ -140,17 +140,29 @@ public class HallOfBanditKing extends Room {
         Layer lay1 = new Layer(base, "RoomLayer");
         Art coloring = new Art();
 
-        lay1.findAndReplace(new SpecialText(":"), new SpecialText(":", null, new Color(51, 43, 38)));
-        lay1.findAndReplace(new SpecialText(";"), new SpecialText(";", null, new Color(51, 43, 38)));
-        lay1.findAndReplace(new SpecialText("^"), new SpecialText("^", null, new Color(51, 43, 38)));
+//        lay1.findAndReplace(new SpecialText(":"), new SpecialText(":", null, new Color(51, 43, 38)));
+//        lay1.findAndReplace(new SpecialText(";"), new SpecialText(";", null, new Color(51, 43, 38)));
+//        lay1.findAndReplace(new SpecialText("^"), new SpecialText("^", null, new Color(51, 43, 38)));
 
-        lay1.setAllFg(coloring.mountainPallette1);
+//        lay1.setAllFg(coloring.mountainPallette1);
+/*        lay1.influenceAll(coloring.mountainPallette1);
         lay1.findAndReplace(new SpecialText("#", coloring.mountainPallette1), new SpecialText("#", new Color(175, 175, 175), new Color(25, 25, 25)));
         lay1.findAndReplace(new SpecialText("o", coloring.mountainPallette1), new SpecialText("o", coloring.mountainPallette2));
         lay1.findAndReplace(new SpecialText("O", coloring.mountainPallette1), new SpecialText("O", coloring.mountainPallette2));
         lay1.findAndReplace(new SpecialText("0", coloring.mountainPallette1), new SpecialText("0", coloring.mountainPallette2));
         lay1.findAndReplace(new SpecialText(".", coloring.mountainPallette1), new SpecialText(".", coloring.mountainPallette2));
-        lay1.findAndReplace(new SpecialText("8", coloring.mountainPallette1), new SpecialText("8", new Color(200, 200, 75)));
+
+        lay1.findAndReplace(new SpecialText("_", coloring.mountainPallette1), new SpecialText("_", coloring.mountainPallette1));
+        lay1.findAndReplace(new SpecialText("|", coloring.mountainPallette1), new SpecialText("|", coloring.mountainPallette1));
+        lay1.findAndReplace(new SpecialText("/", coloring.mountainPallette1), new SpecialText("/", coloring.mountainPallette1));
+        lay1.findAndReplace(new SpecialText("\\", coloring.mountainPallette1), new SpecialText("\\", coloring.mountainPallette1));
+        */
+        lay1.influenceAll(coloring.mountainPallette3);
+        lay1.findAndReplace(new SpecialText("^", coloring.mountainPallette3), new SpecialText("^", coloring.mountainPallette1));
+        lay1.findAndReplace(new SpecialText(":", coloring.mountainPallette3), new SpecialText(":", coloring.mountainPallette1));
+        lay1.findAndReplace(new SpecialText(";", coloring.mountainPallette3), new SpecialText(";", coloring.mountainPallette1));
+        lay1.findAndReplace(new SpecialText("#", coloring.mountainPallette3), coloring.poundWall);
+        lay1.findAndReplace(new SpecialText("8", coloring.mountainPallette3), new SpecialText("8", new Color(200, 200, 75)));
         highlightFlavorText(lay1);
         org.addLayer(lay1);
 
