@@ -497,6 +497,8 @@ public class Room implements java.io.Serializable {
         waterMesh =  new boolean[baseLayer.getColumns()][baseLayer.getRows()]; // Flipped around, it looks easier
         baseHitMesh = new boolean[baseLayer.getRows()][baseLayer.getColumns()];
         objHitMesh = new boolean[baseLayer.getRows()][baseLayer.getColumns()];
+        roomHeight = baseLayer.getRows();
+        roomWidth = baseLayer.getColumns();
         emptyAllHitMeshes();
     }
 

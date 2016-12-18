@@ -15,6 +15,7 @@ import SourceryText.Layer;
 import SourceryText.Rooms.Room;
 import SourceryText.SpecialText;
 
+import java.awt.*;
 import java.util.Random;
 
 /**
@@ -65,7 +66,7 @@ public class SnowyPeak extends Room {
     public void addItems() {
         Random randy = new Random();
 
-        for (int flakes = 0; flakes < 300; flakes++) {
+        for (int flakes = 0; flakes < 200; flakes++) {
             addObject(new Snowflake(org, this, randy.nextInt(roomWidth), randy.nextInt(roomHeight)));
         }
 
@@ -86,15 +87,18 @@ public class SnowyPeak extends Room {
     public void startup() {
         String[] signWords = {"WARNING:\n Polar bears ahead.\n RUN AWAY if one attacks you!", "However, they are known for stealing\n keys and whatnot.\nGetting them back is not recommended though"};
         plantText(new FlavorText(114, 9, signWords, "A Sign"));
-
         Art arty = new Art();
         String[][] base = Art.strToArray(arty.snowyPeak);
 
         Layer lay1 = new Layer(base, "Test");
         Art coloring = new Art();
-        lay1.influenceAll(coloring.mtnPeakPallette1);
+        lay1.setAllFg(coloring.mtnPeakPallette1);
         lay1.findAndReplace(new SpecialText("W", coloring.mtnPeakPallette1), new SpecialText("W", coloring.mtnPeakPallette2));
         lay1.findAndReplace(new SpecialText("-", coloring.mtnPeakPallette1), new SpecialText("-"));
+        
+        lay1.findAndReplace(new SpecialText("O", coloring.mtnPeakPallette1), new SpecialText("O", coloring.mtnPeakPallette1, new Color(21, 26, 26)));
+        lay1.findAndReplace(new SpecialText("0", coloring.mtnPeakPallette1), new SpecialText("0", coloring.mtnPeakPallette1, new Color(21, 26, 26)));
+        lay1.findAndReplace(new SpecialText("o", coloring.mtnPeakPallette1), new SpecialText("o", coloring.mtnPeakPallette1, new Color(21, 26, 26)));
         highlightFlavorText(lay1);
         org.addLayer(lay1);
 

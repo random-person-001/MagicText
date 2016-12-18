@@ -14,6 +14,8 @@ import SourceryText.Layer;
 import SourceryText.Rooms.Room;
 import SourceryText.SpecialText;
 
+import java.awt.*;
+
 /**
  * The inner mountains area, filled with carrots and the fork in the road between the snowy peak and the bandit fortress
  *
@@ -91,7 +93,12 @@ public class InnerMountains extends Room {
         String[][] base = Art.strToArray(arty.innerMountains);
         Layer lay1 = new Layer(base, "Test");
         Art coloring = new Art();
-        lay1.influenceAll(coloring.mountainPallette1);
+
+        lay1.findAndReplace(new SpecialText(":"), new SpecialText(":", null, new Color(51, 43, 38)));
+        lay1.findAndReplace(new SpecialText(";"), new SpecialText(";", null, new Color(51, 43, 38)));
+        lay1.findAndReplace(new SpecialText("^"), new SpecialText("^", null, new Color(51, 43, 38)));
+
+        lay1.setAllFg(coloring.mountainPallette1);
         lay1.findAndReplace(new SpecialText("R", coloring.mountainPallette1), new SpecialText(":", coloring.mtnPeakPallette1));
         lay1.findAndReplace(new SpecialText("o", coloring.mountainPallette1), new SpecialText("o", coloring.mountainPallette2));
         lay1.findAndReplace(new SpecialText("O", coloring.mountainPallette1), new SpecialText("O", coloring.mountainPallette2));

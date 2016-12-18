@@ -110,7 +110,16 @@ public class SourcePit extends Room {
 
         String[][] base = Art.strToArray(arty.sourcePit);
         Layer lay1 = new Layer(base, "base");
-        lay1.influenceAll(arty.mountainPallette1);
+
+        lay1.findAndReplace(new SpecialText(":"), new SpecialText(":", null, new Color(51, 43, 38)));
+        lay1.findAndReplace(new SpecialText(";"), new SpecialText(";", null, new Color(51, 43, 38)));
+        lay1.findAndReplace(new SpecialText("^"), new SpecialText("^", null, new Color(51, 43, 38)));
+
+        lay1.findAndReplace(new SpecialText("."), new SpecialText(".", null, new Color(26, 22, 19)));
+        lay1.findAndReplace(new SpecialText("'"), new SpecialText("'", null, new Color(26, 22, 19)));
+        lay1.findAndReplace(new SpecialText(","), new SpecialText(",", null, new Color(26, 22, 19)));
+
+        lay1.setAllFg(arty.mountainPallette1);
 
         System.out.println("[SourcePit]");
         for (int r=0; r<lay1.getRows(); r++){

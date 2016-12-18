@@ -9,6 +9,8 @@ import SourceryText.Layer;
 import SourceryText.Rooms.Room;
 import SourceryText.SpecialText;
 
+import java.awt.*;
+
 /**
  * Some mountains, where you fight some enemies
  * Created by riley on 15-Jun-2016.
@@ -93,14 +95,23 @@ public class Cliffside extends Room {
     @Override
     public void startup() {
 
-        String[][] base = Art.strToArray(arty.mountainPlace);
+        String[][] base = Art.strToArray(arty.cliffSide);
 
         Layer baseLayer = new Layer(base, "backgronud");
         Art coloring = new Art();
-        baseLayer.influenceAll(coloring.mountainPallette1);
+        baseLayer.findAndReplace(new SpecialText("%"), new SpecialText("\\"));
+
+        baseLayer.findAndReplace(new SpecialText(":"), new SpecialText(":", null, new Color(51, 43, 38)));
+        baseLayer.findAndReplace(new SpecialText("^"), new SpecialText("^", null, new Color(51, 43, 38)));
+
+        baseLayer.findAndReplace(new SpecialText("."), new SpecialText(".", null, new Color(26, 22, 19)));
+
+        baseLayer.setAllFg(coloring.mountainPallette1);
+
         baseLayer.findAndReplace(new SpecialText("0", coloring.mountainPallette1), new SpecialText("O", coloring.mountainPallette2));
         baseLayer.findAndReplace(new SpecialText("o", coloring.mountainPallette1), new SpecialText("o", coloring.mountainPallette2));
         baseLayer.findAndReplace(new SpecialText(",", coloring.mountainPallette1), new SpecialText(",", coloring.mountainPallette2));
+
         org.addLayer(baseLayer);
 
         initHitMeshes(baseLayer);

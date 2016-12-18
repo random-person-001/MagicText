@@ -583,7 +583,7 @@ public class Art implements java.io.Serializable{
 
 
 
-    public String mountainPlace =
+    public String cliffSide =
             "          :    :                                                                                                         (mountain)    :  ::        \n" +
             "         :     :                                                                                                                        :   :       \n" +
             "        :     :                                                                        ::^:::    ::^::                                  :    ^::    \n" +
