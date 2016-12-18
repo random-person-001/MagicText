@@ -14,9 +14,6 @@ import java.awt.*;
 
 /**
  * A Fortress!  Exciting!
- * Normal entrance:
- * Player X: 67
- * Player Y: 103
  * Created by riley on 01-Sep-2016.
  */
 public class BanditFortress extends Room {
@@ -28,7 +25,6 @@ public class BanditFortress extends Room {
 
     @Override
     protected String loop(Player play) {
-        int count = 0;
 
         while (exitCode.equals("")) {
             try {
@@ -56,7 +52,7 @@ public class BanditFortress extends Room {
 
         int[][] banditStations = {{35, 74}, {33, 75}, {38, 75}, {36, 76}, {61, 87}, {73, 87}, {67, 94}, {19, 46},
                 {27, 46}, {42, 56}, {48, 61}, {56, 56}, {60, 63}, {74, 32}, {86, 32}, {51, 25}, {59, 24}, {62, 19}, {39, 15},
-                {65,41}, {53,36}, {113,65}, {54,84}, {50,84}, {25,83}, {9,51}, {64,72}, {73, 77}, {92,84}};
+                {65,41}, {53,36}, {113,65}, {54,84}, {50,84}, {64,72}, {73, 77}, {92,84}};
         for (int[] station : banditStations) {
             Bandit roughBill = new Bandit(org, this, station[0], station[1]);
             addMortal(roughBill);
@@ -127,15 +123,12 @@ public class BanditFortress extends Room {
         Color closeRock = new Color(65,55,33);
         Color rock = new Color(65/2,55/2,33/3);
         Color farRock = new Color(65/4,55/4,33/4);
-        //lay1.findAndReplace(new SpecialText("r"), new SpecialText(".", closeRock, rock), 20);
-        //lay1.findAndReplace(new SpecialText("r"), new SpecialText(":", closeRock, rock), 20);
+
         lay1.findAndReplace(new SpecialText("r"), new SpecialText(":", closeRock, rock), 40);
         lay1.findAndReplace(new SpecialText("r"), new SpecialText(";", closeRock, rock), 50);
         lay1.findAndReplace(new SpecialText("r"), new SpecialText("^", closeRock, rock), 70);
         lay1.findAndReplace(new SpecialText("r"), new SpecialText("*", rock, rock));
 
-        //lay1.findAndReplace(new SpecialText("s"), new SpecialText(".", rock, farRock),20);
-        //lay1.findAndReplace(new SpecialText("s"), new SpecialText(":", rock, farRock),20);
         lay1.findAndReplace(new SpecialText("s"), new SpecialText(":", rock, farRock),40);
         lay1.findAndReplace(new SpecialText("s"), new SpecialText(";", rock, farRock),50);
         lay1.findAndReplace(new SpecialText("s"), new SpecialText("^", rock, farRock),70);
@@ -155,7 +148,7 @@ public class BanditFortress extends Room {
         initHitMeshes(lay1);
 
         addItems();
-        String[] solids = {":", "w", "m", "#", "/", "C", "o"};
+        String[] solids = {":", "w", "m", "#", "/", "C", "o", "r", "s", "t", "h"};
         addToBaseHitMesh(base, solids);
 
         addObject(new WaterPool(this, lay1,"1", 1));
