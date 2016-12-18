@@ -15,8 +15,13 @@ import java.awt.*;
  */
 public class Bandit extends Mortal {
     private int followDist = 8;
+    private boolean isInTraining = false;
+    private SpecialText icon;
 
     public Bandit(ImageOrg orga, Room theRoom, int xStart, int yStart) {
+        this(orga, theRoom, xStart, yStart, false);
+    }
+    public Bandit(ImageOrg orga, Room theRoom, int xStart, int yStart, boolean isInTraining) {
         super.strClass = "Bandit";
         org = orga;
         room = theRoom;
@@ -24,10 +29,18 @@ public class Bandit extends Mortal {
 
         x = xStart;
         y = yStart;
-        setHealth(15);
         org.addLayer(new Layer(new String[1][1], layerName, x, y));
 
-        setupTimer(600); // Maybe the player should check this instead
+        this.isInTraining = isInTraining;
+        if (!isInTraining){
+            icon = new SpecialText("B", new Color(255, 160, 160));
+            setHealth(15);
+            setupTimer(600);
+        } else {
+            icon = new SpecialText("b", new Color(255, 180, 180));
+            setHealth(4);
+            setupTimer(700);
+        }
     }
 
 
@@ -38,14 +51,18 @@ public class Bandit extends Mortal {
             if (Math.abs(x - closestGoodGuy.getX()) <= 2 && Math.abs(y - closestGoodGuy.getY()) <= 2) {
                 closestGoodGuy.subtractHealth(2);
             }
-            if (closestGoodGuy.getX() == getX() || closestGoodGuy.getY() == getY()) { // sprint when straight line to player
+            if (!isInTraining && (closestGoodGuy.getX() == getX() || closestGoodGuy.getY() == getY())) { // sprint when straight line to player
                 pathToPos(followDist, closestGoodGuy.getX(), closestGoodGuy.getY());
             }
             pathToPos(followDist, closestGoodGuy.getX(), closestGoodGuy.getY());
         } else {
             System.out.println("Bandit could not find a nearest good guy :(");
         }
-        setDispIcon(new SpecialText("B", new Color(255, 160, 160)));
+        setDispIcon(icon);
+    }
+
+    public void setIcon(SpecialText newIcon){
+        icon = newIcon;
     }
 
     @Override

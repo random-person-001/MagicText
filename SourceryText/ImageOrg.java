@@ -277,7 +277,7 @@ public class ImageOrg implements java.io.Serializable {
         }
         layerOpLock = false;
         operationList.clear();
-        if (doOutput) {
+        if (doOutput && debugGame) {
             System.out.println(opManifest + "\n");
             layerChangeInstance++;
         }
@@ -596,7 +596,7 @@ public class ImageOrg implements java.io.Serializable {
             newSendImage();
             long diff = System.currentTimeMillis() - lastRunMs;
             float avg = averageTimes();
-            if (diff > Math.ceil(avg) + TOLERANCE) {
+            if (diff > Math.ceil(avg) + TOLERANCE && debugGame) {
                 System.out.printf("Time to compile image (notably long): %1$dms (avg %2$f)\n", System.currentTimeMillis() - lastRunMs, avg);
             }
 

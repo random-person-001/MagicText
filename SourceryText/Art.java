@@ -686,65 +686,65 @@ public class Art implements java.io.Serializable{
 
 
     public String banditFortress =
-                    "                                                                                                                                        \n" +
-                    "                                                                                                                                        \n" +
-                    "                                                 :   :                                                                                  \n" +
-                    "                                                c:   :c                                                                                 \n" +
-                    "                                             CCCC:   :CCCC                                                                              \n" +
-                    "                                            CCCCC:   :CCCCCC                                                                            \n" +
-                    "                                           CCCCC:     :CCCCCCC                                                                          \n" +
-                    "                                         CCCCCCC:     :CCCCCCCCCCCC                     /   /                                           \n" +
-                    "                                       CCCCCCCCC:     :CCCCCCCCCCCCCCCCCCCC            /---/                                            \n" +
-                    "                                     CCCCCCCCCCC:     :CCCCCCCCCCCCCCCCCtttCCC        /---/                                             \n" +
-                    "                                  CCCCCCC:::::::::   :::CCCCCCCCCCCCCChttttttCCC     /---/                                              \n" +
-                    "                                htttCCC::                     CCCCCCCChttttttCC     /---/                                               \n" +
-                    "                                hhhhCC:                         CCCCCCChhhhCCC     /---/                                                \n" +
-                    "                                CCCCC:                           CCCCCCCCCCC      /---/                                                 \n" +
-                    "                                 CCC:           :::::::           CCCCCCCCC::::::/---/:::::                                             \n" +
-                    "                                  C:         :::1111111:::         CCCCCCCC:               :                                            \n" +
-                    "                           ttt    :       :::1112222222111:::       :::::::                :                                            \n" +
-                    "                          htttt   :      ::11222222222222211::                             :                                            \n" +
-                    "                           hhh    :     ::1122222221222222211::     :::::::::::::::::::::::                                             \n" +
-                    "                                  :     ::1122222211122222211::     CCCCCC                                                              \n" +
-                    "                                  :     ::1122222221222222221::     CCCCCC tttt                                                         \n" +
-                    "                                  :      ::11222222222222211::      CCCCCChttttt                                                        \n" +
-                    "                                  :       :::1112222222111:::       CCCCC  hhhh                                                         \n" +
-                    "                                   :         :::1111111:::         CCCCC                                                                \n" +
-                    "                                    :           :::::::           CCCCC                                                                 \n" +
-                    "                                     :             G             CCCCC                                                                  \n" +
-                    "                               ttt    :                        :::::::::::::::::::                                                      \n" +
-                    "                              htttt    ::::                                       :                                                     \n" +
-                    "                               hhh         :::::::::::::::::::::::::::::::::::    :                                                     \n" +
-                    "                                                                              :   :                                                     \n" +
-                    "                                                                       wwwww:::   :::wwwww                                              \n" +
-                    "                                                                      w     w :   : w     w                                             \n" +
-                    "                                                                      w                   w                                             \n" +
-                    "                                                                      w     w:     :w     w                                             \n" +
-                    "         wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww   wwwwwwwwwwwwwwwwww                                    \n" +
-                    "        w::#####################################:::::::::::::::::::::::::::::::   ::::::::::::::::::w                                   \n" +
-                    "       w::##:::::::::::::::::::::::::::::::::::##:::::      :      :      :::::   ::      :      ::::w                                  \n" +
-                    "      w::##:::::::::::::::::::::::::::::::::::::##::::      :      :      :::::   ::      :      :::::w                                 \n" +
-                    "     w::#::::                                 ::::#::::  :::::  :::::  ::::::::   :::::  :::::  :::::::w                                \n" +
-                    "    w::#:::                                     :::#::                                              ::::w                               \n" +
-                    "   w:::#:::                                     :::#::                       ::   ::                :::::w                              \n" +
-                    "   w::::#::::                                 ::::#::::  ::::::::::::::::::::::   :::::  :::::  ::::::::::w                             \n" +
-                    "   w:::::##:::::::::::   :::::::::::::::::::::::##::::      :::::::::::::::::::   ::      :      ::::::::::w                            \n" +
-                    "   w::::::##::::::::::: :::::::::::::::::::::::##:::::      ::::::::::::::::::    ::      :      :::::::::::w                           \n" +
-                    "   w:::::::##########:: ::######################::::::::::::::::                  :::::::::::::::::::::::::::w                          \n" +
-                    "   w::::::::::::::::::   :::::::::::::::::::::::::::::::::::::::                  ::::::::::::::::::::::::::::w                         \n" +
-                    "   w::::::::::::               :::            ::              ::    :::::::::::::::::::::::::::::::::::::::::::w                        \n" +
-                    "   w::::::::::::::::::   :::::::::                            ::   ::mmmmmmmm                     m:::::::::::::w                       \n" +
-                    "   w::::::::::::::::::: :::::                 ::              ::   ::mm                mmmmmmmmm  m::::::::::::::w                      \n" +
-                    "   w::::::::::::::::::: :::::    :            ::              ::   ::mmmmmmmm     P               m:::::::::::::::w                      \n" +
-                    "   w::::::::::::::::::   :::::  ::::::::::::::::::  :::::::  ::     :::::::::::::::   :::::::::::::::::::::::::::::w                    \n" +
-                    "   w::::::::::                                                                            ::::::::::::::::::::::::::w                   \n" +
-                    "   w::::::::                                                                                ::::::::::::::::::::::::w                   \n" +
-                    "   w::::::::                                                mmmmmmmmmmm                     ::::::::::::::::::::::::w                   \n" +
-                    "   w::::::::  mmmmmmmm      mmmmmmmm     mmmmmmmm           mmmmmmmmmmm          mm          :::::::::::::::::::::::w                   \n" +
-                    "   w########: mmmmmmmm      mmmmmmmm     mmmmmmmm                              mmmmmm       m:::::::::::::::::::::::w                   \n" +
-                    "   w:::::::#:                                                                  mmmmmm     mmm:::::::::::::::::::::::w                   \n" +
-                    "   w  e                                                     mmmmmmmmmmm          mm       mmm:::::::::::::::::::::::w                   \n" +
-                    "   w  x         mmmmmmmm      mmmmmmmm      mmmmmmmm        mmmmmmmmmmm                     m::::::::::::::::::::::;w                   \n" +
+                    "                  ss           ss                                     ss                                                                \n" +
+                    "         s        ssss       ssssss                                ssss     ss       s                                                  \n" +
+                    "  ss      ss     ssssssssssssssssssss            :   :         sssssss     sss       ss                                                 \n" +
+                    "   ss      sssssssssssrrrrrrrrrrrrrrr:::::::::::::   :::::ssssssssssssssssssss      sss                                                 \n" +
+                    "    sss     ssssssrrrr                        ggg:   :ggggrrrrrrrrrrrssssssssssssssssss                                                 \n" +
+                    "     ssssssssssrrrr                         ggggg:   :ggggggg       rrrrrrrrrrssssssssss s/---/                                         \n" +
+                    "s    sssssssssrrr                        ggggggg:     :gggggggggg             rrrrrrsssss/---/             ss                           \n" +
+                    "ss   sssssssrrr                       gggggggggg:     :gggggggggggggggggg          rrrss/---/s            ss                            \n" +
+                    " sssssssssrrr                     gggggggggggggg:     :gggggggggggggggggggggggg      rr/---/ssss         ss              s              \n" +
+                    "  ssssssrrr                 ggggggggggggggggggg::     ::ggggggggggggggggtttggggg      /---/ssssssss    ssss             ss              \n" +
+                    "  sssssrr                gggggggggggggggggggggg:::   :::gggggggggggggghttttttggg     /---/rrrsssssssssssss             ss               \n" +
+                    " ssssrrr              gggggggggghtttgggggggg               ggggggggggghttttttgg     /---/   rrrrsssssssssssss        sss       s       s\n" +
+                    " sssrr               ggggggggggghhhhgggg                       gggggggghhhhggg     /---/       rrrrrrrssssssssssssssssss      ss      s \n" +
+                    " ssrr              ggggtttgggggggggggg                           ggggggggggg      /---/              rrrrrrssssssssssssss    ss         \n" +
+                    "ssrr               gggghhhggggggggggg           :::::::           gggggggggg:::::/---/:::::               rrrsssssssssssssssss       s  \n" +
+                    "ssrr               ggggggggggggggggg         :::1111111:::         ggggggggg               :                 rrrrrrsssssssssss       s  \n" +
+                    "sssrr              ggggggggtttggggg       :::1112222222111:::                              :                       rrrrrsssssssss   ss  \n" +
+                    " ssrr               gggggghttttgggg      ::11222222222222211::                             :                            rrrsssssssssss  \n" +
+                    " sssrr               gggggghhhggggg     ::1122222221222222211::     gggggggggg:::::::::::::                                rrsssssssss  \n" +
+                    " ssssrr               ggggggggggggg     ::1122222211122222211::     gggggggggggg                                             rrssssssss \n" +
+                    "  sssrr                gggggggggggg     ::1122222221222222221::     gggggggttttgg                                              rrssssss \n" +
+                    "  sssrr                 ggggggggggg      ::11222222222222211::      gggggghtttttggg                                            rrrssss  \n" +
+                    "  ssrr                  ggggggggggg       :::1112222222111:::       ggggggghhhhggggg                                          rrssssss  \n" +
+                    "sssssrr                 gggggggggggg         :::1111111:::         gggggggggggggggg                                         rrsssssssss \n" +
+                    "  sssrr                 ggggggggggggg           :::::::           ggggggggggggggg                                          rrsssssss  ss\n" +
+                    "   sssrr               ggggggggggggggg             G             gggggggggg                                               rrssssssss    \n" +
+                    "   sssrr              gggggggggtttgggggg                        ggggggggg:::::::::                                      rrrssssssssss   \n" +
+                    "  ssssrr              gggggggghttttggggggggg                                      :                                   rrrsssssss   sss  \n" +
+                    " ssssrr                 ggggggghhhgggggggggggg::::::::::::::::::::::::::::::::    :                                 rrrsssssssss     ss \n" +
+                    "sssssrr                     gggggggggggggggggg                                :   :                                rrssssssss sss      s\n" +
+                    "ssssrr                            gggggggggg                           wwwww:::   :::wwwww                       rrrssssssssss   s      \n" +
+                    "sssssrr                                                               w     w :   : w     w                   rrrrsssssss sssss         \n" +
+                    " sssssrrr                                                             w                   w                 rrrssssssss      sss        \n" +
+                    "  ssssssrr                                                            w     w:     :w     w               rrrssssssss          ss       \n" +
+                    "  ssssssswwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww   wwwwwwwwwwwwwwwwww   rrrrsssss  sss           ss      \n" +
+                    " sssssssw::#####################################:::::::::::::::::::::::::::::::   ::::::::::::::::::w rrrsssssss    sss          ss     \n" +
+                    "s  ssssw::##:::::::::::::::::::::::::::::::::::##:          :      :     :   ::   ::                :wrrsssssss       ss           s    \n" +
+                    "   sssw::##:::::::::::::::::::::::::::::::::::::##::   :::::::::  :::::  ::: ::   ::                ::wrsss sss         s               \n" +
+                    "   ssw::#::::                                 ::::#:                         ::   ::                :::wss   ss                         \n" +
+                    "  ssw::#:::                                     :::#   :::::::::::::              ::                ::  w     ss                        \n" +
+                    " ssw:::#:::                                     :::#        :                ::   ::                ::   w     s                        \n" +
+                    "s  w::::#::::                                 ::::#:        :      :  :::::  ::   ::                ::    w                             \n" +
+                    "   w:::::##:::::::::::   :::::::::::::::::::::::##:::::::::::      :    :    ::   ::                ::     w                            \n" +
+                    "   w::::::##::::::::::: :::::::::::::::::::::::##::        :::::::::::::::::::    ::                ::::::  w                           \n" +
+                    "   w:::::::##########:: ::######################:::        :::::                  ::                        :w                          \n" +
+                    "   w       :::::::::::   ::::::::::::::::::::::::::                               ::                        ::w                         \n" +
+                    "   w       :::::               ::                          :::::    ::::::::::::::::::::::::::::::::     ::::::w                        \n" +
+                    "   w       :::::::::::   ::::::::                          :::::   ::mmmmmmmm                     m::   ::      w                       \n" +
+                    "   w              ::::: :::::                                  :   ::mm                mmmmmmmmm  m::   ::       w                      \n" +
+                    "   w              ::::: :::::                :::      :::      :   ::mmmmmmmm     P               m:::   ::        w                     \n" +
+                    "   w       :::::::::::   :::::::::::::::::::::::::  :::::::::::     :::::::::::::::   ::::::::::::::     ::::::::::w                    \n" +
+                    "   w       :::                                                                            :::::                   ::w                   \n" +
+                    "   w       :                                                                                ::                     :w                   \n" +
+                    "   w                                                        mmmmmmmmmmm                     ::                     :w                   \n" +
+                    "   w::::::::  mmmmmmmm      mmmmmmmm     mmmmmmmm           mmmmmmmmmmm          mm          ::                    :w                   \n" +
+                    "   w########: mmmmmmmm      mmmmmmmm     mmmmmmmm                              mmmmmm       m::                    :w                   \n" +
+                    "   w:::::::#:                                                                  mmmmmm     mmm::                    :w                   \n" +
+                    "   w  e   :#:                                               mmmmmmmmmmm          mm       mmm::                    :w                   \n" +
+                    "   w  x   :#:   mmmmmmmm      mmmmmmmm      mmmmmmmm        mmmmmmmmmmm                     m:::                   :w                   \n" +
                     "   w  p   :#:   mmmmmmmm      mmmmmmmm      mmmmmmmm                           mm              :::::::::::::::::::::w                   \n" +
                     "   w  l   :#:                                                                mmmmmm                   ::::::::::::::w CCCC              \n" +
                     "   w  o   :#:                                               mmmmmmmmmmm      mmmmmm     mm   ::::::::         ::::::wCC  CCCC           \n" +
@@ -755,42 +755,42 @@ public class Art implements java.io.Serializable{
                     "   w  s    ::#:::::  :::      :::::::::::::::::::::::::::::::::::::::::::::::::::::::::   S::    :                  w           CCCC    \n" +
                     "   w       ::#::       ::    ::         :: b  : b  : b  : b  : b  : b  : b  : b  : b  :    ::                   :::w                    \n" +
                     "   w  t    ::#::       ::    ::         ::                                                  ::::::::::::::::::::::w                     \n" +
-                    "    w  e                ::  ::          ::::::::::::::::::::::::::::::::::::::::::::::::   ::::::::::::::::::::::w                      \n" +
-                    "     w  s               ::      armory  ::                                                  ::::::::::::::::::::w                       \n" +
-                    "      w::::::#:         ::  ::          :: b  : b  : b  : b  : b  : b  : b  : b  : b  :     :::::::::::::::::::w                        \n" +
-                    "       w:::::#:         ::  ::          ::::::::::::::::::::::::::::::::::::::::::::::::   :::::::::::::::::::w                         \n" +
-                    "        w::::#:         ::  :::::::::::::: b  : b  : b  : b  : b  : b  : b  : b  : b  :     :::::::::::::::::w                          \n" +
-                    "         w:::#:         ::  ::          ::                                                  ::::::::::::::::w                           \n" +
+                    "    w  e   ::#:         ::  ::          ::::::::::::::::::::::::::::::::::::::::::::::::   ::: ::      ::  :::  :w                      \n" +
+                    "     w  s  ::#:         ::              ::                                                     ::  ::  ::  ::  :w                       \n" +
+                    "      w  t ::#:         ::  ::          :: b  : b  : b  : b  : b  : b  : b  : b  : b  :     :  ::  ::  ::     :w                        \n" +
+                    "       w  s::#:         ::  ::          ::::::::::::::::::::::::::::::::::::::::::::::::   ::  ::  ::  ::  :::w                         \n" +
+                    "        w  ::#:         ::  :::::::::::::: b  : b  : b  : b  : b  : b  : b  : b  : b  :     :  ::  ::  ::  ::w                          \n" +
+                    "         w ::#:         ::  ::          ::                                                         ::      :w                           \n" +
                     "          w::#:         ::  :::         ::::::::::::::::::::::::::::::::::::::::::::::::   ::::::::::::::::w                            \n" +
-                    "           w:#:                  armory ::                                                  ::::::::::::::w                             \n" +
-                    "            w#:         ::   ::         :: b  : b  : b  : b  : b  :    : b  : b  : b  : b   :::::::::::::w                              \n" +
-                    "             w:         :::   ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::w                               \n" +
-                    "              w:       ::#::                               :::::::::::::::::                     ::::::w                                \n" +
-                    "               w:     ::# #::                                 ::::::::::::::                     :::::w                                 \n" +
-                    "                w:   ::#####::                                   :::::::::::                     ::::w                                  \n" +
-                    "                 w::::::::::::::::::::::::::::::::  :::::           ::::::::::  ::::::::::::::::::::w                                   \n" +
-                    "                  oo::::::::::::::::::::::               :::           ::                ::::::::::o                                    \n" +
-                    "                   w:::::::::::::::::::::                   ::           :               :::::::::w                                     \n" +
-                    "                    w:::o:::::::::::::::::o:::::::::::::::o:::           :::o::::::::::::::::o:::w                                      \n" +
-                    "                     wwwowwwwwwwwwwwwwwwwwowwwwwwwwwwwwwwwowwwwwww   wwwwwwwowwwwwwwwwwwwwwwwowww                                       \n" +
-                    "                                                        w     w::     ::w     w                                                         \n" +
-                    "                                                        w                     w                                                         \n" +
-                    "                                                        w     w:::   :::w     w                                                         \n" +
-                    "                                                         wwwww   :   :   wwwww                                                          \n" +
-                    "                                                                 :   :                                                                  \n" +
-                    "                                                                 :   :                                                                  \n" +
-                    "                                                             ::::     ::::                                                              \n" +
-                    "                                                            :             :                                                             \n" +
-                    "                                                           :               :                                                            \n" +
-                    "                                                           :               :                                                            \n" +
-                    "                                                            :             :                                                             \n" +
-                    "                                                             :::       :::                                                              \n" +
-                    "                                                                :     :                                                                 \n" +
-                    "                                                                 :   :                                                                  \n" +
-                    "                                                                 :   :                                                                 .\n" +
-                    "                                                                 :   :                                                                  \n" +
-                    "                                                                 :   :                                                                  \n" +
-                    "                                                                 :   :                                                                  \n";
+                    "           w:#:         ::              ::                                                  ::           :w                             \n" +
+                    "            w#:         ::   ::         :: b  : b  : b  : b  : b  :    : b  : b  : b  : b   ::          :w                              \n" +
+                    "             w:         :::   :::::::::::::::::::::::::::::::::::::    :::::::::::::::::::::::         :w                               \n" +
+                    "              w:       ::#::                               :::            ::                          :w                                \n" +
+                    "               w:     ::# #::                                 :::                                    :wg                                \n" +
+                    "                w:   ::#####::                                   :::  ::                         ::::wgg                                \n" +
+                    "                 w::::::::::::::::::::::::::::::::  :::::           ::::::::::  ::::::::::::::::::::wgg                                 \n" +
+                    "                  oo            guards                   :::           ::                         oogg                                  \n" +
+                    "                  gw:                                       ::           :                       :wgg                                   \n" +
+                    "                  ggw:::o:::::::::::::::::o:::::::::::::::o:::           :::o::::::::::::::::o:::wgg                                    \n" +
+                    "                   ggwwwowwwwwwwwwwwwwwwwwowwwwwwwwwwwwwwwowwwwwww   wwwwwwwowwwwwwwwwwwwwwwwowwwgg                                     \n" +
+                    "                    ggggggggggggggggggggggggggggggggggggw     w::     ::w     wggggggggggggggggggg                                      \n" +
+                    "                                                ggggggggw                     wggggggg                                                  \n" +
+                    "                                                    ggggw     w:::   :::w     wggg                                                      \n" +
+                    "                                                    gggggwwwww::::   ::::wwwwwgggg                                                      \n" +
+                    "                                                     gggggggggggg:   :ggggggggggg                                                       \n" +
+                    "                                                      gggggggggggg   ggggggggggg                                                        \n" +
+                    "                                                         gggggggg     gggggggg                                                          \n" +
+                    "                                                          ggg             ggg                                                           \n" +
+                    "                                                         ggg               ggg                                                          \n" +
+                    "                                                         ggg               ggg                                                          \n" +
+                    "                                                         gggg             gggg                                                          \n" +
+                    "                                                          gggggg       gggggg                                                           \n" +
+                    "                                                           gggggg     gggggg                                                            \n" +
+                    "                                                             ggggg   ggggg                                                              \n" +
+                    "                                                              gggg   gggg                                                              .\n" +
+                    "                                                              gggg   gggg                                                               \n" +
+                    "                                                              gggg   gggg                                                               \n" +
+                    "                                                             gggg     gggg                                                              \n";
 
     public String innerMountains =
                     "                       :   :                                       \n" +

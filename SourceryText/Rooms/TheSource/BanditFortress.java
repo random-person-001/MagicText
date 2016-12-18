@@ -55,7 +55,8 @@ public class BanditFortress extends Room {
     public void addItems() {
 
         int[][] banditStations = {{35, 74}, {33, 75}, {38, 75}, {36, 76}, {61, 87}, {73, 87}, {67, 94}, {19, 46},
-                {27, 46}, {42, 56}, {48, 61}, {56, 56}, {60, 63}, {74, 32}, {86, 32}, {51, 25}, {59, 24}, {62, 19}, {39, 15}};
+                {27, 46}, {42, 56}, {48, 61}, {56, 56}, {60, 63}, {74, 32}, {86, 32}, {51, 25}, {59, 24}, {62, 19}, {39, 15},
+                {65,41}, {53,36}, {113,65}, {54,84}, {50,84}, {25,83}, {9,51}, {64,72}, {73, 77}, {92,84}};
         for (int[] station : banditStations) {
             Bandit roughBill = new Bandit(org, this, station[0], station[1]);
             addMortal(roughBill);
@@ -116,7 +117,29 @@ public class BanditFortress extends Room {
         SpecialText[] flammableTreeChars = {new SpecialText(" ", null, lightTreeGreen), new SpecialText(" ", null, shadowTreeGreen)};
         lay1.findAndReplace(new SpecialText("t"), flammableTreeChars[0]);
         lay1.findAndReplace(new SpecialText("h"), flammableTreeChars[1]);
+        Color grassbkgd = new Color(0, 28, 6);
+        Color grassfgd = new Color(20, 40, 30);
+        lay1.findAndReplace(new SpecialText("g"), new SpecialText(".", grassfgd, grassbkgd), 15);
+        lay1.findAndReplace(new SpecialText("g"), new SpecialText(",", grassfgd, grassbkgd), 15);
+        lay1.findAndReplace(new SpecialText("g"), new SpecialText(" ", grassfgd, grassbkgd));
         lay1.findAndReplace(new SpecialText("C"), new SpecialText(" ", null, new Color(43, 38, 33)));
+
+        Color closeRock = new Color(65,55,33);
+        Color rock = new Color(65/2,55/2,33/3);
+        Color farRock = new Color(65/4,55/4,33/4);
+        //lay1.findAndReplace(new SpecialText("r"), new SpecialText(".", closeRock, rock), 20);
+        //lay1.findAndReplace(new SpecialText("r"), new SpecialText(":", closeRock, rock), 20);
+        lay1.findAndReplace(new SpecialText("r"), new SpecialText(":", closeRock, rock), 40);
+        lay1.findAndReplace(new SpecialText("r"), new SpecialText(";", closeRock, rock), 50);
+        lay1.findAndReplace(new SpecialText("r"), new SpecialText("^", closeRock, rock), 70);
+        lay1.findAndReplace(new SpecialText("r"), new SpecialText("*", rock, rock));
+
+        //lay1.findAndReplace(new SpecialText("s"), new SpecialText(".", rock, farRock),20);
+        //lay1.findAndReplace(new SpecialText("s"), new SpecialText(":", rock, farRock),20);
+        lay1.findAndReplace(new SpecialText("s"), new SpecialText(":", rock, farRock),40);
+        lay1.findAndReplace(new SpecialText("s"), new SpecialText(";", rock, farRock),50);
+        lay1.findAndReplace(new SpecialText("s"), new SpecialText("^", rock, farRock),70);
+        lay1.findAndReplace(new SpecialText("s"), new SpecialText("*", farRock, farRock));
 
         lay1.findAndReplace(new SpecialText("m"), new SpecialText("m", new Color(40*2, 38*2, 36*2), new Color(60/2, 58/2, 56/2)));
         lay1.findAndReplace(new SpecialText(":"), new SpecialText("#", new Color(40*2, 38*2, 36*2), new Color(60/2, 58/2, 56/2)));
