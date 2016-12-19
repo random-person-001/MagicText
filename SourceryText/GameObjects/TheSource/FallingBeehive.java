@@ -68,7 +68,7 @@ public class FallingBeehive extends GameObject {
                 int randY = 2 - dice.nextInt(4);
                 System.out.printf("Buzz @ (delta) %1$d, %2$d\n", randX, randY);
                 Color beeColor = new Color(224, 224, 135);
-                Spell bee = new Spell(room, x + randX, y + randY, -1, 25, 40, new SpecialText("v", beeColor), new SpecialText(".", beeColor), true, true);
+                Spell bee = new Spell(room, x + randX, y + randY, -1, 25, 40, new SpecialText("v", beeColor), new SpecialText(".", beeColor), true, true, "bee");
                 room.addObject(bee);
                 resetTime();
                 beesInside--;
