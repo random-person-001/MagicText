@@ -121,23 +121,23 @@ public class SourcePit extends Room {
 
         lay1.setAllFg(arty.mountainPallette1);
 
-        System.out.println("[SourcePit]");
+        //System.out.println("[SourcePit]");
         for (int r=0; r<lay1.getRows(); r++){
             for (int c=0; c<lay1.getColumns(); c++){
                 String s = lay1.getStr(r,c);
                 SpecialText st = lay1.getSpecTxt(r,c);
                 //System.out.print(s);
                 if (s.equals("\\") || s.equals("|") || s.equals("/")){
-                    System.out.println(1*(r-11.0)/18.0);
+                    //System.out.println(1*(r-11.0)/18.0);
                     int depth = 255 - (int) (255 * (r-11.0)/18.0);
-                    System.out.println(depth);
+                    //System.out.println(depth);
                     st.setInfluencedForegroundColor(new Color(depth,depth,depth));
                     lay1.setSpecTxt(r,c,st);
                 }
             }
             //System.out.println();
         }
-        System.out.println("[/SourcePit]");
+        //System.out.println("[/SourcePit]");
 
         highlightFlavorText(lay1);
         org.addLayer(lay1);

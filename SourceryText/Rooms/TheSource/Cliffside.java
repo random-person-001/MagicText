@@ -100,13 +100,33 @@ public class Cliffside extends Room {
         Layer baseLayer = new Layer(base, "backgronud");
         Art coloring = new Art();
         baseLayer.findAndReplace(new SpecialText("%"), new SpecialText("\\"));
-
         baseLayer.findAndReplace(new SpecialText(":"), new SpecialText(":", null, new Color(51, 43, 38)));
         baseLayer.findAndReplace(new SpecialText("^"), new SpecialText("^", null, new Color(51, 43, 38)));
-
         baseLayer.findAndReplace(new SpecialText("."), new SpecialText(".", null, new Color(26, 22, 19)));
-
         baseLayer.setAllFg(coloring.mountainPallette1);
+
+        System.out.println("[Cliffside]");
+        for (int r=0; r<baseLayer.getRows(); r++){
+            for (int c=0; c<baseLayer.getColumns(); c++){
+                String s = baseLayer.getStr(r,c);
+                SpecialText st = baseLayer.getSpecTxt(r,c);
+                System.out.print(s);
+                if (s.equals("\\") || s.equals("|") || s.equals("/")){
+                    float topValue = (c<100) ? 7f : 14f;
+                    System.out.println(1*(r-topValue)/20.0);
+                    int depth = 255 - (int) (255 * (r-topValue)/20.0);
+                    System.out.println(depth);
+                    if (depth < 0) {
+                        System.out.println("Too deep!");
+                        depth = 1;
+                    }
+                    st.setInfluencedForegroundColor(new Color(depth, depth, depth));
+                    baseLayer.setSpecTxt(r, c, st);
+                }
+            }
+            System.out.println();
+        }
+        System.out.println("[/Cliffside]");
 
         baseLayer.findAndReplace(new SpecialText("0", coloring.mountainPallette1), new SpecialText("O", coloring.mountainPallette2));
         baseLayer.findAndReplace(new SpecialText("o", coloring.mountainPallette1), new SpecialText("o", coloring.mountainPallette2));
