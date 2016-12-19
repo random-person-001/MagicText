@@ -132,6 +132,7 @@ public class TutorialBasement extends Room {
                 if (play.getX() > 132) {
                     setNewRoom("SourcePit", play, 10, 109);
                 }
+                /*
                 if (play.getX() == 20 && play.getY() == 32) {
                     play.isGhost = true;
                     play.ludicrousSpeed = true;
@@ -141,6 +142,7 @@ public class TutorialBasement extends Room {
                     play.addItem(fireSpell);
                     setNewRoom("switch to zone 2", play, 0, 0);
                 }
+                */
 
             } catch (InterruptedException ignored) {
             }
@@ -203,11 +205,13 @@ public class TutorialBasement extends Room {
         addMortal(spoidur);
 
 
+        /*
         Item potion = new Item("SC&OPotatoChip", "This variety of magic\n potato chip is flavored\n with sour cream and onions\n\nIt makes your breath so bad\n it hurts nearby enemies.", "item");
         potion.setSpellType("potion");
         potion.setDuration(20 * 1000);
         DroppedItem dPotion = new DroppedItem(this, "You found a potato chip!", potion, 5, 7);
         super.addObject(dPotion);
+        */
 
         /*
         PathingObj obj = new PathingObj(this, 15, 29);

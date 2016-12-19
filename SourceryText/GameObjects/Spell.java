@@ -45,8 +45,8 @@ public class Spell extends GameObject {
      * @param setY    Y starting point
      * @param setOr   integer orientation.  0: up  1:down  2:left  3:right
      */
-    public Spell(Room theRoom, int setX, int setY, int setOr, int setDmg, int setRng, SpecialText set1, SpecialText set2, boolean alting, boolean tracking) {
-        this(theRoom, setX, setY, setOr, setDmg, setRng, set1, set2, alting, "arcane");
+    public Spell(Room theRoom, int setX, int setY, int setOr, int setDmg, int setRng, SpecialText set1, SpecialText set2, boolean alting, boolean tracking, String spellName) {
+        this(theRoom, setX, setY, setOr, setDmg, setRng, set1, set2, alting, spellName);
         enemySeeking = tracking;
     }
 
@@ -65,7 +65,7 @@ public class Spell extends GameObject {
         org.addLayer(effect);
 
         orientation = setOr;
-        this.type = type;
+        name = type;
 
         define(setDmg, setRng, set1, set2);
         dispAlting = alting;

@@ -6,6 +6,8 @@
 package SourceryText.Rooms.TheSource;
 
 import SourceryText.Art;
+import SourceryText.GameObjects.Mortal;
+import SourceryText.GameObjects.OneWayDoor;
 import SourceryText.GameObjects.Player;
 import SourceryText.GameObjects.TheSource.Bandit;
 import SourceryText.GameObjects.TheSource.BanditKing;
@@ -45,6 +47,8 @@ public class HallOfBanditKing extends Room {
     private boolean fightStarting = true;
     private int kingIntroSeq = 0;
 
+    private int playerJumpingTimer = 0;
+
     @Override
     protected String loop(Player play) {
         while (exitCode.equals("")) {
@@ -71,6 +75,9 @@ public class HallOfBanditKing extends Room {
                 }
                 if ((play.getY() >= 54 && play.getY() <= 66) || beehiveReaction){
                     fightStarting = false;
+                    Mortal[] kingList = getMortalListOf("BanditKing");
+                    if (kingList.length > 0)
+                        getMortalListOf("BanditKing")[0].followingDist = 30;
                 }
                 if (fightStarting && play.getY() <= 71 && play.getY() > 69 && kingIntroSeq == 0){
                     queueMessage(new FlavorText("Carlson! Is that you again?!?!\n For the last time, I do NOT want\n another update on that cat in the tree!","Bandit King").setViewerUsername(play.getUsername()));
@@ -80,7 +87,6 @@ public class HallOfBanditKing extends Room {
                 if (fightStarting && play.getY() > 67 && play.getY() <= 69 && kingIntroSeq == 1){
                     queueMessage(new FlavorText("You're not Carlson! I didn't summon you!\n Who even are you? How did you get here?","Bandit King").setViewerUsername(play.getUsername()));
                     queueMessage(new FlavorText("I can't let just some nobody walk\n here unannounced!\nPrepare to die!!!","Bandit King").setViewerUsername(play.getUsername()));
-                    getMortalListOf("BanditKing")[0].followingDist = 30;
                     kingIntroSeq++;
                 }
                 if (play.getY() >= 9 && play.getY() <= 12){
@@ -88,6 +94,15 @@ public class HallOfBanditKing extends Room {
                 }
                 if (play.getY() >= 73){
                     setNewRoom("BanditFortress", play,4,51);
+                }
+                if (play.getX() == 37 && play.getY() == 27){
+                    playerJumpingTimer += players.size();
+                    if (playerJumpingTimer == 10){
+                        splashQuestion("Jump off the cliff to your fate beyond?", play, 1);
+                    }
+                } else if (playerJumpingTimer > 0){
+                    playerJumpingTimer--;
+                    System.out.println(playerJumpingTimer);
                 }
             } catch (InterruptedException ignored) {}
         }
@@ -105,6 +120,9 @@ public class HallOfBanditKing extends Room {
         */
         BanditKing theBanditKing = new BanditKing(this, 37, 55);
         addMortal(theBanditKing);
+
+        OneWayDoor bossDoor = new OneWayDoor(false, 35, 70, this, org);
+        addObject(bossDoor);
     }
 
     @Override
@@ -140,9 +158,9 @@ public class HallOfBanditKing extends Room {
         Layer lay1 = new Layer(base, "RoomLayer");
         Art coloring = new Art();
 
-//        lay1.findAndReplace(new SpecialText(":"), new SpecialText(":", null, new Color(51, 43, 38)));
-//        lay1.findAndReplace(new SpecialText(";"), new SpecialText(";", null, new Color(51, 43, 38)));
-//        lay1.findAndReplace(new SpecialText("^"), new SpecialText("^", null, new Color(51, 43, 38)));
+        //lay1.findAndReplace(new SpecialText(":"), new SpecialText(":", null, new Color(51, 43, 38)));
+        //lay1.findAndReplace(new SpecialText(";"), new SpecialText(";", null, new Color(51, 43, 38)));
+        //lay1.findAndReplace(new SpecialText("^"), new SpecialText("^", null, new Color(51, 43, 38)));
 
 //        lay1.setAllFg(coloring.mountainPallette1);
 /*        lay1.influenceAll(coloring.mountainPallette1);
@@ -157,18 +175,19 @@ public class HallOfBanditKing extends Room {
         lay1.findAndReplace(new SpecialText("/", coloring.mountainPallette1), new SpecialText("/", coloring.mountainPallette1));
         lay1.findAndReplace(new SpecialText("\\", coloring.mountainPallette1), new SpecialText("\\", coloring.mountainPallette1));
         */
-        lay1.influenceAll(coloring.mountainPallette3);
-        lay1.findAndReplace(new SpecialText("^", coloring.mountainPallette3), new SpecialText("^", coloring.mountainPallette1));
-        lay1.findAndReplace(new SpecialText(":", coloring.mountainPallette3), new SpecialText(":", coloring.mountainPallette1));
-        lay1.findAndReplace(new SpecialText(";", coloring.mountainPallette3), new SpecialText(";", coloring.mountainPallette1));
+        lay1.setAllFg(coloring.mountainPallette3);
+        lay1.findAndReplace(new SpecialText("^", coloring.mountainPallette3), new SpecialText("^", coloring.mountainPallette1, new Color(51, 43, 38)));
+        lay1.findAndReplace(new SpecialText(":", coloring.mountainPallette3), new SpecialText(":", coloring.mountainPallette1, new Color(51, 43, 38)));
+        lay1.findAndReplace(new SpecialText(";", coloring.mountainPallette3), new SpecialText(";", coloring.mountainPallette1, new Color(51, 43, 38)));
         lay1.findAndReplace(new SpecialText("#", coloring.mountainPallette3), coloring.poundWall);
         lay1.findAndReplace(new SpecialText("8", coloring.mountainPallette3), new SpecialText("8", new Color(200, 200, 75)));
         highlightFlavorText(lay1);
         org.addLayer(lay1);
 
         initHitMeshes(lay1);
-        String[] solids = {";", ":", "^", "O", "o", "O", "#","_","\\","/","|","8","-"};
+        String[] solids = {";", ":", "^", "O", "o", "O", "#","_","\\","/","|","8"};
         addToBaseHitMesh(base, solids);
+        addToBaseHitMesh(37, 53);
 
         addItems();
 

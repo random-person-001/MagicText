@@ -33,7 +33,7 @@ public class Cliffside extends Room {
                     queueMessage(new FlavorText("Endless rows of trees covered in sunset\n sitting beyond your view distance....", "").setViewerUsername(play.getUsername()));
                     queueMessage(new FlavorText("A picture taken here on this cliff\n would definitely make a great postcard.", "").setViewerUsername(play.getUsername()));
                     // ^ This should be an item in The Mines of Mementos
-                    queueMessage(new FlavorText("\"that gorge was carved by erosion of millions of bandits traveling along a path there - a force to be reckoned with\"", "").setViewerUsername(play.getUsername()));
+                    queueMessage(new FlavorText("You know those bandits Dennis was\n talking about? There's a patrol\n already at the other end.", "").setViewerUsername(play.getUsername()));
                     count++;
                 }
 
@@ -79,17 +79,21 @@ public class Cliffside extends Room {
         //Thief johnathan = new Thief(org, this, 21, 10);
         //addMortal(johnathan);
 
+        /*
         int[][] towerLocs = {{124, 14}, {130, 18}, {130, 8}, {140, 16}};
         for (int[] towerLoc : towerLocs) {
             WeakTower t = new WeakTower(org, this, towerLoc[0], towerLoc[1]);
             addMortal(t);
         }
+        */
 
+        /*
         Item potion = new Item("SC&OPotatoChip", "This variety of magic\n potato chip is flavored\n with sour cream and onions\n\nIt makes your breath so bad\n it hurts nearby enemies.", "item");
         potion.setSpellType("potion");
         potion.setDuration(20 * 1000);
         DroppedItem dPotion = new DroppedItem(this, "You found a potato chip!", potion, 58, 7);
         super.addObject(dPotion);
+        */
     }
 
     @Override

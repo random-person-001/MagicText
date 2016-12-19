@@ -28,13 +28,15 @@ import static java.lang.StrictMath.abs;
  * @author 119184
  */
 public class GameObject implements java.io.Serializable {
-    updateTimer updateTimerInstance;
+    UpdateTimer updateTimerInstance;
     public String strClass = "None";
     public ImageOrg org;
     public Room room;
     private transient Timer timer;
     private int targetUpdateInterval;
     private int currentUpdateInterval = targetUpdateInterval; // Almost always == target one.  Temporal dilation sometimes changes this, though
+
+    public int slowedTimer = 0;
 
     protected int x;
     protected int y;
@@ -110,7 +112,7 @@ public class GameObject implements java.io.Serializable {
     public void setupTimer(){
         cancelTimer();
         timer = new Timer();
-        updateTimerInstance = new updateTimer(currentUpdateInterval);
+        updateTimerInstance = new UpdateTimer(currentUpdateInterval);
         timer.scheduleAtFixedRate(updateTimerInstance, currentUpdateInterval, currentUpdateInterval);
     }
 
@@ -144,18 +146,25 @@ public class GameObject implements java.io.Serializable {
         paused.set(set);
     }
 
-    class updateTimer extends TimerTask implements java.io.Serializable {
+    class UpdateTimer extends TimerTask implements java.io.Serializable {
         int freq;
+        boolean waitThisUpdate = false;
 
-        updateTimer(int frequency) {
+        UpdateTimer(int frequency) {
             freq = frequency;
         }
 
         public void run() {
-            if (!paused.get()) {
+            if (!paused.get() && !waitThisUpdate) {
                 update();
                 backgroundUpdate();
                 addTime(freq);
+                if (slowedTimer > 0){
+                    waitThisUpdate = true;
+                    slowedTimer--;
+                }
+            } else if (waitThisUpdate){
+                waitThisUpdate = false;
             }
         }
     }

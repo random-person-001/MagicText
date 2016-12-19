@@ -151,7 +151,7 @@ public class Room implements java.io.Serializable {
         }
     }
 
-    protected void setNewRoom(String newID, Player player, int playerY, int playerX) {
+    public void setNewRoom(String newID, Player player, int playerY, int playerX) {
         if (exitCode.equals("")) {
             removeFromObjHitMesh(player.getX(), player.getY());
             player.goTo(playerX, playerY);
@@ -947,7 +947,7 @@ public class Room implements java.io.Serializable {
                 if (messageQueue.size() >= 1) {
                     messageQueue.get(0).output();
                 }
-                if (isQuestion && choosingYes)
+                if (isQuestion && choosingYes && playerName != null)
                     doQuestionResponse(questionID, playerName);
             }
             if (changingAnswer) {

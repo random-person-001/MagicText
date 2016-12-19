@@ -31,9 +31,6 @@ public class Mortal extends GameObject implements java.io.Serializable {
 
     private SpecialText dmgIcon = new SpecialText("");
 
-    public int slowedTimer = 0; //Timer for slowing enemies
-
-
     /**
      * Mortal-specific stuff for updates.  Checks death and runs onDeath() when appropriate
      */
@@ -56,7 +53,7 @@ public class Mortal extends GameObject implements java.io.Serializable {
         return health;
     }
 
-    public void subtractHealth(int amountLost, String message, String damageType) {
+    public void subtractHealth(int amountLost, String message, String spellName) {
         if (strClass.equals("Player")) {
             Player meAsPlayer = (Player) this;
             int damage = (amountLost - meAsPlayer.defense);
@@ -80,6 +77,15 @@ public class Mortal extends GameObject implements java.io.Serializable {
             setDispIcon(dmgIcon);
             Timer timing = new Timer();
             timing.schedule(new dmgTimer(), 250);
+        }
+        doSpellEffects(spellName);
+    }
+
+    private void doSpellEffects(String spellName){
+        switch(spellName){
+            case "FluffySnowball":
+                slowedTimer = 7;
+                break;
         }
     }
 
