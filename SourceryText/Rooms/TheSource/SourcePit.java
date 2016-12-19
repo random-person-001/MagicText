@@ -111,15 +111,14 @@ public class SourcePit extends Room {
         String[][] base = Art.strToArray(arty.sourcePit);
         Layer lay1 = new Layer(base, "base");
 
-        lay1.findAndReplace(new SpecialText(":"), new SpecialText(":", null, new Color(51, 43, 38)));
-        lay1.findAndReplace(new SpecialText(";"), new SpecialText(";", null, new Color(51, 43, 38)));
-        lay1.findAndReplace(new SpecialText("^"), new SpecialText("^", null, new Color(51, 43, 38)));
+        lay1.findAndReplace(new SpecialText(":"), new SpecialText(":", arty.mountainPallette1, new Color(51, 43, 38)));
+        lay1.findAndReplace(new SpecialText(";"), new SpecialText(";", arty.mountainPallette1, new Color(51, 43, 38)));
+        lay1.findAndReplace(new SpecialText("^"), new SpecialText("`", arty.mountainPallette1, new Color(51, 43, 38)));
 
-        lay1.findAndReplace(new SpecialText("."), new SpecialText(".", null, new Color(26, 22, 19)));
-        lay1.findAndReplace(new SpecialText("'"), new SpecialText("'", null, new Color(26, 22, 19)));
-        lay1.findAndReplace(new SpecialText(","), new SpecialText(",", null, new Color(26, 22, 19)));
-
-        lay1.setAllFg(arty.mountainPallette1);
+        lay1.findAndReplace(new SpecialText("."), new SpecialText(".", arty.mountainPallette1, new Color(26, 22, 19)));
+        lay1.findAndReplace(new SpecialText("'"), new SpecialText("'", arty.mountainPallette1, new Color(26, 22, 19)));
+        lay1.findAndReplace(new SpecialText(","), new SpecialText(",", arty.mountainPallette1, new Color(26, 22, 19)));
+        lay1.findAndReplace(new SpecialText("o"), new SpecialText("o", new Color(100,100,100), null));
 
         //System.out.println("[SourcePit]");
         for (int r=0; r<lay1.getRows(); r++){
@@ -127,12 +126,20 @@ public class SourcePit extends Room {
                 String s = lay1.getStr(r,c);
                 SpecialText st = lay1.getSpecTxt(r,c);
                 //System.out.print(s);
-                if (s.equals("\\") || s.equals("|") || s.equals("/")){
+                if (r > 10 && (s.equals("\\") || s.equals("|") || s.equals("/"))){
                     //System.out.println(1*(r-11.0)/18.0);
                     int depth = 255 - (int) (255 * (r-11.0)/18.0);
                     //System.out.println(depth);
+                    st.setForeground(arty.mountainPallette1);
                     st.setInfluencedForegroundColor(new Color(depth,depth,depth));
-                    lay1.setSpecTxt(r,c,st);
+                }
+                else if (r < 10 && (s.equals("\\") || s.equals("/") || s.equals("|") || s.equals("_") || s.equals("-")|| s.equals("v"))){ // color roof and house
+                    st.setForeground(new Color(150,151,100));
+                }
+                else if (r < 10 && (s.equals("#"))){ // color roof and house
+                    //st.setForeground(new Color(90,60,50));
+                    st.setForeground(new Color(240,230,200));
+                    st.setBackground(new Color(20,21,5));
                 }
             }
             //System.out.println();
