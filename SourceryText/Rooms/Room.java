@@ -151,7 +151,7 @@ public class Room implements java.io.Serializable {
         }
     }
 
-    protected void setNewRoom(String newID, Player player, int playerY, int playerX) {
+    public void setNewRoom(String newID, Player player, int playerY, int playerX) {
         if (exitCode.equals("")) {
             removeFromObjHitMesh(player.getX(), player.getY());
             player.goTo(playerX, playerY);

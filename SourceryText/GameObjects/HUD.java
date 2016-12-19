@@ -302,6 +302,7 @@ class HUD implements java.io.Serializable {
      * >unfreeze : sets frozen to off for player (in the case it is forgotten somehow)
      * >unghost : Re-enables players checking for walls
      * >unpause : set Player's paused to false
+     * >zone2 cheat : jumps to zone 2 and gives player a bunch of stuff
      * </p>
      * Tip: to execute a bunch of commands after each other, use '&&' in between them.  Also, you can type a command
      * after 'sudo' to execute that command with root privileges, however there isn't much difference anymore :(
@@ -559,6 +560,14 @@ class HUD implements java.io.Serializable {
                     player.room.exitCode = "switch to zone " + newZone;
                 }
             }
+        } else if (command.contains("zone2 cheat")) {
+            player.isGhost = true;
+            player.ludicrousSpeed = true;
+            player.restoreHealth(400, 294);
+            Item fireSpell = new Item("Fireball", "Fire Spell;\nUse your imagination.", "FrBll", "spell", true);
+            fireSpell.dmgSpellDefine(1, 100, 0, "fire", new SpecialText("6", new Color(255, 200, 0)), new SpecialText("9", new Color(255, 150, 0)));
+            player.addItem(fireSpell);
+            room.setNewRoom("switch to zone 2", player, 0, 0);
         } else if (command.length() > 0) {
             showResponse("Command '" + command + "' not recognised.  Check your spelling or " +
                     "request it as a new feature.");
