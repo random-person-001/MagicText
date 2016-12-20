@@ -44,6 +44,8 @@ public class Item implements java.io.Serializable {
     private boolean pathfinds = false;
 
     public boolean isDmgSpell = false;
+    public float spellBurnout = 0f; //Accumulative burnout of spell
+    public float usageBurnout = 0f; //Burnout obtained with each use
 
     public Item(String theName, String theDesc) {
         name = theName;
@@ -220,6 +222,13 @@ public class Item implements java.io.Serializable {
 
     public void setHeal(int to) {
         healing = to;
+    }
+
+    public void setUsageBurnout(float to) {usageBurnout = to;}
+
+    public void decrementBurnout() {
+        spellBurnout -= 0.01f;
+        if (spellBurnout < 0) spellBurnout = 0;
     }
 
     public void healItemDefine(int to, int over) {

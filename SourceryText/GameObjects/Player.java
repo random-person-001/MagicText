@@ -59,6 +59,10 @@ public class Player extends Mortal implements java.io.Serializable {
     int manaWait = 0;
     private boolean manaHalfStep;
     int defense = 0;
+
+    private int burnoutRecoveryClock = 0;
+    private int burnoutWaitTime = 250;
+
     //Note for the future: Damage can't be reduced below 1 damage. Swords and explosions don't heal people.
 
     // CHANGABLE STATS
@@ -267,7 +271,16 @@ public class Player extends Mortal implements java.io.Serializable {
                 manaRegenClock = 0;
             }
 
-            resetTime(); // time is used for mana regen.
+            burnoutRecoveryClock += getTime();
+            if (burnoutRecoveryClock > burnoutWaitTime){
+                spell1.decrementBurnout();
+                //if (spell1.spellBurnout > 0)
+                //    System.out.printf("Player Spell 1 Burnout: %1$f\n", spell1.spellBurnout);
+                spell2.decrementBurnout();
+                burnoutRecoveryClock -= burnoutWaitTime;
+            }
+
+            resetTime(); // time is used for mana regen and spell burnout.
             graphicUpdate();
             aimDispUpdate();
             doMovement();
@@ -668,15 +681,17 @@ public class Player extends Mortal implements java.io.Serializable {
                         damage += darkSpellBoost;
                         break;
                 }
+                damage = (int)Math.ceil((float)damage * (1.0f - spell.spellBurnout));
                 looseCastDmgSpell(damage, spell);
-            } else {
-                switch (spell.getName()) {
-                    case "Heal":
-                        if (mana >= spell.cost) {
-                            restoreHealth(spell.healing);
-                            spendMana(spell.cost);
-                        }
-                        break;
+                spell.spellBurnout += spell.usageBurnout;
+                if (spell.spellBurnout > 0.99f) spell.spellBurnout = 0.99f;
+            } else if (spell.getDescMode().equals("healing")){
+                if (mana >= spell.cost) {
+                    int amountHealing = (int)Math.ceil((float)spell.healing * (1.0f - spell.spellBurnout));
+                    restoreHealth(amountHealing);
+                    spendMana(spell.cost);
+                    spell.spellBurnout += spell.usageBurnout;
+                    if (spell.spellBurnout > 0.99f) spell.spellBurnout = 0.99f;
                 }
             }
         }

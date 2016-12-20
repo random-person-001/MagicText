@@ -175,9 +175,10 @@ public class TutorialBasement extends Room {
         DroppedItem gFire = new DroppedItem(this, "You found a spell: Fireball!", fireSpell, 80, 29);
         super.addObject(gFire);
 
-        Item healSpell = new Item("Heal", "Simple healing spell.", "Heal ", "spell");
+        Item healSpell = new Item("Simple Heal", "Simple healing spell.", "sHeal", "spell");
         healSpell.altSpellDefine(12, "healing");
         healSpell.setHeal(8);
+        healSpell.setUsageBurnout(0.3f);
         DroppedItem gHeal = new DroppedItem(this, "You found a spell: Heal!", healSpell, 65, 9);
         super.addObject(gHeal);
 

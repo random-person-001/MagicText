@@ -149,8 +149,9 @@ class HUD implements java.io.Serializable {
                     } else {
                         if (spell1Name[ii] == null)
                             putChar(" ");
-                        else
-                            putChar(spell1Name[ii]);
+                        else {
+                            putChar(new SpecialText(spell1Name[ii], createColorFromSpell(player.spell1, ii)));
+                        }
                     }
                 }
                 putChar(")");
@@ -165,7 +166,7 @@ class HUD implements java.io.Serializable {
                         if (spell2Name[ii] == null)
                             putChar(" ");
                         else
-                            putChar(spell2Name[ii]);
+                            putChar(new SpecialText(spell2Name[ii], createColorFromSpell(player.spell2, ii)));
                     }
                 }
                 putChar(")");
@@ -241,6 +242,39 @@ class HUD implements java.io.Serializable {
         } else if (key == '~') {
             command = "ghost && catch all && goto 118 4 && jumpto Cliffside";
         }
+    }
+
+    private Color createColorFromSpell (Item source, int charNum){
+        Color baseColor = Color.WHITE;
+        switch (source.getDescMode()){
+            case "arcane":
+                baseColor = new Color(102, 102, 255);
+                break;
+            case "fire":
+                baseColor = new Color(204, 161, 82);
+                break;
+            case "ice":
+                baseColor = new Color(102, 204, 255);
+                break;
+            case "dark":
+                baseColor = new Color(125, 71, 179);
+                break;
+            case "healing":
+                baseColor = new Color(205, 255, 100);
+                break;
+        }
+        float burnoutColorScalar = 1f;
+        if (source.spellBurnout < (5 - charNum) * 0.2f && source.spellBurnout > (4 - charNum) * 0.2f){
+            burnoutColorScalar = ((0.2f - (source.spellBurnout % 0.2f)) * 3) + 0.4f;
+            //System.out.printf("Burnout disp scalar: %1$f\n", burnoutColorScalar);
+        } else if ((source.spellBurnout) > (5 - charNum) * 0.2f){
+            burnoutColorScalar = 0.4f;
+        }
+        Color finalColor = new Color(
+                (int)(baseColor.getRed() * burnoutColorScalar),
+                (int)(baseColor.getGreen() * burnoutColorScalar),
+                (int)(baseColor.getBlue() * burnoutColorScalar));
+        return finalColor;
     }
 
     /**
