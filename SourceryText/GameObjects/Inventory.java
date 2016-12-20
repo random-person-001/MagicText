@@ -256,13 +256,13 @@ class Inventory implements java.io.Serializable {
         item3.setEquipvals(1, 1, 1, 1, 1, 1, 1, "weapon");
         equip.add(item3);
         Item item5 = new Item("NeodymNeedle", "Arcane spell;\n\nA neodymium needle.\n\nIt is so magnetic it will\n fly around walls to hit\n enemies; no aim required.", "NeoNd", "spell", true);
-        item5.dmgSpellDefine(6, 20, 7, "arcane", new SpecialText("\\"), new SpecialText("/"), true, 0);
+        item5.dmgSpellDefine(6, 20, 7, 0.1f, "arcane", new SpecialText("\\"), new SpecialText("/"), true, 0);
         spells.add(item5);
         Item item5AndAHalf = new Item("Fire Bomb", "Fire spell;\n\nHighly explosive throwable\n\nBoom! There goes another\n ship! So poetic!\n Deals splash damage on impact", "FireB", "spell", true);
-        item5AndAHalf.dmgSpellDefine(7, 11, 9, "fire", new SpecialText("O", new Color(191, 8, 38)), new SpecialText("o", new Color(255,156,0)), false, 5);
+        item5AndAHalf.dmgSpellDefine(7, 11, 9, 0.1f, "fire", new SpecialText("O", new Color(191, 8, 38)), new SpecialText("o", new Color(255,156,0)), false, 5);
         spells.add(item5AndAHalf);
         Item item6 = new Item("Evil Powers", "Dark Spell;\n\nYou're not sure what it is\n exactly, but it has the\n word 'power' in its name,\n so it must be good,\n right?", "EvlPw", "spell", true);
-        item6.dmgSpellDefine(1, 8, 2, "dark", new SpecialText("*", new Color(155, 55, 155)), new SpecialText("*", new Color(255, 55, 255)), false, 0);
+        item6.dmgSpellDefine(1, 8, 2, 0.05f, "dark", new SpecialText("*", new Color(155, 55, 155)), new SpecialText("*", new Color(255, 55, 255)), false, 0);
         spells.add(item6);
         Item item7 = new Item("Bewitched Scarf", "A scarf imbued with witch\n magic, granting the user\n increased dark and ice\n magic power\n\nIt smells like flowers.", "equipment");
         item7.setEquipvals(1, 3, 0, 0, 0, 2, 2, "weapon");

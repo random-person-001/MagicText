@@ -274,8 +274,8 @@ public class Player extends Mortal implements java.io.Serializable {
             burnoutRecoveryClock += getTime();
             if (burnoutRecoveryClock > burnoutWaitTime){
                 spell1.decrementBurnout();
-                //if (spell1.spellBurnout > 0)
-                //    System.out.printf("Player Spell 1 Burnout: %1$f\n", spell1.spellBurnout);
+                if (spell1.spellBurnout > 0)
+                    System.out.printf("Player Spell 1 Burnout: %1$f\n", spell1.spellBurnout);
                 spell2.decrementBurnout();
                 burnoutRecoveryClock -= burnoutWaitTime;
             }
@@ -683,24 +683,26 @@ public class Player extends Mortal implements java.io.Serializable {
                 }
                 damage = (int)Math.ceil((float)damage * (1.0f - spell.spellBurnout));
                 looseCastDmgSpell(damage, spell);
-                spell.spellBurnout += spell.usageBurnout;
-                if (spell.spellBurnout > 0.99f) spell.spellBurnout = 0.99f;
             } else if (spell.getDescMode().equals("healing")){
                 if (mana >= spell.cost) {
                     int amountHealing = (int)Math.ceil((float)spell.healing * (1.0f - spell.spellBurnout));
                     restoreHealth(amountHealing);
-                    spendMana(spell.cost);
-                    spell.spellBurnout += spell.usageBurnout;
-                    if (spell.spellBurnout > 0.99f) spell.spellBurnout = 0.99f;
+                    spendMana(spell);
                 }
             }
         }
     }
 
-    private void spendMana(int cost) {
+    private void spendMana(int cost){
         mana -= cost;
         int wait = 2000 - (int) (1750 * ((float) mana / (float) maxMana));
         manaWait = wait;
+    }
+
+    private void spendMana(Item spellUsed) {
+        spendMana(spellUsed.cost);
+        spellUsed.spellBurnout += spellUsed.usageBurnout;
+        if (spellUsed.spellBurnout > 0.99f) spellUsed.spellBurnout = 0.99f;
     }
 
     private void looseCastDmgSpell(int dmg, Item spell) {
@@ -710,7 +712,7 @@ public class Player extends Mortal implements java.io.Serializable {
             toFire.setHostility(false);
             toFire.setSplashRadius(spell.splashRadius);
             room.addObject(toFire);
-            spendMana(spell.cost);
+            spendMana(spell);
             //System.out.println("The damage spell fired!");
         }
     }

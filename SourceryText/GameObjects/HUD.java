@@ -599,7 +599,7 @@ class HUD implements java.io.Serializable {
             player.ludicrousSpeed = true;
             player.restoreHealth(400, 294);
             Item fireSpell = new Item("Fireball", "Fire Spell;\nUse your imagination.", "FrBll", "spell", true);
-            fireSpell.dmgSpellDefine(1, 100, 0, "fire", new SpecialText("6", new Color(255, 200, 0)), new SpecialText("9", new Color(255, 150, 0)));
+            fireSpell.dmgSpellDefine(1, 100, 0, 0f, "fire", new SpecialText("6", new Color(255, 200, 0)), new SpecialText("9", new Color(255, 150, 0)));
             player.addItem(fireSpell);
             room.setNewRoom("switch to zone 2", player, 0, 0);
         } else if (command.length() > 0) {

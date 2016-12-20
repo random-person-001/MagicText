@@ -61,7 +61,7 @@ public class IceCaves extends Room {
         }
 
         Item snowballSpell = new Item("FluffySnowball", "Ice Spell;\n\nA ball of fluffy snow.\n\nThe snowball itself is\n very cold, so it will\n slow enemies that are hit.", "FSwBl", "spell", true);
-        snowballSpell.dmgSpellDefine(1, 6, 2, "ice", new SpecialText("o", new Color(191, 249, 255)), new SpecialText("o", new Color(191, 249, 255)), false, 0);
+        snowballSpell.dmgSpellDefine(1, 6, 2, 0.03f, "ice", new SpecialText("o", new Color(191, 249, 255)), new SpecialText("o", new Color(191, 249, 255)), false, 0);
         DroppedItem gSnowball = new DroppedItem(this, "Found a new spell: FluffySnowball!", snowballSpell, 21, 3);
         super.addObject(gSnowball);
 

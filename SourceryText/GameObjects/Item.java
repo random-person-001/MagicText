@@ -98,13 +98,14 @@ public class Item implements java.io.Serializable {
      * @param s2    state two (animation)
      * @param splashRadius make your spell a splash spell!  (non-splash spells naturally pass zero to this)
      */
-    public void dmgSpellDefine(int toD, int toR, int toC, String dMode, SpecialText s1, SpecialText s2, boolean pathfinding, int splashRadius) {
+    public void dmgSpellDefine(int toD, int toR, int toC, float toB, String dMode, SpecialText s1, SpecialText s2, boolean pathfinding, int splashRadius) {
         setDmgRngCost(toD, toR, toC);
         setSpellType(dMode);
         setAnim(s1, s2);
         pathfinds = pathfinding;
         this.splashRadius = splashRadius;
         System.out.println("Am I a damage spell?: " + isDmgSpell);
+        usageBurnout = toB;
     }
 
     /**
@@ -117,11 +118,12 @@ public class Item implements java.io.Serializable {
      * @param s1    state one (animation)
      * @param s2    state two (animation)
      */
-    public void dmgSpellDefine(int toD, int toR, int toC, String dMode, SpecialText s1, SpecialText s2) {
+    public void dmgSpellDefine(int toD, int toR, int toC, float toB, String dMode, SpecialText s1, SpecialText s2) {
         setDmgRngCost(toD, toR, toC);
         setSpellType(dMode);
         setAnim(s1, s2);
         System.out.println("Am I a damage spell?: " + isDmgSpell);
+        usageBurnout = toB;
     }
 
     /**
@@ -260,17 +262,13 @@ public class Item implements java.io.Serializable {
             case "damage":
                 return description + "\n\nDamage: " + String.valueOf(damage) + "\nRange : " + String.valueOf(range) + "\nCost  : " + String.valueOf(cost);
             case "arcane":
-                return description + "\n\nDamage: " + String.valueOf(damage) + " (+" + (player.allSpellBoost + player.arcSpellBoost)
-                        + ")\nRange : " + String.valueOf(range) + "\nCost  : " + String.valueOf(cost);
+                return genericDamageSpellDesc(arcBoost, player);
             case "fire":
-                return description + "\n\nDamage: " + String.valueOf(damage) + " (+" + (player.allSpellBoost + player.fireSpellBoost)
-                        + ")\nRange : " + String.valueOf(range) + "\nCost  : " + String.valueOf(cost);
+                return genericDamageSpellDesc(fireBoost, player);
             case "ice":
-                return description + "\n\nDamage: " + String.valueOf(damage) + " (+" + (player.allSpellBoost + player.iceSpellBoost)
-                        + ")\nRange : " + String.valueOf(range) + "\nCost  : " + String.valueOf(cost);
+                return genericDamageSpellDesc(iceBoost, player);
             case "dark":
-                return description + "\n\nDamage: " + String.valueOf(damage) + " (+" + (player.allSpellBoost + player.darkSpellBoost)
-                        + ")\nRange : " + String.valueOf(range) + "\nCost  : " + String.valueOf(cost);
+                return genericDamageSpellDesc(darkBoost, player);
             case "healing":
                 return description + "\n\nRestores " + String.valueOf(healing) + " Health\nOverheal: " + String.valueOf(overheal) + "\nCost: " + String.valueOf(cost);
             case "healitem":
@@ -292,6 +290,10 @@ public class Item implements java.io.Serializable {
             default:
                 return description + "\n\nINVALID DISPLAY MODE: \n  \"" + displayMode + "\"";
         }
+    }
+
+    private String genericDamageSpellDesc(int specialBonus, Player player){
+        return String.format("%1$s\n\nDamage: %2$d (+%3$d) | Range: %4$d\nCost: %5$d   | Burnout: %6$.1f%%", description, damage, specialBonus, range, cost, (usageBurnout * 100));
     }
 
     public int getSplashRadius() {
