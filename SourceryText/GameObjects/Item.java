@@ -262,15 +262,15 @@ public class Item implements java.io.Serializable {
             case "damage":
                 return description + "\n\nDamage: " + String.valueOf(damage) + "\nRange : " + String.valueOf(range) + "\nCost  : " + String.valueOf(cost);
             case "arcane":
-                return genericDamageSpellDesc(arcBoost, player);
+                return genericDamageSpellDesc(player.arcSpellBoost, player);
             case "fire":
-                return genericDamageSpellDesc(fireBoost, player);
+                return genericDamageSpellDesc(player.fireSpellBoost, player);
             case "ice":
-                return genericDamageSpellDesc(iceBoost, player);
+                return genericDamageSpellDesc(player.iceSpellBoost, player);
             case "dark":
-                return genericDamageSpellDesc(darkBoost, player);
+                return genericDamageSpellDesc(player.darkSpellBoost, player);
             case "healing":
-                return description + "\n\nRestores " + String.valueOf(healing) + " Health\nOverheal: " + String.valueOf(overheal) + "\nCost: " + String.valueOf(cost);
+                return String.format("%1$s\n\nHeals: %2$d | Overheal: %3$d\nCost: %4$d | Burnout: %5$.1f%%", description, healing, overheal, cost, (usageBurnout * 100));
             case "healitem":
                 return description + "\n\nRestores " + String.valueOf(healing) + " Health\nOverheal: " + String.valueOf(overheal);
             case "potion":
@@ -293,7 +293,7 @@ public class Item implements java.io.Serializable {
     }
 
     private String genericDamageSpellDesc(int specialBonus, Player player){
-        return String.format("%1$s\n\nDamage: %2$d (+%3$d) | Range: %4$d\nCost: %5$d   | Burnout: %6$.1f%%", description, damage, specialBonus, range, cost, (usageBurnout * 100));
+        return String.format("%1$s\n\nDamage: %2$d (+%3$d) | Range: %4$d\nCost: %5$d   | Burnout: %6$.1f%%", description, damage, player.allSpellBoost + specialBonus, range, cost, (usageBurnout * 100));
     }
 
     public int getSplashRadius() {
