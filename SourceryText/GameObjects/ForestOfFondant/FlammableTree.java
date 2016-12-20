@@ -41,7 +41,7 @@ public class FlammableTree extends InteractableEnvironment {
         if (currentState < 4){
             int absX = dataC + layerWithStuff.getX();
             int absY = dataR + layerWithStuff.getY();
-            room.hurtSomethingAt(absX, absY ,2,"You were burnt to a crisp", "arcane");
+            room.hurtSomethingAt(absX, absY ,2,"You were burnt to a crisp", "fire");
             // Maybe start a forest fire!
             if (r(100) <= chanceOfSpreadingInEachDirection){
                 onSpellOver(absX+1, absY, "fire");

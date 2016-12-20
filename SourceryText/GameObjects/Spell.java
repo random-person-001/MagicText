@@ -7,6 +7,7 @@ import SourceryText.SpecialText;
 import java.util.Random;
 
 import static java.lang.Math.abs;
+import static java.lang.Math.toRadians;
 
 /**
  * Create a new spell.  Attributes such as its character representation, damage, and range can be customized.
@@ -30,7 +31,9 @@ public class Spell extends GameObject {
     private boolean enemySeeking = false;
 
     private boolean isHostile = false;
-    private String type; // like 'fire' or 'arcane'
+    private String type = ""; // like 'fire' or 'arcane'
+
+    private Item baseItem = null;
 
     /**
      * You can name and customize different spells.  Some presets are:
@@ -69,6 +72,37 @@ public class Spell extends GameObject {
 
         define(setDmg, setRng, set1, set2);
         dispAlting = alting;
+
+        if (org.getDebug())
+            System.out.println(name + " spell cast!");
+
+        setupTimer(30);
+    }
+
+    public Spell(Room theRoom, int setX, int setY, int setOr, int setDmg, Item setBase){
+        strClass = "Spell";
+        room = theRoom;
+        org = room.org;
+
+        x = setX;
+        y = setY;
+
+        layerName = room.makeUniqueLayerName("Spell");
+        Layer effect = new Layer(new String[1][1], layerName);
+        effect.setStr(0, 0, " ");
+        effect.setPos(x, y);
+        org.addLayer(effect);
+
+        orientation = setOr;
+
+        baseItem = setBase;
+
+        name = baseItem.getName();
+        define(setDmg, baseItem.range, baseItem.animation1, baseItem.animation2);
+        dispAlting = baseItem.getAlting();
+        enemySeeking = baseItem.getPathfinding();
+
+        type = baseItem.getDescMode();
 
         if (org.getDebug())
             System.out.println(name + " spell cast!");
@@ -171,20 +205,20 @@ public class Spell extends GameObject {
     }
 
     protected void takeCareOfHittingStuff(){
-        boolean hitSomeOne = room.hurtSomethingAt(x, y, damage, killMessage, !isHostile, type);
+        boolean hitSomeOne = room.hurtSomethingAt(x, y, damage, killMessage, !isHostile, name);
         if (enemySeeking) {
             switch (orientation){
                 case 0:
-                    hitSomeOne |= room.hurtSomethingAt(x, y - 1, damage, killMessage, !isHostile, type);
+                    hitSomeOne |= room.hurtSomethingAt(x, y - 1, damage, killMessage, !isHostile, name);
                     break;
                 case 1:
-                    hitSomeOne |= room.hurtSomethingAt(x, y + 1, damage, killMessage, !isHostile, type);
+                    hitSomeOne |= room.hurtSomethingAt(x, y + 1, damage, killMessage, !isHostile, name);
                     break;
                 case 2:
-                    hitSomeOne |= room.hurtSomethingAt(x - 1, y, damage, killMessage, !isHostile, type);
+                    hitSomeOne |= room.hurtSomethingAt(x - 1, y, damage, killMessage, !isHostile, name);
                     break;
                 case 3:
-                    hitSomeOne |= room.hurtSomethingAt(x + 1, y, damage, killMessage, !isHostile, type);
+                    hitSomeOne |= room.hurtSomethingAt(x + 1, y, damage, killMessage, !isHostile, name);
                     break;
             }
         }
@@ -266,7 +300,7 @@ public class Spell extends GameObject {
                 float yDamageMult = abs(abs(yi) - splashRadius) / (float) splashRadius;
                 int totalDamage = (int) (damage * .5 * (xDamageMult + yDamageMult));
                 if (xi==0 && yi==0) totalDamage = 0; // We already hit the thing in the middle, earlier in the code.
-                room.hurtSomethingAt(xi + x, yi + y, totalDamage, "Hit by the splash damage of a\n spell! Better be more careful.", type);
+                room.hurtSomethingAt(xi + x, yi + y, totalDamage, "Hit by the splash damage of a\n spell! Better be more careful.", name);
                 //System.out.println(x + xi + " " + (yi + y) + " given " + totalDamage + " damage");
             }
             //System.out.println();

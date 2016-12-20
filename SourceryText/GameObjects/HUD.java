@@ -476,7 +476,7 @@ class HUD implements java.io.Serializable {
                 System.out.println("X: " + x);
                 System.out.println("Y: " + y);
                 room.hurtSomethingAt(x, y, 1000, "You were zapped by your own lightning!\nNext time, be more careful" +
-                        "with \nthe command line.", "arcane");
+                        "with \nthe command line.");
 
                 Item ashItem = new Item("Ash", "You struck down a \n bolt of lightning, \n which left only this\n behind.", "~", "item");
                 DroppedItem ashDrop = new DroppedItem(room, "Ow!  The ashes of your smote\n enemies are still hot!", ashItem, x, y);
@@ -514,7 +514,7 @@ class HUD implements java.io.Serializable {
                             float xDamageMult = abs(abs(xi) - r) / (float) r; // 0 to 1, peaking when xi=0 (center)
                             float yDamageMult = abs(abs(yi) - r) / (float) r;
                             int totalDamage = (int) (d * .5 * (xDamageMult + yDamageMult));
-                            room.hurtSomethingAt(xi + x, yi + y, totalDamage, "Jeez, killed yourself with an ICBM!\n Careful!", "arcane");
+                            room.hurtSomethingAt(xi + x, yi + y, totalDamage, "Jeez, killed yourself with an ICBM!\n Careful!");
                             System.out.println(x + xi + " " + (yi + y) + " given " + totalDamage + " damage");
                         }
                         System.out.println();

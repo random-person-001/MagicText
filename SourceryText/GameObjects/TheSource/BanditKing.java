@@ -46,7 +46,8 @@ public class BanditKing extends Mortal {
             Mortal target = getClosestGoodGuy();
             pathToPos(followingDist, target.getX(), target.getY());
             if (Math.abs(target.getX() - x) + Math.abs(target.getY() - y) <= 1){
-                room.hurtSomethingAt(target.getX(), target.getY(), 8, "You got sliced by the Bandit King's axe!", "");
+                //room.hurtSomethingAt(target.getX(), target.getY(), 8, "You got sliced by the Bandit King's axe!");
+                target.subtractHealth(8, "You got sliced by the Bandit King's axe!", "axe");
                 isRanged = true;
                 chargeTimer = 0;
             }
