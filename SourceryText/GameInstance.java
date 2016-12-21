@@ -3,6 +3,7 @@ package SourceryText;
 import SourceryText.GameObjects.Player;
 import SourceryText.GameObjects.PlayerKeyPressListener;
 import SourceryText.Rooms.ForestOfFondant.Cliffbottom;
+import SourceryText.Rooms.ForestOfFondant.FondantVillage;
 import SourceryText.Rooms.Room;
 import SourceryText.Rooms.SeaOfSurprise.DockAndShip;
 import SourceryText.Rooms.TheSource.*;
@@ -168,6 +169,7 @@ public class GameInstance implements java.io.Serializable {
         // Add rooms here
         rooms.put("DockAndShip", new DockAndShip(player));
         rooms.put("Cliffbottom", new Cliffbottom(player));
+        rooms.put("FondantVillage", new FondantVillage(player));
 
         rooms.forEach((s, room) -> room.startup());
         rooms.forEach((s, room) -> room.setObjsPause(true));

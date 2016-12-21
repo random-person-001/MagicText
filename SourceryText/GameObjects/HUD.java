@@ -337,6 +337,7 @@ class HUD implements java.io.Serializable {
      * >unghost : Re-enables players checking for walls
      * >unpause : set Player's paused to false
      * >zone2 cheat : jumps to zone 2 and gives player a bunch of stuff
+     * >zone2 lite : jumps to zone 2 and gives player a little bit less stuff
      * </p>
      * Tip: to execute a bunch of commands after each other, use '&&' in between them.  Also, you can type a command
      * after 'sudo' to execute that command with root privileges, however there isn't much difference anymore :(
@@ -599,6 +600,13 @@ class HUD implements java.io.Serializable {
             player.ludicrousSpeed = true;
             player.restoreHealth(400, 294);
             Item fireSpell = new Item("Fireball", "Fire Spell;\nUse your imagination.", "FrBll", "spell", true);
+            fireSpell.dmgSpellDefine(1, 100, 0, 0f, "fire", new SpecialText("6", new Color(255, 200, 0)), new SpecialText("9", new Color(255, 150, 0)));
+            player.addItem(fireSpell);
+            room.setNewRoom("switch to zone 2", player, 0, 0);
+        } else if (command.contains("zone2 lite")) {
+            player.isGhost = true;
+            player.restoreHealth(400, 294);
+            Item fireSpell = new Item("Deforestor", "Fire Spell;\nUse your imagination.", "DFrst", "spell", true);
             fireSpell.dmgSpellDefine(1, 100, 0, 0f, "fire", new SpecialText("6", new Color(255, 200, 0)), new SpecialText("9", new Color(255, 150, 0)));
             player.addItem(fireSpell);
             room.setNewRoom("switch to zone 2", player, 0, 0);
