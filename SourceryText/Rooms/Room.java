@@ -589,11 +589,11 @@ public class Room implements java.io.Serializable {
     /**
      * Puts a message on the queue for display
      */
-    public void queueMessage(FlavorText message) {
-        messageQueue.add(message);
-        System.out.println("MESSAGE STACK SIZE: " + messageQueue.size());
-        if (messageQueue.size() == 1) {
-            messageQueue.get(0).output();
+    public void queueMessage(FlavorText message, Player viewer) {
+        viewer.messageQueue.add(message.setViewer(viewer));
+        System.out.println("MESSAGE STACK SIZE: " + viewer.messageQueue.size());
+        if (viewer.messageQueue.size() == 1) {
+            viewer.messageQueue.get(0).output();
         }
     }
 
@@ -642,119 +642,22 @@ public class Room implements java.io.Serializable {
     protected void specialInspect(int x, int y, Player inspector) {
     }
 
-
-    public void compactTextBox(String text, String speaker, boolean helpful) {
-        compactTextBox(text, speaker, helpful, null);
-    }
-
     /**
      * Draw a smallish text box at the bottom of the screen, waiting for enter to be pressed to dismiss it.
      *
      * @param text             a string, with appropriate newlines, to show
      * @param speaker          Who said it?  Do tell!
      * @param helpful          whether the box ought to give instructions on its own dismissal
-     * @param usernameToShowTo if not null, show this to only the Player with that username.
+     * @param user             if not null, show this to only the Player with that username.
      */
-    private void compactTextBox(String text, String speaker, boolean helpful, String usernameToShowTo) {
-        Art artsedo = new Art();
-        Layer txtBox;
-        if (helpful) {
-            txtBox = new Layer(Art.strToArray(artsedo.textBoxHelpful), "Dialog", 0, 13, false, true);
-        } else {
-            txtBox = new Layer(Art.strToArray(artsedo.textBox), "Dialog", 0, 13, false, true);
-        }
-        txtBox.setOwningPlayerUsername(usernameToShowTo);
-        txtBox.setImportance(true);
-        System.out.println(usernameToShowTo);
-
-        for (int ii = 0; ii < speaker.length(); ii++) {
-            txtBox.setStr(0, ii + 2, String.valueOf(speaker.charAt(ii)));
-        }
-
-        if (speaker.length() != 0) {
-            txtBox.setStr(0, speaker.length() + 2, ":");
-        }
-
-        int line = 1;
-        int newLineAdjust = 0;
-        for (int ii = 0; ii < text.length(); ii++) {
-            if (text.charAt(ii) == '\n') {
-                line++;
-                newLineAdjust = ii + 1;
-                System.out.println("Found newline.");
-            } else if (String.valueOf(text.charAt(ii)).equals("ĩ")) {
-                txtBox.setSpecTxt(line, ii + 1 - newLineAdjust, new SpecialText("#"));
-                //, new Color(175, 215, 245), new Color(175, 215, 245)
-            } else {
-                txtBox.setStr(line, ii + 1 - newLineAdjust, String.valueOf(text.charAt(ii)));
-            }
-        }
-        //txtBox.influenceAll(new Color(183, 199, 237));
-        txtBox.setAllBg(new Color(0, 0, 15));
-
-        //setObjsPause(true);  Unnecessary feature that interferes with fabulous mode
-        org.addLayer(txtBox);
-
-        // only bind to relavent user.
-        for (Player p : players) {
-            if (p.getUsername().equals(usernameToShowTo)) {
-                System.out.println("Binding to " + usernameToShowTo);
-            }
-            p.frozen = true;
-            // Also make them not go over the textbox
-            org.setLayerImportance(p.getLayerName(), false);
-        }
-
-        resume = false;
-
-        Timer listenTick = new Timer();
-        TextBoxListener listen = new TextBoxListener(false);
-        listenTick.scheduleAtFixedRate(listen, 100, 100);
+    private void compactTextBox(String text, String speaker, boolean helpful, Player user) {
+        TextBox box = new TextBox(this, user, text, speaker);
+        box.showTextBox(helpful);
     }
 
-    private void questionTextBox(String text, String usernameToShowTo, int qID) {
-        Art artsedo = new Art();
-        Layer txtBox = new Layer(Art.strToArray(artsedo.textBoxQuestion), "Dialog", 0, 13, false, true);
-
-        txtBox.setOwningPlayerUsername(usernameToShowTo);
-        txtBox.setImportance(true);
-        System.out.println(usernameToShowTo);
-
-        int line = 1;
-        int newLineAdjust = 0;
-        for (int ii = 0; ii < text.length(); ii++) {
-            if (text.charAt(ii) == '\n') {
-                line++;
-                newLineAdjust = ii + 1;
-                System.out.println("Found newline.");
-            } else if (String.valueOf(text.charAt(ii)).equals("ĩ")) {
-                txtBox.setSpecTxt(line, ii + 1 - newLineAdjust, new SpecialText("#"));
-                //, new Color(175, 215, 245), new Color(175, 215, 245)
-            } else {
-                txtBox.setStr(line, ii + 1 - newLineAdjust, String.valueOf(text.charAt(ii)));
-            }
-        }
-        //txtBox.influenceAll(new Color(183, 199, 237));
-        txtBox.setAllBg(new Color(0, 0, 15));
-
-        //setObjsPause(true);  Unnecessary feature that interferes with fabulous mode
-        org.addLayer(txtBox);
-
-        // only bind to relavent user.
-        for (Player p : players) {
-            if (p.getUsername().equals(usernameToShowTo)) {
-                System.out.println("Binding to " + usernameToShowTo);
-            }
-            p.frozen = true;
-            // Also make them not go over the textbox
-            org.setLayerImportance(p.getLayerName(), false);
-        }
-
-        resume = false;
-
-        Timer listenTick = new Timer();
-        TextBoxListener listen = new TextBoxListener(true, qID, usernameToShowTo);
-        listenTick.scheduleAtFixedRate(listen, 100, 100);
+    private void questionTextBox(String text, String speaker, Player user, int qID) {
+        TextBox question = new TextBox(this, user, text, speaker);
+        question.showQuestionBox(qID);
     }
 
     /**
@@ -771,11 +674,11 @@ public class Room implements java.io.Serializable {
     }
 
     public void splashMessage(String message, String speaker, Player viewer) {
-        queueMessage(new FlavorText(message, speaker).setViewerUsername(viewer.getUsername()));
+        queueMessage(new FlavorText(message, speaker), viewer);
     }
 
     public void splashQuestion(String message, Player viewer, int questionID) {
-        queueMessage(new FlavorText(message, true, questionID).setViewerUsername(viewer.getUsername()));
+        queueMessage(new FlavorText(message, true, questionID), viewer);
     }
 
     public Player getClosestPlayerTo(int x, int y){
@@ -840,7 +743,7 @@ public class Room implements java.io.Serializable {
     }
 
     public class FlavorText implements java.io.Serializable {
-        String usernameOfPlayer;
+        Player player;
         String[] messages = {""};
         String speaker = "";
         int x;
@@ -906,82 +809,30 @@ public class Room implements java.io.Serializable {
 
         void textIfCorrectSpot(int testX, int testY, String username) {
             if (x == testX && y == testY) {
-                doMessage(username);
+                doMessage(player);
             }
         }
 
-        void doMessage(String username) {
+        void doMessage(Player user) {
             for (String message : messages) {
                 //System.out.println("STACKING FOLLOWING MESSAGE:\n " + message);
                 FlavorText panel = new FlavorText(x, y, message, speaker);
-                panel.usernameOfPlayer = username;
-                queueMessage(panel);
+                panel.player = user;
+                queueMessage(panel, player);
             }
         }
 
-        void output() {
+        public void output() {
             if (isQuestion)
-                questionTextBox(messages[0], usernameOfPlayer, questionID);
+                questionTextBox(messages[0], speaker, player, questionID);
             else
-                compactTextBox(messages[0], speaker, isHelpful, usernameOfPlayer);
+                compactTextBox(messages[0], speaker, isHelpful, player);
         }
 
-        public FlavorText setViewerUsername(String usernameOfPlayer) {
-            this.usernameOfPlayer = usernameOfPlayer;
+        public FlavorText setViewer (Player viewer){
+            player = viewer;
             return this;
         }
     }
 
-    private class TextBoxListener extends TimerTask {
-        public boolean isQuestion = false;
-        public boolean choosingYes = false;
-
-        public String playerName;
-
-        public int questionID = 0;
-
-        public void run() {
-            if (resume) {
-                cancel();
-                //setObjsPause(false);
-                org.removeLayer("Dialog");
-                for (Player p : players) { // Remake the player layers important.
-                    org.setLayerImportance(p.getLayerName(), true);
-                    p.frozen = false;
-                }
-                if (messageQueue.size() > 0) {
-                    messageQueue.remove(messageQueue.get(0));
-                }
-                if (messageQueue.size() >= 1) {
-                    messageQueue.get(0).output();
-                }
-                if (isQuestion && choosingYes && playerName != null)
-                    doQuestionResponse(questionID, playerName);
-            }
-            if (changingAnswer) {
-                if (isQuestion) {
-                    if (!choosingYes) {
-                        org.editLayer(" ", "Dialog", 4, 3);
-                        org.editLayer(">", "Dialog", 4, 11);
-                        choosingYes = true;
-                    } else {
-                        org.editLayer(" ", "Dialog", 4, 11);
-                        org.editLayer(">", "Dialog", 4, 3);
-                        choosingYes = false;
-                    }
-                }
-                changingAnswer = false;
-            }
-        }
-
-        public TextBoxListener(boolean stateOfBeingQuestion) {
-            isQuestion = stateOfBeingQuestion;
-        }
-
-        public TextBoxListener(boolean stateOfBeingQuestion, int qID, String userName) {
-            isQuestion = stateOfBeingQuestion;
-            questionID = qID;
-            playerName = userName;
-        }
-    }
 }

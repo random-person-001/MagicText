@@ -56,12 +56,12 @@ public class HallOfBanditKing extends Room {
                 Thread.sleep(200);
                 if (getMortalCountOf("BanditKing") == 0 && !kingLastWordsSpoken && play.getY() >= 54 && play.getY() <= 66){
                     for (Player winner : players){
-                        queueMessage(new FlavorText("*Cough* *Cough*\nNo... I don't want to lose to\n a wimp like you....","Bandit King").setViewerUsername(winner.getUsername()));
-                        queueMessage(new FlavorText("You don't deserve the throne...\nI DO!\nYou can't take it from me!","Bandit King").setViewerUsername(winner.getUsername()));
-                        queueMessage(new FlavorText("*Wheeze*\n But I have fought to my dying breath.\n There's no more left of me.","Bandit King").setViewerUsername(winner.getUsername()));
-                        queueMessage(new FlavorText("Huh? You're frozen like a statue!\n You're taking my place, aren't you?","Bandit King").setViewerUsername(winner.getUsername()));
-                        queueMessage(new FlavorText("You're not? Well then, uhhh...\n You can go on now.\n Jump off the cliff if you want to.","Bandit King").setViewerUsername(winner.getUsername()));
-                        queueMessage(new FlavorText("Just uhh, *cough* get out of here.\n Go away.","Bandit King").setViewerUsername(winner.getUsername()));
+                        queueMessage(new FlavorText("*Cough* *Cough*\nNo... I don't want to lose to\n a wimp like you....","Bandit King"), winner);
+                        queueMessage(new FlavorText("You don't deserve the throne...\nI DO!\nYou can't take it from me!","Bandit King"), winner);
+                        queueMessage(new FlavorText("*Wheeze*\n But I have fought to my dying breath.\n There's no more left of me.","Bandit King"), winner);
+                        queueMessage(new FlavorText("Huh? You're frozen like a statue!\n You're taking my place, aren't you?","Bandit King"), winner);
+                        queueMessage(new FlavorText("You're not? Well then, uhhh...\n You can go on now.\n Jump off the cliff if you want to.","Bandit King"), winner);
+                        queueMessage(new FlavorText("Just uhh, *cough* get out of here.\n Go away.","Bandit King"), winner);
                     }
                     kingLastWordsSpoken = true;
                     org.editLayer(" ", "RoomLayer", 53, 37);
@@ -69,7 +69,7 @@ public class HallOfBanditKing extends Room {
                 }
                 if (getObjectsAt(37, 59).size() > 0 && beehiveKnockedDown && !beehiveReaction){
                     for (Player jerk : players){
-                        queueMessage(new FlavorText("WHAT?!?! Bees!\nAaaaaaaaaaaa!\n Why do I have to be allergic to them?!?!?","Bandit King").setViewerUsername(jerk.getUsername()));
+                        queueMessage(new FlavorText("WHAT?!?! Bees!\nAaaaaaaaaaaa!\n Why do I have to be allergic to them?!?!?","Bandit King"), jerk);
                     }
                     beehiveReaction = true;
                 }
@@ -80,13 +80,13 @@ public class HallOfBanditKing extends Room {
                         getMortalListOf("BanditKing")[0].followingDist = 30;
                 }
                 if (fightStarting && play.getY() <= 71 && play.getY() > 69 && kingIntroSeq == 0){
-                    queueMessage(new FlavorText("Carlson! Is that you again?!?!\n For the last time, I do NOT want\n another update on that cat in the tree!","Bandit King").setViewerUsername(play.getUsername()));
-                    queueMessage(new FlavorText("This better be important!","Bandit King").setViewerUsername(play.getUsername()));
+                    queueMessage(new FlavorText("Carlson! Is that you again?!?!\n For the last time, I do NOT want\n another update on that cat in the tree!","Bandit King"), play);
+                    queueMessage(new FlavorText("This better be important!","Bandit King"), play);
                     kingIntroSeq++;
                 }
                 if (fightStarting && play.getY() > 67 && play.getY() <= 69 && kingIntroSeq == 1){
-                    queueMessage(new FlavorText("You're not Carlson! I didn't summon you!\n Who even are you? How did you get here?","Bandit King").setViewerUsername(play.getUsername()));
-                    queueMessage(new FlavorText("I can't let just some nobody walk\n here unannounced!\nPrepare to die!!!","Bandit King").setViewerUsername(play.getUsername()));
+                    queueMessage(new FlavorText("You're not Carlson! I didn't summon you!\n Who even are you? How did you get here?","Bandit King"), play);
+                    queueMessage(new FlavorText("I can't let just some nobody walk\n here unannounced!\nPrepare to die!!!","Bandit King"), play);
                     kingIntroSeq++;
                 }
                 if (play.getY() >= 9 && play.getY() <= 12){
@@ -128,10 +128,10 @@ public class HallOfBanditKing extends Room {
     @Override
     protected void specialInspect(int x, int y, Player inspector){
         if (x == 38 && y == 2 && !beehiveKnockedDown){
-            queueMessage(new FlavorText("Knock down the beehive?", true, 0).setViewerUsername(inspector.getUsername()));
+            queueMessage(new FlavorText("Knock down the beehive?", true, 0), inspector);
         }
         if (x == 37 && y == 27) {
-            queueMessage(new FlavorText("Jump off the cliff to your fate beyond?", true, 1).setViewerUsername(inspector.getUsername()));
+            queueMessage(new FlavorText("Jump off the cliff to your fate beyond?", true, 1), inspector);
         }
     }
 

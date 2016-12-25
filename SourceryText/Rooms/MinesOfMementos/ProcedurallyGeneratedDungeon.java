@@ -28,7 +28,7 @@ public class ProcedurallyGeneratedDungeon extends Room {
             try {
                 Thread.sleep(20);
                 if (count == 0) {
-                    compactTextBox("Welcome to the Procedurally Generated \n Dungeon.", "", false);
+                    //compactTextBox("Welcome to the Procedurally Generated \n Dungeon.", "", false);
                     count++;
                 }
             } catch (InterruptedException ignored) {

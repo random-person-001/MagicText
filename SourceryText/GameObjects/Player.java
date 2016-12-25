@@ -25,7 +25,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.util.ConcurrentModificationException;
+import java.util.*;
 
 /**
  * Player-controlled protagonist
@@ -41,6 +41,9 @@ public class Player extends Mortal implements java.io.Serializable {
     private HUD hud;
     private NetworkServer networkServer; // Only used in multiplayer
     private boolean hasLocalWindow;
+    public java.util.List<Room.FlavorText> messageQueue = new ArrayList<>();
+
+    TextBox textBox;
 
     private boolean shouldNewInv = false;
     private String lastPainMessage = "None";
@@ -650,6 +653,19 @@ public class Player extends Mortal implements java.io.Serializable {
         }
     }
 
+    void textBoxKeys(char key){
+        switch (Character.toLowerCase(key)) {
+            case '\n': // ESC right now, subject to change
+                if (textBox != null) textBox.receiveInput("end");
+                break;
+            case '\t': // ESC right now, subject to change
+                if (textBox != null) textBox.receiveInput("change");
+                break;
+            default:
+                System.out.print(key);
+        }
+    }
+
     /**
      * Call room.queryForText() in a + shape around you - effectively activating any peices of text planted around
      * the level next to you.
@@ -788,12 +804,16 @@ public class Player extends Mortal implements java.io.Serializable {
                 downPressed = true;
             } else if (event.getKeyCode() == KeyEvent.VK_LEFT) {
                 leftPressed = true;
+                textBoxKeys('\t');
             } else if (event.getKeyCode() == KeyEvent.VK_RIGHT) {
                 rightPressed = true;
+                textBoxKeys('\t');
             } else if (event.getKeyCode() == KeyEvent.VK_SPACE) {
                 spacePressed = true;
             } else if (event.getKeyCode() == KeyEvent.VK_ESCAPE) {
                 keyPressed('\'');
+            } else if (event.getKeyCode() == KeyEvent.VK_ENTER) {
+                textBoxKeys('\n');
             } else {
                 keyPressed(event.getKeyChar());
             }

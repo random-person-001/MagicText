@@ -155,32 +155,32 @@ public class HiddenBunker extends Room {
         if (Math.abs(x - 24) + Math.abs(y - 24) <= 1 && !keysTaken[0]) {
             Item key = new Item("Bunker Key 1", "A key to a door in\n the hidden bunker found\n in the mountains.\n\nThere is an inscription\n on the key:\n\n\'Need more plunder,\n hide key\'", "item");
             inspector.addItem(key);
-            queueMessage(new FlavorText("You found a key!", "").setViewerUsername(inspector.getUsername()));
+            queueMessage(new FlavorText("You found a key!", ""), inspector);
             keysTaken[0] = true;
         }
 
         if (Math.abs(x - 69) + Math.abs(y - 30) <= 1 && !keysTaken[1]) {
             Item key = new Item("Bunker Key 2", "A key to a door in\n the hidden bunker found\n in the mountains.\n\nThere is an inscription\n on the key:\n\n\'Mike need to shower\'", "item");
             inspector.addItem(key);
-            queueMessage(new FlavorText("You found a key!", "").setViewerUsername(inspector.getUsername()));
+            queueMessage(new FlavorText("You found a key!", ""), inspector);
             keysTaken[1] = true;
         }
         if (Math.abs(x - 54) + Math.abs(y - 4) <= 1 && !keysTaken[2]) {
             Item key = new Item("Bunker Key 3", "A key to a door in\n the hidden bunker found\n in the mountains.\n\nThere is an inscription\n on the key:\n\n\'Fondant\n Fondant\n Fondant\'", "item");
             inspector.addItem(key);
-            queueMessage(new FlavorText("You found a key!", "").setViewerUsername(inspector.getUsername()));
+            queueMessage(new FlavorText("You found a key!", ""), inspector);
             keysTaken[2] = true;
         }
         if (Math.abs(x - 125) + Math.abs(y - 25) <= 1 && !keysTaken[3]) {
             Item key = new Item("Bunker Key 4", "A key to a door in\n the hidden bunker found\n in the mountains.\n\nThere is an inscription\n on the key:\n\n\'Down with Carlson\'", "item");
             inspector.addItem(key);
-            queueMessage(new FlavorText("You found a key!", "").setViewerUsername(inspector.getUsername()));
+            queueMessage(new FlavorText("You found a key!", ""), inspector);
             keysTaken[3] = true;
         }
         if (Math.abs(x - 134) + Math.abs(y - 24) <= 1 && !keysTaken[4]) {
             Item key = new Item("Tunnel Key", "A key to a secret passageway\n deep in the mountains\n\nThere is an inscription\n on the key:\n\n\'DO NOT LOSE\'", "item");
             inspector.addItem(key);
-            queueMessage(new FlavorText("You found a key!", "").setViewerUsername(inspector.getUsername()));
+            queueMessage(new FlavorText("You found a key!", ""), inspector);
             keysTaken[4] = true;
         }
     }

@@ -33,11 +33,11 @@ public class DockAndShip extends Room {
             try {
                 Thread.sleep(20);
                 if (count == 0) {
-                    compactTextBox("You should probs get on the ship!", "A Passerby", false);
+                    //compactTextBox("You should probs get on the ship!", "A Passerby", false);
                     count++;
                 }
                 if (count == 1 && playo.getX() == 23 && playo.getY() == 1) {
-                    compactTextBox("Ahoy!  This is the front of the ship. \n ", "Seagull", false);
+                    //compactTextBox("Ahoy!  This is the front of the ship. \n ", "Seagull", false);
                     count++;
                 }
                 timer++;
@@ -56,7 +56,7 @@ public class DockAndShip extends Room {
                                     m.subtractHealth(30, "You were not long for this world. \n You *Were* told to get on the ship.", "arcane");
                                 }
                                 if (count == 1 && m.strClass.equals("Player")) {
-                                    compactTextBox("You missed the ship!  I told you not to.", "THE PASSERBY", false);
+                                    //compactTextBox("You missed the ship!  I told you not to.", "THE PASSERBY", false);
                                     count++;
                                 }
                             }

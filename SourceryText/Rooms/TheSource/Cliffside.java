@@ -29,11 +29,11 @@ public class Cliffside extends Room {
                 Thread.sleep(20);
 
                 if (count == 0) {
-                    queueMessage(new FlavorText("Ah, the air is nice and fresh\n outside.", "").setViewerUsername(play.getUsername()));
-                    queueMessage(new FlavorText("Endless rows of trees covered in sunset\n sitting beyond your view distance....", "").setViewerUsername(play.getUsername()));
-                    queueMessage(new FlavorText("A picture taken here on this cliff\n would definitely make a great postcard.", "").setViewerUsername(play.getUsername()));
+                    queueMessage(new FlavorText("Ah, the air is nice and fresh\n outside.", ""), play);
+                    queueMessage(new FlavorText("Endless rows of trees covered in sunset\n sitting beyond your view distance....", ""), play);
+                    queueMessage(new FlavorText("A picture taken here on this cliff\n would definitely make a great postcard.", ""), play);
                     // ^ This should be an item in The Mines of Mementos
-                    queueMessage(new FlavorText("You know those bandits Dennis was\n talking about? There's a patrol\n already at the other end.", "").setViewerUsername(play.getUsername()));
+                    queueMessage(new FlavorText("You know those bandits Dennis was\n talking about? There's a patrol\n already at the other end.", ""), play);
                     count++;
                 }
 

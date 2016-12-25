@@ -52,10 +52,10 @@ public class SourcePit extends Room {
                 }
                 if (count == 0) {
                     if (play.getX() == 109 && play.getY() == 10) {
-                        queueMessage(new FlavorText("Welcome to the rest of the world!", "").setViewerUsername(play.getUsername()));
-                        queueMessage(new FlavorText("There are many things to find and explore!\nUse the 'F' key to inspect things.", "").setViewerUsername(play.getUsername()));
-                        queueMessage(new FlavorText("Things to look at and interact with are\n usually colored teal-ish blue.\n It is usually helpful to inspect them", "").setViewerUsername(play.getUsername()));
-                        queueMessage(new FlavorText("Sometimes, they also buttons and\n triggers for various things.\n Fun!", "").setViewerUsername(play.getUsername()));
+                        queueMessage(new FlavorText("Welcome to the rest of the world!", ""), play);
+                        queueMessage(new FlavorText("There are many things to find and explore!\nUse the 'F' key to inspect things.", ""), play);
+                        queueMessage(new FlavorText("Things to look at and interact with are\n usually colored teal-ish blue.\n It is usually helpful to inspect them", ""), play);
+                        queueMessage(new FlavorText("Sometimes, they also buttons and\n triggers for various things.\n Fun!", ""), play);
                     }
                     count++;
                 }

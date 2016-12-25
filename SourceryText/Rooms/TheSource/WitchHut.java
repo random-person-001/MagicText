@@ -127,12 +127,12 @@ public class WitchHut extends Room {
                     removeFromBaseHitMesh(coordPair[0], coordPair[1]);
                 }
                 String[] witchThankYouWords = {"*Gasp* You made the Clone Buster!\n Let's see if it works....", "It does! They're gone!\n Everything is normal again!\nThank you so much!"};
-                queueMessage(new FlavorText(witchThankYouWords[0], "Witch"));
-                queueMessage(new FlavorText(witchThankYouWords[1], "Witch"));
+                queueMessage(new FlavorText(witchThankYouWords[0], "Witch"), inspector);
+                queueMessage(new FlavorText(witchThankYouWords[1], "Witch"), inspector);
                 inspector.removeItem("Clone Buster", "items");
                 cloneBusterUsed = true;
             } else if (cloneBusterUsed){
-                queueMessage(new FlavorText(7,8,"I can't thank you enough for\n making that spell!","Witch"));
+                queueMessage(new FlavorText(7,8,"I can't thank you enough for\n making that spell!","Witch"), inspector);
             }
         }
     }

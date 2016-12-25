@@ -28,7 +28,7 @@ public class ImageOrg implements java.io.Serializable {
 
     private int camX = 0;
     private int camY = 0;
-    private boolean debugGame = false;
+    private boolean debugGame = true;
 
     public Color roomBackground = Color.BLACK;
 

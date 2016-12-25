@@ -58,21 +58,21 @@ public class TutorialBasement extends Room {
                 Thread.sleep(20);
 
                 if (count == 0) {
-                    queueMessage(new FlavorText("You've woken up in a basement somewhere.\nWoah, there's now lots of text everywhere!", "", true).setViewerUsername(play.getUsername()));
-                    queueMessage(new FlavorText("You should explore the basement!\nUse the arrow keys to navigate the place.", "").setViewerUsername(play.getUsername()));
-                    //queueMessage(new FlavorText("Want some pie??", true, 0).setViewerUsername(play.getUsername()));
+                    queueMessage(new FlavorText("You've woken up in a basement somewhere.\nWoah, there's now lots of text everywhere!", "", true), play);
+                    queueMessage(new FlavorText("You should explore the basement!\nUse the arrow keys to navigate the place.", ""), play);
+                    queueMessage(new FlavorText("Want some pie??", true, 0), play);
                     count++;
                 }
                 if (count == 1 && play.getX() == 5 && play.getY() == 23) {
-                    queueMessage(new FlavorText("Ahead of you is a pot of petunias. \nPretty, isn't it?\nHowever, it's in the way...", "").setViewerUsername(play.getUsername()));
-                    queueMessage(new FlavorText("Luckily, you were a student at\n The Magic Academy, so you must know\n plenty of spells to help you, right?", "").setViewerUsername(play.getUsername()));
-                    queueMessage(new FlavorText("WRONG. You dropped out of magic school.\nYou know absolutely nothing. Nothing.\nYou have no memory of how to cast any spell", "").setViewerUsername(play.getUsername()));
-                    queueMessage(new FlavorText("Most spells ARE written down, so if you\n stumble upon some spare magic literature,\n you can just follow the instructions.", "").setViewerUsername(play.getUsername()));
-                    queueMessage(new FlavorText("Unfortunately, your coat pockets\n are empty. Or in this case, robe pockets.\n", "").setViewerUsername(play.getUsername()));
+                    queueMessage(new FlavorText("Ahead of you is a pot of petunias. \nPretty, isn't it?\nHowever, it's in the way...", ""), play);
+                    queueMessage(new FlavorText("Luckily, you were a student at\n The Magic Academy, so you must know\n plenty of spells to help you, right?", ""), play);
+                    queueMessage(new FlavorText("WRONG. You dropped out of magic school.\nYou know absolutely nothing. Nothing.\nYou have no memory of how to cast any spell", ""), play);
+                    queueMessage(new FlavorText("Most spells ARE written down, so if you\n stumble upon some spare magic literature,\n you can just follow the instructions.", ""), play);
+                    queueMessage(new FlavorText("Unfortunately, your coat pockets\n are empty. Or in this case, robe pockets.\n", ""), play);
                     count++;
                 }
                 if (!holdDownReminder && play.getX() > 14 && play.getX() < 20 && play.getY() == 22) {
-                    queueMessage(new FlavorText("Hold SPACE while moving to sprint.\n However you aren't that very athletic,\n so you get tired very quickly", "").setViewerUsername(play.getUsername()));
+                    queueMessage(new FlavorText("Hold SPACE while moving to sprint.\n However you aren't that very athletic,\n so you get tired very quickly", ""), play);
                     holdDownReminder = true;
                 }
                 if (play.getX() == 87 && play.getY() == 35) {
@@ -83,50 +83,50 @@ public class TutorialBasement extends Room {
                 }
                 if (play.getX() == 67 && play.getY() == 32) {
                     if (!inMaze) {
-                        queueMessage(new FlavorText("Wow, there's a lot of junk here!\nDoes the owner of this basement\n realize there are other rooms...", "").setViewerUsername(play.getUsername()));
-                        queueMessage(new FlavorText("...in this basement that he can also\n put stuff in?\nSeriously, you woke up in an empty room.", "").setViewerUsername(play.getUsername()));
+                        queueMessage(new FlavorText("Wow, there's a lot of junk here!\nDoes the owner of this basement\n realize there are other rooms...", ""), play);
+                        queueMessage(new FlavorText("...in this basement that he can also\n put stuff in?\nSeriously, you woke up in an empty room.", ""), play);
                     }
                     inMaze = true;
                     //System.out.println("IN THE MAZE....");
                 }
                 if (count == 2 && play.getX() > 14 && play.getX() < 20 && play.getY() == 22 && (foundSpell1 || foundSpell2)) {
-                    queueMessage(new FlavorText("Now that you are armed with\n some magic scrolls, you can\n defeat the pot of petunias!", "").setViewerUsername(play.getUsername()));
-                    queueMessage(new FlavorText("Push 'W' to open the menu.\nPush 'A' to confirm an option that\n the cursor is selecting", "").setViewerUsername(play.getUsername()));
-                    queueMessage(new FlavorText("Go to 'Spells' and Push either 'S' or 'D'\n to bind a spell to to keys 'S' and 'D'", "").setViewerUsername(play.getUsername()));
+                    queueMessage(new FlavorText("Now that you are armed with\n some magic scrolls, you can\n defeat the pot of petunias!", ""), play);
+                    queueMessage(new FlavorText("Push 'W' to open the menu.\nPush 'A' to confirm an option that\n the cursor is selecting", ""), play);
+                    queueMessage(new FlavorText("Go to 'Spells' and Push either 'S' or 'D'\n to bind a spell to to keys 'S' and 'D'", ""), play);
                     count++;
                 }
                 if (inMaze && (!foundSpell1 ^ !foundSpell2) && !leavingEarly && play.getX() == 66 && play.getY() == 32) {
-                    queueMessage(new FlavorText("There may be other spells hidden in the maze.\n You may want to head back.", "").setViewerUsername(play.getUsername()));
+                    queueMessage(new FlavorText("There may be other spells hidden in the maze.\n You may want to head back.", ""), play);
                     leavingEarly = true;
                 }
                 if (inMaze && !(foundSpell1 || foundSpell2) && !leavingEarly && play.getX() == 66 && play.getY() == 32) {
-                    queueMessage(new FlavorText("There are some spells hidden in the maze.\n You may want to head back.", "").setViewerUsername(play.getUsername()));
+                    queueMessage(new FlavorText("There are some spells hidden in the maze.\n You may want to head back.", ""), play);
                     leavingEarly = true;
                 }
                 if (count == 3 && play.getX() == 5 && play.getY() == 22) {
-                    queueMessage(new FlavorText("Casting spells is simple:\nPush the 'S' and 'D' key to cast the\n spell bound to its respective key", "").setViewerUsername(play.getUsername()));
+                    queueMessage(new FlavorText("Casting spells is simple:\nPush the 'S' and 'D' key to cast the\n spell bound to its respective key", ""), play);
                     count++;
                 }
                 if (count == 4 && play.getX() == 5 && play.getY() == 14) {
-                    queueMessage(new FlavorText("You've managed to defeat\n The Pot of Petunias!\nCongratulations!", "").setViewerUsername(play.getUsername()));
-                    queueMessage(new FlavorText("As you may have noticed, your meter\n at the top-right had depleted a bit.\nThat is your mana bar", "").setViewerUsername(play.getUsername()));
-                    queueMessage(new FlavorText("Casting spells and sprinting\n costs mana. Fortunately, mana will\n regenerate shortly after.", "", false).setViewerUsername(play.getUsername()));
-                    queueMessage(new FlavorText("Note: The less mana you spend,\n the less you have to wait before\n your mana refills.", "", false).setViewerUsername(play.getUsername()));
+                    queueMessage(new FlavorText("You've managed to defeat\n The Pot of Petunias!\nCongratulations!", ""), play);
+                    queueMessage(new FlavorText("As you may have noticed, your meter\n at the top-right had depleted a bit.\nThat is your mana bar", ""), play);
+                    queueMessage(new FlavorText("Casting spells and sprinting\n costs mana. Fortunately, mana will\n regenerate shortly after.", "", false), play);
+                    queueMessage(new FlavorText("Note: The less mana you spend,\n the less you have to wait before\n your mana refills.", "", false), play);
                     count++;
                 }
                 if (count == 5 && ((play.getX() == 5 && play.getY() == 6))) {
-                    queueMessage(new FlavorText("It seems there is a rather large\n spider in the next room.", "", false).setViewerUsername(play.getUsername()));
-                    queueMessage(new FlavorText("Luckily, it doesn't know any magic,\n is very slow moving,\n and it doesn't have that much health", "", false).setViewerUsername(play.getUsername()));
-                    queueMessage(new FlavorText("Pushing the 'A' key locks your aim,\n allowing you to comfortably strafe\n while casting spells", "", false).setViewerUsername(play.getUsername()));
-                    queueMessage(new FlavorText("Use this technique to effortlessly\n dispatch the spider.", "", false).setViewerUsername(play.getUsername()));
+                    queueMessage(new FlavorText("It seems there is a rather large\n spider in the next room.", "", false), play);
+                    queueMessage(new FlavorText("Luckily, it doesn't know any magic,\n is very slow moving,\n and it doesn't have that much health", "", false), play);
+                    queueMessage(new FlavorText("Pushing the 'A' key locks your aim,\n allowing you to comfortably strafe\n while casting spells", "", false), play);
+                    queueMessage(new FlavorText("Use this technique to effortlessly\n dispatch the spider.", "", false), play);
                     count++;
                 }
                 if (count == 6 && (play.getX() >= 84 && play.getY() == 16 && play.getX() <= 91)) {
                     count++;
                 }
                 if (count == 7 && play.getY() >= 17) {
-                    queueMessage(new FlavorText("You have probably stumbled upon\n some weapons. You should go to\n the 'Equipment' menu.", "", false).setViewerUsername(play.getUsername()));
-                    queueMessage(new FlavorText("Use the 'A' key to equip a weapon.", "", false).setViewerUsername(play.getUsername()));
+                    queueMessage(new FlavorText("You have probably stumbled upon\n some weapons. You should go to\n the 'Equipment' menu.", "", false), play);
+                    queueMessage(new FlavorText("Use the 'A' key to equip a weapon.", "", false), play);
                     count++;
                 }
                 if (play.getX() > 132) {
