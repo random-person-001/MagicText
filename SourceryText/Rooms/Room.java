@@ -666,13 +666,6 @@ public class Room implements java.io.Serializable {
     public void respondToQuestion(int qID, Player respondTo) {
     }
 
-    private void doQuestionResponse(int qID, String userName) {
-        for (Player player : players) {
-            if (userName.equals(player.getUsername()))
-                respondToQuestion(qID, player);
-        }
-    }
-
     public void splashMessage(String message, String speaker, Player viewer) {
         queueMessage(new FlavorText(message, speaker), viewer);
     }

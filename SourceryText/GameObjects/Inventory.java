@@ -136,7 +136,10 @@ class Inventory implements java.io.Serializable {
                 spells.add(input);
                 break;
             case 2:
-                items.add(input);
+                if (input.getDescMode().equals("healitem") || input.getDescMode().equals("potion"))
+                    items.add(0, input); //Places important and useful items at the top of the list
+                else
+                    items.add(input); //Other stuff relegated to the bottom
                 break;
             case 3:
                 equip.add(input);
