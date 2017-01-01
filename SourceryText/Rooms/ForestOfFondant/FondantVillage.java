@@ -121,6 +121,12 @@ public class FondantVillage extends Room {
         forestBackground.findAndReplace(new SpecialText(" "), new SpecialText("_", normalGrass, dirt), 15);
         forestBackground.findAndReplace(new SpecialText(" "), new SpecialText(" ", null, dirt));
 
+        Color roadBkg = new Color(60, 40, 25);
+        Color roadFg  = new Color(77, 58, 47);
+        forestBackground.findAndReplace(new SpecialText("o"), new SpecialText(".", roadFg, roadBkg), 25);
+        forestBackground.findAndReplace(new SpecialText("o"), new SpecialText("o", roadFg, roadBkg), 10);
+        forestBackground.findAndReplace(new SpecialText("o"), new SpecialText(" ", roadFg, roadBkg));
+
         org.addLayer(forestBackground);
         initHitMeshes(forestBackground);
         String[] solids = {"r", "t", "h","T"};

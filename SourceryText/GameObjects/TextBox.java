@@ -12,7 +12,7 @@ import java.awt.*;
  */
 public class TextBox extends GameObject {
     
-    Player viewer;
+    private Player viewer;
     private boolean showing = false;
 
     private boolean isQuestion = false;
@@ -21,8 +21,8 @@ public class TextBox extends GameObject {
 
     String layerName = "";
     
-    String text;
-    String speaker;
+    private String text;
+    private String speaker;
 
     public TextBox(Room theRoom, Player receiver, String theText, String theSpeaker){
         room = theRoom;
@@ -142,7 +142,8 @@ public class TextBox extends GameObject {
     public void receiveInput(String inputStr){
         switch (inputStr){
             case "end":
-                exit();
+                if (showing)
+                    exit();
                 break;
             case "change":
                 if (isQuestion) {
