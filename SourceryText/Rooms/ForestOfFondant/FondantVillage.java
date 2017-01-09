@@ -104,6 +104,10 @@ public class FondantVillage extends Room {
         String[][] base = Art.strToArray(arty.fondantVillage);
         Layer forestBackground = new Layer(base, "Base");
 
+        forestBackground.findAndReplace(new SpecialText("%"), new SpecialText("\\"));
+
+        //Nature Art
+
         SpecialText[] trees = { new SpecialText("o", normalGrass, lightTreeGreen),  // Cuz the burnable forest wants to know them
                 new SpecialText("o", otherGrass, lightTreeGreen), new SpecialText("O", otherGrass, lightTreeGreen),
                 new SpecialText("0", otherGrass, lightTreeGreen), new SpecialText(" ", lightTreeGreen, lightTreeGreen),
@@ -121,15 +125,39 @@ public class FondantVillage extends Room {
         forestBackground.findAndReplace(new SpecialText(" "), new SpecialText("_", normalGrass, dirt), 15);
         forestBackground.findAndReplace(new SpecialText(" "), new SpecialText(" ", null, dirt));
 
+        //Road Art
+
         Color roadBkg = new Color(60, 40, 25);
         Color roadFg  = new Color(77, 58, 47);
         forestBackground.findAndReplace(new SpecialText("o"), new SpecialText(".", roadFg, roadBkg), 25);
         forestBackground.findAndReplace(new SpecialText("o"), new SpecialText("o", roadFg, roadBkg), 10);
         forestBackground.findAndReplace(new SpecialText("o"), new SpecialText(" ", roadFg, roadBkg));
 
+        //House Art
+
+        Color bricksFg =  new Color(102, 102, 102);
+        Color bricksBkg = new Color(38, 38, 38);
+        Color woodFg =    new Color(87, 51, 26);
+        Color woodBkg =   new Color(51, 33, 20);
+        Color roofFg =    new Color(150, 150, 250);
+        Color interiorColor = new Color(26, 17, 10);
+
+        forestBackground.findAndReplace(new SpecialText("#"), new SpecialText("#", bricksFg, bricksBkg));
+        forestBackground.findAndReplace(new SpecialText("="), new SpecialText("=", woodFg, woodBkg));
+        forestBackground.findAndReplace(new SpecialText("b"), new SpecialText("|", woodFg, woodBkg));
+        forestBackground.findAndReplace(new SpecialText("d"), new SpecialText(" ", null, interiorColor));
+
+        forestBackground.findAndReplace(new SpecialText("/"), new SpecialText("/", roofFg, dirt));
+        forestBackground.findAndReplace(new SpecialText("_"), new SpecialText("_", roofFg, dirt));
+        forestBackground.findAndReplace(new SpecialText("\\"), new SpecialText("\\", roofFg, dirt));
+
+        forestBackground.findAndReplace(new SpecialText("r"), new SpecialText("/", roofFg, woodBkg));
+        forestBackground.findAndReplace(new SpecialText("l"), new SpecialText("\\", roofFg, woodBkg));
+        forestBackground.findAndReplace(new SpecialText("+"), new SpecialText("+", roofFg, interiorColor));
+
         org.addLayer(forestBackground);
         initHitMeshes(forestBackground);
-        String[] solids = {"r", "t", "h","T"};
+        String[] solids = {"r", "t", "h","T","#","=","l","+","b"};
         addToBaseHitMesh(base, solids);
 
         FlammableTree ft1 = new FlammableTree(this, forestBackground, trees);

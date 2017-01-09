@@ -405,7 +405,7 @@ public class Room implements java.io.Serializable {
         if ((x >= 0 && x <= objHitMesh[0].length - 1) && (y >= 0 && y <= objHitMesh.length - 1)) { // Buffer of 1 for room walls
             return objHitMesh[y][x] || baseHitMesh[y][x];
         } else { // Outside wall
-            return true;
+            return false;
         }
     }
 

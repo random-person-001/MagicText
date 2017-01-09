@@ -1348,42 +1348,42 @@ public String fondantVillage =
         "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTttttttttttttTTTTTTTTTTTTTTTttttttttTTTTTTTTTTTTTtttTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTttt\n" +
         "tttttttTTTTTTTTTTTTTttttttttTTTTTTTTTTTTTTTTTtttttttttttttttttttttttttttttttttttttttttttttttttTTTTTTTTttttttttttttttttttTTTTTTTTTTTTTTTTTTTTttttttt\n" +
         "ttttttttttttttttttttttttttttttttttTTTTTTttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\n" +
-        "tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttthhhhhhhhhhhhhhhhhhhhhhhhhhhhttttttttttttttttttttttttttttttttttttttttttttttttttt\n" +
-        "ttttttttttttttttttttttttttttttttttttttttttttttttttttttttttthhhhhhhhh                            hhhhhhhhhtttttttttttttttttttttttttttttttttttttttttt\n" +
-        "ttttttttttttttttttttttttttttttttttttttttttttttttttthhhhhhhh                                              hhhhhttttttttttttttttttttttttttttttttttttt\n" +
-        "ttttttttttttttttttttttttttttttttttttttttttttthhhhhh                                                           hhhtttttttttttttttttttttttttttttttttt\n" +
-        "ttttttttttttttttttttttttttttttttttttttttttthh                                                                     hhhhtttttttttttttttttttttthhhhhhh\n" +
-        "tttttttttttttttttttttttttttttttttttttttttth                                                                           hhttttttttttthhhhhhhhh       \n" +
-        "ttttttttttttttttttttttttttttttttttttttthhh                                                                              hhhhhhhhhhh       o o o o  \n" +
-        "tttttttttttttttttttttttttttttttttttttth                                                                                           oo ooo oo  o     \n" +
-        "tttttttttttttttttttttttttttttttttttthh                                                                          ooooooo oooo  oooooooo       hhhhhh\n" +
-        "ttttttttttttttttttttttttttttttttttth                                                                      oooo oooo oooooo oooo       hhhhhhhtttttt\n" +
-        "tttttttttttttttttttttttttttttttttth                                                                    ooo oooooo               hhhhhhttttttttttttt\n" +
-        "ttttttttttttttttttttttttttttttttth                                                                    ooooo                hhhhhttttttttttttttttttt\n" +
-        "tttttttttttttttttttttttttttttttth                                                                  ooooo o                 httttttttttttttttttttttt\n" +
-        "ttttttttttttttttttttttttttttttth                                                                 o oooo                    httttttttttttttttttttttt\n" +
-        "tttttttttttttttttttttttttttttth                                                               ooooooo                       htttttttttttttttttttttt\n" +
-        "hhhhhhhhhhhhhtttttttttttttttth                                                              ooo oo                           httttttttttttttttttttt\n" +
-        "     oo oo   hhhhhhhhhhhhhhhh                                                             ooo                                httttttttttttttttttttt\n" +
-        "  o    o o oo ooooo       oooooo  oooooo                                                  oo                                  htttttttttttttttttttt\n" +
-        "hhhhh     o     ooooooooooooooooooooooooooo                                              oooo                                 htttttttttttttttttttt\n" +
-        "ttttthhhhhhhhhhhh    o oooo   ooooooooooooooooo                                        ooooo                                 httttttttttttttttttttt\n" +
-        "ttttttttttttttttthhhhhhhhh           oooooooooooo                                      ooo                                  htttttttttttttttttttttt\n" +
-        "tttttttttttttttttttttttttth               ooooooooo                                  oooo                                   htttttttttttttttttttttt\n" +
-        "tttttttttttttttttttttttttth                 ooo ooo                                    o o                                   httttttttttttttttttttt\n" +
-        "ttttttttttttttttttttttttth                     oooooooo        oooooo                  oooo                                 htttttttttttttttttttttt\n" +
-        "ttttttttttttttttttttttttth                        oo ooooo oooooo ooooooo             oo                                   httttttttttttttttttttttt\n" +
-        "tttttttttttttttttttttttttth                           ooooooooooo     ooooo            ooo                                 httttttttttttttttttttttt\n" +
-        "tttttttttttttttttttttttttth                              oo o oo        oooooooo     o oooo                              hhtttttttttttttttttttttttt\n" +
-        "ttttttttttttttttttttttttttthh                                               ooooo  oooooo                             hhhtttttttttttttttttttttttttt\n" +
-        "ttttttttttttttttttttttttttttth                                                  ooooo o                              httttttttttttttttttttttttttttt\n" +
-        "ttttttttttttttttttttttttttttth                                                oooo ooooo                            htttttttttttttttttttttttttttttt\n" +
-        "tttttttttttttttttttttttttttttthh                                         ooo ooooooo o                            hhttttttttttttttttttttttttttttttt\n" +
-        "tttttttttttttttttttttttttttttttthh                                    o oooooooo o                             hhhttttttttttttttttttttttttttttttttt\n" +
-        "tttttttttttttttttttttttttttttttttthhhh                              oooooooo                             hhhhhhtttttttttttttttttttttttttttttttttttt\n" +
-        "tttttttttttttttttttttttttttttttttttttthhhh                        ooo                            hhhhhhhhtttttttttttttttttttttttttttttttttttttttttt\n" +
-        "tttttttttttttttttttttttttttttttttttttttttthhhhhhhh               oooo                  hhhhhhhhhhtttttttttttttttttttttttttttttttttttttttttttttttttt\n" +
-        "tttttttttttttttttttttttttttttttttttttttttttttttttthhhhhhhhh      o oo       hhhhhhhhhhhtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\n" +
+        "tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttthhhhhhhhhtttttttthhhhhhhhhhhttttttttttttttttttttttttttttttttttttttttttttttttttt\n" +
+        "ttttttttttttttttttttttttttttttttttttttttttttttttttttttttttthhhhhhhhh        htttttttth          hhhhhhhhhtttttttttttttttttttttttttttttttttttttttttt\n" +
+        "ttttttttttttttttttttttttttttttttttttttttttttttttttthhhh___                   htttttth                    hhhhhttttttttttttttttttttttttttttttttttttt\n" +
+        "ttttttttttttttttttttttttttttttttttttttttttttthhhhhh    ###______________    htttttth          hhhhhhh         hhhtttttttttttttttttttttttttttttttttt\n" +
+        "ttttttttttttttttttttttttttttttttttttttttttthh         /##r=++==r==++==l=%   htttttth   ___        hhthhh          hhhhtttttttttttttttttttttthhhhhhh\n" +
+        "tttttttttttttttttttttttttttttttttttttttttth          /==rINN=============%   httthh    ###______    hh                hhttttttttttthhhhhhhhh       \n" +
+        "ttttttttttttttttttttttttttttttttttttttthhh   hhh      #b#++b+#####+b++#b#     hhh     /##r=+=l==%                o      hhhhhhhhhhh       o o o o  \n" +
+        "tttttttttttttttttttttttttttttttttttttth    hhttth     #b###b###d###b###b#   o        /=#r=====l==%       o      o  o              oo ooo oo  o     \n" +
+        "tttttttttttttttttttttttttttttttttttthh    htttth            o ooo oo   o        oo  /=SHOP========%     o   o o ooooooo oooo  oooooooo       hhhhhh\n" +
+        "ttttttttttttttttttttttttttttttttttth     httthh        o   o oooooooooooo ooo o   o  #b#####+++#b#        oooo oooo oooooo oooo       hhhhhhhtttttt\n" +
+        "tttttttttttttttttttttttttttttttttth      htth       o   o ooooooooo ooooooooooooooo  #b##d######b#o    ooo oooooo       o       hhhhhhttttttttttttt\n" +
+        "ttttttttttttttttttttttttttttttttth        hh         o  oooo o      o hhhooo ooooooo    o      o     oooooo o      o       hhhhhttttttttttttttttttt\n" +
+        "tttttttttttttttttttttttttttttttth          o    o    oooo o       hhhhttthhh    o ooo o   oo       ooooo o ooo  o      o   httttttttttttttttttttttt\n" +
+        "ttttttttttttttttttttttttttttttth                  ooooo    hhhhhhhtttttttttth   o oo ooo  oo oo  o oooo   ooooo   o        httttttttttttttttttttttt\n" +
+        "tttttttttttttttttttttttttttttth     o        oooooo oo    htttttttttttttthhh  o o o  ooo oooo ooooooo  hhh o oooo    o      htttttttttttttttttttttt\n" +
+        "hhhhhhhhhhhhhtttttttttttttttth          o  ooooooo   o   htttttttttttthhh o   o      o   o oooo oo hhhhhtthh ooo             httttttttttttttttttttt\n" +
+        "     oo oo   hhhhhhhhhhhhhhhh   o       oooooo o hhhhh o  hhhhhhhhhhhh       hhhhhh    o  ooo  hhhhttttttttth  ooo o         httttttttttttttttttttt\n" +
+        "  o    o o oo ooooo       oooooo  oooooo ooooooohttttth o ___ o       o o hhhtttttthh  o  oo  httttttttttttthoooo             htttttttttttttttttttt\n" +
+        "hhhhh     o     oooooooooooooooooooooooooooooo  httttth   ###______ o    httttttttttth   oooo htttttttttttth  ooo o           htttttttttttttttttttt\n" +
+        "ttttthhhhhhhhhhhh    o oooo   ooooooo ooooo ooo  hhttho  /#r==+==l=%  o htttttttttttth ooooo   hhhhtttttttth o oo   o        httttttttttttttttttttt\n" +
+        "ttttttttttttttttthhhhhhhhh  o   o    oooooooooooo  hth  /===========%  htttttttttttth  ooo    ___  hhhhhhtthooooo o         htttttttttttttttttttttt\n" +
+        "tttttttttttttttttttttttttth         o   o ooooooooo h    #b#######b# o httttttttttth oooo     ###_______ hh  oo oo          htttttttttttttttttttttt\n" +
+        "tttttttttttttttttttttttttth                 ooo oooo  o  #b###d###b#  ohttttttttttth   o o   /##r==+==l=%     oooo           httttttttttttttttttttt\n" +
+        "ttttttttttttttttttttttttth      hhh       o    o oooooo        oooooo   hhhttttttttth  oooo /============%  o oooo          htttttttttttttttttttttt\n" +
+        "ttttttttttttttttttttttttth     httth         o    oo ooooo oooooo ooooooo  hhhtttttth oo     #b########b#  ooooo    o      httttttttttttttttttttttt\n" +
+        "tttttttttttttttttttttttttth     httthh            o   ooooooooooo  o  ooooo   hhhtth   ooo   #b#dd#####b# ooo   o          httttttttttttttttttttttt\n" +
+        "tttttttttttttttttttttttttth      hhttth      hhh      o  oo o oo        oooooooo hh  o oooo ooo  ooo ooo ooooo           hhtttttttttttttttttttttttt\n" +
+        "ttttttttttttttttttttttttttthh      hth     hhttthh          o    o    o     ooooo  oooooo ooo oooooooo oooo  o   o    hhhtttttttttttttttttttttttttt\n" +
+        "ttttttttttttttttttttttttttttth      h      htttttth          hhh          o     ooooo o   ooo   oo  oooo  o          httttttttttttttttttttttttttttt\n" +
+        "ttttttttttttttttttttttttttttth              htttttthhh      httthhh           oooo oooooo    o o     o       o      htttttttttttttttttttttttttttttt\n" +
+        "tttttttttttttttttttttttttttttthh             hhttttttth      httttth  o  ooo ooooooo o     o       o    o         hhttttttttttttttttttttttttttttttt\n" +
+        "tttttttttttttttttttttttttttttttthh             hhhtthh        hhhhh   o oooooooo o  o      o                   hhhttttttttttttttttttttttttttttttttt\n" +
+        "tttttttttttttttttttttttttttttttttthhhh            hh                oooooooo  o                          hhhhhhtttttttttttttttttttttttttttttttttttt\n" +
+        "tttttttttttttttttttttttttttttttttttttthhhh                    o   oooooo o      o                hhhhhhhhtttttttttttttttttttttttttttttttttttttttttt\n" +
+        "tttttttttttttttttttttttttttttttttttttttttthhhhhhhh               oooo       o          hhhhhhhhhhtttttttttttttttttttttttttttttttttttttttttttttttttt\n" +
+        "tttttttttttttttttttttttttttttttttttttttttttttttttthhhhhhhhh    o o oo  o    hhhhhhhhhhhtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\n" +
         "ttttttttttttttttttttttttttttttttttttttttttttttttttttttttttthhhhh ooo hhhhhhhttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\n" +
         "ttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth  o o htttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\n" +
         "tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth o   htttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\n" +
