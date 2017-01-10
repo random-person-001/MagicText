@@ -1135,77 +1135,6 @@ public String testRoom =
         "|                               |\n" +
         "O-------------------------------O\n";
 
-/*
-public String forest2 =
-                "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr                                                       \n" + \
-                "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr                                                           \n" + \
-                "rrrrrrrrr      fdd23333333333333333333333333333333333333333333333333333333rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr                                                                                                                        \n" + \
-                "rr             fd233444444444444444444433333333333333333333333444333333333333332222211111111ffffgg                                                                                                                                        \n" + \
-                "               fd2344444444444444444444443333333333333333334444444443333333333322222211111fffffgg                                                                                                                                         \n" + \
-                "              fd2344444444444444444444443322222333333333334444444444433333333332222221111ffffgg                                                                                                                                           \n" + \
-                "              fd23444444444444444444443332111122333333333333444444444443333333332222111ffffgg                                                                                                                                             \n" + \
-                "              fd233344444444444444333333222111222333333333333344444444443333333222111ffffgg                                                                                                                                               \n" + \
-                "             fd23333333333333333333333332222222223333333333333344444443333333332221fffggg                                                                                                                                                 \n" + \
-                "            fd122333333333333333333333333222222233333333333333333333333333333332211htttg                                                                                                                                                  \n" + \
-                "           fdd112222333333333333333333332222222233333333333333333333333333333333221hhhhg                                                                                                                                                  \n" + \
-                "           fd11122222333333333333333332222222222233333333333333333333333333333333221ffgg                                                                                                                                                  \n" + \
-                "           fd11122222223333333333333222222222222223333333333333333333333333333333221ffggg                                                                                                                                                 \n" + \
-                "           fd111222222222333333332222222222222222222333333333333333333333333333333211ffgggg                                                                                                                                               \n" + \
-                "            fd112222222222222222222222222222222222222233333333333333333333333333333211ffffggg   ttt                                                                                                                                       \n" + \
-                "             fdd12222222222222222222222222222222222222222333333333333333333333333333221111ffgggghhhggg                                                                                                                                    \n" + \
-                "              ffdd1111111111111111111111111111112222222222222222222223333333333333333221111fffffffffffffffffffffffffggg                                                                                                                   \n" + \
-                "                ffdddddddddddfffff111111111111111112222222222222222222222222222222222222222111111111111111111111111111111                                                                                                                 \n" + \
-                "                  fffffffffffffffffffffffffffffff1111111222222222222222222222222222222222222222222222222222222222222222                                                                                                                   \n" + \
-                "         tttt                             gggggggfffff111111111111122222222222222222222222222222222222222222222222222222222                                                                                                               \n" + \
-                "        httttt                                    ggggffffffffff11111ttt1111111111111111111111111111111111111111111111111                                                                                                                 \n" + \
-                "        hhhhh       tttt              tt               tttggggggffffhttttffffffffffffffffggggggggggfffffffffffffffffffggggffff                                                                                                            \n" + \
-                "                   httttt      httt  httt             htttt          hhh                                                                                                                                                                  \n" + \
-                "                    hhhh      httttt  hh               hhh                                                      .                                                                                                                         \n" + \
-                "           ttt                 hhht          tttt                                                                 .  PATH                                                                                                                 \n" + \
-                "          hhhh                              httttt                                                                  .                                                                                                                     \n" + \
-                "                                             hhhhh          ttt             tttt                                      .                                                                                                                   \n" + \
-                "                                                           htttt           httttt                                       .                                                                                                                 \n" + \
-                "              httt                                          hhhh            hhhh                                          .  SVEN?                                                                                                        \n" + \
-                "               hhh      tt           tt           ht                                                                        ....................--> PATH B                                                                                \n" + \
-                "                      htttt        httttt         hh                                                                        ....                                                                                                          \n" + \
-                "                       hhh        hhhttttt                          ttttt                                                    .                                                                                                            \n" + \
-                "                                   hhhhhh                          httttt                                                    .                                                                                                            \n" + \
-                "                                              tttt                   hhh                                                     .                                                                                                            \n" + \
-                "              ttt                            httttt                                                                          .                                                                                                            \n" + \
-                "             htttt                            hhhh        httt                                                              .                                                                                                             \n" + \
-                "              hhhh            tttt                         hhh                                                              .                                                                                                             \n" + \
-                "                             hhhttt                                                                                            PATH A                                                                                                     \n" + \
-                "                              hhhh                                                                                         .                                                                                                              \n" + \
-                "                                                                                                                          .                                                                                                               \n" + \
-                "                                                                                                                                                                                                                                          \n" + \
-                "                                                                                                                         .                                                                                                                \n" + \
-                "                                                                                                                                                                                                                                          \n" + \
-                "                                                                                                                                                                                                                                          \n" + \
-                "                                                                                                                        .                                                                                                                 \n" + \
-                "                                                                                                                                                                                                                                          \n" + \
-                "                                                                                                                                                                                                                                          \n" + \
-                "                                                                                                                                                                                                                                          \n" + \
-                "                                                                                                                       .                                                                                                                  \n" + \
-                "                                                                       ________________________________________________.______________                                                                                                    \n" + \
-                "                                                                                                                       .BRIDGE                                                                                                            \n" + \
-                "                                                                                                  ANOTHER RIVER?       .                                                                                                                  \n" + \
-                "                                                                                                  OR SWITCH THIS RIVER .                                                                                                                  \n" + \
-                "                                                                                                  AND BRIDGE AND VILLAGE                                                                                                                  \n" + \
-                "                                                                                                  TO PATH B?      ______.________                                                                                                         \n" + \
-                "                                                                                                                                                                                                                                          \n" + \
-                "                                                                                                                        .                                                                                                                 \n" + \
-                "                                                                                                                                                                                                                                          \n" + \
-                "                                                                                                                         . TO VILLAGE?  \\/                                                                                               \n" + \
-                "                                                                                                                                                                                                                                          \n" + \
-                "                                                                                                                                                                                                                                          \n" + \
-                "                                                                                                                                                                                                                                          \n" + \
-                "                                                                                                                                                                                                                                          \n" + \
-                "                                                                                                                                                                                                                                          \n" + \
-                "                                                                                                                                                                                                                                          \n" + \
-                "                                                                                                                                                                                                                                          \n" + \
-                "                                                                                                                                                                                                                                          \n" + \
-                "                                                                                                                                                                                                                                          \n";
-*/
 public String forest =
                 "                                                                       hhhh        hhhhhhhhhhh                                  hhhhhhhh                           hhhhhhhhhhhhhhhhhhhhhh           hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhttttt\n" +
                 "                                                      hhhhhhh       hhhtttthhh    htthhhhhhttthhh    hhhh           hhhhhhhhhhhhtttttttthhhhhhhhh         hhhhhhhhhtttttttttttttttttttttthhhhhhhhhhhtttttttttttttttttttttttttttttttttttttt\n" +
@@ -1354,40 +1283,40 @@ public String fondantVillage =
         "ttttttttttttttttttttttttttttttttttttttttttttthhhhhh    ###______________    htttttth          hhhhhhh         hhhtttttttttttttttttttttttttttttttttt\n" +
         "ttttttttttttttttttttttttttttttttttttttttttthh         /##r=++==r==++==l=%   htttttth   ___        hhthhh          hhhhtttttttttttttttttttttthhhhhhh\n" +
         "tttttttttttttttttttttttttttttttttttttttttth          /==rINN=============%   httthh    ###______    hh                hhttttttttttthhhhhhhhh       \n" +
-        "ttttttttttttttttttttttttttttttttttttttthhh   hhh      #b#++b+#####+b++#b#     hhh     /##r=+=l==%                o      hhhhhhhhhhh       o o o o  \n" +
-        "tttttttttttttttttttttttttttttttttttttth    hhttth     #b###b###d###b###b#   o        /=#r=====l==%       o      o  o              oo ooo oo  o     \n" +
-        "tttttttttttttttttttttttttttttttttttthh    htttth            o ooo oo   o        oo  /=SHOP========%     o   o o ooooooo oooo  oooooooo       hhhhhh\n" +
-        "ttttttttttttttttttttttttttttttttttth     httthh        o   o oooooooooooo ooo o   o  #b#####+++#b#        oooo oooo oooooo oooo       hhhhhhhtttttt\n" +
-        "tttttttttttttttttttttttttttttttttth      htth       o   o ooooooooo ooooooooooooooo  #b##d######b#o    ooo oooooo       o       hhhhhhttttttttttttt\n" +
-        "ttttttttttttttttttttttttttttttttth        hh         o  oooo o      o hhhooo ooooooo    o      o     oooooo o      o       hhhhhttttttttttttttttttt\n" +
-        "tttttttttttttttttttttttttttttttth          o    o    oooo o       hhhhttthhh    o ooo o   oo       ooooo o ooo  o      o     hhtttttttttttttttttttt\n" +
-        "ttttttttttttttttttttttttttttttth                  ooooo    hhhhhhhtttttttttth   o oo ooo  oo oo  o oooo   ooooo   o            httttttttttttttttttt\n" +
-        "tttttttttttttttttttttttttttttth     o        oooooo oo    htttttttttttttthhh  o o o  ooo oooo ooooooo  hhh o oooo    o _____### hhttttttttttttttttt\n" +
-        "hhhhhhhhhhhhhtttttttttttttttth          o  ooooooo   o   htttttttttttthhh o   o      o   o oooo oo hhhhhtthh ooo      /=r=+=l##%  htttttttttttttttt\n" +
-        "     oo oo   hhhhhhhhhhhhhhhh   o       oooooo o hhhhh o  hhhhhhhhhhhh       hhhhhh    o  ooo  hhhhttttttttth  ooo o /==========% htttttttttttttttt\n" +
-        "  o    o o oo ooooo       oooooo  oooooo ooooooohttttth o ___ o       o o hhhtttttthh  o  oo  httttttttttttthoooo     #b######b#  htttttttttttttttt\n" +
-        "hhhhh     o     oooooooooooooooooooooooooooooo  httttth   ###______ o    httttttttttth   oooo htttttttttttth  ooo o   #b##d###b# httttttttttttttttt\n" +
-        "ttttthhhhhhhhhhhh    o oooo   ooooooo ooooo ooo  hhttho  /#r==+==l=%  o htttttttttttth ooooo   hhhhtttttttth o oo o ooo  oo     htttttttttttttttttt\n" +
-        "ttttttttttttttttthhhhhhhhh  o   o    oooooooooooo  hth  /===========%  htttttttttttth  ooo    ___  hhhhhhtthooooooooooo oo   hhhttttttttttttttttttt\n" +
-        "tttttttttttttttttttttttttth         o   o ooooooooo h    #b#######b# o httttttttttth oooo     ###_______ hh  oo oo ooo o  o htttttttttttttttttttttt\n" +
-        "ttttttttttttttttttttttttttth                ooo oooo  o  #b###d###b#  ohttttttttttth   o o   /##r==+==l=%     oooooo         httttttttttttttttttttt\n" +
-        "tttttttttttttttttttttttttttth    _____         o oooooo        oooooo   hhhttttttttth  oooo /============%  o oooo          htttttttttttttttttttttt\n" +
-        "ttttttttttttttttttttttttttttth  /=====%   hhh     oo ooooo oooooo ooooooo  hhhtttttth oo     #b########b#  ooooo    o      httttttttttttttttttttttt\n" +
-        "tttttttttttttttttttttttttttttt /b=====b% httthh   o   ooooooooooo  o  ooooo   hhhtth   ooo   #b#dd#####b# ooo   o          httttttttttttttttttttttt\n" +
-        "tttttttttttttttttttttttttttttth b==d==b htttttth      o  oo o oo        oooooooo hh  o oooo ooo  ooo ooo ooooo           hhtttttttttttttttttttttttt\n" +
-        "ttttttttttttttttttttttttttttttth         hhttttthh     oo o o    o    o     ooooo  oooooo ooo oooooooo oooo  o   o    hhhtttttttttttttttttttttttttt\n" +
-        "ttttttttttttttttttttttttttttttth        o  htttttth     oooo hhh          o     ooooo o   ooo   oo  oooo  o          httttttttttttttttttttttttttttt\n" +
-        "tttttttttttttttttttttttttttttth    o   o    htttttthhh o oo httthhh           oooo oooooo    o o     o       o      htttttttttttttttttttttttttttttt\n" +
-        "tttttttttttttttttttttttttttttthh    o o  oo  hhtttttttho oo  httttth  o  ooo ooooooo o     o       o    o         hhttttttttttttttttttttttttttttttt\n" +
-        "tttttttttttttttttttttttttttttttthh     o o oo  hhhtthh   ooo  hhhhh   o oooooooo o  o      o                   hhhttttttttttttttttttttttttttttttttt\n" +
-        "tttttttttttttttttttttttttttttttttthhhh     o oooo hh  ooooo         oooooooo  o                          hhhhhhtttttttttttttttttttttttttttttttttttt\n" +
-        "tttttttttttttttttttttttttttttttttttttthhhh  o oo ooooooo o    o   oooooo o      o                hhhhhhhhtttttttttttttttttttttttttttttttttttttttttt\n" +
-        "tttttttttttttttttttttttttttttttttttttttttthhhhhhhh  oo           oooo       o          hhhhhhhhhhtttttttttttttttttttttttttttttttttttttttttttttttttt\n" +
-        "tttttttttttttttttttttttttttttttttttttttttttttttttthhhhhhhhh    o o oo  o    hhhhhhhhhhhtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\n" +
+        "ttttttttttttttttttttttttttttttttttttttthhh   hhh      #b#++b+#####+b++#b#     hhh     /##r=+=l==%                e      hhhhhhhhhhh       e o o e  \n" +
+        "tttttttttttttttttttttttttttttttttttttth    hhttth     #b###b###d###b###b#   e        /=#r=====l==%       e      e  e              oo ooo oo  e     \n" +
+        "tttttttttttttttttttttttttttttttttttthh    htttth            e ooo ee   e        ee  /=SHOP========%     e   e e ooooooo oooo  oooooooo       hhhhhh\n" +
+        "ttttttttttttttttttttttttttttttttttth     httthh        e   e oooooooooooo ooo e   e  #b#####+++#b#        ooooeooooeoooooo oooo       hhhhhhhtttttt\n" +
+        "tttttttttttttttttttttttttttttttttth      htth       e   e ooooooooo ooooooooooooooo  #b##d######b#o    oooeoooooo       e       hhhhhhttttttttttttt\n" +
+        "ttttttttttttttttttttttttttttttttth        hh         e  oooo e      e hhhooo ooooooo    e      e     oooooo e      e       hhhhhttttttttttttttttttt\n" +
+        "tttttttttttttttttttttttttttttttth          e    e    oooo e       hhhhttthhh    e ooo e   oo       ooooo e ooo  e      e     hhtttttttttttttttttttt\n" +
+        "ttttttttttttttttttttttttttttttth                  ooooo    hhhhhhhtttttttttth   e ooeooo eooeoo  e oooo   ooooo   e            httttttttttttttttttt\n" +
+        "tttttttttttttttttttttttttttttth     e        oooooo ee    htttttttttttttthhh  e o o  oooeooooeooooooo  hhh e oooo    e _____### hhttttttttttttttttt\n" +
+        "hhhhhhhhhhhhhtttttttttttttttth          e  ooooooo   e   htttttttttttthhh e   e      e   e oooo oo hhhhhtthh ooo      /=r=+=l##%  htttttttttttttttt\n" +
+        "     ee ee   hhhhhhhhhhhhhhhh   e       oooooo e hhhhh e  hhhhhhhhhhhh       hhhhhh    e  oooe hhhhttttttttth  ooo e /==========% htttttttttttttttt\n" +
+        "  e    e e oo eoooe       ooooooeeooooooeooooooohttttth e ___ e       e e hhhtttttthh  e  oo  httttttttttttthoooo     #b######b#  htttttttttttttttt\n" +
+        "hhhhh     e     eooooooooooooooooooooooooooooo  httttth   ###______ e    httttttttttth   ooo  htttttttttttth  ooo e   #b##d###b# httttttttttttttttt\n" +
+        "ttttthhhhhhhhhhhh    e oooo   oooooooeoooooeooo  hhttho  /#r==+==l=%  e htttttttttttth ooooo   hhhhtttttttth e oo e ooo  oo     htttttttttttttttttt\n" +
+        "ttttttttttttttttthhhhhhhhh  e   e    oooooooooooo  hth  /===========%  htttttttttttth  ooo    ___  hhhhhhtthooooooooooo oo   hhhttttttttttttttttttt\n" +
+        "tttttttttttttttttttttttttth         e   e ooooooooo h    #b#######b# e httttttttttth oooo     ###_______ hh  oo oo ooo e  e htttttttttttttttttttttt\n" +
+        "ttttttttttttttttttttttttttth                oooeoooo  e  #b###d###b#  ohttttttttttth   e o   /##r==+==l=%     oooooo         httttttttttttttttttttt\n" +
+        "tttttttttttttttttttttttttttth    _____         e oooooo        oooooo   hhhttttttttth  oooo /============%  e oooo          htttttttttttttttttttttt\n" +
+        "ttttttttttttttttttttttttttttth  /=====%   hhh     ooeoooooeooooooeooooooo  hhhtttttth oo     #b########b#  ooooo    e      httttttttttttttttttttttt\n" +
+        "tttttttttttttttttttttttttttttt /b=====b% httthh   e  eooooooooooo  e  ooooo   hhhtth   ooo   #b#dd#####b# ooo   e          httttttttttttttttttttttt\n" +
+        "tttttttttttttttttttttttttttttth b==d==b htttttth      e  ooeoeoo        oooooooo hh  e oooo ooo  ooo ooo ooooo           hhtttttttttttttttttttttttt\n" +
+        "ttttttttttttttttttttttttttttttth         hhttttthh     ooeoeo    e    e     oooooe oooooo ooo oooooooo oooo  e   e    hhhtttttttttttttttttttttttttt\n" +
+        "ttttttttttttttttttttttttttttttth        e  htttttth     oooo hhh          e     ooooo e   ooo   oo  oooo  e          httttttttttttttttttttttttttttt\n" +
+        "tttttttttttttttttttttttttttttth    e   e    htttttthhh e oo httthhh           oooo oooooo    e e     e       e      htttttttttttttttttttttttttttttt\n" +
+        "tttttttttttttttttttttttttttttthh    e o  oo  hhtttttttho oo  httttth  e  ooo ooooooo e     e       e    e         hhttttttttttttttttttttttttttttttt\n" +
+        "tttttttttttttttttttttttttttttttthh     e o oo  hhhtthh   ooo  hhhhh   e oooooooo e  e      e                   hhhttttttttttttttttttttttttttttttttt\n" +
+        "tttttttttttttttttttttttttttttttttthhhh     e oooo hh  ooooo         oooooooo  e                          hhhhhhtttttttttttttttttttttttttttttttttttt\n" +
+        "tttttttttttttttttttttttttttttttttttttthhhh  e oo ooooooo e    e   oooooo e      e                hhhhhhhhtttttttttttttttttttttttttttttttttttttttttt\n" +
+        "tttttttttttttttttttttttttttttttttttttttttthhhhhhhh  oo           oooo       e          hhhhhhhhhhtttttttttttttttttttttttttttttttttttttttttttttttttt\n" +
+        "tttttttttttttttttttttttttttttttttttttttttttttttttthhhhhhhhh    e e oo  e    hhhhhhhhhhhtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\n" +
         "ttttttttttttttttttttttttttttttttttttttttttttttttttttttttttthhhhh ooo hhhhhhhttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\n" +
-        "ttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth  o o htttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\n" +
-        "tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth o   htttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\n" +
-        "tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth   o htttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\n" +
+        "ttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth  e o htttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\n" +
+        "tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth e   htttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\n" +
+        "tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth   e htttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\n" +
         "ttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth     httttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\n";
 
 /*
