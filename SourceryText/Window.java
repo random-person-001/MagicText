@@ -38,28 +38,11 @@ public class Window extends JFrame {
         txtArea.repaint();
     }
 
-    /**
-     * @return the maximum allowable height in the game, an arbitrary large number that should be greater or equal to
-     * the size of a room.  Used for hitmesh sizes and used to be used for the size of a unified spellcasting layer, but
-     * now each spell has their own layer so it's only used for hitmeshes.  I suppose we could make this dynamic and
-     * depend on the size of the background art if we really wanted to, but it isn't a high priority I think.
-     */
-    public int maxH() {
-        return 80;
-    }
-
-    /**
-     * @return the maximum allowable width in the game, an arbitrary large number
-     */
-    public int maxW() {
-        return 150;
-    }
-
-    private int screenH() {
+    public int screenH() {
         return 28;
     }
 
-    private int screenW() {
+    public int screenW() {
         return 46;
     }
 

@@ -46,6 +46,8 @@ public class FondantVillage extends Room {
 
     @Override
     public void startup() {
+        boundedCamera = true;
+
         Color lightTreeGreen = new Color(27, 145, 17);
         Color shadowTreeGreen = new Color(29, 120, 19);
         Color normalGrass = new Color(72, 150, 69);

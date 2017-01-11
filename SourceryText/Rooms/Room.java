@@ -43,6 +43,8 @@ public class Room implements java.io.Serializable {
     public int roomHeight;
     public String exitCode = "";
 
+    public boolean boundedCamera = false;
+
     protected boolean isPaused = false;
     private boolean resume = true;
     private boolean changingAnswer = false;
@@ -65,8 +67,8 @@ public class Room implements java.io.Serializable {
         org.roomBackground = Color.BLACK;
 
         // Boring stuff
-        roomHeight = org.getWindow().maxH();
-        roomWidth = org.getWindow().maxW();
+        roomHeight = 50;
+        roomWidth = 50;
 
         Layer spells = new Layer(new String[roomHeight][roomWidth], "Spellz", true);
         org.addLayer(spells);

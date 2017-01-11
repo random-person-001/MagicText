@@ -522,7 +522,12 @@ public class Player extends Mortal implements java.io.Serializable {
      * @return where the camera ought to be
      */
     public int getCamX() {
-        return getX() - 22;
+        int centeredX = getX() - 23;
+        if (room != null && room.boundedCamera){
+            centeredX = Math.min(centeredX, room.roomWidth - org.getWindow().screenW());
+            centeredX = Math.max(centeredX, 0);
+        }
+        return centeredX;
     }
 
     /**
@@ -531,7 +536,12 @@ public class Player extends Mortal implements java.io.Serializable {
      * @return where the camera ought to be
      */
     public int getCamY() {
-        return getY() - 11;
+        int centeredY = getY() - 11;
+        if (room != null && room.boundedCamera){
+            centeredY = Math.min(centeredY, room.roomHeight - org.getWindow().screenH());
+            centeredY = Math.max(centeredY, 0);
+        }
+        return centeredY;
     }
 
     private void move(int direction) {

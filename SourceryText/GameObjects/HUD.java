@@ -604,17 +604,16 @@ class HUD implements java.io.Serializable {
             fireSpell.dmgSpellDefine(1, 100, 0, 0f, "fire", new SpecialText("6", new Color(255, 200, 0)), new SpecialText("9", new Color(255, 150, 0)));
             player.addItem(fireSpell);
             room.setNewRoom("switch to zone 2", player, 0, 0);
-        } else if (command.contains("zone2 lite")) {
+        } else if (command.contains("zone2 villa")) {
             player.isGhost = true;
             player.restoreHealth(400, 294);
             Item fireSpell = new Item("Deforestor", "Fire Spell;\nUse your imagination.", "DFrst", "spell", true);
             fireSpell.dmgSpellDefine(1, 100, 0, 0f, "fire", new SpecialText("6", new Color(255, 200, 0)), new SpecialText("9", new Color(255, 150, 0)));
             player.addItem(fireSpell);
             room.setNewRoom("switch to zone 2", player, 0, 0);
-        }else if (command.contains("fondant")) {
-            nextCommand = "zone2 lite && sleep 400 && goto 66 44 && jumpto FondantVillage";
+            nextCommand = "sleep 400 && goto 66 44 && jumpto FondantVillage";
             executeNextCommand = true;
-        } else if (command.startsWith("sleep ")){
+        }else if (command.startsWith("sleep ")){
             command = command.substring(6);
             System.out.println(command);
             int[] p = getNParameters(command, 1);
