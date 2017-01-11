@@ -309,6 +309,7 @@ class HUD implements java.io.Serializable {
      * >exit : exit sudo mode, or the game if you aren't in it.
      * >fabulous off : Turns fabulous mode off
      * >fabulous on : Turns fabulous mode on
+     * >fondant : go to the Fondant Village
      * >getpos : print out current player coords in response
      * >ghost : Disables the player checking for walls before moving into one (also called 'noclip')
      * >goto (x) (y) : teleport player to location
@@ -610,6 +611,21 @@ class HUD implements java.io.Serializable {
             fireSpell.dmgSpellDefine(1, 100, 0, 0f, "fire", new SpecialText("6", new Color(255, 200, 0)), new SpecialText("9", new Color(255, 150, 0)));
             player.addItem(fireSpell);
             room.setNewRoom("switch to zone 2", player, 0, 0);
+        }else if (command.contains("fondant")) {
+            nextCommand = "zone2 lite && sleep 400 && goto 66 44 && jumpto FondantVillage";
+            executeNextCommand = true;
+        } else if (command.startsWith("sleep ")){
+            command = command.substring(6);
+            System.out.println(command);
+            int[] p = getNParameters(command, 1);
+            if (p != null && 0 < p[0] && p[0] < 10*60*1000) {
+                showResponse("HUD sleeping for " + p[0] + " ms");
+                try {
+                    Thread.sleep(p[0]);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
         } else if (command.length() > 0) {
             showResponse("Command '" + command + "' not recognised.  Check your spelling or " +
                     "request it as a new feature.");
