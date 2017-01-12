@@ -25,7 +25,7 @@ public class Cliffbottom extends Room {
 
     @Override
     protected String loop(Player play) {
-        play.goTo(206,113);
+        play.goTo(152,113);
 
         while (exitCode.equals("")) {
             if (play.getY() >= 270) {
@@ -54,43 +54,43 @@ public class Cliffbottom extends Room {
         //        , {100, 98}, {100, 100}, {100, 102}, {100, 104}, {98, 111}};
         int[][] allyLocs2 = {{195, 100}, {216, 102}, {217, 114}, {141, 115}, {134, 102}, {131, 97}, {169, 98}, {184, 100}};
         for (int[] coord : allyLocs2) {
-            Alligator ally = new Alligator(this, coord[0], coord[1]);
+            Alligator ally = new Alligator(this, coord[0] - 69, coord[1]);
             addMortal(ally);
         }
 
         Item berries = new Item("Suspicious Berries", "You found these red\n berries while exploring \n a forest, but they\n look, well, suspicous. \n You can try to eat \n them if you want.", "item");
         berries.healItemDefine(-10, 0); // It hurts you
-        DroppedItem dBerries = new DroppedItem(this, "You found some berries!", berries, 130, 108);
+        DroppedItem dBerries = new DroppedItem(this, "You found some berries!", berries, 61, 108);
         addObject(dBerries);
 
-        Bandit loner = new Bandit(org, this, 129, 109);
+        Bandit loner = new Bandit(org, this, 60, 109);
         addMortal(loner);
 
 
         Item dillChip = new Item("dillTaterChip", "It slows down your \n perception of time \n so you can meditate \n on your decisions!", "item");
         dillChip.setDuration(60 * 1000);
         dillChip.setSpellType("potion");
-        super.addObject(new DroppedItem(this, "Oooh, lucky!\n You found a dill potato chip!", dillChip, 121, 100));
+        super.addObject(new DroppedItem(this, "Oooh, lucky!\n You found a dill potato chip!", dillChip, 52, 100));
 
         Item fondantChunk = new Item("fondantChunk", "It puts the world in a\n sugar rush!\n Feels like the day after\n Halloween ", "item");
         fondantChunk.setDuration(30 * 1000);
         fondantChunk.setSpellType("potion");
-        super.addObject(new DroppedItem(this, "Oooh, lucky! You found a chunk of fondant!\n But -   BEWARE:\n eating it will make you super hyper.", fondantChunk, 203, 24));
+        super.addObject(new DroppedItem(this, "Oooh, lucky! You found a chunk of fondant!\n But -   BEWARE:\n eating it will make you super hyper.", fondantChunk, 134, 24));
 
         Item perriwinkle = new Item("wrinkleInTime", "Distorts spacetime in a \n bubble around you, so \n nearby entities slow down \n in your perception of time", "item");
         perriwinkle.setDuration(60 * 1000);
         perriwinkle.setSpellType("potion");
-        super.addObject(new DroppedItem(this, "Oooh, lucky! You found a potion that locally \n distorts spacetime.", perriwinkle, 135, 57));
+        super.addObject(new DroppedItem(this, "Oooh, lucky! You found a potion that locally \n distorts spacetime.", perriwinkle, 64, 57));
 
     }
 
     @Override
     protected void specialInspect(int x, int y, Player inspector) {
-        if (x == 183 && y == 49) {
+        if (x == 114 && y == 49) {
             org.removeLayer("veil");
             removeFromBaseHitMesh(183, 50);
         }
-        if (x == 211 && y == 47) {
+        if (x == 142 && y == 47) {
             // talk to Sven
         }
     }
@@ -121,17 +121,19 @@ public class Cliffbottom extends Room {
         String[][] base = Art.strToArray(arty.forest);
         Layer forestBackground = new Layer(base, "Base");
 
+        /*
         Layer forestRiver = new Layer(Art.strToArray(arty.forestRiver), "river");
         forestRiver.setY(54);
         forestRiver.setX(0);
+        */
 
         Layer kiosk = new Layer(Art.strToArray(arty.forestKiosk), "kiosk");
         kiosk.setY(57);
-        kiosk.setX(141);
+        kiosk.setX(72);
         
         Layer forestVeil = new Layer(Art.strToArray(arty.forestVeil), "veil");
         forestVeil.setY(47);
-        forestVeil.setX(132);
+        forestVeil.setX(63);
 
         SpecialText[] trees = { new SpecialText("o", normalGrass, lightTreeGreen),  // Cuz the burnable forest wants to know them
                 new SpecialText("o", otherGrass, lightTreeGreen), new SpecialText("O", otherGrass, lightTreeGreen),
@@ -196,17 +198,17 @@ public class Cliffbottom extends Room {
          */
 
         org.addLayer(forestBackground);
-        org.addLayer(forestRiver);
+        //org.addLayer(forestRiver);
         org.addLayer(kiosk);
         initHitMeshes(forestBackground);
         String[] solids = {"r", "t", "h"};
         addToBaseHitMesh(base, solids);
-        addToBaseHitMesh(183, 50); // Hiding the kiosk area
-        addToObjHitMesh(120, 97); // Dock
-        addToObjHitMesh(120, 98);
-        addToObjHitMesh(120, 99);
-        addToObjHitMesh(120, 100);
-        addToObjHitMesh(120, 101); // river
+        addToBaseHitMesh(114, 50); // Hiding the kiosk area
+        addToObjHitMesh(71, 97); // Dock
+        addToObjHitMesh(71, 98);
+        addToObjHitMesh(71, 99);
+        addToObjHitMesh(71, 100);
+        addToObjHitMesh(71, 101); // river
         org.addLayer(forestVeil);
 
         FlammableTree ft2 = new FlammableTree(this, forestVeil, trees);
@@ -223,10 +225,11 @@ public class Cliffbottom extends Room {
         addObject(sp);
         org.addLayer(snow);
 
-        WaterPool wp1 = new WaterPool(this, forestRiver, "1", 1);
-        WaterPool wp2 = new WaterPool(this, forestRiver, "2", 2);
-        WaterPool wp3 = new WaterPool(this, forestRiver, "3", 3);
-        WaterPool wp4 = new WaterPool(this, forestRiver, "4", 4);
+
+        WaterPool wp1 = new WaterPool(this, forestBackground, "1", 1);
+        WaterPool wp2 = new WaterPool(this, forestBackground, "2", 2);
+        WaterPool wp3 = new WaterPool(this, forestBackground, "3", 3);
+        WaterPool wp4 = new WaterPool(this, forestBackground, "4", 4);
         addObject(wp1);
         addObject(wp2);
         addObject(wp3);
