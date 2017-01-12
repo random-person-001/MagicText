@@ -151,7 +151,7 @@ public class Cliffbottom extends Room {
         forestVeil.findAndReplace(new SpecialText("t"), trees[4]);
         forestVeil.findAndReplace(new SpecialText("h"), trees[5]);
 
-        forestBackground.findAndReplace(new SpecialText("T"), new SpecialText("T", new Color(38, 77, 54), new Color(27, 51, 35)));
+        forestBackground.findAndReplace(new SpecialText("T"), new SpecialText("T", new Color(38, 77, 54), new Color(45, 64, 51)));
 
         forestBackground.findAndReplace(new SpecialText(" "), new SpecialText(".", otherGrass, dirt), 15);
         forestBackground.findAndReplace(new SpecialText(" "), new SpecialText("_", normalGrass, dirt), 15);
@@ -202,14 +202,18 @@ public class Cliffbottom extends Room {
         //org.addLayer(forestRiver);
         org.addLayer(kiosk);
         initHitMeshes(forestBackground);
-        String[] solids = {"r", "t", "h"};
+        String[] solids = {"r", "t", "h","T"};
         addToBaseHitMesh(base, solids);
         addToBaseHitMesh(114, 50); // Hiding the kiosk area
-        addToObjHitMesh(71, 97); // Dock
-        addToObjHitMesh(71, 98);
-        addToObjHitMesh(71, 99);
-        addToObjHitMesh(71, 100);
-        addToObjHitMesh(71, 101); // river
+        /*
+        addToObjHitMesh(51, 96);
+        addToObjHitMesh(51, 97); // Dock
+        addToObjHitMesh(51, 98);
+        addToObjHitMesh(51, 99);
+        addToObjHitMesh(51, 100);
+        addToObjHitMesh(51, 101);
+        addToObjHitMesh(51, 102);
+        */
         org.addLayer(forestVeil);
 
         FlammableTree ft2 = new FlammableTree(this, forestVeil, trees);
