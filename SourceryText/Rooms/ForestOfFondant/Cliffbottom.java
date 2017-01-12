@@ -25,14 +25,11 @@ public class Cliffbottom extends Room {
 
     @Override
     protected String loop(Player play) {
-        play.goTo(152,113);
+        play.goTo(137,113);
 
         while (exitCode.equals("")) {
-            if (play.getY() >= 270) {
-                setNewRoom("switch to zone 1", play, 0, 0);
-            }
-            if (play.getY() <= 1) {
-                setNewRoom("switch to zone 1", play, 0, 0);
+            if (play.getY() < 1){
+                setNewRoom("FondantVillage", play, 49, play.getX());
             }
             try {
                 Thread.sleep(20);
@@ -97,6 +94,8 @@ public class Cliffbottom extends Room {
 
     @Override
     public void startup() {
+        boundedCamera = true;
+
         Color lightTreeGreen = new Color(27, 145, 17);
         Color shadowTreeGreen = new Color(29, 120, 19);
         Color normalGrass = new Color(72, 150, 69);
@@ -151,6 +150,8 @@ public class Cliffbottom extends Room {
         forestVeil.findAndReplace(new SpecialText("t"), trees[3], 17);
         forestVeil.findAndReplace(new SpecialText("t"), trees[4]);
         forestVeil.findAndReplace(new SpecialText("h"), trees[5]);
+
+        forestBackground.findAndReplace(new SpecialText("T"), new SpecialText("T", new Color(38, 77, 54), new Color(27, 51, 35)));
 
         forestBackground.findAndReplace(new SpecialText(" "), new SpecialText(".", otherGrass, dirt), 15);
         forestBackground.findAndReplace(new SpecialText(" "), new SpecialText("_", normalGrass, dirt), 15);
@@ -216,6 +217,7 @@ public class Cliffbottom extends Room {
         FlammableTree ft1 = new FlammableTree(this, forestBackground, trees);
         addObject(ft1);
 
+        /*
         Layer snow = new Layer(Art.strToArray(arty.testSnow), "snow", 2, 100);
         SpecialText snow1 = new SpecialText("-", new Color(215, 230, 227), new Color(249, 249, 249));
         SpecialText snow2 = new SpecialText(" ", null, new Color(249, 249, 249));
@@ -224,7 +226,7 @@ public class Cliffbottom extends Room {
         SnowPatch sp = new SnowPatch(this, snow, new SpecialText[]{snow1, snow2});
         addObject(sp);
         org.addLayer(snow);
-
+        */
 
         WaterPool wp1 = new WaterPool(this, forestBackground, "1", 1);
         WaterPool wp2 = new WaterPool(this, forestBackground, "2", 2);
