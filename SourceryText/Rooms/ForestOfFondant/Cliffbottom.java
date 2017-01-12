@@ -25,11 +25,11 @@ public class Cliffbottom extends Room {
 
     @Override
     protected String loop(Player play) {
-        play.goTo(137,113);
+        //play.goTo(137,113);
 
         while (exitCode.equals("")) {
             if (play.getY() < 1){
-                setNewRoom("FondantVillage", play, 49, play.getX());
+                setNewRoom("FondantVillage", play, 48, play.getX());
             }
             try {
                 Thread.sleep(20);
@@ -131,7 +131,7 @@ public class Cliffbottom extends Room {
         kiosk.setX(72);
         
         Layer forestVeil = new Layer(Art.strToArray(arty.forestVeil), "veil");
-        forestVeil.setY(47);
+        forestVeil.setY(46);
         forestVeil.setX(63);
 
         SpecialText[] trees = { new SpecialText("o", normalGrass, lightTreeGreen),  // Cuz the burnable forest wants to know them

@@ -400,7 +400,7 @@ public class Art implements java.io.Serializable{
             "   WARNING: setting useAllCharacters to        \n" +
             "     true will enable a very buggy build of    \n" +
             "     a world, and really shouldn't be used.    \n" +
-            "     I'll be fixing that on Thursday.          \n" +
+            "     It should've been fixed last Thursday...  \n" +
             "   */                                          \n" +
             "                                               \n" +
             "   public void generateWorldMagic(){           \n" +
@@ -1137,122 +1137,122 @@ public String testRoom =
 
 //15 x shift
 public String forest =
-                "TTTTTtttttttttttttttttttttttttttttttttttttttttttttttttttttttttth     htttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttTTTTT\n" +
-                "TTTTTttttttttttttttttttttttttttttttttttttttttttttttttttttttttth     httttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttTTTTT\n" +
-                "TTTTTttttttttttttttttttttttttttttttttttttttttttttttttttttttttth      hhhhhhhhhhhhhhhhhhttttttttttttttttttttttttttthhhhhhhhhhhhhhhttthhhhtttttttttttttttttttttttttttttTTTTT\n" +
-                "TTTTTtttttttttttttttttttttttttttttttttttttttttttttttttttttttttth             hhhhhh    hhhhhhhhhttttttttttthhhhhhh               hhh    hhtttttttttttttttttttttttttttTTTTT\n" +
-                "TTTTTttttttttttttttttttttttttttttttttttttttttttttttttttttttttthhh                               hhhhhhhhhhh                               hhtttttttttttttttttttttttttTTTTT\n" +
-                "TTTTTtttttttttttttttttttttttttttttttttttttttttttttttttttttthhh                                                                              httttttttttttttttttttttttTTTTT\n" +
-                "TTTTTttttttttttttttttttttttttttttttttttttttttttttttttttttth                                                                                  htttttttttttttttttttttttTTTTT\n" +
-                "TTTTTtttttttttttttttttttttttttttttttttttttttttttttttttttth                                                                                   htttttttttttttttttttttttTTTTT\n" +
-                "TTTTTttttttttttttttttttttttttttttttttttttttttttttttttttth                                                                                    htttttttttttttttttttttttTTTTT\n" +
-                "TTTTTtttttttttttttttttttttttttttttttttttttttttttttttttttth                                                                                    httttttttttttttttttttttTTTTT\n" +
-                "TTTTTtttttttttttttttttttttttttttttttttttttttttttttttthhttth                                                                                   httttttttttttttttttttttTTTTT\n" +
-                "TTTTTtttttttttttttttttttttttttttttttttttttttttttttttttttttthh                                                                                htttttttttttttttttttttttTTTTT\n" +
-                "TTTTTtttttttttttttttttttttttttttttttttttttttttttttttttttttth                                                                                 htttttttttttttttttttttttTTTTT\n" +
-                "TTTTTttttttttttttttttttttttttttttttttttttttttttttttttttttth                                                                                  htttttttttttttttttttttttTTTTT\n" +
-                "TTTTTttttttttttttttttttttttttttttttttttttttttttttttttttthh                                                                                   htttttttttttttttttttttttTTTTT\n" +
-                "TTTTTtttttttttttttttttttttttttttttttttttttttttttttttttth                                                                                    httttttttttttttttttttttttTTTTT\n" +
-                "TTTTTttttttttttttttttttttttttttttttttttttttttttttttttth                                                                                     httttttttttttttttttttttttTTTTT\n" +
-                "TTTTTttttttttttttttttttttttttttttttttttttttttttttttttttth                                                                                     httttttttttttttttttttttTTTTT\n" +
-                "TTTTTttttttttttttttttttttttttttttttttttttttttttttttttttth                                                                                     httttttttttttttttttttttTTTTT\n" +
-                "TTTTTtttttttttttttttttttttttttttttttttttttttttttttttttttth                                                                                     htttttttttttttttttttttTTTTT\n" +
-                "TTTTTttttttttttttttttttttttttttttttttttttttttttttttttttttth                                                                                    htttttttttttttttttttttTTTTT\n" +
-                "TTTTTtttttttttttttttttttttttttttttttttttttttttttttttttttttthhh                hhh                                                               httttttttttttttttttttTTTTT\n" +
-                "TTTTTttttttttttttttttttttttttttttttttttttttttttttttttttttttttthhhhhhhh      hhttthh                                                             httttttttttttttttttttTTTTT\n" +
-                "TTTTTttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttthhhhhhttttttthhh                           FONDANT GROVE                  httttttttttttttttttttTTTTT\n" +
-                "TTTTTttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttthhh                                                      htttttttttttttttttttttTTTTT\n" +
-                "TTTTTtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttthhhhh                                                 htttttttttttttttttttttTTTTT\n" +
-                "TTTTTttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttthhhhhhh                                         httttttttttttttttttttttTTTTT\n" +
-                "TTTTTtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttthhhh                                    htttttttttttttttttttttttTTTTT\n" +
-                "TTTTTtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttthhhhhh                             httttttttttttttttttttttttTTTTT\n" +
-                "TTTTTtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttthhhhhh              htttttttttttttttttttttttttttTTTTT\n" +
-                "TTTTTtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttthhh           htttttttttttttttttttttttttttTTTTT\n" +
-                "TTTTTttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth          htttttttttttttttttttttttttttTTTTT\n" +
-                "TTTTTtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth          httttttttttttttttttttttttttTTTTT\n" +
-                "TTTTTttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth         httttttttttttttttttttttttttTTTTT\n" +
-                "TTTTTtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth        httttttttttttttttttttttttttTTTTT\n" +
-                "TTTTTttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth      htttttttttttttttttttttttttttTTTTT\n" +
-                "TTTTTtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth    httttttttttttttttttttttttttttTTTTT\n" +
-                "TTTTTttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth     httttttttttttttttttttttttttttTTTTT\n" +
-                "TTTTTtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth      httttttttttttttttttttttttttttTTTTT\n" +
-                "TTTTTtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth     htttttttttttttttttttttttttttttTTTTT\n" +
-                "TTTTTtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth    httttttttttttttttttttttttttttttTTTTT\n" +
-                "TTTTTttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth     httttttttttttttttttttttttttttttTTTTT\n" +
-                "TTTTTtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth      httttttttttttttttttttttttttttttTTTTT\n" +
-                "TTTTTtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth     htttttttttttttttttttttttttttttttTTTTT\n" +
-                "TTTTTttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth     httttttttttttttttttttttttttttttttTTTTT\n" +
-                "TTTTTttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth     httttttttttttttttttttttttttttttttTTTTT\n" +
-                "TTTTTttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttthhhhhtttttttttthhhhhhhttttth    httttttttttttttttttttttttttttttttTTTTT\n" +
-                "TTTTTtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth     htttttttth       hhhhhh     htttttttttttttttttttttttttttttttTTTTT\n" +
-                "TTTTTttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth  hhh httttthhh  hhhhh            htttttttttttttttttttttttttttttttTTTTT\n" +
-                "TTTTTtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttthh htth  httth    httttthhhhhhh      httttttttttttttttttttttttttttttTTTTT\n" +
-                "TTTTTttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttthhh   httth  htth hhhtttttttttttth      httttttttttttttttttttttttttttttTTTTT\n" +
-                "TTTTTtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth    hhttttth  hhh httttttttttttth       httttttttttttttttttttttttttttttTTTTT\n" +
-                "TTTTTtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth hhhtttttttth     htttttttttttttth     htttttttttttttttttttttttttttttttTTTTT\n" +
-                "TTTTTttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttthhhhhhhhhhhtttttttthhhh  httttttttttthhhhhtttttttttttttttth     hhtttttttttttttttttttttttttttttTTTTT\n" +
-                "TTTTTtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttthh            hhhhttth     htttttttttttttttttttttttttttttttttth    httttttttttttttttttttttttttttttTTTTT\n" +
-                "TTTTTttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth                  hhh  hhhhtttttttttttttttttttttttttttttttttttth    htttttttttttttttttttttttttttttTTTTT\n" +
-                "TTTTTtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth                       httttttttttttttttttttttttttttttttttttttth  X   httttttttttttttttttttttttttttTTTTT\n" +
-                "TTTTTttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth                    hhtttttttttttttttttttttttttttttttttttttttth      hhtttttttttttttttttttttttttttTTTTT\n" +
-                "TTTTTttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth                    httttttttttttttttttttttttttttttttttttttttth  SVEN  httttttttttttttttttttttttttTTTTT\n" +
-                "TTTTTttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth                    htttttttttttttttttttttttttttttttttttttttth          htttttttttttttttttttttttttTTTTT\n" +
-                "TTTTTttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth                  hhtttttttttttttttttttttttttttttttttttttttth          httttttttttttttttttttttttttTTTTT\n" +
-                "TTTTTtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth               hhtttttttttttttttttttttttttttttttttttttttttth          httttttttttttttttttttttttttTTTTT\n" +
-                "TTTTTttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttthhhhhh       hhttttttttttttttttttttttttttttttttttttttttttth           httttttttttttttttttttttttttTTTTT\n" +
-                "TTTTTttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttthhhhhhhttttttttttttttttttttttttttttttttttttttttttttth            htttttttttttttttttttttttttTTTTT\n" +
-                "TTTTTttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth            htttttttttttttttttttttttttTTTTT\n" +
-                "TTTTTtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth          httttttttttttttttttttttttttTTTTT\n" +
-                "TTTTTttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttthhh          htttttttttttttttttttttttttttTTTTT\n" +
-                "TTTTTttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth              htttttttttttttttttttttttttTTTTT\n" +
-                "TTTTTtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth             htttttttttttttttttttttttttTTTTT\n" +
-                "TTTTTtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttthh              htttttttttttttttttttttttthTTTTT\n" +
-                "TTTTTtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth                httttttttttttttttttttttthTTTTT\n" +
-                "TTTTTtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttthh                  htttttttttttttttttttttthTTTTT\n" +
-                "TTTTTtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttthh                     hhtttttttttttttttttttthTTTTT\n" +
-                "TTTTTttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttthhhhhh                        httthhhhhhhttttttttthTTTTT\n" +
-                "TTTTTtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttthhh                               hhh      hhhhtttttthTTTTT\n" +
-                "TTTTTttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttthhhhhhhhhh                                               hhhtttthTTTTT\n" +
-                "TTTTTttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttthhhh                 tttttt                                     httthTTTTT\n" +
-                "TTTTTttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttthhhhh                    httttttt                                     httthTTTTT\n" +
-                "TTTTTtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttthhhhh                          httttttt                                     htthTTTTT\n" +
-                "TTTTTtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttthhhh                                hhhhht        tttt                           hthTTTTT\n" +
-                "TTTTTttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttthhh                                                 httttt                          hthTTTTT\n" +
-                "TTTTTtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttthhh                          ttt                        hhhh             ttt          hhthTTTTT\n" +
-                "TTTTTtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttthh                            hhhh        tttt                            htttt           hhTTTTT\n" +
-                "TTTTTttttttttttttttttttttttttttttttttttttttttttttttttttttttttthhhhhhtthhh                                         httttt                            hhh             hTTTTT\n" +
-                "TTTTTttttttttttttttttttttttttttttttttttttttttttttttttttttttthh     hhh                       ttt                   hhhh                                             hTTTTT\n" +
-                "TTTTTtttttttttttttttttttttttttttttttttttttttttttttttttttttth                                httttt                          tttttt                                 htTTTTT\n" +
-                "TTTTTttttttttttttttttttttttttttttttttttttttttttttttttttttth                                  hhhh                          httttttt        ttt                      hTTTTT\n" +
-                "TTTTTttttttttttttttttttttttttttttttttttttttttttttttttttthh                                                       ht         hhtthh        htttt                     hTTTTT\n" +
-                "TTTTTtttttttttttttttttttttttttttttttttttttttttttttttttth                                                         hh           hh           hhh      ttt         hhhhhTTTTT\n" +
-                "TTTTTttttttttttttttttttttttttttttttttttttttttttttttttttthh                            tttt             ttt                                          hhhh        hhtthTTTTT\n" +
-                "TTTTTtttttttttttttttttttttttttttttttttttttttttttttttttth                             httttt           htttt                                                      hhhhTTTTT\n" +
-                "TTTTTttttttttttttttttttttttttttttttttttttttttttttttttttth                             hhhh             hhh           tttt                                           hTTTTT\n" +
-                "TTTTTttttttttttttttttttttttttttttttttttttttttttttttttttth                                                           httttt                               ttt        hTTTTT\n" +
-                "TTTTTttttttttttttttttttttttttttttttttttttttttttttttttthh                                                             hhhh          tttt                 hhhh        hTTTTT\n" +
-                "TTTTTttttttttttttttttttttttttttttttttttttttttttttttth                                                      ttt               tt  httttt      tttt                 hhhTTTTT\n" +
-                "TTTTThhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh                                         ttt          htttt             httt  hhhh      httttt                hthTTTTT\n" +
-                "TTTTT1111111111111111111111111111111111ffffggggfffffjjjjjfffffffffggggggggggffffffffffffffffhtttfffffgggggghhh               hh              hhhh       tttt      hhhTTTTT\n" +
-                "TTTTT22222222222222222222222222222222222222211111111kkkkk111111111111111111111111111111111111hhh11111ffffffffffgggg                                    httttt      hhTTTTT\n" +
-                "TTTTT22222222222222222222222222222222222222222222222jjjjj222222222222222222222222222222222222222221111111111111fffffggggggg                             hhhh        hTTTTT\n" +
-                "TTTTT11111111111111111111111111111111222222222222222kkkkk22222222222222222222222222222222222222222222222222221111111fffffffffffffffffffffffffffffff                 hTTTTT\n" +
-                "TTTTThhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh1111111111111111111111111111111111222222222222222222222222222222222222222211111111111111111fffffdddddddddddff               hTTTTT\n" +
-                "TTTTTtttttttttttttttttttttttttttttttttttgggggfffffffhhhfffffffffffffffffff1111223333333333333333222222222222222222222111111111111111111111111111111ddff            hhTTTTT\n" +
-                "TTTTTttttttttttttttttttttttttttttttttttthhhhhhhhhhhhttth       gggtttggggff11112233333333333333333333333333322222222222222222222222222222222222222221ddf           hhTTTTT\n" +
-                "TTTTTtttttttttttttttttttttttttttttttttttttttttttttttttth           hhh   gggffff112333333333333333333333333333332222222222222222222222222222222222222211df         hhTTTTT\n" +
-                "TTTTTtttttttttttttttttttttttttttttttttttttttttttttttttth                   ggggff112333333333333333333333333333333222222222222222222233333333222222222111df       hthTTTTT\n" +
-                "TTTTTtttttttttttttttttttttttttttttttttttttttttttttttth                      gggff12233333333333333333333333333333332222222222222233333333333332222222111df        hthTTTTT\n" +
-                "TTTTTttttttttttttttttttttttttttttttttttttttttttttttttth       httt           ggff12233333333333333333333333333333333222222222223333333333333333322222111df        hthTTTTT\n" +
-                "TTTTTtttttttttttttttttttttttttttttttttttttttttttttttth        hhhh           ghttt122333333333333333333333333333333332222222233333333333333333333222211ddf        hhhTTTTT\n" +
-                "TTTTTttttttttttttttttttttttttttttttttttttttttttttttth                        ghhhh112233333333333333333333333333333332222222333333333333333333333333221df           hTTTTT\n" +
-                "TTTTTttttttttttttttttttttttttttttttttttttttttttttttth                       gggfff12223333333334444444333333333333332222222223333333333333333333333332df            hTTTTT\n" +
-                "TTTTTtttttttttttttttttttttttttttttttttttttttttttttttth                    ggffff111222333333344444444443333333333333222111222333333444444444444443332df             hTTTTT\n" +
-                "TTTTTtttttttttttttttttttttttttttttttttttttttttttttttthh                  ggffff11122223333333334444444444433333333333322111123334444444444444444444432df            hTTTTT\n" +
-                "TTTTTtttttttttttttttttttttttttttttttttttttttttttthhh                  ggffff1111222222333333333344444444444333333333332222233444444444444444444444432df           hthrrrrr\n" +
-                "TTTTTttttttttttttttttttttttttttttttttttttttttttth                   ggfffff1111122222233333333333444444444333333333333333333444444444444444444444432df            hrrrrrrr\n" +
-                "TTTTTttttttttttttrrrtttttttttttttttttttttrrrttth         rrrr      ggffff1111111122222333333333333334443333333333333333333rr334444444444444444444332df     rrr   rrrrrrrrr\n" +
-                "TTTTTttttttttttrrrrrrrrtttrrrrttttttttttrrrrrrth   rrrrrrrrrrrrrrgggffff11111111rr22223rr3333333333333333rrrr333333333333rrr3333333333rrrrrr3333332ddf  rrrrrrrrrrrrrrrrrr\n" +
+                "TTTTTTTTTTTTTh122222221htttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth     httttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTTh1222222221httttttttttttttttttttttttttttttttttttttttttttttttttttttttttthh     htttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTTTh122222221httttttttttttttttttttttttttttttttttttttttttthhhhhhhhhhhhhhhh     hhttttttttttttttttttttttthhhhhhhhhhhhhhhttthhhhtttttttttttttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTTTh122222221htttttttttttttttttttttttttttttttttttttttthhh         hhhhhh      hhhhhhhttttttttttthhhhhhh               hhh    hhtttttttttttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTTh1222222221httttttttttttttttttttttttttttttttttttthhh                               hhhhhhhhhhh                               hhtttttttttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTTTh122222221htttttttttttttttttttttttttttttttttthhh                                                                              httttttttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTTTh112222221httttttttttttttttttttttttttttttttth                                                                                  htttttttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTTh122222221httttttttttttttttttttttttttttttttth                                                                                   htttttttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTh122222221httttttttttttttttttttttttttttttttth                                                                                    htttttttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTTh112222221httttttttttttttttttttttttttttttttth                                                                                    httttttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTTThh12222221htttttttttttttttttttttttttttthhttth                                                                                   httttttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTTTh122222221htttttttttttttttttttttttttttttttttthh                                                                                htttttttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTTh122222221httttttttttttttttttttttttttttttttttth                                                                                 htttttttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTTh122222221htttttttttttttttttttttttttttttttttth                                                                                  htttttttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTTTh122222221httttttttttttttttttttttttttttttthh                                                                                   htttttttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTTTTh112222221hhtttttttttttttttttttttttttttth                                                                                    httttttttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTTTTThh122222211htttttttttttttttttttttttttth                                                                                     httttttttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTh122222221httttttttttttttttttttttttttth                                                                                     httttttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTh122222221htttttttttttttttttttttttttth                                                                                     httttttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTh1222222221httttttttttttttttttttttttttth                                                                                     htttttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTh1222222211httttttttttttttttttttttttttttth                                                                                    htttttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTh122222221httttttttttttttttttttttttttttttthhh                hhh                                                               httttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTTTTTh122222221httttttttttttttttttttttttttttttttttthhhhhhhh      hhttthh                                                             httttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTTTTh1222222221httttttttttttttttttttttttttttttttttttttttttthhhhhhttttttthhh                           FONDANT GROVE                  httttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTTTTTh1222222211hhhtttttttttttttttttttttttttttttttttttttttttttttttttttttttthhh                                                      htttttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTh122222222111htttttttttttttttttttttttttttttttttttttttttttttttttttttttttthhhhh                                                 htttttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTh122222222221htttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttthhhhhhh                                         httttttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTh111222222221htttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttthhhh                                    htttttttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTThhh1122222221httttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttthhhhhh                             httttttttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTTh1222222221httttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttthhhhhh              htttttttttttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTh1222222221htttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttthhh           htttttttttttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTh1222222221htttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth          htttttttttttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTh1222222211htttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth          httttttttttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTh122222221htttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth         httttttttttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTh122222221htttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth        httttttttttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTh122222221htttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth      htttttttttttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTTh122222221htttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth    httttttttttttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTTh1222222221htttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth     httttttttttttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTTTh112222221httttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth      httttttttttttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTTTh12222221htttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth     htttttttttttttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTTh12222221httttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth    httttttttttttttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTh12222221httttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth     httttttttttttttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTh122222221htttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth      httttttttttttttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTh122222211htttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth     htttttttttttttttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTh122222221htttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth     httttttttttttttttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTh122222221htttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth     httttttttttttttttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTTh122222221httttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttthhhhhtttttttttthhhhhhhttttth    httttttttttttttttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTTh122222221htttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth     htttttttth       hhhhhh     htttttttttttttttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTh1122222221httttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth  hhh httttthhh  hhhhh            htttttttttttttttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTh1222222221httttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttthh htth  httth    httttthhhhhhh      httttttttttttttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTh1222222211httttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttthhh   httth  htth hhhtttttttttttth      httttttttttttttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTh12222221httttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth    hhttttth  hhh httttttttttttth       httttttttttttttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTh12222221hhhhttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth hhhtttttttth     htttttttttttttth     htttttttttttttttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTTh12222221111hhtttttttttttttttttttttttttttttttttthhhhhhhhhhhtttttttthhhh  httttttttttthhhhhtttttttttttttttth     hhtttttttttttttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTTTh112222222211htttttttttttttttttttttttttttttthh            hhhhttth     htttttttttttttttttttttttttttttttttth    httttttttttttttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTTTThh11222222221htttttttttttttttttttttttttttth                  hhh  hhhhtttttttttttttttttttttttttttttttttttth    htttttttttttttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTTTTTThh1122222221htttttttttttttttttttttttttth                       httttttttttttttttttttttttttttttttttttttth  X   httttttttttttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTTTTTThhh112222221httttttttttttttttttttttttttth                    hhtttttttttttttttttttttttttttttttttttttttth      hhtttttttttttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTTTThh11122222221htttttttttttttttttttttttttttth                    httttttttttttttttttttttttttttttttttttttttth  SVEN  httttttttttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTTTh112222222211httttttttttttttttttttttttttttth                    htttttttttttttttttttttttttttttttttttttttth          htttttttttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTTh12222222111hhtttttttttttttttttttttttttttttth                  hhtttttttttttttttttttttttttttttttttttttttth          httttttttttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTTTh12222221hhttttttttttttttttttttttttttttttttth               hhtttttttttttttttttttttttttttttttttttttttttth          httttttttttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTTTh122222221htttttttttttttttttttttttttttttttttthhhhhh       hhttttttttttttttttttttttttttttttttttttttttttth           httttttttttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTTh122222221httttttttttttttttttttttttttttttttttttttttthhhhhhhttttttttttttttttttttttttttttttttttttttttttttth            htttttttttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTTTh122222221htttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth            htttttttttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTTh122222211hhttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth          httttttttttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTTTh122222211hhhtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttthhh          htttttttttttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTTTTh11222222111httttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth              htttttttttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTTTTThh1222222221httttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth             htttttttttttttttttttttttttTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTTTTTTTh1122222221htttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttthh              htttttttttttttttttttttttthTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTTTTTTTh122222221httttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth                httttttttttttttttttttttthTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTTTTTTh122222221htttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttthh                  htttttttttttttttttttttthTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTTTTTTTh112222221httttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttthh                     hhtttttttttttttttttttthTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTTTTTTTh12222221hhtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttthhhhhh                        httthhhhhhhttttttttthTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTTTTTTTTh112222211hhttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttthhh                               hhh      hhhhtttttthTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTTTTTTTTThh122222211httttttttttttttttttttttttttttttttttttttttttttttttttttttttttthhhhhhhhhh                                               hhhtttthTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTh122222221htttttttttttttttttttttttttttttttttttttttttttttttttttttthhhh                 tttttt                                     httthTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTh12222221htttttttttttttttttttttttttttttttttttttttttttttttthhhhh                    httttttt                                     httthTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTTTTTTTTThhh112222221httttttttttttttttttttttttttttttttttttttttttthhhhh                          httttttt                                     htthTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTTTTTTThh11122222221htttttttttttttttttttttttttttttttttttttttthhhh                                hhhhht        tttt                           hthTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTTTTTTh112222222211htttttttttttttttttttttttttttttttttttttthhh                                                 httttt                          hthTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTTTTTh12222222111hhtttttttttttttttttttttttttttttttttttthhh                          ttt                        hhhh             ttt          hhthTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTTTTh122222111hhhtttttttttttttttttttttttttttttttttttthh                            hhhh        tttt                            htttt           hhTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTTTh1222221hhhtttttttttttttttttttttttttttthhhhhhtthhh                                         httttt                            hhh             hTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTTTh12222221httttttttttttttttttttttttttthh     hhh                       ttt                   hhhh                                             hTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTTTTh1222221htttttttttttttttttttttttttth                                httttt                          tttttt                                 htTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTTTTh11222221htttttttttttttttttttttttth                                  hhhh                          httttttt        ttt                      hTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTTTh12222221httttttttttttttttttttttthh                                                       ht         hhtthh        htttt                     hTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTTh12222211httttttttttttttttttttttth                                                         hh           hh           hhh      ttt         hhhhhTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTh12222211httttttttttttttttttttttttthh                            tttt             ttt                                          hhhh        hhtthTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTTh12222221httttttttttttttttttttttth                             httttt           htttt                                                      hhhhTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTTTh12222221httttttttttttttttttttttth                             hhhh             hhh           tttt                                           hTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTTTTh12222221htttttttttttttttttttttth                                                           httttt                               ttt        hTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTThh112222221htttttttttttttttttttthh                                                             hhhh          tttt                 hhhh        hTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTh1122222221httttttttttttttttttth                                                      ttt               tt  httttt      tttt                 hhhTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTh12222222111hhhhhhhhhhhhhhhhhhhh                                         ttt          htttt             httt  hhhh      httttt                hthTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTh122222221111111111ffffggggfffffjjjjjfffffffffggggggggggffffffffffffffffhtttfffffgggggghhh               hh              hhhh       tttt      hhhTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTh122222222222222222222211111111kkkkk111111111111111111111111111111111111hhh11111ffffffffffgggg                                    httttt      hhTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTTh12222222222222222222222222222jjjjj222222222222222222222222222222222222222221111111111111fffffggggggg                             hhhh        hTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTTTh1111111111111222222222222222kkkkk22222222222222222222222222222222222222222222222222221111111fffffffffffffffffffffffffffffff                 hTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTTTThhhhhhhhhhhhhhhh1111111111111111111111111111111111222222222222222222222222222222222222222211111111111111111fffffdddddddddddff               hTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTTTtttttttttttttttttgggggfffffffhhhfffffffffffffffffff1111223333333333333333222222222222222222222111111111111111111111111111111ddff            hhTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTTTttttttttttttttttthhhhhhhhhhhhttth       gggtttggggff11112233333333333333333333333333322222222222222222222222222222222222222221ddf           hhTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTTttttttttttttttttttttttttttttttttth           hhh   gggffff112333333333333333333333333333332222222222222222222222222222222222222211df         hhTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTTttttttttttttttttttttttttttttttttth                   ggggff112333333333333333333333333333333222222222222222222233333333222222222111df       hthTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTTttttttttttttttttttttttttttttttth                      gggff12233333333333333333333333333333332222222222222233333333333332222222111df        hthTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTttttttttttttttttttttttttttttttttth       httt           ggff12233333333333333333333333333333333222222222223333333333333333322222111df        hthTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTttttttttttttttttttttttttttttttttth        hhhh           ghttt122333333333333333333333333333333332222222233333333333333333333222211ddf        hhhTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTtttttttttttttttttttttttttttttttth                        ghhhh112233333333333333333333333333333332222222333333333333333333333333221df           hTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTttttttttttttttttttttttttttttttth                       gggfff12223333333334444444333333333333332222222223333333333333333333333332df            hTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTttttttttttttttttttttttttttttttttth                    ggffff111222333333344444444443333333333333222111222333333444444444444443332df             hTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTtttttttttttttttttttttttttttttttttthh                  ggffff11122223333333334444444444433333333333322111123334444444444444444444432df            hTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTttttttttttttttttttttttttttttttthhh                  ggffff1111222222333333333344444444444333333333332222233444444444444444444444432df           hthrrrrr\n" +
+                "TTTTTTTTTTTTTTTTTTTttttttttttttttttttttttttttttth                   ggfffff1111122222233333333333444444444333333333333333333444444444444444444444432df            hrrrrrrr\n" +
+                "TTTTTTTTTTTTTTTTTrrrtttttttttttttttttttttrrrttth         rrrr      ggffff1111111122222333333333333334443333333333333333333rr334444444444444444444332df     rrr   rrrrrrrrr\n" +
+                "TTTTTTTTTTTTTTTrrrrrrrrtttrrrrttttttttttrrrrrrth   rrrrrrrrrrrrrrgggffff11111111rr22223rr3333333333333333rrrr333333333333rrr3333333333rrrrrr3333332ddf  rrrrrrrrrrrrrrrrrr\n" +
                 "TTTTTrrrrrrrrrrrrrrrrrrrrrrrrrrrttttttrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr11111rrrrrr222rrrrr3333rr3333rrrrrrrrrr3333333rrrrrrrrrrrrrrrrrrrrrrrrr332ddfrrrrrrrrrrrrrrrrrrrrr\n" +
                 "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr33rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr\n" +
                 "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr\n" +
@@ -1266,56 +1266,56 @@ public String forest =
 
 
 public String fondantVillage =
-                "333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333\n" +
-                "222222333333333333333333222222222223333333332222222222222222222222222222333333333222222222222233333333222222222223333333333333333333333333333222222\n" +
-                "222222222223333333222222222222222222233333222222222111111111111111111122222222222221111111112222222222221111112222222222333333333222222222222222222\n" +
-                "111111112222222222211111111111111122222222211111111111111111111111111111111121111111111111111111122211111111111111111122222222222221111111111111111\n" +
-                "11111111111111111111111111TTTTT1111111111111111TTTTTTTTTTTTTTTTTTTTTTTTTTT11111TTTTTTTTTTTTTTTTT11111TTTTTTTTTTTTT1111111111111111111111TTTTTTTTTTT\n" +
-                "TTTTTTTT11111111111TTTTTTTTTTTTTTT111111111TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTttTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT111111111TTTTTTTTTTTTTT\n" +
-                "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT111TTTTTTTTTTTTTTTTttttttttttttTTTTTTTTTTTTTTTttttttttTTTTTTTTTTTTTtttTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTttt\n" +
-                "tttttttTTTTTTTTTTTTTttttttttTTTTTTTTTTTTTTTTTtttttttttttttttttttttttttttttttttttttttttttttttttTTTTTTTTttttttttttttttttttTTTTTTTTTTTTTTTTTTTTttttttt\n" +
-                "ttttttttttttttttttttttttttttttttttTTTTTTttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\n" +
-                "tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttthhhhhhhhhtttttttthhhhhhhhhhhttttttttttttttttttttttttttttttttttttttttttttttttttt\n" +
-                "ttttttttttttttttttttttttttttttttttttttttttttttttttttttttttthhhhhhhhh        htttttttth          hhhhhhhhhtttttttttttttttttttttttttttttttttttttttttt\n" +
-                "ttttttttttttttttttttttttttttttttttttttttttttttttttthhhh___                   htttttth                    hhhhhttttttttttttttttttttttttttttttttttttt\n" +
-                "ttttttttttttttttttttttttttttttttttttttttttttthhhhhh    ###______________    htttttth          hhhhhhh         hhhtttttttttttttttttttttttttttttttttt\n" +
-                "ttttttttttttttttttttttttttttttttttttttttttthh         /##r=++==r==++==l=%   htttttth   ___        hhthhh          hhhhtttttttttttttttttttttthhhhhhh\n" +
-                "tttttttttttttttttttttttttttttttttttttttttth          /==rINN=============%   httthh    ###______    hh                hhttttttttttthhhhhhhhh       \n" +
-                "ttttttttttttttttttttttttttttttttttttttthhh   hhh      #b#++b+#####+b++#b#     hhh     /##r=+=l==%                e      hhhhhhhhhhh  e    eeoeo ee \n" +
-                "tttttttttttttttttttttttttttttttttttttth    hhttth     #b###b###d###b###b#   e        /=#r=====l==%       e      e         e      eeoeoee eoe e     \n" +
-                "tttttttttttttttttttttttttttttttttttthh    htttth            e ooo ee   e        ee  /=SHOP========%     e  e  e   eoe  eooooeeoooee   ee     hhhhhh\n" +
-                "ttttttttttttttttttttttttttttttttttth     httthh        e   e oooooooooo  ee   e   e  #b#####+++#b#         eooeooooeoooooe    e       hhhhhhhtttttt\n" +
-                "tttttttttttttttttttttttttttttttttth      htth       e   e oooooooooeooooeooooooe     #b##d######b#o    oooeooeo         e    e  hhhhhhttttttttttttt\n" +
-                "ttttttttttttttttttttttttttttttttth        hh         e  oooo e      e hhhooo ooooooe    eo     e     oooeoooe      e       hhhhhttttttttttttttttttt\n" +
-                "tttttttttttttttttttttttttttttttth          e    e    oooo e       hhhhttthhh    e ooe eeoooo       ooeoo eoooo  e      e     hhtttttttttttttttttttt\n" +
-                "ttttttttttttttttttttttttttttttth                  ooooo    hhhhhhhtttttttttth   e  eoooooeooeo   e oooe   eoooo   e            httttttttttttttttttt\n" +
-                "tttttttttttttttttttttttttttttth     e        ooeoooee     htttttttttttttthhh  e e e     eooooeooooooo  hhh e eooe    e _____### hhttttttttttttttttt\n" +
-                "hhhhhhhhhhhhhtttttttttttttttth          e  ooooooo   e   htttttttttttthhh e   e      e   e oooo ee hhhhhtthh  eoo     /=r=+=l##%  htttttttttttttttt\n" +
-                "     ee ee   hhhhhhhhhhhhhhhh   e      eoooooo e hhhhh e  hhhhhhhhhhhh       hhhhhh    e  eooe hhhhttttttttth  ooe e /==========% htttttttttttttttt\n" +
-                "  e    e e oo eoooe  e    e   eoeeooooooe  eoooohttttth e ___ e       e e hhhtttttthh  e  eo  httttttttttttth eooo    #b######b#  htttttttttttttttt\n" +
-                "hhhhh     e     eooooooooooooooooooooe  e  eoo  httttth   ###______ e    httttttttttth   eoe  htttttttttttth  eoo e   #b##d###b# httttttttttttttttt\n" +
-                "ttttthhhhhhhhhhhh    e eoe        eooee   e eoo  hhttho  /#r==+==l=%  e htttttttttttth e oe    hhhhtttttttth e oooe e   eoo     htttttttttttttttttt\n" +
-                "ttttttttttttttttthhhhhhhhhhh    e    eoooe   eooo  hth  /===========%  htttttttttttth   oe    ___  hhhhhhtth     ooooooeoo   hhhttttttttttttttttttt\n" +
-                "tttttttttttttttttttttttttttthhhe hh e   eeooooooooo h    #b#######b# e httttttttttth   ee e   ###_______ hh  e  eeeooo e  e htttttttttttttttttttttt\n" +
-                "ttttttttttttttttttttttttttttthhh  hhhhhh    ooeooooo  e  #b###d###b#  ohttttttttttth    eo   /##r==+==l=%  e  eoeooo         httttttttttttttttttttt\n" +
-                "ttttttttttttttttttttttttttthh  _____  hthhh    e oooooo    e   oooooo   hhhttttttttth  eoe  /============%  eeoo            htttttttttttttttttttttt\n" +
-                "tttttttttttttttttttttttttth   /=====%  htttth     ooeooeo e   oooeooooooo  hhhtttttth eoe    #b########b#  eoo  e   e      httttttttttttttttttttttt\n" +
-                "tttttttttttttttttttttttttth  /b=====b%  htttthh   e  eooooo  eooe  e  ooooo   hhhtth   eo    #b#dd#####b# ooo   e          httttttttttttttttttttttt\n" +
-                "ttttttttttttttttttttttttttth  b==d==b  httttttth      e  ooeooo         oooooooo hh  eeoeo     eooo  e   oooe            hhtttttttttttttttttttttttt\n" +
-                "tttttttttttttttttttttttttttth     e      hhttttthh     eooooo    e    e     eooooeeoooeeooe   eoooooooeoooo  e   e    hhhtttttttttttttttttttttttttt\n" +
-                "ttttttttttttttttttttttttttttthh     e   e  htttttth     oeoo hhh          e  eoooe      oooooooee   oooo  e          httttttttttttttttttttttttttttt\n" +
-                "tttttttttttttttttttttttttttttth    e   e    htttttthhh e oo httthhh          eooe   eoeooe  ee e     e       e      htttttttttttttttttttttttttttttt\n" +
-                "tttttttttttttttttttttttttttttthh    e e  oe  hhttttttth eoo  httttth  e  oooeoooooooee             e    e         hhttttttttttttttttttttttttttttttt\n" +
-                "tttttttttttttttttttttttttttttttthh     e e eo  hhhtthh   ooe  hhhhh   e oooooooo e  e      e                   hhhttttttttttttttttttttttttttttttttt\n" +
-                "tttttttttttttttttttttttttttttttttthhhh     e eeee hh   eooo         oooooooo  e                          hhhhhhtttttttttttttttttttttttttttttttttttt\n" +
-                "tttttttttttttttttttttttttttttttttttttthhhh  e eooooooooo e    e   ooeooo e      e                hhhhhhhhtttttttttttttttttttttttttttttttttttttttttt\n" +
-                "tttttttttttttttttttttttttttttttttttttttttthhhhhhhh  ee           oooo       e          hhhhhhhhhhtttttttttttttttttttttttttttttttttttttttttttttttttt\n" +
-                "tttttttttttttttttttttttttttttttttttttttttttttttttthhhhhhhhh    e e oo  e    hhhhhhhhhhhtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\n" +
-                "ttttttttttttttttttttttttttttttttttttttttttttttttttttttttttthhhhh ooo hhhhhhhttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\n" +
-                "ttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth  e e htttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\n" +
-                "tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth e   htttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\n" +
-                "tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth   e htttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\n" +
-                "ttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth     httttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\n";
+                "33333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333\n" +
+                "22222222222222222222222222222333333333333333333222222222223333333332222222222222222222222222222333333333222222222222233333333222222222223333333333333333333333333333222222\n" +
+                "22222222222222222222222222222222223333333222222222222222222233333222222222111111111111111111122222222222221111111112222222222221111112222222222333333333222222222222222222\n" +
+                "11111111111111111111111111111112222222222211111111111111122222222211111111111111111111111111111111121111111111111111111122211111111111111111122222222222221111111111111111\n" +
+                "1111111111111111111111111111111111111111111111111TTTTT1111111111111111TTTTTTTTTTTTTTTTTTTTTTTTTTT11111TTTTTTTTTTTTTTTTT11111TTTTTTTTTTTTT1111111111111111111111TTTTTTTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT11111111111TTTTTTTTTTTTTTT111111111TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTttTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT111111111TTTTTTTTTTTTTT\n" +
+                "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT111TTTTTTTTTTTTTTTTttttttttttttTTTTTTTTTTTTTTTttttttttTTTTTTTTTTTTTtttTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTttt\n" +
+                "ttttttttttttttttttttttttttttttTTTTTTTTTTTTTttttttttTTTTTTTTTTTTTTTTTtttttttttttttttttttttttttttttttttttttttttttttttttTTTTTTTTttttttttttttttttttTTTTTTTTTTTTTTTTTTTTttttttt\n" +
+                "tttttttttttttttttttttttttttttttttttttttttttttttttttttttttTTTTTTttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\n" +
+                "ttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttthhhhhhhhhtttttttthhhhhhhhhhhttttttttttttttttttttttttttttttttttttttttttttttttttt\n" +
+                "tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttthhhhhhhhh        htttttttth          hhhhhhhhhtttttttttttttttttttttttttttttttttttttttttt\n" +
+                "tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttthhhh___                   htttttth                    hhhhhttttttttttttttttttttttttttttttttttttt\n" +
+                "tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttthhhhhh    ###______________    htttttth          hhhhhhh         hhhtttttttttttttttttttttttttttttttttt\n" +
+                "tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttthh         /##r=++==r==++==l=%   htttttth   ___        hhthhh          hhhhtttttttttttttttttttttthhhhhhh\n" +
+                "ttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth          /==rINN=============%   httthh    ###______    hh                hhttttttttttthhhhhhhhh       \n" +
+                "tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttthhh   hhh      #b#++b+#####+b++#b#     hhh     /##r=+=l==%                e      hhhhhhhhhhh  e    eeoeo ee \n" +
+                "ttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth    hhttth     #b###b###d###b###b#   e        /=#r=====l==%       e      e         e      eeoeoee eoe e     \n" +
+                "ttttttttttttttttttttttttttttttttttttttttttttttttttttttttttthh    htttth            e ooo ee   e        ee  /=SHOP========%     e  e  e   eoe  eooooeeoooee   ee     hhhhhh\n" +
+                "tttttttttttttttttttttttttttttttttttttttttttttttttttttttttth     httthh        e   e oooooooooo  ee   e   e  #b#####+++#b#         eooeooooeoooooe    e       hhhhhhhtttttt\n" +
+                "ttttttttttttttttttttttttttttttttttttttttttttttttttttttttth      htth       e   e oooooooooeooooeooooooe     #b##d######b#o    oooeooeo         e    e  hhhhhhttttttttttttt\n" +
+                "tttttttttttttttttttttttttttttttttttttttttttttttttttttttth        hh         e  oooo e      e hhhooo ooooooe    eo     e     oooeoooe      e       hhhhhttttttttttttttttttt\n" +
+                "ttttttttttttttttttttttttttttttttttttttttttttttttttttttth          e    e    oooo e       hhhhttthhh    e ooe eeoooo       ooeoo eoooo  e      e     hhtttttttttttttttttttt\n" +
+                "tttttttttttttttttttttttttttttttttttttttttttttttttttttth                  ooooo    hhhhhhhtttttttttth   e  eoooooeooeo   e oooe   eoooo   e            httttttttttttttttttt\n" +
+                "ttttttttttttttttttttttttttttttttttttttttttttttttttttth     e        ooeoooee     htttttttttttttthhh  e e e     eooooeooooooo  hhh e eooe    e _____### hhttttttttttttttttt\n" +
+                "hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhtttttttttttttttth          e  ooooooo   e   htttttttttttthhh e   e      e   e oooo ee hhhhhtthh  eoo     /=r=+=l##%  htttttttttttttttt\n" +
+                "                            ee ee   hhhhhhhhhhhhhhhh   e      eoooooo e hhhhh e  hhhhhhhhhhhh       hhhhhh    e  eooe hhhhttttttttth  ooe e /==========% htttttttttttttttt\n" +
+                "                         e    e e oo eoooe  e    e   eoeeooooooe  eoooohttttth e ___ e       e e hhhtttttthh  e  eo  httttttttttttth eooo    #b######b#  htttttttttttttttt\n" +
+                "hhhhhhhhhhhhhhhhhhhhhhhhhhhh     e     eooooooooooooooooooooe  e  eoo  httttth   ###______ e    httttttttttth   eoe  htttttttttttth  eoo e   #b##d###b# httttttttttttttttt\n" +
+                "tttttttttttttttttttttttttttthhhhhhhhhhhh    e eoe        eooee   e eoo  hhttho  /#r==+==l=%  e htttttttttttth e oe    hhhhtttttttth e oooe e   eoo     htttttttttttttttttt\n" +
+                "tttttttttttttttttttttttttttttttttttttttthhhhhhhhhhh    e    eoooe   eooo  hth  /===========%  htttttttttttth   oe    ___  hhhhhhtth     ooooooeoo   hhhttttttttttttttttttt\n" +
+                "ttttttttttttttttttttttttttttttttttttttttttttttttttthhhe hh e   eeooooooooo h    #b#######b# e httttttttttth   ee e   ###_______ hh  e  eeeooo e  e htttttttttttttttttttttt\n" +
+                "tttttttttttttttttttttttttttttttttttttttttttttttttttthhh  hhhhhh    ooeooooo  e  #b###d###b#  ohttttttttttth    eo   /##r==+==l=%  e  eoeooo         httttttttttttttttttttt\n" +
+                "tttttttttttttttttttttttttttttttttttttttttttttttttthh  _____  hthhh    e oooooo    e   oooooo   hhhttttttttth  eoe  /============%  eeoo            htttttttttttttttttttttt\n" +
+                "ttttttttttttttttttttttttttttttttttttttttttttttttth   /=====%  htttth     ooeooeo e   oooeooooooo  hhhtttttth eoe    #b########b#  eoo  e   e      httttttttttttttttttttttt\n" +
+                "ttttttttttttttttttttttttttttttttttttttttttttttttth  /b=====b%  htttthh   e  eooooo  eooe  e  ooooo   hhhtth   eo    #b#dd#####b# ooo   e          httttttttttttttttttttttt\n" +
+                "tttttttttttttttttttttttttttttttttttttttttttttttttth  b==d==b  httttttth      e  ooeooo         oooooooo hh  eeoeo     eooo  e   oooe            hhtttttttttttttttttttttttt\n" +
+                "ttttttttttttttttttttttttttttttttttttttttttttttttttth     e      hhttttthh     eooooo    e    e     eooooeeoooeeooe   eoooooooeoooo  e   e    hhhtttttttttttttttttttttttttt\n" +
+                "tttttttttttttttttttttttttttttttttttttttttttttttttttthh     e   e  htttttth     oeoo hhh          e  eoooe      oooooooee   oooo  e          httttttttttttttttttttttttttttt\n" +
+                "ttttttttttttttttttttttttttttttttttttttttttttttttttttth    e   e    htttttthhh e oo httthhh          eooe   eoeooe  ee e     e       e      htttttttttttttttttttttttttttttt\n" +
+                "ttttttttttttttttttttttttttttttttttttttttttttttttttttthh    e e  oe  hhttttttth eoo  httttth  e  oooeoooooooee             e    e         hhttttttttttttttttttttttttttttttt\n" +
+                "ttttttttttttttttttttttttttttttttttttttttttttttttttttttthh     e e eo  hhhtthh   ooe  hhhhh   e oooooooo e  e      e                   hhhttttttttttttttttttttttttttttttttt\n" +
+                "ttttttttttttttttttttttttttttttttttttttttttttttttttttttttthhhh     e eeee hh   eooo         oooooooo  e                          hhhhhhtttttttttttttttttttttttttttttttttttt\n" +
+                "ttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttthhhh  e eooooooooo e    e   ooeooo e      e                hhhhhhhhtttttttttttttttttttttttttttttttttttttttttt\n" +
+                "ttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttthhhhhhhh  ee           oooo       e          hhhhhhhhhhtttttttttttttttttttttttttttttttttttttttttttttttttt\n" +
+                "ttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttthhhhhhhhh    e e oo  e    hhhhhhhhhhhtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\n" +
+                "tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttthhhhh ooo hhhhhhhttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\n" +
+                "tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth  e e htttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\n" +
+                "ttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth e   htttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\n" +
+                "ttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth   e htttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\n" +
+                "tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttth     httttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\n";
 
 /*
 "                                                                                      tttttttttttttttttttttttttttttttttttthh                                                             hhhh          tttt                 hhhh        h \n" + \

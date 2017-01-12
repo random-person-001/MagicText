@@ -30,6 +30,9 @@ public class FondantVillage extends Room {
     protected String loop(Player play) {
         while (exitCode.equals("")) {
             try {
+                if (play.getY() > 49){
+                    setNewRoom("Cliffbottom", play, 1, play.getX());
+                }
                 Thread.sleep(20);
             } catch (InterruptedException ignored) {
             }
