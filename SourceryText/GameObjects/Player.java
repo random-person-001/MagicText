@@ -539,7 +539,7 @@ public class Player extends Mortal implements java.io.Serializable {
         int centeredY = getY() - 11;
         if (room != null && room.boundedCamera){
             centeredY = Math.min(centeredY, room.roomHeight - org.getWindow().screenH());
-            centeredY = Math.max(centeredY, 0);
+            centeredY = Math.max(centeredY, -1);
         }
         return centeredY;
     }

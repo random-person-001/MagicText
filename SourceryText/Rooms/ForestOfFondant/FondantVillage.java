@@ -14,6 +14,7 @@ import SourceryText.Rooms.Room;
 import SourceryText.SpecialText;
 
 import java.awt.*;
+import java.util.Objects;
 
 /**
  * A quaint little village.  You can go many places from here.
@@ -129,6 +130,13 @@ public class FondantVillage extends Room {
         org.roomBackground = dirt;
 
         //addItems();
+
+        WaterPool oceanShallow          = new WaterPool (this, forestBackground, "1", 1);
+        WaterPool oceanDeeper           = new WaterPool (this, forestBackground, "2", 2);
+        WaterPool oceanItGetsEvenDeeper = new WaterPool (this, forestBackground, "3", 3);
+        addObject(oceanShallow);
+        addObject(oceanDeeper);
+        addObject(oceanItGetsEvenDeeper);
 
         genericRoomInitialize();
     }
