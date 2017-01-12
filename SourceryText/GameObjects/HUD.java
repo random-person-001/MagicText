@@ -309,7 +309,6 @@ class HUD implements java.io.Serializable {
      * >exit : exit sudo mode, or the game if you aren't in it.
      * >fabulous off : Turns fabulous mode off
      * >fabulous on : Turns fabulous mode on
-     * >fondant : go to the Fondant Village
      * >getpos : print out current player coords in response
      * >ghost : Disables the player checking for walls before moving into one (also called 'noclip')
      * >goto (x) (y) : teleport player to location
@@ -338,7 +337,7 @@ class HUD implements java.io.Serializable {
      * >unghost : Re-enables players checking for walls
      * >unpause : set Player's paused to false
      * >zone2 cheat : jumps to zone 2 and gives player a bunch of stuff
-     * >zone2 lite : jumps to zone 2 and gives player a little bit less stuff
+     * >zone2 villa : jumps to zone 2 and sends player to FondantVillage
      * </p>
      * Tip: to execute a bunch of commands after each other, use '&&' in between them.  Also, you can type a command
      * after 'sudo' to execute that command with root privileges, however there isn't much difference anymore :(
