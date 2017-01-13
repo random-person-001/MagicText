@@ -108,6 +108,7 @@ public class Player extends Mortal implements java.io.Serializable {
 
 
     private int spellCasts = 0;
+    public boolean catchingSnowflakes = false; // For snowy peak
 
 
     /**
@@ -635,6 +636,7 @@ public class Player extends Mortal implements java.io.Serializable {
                     break;
                 case 'a':
                     orientationLocked = !orientationLocked;
+                    catchingSnowflakes = orientationLocked;
                     break;
                 case 's':
                     newCastSpell(spell1);
@@ -877,5 +879,21 @@ public class Player extends Mortal implements java.io.Serializable {
 
     public void setGameInstance(GameInstance gameInstance) {
         this.gameInstance = gameInstance;
+    }
+
+    public int getOrientation() {
+        return orientation;
+    }
+
+    public void addCurrency(String currencyName, int quantity) {
+        // Todo: implement money!
+    }
+
+    public boolean subtractCurrency(String currencyName, int quantity){
+        return false;
+    }
+
+    public int getCurrency(String currencyName){
+        return 0;
     }
 }

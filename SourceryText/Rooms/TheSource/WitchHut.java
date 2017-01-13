@@ -18,17 +18,9 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 
 /**
- * The initial view of the Source Pit.
+ * A fun witch hut, with a puzzle!
  *
  * @author 119184
- *         <p>
- *         So Far:
- *         > You have been introduced to the backstory
- *         > You've mastered the Tutorial Basement
- *         <p>
- *         What Generally Happens Here:
- *         > The owner of the house is sitting at the edge of the hole. He convinces you to put the world back in order.
- *         > Then you move on to the next level, where a cloned witch has an identity crisis!
  */
 
 
@@ -43,8 +35,6 @@ public class WitchHut extends Room {
 
     @Override
     protected String loop(Player play) {
-        int count = 0;
-
         while (exitCode.equals("")) {
             try {
                 Thread.sleep(200);
@@ -108,6 +98,10 @@ public class WitchHut extends Room {
         item7.setEquipvals(1, 3, 0, 0, 0, 2, 2, "weapon");
         DroppedItem rewardScarf = new DroppedItem(this, "You found the Bewitched Scarf!", item7, 46, 10);
         addObject(rewardScarf);
+
+        Item bucket = new Item("Bucket", "How useful! I bet you\n could catch some pretty\n snowflakes with this!", "Buckt", "spell");
+        DroppedItem droppedBucket = new DroppedItem(this, "You stole a bucket from the house. \n Did you know that the witch\n got that for christmas one\n year?", bucket, 3, 10);
+        addObject(droppedBucket);
     }
 
     private boolean cloneBusterUsed = false;

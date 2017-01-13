@@ -47,4 +47,7 @@ public class Snowflake extends GameObject {
         org.removeLayer(layerName);
     }
 
+    public void respawn() {
+        x = -1;
+    }
 }

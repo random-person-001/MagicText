@@ -612,11 +612,11 @@ class HUD implements java.io.Serializable {
             room.setNewRoom("switch to zone 2", player, 0, 0);
             nextCommand = "sleep 400 && goto 66 44 && jumpto FondantVillage";
             executeNextCommand = true;
-        }else if (command.startsWith("sleep ")){
+        }else if (command.startsWith("sleep ")) {
             command = command.substring(6);
             System.out.println(command);
             int[] p = getNParameters(command, 1);
-            if (p != null && 0 < p[0] && p[0] < 10*60*1000) {
+            if (p != null && 0 < p[0] && p[0] < 10 * 60 * 1000) {
                 showResponse("HUD sleeping for " + p[0] + " ms");
                 try {
                     Thread.sleep(p[0]);
@@ -624,6 +624,10 @@ class HUD implements java.io.Serializable {
                     e.printStackTrace();
                 }
             }
+        } else if (command.contains("unbound camera") && player.room != null){
+            player.room.boundedCamera = false;
+        } else if (command.contains("bound camera") && player.room != null){
+            player.room.boundedCamera = true;
         } else if (command.length() > 0) {
             showResponse("Command '" + command + "' not recognised.  Check your spelling or " +
                     "request it as a new feature.");
