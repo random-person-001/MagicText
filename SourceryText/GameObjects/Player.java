@@ -106,9 +106,8 @@ public class Player extends Mortal implements java.io.Serializable {
     int screenYellowness = 0;
     public Color foregroundColor = Color.WHITE;
 
-
     private int spellCasts = 0;
-    public boolean catchingSnowflakes = false; // For snowy peak
+    private int snowflakes = 0; // Note: we'll probably want to improve the currency system later, like last few methods for this class
 
 
     /**
@@ -636,7 +635,6 @@ public class Player extends Mortal implements java.io.Serializable {
                     break;
                 case 'a':
                     orientationLocked = !orientationLocked;
-                    catchingSnowflakes = orientationLocked;
                     break;
                 case 's':
                     newCastSpell(spell1);
@@ -745,7 +743,7 @@ public class Player extends Mortal implements java.io.Serializable {
         }
     }
 
-    String getPrimarySpell() {
+    public String getPrimarySpell() {
         return spell1.getIcon();
     }
 
@@ -886,7 +884,11 @@ public class Player extends Mortal implements java.io.Serializable {
     }
 
     public void addCurrency(String currencyName, int quantity) {
-        // Todo: implement money!
+        // Todo: implement better money!  Do we want to store lists?
+        currencyName = currencyName.toLowerCase();
+        if (currencyName.equals("snowflake")){
+            snowflakes+=quantity;
+        }
     }
 
     public boolean subtractCurrency(String currencyName, int quantity){
@@ -894,6 +896,14 @@ public class Player extends Mortal implements java.io.Serializable {
     }
 
     public int getCurrency(String currencyName){
+        currencyName = currencyName.toLowerCase();
+        if (currencyName.equals("snowflake")){
+            return snowflakes;
+        }
         return 0;
+    }
+
+    public boolean getOrientationLocked() {
+        return orientationLocked;
     }
 }

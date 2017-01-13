@@ -24,6 +24,7 @@ public class SnowflakeBucket extends GameObject {
     private Layer bucketLayer;
     private int snowflakesCaught = 0;
     private boolean wasCatchingSnowflakesLastTime = false;
+    private int ticksLeftBeforeShowingBucket = 0;
 
     //Convenience variables
     private final int UP = 0;
@@ -41,8 +42,9 @@ public class SnowflakeBucket extends GameObject {
         y = holder.getY();
         layerName = room.makeUniqueLayerName(strClass);
         bucketLayer = new Layer(new String[1][1], layerName, x, y);
+        bucketLayer.setImportance(true);
         bucketLayer.setSpecTxt(0, 0, new SpecialText("u"));
-        setupTimer(100);
+        setupTimer(20);
     }
 
     @Override
@@ -50,8 +52,8 @@ public class SnowflakeBucket extends GameObject {
         if (!holder.roomName.equals("SnowyPeak")){
             return;
         }
-        if (holder.catchingSnowflakes && room != null && room.strRoomName.equals("SnowyPeak")) {
-            System.out.println("Bucket active!");
+        if (holder.getOrientationLocked() && holder.getPrimarySpell().equals("Buckt") && room != null && room.strRoomName.equals("SnowyPeak")) {
+            //System.out.println("Bucket active!");
             if (!wasCatchingSnowflakesLastTime){
                 System.out.println("Yahoo! This'll be fun!");
                 org.addLayer(bucketLayer);
@@ -74,9 +76,18 @@ public class SnowflakeBucket extends GameObject {
                     y = holder.getY();
                     break;
             }
-            org.getLayer(layerName).setPos(x, y);
-            wasCatchingSnowflakesLastTime = true;
 
+            Layer orgsLayerCopy = org.getLayer(layerName);
+            if (orgsLayerCopy != null) {
+                orgsLayerCopy.setPos(x, y);
+            }
+
+            if (ticksLeftBeforeShowingBucket == 0) {
+                org.editLayer("u", layerName, 0,0);
+            } else {
+                ticksLeftBeforeShowingBucket--;
+            }
+            wasCatchingSnowflakesLastTime = true;
 
             List<GameObject> objsHere = room.getObjectsAt(x,y);
             if (objsHere.size() > 0) {
@@ -86,6 +97,12 @@ public class SnowflakeBucket extends GameObject {
                         holder.addCurrency("Snowflake", 1);
                         snowflakesCaught = holder.getCurrency("Snowflake");
                         org.editLayer(String.valueOf(snowflakesCaught), layerName, 0, 0);
+                        ticksLeftBeforeShowingBucket = 10;
+
+                        String description = "A bucket for holding\n snowflakes that you\n found in the Witch's " +
+                                "\n Hut.\n\n You currently have \n" + snowflakesCaught + " snowflake"+
+                                (snowflakesCaught==1 ? "" : "s") +" in it!";
+                        holder.getItem("Bucket", "spells").setDescription(description);
                     }
                 }
             }

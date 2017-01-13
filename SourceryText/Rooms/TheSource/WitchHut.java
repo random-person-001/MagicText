@@ -75,7 +75,7 @@ public class WitchHut extends Room {
                         if (fireplaceFireState > 5) fireplaceFireState = 0;
                     }
                 }
-                if (play.getY() == 13){
+                if (play.getY() >= 13){
                     setNewRoom("SnowyPeak", play, 7,114);
                 }
             } catch (InterruptedException ignored) {

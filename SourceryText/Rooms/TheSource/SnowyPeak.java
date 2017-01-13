@@ -10,13 +10,15 @@ import SourceryText.GameObjects.LockedDoor;
 import SourceryText.GameObjects.Player;
 import SourceryText.GameObjects.TheSource.PolarBear;
 import SourceryText.GameObjects.TheSource.Snowflake;
+import SourceryText.GameObjects.TheSource.SnowflakeBucket;
 import SourceryText.GameObjects.TheSource.Wolf;
 import SourceryText.Layer;
 import SourceryText.Rooms.Room;
 import SourceryText.SpecialText;
 
 import java.awt.*;
-import java.util.Random;
+import java.util.*;
+import java.util.List;
 
 /**
  * A Snowy Mountain Peak, where there's an entrance to a witch hut and a dangerous Polar Bear in the way of the rather pretty Ice Caves
@@ -32,6 +34,7 @@ import java.util.Random;
  *         > Upon its defeat, you get the key to the Witch Hut, which you can now get to to solve a puzzle.
  */
 public class SnowyPeak extends Room {
+    private List<Player> playersWithBuckets = new ArrayList<>();
 
     public SnowyPeak(Player player) {
         super(player);
@@ -52,6 +55,10 @@ public class SnowyPeak extends Room {
                 }
                 if (play.getX() == 114 && play.getY() == 6){
                     setNewRoom("WitchHut", play, 12, 6);
+                }
+                if (play.getItem("Bucket", "spells") != null && !playersWithBuckets.contains(play)) {
+                    addObject(new SnowflakeBucket(play));
+                    playersWithBuckets.add(play);
                 }
             } catch (InterruptedException ignored) {
             }

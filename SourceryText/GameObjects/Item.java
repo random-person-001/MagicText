@@ -80,6 +80,10 @@ public class Item implements java.io.Serializable {
         alting = isAlting;
     }
 
+    public void setDescription(String newDescription){
+        description = newDescription;
+    }
+
     public void setIcon(String set) {
         icon = set;
     }
