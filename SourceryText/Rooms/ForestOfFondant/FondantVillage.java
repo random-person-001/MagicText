@@ -122,9 +122,22 @@ public class FondantVillage extends Room {
         forestBackground.findAndReplace(new SpecialText("l"), new SpecialText("\\", roofFg, woodBkg));
         forestBackground.findAndReplace(new SpecialText("+"), new SpecialText("+", roofFg, interiorColor));
 
+        // River Art
+
+        Color bridgeFg = new Color(128, 95, 64);
+        Color bridgeBkg = new Color(89, 60, 30);
+        Color sand = new Color(221, 192, 89);
+        Color riverRockFg = new Color(115, 128, 128);
+        Color riverRockBkg = new Color(61, 87, 102);
+
+        forestBackground.findAndReplace(new SpecialText("w"), new SpecialText("o", riverRockFg, riverRockBkg));
+        forestBackground.findAndReplace(new SpecialText("R"), new SpecialText("-", bridgeFg, bridgeBkg));
+        forestBackground.findAndReplace(new SpecialText("B"), new SpecialText(":", woodFg, woodBkg));
+        forestBackground.findAndReplace(new SpecialText("s"), new SpecialText(" ", null, sand));
+
         org.addLayer(forestBackground);
         initHitMeshes(forestBackground);
-        String[] solids = {"r", "t", "h","T","#","=","l","+","b"};
+        String[] solids = {"r", "t", "h","T","#","=","l","+","b","R","w"};
         addToBaseHitMesh(base, solids);
 
         FlammableTree ft1 = new FlammableTree(this, forestBackground, trees);

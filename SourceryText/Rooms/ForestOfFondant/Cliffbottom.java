@@ -172,6 +172,11 @@ public class Cliffbottom extends Room {
         forestBackground.findAndReplace(new SpecialText("k"), new SpecialText(".", dock1, dock2), 30);
         forestBackground.findAndReplace(new SpecialText("k"), new SpecialText(" ", dock1, dock2));
 
+        Color riverRockFg = new Color(115, 128, 128);
+        Color riverRockBkg = new Color(61, 87, 102);
+
+        forestBackground.findAndReplace(new SpecialText("w"), new SpecialText("o", riverRockFg, riverRockBkg));
+
         /*
         A more text based theme, without backgrounds.
         lay1.findAndReplace(new SpecialText("t"), new SpecialText("O", lightTreeGreen));
@@ -202,7 +207,7 @@ public class Cliffbottom extends Room {
         //org.addLayer(forestRiver);
         org.addLayer(kiosk);
         initHitMeshes(forestBackground);
-        String[] solids = {"r", "t", "h","T"};
+        String[] solids = {"r", "t", "h","T","w"};
         addToBaseHitMesh(base, solids);
         addToBaseHitMesh(114, 50); // Hiding the kiosk area
         /*
