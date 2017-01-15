@@ -618,15 +618,15 @@ public class Room implements java.io.Serializable {
     /**
      * Mainly used by the player to check for nearby planted text
      */
-    private void queryForText(int testX, int testY, String username) {
+    private void queryForText(int testX, int testY, Player user) {
         for (FlavorText text : flavorTexts) {
-            text.textIfCorrectSpot(testX, testY, username);
+            text.textIfCorrectSpot(testX, testY, user);
         }
     }
 
     public void inspectAt(int testX, int testY, Player observer) {
         specialInspect(testX, testY, observer);
-        queryForText(testX, testY, observer.getUsername());
+        queryForText(testX, testY, observer);
         for (GameObject object : inspectables){
             if (object.getX() == testX && object.getY() == testY){
                 object.onInspect(observer);
@@ -802,9 +802,9 @@ public class Room implements java.io.Serializable {
             return y;
         }
 
-        void textIfCorrectSpot(int testX, int testY, String username) {
+        void textIfCorrectSpot(int testX, int testY, Player user) {
             if (x == testX && y == testY) {
-                doMessage(player);
+                doMessage(user);
             }
         }
 
@@ -813,7 +813,7 @@ public class Room implements java.io.Serializable {
                 //System.out.println("STACKING FOLLOWING MESSAGE:\n " + message);
                 FlavorText panel = new FlavorText(x, y, message, speaker);
                 panel.player = user;
-                queueMessage(panel, player);
+                queueMessage(panel, user);
             }
         }
 

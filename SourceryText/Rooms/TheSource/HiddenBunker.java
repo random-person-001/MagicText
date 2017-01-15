@@ -178,7 +178,7 @@ public class HiddenBunker extends Room {
             keysTaken[3] = true;
         }
         if (Math.abs(x - 134) + Math.abs(y - 24) <= 1 && !keysTaken[4]) {
-            Item key = new Item("Tunnel Key", "A key to a secret passageway\n deep in the mountains\n\nThere is an inscription\n on the key:\n\n\'DO NOT LOSE\'", "item");
+            Item key = new Item("Tunnel Key", "A key to a secret tunnel\n deep in the mountains.\n\nThere is an inscription\n on the key:\n\n\'DO NOT LOSE\'", "item");
             inspector.addItem(key);
             queueMessage(new FlavorText("You found a key!", ""), inspector);
             keysTaken[4] = true;
@@ -240,10 +240,10 @@ public class HiddenBunker extends Room {
 
         int[][] lockedDoorLocs = {{32, 30}, {51, 27}, {77, 11}, {106, 2}};
         for (int ii = 0; ii < lockedDoorLocs.length; ii++) {
-            LockedDoor door = new LockedDoor("Bunker Key " + (ii + 1), 100, lockedDoorLocs[ii][0], lockedDoorLocs[ii][1], this, org);
+            LockedDoor door = new LockedDoor("Bunker Key " + (ii + 1), true, lockedDoorLocs[ii][0], lockedDoorLocs[ii][1], this, org);
             addObject(door);
         }
-        LockedDoor tunnelDoor = new LockedDoor("Tunnel Key", 100, 133, 9, this, org);
+        LockedDoor tunnelDoor = new LockedDoor("Tunnel Key", false, 133, 9, this, org);
         addObject(tunnelDoor);
 
         WaterPool testingPool = new WaterPool(this, new Layer(Art.strToArray(arty.hiddenBunkerWater), "Water!", true, false), 80, 10);

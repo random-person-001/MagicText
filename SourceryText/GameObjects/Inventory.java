@@ -232,6 +232,9 @@ class Inventory implements java.io.Serializable {
 
     void removeItem (String name, String type){
         switch (type){
+            case "item":
+                removeItem(name, "items");
+                break;
             case "items":
                 items.remove(getItem(name, type));
                 break;

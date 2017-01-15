@@ -12,13 +12,13 @@ public class LockedDoor extends GameObject {
     private String layerName;
     public String strClass = "LockedDoor";
     private boolean willMessage = true;
+    private boolean consumeKey = false;
 
-    protected int lockpickDifficulty = 10;
     protected String keyName = "";
 
-    public LockedDoor(String nameOfKey, int difficulty, int xSet, int ySet, Room creator, ImageOrg org) {
+    public LockedDoor(String nameOfKey, boolean keySingleUse, int xSet, int ySet, Room creator, ImageOrg org) {
         keyName = nameOfKey;
-        lockpickDifficulty = difficulty;
+        consumeKey = keySingleUse;
         super.room = creator;
         super.org = org;
         layerName = room.makeUniqueLayerName(strClass);
@@ -46,6 +46,9 @@ public class LockedDoor extends GameObject {
         for (Player player : room.players) {
             if (Math.abs(player.getX() - x) == 1 && player.getY() == y) {
                 if (player.getInventory().getItem(keyName, "items") != null) {
+                    room.splashMessage("Used " + keyName + "...", "", player);
+                    if (consumeKey)
+                        player.removeItem(keyName, "item");
                     selfDestruct();
                 } else {
                     if (willMessage) {
