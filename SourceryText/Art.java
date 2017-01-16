@@ -1137,12 +1137,12 @@ public String testRoom =
 
 //15 x shift
 public String forest =
-                "TTTTTTTTTTTTTh122222221hTTTTTTTTTTTTThhhhttttttttttttttttttttttttttttttttttttttttttttth     httttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttTTTTT\n" +
-                "TTTTTTTTTTTTTh1222222221hTTTTTTTTTTThhhhhttttttttttttttttttttttttttttttttttttttttttthh     htttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttTTTTT\n" +
-                "TTTTTTTTTTTTTTh122222w21hTTTTTTTTThhhhhhtttttttttttttttttttttttttttthhhhhhhhhhhhhhhh     hhttttttttttttttttttttttthhhhhhhhhhhhhhhttthhhhtttttttttttttttttttttttttttttTTTTT\n" +
-                "TTTTTTTTTTTTTTh122222221hTTTTTTThhhhhhttttttttttttttttttttttttttthhh         hhhhhh      hhhhhhhttttttttttthhhhhhh               hhh    hhtttttttttttttttttttttttttttTTTTT\n" +
-                "TTTTTTTTTTTTTh1222222221hTTTThhhhhhttttttttttttttttttttttttttthhh                               hhhhhhhhhhh                               hhtttttttttttttttttttttttttTTTTT\n" +
-                "TTTTTTTTTTTTTTh122222221hTTTThhhhtttttttttttttttttttttttttthhh                                                                              httttttttttttttttttttttttTTTTT\n" +
+                "TTTTTTThhh  ddw22w222w1hTTTTTTTTTTTTThhhhttttttttttttttttttttttttttttttttttttttttttttth     httttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttTTTTT\n" +
+                "TTTTTTThh   dd1w2w2w2w21hTTTTTTTTTTThhhhhttttttttttttttttttttttttttttttttttttttttttthh     htttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttTTTTT\n" +
+                "TTTTTTThh    dd1www2ww21hTTTTTTTTThhhhhhtttttttttttttttttttttttttttthhhhhhhhhhhhhhhh     hhttttttttttttttttttttttthhhhhhhhhhhhhhhttthhhhtttttttttttttttttttttttttttttTTTTT\n" +
+                "TTTTTTThh    dd12222w22whTTTTTTThhhhhhttttttttttttttttttttttttttthhh         hhhhhh      hhhhhhhttttttttttthhhhhhh               hhh    hhtttttttttttttttttttttttttttTTTTT\n" +
+                "TTTTTTThh   dd12222222w1hTTTThhhhhhttttttttttttttttttttttttttthhh                               hhhhhhhhhhh                               hhtttttttttttttttttttttttttTTTTT\n" +
+                "TTTTTTTThhhhhhh122222221hTTTThhhhtttttttttttttttttttttttttthhh                                                                              httttttttttttttttttttttttTTTTT\n" +
                 "TTTTTTTTTTTTTTh112222221hTTTTThhhttttttttttttttttttttttttth                                                                                  htttttttttttttttttttttttTTTTT\n" +
                 "TTTTTTTTTTTTTh122222221hTTTTThhhhtttttttttttttttttttttttth                                                                                   htttttttttttttttttttttttTTTTT\n" +
                 "TTTTTTTTTTTTh12w222221hTTTTThhhhtttttttttttttttttttttttth                                                                                    htttttttttttttttttttttttTTTTT\n" +
@@ -1285,11 +1285,11 @@ public String fondantVillage =
                 "ttttttttttth122222w21httttttttttttttttttttttttttttttttttttttth    hhttth     #b###b###d###b###b#   e        /=#r=====l==%       e      e         e      eeoeoee eoe e     \n" +
                 "tttttttttttth122222221htttttttttttttttttttttttttttttttttttthh    htttth            e ooo ee   e        ee  /=SHOP========%     e  e  e   eoe  eooooeeoooee   ee     hhhhhh\n" +
                 "ttttttttttttth122222221htttttttttttttttttttttttttttttttttth     httthh        e   e oooooooooo  ee   e   e  #b#####+++#b#         eooeooooeoooooe    e       hhhhhhhtttttt\n" +
-                "tttttttttttttth122222221htttttttttttttttttttttttttttttttth      htth       e   e oooooooooeooooeooooooe     #b##d######b#o    oooeooeo         e    e  hhhhhhttttttttttttt\n" +
-                "tttttttttttttth122222221httttttttttttttttttttttttttttttth        hh         e  oooo e      e hhhooo ooooooe    eo     e     oooeoooe      e       hhhhhttttttttttttttttttt\n" +
-                "ttttttttttttth122222221httttttttttttttttttttttttttttttth          e    e    oooo e       hhhhttthhh    e ooe eeoooo       ooeoo eoooo  e      e     hhtttttttttttttttttttt\n" +
-                "ttttttttttttth12w222221htttttttttttttttttttttttttttttth                  ooooo    hhhhhhhtttttttttth   e  eoooooeooeo   e oooe   eoooo   e            httttttttttttttttttt\n" +
-                "ttttttttttttth122222221httttttttttttttttttttttttttttth     e        ooeoooee     htttttttttttttthhh  e e e     eooooeooooooo  hhh e eooe    e _____### hhttttttttttttttttt\n" +
+                "tttttttttttttth12222w221htttttttttttttttttttttttttttttttth      htth       e   e oooooooooeooooeooooooe     #b##d######b#o    oooeooeo         e    e  hhhhhhttttttttttttt\n" +
+                "tttttttttttttth1w2222221httttttttttttttttttttttttttttttth        hh         e  oooo e      e hhhooo ooooooe    eo     e     oooeoooe      e       hhhhhttttttttttttttttttt\n" +
+                "ttttttttttttth1222w2221httttttttttttttttttttttttttttttth          e    e    oooo e       hhhhttthhh    e ooe eeoooo       ooeoo eoooo  e      e     hhtttttttttttttttttttt\n" +
+                "ttttttttttttth12w2222w1htttttttttttttttttttttttttttttth                  ooooo    hhhhhhhtttttttttth   e  eoooooeooeo   e oooe   eoooo   e            httttttttttttttttttt\n" +
+                "ttttttttttttth1w2ww2w21httttttttttttttttttttttttttttth     e        ooeoooee     htttttttttttttthhh  e e e     eooooeooooooo  hhh e eooe    e _____### hhttttttttttttttttt\n" +
                 "hhhhhhhhhhhRRRRRRRRRRRRhhhhhhhhhhhhhtttttttttttttttth          e  ooooooo   e   htttttttttttthhh e   e      e   e oooo ee hhhhhtthh  eoo     /=r=+=l##%  htttttttttttttttt\n" +
                 "           BBBBBBBBBBBB     ee ee   hhhhhhhhhhhhhhhh   e      eoooooo e hhhhh e  hhhhhhhhhhhh       hhhhhh    e  eooe hhhhttttttttth  ooe e /==========% htttttttttttttttt\n" +
                 "           BBBBBBBBBBBB  e    e e oo eoooe  e    e   eoeeooooooe  eoooohttttth e ___ e       e e hhhtttttthh  e  eo  httttttttttttth eooo    #b######b#  htttttttttttttttt\n" +
@@ -1303,19 +1303,19 @@ public String fondantVillage =
                 "TTTTTTTTTThh1w22w2221hTTTTTTTTTTThhhhhhhttttttttth  /b=====b%  htttthh   e  eooooo  eooe  e  ooooo   hhhtth   eo    #b#dd#####b# ooo   e          httttttttttttttttttttttt\n" +
                 "TTTTTTThhhhh122222w21hTTTTTTTTTTTTThhhhhhttttttttth  b==d==b  httttttth      e  ooeooo         oooooooo hh  eeoeo     eooo  e   oooe            hhtttttttttttttttttttttttt\n" +
                 "hhhhhhhhhhh1222w2221hTTTTTTTTTTTTTTTTThhhhhtttttttth     e      hhttttthh     eooooo    e    e     eooooeeoooeeooe   eoooooooeoooo  e   e    hhhtttttttttttttttttttttttttt\n" +
-                "hhhhhhhhhss122222221hTTTTTTTTTTTTTTTTTThhhhhtttttttthh     e   e  htttttth     oeoo hhh          e  eoooe      oooooooee   oooo  e          httttttttttttttttttttttttttttt\n" +
+                "hhhhhhhhhss122222w21hTTTTTTTTTTTTTTTTTThhhhhtttttttthh     e   e  htttttth     oeoo hhh          e  eoooe      oooooooee   oooo  e          httttttttttttttttttttttttttttt\n" +
                 "hhh      ss122222221hTTTTTTTTTTTTTTTTTTThhhhttttttttth    e   e    htttttthhh e oo httthhh          eooe   eoeooe  ee e     e       e      htttttttttttttttttttttttttttttt\n" +
-                "          ss122222221hTTTTTTTTTTTTTTTTTTThhhhtttttttthh    e e  oe  hhttttttth eoo  httttth  e  oooeoooooooee             e    e         hhttttttttttttttttttttttttttttttt\n" +
-                "        hhhhh122222221hTTTTTTTTTTTTTTTTTThhhhtttttttttthh     e e eo  hhhtthh   ooe  hhhhh   e oooooooo e  e      e                   hhhttttttttttttttttttttttttttttttttt\n" +
-                "    hhhhttttth1w2222221hTTTTTTTTTTTTTTTTThhhhtttttttttttthhhh     e eeee hh   eooo         oooooooo  e                          hhhhhhtttttttttttttttttttttttttttttttttttt\n" +
-                "hhhhtttttttttth122222221hTTTTTTTTTTTTTTThhhhhtttttttttttttttthhhh  e eooooooooo e    e   ooeooo e      e                hhhhhhhhtttttttttttttttttttttttttttttttttttttttttt\n" +
-                "ttttttttttttttth122222221hTTTTTTTTTTTTTThhhhttttttttttttttttttttthhhhhhhh  ee           oooo       e          hhhhhhhhhhtttttttttttttttttttttttttttttttttttttttttttttttttt\n" +
-                "hhhhttttttttttth122222221hTTTTTTTTTTTTTThhhhttttttttttttttttttttttttttttthhhhhhhhh    e e oo  e    hhhhhhhhhhhtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\n" +
-                "hhhhhhhttttttth1222222w1hTTTTTTTTTTTTTThhhhhtttttttttttttttttttttttttttttttttttttthhhhh ooo hhhhhhhttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\n" +
-                "TTTThhhhhhhhhth122222221hTTTTTTTTTTTTTThhhhttttttttttttttttttttttttttttttttttttttttttth  e e htttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\n" +
-                "TTTTTTThhhhhhh122222221hTTTTTTTTTTTTTThhhhhtttttttttttttttttttttttttttttttttttttttttttth e   htttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\n" +
-                "TTTTTTTTTTThhh122222221hTTTTTTTTTTTTThhhhhttttttttttttttttttttttttttttttttttttttttttttth   e htttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\n" +
-                "TTTTTTTTTTTTTh122222221hTTTTTTTTTTTTThhhhhttttttttttttttttttttttttttttttttttttttttttth     httttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\n";
+                "          ss122w22221hTTTTTTTTTTTTTTTTTTThhhhtttttttthh    e e  oe  hhttttttth eoo  httttth  e  oooeoooooooee             e    e         hhttttttttttttttttttttttttttttttt\n" +
+                "           ss1222222w1hTTTTTTTTTTTTTTTTTThhhhtttttttttthh     e e eo  hhhtthh   ooe  hhhhh   e oooooooo e  e      e                   hhhttttttttttttttttttttttttttttttttt\n" +
+                "    hhhh    ss1w2222221hTTTTTTTTTTTTTTTTThhhhtttttttttttthhhh     e eeee hh   eooo         oooooooo  e                          hhhhhhtttttttttttttttttttttttttttttttttttt\n" +
+                "hhhhhtthh    ss12w222221hTTTTTTTTTTTTTTThhhhhtttttttttttttttthhhh  e eooooooooo e    e   ooeooo e      e                hhhhhhhhtttttttttttttttttttttttttttttttttttttttttt\n" +
+                "tttttttthh    ss122w22221hTTTTTTTTTTTTTThhhhttttttttttttttttttttthhhhhhhh  ee           oooo       e          hhhhhhhhhhtttttttttttttttttttttttttttttttttttttttttttttttttt\n" +
+                "hhhhttttth    ss1222w2221hTTTTTTTTTTTTTThhhhttttttttttttttttttttttttttttthhhhhhhhh    e e oo  e    hhhhhhhhhhhtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\n" +
+                "hhhhhhhtth   ss12w2222w1hTTTTTTTTTTTTTThhhhhtttttttttttttttttttttttttttttttttttttthhhhh ooo hhhhhhhttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\n" +
+                "TTTThhhhhh   ss122w2w221hTTTTTTTTTTTTTThhhhttttttttttttttttttttttttttttttttttttttttttth  e e htttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\n" +
+                "TTTTTTThhh  ss12w222w21hTTTTTTTTTTTTTThhhhhtttttttttttttttttttttttttttttttttttttttttttth e   htttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\n" +
+                "TTTTTThhh   ss122222w2whTTTTTTTTTTTTThhhhhttttttttttttttttttttttttttttttttttttttttttttth   e htttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\n" +
+                "TTTTTThhh   ss1w2w2w2wwhTTTTTTTTTTTTThhhhhttttttttttttttttttttttttttttttttttttttttttth     httttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\n";
 
 /*
 "                                                                                      tttttttttttttttttttttttttttttttttttthh                                                             hhhh          tttt                 hhhh        h \n" + \
