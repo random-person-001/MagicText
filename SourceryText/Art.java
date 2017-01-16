@@ -1461,14 +1461,14 @@ public String forestKiosk =
         "               sssssssssssssssssssssss                               sss    \n";
 
     public String villageInterior =
-        "      O---------------O                                                                                                   \n" +
-        "      |ooo_____ooooooo|                                                                                                   \n" +
-        "      |ooooo_____ooooo|                                                                                                   \n" +
-        "      |oooo_________oo|                                                                                                   \n" +
-        "      |oo_____________|                                                                                                   \n" +
-        "      |_______________|                                                                                                   \n" +
-        "      O------O_O------O                                                                                                   \n" +
-        "                                                                                                                          \n" +
+        "      O---------------O                                   FF                                      FF                      \n" +
+        "      |ooo_____ooooooo|                               O###FF#############O                     O#FFFF###############O     \n" +
+        "      |ooooo_____ooooo|                               #_tFFFFt___________#                     #tFFFFt______________#     \n" +
+        "      |oooo_________oo|                               #_tFffFt___________#                     #tFffFt______________#     \n" +
+        "      |oo_____________|                               #_tttttt___________#                     #tttttt______________#     \n" +
+        "      |_______________|                               #__________________#                     #____________________#     \n" +
+        "      O------O_O------O                               O#######O_O########O                     O###__###############O     \n" +
+        "              x                                                x                                   xx                     \n" +
         "                                                                                                                          \n" +
         "                                                                                                                          \n" +
         "                                                                                                                          \n" +

@@ -211,7 +211,7 @@ public class WitchHut extends Room {
         lay1.findAndReplace(new SpecialText("0"), new SpecialText("0", null, new Color(25, 25, 25)));
         lay1.findAndReplace(new SpecialText("|"), new SpecialText("|", null, new Color(25, 25, 25)));
         lay1.findAndReplace(new SpecialText("-"), new SpecialText("-", null, new Color(25, 25, 25)));
-        lay1.findAndReplace(new SpecialText("#"), new SpecialText("#", new Color (120, 110, 100), new Color(55, 55, 55)));
+        lay1.findAndReplace(new SpecialText("#"), new SpecialText("#", new Color (130, 110, 100), new Color(55, 55, 55)));
 
         lay1.findAndReplace(new SpecialText(">"), new SpecialText(">", new Color(77, 52, 34), new Color(36, 28, 21)));
 

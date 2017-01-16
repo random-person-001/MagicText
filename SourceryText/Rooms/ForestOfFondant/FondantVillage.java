@@ -36,6 +36,12 @@ public class FondantVillage extends Room {
                 if (play.getX() == 56 && play.getY() == 35) {
                     setNewRoom("VillageInterior", play, 5, 14);
                 }
+                if (play.getX() == 85 && play.getY() == 31) {
+                    setNewRoom("VillageInterior", play, 5, 63);
+                }
+                if ((play.getX() == 119 || play.getX() == 120) && play.getY() == 34) {
+                    setNewRoom("VillageInterior", play, 5, play.getX() - 20);
+                }
                 Thread.sleep(20);
             } catch (InterruptedException ignored) {
             }

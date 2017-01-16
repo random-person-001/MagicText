@@ -22,13 +22,45 @@ public class VillageInterior extends Room {
         strRoomName = "VillageInterior";
     }
 
+    private Layer roomLayer;
+    private int fireplaceFireState = 0;
+
     protected String loop(Player play) {
         while (exitCode.equals("")) {
             try {
                 if (play.getX() == 14 && play.getY() == 6) {
                     setNewRoom("FondantVillage", play, 36, 56);
                 }
-                Thread.sleep(20);
+                if (play.getX() == 63 && play.getY() == 6) {
+                    setNewRoom("FondantVillage", play, 32, 85);
+                }
+                if ((play.getX() == 99 || play.getX() == 100) && play.getY() == 6) {
+                    setNewRoom("FondantVillage", play, 35, play.getX() + 20);
+                }
+                Color fireBkg = new Color(120, 25, 0);
+                switch (fireplaceFireState) {
+                    case 0:
+                        roomLayer.findAndReplace(new SpecialText("w", new Color(150, 40, 0), fireBkg), new SpecialText("w", new Color(165, 70, 0), fireBkg));
+                        break;
+                    case 1:
+                        roomLayer.findAndReplace(new SpecialText("w", new Color(165, 70, 0), fireBkg), new SpecialText("W", new Color(180, 100, 0), fireBkg));
+                        break;
+                    case 2:
+                        roomLayer.findAndReplace(new SpecialText("W", new Color(180, 100, 0), fireBkg), new SpecialText("W", new Color(195, 130, 0), fireBkg));
+                        break;
+                    case 3:
+                        roomLayer.findAndReplace(new SpecialText("W", new Color(195, 130, 0), fireBkg), new SpecialText("W", new Color(180, 100, 0), fireBkg));
+                        break;
+                    case 4:
+                        roomLayer.findAndReplace(new SpecialText("W", new Color(180, 100, 0), fireBkg), new SpecialText("w", new Color(165, 70, 0), fireBkg));
+                        break;
+                    case 5:
+                        roomLayer.findAndReplace(new SpecialText("w", new Color(165, 70, 0), fireBkg), new SpecialText("w", new Color(150, 40, 0), fireBkg));
+                        break;
+                }
+                fireplaceFireState++;
+                if (fireplaceFireState > 5) fireplaceFireState = 0;
+                Thread.sleep(200);
             } catch (InterruptedException ignored) {
             }
         }
@@ -63,12 +95,19 @@ public class VillageInterior extends Room {
 
         baseLayer.findAndReplace(new SpecialText("o"), new SpecialText("o", new Color(100, 64, 39), new Color(38, 19, 6)));
 
+        baseLayer.findAndReplace(new SpecialText("f"), new SpecialText("w", new Color(150, 40, 0), new Color(120, 25, 0)));
+        baseLayer.findAndReplace(new SpecialText("F"), new SpecialText("#", new Color (130, 110, 100), new Color(55, 55, 55)));
+        baseLayer.findAndReplace(new SpecialText("t"), new SpecialText("+", new Color(55, 55, 55), new Color(40, 40, 40)));
+
+        baseLayer.findAndReplace(new SpecialText("x"), new SpecialText(" ", null, Color.BLACK));
+
         org.addLayer(baseLayer);
+        roomLayer = baseLayer;
 
         initHitMeshes(baseLayer);
 
         addItems();
-        String[] solids = {":", "^", "#", ".", "0", "o"};
+        String[] solids = {"|","-","O","o","#","F","f","x"};
         addToBaseHitMesh(base, solids);
 
         genericRoomInitialize();
