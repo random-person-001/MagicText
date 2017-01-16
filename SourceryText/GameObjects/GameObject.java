@@ -97,6 +97,10 @@ public class GameObject implements java.io.Serializable {
         return abs(x - m.getX()) + abs(y - m.getY());
     }
 
+    public boolean isAt (int testX, int testY){
+        return (x == testX && y == testY);
+    }
+
     Mortal getClosestBadGuy(int range) {
         int closest = range;
         Mortal closestM = null;

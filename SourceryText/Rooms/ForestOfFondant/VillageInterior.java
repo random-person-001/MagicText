@@ -34,8 +34,17 @@ public class VillageInterior extends Room {
                 if (play.getX() == 63 && play.getY() == 6) {
                     setNewRoom("FondantVillage", play, 32, 85);
                 }
-                if ((play.getX() == 99 || play.getX() == 100) && play.getY() == 6) {
-                    setNewRoom("FondantVillage", play, 35, play.getX() + 20);
+                if ((play.getX() == 100 || play.getX() == 101) && play.getY() == 6) {
+                    setNewRoom("FondantVillage", play, 35, play.getX() + 19);
+                }
+                if (play.isAt(10, 29)){
+                    setNewRoom("FondantVillage", play, 28, 145);
+                }
+                if (play.isAt(25, 61)){
+                    setNewRoom("FondantVillage", play, 17, 86);
+                }
+                if (play.isAt(61, 29)){
+                    setNewRoom("FondantVillage", play, 20, 112);
                 }
                 Color fireBkg = new Color(120, 25, 0);
                 switch (fireplaceFireState) {
@@ -94,10 +103,14 @@ public class VillageInterior extends Room {
         baseLayer.findAndReplace(new SpecialText("#"), new SpecialText("#", bricksFg, bricksBkg));
 
         baseLayer.findAndReplace(new SpecialText("o"), new SpecialText("o", new Color(100, 64, 39), new Color(38, 19, 6)));
+        baseLayer.findAndReplace(new SpecialText("m"), new SpecialText("m", new Color(100, 64, 39), new Color(38, 19, 6)));
 
         baseLayer.findAndReplace(new SpecialText("f"), new SpecialText("w", new Color(150, 40, 0), new Color(120, 25, 0)));
-        baseLayer.findAndReplace(new SpecialText("F"), new SpecialText("#", new Color (130, 110, 100), new Color(55, 55, 55)));
+        baseLayer.findAndReplace(new SpecialText("F"), new SpecialText("#", new Color(130, 110, 100), new Color(55, 55, 55)));
         baseLayer.findAndReplace(new SpecialText("t"), new SpecialText("+", new Color(55, 55, 55), new Color(40, 40, 40)));
+        baseLayer.findAndReplace(new SpecialText("T"), new SpecialText("T", new Color(90, 85, 85), new Color(40, 40, 40)));
+
+        baseLayer.findAndReplace(new SpecialText("u"), new SpecialText("u", new Color(110, 135, 135), new Color(38, 19, 6)));
 
         baseLayer.findAndReplace(new SpecialText("x"), new SpecialText(" ", null, Color.BLACK));
 
@@ -107,7 +120,7 @@ public class VillageInterior extends Room {
         initHitMeshes(baseLayer);
 
         addItems();
-        String[] solids = {"|","-","O","o","#","F","f","x"};
+        String[] solids = {"|","-","O","o","#","F","f","x","u","m"};
         addToBaseHitMesh(base, solids);
 
         genericRoomInitialize();
