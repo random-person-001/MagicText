@@ -163,6 +163,8 @@ public class FondantVillage extends Room {
 
         org.roomBackground = dirt;
 
+        plantText(new FlavorText(112, 11, "Congratulations!\n You solved the puzzle!", ""));
+
         //addItems();
 
         WaterPool oceanShallow          = new WaterPool (this, forestBackground, "1", 1);

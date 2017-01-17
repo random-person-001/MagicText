@@ -1277,7 +1277,7 @@ public String fondantVillage =
                 "ttttttttttttttth122w22221htttttttttttttttttttttttttttttttTTTTTTttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\n" +
                 "tttttttttttttth122222221htttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttthhhhhhhhhtttttttthhhhhhhhhhhttttttttttttttttttttttttttttttttttttttttttttttttttt\n" +
                 "ttttttttttttth122222221htttttttttttttttttttttttttttttttttttttttttttttttttttttttttthhhhhhhhh        htttttttth          hhhhhhhhhtttttttttttttttttttttttttttttttttttttttttt\n" +
-                "ttttttttttttth122222221htttttttttttttttttttttttttttttttttttttttttttttttttthhhh___                   htttttth                    hhhhhttttttttttttttttttttttttttttttttttttt\n" +
+                "ttttttttttttth122222221htttttttttttttttttttttttttttttttttttttttttttttttttthhhh___                   htttttth    e               hhhhhttttttttttttttttttttttttttttttttttttt\n" +
                 "tttttttttttth122222221httttttttttttttttttttttttttttttttttttttttttttthhhhhh    ###______________    htttttth          hhhhhhh         hhhtttttttttttttttttttttttttttttttttt\n" +
                 "tttttttttttth12w222221httttttttttttttttttttttttttttttttttttttttttthh         /##r=++==r==++==l=%   htttttth   ___        hhthhh          hhhhtttttttttttttttttttttthhhhhhh\n" +
                 "ttttttttttth122222221httttttttttttttttttttttttttttttttttttttttttth          /==rINN=============%   httthh    ###______    hh                hhttttttttttthhhhhhhhh       \n" +
@@ -1463,9 +1463,9 @@ public String forestKiosk =
     public String villageInterior =
         "      O---------------O                                   FF                                       FF                     \n" +
         "      |ooo_____ooooooo|                               O###FF#############O                      O#FFFF###############O    \n" +
-        "      |ooooo_____ooooo|                               #_tFFFFt___________#                      #tFFFFt______________#    \n" +
-        "      |oooo_________oo|                               #_tFffFt___________#                      #tFffFt______________#    \n" +
-        "      |oo_____________|                               #_tttttt___________#                      #tttttt______________#    \n" +
+        "      |ooooo_____ooooo|                               #_tFFFFt___mmmm____#                      #tFFFFt_______#oootto#    \n" +
+        "      |oooo_________oo|                               #_tFffFt___mmmm____#                      #tFffFt__mmm__#ootttt#    \n" +
+        "      |oo_____________|                               #_tttttt___________#                      #tttttt__mmm__O###Ott#    \n" +
         "      |_______________|                               #__________________#                      #____________________#    \n" +
         "      O------O_O------O                               O#######O_O########O                      O###__###############O    \n" +
         "              x                                                x                                    xx                    \n" +
@@ -1485,10 +1485,10 @@ public String forestKiosk =
         "                                                                                                                          \n" +
         "                                                                                                                          \n" +
         "                  FF                                      #  #                                                            \n" +
-        "      O###########FF##O                                  ##--###########O                                                 \n" +
-        "      #_________tFFFFt#                                  #_______|t_____#                                                 \n" +
-        "      #_________tFffFt#                                  #-------Ot_____#                                                 \n" +
-        "      #_________tttttt#                                  #ttttttttt_____#                                                 \n" +
+        "      O#####lll###FF##O                                  ##--###########O                                                 \n" +
+        "      #_mmm_____tFFFFt#                                  #_______|t_____#                                                 \n" +
+        "      #_mmm_____tFffFt#                                  #-------Ot_____#                                                 \n" +
+        "      #___P_____tttttt#                                  #ttttttttt_____#                                                 \n" +
         "      #_______________#                                  #______________#                                                 \n" +
         "      O##O_O##########O                                  O###_##########O                                                 \n" +
         "          x                                                  x                                                            \n" +
@@ -1520,7 +1520,7 @@ public String forestKiosk =
         "        #______________ttttt_____mmmmmmmmm#                                                                               \n" +
         "        #mmmmum________ttttt______________#                                                                               \n" +
         "        #mummmm___mum__ttttt_____mmmmmmmum#                                                                               \n" +
-        "        #_________mmm__ttttt_____mmummmmmm#                                                                               \n" +
+        "        #_P_______mmm__ttttt_____mmummmmmm#                                                                               \n" +
         "        #______________ttttt______________#                                                                               \n" +
         "        O###############OtO###############O                                                                               \n" +
         "                         x                                                                                                \n" +

@@ -238,7 +238,7 @@ public class WitchHut extends Room {
     private void colorBooks (Color[] colors, Layer lay){
         for (int ii = 0; ii < colors.length; ii++){
             int prob = (int)(100f / (float)(colors.length - ii));
-            System.out.printf("[WitchHut] prob %1$d : %2$d\n", ii, prob);
+            //System.out.printf("[WitchHut] prob %1$d : %2$d\n", ii, prob);
             lay.findAndReplace(new SpecialText("m"), new SpecialText("m", colors[ii]),prob);
         }
     }
