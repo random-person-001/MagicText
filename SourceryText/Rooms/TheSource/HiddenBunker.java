@@ -39,7 +39,7 @@ public class HiddenBunker extends Room {
     }
 
     @Override
-    protected String loop(Player play) {
+    protected String playerLoop(Player play) {
         while (exitCode.equals("")) {
             try {
                 Thread.sleep(20);
@@ -191,7 +191,7 @@ public class HiddenBunker extends Room {
         String[] signWords = {"ATTENTION NEW RECRUITS\n in order to ward off robbers\n from taking our stuff,",
                 "Keys and various goods are\n kept behind hidden doors.\nWithout those keys,",
                 "You can't get to our\n valuable stuff!", "Note: to open a door,\n simply rest your hand on\n the wall to move it out of the way"};
-        plantText(new FlavorText(8, 30, signWords, "A Floor Plaque"));
+        plantText(new FlavorText(signWords, "A Floor Plaque"), 8, 30);
 
         Art arty = new Art();
         String[][] base = Art.strToArray(arty.hiddenBunker);

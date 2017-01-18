@@ -127,8 +127,12 @@ public class TextBox extends GameObject {
         org.removeLayer(layerName);
         viewer.frozen = false;
         viewer.textBox = null;
-        if (isQuestion && choosingYes){
-            room.respondToQuestion(questionID, viewer);
+        if (isQuestion){
+            int answerID = questionID;
+            if (!choosingYes){
+                answerID *= -1;
+            }
+            room.respondToQuestion(answerID, viewer);
         }
         if (viewer.messageQueue.size() > 0) {
             viewer.messageQueue.remove(viewer.messageQueue.get(0));

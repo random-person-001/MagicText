@@ -39,7 +39,7 @@ public class InnerMountains extends Room {
     }
 
     @Override
-    protected String loop(Player play) {
+    protected String playerLoop(Player play) {
         while (exitCode.equals("")) {
             try {
                 Thread.sleep(20);
@@ -85,9 +85,9 @@ public class InnerMountains extends Room {
         String[] signWords = {"Because carrots are a healthy snack,\n all carrots growing here are\n available to the general public",
                 "Eating food can restore health\n beyond your maximum health\nThis is called \"Overhealing\"",
                 "The Mountain Range Committee considers\n those who don't eat food regularly\n to be malnourished."};
-        plantText(new FlavorText(8, 38, signWords, "A Sign"));
+        plantText(new FlavorText(signWords, "A Sign"), 8, 38);
 
-        plantText(new FlavorText(39, 18, "<- Bandit Fortress\n   Snowy Peak      ->", "A Sign"));
+        plantText(new FlavorText("<- Bandit Fortress\n   Snowy Peak      ->", "A Sign"), 39, 18);
 
         Art arty = new Art();
         String[][] base = Art.strToArray(arty.innerMountains);

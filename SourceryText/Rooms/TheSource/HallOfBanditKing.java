@@ -50,7 +50,7 @@ public class HallOfBanditKing extends Room {
     private int playerJumpingTimer = 0;
 
     @Override
-    protected String loop(Player play) {
+    protected String playerLoop(Player play) {
         while (exitCode.equals("")) {
             try {
                 Thread.sleep(200);

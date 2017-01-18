@@ -31,7 +31,7 @@ public class SourceCaves extends Room {
     }
 
     @Override
-    protected String loop(Player play) {
+    protected String playerLoop(Player play) {
         int count = 0;
 
         while (exitCode.equals("")) {

@@ -41,7 +41,7 @@ public class TutorialBasement extends Room {
     }
 
     @Override
-    protected String loop(Player play) {
+    protected String playerLoop(Player play) {
         int count = 0;
         boolean foundSpell1 = false;
         boolean foundSpell2 = false;
@@ -245,8 +245,8 @@ public class TutorialBasement extends Room {
     @Override
     public void startup() {
 
-        FlavorText playerStart = new FlavorText(20, 29, "You start here!", "");
-        plantText(playerStart);
+        FlavorText playerStart = new FlavorText("You start here!", "");
+        plantText(playerStart, 20, 29);
 
         Art arty = new Art();
         String[][] base = Art.strToArray(arty.tutForest);

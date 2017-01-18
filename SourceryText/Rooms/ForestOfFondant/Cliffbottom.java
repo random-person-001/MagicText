@@ -24,7 +24,7 @@ public class Cliffbottom extends Room {
     }
 
     @Override
-    protected String loop(Player play) {
+    protected String playerLoop(Player play) {
         //play.goTo(137,113);
 
         while (exitCode.equals("")) {

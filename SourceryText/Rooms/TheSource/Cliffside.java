@@ -22,7 +22,7 @@ public class Cliffside extends Room {
         strRoomName = "Cliffside";
     }
 
-    protected String loop(Player play) {
+    protected String playerLoop(Player play) {
         int count = 0;
         while (exitCode.equals("")) {
             try {

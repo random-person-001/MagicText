@@ -29,7 +29,7 @@ public class VillageInterior extends Room {
     private Layer roomLayer;
     private int fireplaceFireState = 0;
 
-    protected String loop(Player play) {
+    protected String playerLoop(Player play) {
         while (exitCode.equals("")) {
             try {
                 if (play.getX() == 14 && play.getY() == 6) {

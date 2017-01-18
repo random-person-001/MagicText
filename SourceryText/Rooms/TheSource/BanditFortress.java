@@ -24,7 +24,7 @@ public class BanditFortress extends Room {
     }
 
     @Override
-    protected String loop(Player play) {
+    protected String playerLoop(Player play) {
 
         while (exitCode.equals("")) {
             try {
@@ -84,23 +84,23 @@ public class BanditFortress extends Room {
     public void startup() {
 
         String[] rockText1 = {"You've passed safely through the walls of \n the fortress!  Unfortunately, many more\n bandits lie inside.  Be careful."};
-        plantText(new Room.FlavorText(59, 82, rockText1, ""));
+        plantText(new Room.FlavorText(rockText1, ""), 59, 82);
 
         String[] rockText2 = {"The immBanense, strong walls of the bandit   \n fortress tower before you.  This may be\n a long shot, whatever you're to do here."};
-        plantText(new Room.FlavorText(67, 94, rockText2, ""));
+        plantText(new Room.FlavorText(rockText2, ""), 67, 94);
 
         String[] byFountain = {"Phew!  So many bandits!  Thankfully, it  \n only gets worse from here on out.  The \n Bandit King lies ahead, ugly and brutal.",
                 "Meanwhile, you can enjoy the beautiful\n fountain.  There's an inaccessible item\n in the middle of it.  Pretty, huh?"};
-        plantText(new Room.FlavorText(51, 25, byFountain, "Talking Gargoyle"));
+        plantText(new Room.FlavorText(byFountain, "Talking Gargoyle"), 51, 25);
 
         String[] bedrooms = {"1) No bouncing on the beds! (remember the\n Jordan incident, you don't want to end\n up like him)","2) Bedtime at 01:00, we all need our\n beauty sleep"};
-        plantText(new Room.FlavorText(90, 66, bedrooms, "\"BEDROOM RULES\""));
+        plantText(new Room.FlavorText(bedrooms, "\"BEDROOM RULES\""), 90, 66);
 
         String[] kitchen = {"Kitchen staff: currently, more bandits have\n died from food sickness than battle. \n Shape up or see your head on a post."};
-        plantText(new Room.FlavorText(82, 49, kitchen, "Dirty Post-It note on floor"));
+        plantText(new Room.FlavorText(kitchen, "Dirty Post-It note on floor"), 82, 49);
 
         String[] stables = {"Remember to let the horses eat sometimes.  \n If you want to starve things, go to  \n the torture room."};
-        plantText(new Room.FlavorText(113, 63, stables, "Horse Rules"));
+        plantText(new Room.FlavorText(stables, "Horse Rules"), 113, 63);
 
         Color lightTreeGreen = new Color(20, 60, 10);
         Color shadowTreeGreen = new Color(29, 50, 19);

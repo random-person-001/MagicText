@@ -42,7 +42,7 @@ public class SnowyPeak extends Room {
     }
 
     @Override
-    protected String loop(Player play) {
+    protected String playerLoop(Player play) {
         while (exitCode.equals("")) {
             try {
                 Thread.sleep(50);
@@ -93,7 +93,7 @@ public class SnowyPeak extends Room {
     @Override
     public void startup() {
         String[] signWords = {"WARNING:\n Polar bears ahead.\n RUN AWAY if one attacks you!", "However, they are known for stealing\n keys and whatnot.\nGetting them back is not recommended though"};
-        plantText(new FlavorText(114, 9, signWords, "A Sign"));
+        plantText(new FlavorText(signWords, "A Sign"), 114, 9);
         Art arty = new Art();
         String[][] base = Art.strToArray(arty.snowyPeak);
 

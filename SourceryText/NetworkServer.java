@@ -88,7 +88,7 @@ public class NetworkServer {
     }
 
     /**
-     * Start doing a loop that reads the mey input from the client.
+     * Start doing a playerLoop that reads the mey input from the client.
      */
     private void keyReadLoop() {
         try {

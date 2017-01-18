@@ -37,7 +37,7 @@ public class SourcePit extends Room {
     }
 
     @Override
-    protected String loop(Player play) {
+    protected String playerLoop(Player play) {
         int count = 0;
 
         while (exitCode.equals("")) {
@@ -89,10 +89,10 @@ public class SourcePit extends Room {
                 "\n on the way out;\nYa can have them if you want to.", "Ya'll probably be fighting wolves\n and bandits on the way out\n of these mountains anyway!", ".....", "Hey, can ya do me a favor?" +
                 "\nI hate all of this text everywhere!\nI hate all of it!", "Ya've probably got nothing else to do,\n right?", "Can ya go fetch me one of those magic\n ropes that can go down into" +
                 "\n The Source and change things back?", "I think ya liked how it was before, right?\nWell, so do I!", "Yar way out is that trail down\n over there, past The Source.", "See ya later!"};
-        plantText(new FlavorText(93, 12, dennisWords, "Dennis"));
+        plantText(new FlavorText(dennisWords, "Dennis"), 93, 12);
 
         String[] doorLocked = {"The door seems to have locked behind you.", "The owner must have installed\n an auto-lock on the door."};
-        plantText(new FlavorText(109, 9, doorLocked, ""));
+        plantText(new FlavorText(doorLocked, ""), 109, 9);
 
         Art arty = new Art();
 

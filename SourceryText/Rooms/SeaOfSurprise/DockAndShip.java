@@ -23,7 +23,7 @@ public class DockAndShip extends Room {
     }
 
     @Override
-    protected String loop(Player play) {
+    protected String playerLoop(Player play) {
         if (play.getX() == 0 && play.getY() == 0) {
             play.goTo(66, 50);
         }

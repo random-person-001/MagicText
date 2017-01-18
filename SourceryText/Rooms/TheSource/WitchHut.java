@@ -34,7 +34,7 @@ public class WitchHut extends Room {
     int fireplaceFireState = 0;
 
     @Override
-    protected String loop(Player play) {
+    protected String playerLoop(Player play) {
         while (exitCode.equals("")) {
             try {
                 Thread.sleep(200);
@@ -126,7 +126,7 @@ public class WitchHut extends Room {
                 inspector.removeItem("Clone Buster", "items");
                 cloneBusterUsed = true;
             } else if (cloneBusterUsed){
-                queueMessage(new FlavorText(7,8,"I can't thank you enough for\n making that spell!","Witch"), inspector);
+                queueMessage(new FlavorText("I can't thank you enough for\n making that spell!","Witch"), inspector);
             }
         }
     }
@@ -163,36 +163,36 @@ public class WitchHut extends Room {
         String[] mainWitchDialogue = {"Oh, finally! Someone else!\n I need you pretty badly.","You see, I cloned myself.\n Then the clones decided to clone\n themselves.",
                 "Now there's too many for this little\n house of mine.","However there is a spell you can brew\n in that cauldron over there, but I\n can't do it myself.",
                 "You see, because I casted the clone spell,\n I can't undo it without undoing me!\n So I need you to undo the spell","Please consult my recipes on the\n bookshelf on the wall."};
-        plantText(new FlavorText(7, 8, mainWitchDialogue, "Witch"));
+        plantText(new FlavorText(mainWitchDialogue, "Witch"), 7, 8);
 
-        plantText(new FlavorText(27, 9, "One wardrobe for all of us?\n How can we live in conditions like this?", "Witch"));
-        plantText(new FlavorText(34, 6, "I want to cast a mean spell on you, but\n the spell book fell into a\n bookshelf and we can't seem to get it back", "Witch"));
-        plantText(new FlavorText(40, 6, "Who fills a whole bookshelf with history\n books? This place needs a tea cookbook\n MINIMUM.", "Witch"));
-        plantText(new FlavorText(44, 8, "I hate taking turns on the broomstick!\n It's just not right!", "Witch"));
-        plantText(new FlavorText(36, 10, "The witch over there says we're all clones\n of her, but I swear I'm the original one!\n....Says everyone.....", "Witch"));
+        plantText(new FlavorText("One wardrobe for all of us?\n How can we live in conditions like this?", "Witch"), 27, 9);
+        plantText(new FlavorText("I want to cast a mean spell on you, but\n the spell book fell into a\n bookshelf and we can't seem to get it back", "Witch"), 34, 6);
+        plantText(new FlavorText("Who fills a whole bookshelf with history\n books? This place needs a tea cookbook\n MINIMUM.", "Witch"), 40, 6);
+        plantText(new FlavorText("I hate taking turns on the broomstick!\n It's just not right!", "Witch"), 44, 8);
+        plantText(new FlavorText("The witch over there says we're all clones\n of her, but I swear I'm the original one!\n....Says everyone.....", "Witch"), 36, 10);
 
         highlightFlavorText(lay1);
 
         //The lore/history of the world
-        plantText(new FlavorText(31, 4, "...Of all magic, Arcane is the king;\n The world is simply not complex\n enough to support Fire, Ice, and Dark...", "Book"));
-        plantText(new FlavorText(32, 4, "...Arcane is primal; it is magic itself.\n Fire, Ice, and Dark are all false copies\n of it; they are not fit to be magic...", "Book"));
-        plantText(new FlavorText(33, 4, "...For decades the debate raged onward;\n Not even the grand council of\n the Magic Academy could end it...", "Book"));
+        plantText(new FlavorText( "...Of all magic, Arcane is the king;\n The world is simply not complex\n enough to support Fire, Ice, and Dark...", "Book"), 31, 4);
+        plantText(new FlavorText( "...Arcane is primal; it is magic itself.\n Fire, Ice, and Dark are all false copies\n of it; they are not fit to be magic...", "Book"), 32, 4);
+        plantText(new FlavorText("...For decades the debate raged onward;\n Not even the grand council of\n the Magic Academy could end it...", "Book"), 33, 4);
 
-        plantText(new FlavorText(36, 4, "...The discovery of The Source is almost as\n influential as its potential misuse...", "Book"));
-        plantText(new FlavorText(37, 4, "...Amidst the endless argument\n over the fate of magic, many took action\n while others continued to argue...", "Book"));
-        plantText(new FlavorText(38, 4, "...However, exiting the universe proved\n difficult, until someone found two ropes\n strong enough to survive...", "Book"));
+        plantText(new FlavorText("...The discovery of The Source is almost as\n influential as its potential misuse...", "Book"), 36, 4);
+        plantText(new FlavorText( "...Amidst the endless argument\n over the fate of magic, many took action\n while others continued to argue...", "Book"), 37, 4);
+        plantText(new FlavorText("...However, exiting the universe proved\n difficult, until someone found two ropes\n strong enough to survive...", "Book"), 38, 4);
 
-        plantText(new FlavorText(41, 4, "...Unfortunately, the person who discovered\n the ropes strongly opposed its use...", "Book"));
-        plantText(new FlavorText(42, 4, "...With his own magical hands he built\n two giant labyrinths to stop all\n intruders, each guarding a single rope...", "Book"));
-        plantText(new FlavorText(43, 4, "...Countless breakthroughs were attempted\nAll but one had ultimately failed.\nThat one rope has yet to be found...", "Book"));
+        plantText(new FlavorText("...Unfortunately, the person who discovered\n the ropes strongly opposed its use...", "Book"), 41, 4);
+        plantText(new FlavorText("...With his own magical hands he built\n two giant labyrinths to stop all\n intruders, each guarding a single rope...", "Book"), 42, 4);
+        plantText(new FlavorText("...Countless breakthroughs were attempted\nAll but one had ultimately failed.\nThat one rope has yet to be found...", "Book"), 43, 4);
 
         //Recipe for creating the anti-clone potion
-        plantText(new FlavorText(5, 5, "1) No two fruits may be added consecutively", "Recipe Book"));
-        plantText(new FlavorText(6, 5, "2) The Sistine Apple must be added\n sometime after The Grape of Good Hope", "Recipe Book"));
-        plantText(new FlavorText(7, 5, "3) The Bering Date muse be added\n directly before The Mesopotato", "Recipe Book"));
-        plantText(new FlavorText(8, 5, "4) The Gordian Nut must be added\n sometime after The Chichen Pizza", "Recipe Book"));
-        plantText(new FlavorText(9, 5, "5) The Grape of Good Hope must be added\n sometime after The Mesopotato", "Recipe Book"));
-        plantText(new FlavorText(10, 5, "6) The Bering Date cannot be added first", "Recipe Book"));
+        plantText(new FlavorText("1) No two fruits may be added consecutively", "Recipe Book"), 5, 5);
+        plantText(new FlavorText("2) The Sistine Apple must be added\n sometime after The Grape of Good Hope", "Recipe Book"), 6, 5);
+        plantText(new FlavorText("3) The Bering Date muse be added\n directly before The Mesopotato", "Recipe Book"), 7, 5);
+        plantText(new FlavorText("4) The Gordian Nut must be added\n sometime after The Chichen Pizza", "Recipe Book"), 8, 5);
+        plantText(new FlavorText("5) The Grape of Good Hope must be added\n sometime after The Mesopotato", "Recipe Book"), 9, 5);
+        plantText(new FlavorText("6) The Bering Date cannot be added first", "Recipe Book"), 10, 5);
 
 
 

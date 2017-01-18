@@ -90,12 +90,12 @@ public class Room implements java.io.Serializable {
 
     /**
      * OVERRIDE THIS
-     * Run a loop, doing things, until the player should go to a new room.
+     * Run a playerLoop, doing things, until the player should go to a new room.
      *
      * @param play
      * @return the room name to go to next
      */
-    protected String loop(Player play) {
+    protected String playerLoop(Player play) {
         return "You were supposed to override this, dummy.";
     }
 
@@ -126,7 +126,7 @@ public class Room implements java.io.Serializable {
         player.frozen = false;
         player.setupForNewRoom();
 
-        String exit = loop(player);
+        String exit = playerLoop(player);
 
         takeCareOfPlayerLeavingRoom(player, exit);
     }
@@ -604,7 +604,9 @@ public class Room implements java.io.Serializable {
      *
      * @param thing
      */
-    protected void plantText(FlavorText thing) {
+    protected void plantText(FlavorText thing, int setX, int setY) {
+        thing.x = setX;
+        thing.y = setY;
         flavorTexts.add(thing);
     }
 
@@ -749,16 +751,12 @@ public class Room implements java.io.Serializable {
         boolean isQuestion = false;
         int questionID = 0;
 
-        public FlavorText(int xLoc, int yLoc, String[] theMessage, String theSpeaker) {
-            x = xLoc;
-            y = yLoc;
+        public FlavorText(String[] theMessage, String theSpeaker) {
             messages = theMessage;
             speaker = theSpeaker;
         }
 
-        public FlavorText(int xLoc, int yLoc, String theMessage, String theSpeaker) {
-            x = xLoc;
-            y = yLoc;
+        public FlavorText(String theMessage, String theSpeaker) {
             String[] messageArray = new String[1];
             messageArray[0] = theMessage;
             messages = messageArray;
@@ -773,15 +771,6 @@ public class Room implements java.io.Serializable {
             messages = messageArray;
             speaker = theSpeaker;
             isHelpful = helpful;
-        }
-
-        public FlavorText(String theMessage, String theSpeaker) {
-            x = 0;
-            y = 0;
-            String[] messageArray = new String[1];
-            messageArray[0] = theMessage;
-            messages = messageArray;
-            speaker = theSpeaker;
         }
 
         public FlavorText(String theMessage, boolean setQuestion, int qID) {
@@ -811,8 +800,10 @@ public class Room implements java.io.Serializable {
         void doMessage(Player user) {
             for (String message : messages) {
                 //System.out.println("STACKING FOLLOWING MESSAGE:\n " + message);
-                FlavorText panel = new FlavorText(x, y, message, speaker);
+                FlavorText panel = new FlavorText(message, speaker);
                 panel.player = user;
+                panel.isQuestion = isQuestion;
+                panel.questionID = questionID;
                 queueMessage(panel, user);
             }
         }

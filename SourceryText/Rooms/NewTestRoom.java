@@ -27,7 +27,7 @@ public class NewTestRoom extends Room {
         super(player);
     }
 
-    protected String loop(Player play) {
+    protected String playerLoop(Player play) {
 
         while (exitCode.equals("")) {
             try {

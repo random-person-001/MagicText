@@ -22,7 +22,7 @@ public class ProcedurallyGeneratedDungeon extends Room {
         strRoomName = "ProcedurallyGeneratedDungeon";
     }
 
-    protected String loop(Player play) {
+    protected String playerLoop(Player play) {
         int count = 0;
         while (exitCode.equals("")) {
             try {

@@ -27,7 +27,7 @@ public class FondantVillage extends Room {
     }
 
     @Override
-    protected String loop(Player play) {
+    protected String playerLoop(Player play) {
         while (exitCode.equals("")) {
             try {
                 if (play.getY() > 49){
@@ -60,6 +60,13 @@ public class FondantVillage extends Room {
 
     @Override
     public void addItems() {
+    }
+
+    @Override
+    public void respondToQuestion (int qID, Player respondTo){
+        if (qID == 1){
+            setNewRoom("ShopTunnel", respondTo, 5, 41);
+        }
     }
 
     @Override
@@ -163,7 +170,7 @@ public class FondantVillage extends Room {
 
         org.roomBackground = dirt;
 
-        plantText(new FlavorText(112, 11, "Congratulations!\n You solved the puzzle!", ""));
+        plantText(new FlavorText("There's a trapdoor hidden beneath the dirt.\n Drop through it?", true, 1), 112, 11);
 
         //addItems();
 
