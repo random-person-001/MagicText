@@ -99,8 +99,8 @@ public class WitchHut extends Room {
         DroppedItem rewardScarf = new DroppedItem(this, "You found the Bewitched Scarf!", item7, 46, 10);
         addObject(rewardScarf);
 
-        Item bucket = new Item("Bucket", "How useful! I bet you\n could catch some pretty\n snowflakes with this!", "Buckt", "spell");
-        DroppedItem droppedBucket = new DroppedItem(this, "You stole a bucket from the house. \n Did you know that the witch\n got that for christmas one\n year?", bucket, 3, 10);
+        Item bucket = new Item("Bucket", "How useful! A shiny bucket\n to catch pretty snowflakes\n in!\n\nTo use, equip the bucket \nas your primary spell and\n lock aim, you can use this\n to catch snowflakes!", "Buckt", "spell");
+        DroppedItem droppedBucket = new DroppedItem(this, "You stole a bucket from the house. \n Did you know that the witch\n got that for christmas one year?", bucket, 3, 10);
         addObject(droppedBucket);
     }
 

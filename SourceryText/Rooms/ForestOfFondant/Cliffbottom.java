@@ -177,31 +177,39 @@ public class Cliffbottom extends Room {
 
         forestBackground.findAndReplace(new SpecialText("w"), new SpecialText("o", riverRockFg, riverRockBkg));
 
-        /*
-        A more text based theme, without backgrounds.
-        lay1.findAndReplace(new SpecialText("t"), new SpecialText("O", lightTreeGreen));
-        lay1.findAndReplace(new SpecialText("h"), new SpecialText("o", shadowTreeGreen));
-        lay1.findAndReplace(new SpecialText(" "), new SpecialText(".", otherGrass), 2);
-        lay1.findAndReplace(new SpecialText(" "), new SpecialText("_", dirt), 4);
+        Color fondantBudding1 = new Color(250, 58, 58);
+        Color fondant1 = new Color(230, 128, 128);
+        Color fondantDark1 = new Color(190, 98, 98);
+        Color fondant2 = new Color(130, 128, 228);
+        Color fondantDark2 = new Color(90, 98, 198);
+        Color fondantBudding3 = new Color(240, 58, 248);
+        Color fondant3 = new Color(230, 128, 228);
+        Color fondantDark3 = new Color(190, 98, 198);
+        Color fondant4 = new Color(230, 228, 68);
+        Color fondantDark4 = new Color(190, 198, 1);
+        Color fondantBudding5 = new Color(60, 250, 248);
+        Color fondant5 = new Color(130, 228, 228);
+        Color fondantDark5 = new Color(90, 198, 198);
 
-        lay1.findAndReplace(new SpecialText("r"), new SpecialText(" ", mainRiverWater, mainRiverWater));
-        lay1.findAndReplace(new SpecialText("s"), new SpecialText("~", fastRiverWater, mainRiverWater));
+        forestBackground.findAndReplace(new SpecialText("l"), new SpecialText(" ", null, fondant1));
+        forestBackground.findAndReplace(new SpecialText("m"), new SpecialText(" ", null, fondant2));
+        forestBackground.findAndReplace(new SpecialText("n"), new SpecialText(" ", null, fondant3));
+        forestBackground.findAndReplace(new SpecialText("o"), new SpecialText(" ", null, fondant4));
+        forestBackground.findAndReplace(new SpecialText("p"), new SpecialText(" ", null, fondant5));
+        forestBackground.findAndReplace(new SpecialText("q"), new SpecialText(" ", null, fondant3));
+        forestBackground.findAndReplace(new SpecialText("r"), new SpecialText(" ", null, fondant2));
 
-        lay1.findAndReplace(new SpecialText("w"), new SpecialText("~", deepWater2, deepWater1), 10);
-        lay1.findAndReplace(new SpecialText("w"), new SpecialText(" ", deepWater1, deepWater1));
+        forestBackground.findAndReplace(new SpecialText("L"), new SpecialText(" ", null, fondantDark1));
+        forestBackground.findAndReplace(new SpecialText("M"), new SpecialText(" ", null, fondantDark2));
+        forestBackground.findAndReplace(new SpecialText("N"), new SpecialText(" ", null, fondantDark3));
+        forestBackground.findAndReplace(new SpecialText("O"), new SpecialText(" ", null, fondantDark4));
+        forestBackground.findAndReplace(new SpecialText("P"), new SpecialText(" ", null, fondantDark5));
+        forestBackground.findAndReplace(new SpecialText("Q"), new SpecialText(" ", null, fondantDark3));
+        forestBackground.findAndReplace(new SpecialText("R"), new SpecialText(" ", null, fondantDark2));
 
-        lay1.findAndReplace(new SpecialText("4"), new SpecialText(" ", deepWater4, deepWater4));
-        lay1.findAndReplace(new SpecialText("3"), new SpecialText(" ", deepWater3, deepWater3));
-        lay1.findAndReplace(new SpecialText("2"), new SpecialText(" ", deepWater2, deepWater2));
-        lay1.findAndReplace(new SpecialText("1"), new SpecialText(" ", deepWater1, deepWater1));
-
-        lay1.findAndReplace(new SpecialText("d"), new SpecialText(":", sand2), 20);
-        lay1.findAndReplace(new SpecialText("d"), new SpecialText(":", sand3));
-        lay1.findAndReplace(new SpecialText("f"), new SpecialText(".", sand3), 15);
-        lay1.findAndReplace(new SpecialText("f"), new SpecialText(".", sand2));
-        lay1.findAndReplace(new SpecialText("g"), new SpecialText(".", dirt), 15);
-        lay1.findAndReplace(new SpecialText("g"), new SpecialText(".", sand1));
-         */
+        forestBackground.findAndReplace(new SpecialText("x"), new SpecialText("*", fondantBudding3, shadowTreeGreen));
+        forestBackground.findAndReplace(new SpecialText("y"), new SpecialText("*", fondantBudding5, shadowTreeGreen));
+        forestBackground.findAndReplace(new SpecialText("z"), new SpecialText("*", fondantBudding1, shadowTreeGreen));
 
         org.addLayer(forestBackground);
         //org.addLayer(forestRiver);
@@ -210,32 +218,13 @@ public class Cliffbottom extends Room {
         String[] solids = {"r", "t", "h","T","w"};
         addToBaseHitMesh(base, solids);
         addToBaseHitMesh(114, 50); // Hiding the kiosk area
-        /*
-        addToObjHitMesh(51, 96);
-        addToObjHitMesh(51, 97); // Dock
-        addToObjHitMesh(51, 98);
-        addToObjHitMesh(51, 99);
-        addToObjHitMesh(51, 100);
-        addToObjHitMesh(51, 101);
-        addToObjHitMesh(51, 102);
-        */
+
         org.addLayer(forestVeil);
 
         FlammableTree ft2 = new FlammableTree(this, forestVeil, trees);
         addObject(ft2);
         FlammableTree ft1 = new FlammableTree(this, forestBackground, trees);
         addObject(ft1);
-
-        /*
-        Layer snow = new Layer(Art.strToArray(arty.testSnow), "snow", 2, 100);
-        SpecialText snow1 = new SpecialText("-", new Color(215, 230, 227), new Color(249, 249, 249));
-        SpecialText snow2 = new SpecialText(" ", null, new Color(249, 249, 249));
-        snow.findAndReplace(new SpecialText("s"), snow1, 30);
-        snow.findAndReplace(new SpecialText("s"), snow2);
-        SnowPatch sp = new SnowPatch(this, snow, new SpecialText[]{snow1, snow2});
-        addObject(sp);
-        org.addLayer(snow);
-        */
 
         WaterPool wp1 = new WaterPool(this, forestBackground, "1", 1);
         WaterPool wp2 = new WaterPool(this, forestBackground, "2", 2);
