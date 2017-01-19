@@ -1,8 +1,9 @@
-# MagicText
+
+![If the game was slower, this would be the splash screen](http://i.imgur.com/URYkKiB.png "Image")
+
+# SourceryText
 A text-based Java adventure, in collaboration with @HazilTheNut, and @zachllogan
 
-
-/////////////////////////////////////////////////
 ###GENERALLY RELEVANT WORDS   
 
 If you want to try out the latest build of the game, you can [download the .jar file](https://github.com/random-person-001/MagicText/raw/master/jarOutput/latest.jar) from the jarOutput folder (your computer will understandably ask for your affirmation before running it).
