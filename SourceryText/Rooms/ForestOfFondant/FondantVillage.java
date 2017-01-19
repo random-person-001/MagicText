@@ -65,7 +65,7 @@ public class FondantVillage extends Room {
     @Override
     public void respondToQuestion (int qID, Player respondTo){
         if (qID == 1){
-            setNewRoom("ShopTunnel", respondTo, 5, 41);
+            setNewRoom("ShopTunnel", respondTo, 11, 41);
         }
     }
 

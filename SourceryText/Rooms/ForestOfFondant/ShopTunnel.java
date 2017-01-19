@@ -9,6 +9,7 @@ import SourceryText.SpecialText;
 import java.awt.*;
 
 /**
+ * A secret tunnel going to the shop, and your first opportunity to do some dirty work for the VC (the version control)
  * Created by Jared on 18-Jan-17.
  */
 public class ShopTunnel extends Room {
