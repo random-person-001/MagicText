@@ -1,5 +1,5 @@
 
-![If the game was slower, this would be the splash screen](http://i.imgur.com/URYkKiB.png "Image")
+![Pretty picture](http://i.imgur.com/URYkKiB.png "If the game was slower, this would be the splash screen")
 
 # SourceryText
 A text-based Java adventure, in collaboration with @HazilTheNut, and @zachllogan
