@@ -72,7 +72,7 @@ public class Cliffbottom extends Room {
         Item fondantChunk = new Item("fondantChunk", "It puts the world in a\n sugar rush!\n Feels like the day after\n Halloween ", "item");
         fondantChunk.setDuration(30 * 1000);
         fondantChunk.setSpellType("potion");
-        super.addObject(new DroppedItem(this, "Oooh, lucky! You found a chunk of fondant!\n But -   BEWARE:\n eating it will make you super hyper.", fondantChunk, 134, 24));
+        super.addObject(new DroppedItem(this, "Oooh, lucky! You found a chunk of fondant!\n But -   BEWARE:\n eating it will make you super hyper.", fondantChunk, 90, 10));
 
         Item perriwinkle = new Item("wrinkleInTime", "Distorts spacetime in a \n bubble around you, so \n nearby entities slow down \n in your perception of time", "item");
         perriwinkle.setDuration(60 * 1000);
@@ -134,10 +134,32 @@ public class Cliffbottom extends Room {
         forestVeil.setY(46);
         forestVeil.setX(63);
 
+        Color fondantBudding1 = new Color(250, 58, 58);
+        Color fondant1 = new Color(230, 128, 128);
+        Color fondantDark1 = new Color(190, 98, 98);
+        Color fondant2 = new Color(130, 128, 228);
+        Color fondantDark2 = new Color(90, 98, 198);
+        Color fondantBudding3 = new Color(240, 58, 248);
+        Color fondant3 = new Color(230, 128, 228);
+        Color fondantDark3 = new Color(190, 98, 198);
+        Color fondant4 = new Color(230, 228, 68);
+        Color fondantDark4 = new Color(190, 198, 1);
+        Color fondantBudding5 = new Color(60, 250, 248);
+        Color fondant5 = new Color(130, 228, 228);
+        Color fondantDark5 = new Color(90, 198, 198);
+
         SpecialText[] trees = { new SpecialText("o", normalGrass, lightTreeGreen),  // Cuz the burnable forest wants to know them
                 new SpecialText("o", otherGrass, lightTreeGreen), new SpecialText("O", otherGrass, lightTreeGreen),
                 new SpecialText("0", otherGrass, lightTreeGreen), new SpecialText(" ", lightTreeGreen, lightTreeGreen),
-                new SpecialText(" ", shadowTreeGreen, shadowTreeGreen)};
+                new SpecialText(" ", shadowTreeGreen, shadowTreeGreen),
+                // Fondant stuff (cuz you can burn it)
+                new SpecialText(" ", null, fondant1), new SpecialText(" ", null, fondant2),
+                new SpecialText(" ", null, fondant3), new SpecialText(" ", null, fondant4),
+                new SpecialText(" ", null, fondant5), new SpecialText(" ", null, fondantDark1),
+                new SpecialText(" ", null, fondantDark2), new SpecialText(" ", null, fondantDark3),
+                new SpecialText(" ", null, fondantDark4), new SpecialText(" ", null, fondantDark5),
+                new SpecialText("*", fondantBudding1, shadowTreeGreen), new SpecialText("*", fondantBudding3, shadowTreeGreen),
+                new SpecialText("*", fondantBudding5, shadowTreeGreen)};
         forestBackground.findAndReplace(new SpecialText("t"), trees[0], 17);
         forestBackground.findAndReplace(new SpecialText("t"), trees[1], 17);
         forestBackground.findAndReplace(new SpecialText("t"), trees[2], 17);
@@ -177,20 +199,6 @@ public class Cliffbottom extends Room {
 
         forestBackground.findAndReplace(new SpecialText("w"), new SpecialText("o", riverRockFg, riverRockBkg));
 
-        Color fondantBudding1 = new Color(250, 58, 58);
-        Color fondant1 = new Color(230, 128, 128);
-        Color fondantDark1 = new Color(190, 98, 98);
-        Color fondant2 = new Color(130, 128, 228);
-        Color fondantDark2 = new Color(90, 98, 198);
-        Color fondantBudding3 = new Color(240, 58, 248);
-        Color fondant3 = new Color(230, 128, 228);
-        Color fondantDark3 = new Color(190, 98, 198);
-        Color fondant4 = new Color(230, 228, 68);
-        Color fondantDark4 = new Color(190, 198, 1);
-        Color fondantBudding5 = new Color(60, 250, 248);
-        Color fondant5 = new Color(130, 228, 228);
-        Color fondantDark5 = new Color(90, 198, 198);
-
         forestBackground.findAndReplace(new SpecialText("l"), new SpecialText(" ", null, fondant1));
         forestBackground.findAndReplace(new SpecialText("m"), new SpecialText(" ", null, fondant2));
         forestBackground.findAndReplace(new SpecialText("n"), new SpecialText(" ", null, fondant3));
@@ -215,7 +223,7 @@ public class Cliffbottom extends Room {
         //org.addLayer(forestRiver);
         org.addLayer(kiosk);
         initHitMeshes(forestBackground);
-        String[] solids = {"r", "t", "h","T","w"};
+        String[] solids = {"r", "t", "h","T","w","l","m","n","o","p","L","M","N","O","P","x","y","z"};
         addToBaseHitMesh(base, solids);
         addToBaseHitMesh(114, 50); // Hiding the kiosk area
 
