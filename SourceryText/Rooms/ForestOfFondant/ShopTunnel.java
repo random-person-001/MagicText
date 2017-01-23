@@ -31,7 +31,7 @@ public class ShopTunnel extends Room {
     }
 
     @Override
-    public void respondToQuestion(int qID, Player respondTo){
+    public void uniqueResponse(int qID, Player respondTo){
         if (qID == 1){
             setNewRoom("FondantVillage", respondTo, 11, 112);
         }

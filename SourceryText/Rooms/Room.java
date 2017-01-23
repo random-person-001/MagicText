@@ -667,10 +667,26 @@ public class Room implements java.io.Serializable {
         question.showQuestionBox(qID);
     }
 
+    protected void addSavePoint(int pX, int pY){
+        SavePoint savePoint = new SavePoint(this, pX, pY);
+        addObject(savePoint);
+    }
+
     /**
      * Override with custom code for each room that poses a question
      */
-    public void respondToQuestion(int qID, Player respondTo) {
+    public void uniqueResponse(int qID, Player respondTo) {
+    }
+
+    public void respondToQuestion(int qID, Player respondTo){
+        genericResponse(qID, respondTo);
+        uniqueResponse(qID, respondTo);
+    }
+
+    private void genericResponse(int qID, Player respondTo){
+        if (qID == 255){
+            respondTo.saveGame();
+        }
     }
 
     public void splashMessage(String message, String speaker, Player viewer) {

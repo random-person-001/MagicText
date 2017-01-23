@@ -9,6 +9,7 @@ import SourceryText.Art;
 import SourceryText.GameObjects.DroppedItem;
 import SourceryText.GameObjects.Item;
 import SourceryText.GameObjects.Player;
+import SourceryText.GameObjects.SavePoint;
 import SourceryText.GameObjects.TheSource.Wolf;
 import SourceryText.Layer;
 import SourceryText.Rooms.Room;
@@ -76,6 +77,8 @@ public class InnerMountains extends Room {
             Wolf puppy = new Wolf(org, this, coord[0], coord[1]);
             addMortal(puppy);
         }
+
+        addSavePoint(12, 33);
     }
 
     @Override
