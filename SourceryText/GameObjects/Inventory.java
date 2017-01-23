@@ -26,7 +26,7 @@ class Inventory implements java.io.Serializable {
     private Player player;
     private ImageOrg org;
     private KeyMap keymap;
-    private Timer timer = new Timer("InventoryTimer");
+    private transient Timer timer = new Timer("InventoryTimer");
     //Cursor stuff
     private int cursorY = 2;
     private int cursorX = 28;

@@ -13,7 +13,7 @@ import java.awt.*;
 /**
  * Created by Jared on 12-Dec-16.
  */
-public class CauldronPuzzle {
+public class CauldronPuzzle implements java.io.Serializable {
 
     private ImageOrg org;
     private Player player;

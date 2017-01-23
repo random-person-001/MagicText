@@ -37,7 +37,7 @@ public class ImageOrg implements java.io.Serializable {
             new Color(80, 255, 120), new Color(255, 255, 100), new Color(255, 150, 75)};
 
     //FrameTimer frameTimerInstance = new FrameTimer();
-    private Timer drawTimer = new Timer();
+    private transient Timer drawTimer = new Timer();
     final int orgSerial = (int) (Math.random() * 10000);
     private Player defaultPlayer = null; // Will be changed when enter
 
