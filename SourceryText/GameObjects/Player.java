@@ -82,6 +82,7 @@ public class Player extends Mortal implements java.io.Serializable {
     public boolean ludicrousSpeed = false;
     private int orientation = UP;
     private boolean orientationLocked = false;
+    private boolean lockedAimLastTick = false;
     private String aimDispName = "aimDisp";
     public boolean frozen = false;
     public boolean isGhost = false;
@@ -93,7 +94,6 @@ public class Player extends Mortal implements java.io.Serializable {
     int darkSpellBoost = 0;
     private int healBoost, durBoost, rangeBoost, armorHealthBoost = 0;
     //NO MORE STATS
-
 
     Item spell1 = new Item("None", "");
     Item spell2 = new Item("None", "");
@@ -182,14 +182,16 @@ public class Player extends Mortal implements java.io.Serializable {
 
     public void setupForNewRoom() {
         graphicUpdate();
+        /*
         upPressed = false;
         downPressed = false;
         leftPressed = false;
         rightPressed = false;
+         */
     }
 
     /**
-     * Change the Player's perception of which room it is in, and do various cleenup from before.
+     * Change the Player's perception of which room it is in, and do various cleanup from earlier rooms.
      *
      * @param newRoom a Room that Player should consider itself in
      */
@@ -211,6 +213,9 @@ public class Player extends Mortal implements java.io.Serializable {
         setupTimer(20);
     }
 
+    /**
+     * Add layers for the HUD and player into this room.
+     */
     private void addPlayerLayers() {
         // Add hud layer
         System.out.println("Adding HUD for " + username);
@@ -233,7 +238,7 @@ public class Player extends Mortal implements java.io.Serializable {
     }
 
     /**
-     * Set x and y coordinates directly.
+     * Set x and y coordinates of the player directly.
      *
      * @param newX the new x coord
      * @param newY the new y coord
@@ -246,7 +251,7 @@ public class Player extends Mortal implements java.io.Serializable {
     }
 
     /**
-     * Perform a general update of the player.
+     * Perform a general update of the player, calling all methods that ought to be called each tick.
      */
     @Override
     public void update() {
@@ -293,6 +298,9 @@ public class Player extends Mortal implements java.io.Serializable {
         }
     }
 
+    /**
+     * General method for handling player movement for this tick.
+     */
     private void doMovement() {
         int movespeed = 5;
         boolean spendingManaToSprint = false;
@@ -359,10 +367,8 @@ public class Player extends Mortal implements java.io.Serializable {
         spacePressed = false;
     }
 
-    private boolean hadLocked = false;
-
     private void aimDispUpdate() {
-        if (orientationLocked && !hadLocked) {
+        if (orientationLocked && !lockedAimLastTick) {
             switch (orientation) {
                 case UP:
                     org.editLayer("+", layerName, 0, 1);
@@ -377,13 +383,13 @@ public class Player extends Mortal implements java.io.Serializable {
                     org.editLayer("+", layerName, 1, 2);
                     break;
             }
-            hadLocked = true;
-        } else if (!orientationLocked && hadLocked) {
+            lockedAimLastTick = true;
+        } else if (!orientationLocked && lockedAimLastTick) {
             org.editLayer(" ", layerName, 1, 0);
             org.editLayer(" ", layerName, 0, 1);
             org.editLayer(" ", layerName, 1, 2);
             org.editLayer(" ", layerName, 2, 1);
-            hadLocked = false;
+            lockedAimLastTick = false;
         }
     }
 
@@ -413,7 +419,6 @@ public class Player extends Mortal implements java.io.Serializable {
             return false;
         }
         org.terminateClock();
-        System.out.println("Running serialization test...");
         String path;
         JFileChooser chooser = new JFileChooser();
         chooser.setSelectedFile(new File(roomName + ".sav"));
@@ -434,12 +439,13 @@ public class Player extends Mortal implements java.io.Serializable {
         }
 
         try {
+            System.out.println("Valid output file specified; attempting serialization of gameInstance...");
             room.setObjsPause(true);
-            FileOutputStream fileOut =
-                    new FileOutputStream(path);
+            FileOutputStream fileOut = new FileOutputStream(path);
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
             System.out.println("Writing, please wait...");
             out.writeObject(gameInstance);
+            System.out.println("Written!");
             out.close();
             fileOut.close();
             System.out.printf("Serialized Player data is saved in " + path);
@@ -464,7 +470,7 @@ public class Player extends Mortal implements java.io.Serializable {
     }
 
     /**
-     * Increment variables relating to fab mode if needed.
+     * Increment variables relating to fabulous mode (colorful screen after eating some potions) if needed.
      */
     private void updateFabulousness() {
         if (fabulousMode) {
@@ -478,7 +484,7 @@ public class Player extends Mortal implements java.io.Serializable {
     }
 
     /**
-     * Update the Player symbol and all the graphic things
+     * Update the Player symbol and all the graphic things, like screen coloration for healing or hurting effects
      */
     private void graphicUpdate() {
         if (screenRedness > 0 || screenYellowness > 0) {
@@ -549,6 +555,10 @@ public class Player extends Mortal implements java.io.Serializable {
         return centeredY;
     }
 
+    /**
+     * Attempt to move in the world
+     * @param direction a magic int corresponding to up, down, left, or right
+     */
     private void move(int direction) {
         if (!paused.get()) {
             try {
@@ -610,7 +620,7 @@ public class Player extends Mortal implements java.io.Serializable {
         }
     }
 
-    //   Where the spell boost variables are used, the corresponding expression should be used instead. --Riley
+    //   Where the spell boost variables are used, maybe the corresponding expression should be used instead. --Riley
     void defineStats() {
         defense = armor.getEquipVals()[0] + weapon.getEquipVals()[0];
         armorHealthBoost = armor.getEquipVals()[1] + weapon.getEquipVals()[1];
@@ -634,27 +644,14 @@ public class Player extends Mortal implements java.io.Serializable {
      */
     void keyPressed(int key) {
         if (!frozen) {
-            if(key == keymap.BACK_PRIMARY || keymap.BACK_SECONDARY == key)                              {reportPos();}
-            else if(key == keymap.TURN_TYPE_HOLD_PRIMARY || keymap.TURN_TYPE_HOLD_SECONDARY == key)     {orientationLocked = !orientationLocked;}
-            else if(key == keymap.SPELL1_PRIMARY || keymap.SPELL1_SECONDARY == key)                     {newCastSpell(spell1);}
-            else if(key == keymap.SPELL2_PRIMARY || keymap.SPELL2_SECONDARY == key)                     {newCastSpell(spell2);}
-            else if(key == keymap.MENU_PRIMARY || keymap.MENU_SECONDARY == key)                         {shouldNewInv = true;}
-            else if(key == keymap.INTERACT_PRIMARY || keymap.INTERACT_SECONDARY == key)                 {textBoxQuery();}
-            else                                                                                    {System.out.print(key);}
+            if      (key == keymap.BACK_PRIMARY || keymap.BACK_SECONDARY == key)                       { reportPos(); }
+            else if (key == keymap.TURN_TYPE_HOLD_PRIMARY || keymap.TURN_TYPE_HOLD_SECONDARY == key)   { orientationLocked = !orientationLocked; }
+            else if (key == keymap.SPELL1_PRIMARY || keymap.SPELL1_SECONDARY == key)                   { newCastSpell(spell1); }
+            else if (key == keymap.SPELL2_PRIMARY || keymap.SPELL2_SECONDARY == key)                   { newCastSpell(spell2); }
+            else if (key == keymap.MENU_PRIMARY || keymap.MENU_SECONDARY == key)                       { shouldNewInv = true; }
+            else if (key == keymap.INTERACT_PRIMARY || keymap.INTERACT_SECONDARY == key)               { textBoxQuery(); }
+            else                                                                                       { System.out.print(key); }
             graphicUpdate();
-        }
-    }
-
-    void textBoxKeys(char key){
-        switch (Character.toLowerCase(key)) {
-            case '\n': // ESC right now, subject to change
-                if (textBox != null) textBox.receiveInput("end");
-                break;
-            case '\t': // ESC right now, subject to change
-                if (textBox != null) textBox.receiveInput("change");
-                break;
-            default:
-                System.out.print(key);
         }
     }
 
@@ -800,16 +797,16 @@ public class Player extends Mortal implements java.io.Serializable {
                 downPressed = true;
             } if (event.getKeyCode() == keymap.LEFT_PRIMARY || event.getKeyCode() == keymap.LEFT_SECONDARY) {
                 leftPressed = true;
-                textBoxKeys('\t');
+                if (textBox != null) textBox.receiveInput("change");
             } if (event.getKeyCode() == keymap.RIGHT_PRIMARY || event.getKeyCode() == keymap.RIGHT_SECONDARY) {
                 rightPressed = true;
-                textBoxKeys('\t');
+                if (textBox != null) textBox.receiveInput("change");
             } if (event.getKeyCode() == keymap.RUN_PRIMARY || event.getKeyCode() == keymap.RUN_SECONDARY) {
                 spacePressed = true;
             } if (event.getKeyCode() == keymap.BACK_PRIMARY || event.getKeyCode() == keymap.BACK_SECONDARY) {
                 keyPressed(event.getKeyCode());
             } if (event.getKeyCode() == keymap.CONFIRM_PRIMARY || event.getKeyCode() == keymap.CONFIRM_SECONDARY) {
-                textBoxKeys('\n');
+                if (textBox != null) textBox.receiveInput("end");
             } else {
                 keyPressed(event.getKeyCode());
             }
