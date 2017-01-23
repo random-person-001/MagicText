@@ -167,7 +167,6 @@ public class Player extends Mortal implements java.io.Serializable {
      * Set things up that don't get carried between saves, ex timers
      */
     public void resumeFromSave() {
-        //org.getWindow().txtArea.addKeyListener(new PlayerKeyPressListener(this)); // Add key listeners.
         //org.resetClock();
         hud.setupTimer();
     }
@@ -416,6 +415,7 @@ public class Player extends Mortal implements java.io.Serializable {
     public boolean saveGame() {
         if (gameInstance == null) {
             System.out.println("Player.gameInstance is null; cannot save");
+            room.splashMessage("Saving failed!", "Save Point", this);
             return false;
         }
         org.terminateClock();
@@ -435,6 +435,7 @@ public class Player extends Mortal implements java.io.Serializable {
             System.out.println("You chose to save the file to: " + path);
         } else {
             org.resetClock();
+            room.splashMessage("Saving failed!", "Save Point", this);
             return false;
         }
 
@@ -451,10 +452,12 @@ public class Player extends Mortal implements java.io.Serializable {
             System.out.printf("Serialized Player data is saved in " + path);
             room.setObjsPause(false);
             org.resetClock();
+            room.splashMessage("Saving successful!", "Save Point", this);
             return true;
         } catch (IOException | ConcurrentModificationException e) {
             e.printStackTrace();
             org.resetClock();
+            room.splashMessage("Saving failed!", "Save Point", this);
             return false;
         }
     }
