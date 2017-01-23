@@ -7,6 +7,7 @@ package SourceryText.Rooms.TheSource;
 
 import SourceryText.Art;
 import SourceryText.GameObjects.Player;
+import SourceryText.GameObjects.SavePoint;
 import SourceryText.GameObjects.TheSource.Spider;
 import SourceryText.Layer;
 import SourceryText.Rooms.Room;
@@ -79,6 +80,7 @@ public class SourcePit extends Room {
         Spider itsyBitsy = new Spider(this, 59, 30); // blocks way out.
         addMortal(itsyBitsy);
 
+        addSavePoint(113, 18);
     }
 
     @Override

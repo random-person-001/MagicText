@@ -1,14 +1,11 @@
 package SourceryText.Rooms.ForestOfFondant;
 
 import SourceryText.Art;
-import SourceryText.GameObjects.DroppedItem;
+import SourceryText.GameObjects.*;
 import SourceryText.GameObjects.ForestOfFondant.Alligator;
 import SourceryText.GameObjects.ForestOfFondant.FlammableTree;
-import SourceryText.GameObjects.Item;
-import SourceryText.GameObjects.Player;
 import SourceryText.GameObjects.TheSource.Bandit;
 import SourceryText.GameObjects.TheSource.SnowPatch;
-import SourceryText.GameObjects.WaterPool;
 import SourceryText.Layer;
 import SourceryText.Rooms.Room;
 import SourceryText.SpecialText;
@@ -60,10 +57,11 @@ public class FondantVillage extends Room {
 
     @Override
     public void addItems() {
+        addSavePoint(95, 37);
     }
 
     @Override
-    public void respondToQuestion (int qID, Player respondTo){
+    public void uniqueResponse(int qID, Player respondTo){
         if (qID == 1){
             setNewRoom("ShopTunnel", respondTo, 11, 41);
         }
@@ -172,7 +170,7 @@ public class FondantVillage extends Room {
 
         plantText(new FlavorText("There's a trapdoor hidden beneath the dirt.\n Drop through it?", true, 1), 112, 11);
 
-        //addItems();
+        addItems();
 
         WaterPool oceanShallow          = new WaterPool (this, forestBackground, "1", 1);
         WaterPool oceanDeeper           = new WaterPool (this, forestBackground, "2", 2);

@@ -78,6 +78,9 @@ public class BanditFortress extends Room {
 
         OneWayDoor bunkerEntrance = new OneWayDoor(true, 94, 60, this, org);
         addObject(bunkerEntrance);
+
+        addSavePoint(129, 63);
+        addSavePoint(65, 8);
     }
 
     @Override

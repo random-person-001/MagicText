@@ -404,7 +404,7 @@ public class Player extends Mortal implements java.io.Serializable {
      *
      * @return whether the saving was successful
      */
-    boolean saveGame() {
+    public boolean saveGame() {
         if (gameInstance == null) {
             System.out.println("Player.gameInstance is null; cannot save");
             return false;
@@ -431,6 +431,7 @@ public class Player extends Mortal implements java.io.Serializable {
         }
 
         try {
+            room.setObjsPause(true);
             FileOutputStream fileOut =
                     new FileOutputStream(path);
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
@@ -439,6 +440,7 @@ public class Player extends Mortal implements java.io.Serializable {
             out.close();
             fileOut.close();
             System.out.printf("Serialized Player data is saved in " + path);
+            room.setObjsPause(false);
             org.resetClock();
             return true;
         } catch (IOException | ConcurrentModificationException e) {

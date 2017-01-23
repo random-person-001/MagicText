@@ -19,6 +19,8 @@ public class TextBox extends GameObject {
     private boolean choosingYes = false;
     private int questionID = 0;
 
+    private GameObject specialRecipient;
+
     String layerName = "";
     
     private String text;

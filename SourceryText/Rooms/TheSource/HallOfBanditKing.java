@@ -136,7 +136,7 @@ public class HallOfBanditKing extends Room {
     }
 
     @Override
-    public void respondToQuestion(int qID, Player respondTo) {
+    public void uniqueResponse(int qID, Player respondTo) {
         if (qID == 0) {
             FallingBeehive wheee = new FallingBeehive(this, 37, 2);
             addObject(wheee);

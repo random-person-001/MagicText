@@ -85,6 +85,8 @@ public class SourceCaves extends Room {
         furCoat.setEquipvals(0, 5, 0, 0, 0, 0, 0, "armor");
         DroppedItem dCoat = new DroppedItem(this, "You found... a fur coat? In a cave?", furCoat, 413, 3);
         addObject(dCoat);
+
+        addSavePoint(200, 13);
     }
 
     @Override
