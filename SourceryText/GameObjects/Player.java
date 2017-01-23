@@ -15,6 +15,7 @@
 package SourceryText.GameObjects;
 
 import SourceryText.*;
+import SourceryText.GameSettings.KeyMap;
 import SourceryText.Rooms.Room;
 
 import javax.swing.*;
@@ -39,6 +40,7 @@ public class Player extends Mortal implements java.io.Serializable {
     private String username = System.getProperty("user.name");
     private Inventory inv;
     private HUD hud;
+    private KeyMap keymap;
     private NetworkServer networkServer; // Only used in multiplayer
     private boolean hasLocalWindow;
     public java.util.List<Room.FlavorText> messageQueue = new ArrayList<>();
@@ -115,7 +117,7 @@ public class Player extends Mortal implements java.io.Serializable {
      *
      * @param theOrg the ImageOrg(anizer)
      */
-    public Player(GameInstance gameInstance, ImageOrg theOrg, int playerNumber) {
+    public Player(GameInstance gameInstance, ImageOrg theOrg, int playerNumber, KeyMap keymap) {
         this.gameInstance = gameInstance;
         hasLocalWindow = (playerNumber == 0);
         setHealth(baseMaxHP);
@@ -135,6 +137,7 @@ public class Player extends Mortal implements java.io.Serializable {
         hud.setOrg(org);
         setupTimer(20);
         //resumeFromSave();
+        this.keymap = keymap;
     }
 
     /**
@@ -627,38 +630,15 @@ public class Player extends Mortal implements java.io.Serializable {
      *
      * @param key a character that was pressed on the leopard
      */
-    void keyPressed(char key) {
+    void keyPressed(int key) {
         if (!frozen) {
-            switch (Character.toLowerCase(key)) {
-                case '\'': // ESC right now, subject to change
-                    reportPos();
-                    break;
-                case 'a':
-                    orientationLocked = !orientationLocked;
-                    break;
-                case 's':
-                    newCastSpell(spell1);
-                    break;
-                case 'd':
-                    newCastSpell(spell2);
-                    break;
-                case '1':
-                    //testSpell1();
-                    break;
-                case 'w':
-                    shouldNewInv = true;
-                    break;
-                case 'q':
-                    reportPos();
-                    break;
-                case 'f':
-                    textBoxQuery();
-                    break;
-                case 'h':
-                    System.out.println(room.getCountOf("HUD"));
-                default:
-                    System.out.print(key);
-            }
+            if(key == keymap.BACK_PRIMARY || keymap.BACK_SECONDARY == key)                              {reportPos();}
+            else if(key == keymap.TURN_TYPE_HOLD_PRIMARY || keymap.TURN_TYPE_HOLD_SECONDARY == key)     {orientationLocked = !orientationLocked;}
+            else if(key == keymap.SPELL1_PRIMARY || keymap.SPELL1_SECONDARY == key)                     {newCastSpell(spell1);}
+            else if(key == keymap.SPELL2_PRIMARY || keymap.SPELL2_SECONDARY == key)                     {newCastSpell(spell2);}
+            else if(key == keymap.MENU_PRIMARY || keymap.MENU_SECONDARY == key)                         {shouldNewInv = true;}
+            else if(key == keymap.INTERACT_PRIMARY || keymap.INTERACT_SECONDARY == key)                 {textBoxQuery();}
+            else                                                                                    {System.out.print(key);}
             graphicUpdate();
         }
     }
@@ -812,40 +792,40 @@ public class Player extends Mortal implements java.io.Serializable {
      */
     public void fireKeyEvent(KeyEvent event) {
         if (event.toString().contains("KEY_PRESSED")) {
-            if (event.getKeyCode() == KeyEvent.VK_UP) {
+            if (event.getKeyCode() == keymap.UP_PRIMARY || event.getKeyCode() == keymap.UP_SECONDARY) {
                 upPressed = true;
-            } else if (event.getKeyCode() == KeyEvent.VK_DOWN) {
+            } if (event.getKeyCode() == keymap.DOWN_PRIMARY || event.getKeyCode() == keymap.DOWN_SECONDARY) {
                 downPressed = true;
-            } else if (event.getKeyCode() == KeyEvent.VK_LEFT) {
+            } if (event.getKeyCode() == keymap.LEFT_PRIMARY || event.getKeyCode() == keymap.LEFT_SECONDARY) {
                 leftPressed = true;
                 textBoxKeys('\t');
-            } else if (event.getKeyCode() == KeyEvent.VK_RIGHT) {
+            } if (event.getKeyCode() == keymap.RIGHT_PRIMARY || event.getKeyCode() == keymap.RIGHT_SECONDARY) {
                 rightPressed = true;
                 textBoxKeys('\t');
-            } else if (event.getKeyCode() == KeyEvent.VK_SPACE) {
+            } if (event.getKeyCode() == keymap.RUN_PRIMARY || event.getKeyCode() == keymap.RUN_SECONDARY) {
                 spacePressed = true;
-            } else if (event.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                keyPressed('\'');
-            } else if (event.getKeyCode() == KeyEvent.VK_ENTER) {
+            } if (event.getKeyCode() == keymap.BACK_PRIMARY || event.getKeyCode() == keymap.BACK_SECONDARY) {
+                keyPressed(event.getKeyCode());
+            } if (event.getKeyCode() == keymap.CONFIRM_PRIMARY || event.getKeyCode() == keymap.CONFIRM_SECONDARY) {
                 textBoxKeys('\n');
             } else {
-                keyPressed(event.getKeyChar());
+                keyPressed(event.getKeyCode());
             }
             if (room != null) { // Player is sometimes initialized for a bit before being placed into the room
-                inv.fireKeyEvent(event);
-                room.fireKeyEvent(event);
+                inv.fireKeyEvent(event, keymap);
+                room.fireKeyEvent(event, keymap);
                 hud.fireKeyEvent(event);
             }
         } else if (event.toString().contains("KEY_RELEASED")) {
-            if (event.getKeyCode() == KeyEvent.VK_UP) {
+            if (event.getKeyCode() == keymap.UP_PRIMARY || event.getKeyCode() == keymap.UP_SECONDARY) {
                 upPressed = false;
-            } else if (event.getKeyCode() == KeyEvent.VK_DOWN) {
+            } if (event.getKeyCode() == keymap.DOWN_PRIMARY || event.getKeyCode() == keymap.DOWN_SECONDARY) {
                 downPressed = false;
-            } else if (event.getKeyCode() == KeyEvent.VK_LEFT) {
+            } if (event.getKeyCode() == keymap.LEFT_PRIMARY || event.getKeyCode() == keymap.LEFT_SECONDARY) {
                 leftPressed = false;
-            } else if (event.getKeyCode() == KeyEvent.VK_RIGHT) {
+            } if (event.getKeyCode() == keymap.RIGHT_PRIMARY || event.getKeyCode() == keymap.RIGHT_SECONDARY) {
                 rightPressed = false;
-            } else if (event.getKeyCode() == KeyEvent.VK_SPACE) {
+            } if (event.getKeyCode() == keymap.RUN_PRIMARY || event.getKeyCode() == keymap.RUN_SECONDARY) {
                 spacePressed = false;
             }
         }

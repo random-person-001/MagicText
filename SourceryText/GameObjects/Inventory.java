@@ -1,6 +1,7 @@
 package SourceryText.GameObjects;
 
 import SourceryText.Art;
+import SourceryText.GameSettings.KeyMap;
 import SourceryText.ImageOrg;
 import SourceryText.Layer;
 import SourceryText.SpecialText;
@@ -24,6 +25,7 @@ class Inventory implements java.io.Serializable {
 
     private Player player;
     private ImageOrg org;
+    private KeyMap keymap;
     private Timer timer = new Timer("InventoryTimer");
     //Cursor stuff
     private int cursorY = 2;
@@ -838,38 +840,39 @@ class Inventory implements java.io.Serializable {
     }
 
 
-    void fireKeyEvent(KeyEvent event) {
+    void fireKeyEvent(KeyEvent event, KeyMap keymap) {
+        this.keymap = keymap;
         if (!inCmdLine) {
             int key = event.getKeyCode();
-            if (key == KeyEvent.VK_UP) {
+            if (key == keymap.UP_PRIMARY || key == keymap.UP_SECONDARY) {
                 keyPressed('↑');
             }
-            if (key == KeyEvent.VK_DOWN) {
+            else if (key == keymap.DOWN_PRIMARY || key == keymap.DOWN_SECONDARY) {
                 keyPressed('↓');
             }
-            if (key == KeyEvent.VK_LEFT) {
+            else if (key == keymap.LEFT_PRIMARY || key == keymap.LEFT_SECONDARY) {
                 keyPressed('←');
             }
-            if (key == KeyEvent.VK_RIGHT) {
+            else if (key == keymap.RIGHT_PRIMARY || key == keymap.RIGHT_SECONDARY) {
                 keyPressed('→');
             }
-            if (Character.isDigit(event.getKeyChar())) {
-                keyPressed(event.getKeyChar());
-            }
-            if (key == 'A' || key == KeyEvent.VK_ENTER) {
+            else if (key == keymap.CONFIRM_PRIMARY || key == keymap.CONFIRM_SECONDARY) {
                 pressedA = true;
             }
-            if (key == 'S') {
+            else if (key == keymap.SPELL1_PRIMARY || key == keymap.SPELL1_SECONDARY) {
                 pressedS = true;
             }
-            if (key == 'D') {
+            else if (key == keymap.SPELL2_PRIMARY || key == keymap.SPELL2_SECONDARY) {
                 pressedD = true;
             }
-            if (key == '\\') {
+            else if (key == '\\') {
                 System.out.println(getY());
             }
-            if (key == KeyEvent.VK_ESCAPE || event.getKeyChar() == 'w') {
+            else if (key == keymap.MENU_PRIMARY || key == keymap.MENU_SECONDARY) {
                 exitAllMenus();
+            }
+            else if (Character.isDigit(event.getKeyChar())) {
+                keyPressed(event.getKeyChar());
             }
         }
     }

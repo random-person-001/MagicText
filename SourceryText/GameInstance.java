@@ -135,7 +135,7 @@ public class GameInstance implements java.io.Serializable {
      * @return a new instance of Player, all set up to go!
      */
     Player requestNewPlayer() {
-        Player noob = new Player(this, playerList.get(0).org, playerList.size());
+        Player noob = new Player(this, playerList.get(0).org, playerList.size(), null);
         noob.frozen = false;
         noob.roomName = "TutorialBasement";
         playerList.add(noob);

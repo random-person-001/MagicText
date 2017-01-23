@@ -10,6 +10,7 @@ import SourceryText.GameObjects.DroppedItem;
 import SourceryText.GameObjects.Item;
 import SourceryText.GameObjects.Player;
 import SourceryText.GameObjects.TheSource.CauldronPuzzle;
+import SourceryText.GameSettings.KeyMap;
 import SourceryText.Layer;
 import SourceryText.Rooms.Room;
 import SourceryText.SpecialText;
@@ -25,6 +26,8 @@ import java.awt.event.KeyEvent;
 
 
 public class WitchHut extends Room {
+
+    private KeyMap keymap;
 
     public WitchHut(Player player) {
         super(player);
@@ -134,19 +137,18 @@ public class WitchHut extends Room {
     private CauldronPuzzle puzzler = null;
 
     @Override
-    public void fireKeyEvent(KeyEvent event) {
+    public void fireKeyEvent(KeyEvent event, KeyMap keymap) {
+        this.keymap = keymap;
         genericKeyEvent(event);
         if (puzzler != null) {
-            switch (event.getKeyCode()){
-                case KeyEvent.VK_ENTER:
+                if(event.getKeyCode() == keymap.CONFIRM_PRIMARY || event.getKeyCode() == keymap.CONFIRM_SECONDARY) {
                     puzzler.getInput("enter");
-                    break;
-                case KeyEvent.VK_UP:
+                }
+                else if(event.getKeyCode() == keymap.UP_PRIMARY || event.getKeyCode() == keymap.UP_SECONDARY) {
                     puzzler.getInput("up");
-                    break;
-                case KeyEvent.VK_DOWN:
+                }
+                else if(event.getKeyCode() == keymap.DOWN_PRIMARY || event.getKeyCode() == keymap.DOWN_SECONDARY) {
                     puzzler.getInput("down");
-                    break;
             }
         }
     }

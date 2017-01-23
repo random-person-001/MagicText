@@ -3,6 +3,7 @@ package SourceryText.UserScreens;
 import SourceryText.*;
 import SourceryText.GameObjects.Player;
 import SourceryText.GameObjects.PlayerKeyPressListener;
+import SourceryText.GameSettings.KeyMap;
 import SourceryText.Window;
 
 import java.awt.*;
@@ -20,12 +21,12 @@ public class StartMethods {
         this.org = org;
     }
 
-    void newGame(int numPlayers) {
+    void newGame(int numPlayers, KeyMap keymap) {
         System.out.println("[-]\n\\/\\/\\/\\/\\/\\/\\\n  CREATING NEW GAME\n\\/\\/\\/\\/\\/\\/\\\n");
         if (numPlayers < 1) {
             return;
         }
-        Player player = new Player(null, org, 0);
+        Player player = new Player(null, org, 0, keymap);
         player.roomName = "TutorialBasement";
         GameInstance master = new GameInstance(player);
         player.setGameInstance(master);

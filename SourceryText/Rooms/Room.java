@@ -7,6 +7,7 @@ package SourceryText.Rooms;
 
 import SourceryText.Art;
 import SourceryText.GameObjects.*;
+import SourceryText.GameSettings.KeyMap;
 import SourceryText.ImageOrg;
 import SourceryText.Layer;
 import SourceryText.SpecialText;
@@ -38,6 +39,8 @@ public class Room implements java.io.Serializable {
     private ArrayList<InteractableEnvironment> interactableEnvironmentObjects = new ArrayList<>(); // things that should be notified on a spell going somewhere
 
     public Player playo = null;
+
+    private KeyMap keymap;
 
     public int roomWidth;
     public int roomHeight;
@@ -692,18 +695,20 @@ public class Room implements java.io.Serializable {
     }
 
     protected void genericKeyEvent (KeyEvent event){
-        if (event.getKeyCode() == KeyEvent.VK_ESCAPE) {
+        if (event.getKeyCode() == keymap.BACK_PRIMARY || event.getKeyCode() == keymap.BACK_SECONDARY) {
             resume = true;
         }
-        if (event.getKeyCode() == KeyEvent.VK_ENTER) {
+        if (event.getKeyCode() == keymap.CONFIRM_PRIMARY || event.getKeyCode() == keymap.CONFIRM_SECONDARY) {
             resume = true;
         }
-        if (event.getKeyCode() == KeyEvent.VK_LEFT || event.getKeyCode() == KeyEvent.VK_RIGHT) {
+        if (event.getKeyCode() == keymap.LEFT_PRIMARY || event.getKeyCode() == keymap.LEFT_SECONDARY ||
+            event.getKeyCode() == keymap.RIGHT_PRIMARY || event.getKeyCode() == keymap.RIGHT_SECONDARY) {
             changingAnswer = true;
         }
     }
 
-    public void fireKeyEvent(KeyEvent event) {
+    public void fireKeyEvent(KeyEvent event, KeyMap keymap) {
+        this.keymap = keymap;
         genericKeyEvent(event);
     }
 

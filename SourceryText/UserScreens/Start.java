@@ -23,7 +23,7 @@ public class Start {
         ImageOrg org = new ImageOrg(game);
 
         if (doDemo) {
-            Player player = new Player(null, org, 0);
+            Player player = new Player(null, org, 0, null);
             player.goTo(4, 4);
             NewTestRoom rooma = new NewTestRoom(player);
             org.removeAllButPlayer();

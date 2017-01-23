@@ -63,6 +63,7 @@ public class Art implements java.io.Serializable{
             "|   |  +--  |   |         New Game           |\n" +
             "|   |  |   / \\  |         Multiplayer        |\n" +
             "|   |  +-- | |  |         Load Game          |\n" +
+            "|                         Settings           |\n" +
             "|                         Quit               |\n" +
             "|                                            |\n" +
             "|                                            |\n" +
@@ -77,8 +78,67 @@ public class Art implements java.io.Serializable{
             "|                                            |\n" +
             "|                                            |\n" +
             "|                                            |\n" +
-            "|                                            |\n" +
             "|                                            |\n";
+
+    public String settingsMenu =
+            "@                                            @\n" +
+            "|                                            |\n" +
+            "|              S E T T I N G S               |\n" +
+            "|                                            |\n" +
+            "|                                            |\n" +
+            "|                   α     Controls           |\n" +
+            "|                         Main Menu          |\n" +
+            "|                                            |\n" +
+            "|                                            |\n" +
+            "|                                            |\n" +
+            "|                                            |\n" +
+            "|                                            |\n" +
+            "|                                            |\n" +
+            "|                                            |\n" +
+            "|                                            |\n" +
+            "|                                            |\n" +
+            "|                                            |\n" +
+            "|                                            |\n" +
+            "|                                            |\n" +
+            "|                                            |\n" +
+            "|                                            |\n" +
+            "|                                            |\n" +
+            "|                                            |\n" +
+            "|                                            |\n" +
+            "|                                            |\n" +
+            "|                                            |\n" +
+            "|                                            |\n" +
+            "@                                            @\n";
+
+    public String controlsMenu =
+            "@              C O N T R O L S               @\n" +
+            "|   Profile                                  |\n" +
+            "|                  Mapping   |   1   |   2   |\n" +
+            "|   up                       |       |       |\n" +
+            "|   left                     |       |       |\n" +
+            "|   down                     |       |       |\n" +
+            "|   right                    |       |       |\n" +
+            "|   turn clockwise           |       |       |\n" +
+            "|   turn anticlockwise       |       |       |\n" +
+            "|   turn-type (toggle)       |       |       |\n" +
+            "|   turn-type (hold)         |       |       |\n" +
+            "|   display direction (toggle)       |       |\n" +
+            "|   run                      |       |       |\n" +
+            "|   spell 1                  |       |       |\n" +
+            "|   spell 2                  |       |       |\n" +
+            "|   interact                 |       |       |\n" +
+            "|   menu                     |       |       |\n" +
+            "|   continue/select          |       |       |\n" +
+            "|   back/deselect            |       |       |\n" +
+            "|                                            |\n" +
+            "|   Settings                                 |\n" +
+            "|                                            |\n" +
+            "|  @--------------------------------------@  |\n" +
+            "|  |                                      |  |\n" +
+            "|  |                                      |  |\n" +
+            "|  |                                      |  |\n" +
+            "|  @--------------------------------------@  |\n" +
+            "@                                            @\n";
 
     public String multiplayerMenu =
             "@                                            @\n" +

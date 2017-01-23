@@ -292,8 +292,11 @@ public class ImageOrg implements java.io.Serializable {
      * @param x         the X coordinate which you want to change something at
      */
     public void editLayer(String input, String layerName, int y, int x) {
-        SpecialText translate = new SpecialText(input);
-        editLayer(translate, layerName, y, x);
+        for(int i = 0; i<input.length(); i++)
+        {
+            SpecialText translate = new SpecialText(input.substring(i,i+1));
+            editLayer(translate, layerName, y, x+i);
+        }
     }
 
     /**

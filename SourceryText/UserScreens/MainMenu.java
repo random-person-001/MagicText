@@ -2,6 +2,10 @@ package SourceryText.UserScreens;
 
 import SourceryText.Art;
 import SourceryText.GameInstance;
+import SourceryText.GameSettings.KeyMap;
+import SourceryText.GameSettings.MetaSettings;
+import SourceryText.GameSettings.Settings;
+import SourceryText.GameSettings.SettingsIO;
 import SourceryText.ImageOrg;
 import SourceryText.Layer;
 
@@ -30,13 +34,24 @@ class MainMenu {
     private final int TOP_MENU = 0;
     private final int MULTIPLAYER_MENU = 1;
     private final int IP_ENTERING_MENU = 2;
-    private final int EXIT_MENU = 4;
+    private final int SETTINGS_MENU = 3;
+    private final int CONTROLS_MENU = 4;
+    private final int EXIT_MENU = 5;
 
     private int menuID = TOP_MENU;
     private char keyChar = ' ';
     private String ipString = "192.168.0.";
     private int cursorY = 9;
+    private int cursorX = 2;
     private int ipSetXPos = 11 + 10;
+    private boolean mapping = false;
+    private int namingI = -1;
+    private String newName = "";
+    private String[] presets;
+    private int presetI = 0;
+    private KeyMap keymap = new KeyMap();
+    private MetaSettings metasettings = new MetaSettings();
+    private SettingsIO saveORload = new SettingsIO();
 
     MainMenu(ImageOrg orgo) {
         org = orgo;
@@ -50,6 +65,21 @@ class MainMenu {
         Layer menuLayer = new Layer(Art.strToArray(artida.mainMenu, true), "MAIN_MENU");
         org.addLayer(menuLayer);
         waitAMomentAndUpdateCursor();
+
+        presets = saveORload.getFileNames(keymap);
+        for (int i=0;i<presets.length;i++) {
+            if (presets[i] == metasettings.DEFAULT_KEYMAP) {
+                presetI = i;
+                break;
+            }
+        }
+        for (int i=0;i<presets.length;i++) {
+            if (presets[i] == metasettings.USER_KEYMAP) {
+                presetI = i;
+                break;
+            }
+        }
+        keymap = (KeyMap) saveORload.loadSettings(keymap, presets[presetI]);
     }
 
     private void onEnterPressedDuringTop() {
@@ -61,11 +91,11 @@ class MainMenu {
         if (cursorY == 8) {
             starter.doIntro();
         }
-        if (cursorY == 9) {
+        else if (cursorY == 9) {
             System.out.println("\n\nNEW GAME!!!\n\n");
-            starter.newGame(1);
+            starter.newGame(1, keymap);
         }
-        if (cursorY == 10) {
+        else if (cursorY == 10) {
             Layer multiplayerLayer = new Layer(Art.strToArray(new Art().multiplayerMenu), "MULTIPLAYER_MENU");
             org.addLayer(multiplayerLayer);
             window.txtArea.addKeyListener(keyInputter); // Cuz we removed it before
@@ -73,7 +103,7 @@ class MainMenu {
             cursorY = 9;
             waitAMomentAndUpdateCursor();
         }
-        if (cursorY == 11) {
+        else if (cursorY == 11) {
             if (loadGame()) {
                 System.out.println("success!");
             } else {
@@ -83,7 +113,15 @@ class MainMenu {
                 waitAMomentAndUpdateCursor();
             }
         }
-        if (cursorY == 12) {
+        else if (cursorY == 12) {
+            Layer settingsLayer = new Layer(Art.strToArray(new Art().settingsMenu), "SETTINGS_MENU");
+            org.addLayer(settingsLayer);
+            window.txtArea.addKeyListener(keyInputter); // Cuz we removed it before
+            menuID = SETTINGS_MENU;
+            cursorY = 5;
+            waitAMomentAndUpdateCursor();
+        }
+        else if (cursorY == 13) {
             System.exit(0);
         }
     }
@@ -91,6 +129,7 @@ class MainMenu {
 
     private void onPressArrow() {
         int oldCursorY = cursorY;
+        int oldCursorX = cursorX;
         switch (keyCode) {
             case UP:
                 cursorY--;
@@ -104,7 +143,7 @@ class MainMenu {
         switch (menuID) {
             case TOP_MENU:
                 org.editLayer(" ", "MAIN_MENU", oldCursorY, 24);
-                loopAtMenuEnd(8, 12);
+                loopAtMenuEnd(8, 13);
                 org.editLayer("*", "MAIN_MENU", cursorY, 24);
                 break;
             case MULTIPLAYER_MENU:
@@ -116,6 +155,20 @@ class MainMenu {
                 org.editLayer(" ", "MULTIPLAYER_MENU", oldCursorY, 10);
                 loopAtMenuEnd(10, 13);
                 org.editLayer("*", "MULTIPLAYER_MENU", cursorY, 10);
+                break;
+            case SETTINGS_MENU:
+                org.editLayer(" ", "SETTINGS_MENU", oldCursorY, 24);
+                loopAtMenuEnd(5, 6);
+                org.editLayer("*", "SETTINGS_MENU", cursorY, 24);
+                break;
+            case CONTROLS_MENU:
+                if(cursorY==2 || cursorY==19)       {cursorY+=cursorY-oldCursorY;}
+                org.editLayer(" ", "CONTROLS_MENU", oldCursorY, oldCursorX);
+                loopAtMenuEnd(1, 20);
+                if(cursorY==1 || cursorY==20)       {cursorX=2;}
+                else if(cursorX==2)                 {cursorX=30;}
+                org.editLayer("*", "CONTROLS_MENU", cursorY, cursorX);
+                writeDescription();
                 break;
             case EXIT_MENU:
                 System.out.println("You have pressed a button while exiting.");
@@ -159,7 +212,7 @@ class MainMenu {
             org.removeLayer("MULTIPLAYER_MENU");
             window.txtArea.removeKeyListener(keyInputter);
             System.out.println("New multiplayer game made!");
-            starter.newGame(2);
+            starter.newGame(2, keymap);
         }
         if (cursorY == 6) { //Jumps to ip address submenu
             org.editLayer(" ", "MULTIPLAYER_MENU", cursorY, 24);
@@ -213,14 +266,184 @@ class MainMenu {
     }
 
     /**
+     * Generally, when a key is pressed during the control mapping menu, call this.
+     *
+     * @param event the KeyEvent generated
+     */
+    private void onKeyPressedDuringControls(KeyEvent event) {
+        if(cursorY==20){return;}
+        int keyCode = event.getKeyCode();
+        if(mapping) {
+            org.editLayer(new String(new char[6]).replace("\0", " "), "CONTROLS_MENU", cursorY, cursorX+1);
+            org.editLayer(keymap.getKeyText(keyCode), "CONTROLS_MENU", cursorY, cursorX+1);
+            int ordinal = cursorX==30 ? 1 : 2;
+            keymap.setMap(cursorY-3, ordinal, keyCode);
+            mapping = false;
+            return;
+        }
+        switch(keyCode) {
+            case KeyEvent.VK_LEFT:
+                if(cursorY==1) {
+                    org.editLayer(new String(new char[32]).replace("\0", " "), "CONTROLS_MENU", 1, 13);
+                    presetI = presetI==0 ? presets.length-1 : presetI-1;
+                    keymap = (KeyMap) saveORload.loadSettings(keymap, presets[presetI]);
+                    org.editLayer(presets[presetI], "CONTROLS_MENU", 1, 13);
+                    for(int action=0; action<=15;action++){
+                        for(int ordinal=1; ordinal<=2; ordinal++) {
+                            int k = keymap.getMap(action, ordinal);
+                            org.editLayer(new String(new char[6]).replace("\0", " "), "CONTROLS_MENU", action+3, 31+(ordinal-1)*8);
+                            org.editLayer(k!=-1 ? keymap.getKeyText(k) : "", "CONTROLS_MENU", action+3, 31+(ordinal-1)*8);
+                        }
+                    }
+                }
+                else {
+                    cursorX=30;
+                    org.editLayer(" ", "CONTROLS_MENU", cursorY, 38);
+                    org.editLayer("*", "CONTROLS_MENU", cursorY, 30);
+                }
+                break;
+            case KeyEvent.VK_RIGHT:
+                if(cursorY==1) {
+                    org.editLayer(new String(new char[32]).replace("\0", " "), "CONTROLS_MENU", 1, 13);
+                    presetI = presetI==presets.length-1 ? 0 : presetI+1;
+                    keymap = (KeyMap) saveORload.loadSettings(keymap, presets[presetI]);
+                    org.editLayer(presets[presetI], "CONTROLS_MENU", 1, 13);
+                    for(int action=0; action<=15;action++){
+                        for(int ordinal=1; ordinal<=2; ordinal++) {
+                            int k = keymap.getMap(action, ordinal);
+                            org.editLayer(new String(new char[6]).replace("\0", " "), "CONTROLS_MENU", action+3, 31+(ordinal-1)*8);
+                            org.editLayer(k!=-1 ? keymap.getKeyText(k) : "", "CONTROLS_MENU", action+3, 31+(ordinal-1)*8);
+                        }
+                    }
+                }
+                else {
+                    cursorX=38;
+                    org.editLayer(" ", "CONTROLS_MENU", cursorY, 30);
+                    org.editLayer("*", "CONTROLS_MENU", cursorY, 38);
+                }
+                break;
+            case KeyEvent.VK_BACK_SPACE:
+                if(cursorY==1 && namingI>-1) {
+                    org.editLayer(" ", "CONTROLS_MENU", 1, 13+namingI);
+                    namingI--;
+                    newName = newName.substring(0,newName.length()-1);
+                    if(namingI==-1) {
+                        newName = "";
+                        org.editLayer(presets[presetI],"CONTROLS_MENU", 1, 13);
+                    }
+                }
+            default:
+                if(cursorY==1 && event.getKeyText(keyCode).length()==1) {
+                    if(namingI==-1)     {org.editLayer(new String(new char[32]).replace("\0", " "), "CONTROLS_MENU", 1, 13);}
+                    namingI++;
+                    org.editLayer(event.getKeyText(keyCode), "CONTROLS_MENU", 1, 13+namingI);
+                    newName+=event.getKeyText(keyCode);
+                }
+        }
+    }
+
+    //writes descriptions of menu items in the box at the bottom of the controls menu
+    private void writeDescription() {
+        org.editLayer(new String(new char[38]).replace("\0", " "), "CONTROLS_MENU", 23, 4);
+        org.editLayer(new String(new char[38]).replace("\0", " "), "CONTROLS_MENU", 24, 4);
+        org.editLayer(new String(new char[38]).replace("\0", " "), "CONTROLS_MENU", 25, 4);
+        if(cursorY==1){
+            org.editLayer("press left or right to change presets", "CONTROLS_MENU", 23, 4);
+            org.editLayer("type name to create a new profile", "CONTROLS_MENU", 24, 4);
+            org.editLayer("press enter to save", "CONTROLS_MENU", 25, 4);
+        }
+        else if(cursorY==20) {
+            org.editLayer("press enter to exit to settings", "CONTROLS_MENU", 23, 4);
+            org.editLayer("", "CONTROLS_MENU", 24, 4);
+            org.editLayer("", "CONTROLS_MENU", 25, 4);
+        }
+        else{
+            org.editLayer(keymap.getActionDescription(cursorY - 3)[0], "CONTROLS_MENU", 23, 4);
+            org.editLayer(keymap.getActionDescription(cursorY - 3)[1], "CONTROLS_MENU", 24, 4);
+            org.editLayer(keymap.getActionDescription(cursorY - 3)[2], "CONTROLS_MENU", 25, 4);
+        }
+    }
+
+    /**
+     * Flow control and code to execute when, during the Settings menu, the enter key is pressed
+     */
+    private void onEnterPressedDuringSettings() {
+        if (cursorY == 5) { //to control menu
+            org.editLayer(" ", "SETTINGS_MENU", cursorY, 24);
+            org.removeLayer("SETTINGS_MENU");
+            System.out.println("Entering controls menu");
+            menuID = CONTROLS_MENU;
+            org.addLayer(new Layer(Art.strToArray(new Art().controlsMenu, true), "CONTROLS_MENU"));
+            cursorY = 1;
+            waitAMomentAndUpdateCursor();
+            org.editLayer(presets[presetI], "CONTROLS_MENU", 1, 13);
+            for(int action=0; action<=15;action++){
+                for(int ordinal=1; ordinal<=2; ordinal++) {
+                    int k = keymap.getMap(action, ordinal);
+                    org.editLayer(k!=-1 ? keymap.getKeyText(k) : "", "CONTROLS_MENU", action+3, 31+(ordinal-1)*8);
+                }
+            }
+        }
+        else if (cursorY == 6) { //back to main menu
+            saveORload.saveSettings(metasettings, metasettings.FILE_NAME);
+            org.editLayer(" ", "SETTINGS_MENU", cursorY, 24);
+            org.removeLayer("SETTINGS_MENU");
+            System.out.println("Returning to main menu");
+            menuID = TOP_MENU;
+            org.addLayer(new Layer(Art.strToArray(new Art().mainMenu, true), "MAIN_MENU"));
+            cursorY = 12;
+            waitAMomentAndUpdateCursor();
+        }
+    }
+
+    /**
+     * Flow control and code to execute when, during the Settings menu, the enter key is pressed
+     */
+    private void onEnterPressedDuringControls() {
+        if (cursorY == 1) {
+            String name = newName!="" ? newName : presets[presetI] ;
+            for (int i=0;i<metasettings.OVERITE_PROTECTED_KEYMAPS.length;i++) {
+                if(name.equals(metasettings.OVERITE_PROTECTED_KEYMAPS[i]))        {return;}
+            }
+            saveORload.saveSettings(keymap, newName);
+            newName = "";
+            namingI = 0;
+            presetI = -1;
+            presets = saveORload.getFileNames(keymap);
+            for (int i=0;i<presets.length;i++) {
+                if (presets[i].equals(name)) {
+                    presetI = i;
+                    break;
+                }
+            }
+        }
+        else if (cursorY == 20) { //back to settings menu
+            metasettings.USER_KEYMAP = presets[presetI];
+            org.editLayer(" ", "CONTROLS_MENU", cursorY, 24);
+            org.removeLayer("CONTROLS_MENU");
+            System.out.println("Returning to settings menu");
+            menuID = SETTINGS_MENU;
+            org.addLayer(new Layer(Art.strToArray(new Art().settingsMenu, true), "SETTINGS_MENU"));
+            cursorY = 5;
+            waitAMomentAndUpdateCursor();
+        }
+        else{
+            mapping = true;
+        }
+    }
+    /**
      * Generic case for pressing enter; splits flow off into the different methods according to whether in multiplayer
      * menu or not.
      */
     private void onEnterPressed() {
         if (menuID == TOP_MENU) {
             onEnterPressedDuringTop();
-        } else {
+        } else if(menuID == MULTIPLAYER_MENU) {
             onEnterPressedDuringMultiplayer();
+        } else if(menuID == SETTINGS_MENU) {
+            onEnterPressedDuringSettings();
+        } else if(menuID == CONTROLS_MENU){
+            onEnterPressedDuringControls();
         }
     }
 
@@ -232,6 +455,8 @@ class MainMenu {
     private void onGenericKeyPressed(KeyEvent e) {
         if (menuID == IP_ENTERING_MENU) {
             onKeyPressedDuringIP(e);
+        } else if (menuID == CONTROLS_MENU){
+            onKeyPressedDuringControls(e);
         }
     }
 
@@ -283,6 +508,7 @@ class MainMenu {
         @Override
         public void keyPressed(KeyEvent e) {
             int input = e.getKeyCode();
+            if(mapping)     {onGenericKeyPressed(e);    return;}
             switch (input) {
                 case KeyEvent.VK_UP:
                     keyCode = UP;
