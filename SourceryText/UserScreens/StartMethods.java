@@ -58,17 +58,15 @@ public class StartMethods {
 
     void doIntro() {
         System.out.println("Starting intro...");
-        (new Thread() {
-            public void run() {
-                try {
-                    intro();
-                    System.out.println("Intro finished.");
-                    new MainMenu(org);
-                } catch (InterruptedException e) {
-                    System.out.println("Intro interrupted.");
-                }
+        (new Thread(() -> {
+            try {
+                intro();
+                System.out.println("Intro finished.");
+                new MainMenu(org);
+            } catch (InterruptedException e) {
+                System.out.println("Intro interrupted.");
             }
-        }).start(); // I think this should be the only thread in the program at this point, all others should have fallen through
+        })).start(); // I think this should be the only thread in the program at this point, all others should have fallen through
     }
 
     void doNetworkClient(String serverName) {
