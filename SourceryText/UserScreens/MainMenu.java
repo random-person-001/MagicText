@@ -64,8 +64,8 @@ class MainMenu {
         Art artida = new Art();
         Layer menuLayer = new Layer(Art.strToArray(artida.mainMenu, true), "MAIN_MENU");
         org.addLayer(menuLayer);
-        waitAMomentAndUpdateCursor();
 
+        metasettings = (MetaSettings) saveORload.loadSettings(metasettings, metasettings.FILE_NAME);
         presets = saveORload.getFileNames(keymap);
         for (int i=0;i<presets.length;i++) {
             if (presets[i] == metasettings.DEFAULT_KEYMAP) {
@@ -74,12 +74,13 @@ class MainMenu {
             }
         }
         for (int i=0;i<presets.length;i++) {
-            if (presets[i] == metasettings.USER_KEYMAP) {
+            if (presets[i].equals(metasettings.USER_KEYMAP)) {
                 presetI = i;
                 break;
             }
         }
         keymap = (KeyMap) saveORload.loadSettings(keymap, presets[presetI]);
+        waitAMomentAndUpdateCursor();
     }
 
     private void onEnterPressedDuringTop() {
@@ -405,7 +406,7 @@ class MainMenu {
             for (int i=0;i<metasettings.OVERITE_PROTECTED_KEYMAPS.length;i++) {
                 if(name.equals(metasettings.OVERITE_PROTECTED_KEYMAPS[i]))        {return;}
             }
-            saveORload.saveSettings(keymap, newName);
+            saveORload.saveSettings(keymap, newName!="" ? newName : presets[presetI]);
             newName = "";
             namingI = 0;
             presetI = -1;
