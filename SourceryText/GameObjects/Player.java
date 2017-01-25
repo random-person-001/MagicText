@@ -169,6 +169,7 @@ public class Player extends Mortal implements java.io.Serializable {
     public void resumeFromSave() {
         //org.resetClock();
         hud.setupTimer();
+        inv.rebuildTimer();
     }
 
     public String getUsername() {
@@ -291,9 +292,9 @@ public class Player extends Mortal implements java.io.Serializable {
             }
 
             resetTime(); // time is used for mana regen and spell burnout.
-            graphicUpdate();
             aimDispUpdate();
             doMovement();
+            graphicUpdate();
         }
     }
 
@@ -367,7 +368,7 @@ public class Player extends Mortal implements java.io.Serializable {
     }
 
     private void aimDispUpdate() {
-        if (orientationLocked && !lockedAimLastTick) {
+        if (orientationLocked) {
             switch (orientation) {
                 case UP:
                     org.editLayer("+", layerName, 0, 1);
@@ -383,7 +384,7 @@ public class Player extends Mortal implements java.io.Serializable {
                     break;
             }
             lockedAimLastTick = true;
-        } else if (!orientationLocked && lockedAimLastTick) {
+        } else {
             org.editLayer(" ", layerName, 1, 0);
             org.editLayer(" ", layerName, 0, 1);
             org.editLayer(" ", layerName, 1, 2);
@@ -442,6 +443,7 @@ public class Player extends Mortal implements java.io.Serializable {
         try {
             System.out.println("Valid output file specified; attempting serialization of gameInstance...");
             room.setObjsPause(true);
+            inv.cancelTimer();
             FileOutputStream fileOut = new FileOutputStream(path);
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
             System.out.println("Writing, please wait...");
@@ -452,6 +454,7 @@ public class Player extends Mortal implements java.io.Serializable {
             System.out.printf("Serialized Player data is saved in " + path);
             room.setObjsPause(false);
             org.resetClock();
+            inv.rebuildTimer();
             room.splashMessage("Saving successful!", "Save Point", this);
             return true;
         } catch (IOException | ConcurrentModificationException e) {
@@ -647,13 +650,16 @@ public class Player extends Mortal implements java.io.Serializable {
      */
     void keyPressed(int key) {
         if (!frozen) {
-            if      (key == keymap.BACK_PRIMARY || keymap.BACK_SECONDARY == key)                       { reportPos(); }
-            else if (key == keymap.TURN_TYPE_HOLD_PRIMARY || keymap.TURN_TYPE_HOLD_SECONDARY == key)   { orientationLocked = !orientationLocked; }
-            else if (key == keymap.SPELL1_PRIMARY || keymap.SPELL1_SECONDARY == key)                   { newCastSpell(spell1); }
-            else if (key == keymap.SPELL2_PRIMARY || keymap.SPELL2_SECONDARY == key)                   { newCastSpell(spell2); }
-            else if (key == keymap.MENU_PRIMARY || keymap.MENU_SECONDARY == key)                       { shouldNewInv = true; }
-            else if (key == keymap.INTERACT_PRIMARY || keymap.INTERACT_SECONDARY == key)               { textBoxQuery(); }
-            else                                                                                       { System.out.print(key); }
+            if      (key == keymap.BACK_PRIMARY || keymap.BACK_SECONDARY == key)                           { reportPos(); }
+            else if (key == keymap.TURN_TYPE_TOGGLE_PRIMARY || keymap.TURN_TYPE_TOGGLE_SECONDARY == key)   {
+                orientationLocked = !orientationLocked;
+                System.out.println("Aim-lock toggle!");
+            }
+            else if (key == keymap.SPELL1_PRIMARY || keymap.SPELL1_SECONDARY == key)                       { newCastSpell(spell1); }
+            else if (key == keymap.SPELL2_PRIMARY || keymap.SPELL2_SECONDARY == key)                       { newCastSpell(spell2); }
+            else if (key == keymap.MENU_PRIMARY || keymap.MENU_SECONDARY == key)                           { shouldNewInv = true; }
+            else if (key == keymap.INTERACT_PRIMARY || keymap.INTERACT_SECONDARY == key)                   { textBoxQuery(); }
+            else                                                                                           { System.out.print(key); }
             graphicUpdate();
         }
     }
@@ -806,6 +812,8 @@ public class Player extends Mortal implements java.io.Serializable {
                 if (textBox != null) textBox.receiveInput("change");
             } if (event.getKeyCode() == keymap.RUN_PRIMARY || event.getKeyCode() == keymap.RUN_SECONDARY) {
                 spacePressed = true;
+            } if (event.getKeyCode() == keymap.TURN_TYPE_HOLD_PRIMARY || event.getKeyCode() == keymap.TURN_TYPE_HOLD_SECONDARY) {
+                orientationLocked = true;
             } if (event.getKeyCode() == keymap.BACK_PRIMARY || event.getKeyCode() == keymap.BACK_SECONDARY) {
                 keyPressed(event.getKeyCode());
             } if (event.getKeyCode() == keymap.CONFIRM_PRIMARY || event.getKeyCode() == keymap.CONFIRM_SECONDARY) {
@@ -829,6 +837,8 @@ public class Player extends Mortal implements java.io.Serializable {
                 rightPressed = false;
             } if (event.getKeyCode() == keymap.RUN_PRIMARY || event.getKeyCode() == keymap.RUN_SECONDARY) {
                 spacePressed = false;
+            } if (event.getKeyCode() == keymap.TURN_TYPE_HOLD_PRIMARY || event.getKeyCode() == keymap.TURN_TYPE_HOLD_SECONDARY) {
+                orientationLocked = false;
             }
         }
         if (frozen){

@@ -122,7 +122,7 @@ public class Art implements java.io.Serializable{
             "|   turn anticlockwise       |       |       |\n" +
             "|   turn-type (toggle)       |       |       |\n" +
             "|   turn-type (hold)         |       |       |\n" +
-            "|   display direction (toggle)       |       |\n" +
+            "|   toggle aim display       |       |       |\n" +
             "|   run                      |       |       |\n" +
             "|   spell 1                  |       |       |\n" +
             "|   spell 2                  |       |       |\n" +

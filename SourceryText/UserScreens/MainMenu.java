@@ -349,14 +349,14 @@ class MainMenu {
         org.editLayer(new String(new char[38]).replace("\0", " "), "CONTROLS_MENU", 24, 4);
         org.editLayer(new String(new char[38]).replace("\0", " "), "CONTROLS_MENU", 25, 4);
         if(cursorY==1){
-            org.editLayer("press left or right to change presets", "CONTROLS_MENU", 23, 4);
-            org.editLayer("type name to create a new profile", "CONTROLS_MENU", 24, 4);
-            org.editLayer("press enter to save", "CONTROLS_MENU", 25, 4);
+            org.editLayer("Press left or right to change presets", "CONTROLS_MENU", 23, 4);
+            org.editLayer("Type name to create a new profile", "CONTROLS_MENU", 24, 4);
+            org.editLayer("Press enter to save", "CONTROLS_MENU", 25, 4);
         }
         else if(cursorY==20) {
-            org.editLayer("press enter to exit to settings", "CONTROLS_MENU", 23, 4);
-            org.editLayer("", "CONTROLS_MENU", 24, 4);
-            org.editLayer("", "CONTROLS_MENU", 25, 4);
+            org.editLayer("Press enter to exit to settings", "CONTROLS_MENU", 23, 4);
+            org.editLayer("(Note: this doesn't save your", "CONTROLS_MENU", 24, 4);
+            org.editLayer("changes!)", "CONTROLS_MENU", 25, 4);
         }
         else{
             org.editLayer(keymap.getActionDescription(cursorY - 3)[0], "CONTROLS_MENU", 23, 4);
