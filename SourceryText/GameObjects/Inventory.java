@@ -120,6 +120,8 @@ class Inventory implements java.io.Serializable {
 
         player.armor = equip.get(0);
         player.defineStats();
+
+        rebuildTimer();
     }
 
     private void submenuColoring(Layer toColor) {
@@ -373,6 +375,10 @@ class Inventory implements java.io.Serializable {
             timer.cancel();
             timer.purge();
         }
+    }
+
+    void rebuildTimer() {
+        timer = new Timer("InventoryTimer");
     }
 
     /**
