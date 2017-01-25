@@ -42,7 +42,7 @@ public class SpecialText implements java.io.Serializable {
     }
 
     public boolean isSignificant() {
-        return !("".equals(self) || " ".equals(self) || self == null) || !backgroundColor.equals(Color.BLACK);
+        return !("".equals(self) || " ".equals(self) || self == null) || !(new Color(backgroundColor.getRGB(), false).equals(Color.BLACK));
     }
 
     /**
