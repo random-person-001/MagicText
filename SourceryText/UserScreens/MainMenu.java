@@ -282,6 +282,12 @@ class MainMenu {
             mapping = false;
             return;
         }
+        else if(keyCode == KeyEvent.VK_DELETE) {
+            org.editLayer(new String(new char[6]).replace("\0", " "), "CONTROLS_MENU", cursorY, cursorX+1);
+            int ordinal = cursorX==30 ? 1 : 2;
+            keymap.setMap(cursorY-3, ordinal, -1);
+            return;
+        }
         switch(keyCode) {
             case KeyEvent.VK_LEFT:
                 if(cursorY==1) {
