@@ -77,7 +77,7 @@ public class Cliffbottom extends Room {
         Item perriwinkle = new Item("wrinkleInTime", "Distorts spacetime in a \n bubble around you, so \n nearby entities slow down \n in your perception of time", "item");
         perriwinkle.setDuration(60 * 1000);
         perriwinkle.setSpellType("potion");
-        super.addObject(new DroppedItem(this, "Oooh, lucky! You found a potion that locally \n distorts spacetime.", perriwinkle, 64, 57));
+        super.addObject(new DroppedItem(this, "Oooh, lucky! You found a potion that locally \n distorts spacetime.", perriwinkle, 72, 59));
 
     }
 
