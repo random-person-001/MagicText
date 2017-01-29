@@ -107,6 +107,12 @@ public class SourceCaves extends Room {
 
         org.addLayer(lay1);
 
+        String[][] fogStr = Art.strToArray(arty.aura2);
+        Layer fog = new Layer(fogStr, "fog");
+        fog.findAndReplace(new SpecialText("#"), new SpecialText(null, null, new Color(34, 255, 2, 147)));
+        org.addLayer(fog);
+
+
         initHitMeshes(lay1);
         String[] solids = {"#", "H", "-"};
         addToBaseHitMesh(base, solids);

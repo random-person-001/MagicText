@@ -11,7 +11,6 @@ import java.awt.*;
  * Created by Jared on 25-Dec-16.
  */
 public class TextBox extends GameObject {
-    
     private Player viewer;
     private boolean showing = false;
 

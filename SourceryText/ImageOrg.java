@@ -7,6 +7,7 @@ package SourceryText;
 
 import SourceryText.GameObjects.Player;
 
+import javax.naming.OperationNotSupportedException;
 import java.awt.*;
 import java.util.*;
 
@@ -428,6 +429,7 @@ public class ImageOrg implements java.io.Serializable {
             } else {
                 //System.out.println("[ImageOrg " + orgSerial + "] TopDownBuild on " + defaultPlayer.getUsername());
                 fullImage = topDownBuild(defaultPlayer);
+                //System.out.println(fullImage.getStr());
             }
             window.build(fullImage);
         } catch (ConcurrentModificationException e) {
@@ -483,6 +485,9 @@ public class ImageOrg implements java.io.Serializable {
         int maxW = screenW(); //Equals 46
         for (int row = 0; row < maxH; row++) { //Iterates over every coordinate of the screen
             for (int col = 0; col < maxW; col++) {
+                Color colorFilterSoFar = new Color(0,0,0,0); // Instead of keeping an arbitrarily large-sized array of
+                // translucent colors, it's more efficient just have one that is influenced with translucent layer we look at.
+                String characterHere = null;
                 for (int ii = allLayers.size(); ii > 0; ii--) { //At each coordinate, goes through all layers until an opaque space is found
                     Layer layer = allLayers.get(ii - 1);
                     if (layer != null) {
@@ -497,23 +502,50 @@ public class ImageOrg implements java.io.Serializable {
                         if (found.isSignificant() && (layer.getRelaventPlayerUsername() == null || layer.getRelaventPlayerUsername().equals(owningPlayerUsername))) { //If the SpecialText isn't blank
                             if ("ñ".equals(input)) { //If space found was opaque
                                 fullImage.setSpecTxt(row, col, new SpecialText(" ", Color.WHITE, found.getBackgroundColor()));
+                                ii = 0; //Ends search at the coordinate and moves onto the next coordinate
                             } else { //Otherwise, place found SpecialText
-                                SpecialText toPlace = new SpecialText(found.getStr(), found.foregroundColor, found.backgroundColor);
-                                if (foregroundColor != null && foregroundColor != Color.WHITE) {
-                                    toPlace.setInfluencedForegroundColor(foregroundColor);
+                                if (found.backgroundColor != Color.black){
+                                    colorFilterSoFar = blendColors(found.backgroundColor, colorFilterSoFar);
+                                    System.out.println(colorFilterSoFar.toString());
                                 }
-                                if (fabulousMode && Math.abs((row + col) - fabulousLocIndex) <= 7) { // Fabulous mode accommodations
-                                    toPlace.setInfluencedForegroundColor(fabulousColorWheel[fabulousColorIndex]);
+                                if (input != null) {
+                                    if (characterHere == null){ // if this is the first string we see at this coord, remember it
+                                        characterHere = input;
+                                    }
+                                    SpecialText toPlace = new SpecialText(characterHere, found.foregroundColor, colorFilterSoFar);
+                                    if (foregroundColor != null && foregroundColor != Color.WHITE) {
+                                        toPlace.setInfluencedForegroundColor(foregroundColor);
+                                    }
+                                    if (fabulousMode && Math.abs((row + col) - fabulousLocIndex) <= 7) { // Fabulous mode accommodations
+                                        toPlace.setInfluencedForegroundColor(fabulousColorWheel[fabulousColorIndex]);
+                                    }
+                                    fullImage.setSpecTxt(row, col, toPlace);
+                                    ii = 0; //Ends search at the coordinate and moves onto the next coordinate
                                 }
-                                fullImage.setSpecTxt(row, col, toPlace);
                             }
-                            ii = 0; //Ends search at the coordinate and moves onto the next coordinate
                         }
                     }
                 }
             }
         }
         return fullImage;
+    }
+
+    /**
+     * Mix colors!       N O T   D O N E   Y E T !  todo resultant color alpha
+     * @param filter
+     * @param destination
+     * @return
+     */
+    private Color blendColors(Color filter, Color destination) {
+        float alpha = filter.getAlpha()/255 * destination.getAlpha() / 255;
+        int r = (int) (filter.getRed() * alpha + destination.getRed() * alpha);
+        int g = (int) (filter.getGreen() * alpha + destination.getGreen() * alpha);
+        int b = (int) (filter.getBlue() * alpha + destination.getBlue() * alpha);
+        int newAlpha = 255;
+
+        //return new Color(r,g,b,newAlpha);
+        return destination;
     }
 
 

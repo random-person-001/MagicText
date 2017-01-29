@@ -405,4 +405,8 @@ public class Layer implements java.io.Serializable {
     public void setX(int x) {
         xPos = x;
     }
+
+    public boolean isOpaque() {
+        return opaque;
+    }
 }

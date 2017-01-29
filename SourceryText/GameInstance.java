@@ -177,7 +177,6 @@ public class GameInstance implements java.io.Serializable {
 
         rooms.forEach((s, room) -> room.startup());
         rooms.forEach((s, room) -> room.setObjsPause(true));
-        //System.out.println("[GameInstance] no classes are specified yet in initializeZone2Rooms(): Bad things will happen");
         return rooms;
     }
 
