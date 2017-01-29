@@ -19,10 +19,26 @@ public class ColoredTextMatrix extends JPanel {
     private int CHAR_SIZE = 15;
     private int HOR_MARGIN = 0;
 
-    ColoredTextMatrix() {
+    private boolean sizeFixed = false;
+    private int fixedX = 100;
+    private int fixedY = 100;
+
+    public ColoredTextMatrix() {
         setOpaque(true);
         setFocusable(true);
         recalculate();
+        setFont(new Font("Monospaced", Font.PLAIN, CHAR_SIZE));
+        addComponentListener(new ComponentResizeListener());
+    }
+
+    public ColoredTextMatrix(int setX, int setY) {
+        setOpaque(true);
+        setFocusable(true);
+        setSize(setX, setY);
+        fixedX = setX;
+        fixedY = setY;
+        recalculate();
+        sizeFixed = true;
         setFont(new Font("Monospaced", Font.PLAIN, CHAR_SIZE));
         addComponentListener(new ComponentResizeListener());
     }
@@ -35,10 +51,8 @@ public class ColoredTextMatrix extends JPanel {
          */
         @Override
         public void componentResized(ComponentEvent e) {
-            //System.out.println("Window resized!");
-            recalculate();
-            //String message = "w=" + getWidth() + " h=" + getHeight();
-            //System.out.println(message);
+            if (!sizeFixed)
+                recalculate();
         }
 
         // These aren't important; it refused to run by throwing errors until I implemented these.
@@ -59,12 +73,15 @@ public class ColoredTextMatrix extends JPanel {
      * Recalculate all of the display stuff, to call during window resizing (when it changes)
      */
     private void recalculate() {
-        HOR_SEPARATION = getWidth() / 46; //Calculates horizontal and vertical separation of the letters
-        VER_SEPARATION = (getHeight() / 28); //Intentionally wrong
+        int width = (sizeFixed) ? fixedX : getWidth();
+        int height = (sizeFixed) ? fixedY : getHeight();
+
+        HOR_SEPARATION = width / 46; //Calculates horizontal and vertical separation of the letters
+        VER_SEPARATION = (height / 28); //Intentionally wrong
         int adjustedVerSep = (int) ((float) VER_SEPARATION * (9f / 15)); //Adjusts horizontal separation if too big for vertical.
         if (HOR_SEPARATION > adjustedVerSep) {
             HOR_SEPARATION = adjustedVerSep;
-            HOR_MARGIN = (getWidth() - (HOR_SEPARATION * 46)) / 2; //Sets a margin to center display in the screen
+            HOR_MARGIN = (width - (HOR_SEPARATION * 46)) / 2; //Sets a margin to center display in the screen
         } else {
             HOR_MARGIN = 0;
         }
@@ -79,8 +96,10 @@ public class ColoredTextMatrix extends JPanel {
     @Override
     public void paintComponent(Graphics g) {
         //float startTime = System.currentTimeMillis();
+        int width = (sizeFixed) ? fixedX : getWidth();
+        int height = (sizeFixed) ? fixedY : getHeight();
         g.setColor(Color.BLACK);
-        g.fillRect(0, 0, getWidth(), getHeight());
+        g.fillRect(0, 0, width, height);
 
         //recalculate(); // See the difference it makes by uncommenting - my unscientific methods measured around a thirdish difference
 
@@ -108,8 +127,8 @@ public class ColoredTextMatrix extends JPanel {
             int secondX = HOR_MARGIN + (HOR_SEPARATION * 46);
             int marginColor = (marginDisplayTimer < 15) ? marginDisplayTimer * 3 : 45;
             g.setColor(new Color(marginColor, marginColor, marginColor));
-            g.drawLine(HOR_MARGIN - 1, 0, HOR_MARGIN - 1, getHeight());
-            g.drawLine(secondX, 0, secondX, getHeight());
+            g.drawLine(HOR_MARGIN - 1, 0, HOR_MARGIN - 1, height);
+            g.drawLine(secondX, 0, secondX, height);
             marginDisplayTimer--;
         }
     }
