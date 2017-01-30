@@ -14,8 +14,6 @@ public class EditorFrame extends JFrame {
     public ColoredTextMatrix viewMatrix;
     public EditorToolbar toolbar;
 
-
-
     private Container c = getContentPane();
 
     public SpecialText selectedSpecialText;
@@ -48,6 +46,7 @@ public class EditorFrame extends JFrame {
         toolbar = new EditorToolbar(0, 572, 510);
 
         c.add(toolbar);
+
         c.validate();
 
         repaintComponents();
