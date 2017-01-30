@@ -109,7 +109,7 @@ public class SourceCaves extends Room {
 
         String[][] fogStr = Art.strToArray(arty.aura2);
         Layer fog = new Layer(fogStr, "fog");
-        fog.findAndReplace(new SpecialText("#"), new SpecialText(null, null, new Color(34, 255, 2, 147)));
+        fog.findAndReplace(new SpecialText("#"), new SpecialText(".", Color.CYAN, new Color(34, 255, 2, 10)));
         org.addLayer(fog);
 
 
