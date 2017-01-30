@@ -488,6 +488,7 @@ public class ImageOrg implements java.io.Serializable {
                 Color colorFilterSoFar = new Color(0,0,0,0); // Instead of keeping an arbitrarily large-sized array of
                 // translucent colors, it's more efficient just have one that is influenced with translucent layer we look at.
                 String characterHere = null;
+                Color characterHereColor = null;
                 for (int ii = allLayers.size(); ii > 0; ii--) { //At each coordinate, goes through all layers until an opaque space is found
                     Layer layer = allLayers.get(ii - 1);
                     if (layer != null) {
@@ -500,29 +501,39 @@ public class ImageOrg implements java.io.Serializable {
                         SpecialText found = layer.getSpecTxt(xPos, yPos); //Gets SpecialText from derived layer coordinate
                         String input = found.getStr(); //Gets string from SpecialText to make code easier to read
                         if (found.isSignificant() && (layer.getRelaventPlayerUsername() == null || layer.getRelaventPlayerUsername().equals(owningPlayerUsername))) { //If the SpecialText isn't blank
-                            if ("ñ".equals(input)) { //If space found was opaque
-                                fullImage.setSpecTxt(row, col, new SpecialText(" ", Color.WHITE, found.getBackgroundColor()));
-                                ii = 0; //Ends search at the coordinate and moves onto the next coordinate
-                            } else { //Otherwise, place found SpecialText
-                                if (found.backgroundColor != Color.black){
-                                    colorFilterSoFar = blendColors(found.backgroundColor, colorFilterSoFar);
-                                    System.out.println(colorFilterSoFar.toString());
-                                }
-                                if (input != null) {
-                                    if (characterHere == null){ // if this is the first string we see at this coord, remember it
-                                        characterHere = input;
-                                    }
-                                    SpecialText toPlace = new SpecialText(characterHere, found.foregroundColor, colorFilterSoFar);
-                                    if (foregroundColor != null && foregroundColor != Color.WHITE) {
-                                        toPlace.setInfluencedForegroundColor(foregroundColor);
-                                    }
-                                    if (fabulousMode && Math.abs((row + col) - fabulousLocIndex) <= 7) { // Fabulous mode accommodations
-                                        toPlace.setInfluencedForegroundColor(fabulousColorWheel[fabulousColorIndex]);
-                                    }
-                                    fullImage.setSpecTxt(row, col, toPlace);
-                                    ii = 0; //Ends search at the coordinate and moves onto the next coordinate
-                                }
+                            //place found SpecialText
+                            if (!found.backgroundColor.equals(Color.black)){
+                                colorFilterSoFar = blendColors(found.backgroundColor, colorFilterSoFar);
+                                System.out.println(colorFilterSoFar.toString());
+
                             }
+                            if (colorFilterSoFar.getAlpha() == 255){
+                                ii = 0;
+                            }
+                            if (input != null && characterHere == null) { // if this is the first string we see at this coord, remember it
+                                characterHere = input;
+                                characterHereColor = found.foregroundColor;
+                            }
+                            if ("ñ".equals(input)) { //If space found was opaque
+                                characterHere = " ";
+                                characterHereColor = Color.white;
+                                ii = 0; //Ends search at the coordinate and moves onto the next coordinate
+                            }
+                            if (ii == 0){
+                                if (characterHere == null){
+                                    characterHere = " ";
+                                    characterHereColor = Color.white;
+                                }
+                                SpecialText toPlace = new SpecialText(characterHere, characterHereColor, colorFilterSoFar);
+                                if (foregroundColor != null && foregroundColor != Color.WHITE) {
+                                    toPlace.setInfluencedForegroundColor(foregroundColor);
+                                }
+                                if (fabulousMode && Math.abs((row + col) - fabulousLocIndex) <= 7) { // Fabulous mode accommodations
+                                    toPlace.setInfluencedForegroundColor(fabulousColorWheel[fabulousColorIndex]);
+                                }
+                                fullImage.setSpecTxt(row, col, toPlace);
+                            }
+
                         }
                     }
                 }
@@ -533,19 +544,21 @@ public class ImageOrg implements java.io.Serializable {
 
     /**
      * Mix colors!       N O T   D O N E   Y E T !  todo resultant color alpha
+     * About the resultant alpha: it should be greater than either of the input alphas, unless the inputs were both zero,
+     * when it'd be zero, or either input was 255, in which case it should be that.
      * @param filter
      * @param destination
      * @return
      */
     private Color blendColors(Color filter, Color destination) {
-        float alpha = filter.getAlpha()/255 * destination.getAlpha() / 255;
-        int r = (int) (filter.getRed() * alpha + destination.getRed() * alpha);
-        int g = (int) (filter.getGreen() * alpha + destination.getGreen() * alpha);
-        int b = (int) (filter.getBlue() * alpha + destination.getBlue() * alpha);
+        float alpha = filter.getAlpha()/255;
+        int r = (int) (filter.getRed() * alpha + destination.getRed() * (1-alpha));
+        int g = (int) (filter.getGreen() * alpha + destination.getGreen() * (1-alpha));
+        int b = (int) (filter.getBlue() * alpha + destination.getBlue() * (1-alpha));
         int newAlpha = 255;
 
-        //return new Color(r,g,b,newAlpha);
-        return destination;
+        return new Color(r,g,b,newAlpha);
+        //return destination;
     }
 
 
