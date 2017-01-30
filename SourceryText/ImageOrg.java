@@ -510,7 +510,7 @@ public class ImageOrg implements java.io.Serializable {
                 if (found.isSignificant() && (layer.getRelaventPlayerUsername() == null || layer.getRelaventPlayerUsername().equals(owningPlayerUsername))) { //If the SpecialText isn't blank
                     //place found SpecialText
                     if (!found.backgroundColor.equals(Color.black)){
-                        colorFilterSoFar = blendColors(found.backgroundColor, colorFilterSoFar);
+                        colorFilterSoFar = blendColors(colorFilterSoFar, found.backgroundColor);
                     }
                     if (colorFilterSoFar.getAlpha() == 255){
                         ii = 0;
@@ -537,6 +537,9 @@ public class ImageOrg implements java.io.Serializable {
         if (colorFilterSoFar.getAlpha() == 0){
             colorFilterSoFar = Color.black;
         }
+        else if (colorFilterSoFar.getAlpha() != 255){
+            System.out.println("Final background alpha: 0 < a < 255  |  a = " + colorFilterSoFar.getAlpha());
+        }
         SpecialText toPlace = new SpecialText(characterHere, characterHereColor, colorFilterSoFar);
         if (foregroundColor != null && foregroundColor != Color.WHITE) {
             toPlace.setInfluencedForegroundColor(foregroundColor);
@@ -548,22 +551,21 @@ public class ImageOrg implements java.io.Serializable {
     }
 
     /**
-     * Mix colors!       N O T   D O N E   Y E T !  todo resultant color alpha
-     * About the resultant alpha: it should be greater than either of the input alphas, unless the inputs were both zero,
-     * when it'd be zero, or either input was 255, in which case it should be that.
-     * @param filter
-     * @param destination
-     * @return
+     * Mix colors, supporting Alpha!
+     * @param filter a Color that is to be placed on top of the ...
+     * @param destination a Color, behind the other, to be blended onto
+     * @return the blended, mushed up combination of the two
      */
     private Color blendColors(Color filter, Color destination) {
-        float alpha = filter.getAlpha()/255;
-        int r = (int) (filter.getRed() * alpha + destination.getRed() * (1-alpha));
-        int g = (int) (filter.getGreen() * alpha + destination.getGreen() * (1-alpha));
-        int b = (int) (filter.getBlue() * alpha + destination.getBlue() * (1-alpha));
-        int newAlpha = 255;
+        float filterAlphaPercent = (float)(filter.getAlpha()) / (float)(filter.getAlpha() + destination.getAlpha());
+        int r = (int) ((filter.getRed() * (filterAlphaPercent) + destination.getRed() * (1-filterAlphaPercent)));
+        int g = (int) ((filter.getGreen() * (filterAlphaPercent) + destination.getGreen() * (1-filterAlphaPercent)));
+        int b = (int) (filter.getBlue() * filterAlphaPercent + destination.getBlue() * (1-filterAlphaPercent));
+        float filterAlpha = (float)(filter.getAlpha())/255f;
+        float destAlpha = (float)(destination.getAlpha())/255f;
+        int newAlpha = (int) (255 * (filterAlpha + destAlpha - filterAlpha*destAlpha));  // Kudos to Nathan for this equation
 
         return new Color(r,g,b,newAlpha);
-        //return destination;
     }
 
 
