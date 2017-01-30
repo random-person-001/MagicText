@@ -534,11 +534,11 @@ public class Player extends Mortal implements java.io.Serializable {
             playerIcon = new SpecialText("@", new Color(150, 255, 100));
         else {
             if (waterEntry == 2)
-                playerIcon = new SpecialText("u", new Color(255, 255, 255), new Color(70, 70, 200));
+                playerIcon = new SpecialText("u", new Color(255, 255, 255));
             else if (waterEntry == 1) {
-                playerIcon = new SpecialText("Y", new Color(255, 255, 255), new Color(70, 70, 200));
+                playerIcon = new SpecialText("Y", new Color(255, 255, 255));
             } else
-                playerIcon = new SpecialText("@", new Color(100, 150, 255), new Color(65, 65, 200));
+                playerIcon = new SpecialText("@", new Color(100, 150, 255));
         }
         org.editLayer(playerIcon, layerName, 1, 1);
         Layer iconLayer = org.getLayer(layerName);
