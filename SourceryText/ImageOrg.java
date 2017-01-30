@@ -504,13 +504,11 @@ public class ImageOrg implements java.io.Serializable {
                             //place found SpecialText
                             if (!found.backgroundColor.equals(Color.black)){
                                 colorFilterSoFar = blendColors(found.backgroundColor, colorFilterSoFar);
-                                System.out.println(colorFilterSoFar.toString());
-
                             }
                             if (colorFilterSoFar.getAlpha() == 255){
                                 ii = 0;
                             }
-                            if (input != null && characterHere == null) { // if this is the first string we see at this coord, remember it
+                            if (input != null && input != "" && characterHere == null) { // if this is the first string we see at this coord, remember it
                                 characterHere = input;
                                 characterHereColor = found.foregroundColor;
                             }
@@ -519,24 +517,27 @@ public class ImageOrg implements java.io.Serializable {
                                 characterHereColor = Color.white;
                                 ii = 0; //Ends search at the coordinate and moves onto the next coordinate
                             }
-                            if (ii == 0){
-                                if (characterHere == null){
-                                    characterHere = " ";
-                                    characterHereColor = Color.white;
-                                }
-                                SpecialText toPlace = new SpecialText(characterHere, characterHereColor, colorFilterSoFar);
-                                if (foregroundColor != null && foregroundColor != Color.WHITE) {
-                                    toPlace.setInfluencedForegroundColor(foregroundColor);
-                                }
-                                if (fabulousMode && Math.abs((row + col) - fabulousLocIndex) <= 7) { // Fabulous mode accommodations
-                                    toPlace.setInfluencedForegroundColor(fabulousColorWheel[fabulousColorIndex]);
-                                }
-                                fullImage.setSpecTxt(row, col, toPlace);
+                            if (layer.isOpaque()){
+                                ii = 0;
                             }
-
                         }
                     }
                 }
+                if (characterHere == null){
+                    characterHere = " ";
+                    characterHereColor = Color.white;
+                }
+                if (colorFilterSoFar.getAlpha() == 0){
+                    colorFilterSoFar = Color.black;
+                }
+                SpecialText toPlace = new SpecialText(characterHere, characterHereColor, colorFilterSoFar);
+                if (foregroundColor != null && foregroundColor != Color.WHITE) {
+                    toPlace.setInfluencedForegroundColor(foregroundColor);
+                }
+                if (fabulousMode && Math.abs((row + col) - fabulousLocIndex) <= 7) { // Fabulous mode accommodations
+                    toPlace.setInfluencedForegroundColor(fabulousColorWheel[fabulousColorIndex]);
+                }
+                fullImage.setSpecTxt(row, col, toPlace);
             }
         }
         return fullImage;
