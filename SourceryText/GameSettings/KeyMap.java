@@ -329,7 +329,7 @@ public class KeyMap implements Settings{
             case KeyEvent.VK_KP_UP: return "KPUP";
             case KeyEvent.VK_L: return "L";
             case KeyEvent.VK_LEFT: return "LEFT";
-            case KeyEvent.VK_LEFT_PARENTHESIS: return ")";
+            case KeyEvent.VK_LEFT_PARENTHESIS: return "(";
             case KeyEvent.VK_LESS: return "<";
             case KeyEvent.VK_M: return "M";
             case KeyEvent.VK_META: return "META";
