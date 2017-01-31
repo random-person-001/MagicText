@@ -135,7 +135,7 @@ public class Room implements java.io.Serializable {
     }
 
     /**
-     * Thing to be called at the end of enter() after things are done.  Needs work for multiplayer.
+     * Thing to be called at the end of enter() after things are done.
      *
      * @param player a Player that left
      * @param exit   the String of what room they're trying to go to now.
@@ -154,6 +154,17 @@ public class Room implements java.io.Serializable {
             org.terminateClock();
             setObjsPause(true);
         }
+    }
+
+    /**
+     * Forcably make a player exit the room, whether the player wanted to or not (independant of normal stuff) (used to
+     * make resuming from save work well)
+     *
+     * @param player a Player to leave
+     * @param exit   the String of what room they shall go to now.
+     */
+    public void makePlayerExitRoom(Player player, String exit){
+        takeCareOfPlayerLeavingRoom(player, exit);
     }
 
     public void setNewRoom(String newID, Player player, int playerY, int playerX) {
