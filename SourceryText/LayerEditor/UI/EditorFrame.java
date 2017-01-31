@@ -50,6 +50,8 @@ public class EditorFrame extends JFrame {
         c.validate();
 
         repaintComponents();
+
+        SpecialTextMaker testMaker = new SpecialTextMaker();
     }
 
     protected void repaintComponents(){
