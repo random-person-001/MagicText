@@ -33,7 +33,7 @@ public class EditorFrame extends JFrame {
 
         setVisible(true);
 
-        setBounds(100, 100, 700, 850);
+        setBounds(100, 100, 700, 640);
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sourcery Text Layer Editor");
