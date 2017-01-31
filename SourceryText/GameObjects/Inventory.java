@@ -874,7 +874,7 @@ class Inventory implements java.io.Serializable {
             else if (key == '\\') {
                 System.out.println(getY());
             }
-            else if (key == keymap.MENU_PRIMARY || key == keymap.MENU_SECONDARY) {
+            else if (key == keymap.MENU_PRIMARY || key == keymap.MENU_SECONDARY || key == keymap.BACK_PRIMARY || key == keymap.BACK_SECONDARY) {
                 exitAllMenus();
             }
             else if (Character.isDigit(event.getKeyChar())) {
