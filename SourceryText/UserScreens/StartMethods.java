@@ -42,8 +42,10 @@ public class StartMethods {
 
     void buildGame(GameInstance instance) {
         Player imported = instance.getProtaganist();
-        imported.org.setWindow(org.getWindow()); // hopefully doesn't kill anything
         org.terminateClock();
+        String roomName = imported.roomName;
+        imported.getGameInstance().setWindow(org.getWindow());
+        imported.room.makePlayerExitRoom(imported, roomName); // hopefully doesn't kill anything
 
         org = imported.org; // Now we switch orgs out.
         org.resetClock();

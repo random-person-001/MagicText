@@ -916,4 +916,8 @@ public class Player extends Mortal implements java.io.Serializable {
     public boolean getOrientationLocked() {
         return orientationLocked;
     }
+
+    public GameInstance getGameInstance() {
+        return gameInstance;
+    }
 }
