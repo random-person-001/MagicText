@@ -4,6 +4,7 @@ import SourceryText.*;
 import SourceryText.GameObjects.Player;
 import SourceryText.GameObjects.PlayerKeyPressListener;
 import SourceryText.GameSettings.KeyMap;
+import SourceryText.Network.NetworkClient;
 import SourceryText.Window;
 
 import java.awt.*;
