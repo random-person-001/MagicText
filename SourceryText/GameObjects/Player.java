@@ -829,6 +829,8 @@ public class Player extends Mortal implements java.io.Serializable {
                 turnTypeHeld = true;
             } if (event.getKeyCode() == keymap.CONFIRM_PRIMARY || event.getKeyCode() == keymap.CONFIRM_SECONDARY) {
                 if (textBox != null) textBox.receiveInput("end");
+            } if (event.getKeyCode() == keymap.BACK_PRIMARY || event.getKeyCode() == keymap.BACK_SECONDARY) {
+                if (textBox != null) textBox.receiveInput("end");
             } else {
                 keyPressed(event.getKeyCode());
             }

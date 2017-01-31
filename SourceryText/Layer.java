@@ -220,7 +220,7 @@ public class Layer implements java.io.Serializable {
      *
      * @param r row of desired SpecialText
      * @param c column of desired SpecialText
-     * @return
+     * @return the SpecialText at those layer (local) coordinates
      */
     public SpecialText getSpecTxt(int r, int c) {
         if (!(r < 0 || r >= getRows() || c < 0 || c >= getColumns())) {
