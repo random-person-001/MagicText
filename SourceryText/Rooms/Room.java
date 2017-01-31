@@ -750,6 +750,21 @@ public class Room implements java.io.Serializable {
     }
 
     /**
+     * Finds all SpecialTexts in layer and replaces it with another.
+     *
+     * @param find        SpecialText to find
+     */
+    public void multiPlantText(SpecialText find, FlavorText message, Layer template) {
+        for (int c = 0; c < template.getColumns(); c++) {
+            for (int r = 0; r < template.getRows(); r++) {
+                if (template.getSpecTxt(r, c).equals(find)) {
+                    plantText(message, c, r);
+                }
+            }
+        }
+    }
+
+    /**
      * If you move around but still want to be inspectable by the player, call this method so we can index you!
      * @param gameObject
      */
