@@ -240,7 +240,7 @@ class MainMenu {
         }
         if (cursorY == 12) { //Runs client connection based on entered ip address
             System.out.println("Requesting connection to Sourcery Text server at \"" + ipString + "\"");
-            starter.doNetworkClient(ipString); // Thread waits here until game finishes
+            starter.doNetworkClient(ipString);
         }
         if (cursorY == 13) { //Go back to multiplayer top menu.
             org.editLayer(" ", "MULTIPLAYER_MENU", cursorY, 10);
@@ -445,7 +445,7 @@ class MainMenu {
     private void onEnterPressed() {
         if (menuID == TOP_MENU) {
             onEnterPressedDuringTop();
-        } else if(menuID == MULTIPLAYER_MENU) {
+        } else if(menuID == MULTIPLAYER_MENU || menuID == IP_ENTERING_MENU) {
             onEnterPressedDuringMultiplayer();
         } else if(menuID == SETTINGS_MENU) {
             onEnterPressedDuringSettings();
