@@ -4,6 +4,7 @@ import SourceryText.ColoredTextMatrix;
 import SourceryText.SpecialText;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
@@ -28,15 +29,17 @@ public class SpecialTextMaker extends JFrame implements ChangeListener{
     private JTextField satLabel = new JTextField();
     private JTextField briLabel = new JTextField();
 
+    private JTextField setSpecTxt = new JTextField();
+
     public SpecialTextMaker (){
         setBackground(new Color(180, 180, 173));
 
         setVisible(true);
 
-        setBounds(400, 400, 540, 600);
+        setBounds(400, 400, 540, 260);
 
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Sourcery Text Layer Editor");
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("SpecialText Creator");
         setResizable(false);
 
         redSlider.setName("red");
@@ -46,14 +49,22 @@ public class SpecialTextMaker extends JFrame implements ChangeListener{
         satSlider.setName("sat");
         briSlider.setName("bright");
 
+        c.setLayout(new FlowLayout());
+
         addColorSlider("R:", c, redSlider, new Color(255, 200, 200), redLabel);
         addColorSlider("H:", c, hueSlider, new Color(255, 200, 255), hueLabel);
         addColorSlider("G:", c, greenSlider, new Color(200, 255, 200), greenLabel);
-        addColorSlider("S:", c, satSlider, new Color(255, 255, 200), satLabel);
+        addColorSlider("S:", c, satSlider, new Color(204, 204, 204), satLabel);
         addColorSlider("B:", c, blueSlider, new Color(200, 200, 255), blueLabel);
         addColorSlider("B:", c, briSlider, new Color(255, 255, 255), briLabel);
 
-        c.setLayout(new FlowLayout());
+        JTextField setSpecTxtLabel = new JTextField("Char:",3);
+        setSpecTxtLabel.setEditable(false);
+        c.add(setSpecTxtLabel);
+
+        setSpecTxt.setEditable(true);
+        setSpecTxt.setColumns(1);
+        c.add(setSpecTxt);
 
         c.validate();
     }
@@ -99,13 +110,23 @@ public class SpecialTextMaker extends JFrame implements ChangeListener{
                 break;
             case "hue":
                 hueLabel.setText(String.valueOf(source.getValue()));
+                updateRGB();
                 break;
             case "sat":
                 satLabel.setText(String.valueOf(source.getValue()));
+                updateRGB();
                 break;
             case "bright":
                 briLabel.setText(String.valueOf(source.getValue()));
+                updateRGB();
                 break;
         }
+    }
+
+    private void updateRGB(){
+        Color newRGB = new Color(Color.HSBtoRGB(hueSlider.getValue() / 255f,satSlider.getValue() / 255f,briSlider.getValue()/ 255f));
+        redSlider.setValue(newRGB.getRed());
+        greenSlider.setValue(newRGB.getGreen());
+        blueSlider.setValue(newRGB.getBlue());
     }
 }
