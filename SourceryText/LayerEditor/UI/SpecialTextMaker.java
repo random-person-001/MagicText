@@ -4,13 +4,29 @@ import SourceryText.ColoredTextMatrix;
 import SourceryText.SpecialText;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 
 /**
  * Created by Jared on 1/30/2017.
  */
-public class SpecialTextMaker extends JFrame {
+public class SpecialTextMaker extends JFrame implements ChangeListener{
     private Container c = getContentPane();
+
+    private JSlider redSlider = new JSlider();
+    private JSlider blueSlider = new JSlider();
+    private JSlider greenSlider = new JSlider();
+    private JSlider hueSlider = new JSlider();
+    private JSlider satSlider = new JSlider();
+    private JSlider briSlider = new JSlider();
+
+    private JTextField redLabel = new JTextField();
+    private JTextField blueLabel = new JTextField();
+    private JTextField greenLabel = new JTextField();
+    private JTextField hueLabel = new JTextField();
+    private JTextField satLabel = new JTextField();
+    private JTextField briLabel = new JTextField();
 
     public SpecialTextMaker (){
         setBackground(new Color(180, 180, 173));
@@ -23,20 +39,26 @@ public class SpecialTextMaker extends JFrame {
         setTitle("Sourcery Text Layer Editor");
         setResizable(false);
 
-        addColorSlider("R:", c, new JSlider(), new Color(255, 200, 200));
-        addColorSlider("H:", c, new JSlider(), new Color(255, 200, 255));
-        addColorSlider("G:", c, new JSlider(), new Color(200, 255, 200));
-        addColorSlider("S:", c, new JSlider(), new Color(255, 255, 200));
-        addColorSlider("B:", c, new JSlider(), new Color(200, 200, 255));
-        addColorSlider("B:", c, new JSlider(), new Color(255, 255, 255));
+        redSlider.setName("red");
+        blueSlider.setName("blue");
+        greenSlider.setName("green");
+        hueSlider.setName("hue");
+        satSlider.setName("sat");
+        briSlider.setName("bright");
 
+        addColorSlider("R:", c, redSlider, new Color(255, 200, 200), redLabel);
+        addColorSlider("H:", c, hueSlider, new Color(255, 200, 255), hueLabel);
+        addColorSlider("G:", c, greenSlider, new Color(200, 255, 200), greenLabel);
+        addColorSlider("S:", c, satSlider, new Color(255, 255, 200), satLabel);
+        addColorSlider("B:", c, blueSlider, new Color(200, 200, 255), blueLabel);
+        addColorSlider("B:", c, briSlider, new Color(255, 255, 255), briLabel);
 
         c.setLayout(new FlowLayout());
 
         c.validate();
     }
     
-    private void addColorSlider (String sliderName, Container c, JSlider toAdd, Color bkgHue){
+    private void addColorSlider (String sliderName, Container c, JSlider toAdd, Color bkgHue, JTextField manualEnter){
         toAdd.setMinimum(0);
         toAdd.setMaximum(255);
         toAdd.setValue(255);
@@ -51,10 +73,39 @@ public class SpecialTextMaker extends JFrame {
         toAddLabel.setBackground(bkgHue);
         toAddLabel.setEditable(false);
 
-        JTextField manualEnter = new JTextField(String.valueOf(toAdd.getValue()),2);
+        manualEnter.setText(String.valueOf(toAdd.getValue()));
+        manualEnter.setColumns(2);
+
+        toAdd.addChangeListener(this);
 
         c.add(toAddLabel);
         c.add(toAdd);
         c.add(manualEnter);
+    }
+
+
+    @Override
+    public void stateChanged(ChangeEvent e) {
+        JSlider source = (JSlider) e.getSource();
+        switch(source.getName()){
+            case "red":
+                redLabel.setText(String.valueOf(source.getValue()));
+                break;
+            case "blue":
+                blueLabel.setText(String.valueOf(source.getValue()));
+                break;
+            case "green":
+                greenLabel.setText(String.valueOf(source.getValue()));
+                break;
+            case "hue":
+                hueLabel.setText(String.valueOf(source.getValue()));
+                break;
+            case "sat":
+                satLabel.setText(String.valueOf(source.getValue()));
+                break;
+            case "bright":
+                briLabel.setText(String.valueOf(source.getValue()));
+                break;
+        }
     }
 }

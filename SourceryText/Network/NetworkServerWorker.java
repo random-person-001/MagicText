@@ -1,6 +1,7 @@
-package SourceryText;
+package SourceryText.Network;
 
 import SourceryText.GameObjects.Player;
+import SourceryText.Layer;
 
 import java.awt.event.KeyEvent;
 import java.io.IOException;
@@ -16,7 +17,7 @@ import java.util.TimerTask;
  * Receives connections from a NetworkClient and sends them ColoredTextMatrices periodically.
  * Created by riley on 05-Nov-2016.
  */
-public class NetworkServer {
+public class NetworkServerWorker {
     private int PORT = 8793;
     private ServerSocket serverSocket;
     private Updater updaterTask = new Updater();
@@ -27,11 +28,11 @@ public class NetworkServer {
     private Player player; //Client player
 
     /**
-     * @param playery the Player who the display should be centered on
+     * @param player the Player who the display should be centered on
      * @throws IOException
      */
-    public NetworkServer(Player playery) throws IOException {
-        player = playery;
+    public NetworkServerWorker(Player player) throws IOException {
+        this.player = player;
         serverSocket = new ServerSocket(PORT);
         serverSocket.setSoTimeout(60 * 1000);
     }

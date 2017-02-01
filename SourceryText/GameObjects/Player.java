@@ -16,6 +16,7 @@ package SourceryText.GameObjects;
 
 import SourceryText.*;
 import SourceryText.GameSettings.KeyMap;
+import SourceryText.Network.NetworkServerWorker;
 import SourceryText.Rooms.Room;
 
 import javax.swing.*;
@@ -41,7 +42,7 @@ public class Player extends Mortal implements java.io.Serializable {
     private Inventory inv;
     private HUD hud;
     private KeyMap keymap;
-    private NetworkServer networkServer; // Only used in multiplayer
+    private NetworkServerWorker networkServer; // Only used in multiplayer
     private boolean hasLocalWindow;
     public java.util.List<Room.FlavorText> messageQueue = new ArrayList<>();
 
@@ -148,7 +149,7 @@ public class Player extends Mortal implements java.io.Serializable {
      */
     void testSendOverNetwork() {
         try {
-            networkServer = new NetworkServer(this);
+            networkServer = new NetworkServerWorker(this);
             networkServer.doTimerSend();
         } catch (IOException e) {
             e.printStackTrace();

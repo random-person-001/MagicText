@@ -1,6 +1,7 @@
 package SourceryText;
 
 import SourceryText.GameObjects.Player;
+import SourceryText.Network.NetworkServerWorker;
 
 import java.io.IOException;
 
@@ -22,7 +23,7 @@ public class SlaveGameInstance {
         Player me = masterInstance.requestNewPlayer();
         System.out.println(me.getUsername() + " instantiated.  Now waiting for a connection for them...");
         try {
-            NetworkServer networkServer = new NetworkServer(me);
+            NetworkServerWorker networkServer = new NetworkServerWorker(me);
             networkServer.doTimerSend();
         } catch (IOException e) {
             e.printStackTrace();
