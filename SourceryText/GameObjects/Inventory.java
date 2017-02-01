@@ -96,7 +96,7 @@ class Inventory implements java.io.Serializable {
         equipMenuLayer.findAndReplace(new SpecialText(","), new SpecialText("_", new Color(15, 17, 15), new Color(20, 22, 20)));
         taterMenuLayer = new Layer(Art.strToArray(new Art().taterMenu), "tater" + player.getUsername(), 27, 1, false, true, true);
         taterMenuLayer.setOwningPlayerUsername(p.getUsername());
-        selectorLayer = new Layer(new String[1][1], "selector" + player.getUsername(), 0, 0, false, false, true);
+        selectorLayer = new Layer(new String[1][1], "selector" + player.getUsername(), 0, 0, false, true, true);
         selectorLayer.setOwningPlayerUsername(p.getUsername());
         infoLayer = new Layer(new String[22][46], "invInfo" + player.getUsername(), 0, 0, false, false, true);
         infoLayer.setOwningPlayerUsername(p.getUsername());
@@ -344,8 +344,8 @@ class Inventory implements java.io.Serializable {
         selectorLayer.setStr(0, 0, ">");
         selectorLayer.setPos(cursorX, cursorY);
         org.addLayer(topMenuLayer);
-        org.addLayer(selectorLayer);
         org.addLayer(infoLayer);
+        org.addLayer(selectorLayer);
 
         timer.scheduleAtFixedRate(new MenuTimer(), 10, 99);
     }
@@ -417,6 +417,7 @@ class Inventory implements java.io.Serializable {
         pressedD = false;
 
         Layer cursorLayer = org.getLayer(selectorLayer.getName());
+        cursorLayer.setOpaque(true);
         if (cursorLayer != null) cursorLayer.setPos(cursorX, cursorY);
     }
 
@@ -468,8 +469,8 @@ class Inventory implements java.io.Serializable {
 
         org.removeLayer(selectorLayer.getName());
         org.removeLayer(infoLayer.getName());
-        org.addLayer(selectorLayer);
         org.addLayer(infoLayer);
+        org.addLayer(selectorLayer);
         menuID = newID;
         cursorX = newXIndex;
     }
