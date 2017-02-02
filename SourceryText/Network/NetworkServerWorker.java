@@ -7,7 +7,6 @@ import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
 import java.util.Timer;
@@ -17,54 +16,39 @@ import java.util.TimerTask;
  * Receives connections from a NetworkClient and sends them ColoredTextMatrices periodically.
  * Created by riley on 05-Nov-2016.
  */
-public class NetworkServerWorker {
-    private int PORT = 8793;
-    private ServerSocket serverSocket;
+public class NetworkServerWorker extends Thread {
     private Updater updaterTask = new Updater();
-    private InputReader inputReceiver = new InputReader();
     private Socket server = new Socket();
     private ObjectOutputStream out;
     private ObjectInputStream in;
     private Player player; //Client player
 
     /**
-     * @param player the Player who the display should be centered on
+     * @param playery the Player who the display should be centered on
      * @throws IOException
      */
-    public NetworkServerWorker(Player player) throws IOException {
-        this.player = player;
-        serverSocket = new ServerSocket(PORT);
-        serverSocket.setSoTimeout(60 * 1000);
+    NetworkServerWorker(Player playery, Socket socket) throws IOException {
+        player = playery;
+        System.out.println("[NetworkServerWorker] Player is " + ((player == null) ? "null" : "nonnull"));
+        this.server = socket;
     }
 
     /**
-     * Connect to a client and start threads to periodically send them display data
-     * The method waits until a client makes a connection, and then returns after
-     * starting some threads to take care of IO business
-     *
-     * @throws IOException when it's feeling down
+     * Start threads to periodically send the client display data
+     * The method returns after starting some threads to take care of IO business
      */
-    public void doTimerSend() throws IOException {
-        connect();
-        new Timer().scheduleAtFixedRate(updaterTask, 4, 50);
-        new Thread(this::keyReadLoop).start();
-    }
-
-    /**
-     * Connect to a client who asks nicely.
-     * More specifically, accept a connection.  Note that the method will hang until either a client
-     * makes a request, or until it times out after a long time.
-     *
-     * @throws IOException
-     */
-    private void connect() throws IOException {
-        System.out.println("Waiting for client on port " +
-                serverSocket.getLocalPort() + "...");
-        server = serverSocket.accept(); // Note: code waits here until it accepts an incoming request
-
-        System.out.println("Just connected to " + server.getRemoteSocketAddress());
-        in = new ObjectInputStream(server.getInputStream());
-        out = new ObjectOutputStream(server.getOutputStream());
+    public void begin() {
+        try {
+            System.out.println("[NetworkServerWorker] point 1");
+            in = new ObjectInputStream(server.getInputStream());
+            out = new ObjectOutputStream(server.getOutputStream());
+            new Timer().scheduleAtFixedRate(updaterTask, 4, 50);
+            new Thread(this::keyReadLoop).start();
+            System.out.println("[NetworkServerWorker] Finished execution of begin()");
+        } catch (IOException e){
+            System.out.println("I/O Exception in the server worker.begin() method");
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -102,7 +86,7 @@ public class NetworkServerWorker {
     }
 
     /**
-     * Recieve keys that were pressed on a window far away and sent over the network, and tell the Player about them.
+     * Receive keys that were pressed on a window far away and sent over the network, and tell the Player about them.
      *
      * @throws IOException
      * @throws ClassNotFoundException
@@ -120,7 +104,6 @@ public class NetworkServerWorker {
         public void run() {
             Layer fullImage = player.org.topDownBuild(player);
             try {
-                //out.flush();
                 sendImage(fullImage);
             } catch (SocketException e) {
                 System.out.println("The other side probably disconnected (SocketException).");
@@ -129,18 +112,4 @@ public class NetworkServerWorker {
             }
         }
     }
-
-    private class InputReader extends TimerTask {
-
-        public void run() {
-            try {
-                readKeys();
-            } catch (SocketException e) {
-                System.out.println("The other side probably disconnected (SocketException).");
-            } catch (IOException | ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
 }

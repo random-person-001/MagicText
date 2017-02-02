@@ -5,6 +5,7 @@ import SourceryText.GameObjects.Player;
 import SourceryText.GameObjects.PlayerKeyPressListener;
 import SourceryText.GameSettings.KeyMap;
 import SourceryText.Network.NetworkClient;
+import SourceryText.Network.NetworkServerBoss;
 import SourceryText.Window;
 
 import java.awt.*;
@@ -34,10 +35,15 @@ public class StartMethods {
         new Thread(() -> master.runGame(player)).start();
 
         // For multiplayer
-        for (int i = 1; i < numPlayers; i++) {
-            System.out.println("Adding multiplayer player #" + i);
-            SlaveGameInstance instance = new SlaveGameInstance(master);
-            new Thread(instance::runGameAsSlave).start();
+        if (numPlayers > 1){
+            NetworkServerBoss nsb = new NetworkServerBoss(master);
+            System.out.println("Network server boss init exited.");
+            (new Thread(){
+                public void run(){
+                    nsb.run();
+                }
+            }).start();
+            System.out.println("Network server boss run has began");
         }
     }
 
@@ -69,7 +75,8 @@ public class StartMethods {
             } catch (InterruptedException e) {
                 System.out.println("Intro interrupted.");
             }
-        })).start(); // I think this should be the only thread in the program at this point, all others should have fallen through
+        })).start(); // I think this should be the only thread in the program (save for the dying one of the very
+        // beginning?) at this point, all others should have fallen through
     }
 
     void doNetworkClient(String serverName) {

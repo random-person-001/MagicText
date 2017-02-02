@@ -145,18 +145,6 @@ public class Player extends Mortal implements java.io.Serializable {
     }
 
     /**
-     * Initialize a new NetworkServer and start its doTimerSend() method, which sends display information to clients.
-     */
-    void testSendOverNetwork() {
-        try {
-            networkServer = new NetworkServerWorker(this);
-            networkServer.doTimerSend();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
      * Attempt to cancel the sending of the display data over network. (stops an earlier instance of calling testSendOverNetwork())
      */
     void cancelSendOverNetwork() {
