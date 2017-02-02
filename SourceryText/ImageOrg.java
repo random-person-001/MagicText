@@ -423,13 +423,16 @@ public class ImageOrg implements java.io.Serializable {
     private void newSendImage() {
         Layer fullImage;
         try {
-            if (defaultPlayer == null) {
+            if (defaultPlayer == null ) {
                 //System.out.println("[ImageOrg " + orgSerial + "] TopDownBuild on nobody");
                 fullImage = topDownBuild();
-            } else {
+            } else if (defaultPlayer.org == this){
                 //System.out.println("[ImageOrg " + orgSerial + "] TopDownBuild on " + defaultPlayer.getUsername());
                 fullImage = topDownBuild(defaultPlayer);
                 //System.out.println(fullImage.getStr());
+            } else {
+                System.out.println("ImageOrg: 1st player's org is not this, so will not try to update");
+                return;
             }
             window.build(fullImage);
         } catch (ConcurrentModificationException e) {
