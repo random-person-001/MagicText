@@ -417,8 +417,10 @@ class Inventory implements java.io.Serializable {
         pressedD = false;
 
         Layer cursorLayer = org.getLayer(selectorLayer.getName());
-        cursorLayer.setOpaque(true);
-        if (cursorLayer != null) cursorLayer.setPos(cursorX, cursorY);
+        if (cursorLayer != null) {
+            cursorLayer.setPos(cursorX, cursorY);
+            cursorLayer.setOpaque(true);
+        }
     }
 
     /**

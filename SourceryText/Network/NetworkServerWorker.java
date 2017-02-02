@@ -86,7 +86,9 @@ public class NetworkServerWorker extends Thread {
                 readKeys();
             }
         } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            System.out.println("[NetworkServerWorker] Something went wrong. (IOException or ClassNotFoundException).  Aborting this whole connection");
+            disconnect();
         }
     }
 

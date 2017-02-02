@@ -148,11 +148,7 @@ public class Player extends Mortal implements java.io.Serializable {
      * Attempt to cancel the sending of the display data over network. (stops an earlier instance of calling testSendOverNetwork())
      */
     void cancelSendOverNetwork() {
-        try {
-            networkServer.disconnect();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        networkServer.disconnect();
     }
 
     /**
