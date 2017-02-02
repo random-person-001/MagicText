@@ -431,7 +431,7 @@ public class ImageOrg implements java.io.Serializable {
                 fullImage = topDownBuild(defaultPlayer);
                 //System.out.println(fullImage.getStr());
             } else {
-                System.out.println("ImageOrg: 1st player's org is not this, so will not try to update");
+                //System.out.println("ImageOrg: 1st player's org is not this, so will not try to update");
                 return;
             }
             window.build(fullImage);

@@ -55,11 +55,15 @@ public class NetworkServerWorker extends Thread {
     /**
      * Disconnect socket and stop the timer
      *
-     * @throws IOException when it gets only lumps of coal in its stocking
      */
-    public void disconnect() throws IOException {
+    public void disconnect() {
         updaterTask.cancel();
-        server.close();
+        try {
+            server.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        server = null;
     }
 
     /**
@@ -78,7 +82,7 @@ public class NetworkServerWorker extends Thread {
      */
     private void keyReadLoop() {
         try {
-            while (true) {
+            while (server != null) {
                 readKeys();
             }
         } catch (IOException | ClassNotFoundException e) {
@@ -96,10 +100,11 @@ public class NetworkServerWorker extends Thread {
         Object o = in.readObject();  //Execution should hang 'in limbo' until some input comes through;
         if (o != null && o.getClass() == KeyEvent.class) {
             if (!player.hasKeyMap()){ // This rarely happens.  But, you know...
-                System.out.println("Player hasn't received the keymap yet");
+                System.out.println("Server hasn't received "+player.getUsername()+"'s keymap yet, but received a" +
+                        " keystroke from them over network.  Ignoring keystroke.");
                 return;
             }
-            KeyEvent e = (KeyEvent)o;
+            KeyEvent e = (KeyEvent) o;
             System.out.println("Client pressed: " + KeyEvent.getKeyText(e.getKeyCode()));
             player.fireKeyEvent(e);
         }
@@ -117,9 +122,12 @@ public class NetworkServerWorker extends Thread {
             try {
                 sendImage(fullImage);
             } catch (SocketException e) {
-                System.out.println("The other side probably disconnected (SocketException).");
+                System.out.println("[NetworkServerWorker] The other side probably disconnected (SocketException).  Aborting whole connection");
+                disconnect();
             } catch (IOException e) {
                 e.printStackTrace();
+                System.out.println("[NetworkServerWorker] Something went wrong. (IOException).  Aborting this whole connection");
+                disconnect();
             }
         }
     }
