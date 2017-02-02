@@ -1,6 +1,7 @@
 package SourceryText.Network;
 
 import SourceryText.GameObjects.Player;
+import SourceryText.GameSettings.KeyMap;
 import SourceryText.Layer;
 
 import java.awt.event.KeyEvent;
@@ -88,14 +89,24 @@ public class NetworkServerWorker extends Thread {
     /**
      * Receive keys that were pressed on a window far away and sent over the network, and tell the Player about them.
      *
-     * @throws IOException
-     * @throws ClassNotFoundException
+     * @throws IOException in case reading from the input stream goes wrong
+     * @throws ClassNotFoundException if it problems occur casting the input to KeyEvent or KeyMap
      */
     private void readKeys() throws IOException, ClassNotFoundException {
-        KeyEvent e = (KeyEvent) in.readObject(); //Execution should hang 'in limbo' until some input comes through
-        if (e != null) {
+        Object o = in.readObject();  //Execution should hang 'in limbo' until some input comes through;
+        if (o != null && o.getClass() == KeyEvent.class) {
+            if (!player.hasKeyMap()){ // This rarely happens.  But, you know...
+                System.out.println("Player hasn't received the keymap yet");
+                return;
+            }
+            KeyEvent e = (KeyEvent)o;
             System.out.println("Client pressed: " + KeyEvent.getKeyText(e.getKeyCode()));
             player.fireKeyEvent(e);
+        }
+        else if (o != null && o.getClass() == KeyMap.class) {
+            KeyMap m = (KeyMap) o;
+            System.out.println("Client sent their keymap!  Thanks!");
+            player.setKeyMap(m);
         }
     }
 

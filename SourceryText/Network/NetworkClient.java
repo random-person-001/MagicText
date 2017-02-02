@@ -1,5 +1,6 @@
 package SourceryText.Network;
 
+import SourceryText.GameSettings.KeyMap;
 import SourceryText.Layer;
 import SourceryText.Window;
 
@@ -25,11 +26,21 @@ public class NetworkClient {
     private MultiplayerKeyListener kl = new MultiplayerKeyListener();
     private UpdateTask updateTask = new UpdateTask();
 
-    public void main(String serverName) throws IOException {
+    public void main(String serverName, KeyMap keymap) throws IOException {
         w = new Window();
         w.txtArea.addKeyListener(kl);
         connect(serverName);
+        sendKeyMap(keymap);
         new Timer().scheduleAtFixedRate(updateTask, 4, 50);
+    }
+
+    private void sendKeyMap(KeyMap keymap)  throws IOException {
+        if (out != null) {
+            System.out.println("Sending keymap over");
+            out.writeObject(keymap);
+        } else {
+            System.out.println("Couldn't send keymap :(");
+        }
     }
 
     private void connect(String serverName) throws IOException {

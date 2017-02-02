@@ -909,4 +909,12 @@ public class Player extends Mortal implements java.io.Serializable {
     public GameInstance getGameInstance() {
         return gameInstance;
     }
+
+    public void setKeyMap(KeyMap keyMap) {
+        this.keymap = keyMap;
+    }
+
+    public boolean hasKeyMap() {
+        return keymap != null;
+    }
 }

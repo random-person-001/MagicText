@@ -38,11 +38,7 @@ public class StartMethods {
         if (numPlayers > 1){
             NetworkServerBoss nsb = new NetworkServerBoss(master);
             System.out.println("Network server boss init exited.");
-            (new Thread(){
-                public void run(){
-                    nsb.run();
-                }
-            }).start();
+            (new Thread(() -> nsb.run())).start();
             System.out.println("Network server boss run has began");
         }
     }
@@ -79,10 +75,10 @@ public class StartMethods {
         // beginning?) at this point, all others should have fallen through
     }
 
-    void doNetworkClient(String serverName) {
+    void doNetworkClient(String serverName, KeyMap keymap) {
         NetworkClient networker = new NetworkClient();
         try {
-            networker.main(serverName);
+            networker.main(serverName, keymap);
         } catch (IOException e) {
             e.printStackTrace();
             networker.attemptCancel();

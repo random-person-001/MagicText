@@ -30,6 +30,7 @@ public class NetworkServerBoss extends Thread{
     public void run(){
         while (true){
             try {
+                System.out.println("[NetworkServerBoss] serverSocket is " + (serverSocket==null ? "null" : "nonnull"));
                 System.out.println("[NetworkServerBoss] Waiting for client on port " + serverSocket.getLocalPort() + "...");
                 System.out.println(serverSocket.toString());
                 Socket server = serverSocket.accept(); // Note: code waits here until it accepts an incoming request
