@@ -43,6 +43,8 @@ public class GameObject implements java.io.Serializable {
 
     protected AtomicBoolean paused = new AtomicBoolean(false);
 
+    MagicSmoke[] magicSmokes = new MagicSmoke[0];
+
     int time; //May be useful when trying to do something asynchronous with room update timings
 
     public void addTime(int add) {
@@ -171,6 +173,15 @@ public class GameObject implements java.io.Serializable {
                 waitThisUpdate = false;
             }
         }
+    }
+
+    public void addMagicSmoke(MagicSmoke magicSmoke) {
+        MagicSmoke[] temp = new MagicSmoke[magicSmokes.length+1];
+        for(int i=0;i<magicSmokes.length;i++) {
+            temp[i] = magicSmokes[i];
+        }
+        temp[magicSmokes.length] = magicSmoke;
+        magicSmokes = temp;
     }
 
     /**
@@ -308,5 +319,6 @@ public class GameObject implements java.io.Serializable {
         int getCntr() {
             return counter;
         }
+
     }
 }

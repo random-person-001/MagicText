@@ -6,12 +6,9 @@
 package SourceryText.Rooms.TheSource;
 
 import SourceryText.Art;
-import SourceryText.GameObjects.DroppedItem;
-import SourceryText.GameObjects.Item;
-import SourceryText.GameObjects.Player;
+import SourceryText.GameObjects.*;
 import SourceryText.GameObjects.TheSource.PotOfPetunias;
 import SourceryText.GameObjects.TheSource.Spider;
-import SourceryText.GameObjects.WaterPool;
 import SourceryText.Layer;
 import SourceryText.Rooms.Room;
 import SourceryText.SpecialText;
@@ -205,6 +202,7 @@ public class TutorialBasement extends Room {
         //Spider spoidur = new Spider(this, 15, 29);
         addMortal(spoidur);
 
+        super.addObject(new MagicSmoke(5, 12, 6, new int[0]));
 
         /*
         Item potion = new Item("SC&OPotatoChip", "This variety of magic\n potato chip is flavored\n with sour cream and onions\n\nIt makes your breath so bad\n it hurts nearby enemies.", "item");
