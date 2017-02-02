@@ -64,12 +64,12 @@ public class SpecialTextMaker extends JFrame implements ChangeListener, ActionLi
 
         c.setLayout(new FlowLayout());
 
-        addColorSlider("R:", c, redSlider, new Color(255, 200, 200), redLabel);
-        addColorSlider("H:", c, hueSlider, new Color(255, 200, 255), hueLabel);
-        addColorSlider("G:", c, greenSlider, new Color(200, 255, 200), greenLabel);
-        addColorSlider("S:", c, satSlider, new Color(204, 204, 204), satLabel);
-        addColorSlider("B:", c, blueSlider, new Color(200, 200, 255), blueLabel);
-        addColorSlider("B:", c, briSlider, new Color(255, 255, 255), briLabel);
+        addColorSlider("R:", c, redSlider, new Color(255, 200, 200), redLabel, 255);
+        addColorSlider("H:", c, hueSlider, new Color(255, 200, 255), hueLabel, 360);
+        addColorSlider("G:", c, greenSlider, new Color(200, 255, 200), greenLabel, 255);
+        addColorSlider("S:", c, satSlider, new Color(204, 204, 204), satLabel, 100);
+        addColorSlider("B:", c, blueSlider, new Color(200, 200, 255), blueLabel, 255);
+        addColorSlider("B:", c, briSlider, new Color(255, 255, 255), briLabel, 100);
 
         /*
         JTextField setSpecTxtLabel = new JTextField("Char:",3);
@@ -105,10 +105,10 @@ public class SpecialTextMaker extends JFrame implements ChangeListener, ActionLi
         c.validate();
     }
     
-    private void addColorSlider (String sliderName, Container c, JSlider toAdd, Color bkgHue, JTextField manualEnter){
+    private void addColorSlider (String sliderName, Container c, JSlider toAdd, Color bkgHue, JTextField manualEnter, int maxValue){
         toAdd.setMinimum(0);
-        toAdd.setMaximum(255);
-        toAdd.setValue(255);
+        toAdd.setMaximum(maxValue);
+        toAdd.setValue(maxValue);
 
         toAdd.setMinorTickSpacing(5);
         toAdd.setMajorTickSpacing(50);
@@ -172,7 +172,7 @@ public class SpecialTextMaker extends JFrame implements ChangeListener, ActionLi
     }
 
     private void updateRGB(){
-        Color newRGB = new Color(Color.HSBtoRGB(hueSlider.getValue() / 255f,satSlider.getValue() / 255f,briSlider.getValue()/ 255f));
+        Color newRGB = new Color(Color.HSBtoRGB(hueSlider.getValue() / 360f,satSlider.getValue() / 100f,briSlider.getValue()/ 100f));
         redSlider.setValue(newRGB.getRed());
         greenSlider.setValue(newRGB.getGreen());
         blueSlider.setValue(newRGB.getBlue());
