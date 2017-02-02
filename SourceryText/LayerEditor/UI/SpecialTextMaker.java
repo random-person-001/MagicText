@@ -1,18 +1,17 @@
 package SourceryText.LayerEditor.UI;
 
-import SourceryText.ColoredTextMatrix;
-import SourceryText.SpecialText;
-
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.plaf.metal.MetalLookAndFeel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Created by Jared on 1/30/2017.
  */
-public class SpecialTextMaker extends JFrame implements ChangeListener{
+public class SpecialTextMaker extends JFrame implements ChangeListener, ActionListener{
     private Container c = getContentPane();
 
     private JSlider redSlider = new JSlider();
@@ -31,10 +30,23 @@ public class SpecialTextMaker extends JFrame implements ChangeListener{
 
     private JTextField setSpecTxt = new JTextField();
 
+    private JButton setForegroundButton = new JButton();
+    private JButton setBackgroundButton = new JButton();
+    private boolean settingForeground = true;
+
+    private Color fgColor = Color.WHITE;
+    private Color bgColor = Color.BLACK;
+
     public SpecialTextMaker (){
         setBackground(new Color(180, 180, 173));
 
         setVisible(true);
+
+        try {
+            UIManager.setLookAndFeel(new MetalLookAndFeel());
+        } catch (UnsupportedLookAndFeelException e) {
+            e.printStackTrace();
+        }
 
         setBounds(400, 400, 540, 260);
 
@@ -58,13 +70,36 @@ public class SpecialTextMaker extends JFrame implements ChangeListener{
         addColorSlider("B:", c, blueSlider, new Color(200, 200, 255), blueLabel);
         addColorSlider("B:", c, briSlider, new Color(255, 255, 255), briLabel);
 
+        /*
         JTextField setSpecTxtLabel = new JTextField("Char:",3);
         setSpecTxtLabel.setEditable(false);
         c.add(setSpecTxtLabel);
+        */
 
         setSpecTxt.setEditable(true);
-        setSpecTxt.setColumns(1);
+        setSpecTxt.setFont(new Font("Monospaced", Font.PLAIN, 30));
+        setSpecTxt.setHorizontalAlignment(JTextField.CENTER);
+        setSpecTxt.setPreferredSize(new Dimension(30, 30));
         c.add(setSpecTxt);
+
+        setForegroundButton = new JButton("Fg");
+        setForegroundButton.setPreferredSize(new Dimension(80, 30));
+        setForegroundButton.setBackground(Color.WHITE);
+        setForegroundButton.setActionCommand("foreground");
+        setForegroundButton.addActionListener(this);
+        setForegroundButton.setOpaque(true);
+        setForegroundButton.setEnabled(false);
+
+        setBackgroundButton = new JButton("Bg");
+        setBackgroundButton.setPreferredSize(new Dimension(80, 30));
+        setBackgroundButton.setBackground(Color.WHITE);
+        setBackgroundButton.setActionCommand("background");
+        setBackgroundButton.addActionListener(this);
+        setBackgroundButton.setOpaque(true);
+        setBackgroundButton.setEnabled(true);
+
+        c.add(setForegroundButton);
+        c.add(setBackgroundButton);
 
         c.validate();
     }
@@ -121,6 +156,15 @@ public class SpecialTextMaker extends JFrame implements ChangeListener{
                 updateRGB();
                 break;
         }
+        if (settingForeground) {
+            fgColor = new Color(Integer.valueOf(redLabel.getText()), Integer.valueOf(greenLabel.getText()), Integer.valueOf(blueLabel.getText()));
+            setForegroundButton.setBackground(fgColor);
+            setSpecTxt.setForeground(fgColor);
+        } else {
+            bgColor = new Color(Integer.valueOf(redLabel.getText()), Integer.valueOf(greenLabel.getText()), Integer.valueOf(blueLabel.getText()));
+            setBackgroundButton.setBackground(bgColor);
+            setSpecTxt.setBackground(bgColor);
+        }
     }
 
     private void updateRGB(){
@@ -128,5 +172,19 @@ public class SpecialTextMaker extends JFrame implements ChangeListener{
         redSlider.setValue(newRGB.getRed());
         greenSlider.setValue(newRGB.getGreen());
         blueSlider.setValue(newRGB.getBlue());
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if ("foreground".equals(e.getActionCommand())){
+            settingForeground = true;
+            setForegroundButton.setEnabled(false);
+            setBackgroundButton.setEnabled(true);
+        } else if ("background".equals(e.getActionCommand())){
+            settingForeground = false;
+            setForegroundButton.setEnabled(true);
+            setBackgroundButton.setEnabled(false);
+        } else
+            System.out.println(e.getActionCommand());
     }
 }
