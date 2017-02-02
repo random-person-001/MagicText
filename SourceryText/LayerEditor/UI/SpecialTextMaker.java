@@ -71,12 +71,6 @@ public class SpecialTextMaker extends JFrame implements ChangeListener, ActionLi
         addColorSlider("B:", c, blueSlider, new Color(200, 200, 255), blueLabel, 255);
         addColorSlider("B:", c, briSlider, new Color(255, 255, 255), briLabel, 100);
 
-        /*
-        JTextField setSpecTxtLabel = new JTextField("Char:",3);
-        setSpecTxtLabel.setEditable(false);
-        c.add(setSpecTxtLabel);
-        */
-
         setSpecTxt.setEditable(true);
         setSpecTxt.setFont(new Font("Monospaced", Font.PLAIN, 30));
         setSpecTxt.setHorizontalAlignment(JTextField.CENTER);
@@ -110,8 +104,10 @@ public class SpecialTextMaker extends JFrame implements ChangeListener, ActionLi
         toAdd.setMaximum(maxValue);
         toAdd.setValue(maxValue);
 
-        toAdd.setMinorTickSpacing(5);
-        toAdd.setMajorTickSpacing(50);
+        int majorSpacing = (maxValue / 5) - ((maxValue / 5) % 5);
+        toAdd.setMinorTickSpacing((maxValue / 50));
+        toAdd.setMajorTickSpacing(majorSpacing);
+        System.out.println(majorSpacing);
         toAdd.setPaintTicks(true);
         toAdd.setPaintLabels(true);
 
