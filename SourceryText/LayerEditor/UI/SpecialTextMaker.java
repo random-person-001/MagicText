@@ -1,18 +1,19 @@
 package SourceryText.LayerEditor.UI;
 
-import SourceryText.ColoredTextMatrix;
 import SourceryText.SpecialText;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.plaf.metal.MetalLookAndFeel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Created by Jared on 1/30/2017.
  */
-public class SpecialTextMaker extends JFrame implements ChangeListener{
+public class SpecialTextMaker extends JFrame implements ChangeListener, ActionListener{
     private Container c = getContentPane();
 
     private JSlider redSlider = new JSlider();
@@ -31,10 +32,22 @@ public class SpecialTextMaker extends JFrame implements ChangeListener{
 
     private JTextField setSpecTxt = new JTextField();
 
+    private JButton setForegroundButton = new JButton();
+    private JButton setBackgroundButton = new JButton();
+    private boolean settingForeground = true;
+
+    private SpecialText finalChar = new SpecialText("", Color.WHITE, Color.BLACK);
+
     public SpecialTextMaker (){
         setBackground(new Color(180, 180, 173));
 
         setVisible(true);
+
+        try {
+            UIManager.setLookAndFeel(new MetalLookAndFeel());
+        } catch (UnsupportedLookAndFeelException e) {
+            e.printStackTrace();
+        }
 
         setBounds(400, 400, 540, 260);
 
@@ -58,13 +71,36 @@ public class SpecialTextMaker extends JFrame implements ChangeListener{
         addColorSlider("B:", c, blueSlider, new Color(200, 200, 255), blueLabel);
         addColorSlider("B:", c, briSlider, new Color(255, 255, 255), briLabel);
 
+        /*
         JTextField setSpecTxtLabel = new JTextField("Char:",3);
         setSpecTxtLabel.setEditable(false);
         c.add(setSpecTxtLabel);
+        */
 
         setSpecTxt.setEditable(true);
-        setSpecTxt.setColumns(1);
+        setSpecTxt.setFont(new Font("Monospaced", Font.PLAIN, 30));
+        setSpecTxt.setHorizontalAlignment(JTextField.CENTER);
+        setSpecTxt.setPreferredSize(new Dimension(30, 30));
         c.add(setSpecTxt);
+
+        setForegroundButton = new JButton("Fg");
+        setForegroundButton.setPreferredSize(new Dimension(80, 30));
+        setForegroundButton.setBackground(Color.WHITE);
+        setForegroundButton.setActionCommand("foreground");
+        setForegroundButton.addActionListener(this);
+        setForegroundButton.setOpaque(true);
+        setForegroundButton.setEnabled(false);
+
+        setBackgroundButton = new JButton("Bg");
+        setBackgroundButton.setPreferredSize(new Dimension(80, 30));
+        setBackgroundButton.setBackground(Color.WHITE);
+        setBackgroundButton.setActionCommand("background");
+        setBackgroundButton.addActionListener(this);
+        setBackgroundButton.setOpaque(true);
+        setBackgroundButton.setEnabled(true);
+
+        c.add(setForegroundButton);
+        c.add(setBackgroundButton);
 
         c.validate();
     }
@@ -94,6 +130,7 @@ public class SpecialTextMaker extends JFrame implements ChangeListener{
         c.add(manualEnter);
     }
 
+    private boolean evaluateColor = true;
 
     @Override
     public void stateChanged(ChangeEvent e) {
@@ -121,6 +158,17 @@ public class SpecialTextMaker extends JFrame implements ChangeListener{
                 updateRGB();
                 break;
         }
+        if (evaluateColor) {
+            if (settingForeground) {
+                finalChar.setForeground(new Color(Integer.valueOf(redLabel.getText()), Integer.valueOf(greenLabel.getText()), Integer.valueOf(blueLabel.getText())));
+                setForegroundButton.setBackground(finalChar.getForegroundColor());
+                setSpecTxt.setForeground(finalChar.getForegroundColor());
+            } else {
+                finalChar.setBackground(new Color(Integer.valueOf(redLabel.getText()), Integer.valueOf(greenLabel.getText()), Integer.valueOf(blueLabel.getText())));
+                setBackgroundButton.setBackground(finalChar.getBackgroundColor());
+                setSpecTxt.setBackground(finalChar.getBackgroundColor());
+            }
+        }
     }
 
     private void updateRGB(){
@@ -128,5 +176,58 @@ public class SpecialTextMaker extends JFrame implements ChangeListener{
         redSlider.setValue(newRGB.getRed());
         greenSlider.setValue(newRGB.getGreen());
         blueSlider.setValue(newRGB.getBlue());
+    }
+
+    private void updateHSB(){
+        float[] hsbVals =  new float[3];
+        Color.RGBtoHSB(getSliderVal(redSlider), getSliderVal(greenSlider), getSliderVal(blueSlider), hsbVals);
+        hueSlider.setValue((int)(hsbVals[0] * 255));
+        satSlider.setValue((int)(hsbVals[1] * 255));
+        briSlider.setValue((int)(hsbVals[2] * 255));
+    }
+
+    public int getSliderVal(JSlider getFrom){
+        switch(getFrom.getName()){
+            case "red":
+                return Integer.valueOf(redLabel.getText());
+            case "blue":
+                return Integer.valueOf(blueLabel.getText());
+            case "green":
+                return Integer.valueOf(greenLabel.getText());
+            case "hue":
+                return Integer.valueOf(hueLabel.getText());
+            case "sat":
+                return Integer.valueOf(satLabel.getText());
+            case "bright":
+                return Integer.valueOf(briLabel.getText());
+            default:
+                return 0;
+        }
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if ("foreground".equals(e.getActionCommand())){
+            evaluateColor = false;
+            setForegroundButton.setEnabled(false);
+            setBackgroundButton.setEnabled(true);
+            redSlider.setValue(finalChar.getForegroundColor().getRed());
+            greenSlider.setValue(finalChar.getForegroundColor().getGreen());
+            blueSlider.setValue(finalChar.getForegroundColor().getBlue());
+            updateHSB();
+            settingForeground = true;
+            evaluateColor = true;
+        } else if ("background".equals(e.getActionCommand())){
+            evaluateColor = false;
+            setForegroundButton.setEnabled(true);
+            setBackgroundButton.setEnabled(false);
+            redSlider.setValue(finalChar.getBackgroundColor().getRed());
+            greenSlider.setValue(finalChar.getBackgroundColor().getGreen());
+            blueSlider.setValue(finalChar.getBackgroundColor().getBlue());
+            updateHSB();
+            settingForeground = false;
+            evaluateColor = true;
+        } else
+            System.out.println(e.getActionCommand());
     }
 }
