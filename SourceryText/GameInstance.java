@@ -2,6 +2,7 @@ package SourceryText;
 
 import SourceryText.GameObjects.Player;
 import SourceryText.GameObjects.PlayerKeyPressListener;
+import SourceryText.Network.NetworkServerBoss;
 import SourceryText.Rooms.ForestOfFondant.Cliffbottom;
 import SourceryText.Rooms.ForestOfFondant.FondantVillage;
 import SourceryText.Rooms.ForestOfFondant.ShopTunnel;
@@ -20,6 +21,7 @@ import java.util.List;
  * Created by riley on 02-Oct-2016, expanded significantly to accommodate zone switching on 22-Nov-2016
  */
 public class GameInstance implements java.io.Serializable {
+    private NetworkServerBoss nsb;
     private Player protaganist;
     private List<Player> playerList;
     private int zoneNumber;
@@ -37,6 +39,7 @@ public class GameInstance implements java.io.Serializable {
         protaganist.org.getWindow().txtArea.addKeyListener(kl);
         protaganist.org.terminateClock();
         switchZones(); // Initialize zone one to start
+        resetNSB();
     }
 
     /**
@@ -126,7 +129,7 @@ public class GameInstance implements java.io.Serializable {
             p.roomName = startingRoomName;
             p.setZoneNumber(to);
             p.goTo(0, 0);
-            System.out.println("set " + p.getUsername() + "'s zone to " + zoneNumber + " and room name to " + startingRoomName);
+            System.out.println("set " + p.getUsername() + "'s zone to " + zoneNumber + " and room name to " + startingRoomName); // does display
         }
     }
 
@@ -198,8 +201,57 @@ public class GameInstance implements java.io.Serializable {
         return protaganist;
     }
 
+    /**
+     * Set the window for each of this zone's room's orgs, as well as the player.  When you go to a new zone, these will
+     * be passed on to everything in the new zone.
+     * @param window the new Window everything should be
+     */
     public void setWindow(Window window) {
         thisZoneRooms.forEach((s, room) -> room.org.setWindow(window));
         protaganist.org.setWindow(window);
+    }
+
+    /**
+     * Start accepting connections from other computers
+     */
+    public void openNetworking(){
+        nsb.openNetworking();
+    }
+
+    /**
+     * Stop accepting connections from other computers
+     */
+    public void closeNetworking(){
+        nsb.closeNetworking();
+    }
+
+    /**
+     * Kick all players out who aren't the host.
+     * Notifies all client players that they'll be kicked off a bit before the fact, to be nice.
+     */
+    public void bootClientPlayersOff(){
+        (new Thread(() -> {
+            for (Player p : playerList) {
+                if (!p.getHasLocalWindow()){
+                    p.room.splashMessage("You're being kicked out.\n The host of this world has \n kicked everyone out.", "* Game *", p);
+                }
+            }
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException ignore) {
+            }
+            nsb.bootOutClients();
+        })).start();
+    }
+
+    /**
+     * Only call this when you need it - like resuming from save (serialized) or on startup
+     */
+    public void resetNSB() {
+        if (nsb != null){
+            System.out.println("Network server boss was not null.  I hope you're resuming from save, or else you're doing it wrong");
+            nsb.closeNetworking();
+        }
+        nsb = new NetworkServerBoss(this);
     }
 }

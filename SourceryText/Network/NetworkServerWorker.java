@@ -41,10 +41,10 @@ public class NetworkServerWorker extends Thread {
     public void begin() {
         try {
             System.out.println("[NetworkServerWorker] point 1");
-            in = new ObjectInputStream(server.getInputStream());
             out = new ObjectOutputStream(server.getOutputStream());
+            in = new ObjectInputStream(server.getInputStream());
             new Timer().scheduleAtFixedRate(updaterTask, 4, 50);
-            new Thread(this::keyReadLoop).start();
+            new Thread(this::keyReadLoop).start(); // we should cancel this, too
             System.out.println("[NetworkServerWorker] Finished execution of begin()");
         } catch (IOException e){
             System.out.println("I/O Exception in the server worker.begin() method");
@@ -54,16 +54,19 @@ public class NetworkServerWorker extends Thread {
 
     /**
      * Disconnect socket and stop the timer
-     *
      */
     public void disconnect() {
         updaterTask.cancel();
         try {
-            server.close();
+            if (server != null) server.close();
+            if (out != null) out.close();
+            if (in != null) in.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
         server = null;
+        out = null;
+        in = null;
     }
 
     /**
