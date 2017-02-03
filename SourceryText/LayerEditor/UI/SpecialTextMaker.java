@@ -9,6 +9,10 @@ import javax.swing.plaf.metal.MetalLookAndFeel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.*;
+import java.util.Timer;
 
 /**
  * Created by Jared on 1/30/2017.
@@ -49,7 +53,7 @@ public class SpecialTextMaker extends JFrame implements ChangeListener, ActionLi
             e.printStackTrace();
         }
 
-        setBounds(400, 400, 540, 260);
+        setBounds(400, 400, 565, 260);
 
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("SpecialText Creator");
@@ -64,12 +68,12 @@ public class SpecialTextMaker extends JFrame implements ChangeListener, ActionLi
 
         c.setLayout(new FlowLayout());
 
-        addColorSlider("R:", c, redSlider, new Color(255, 200, 200), redLabel, 255);
-        addColorSlider("H:", c, hueSlider, new Color(255, 200, 255), hueLabel, 360);
-        addColorSlider("G:", c, greenSlider, new Color(200, 255, 200), greenLabel, 255);
-        addColorSlider("S:", c, satSlider, new Color(204, 204, 204), satLabel, 100);
-        addColorSlider("B:", c, blueSlider, new Color(200, 200, 255), blueLabel, 255);
-        addColorSlider("B:", c, briSlider, new Color(255, 255, 255), briLabel, 100);
+        addColorSlider("R:", c, redSlider, new Color(255, 200, 200), redLabel, "m_red", 255);
+        addColorSlider("H:", c, hueSlider, new Color(255, 200, 255), hueLabel, "m_hue", 360);
+        addColorSlider("G:", c, greenSlider, new Color(200, 255, 200), greenLabel, "m_green", 255);
+        addColorSlider("S:", c, satSlider, new Color(204, 204, 204), satLabel, "m_saturation", 100);
+        addColorSlider("B:", c, blueSlider, new Color(200, 200, 255), blueLabel, "m_blue", 255);
+        addColorSlider("B:", c, briSlider, new Color(255, 255, 255), briLabel, "m_brightness", 100);
 
         setSpecTxt.setEditable(true);
         setSpecTxt.setFont(new Font("Monospaced", Font.PLAIN, 30));
@@ -96,10 +100,18 @@ public class SpecialTextMaker extends JFrame implements ChangeListener, ActionLi
         c.add(setForegroundButton);
         c.add(setBackgroundButton);
 
+        JButton finishButton = new JButton("Finish");
+        finishButton.setActionCommand("finish");
+
+        c.add(finishButton);
+
         c.validate();
+
+        Timer textTimer = new Timer();
+        textTimer.scheduleAtFixedRate(new TextUpdate(), 10, 50);
     }
     
-    private void addColorSlider (String sliderName, Container c, JSlider toAdd, Color bkgHue, JTextField manualEnter, int maxValue){
+    private void addColorSlider (String sliderName, Container c, JSlider toAdd, Color bkgHue, JTextField manualEnter, String manualName, int maxValue){
         toAdd.setMinimum(0);
         toAdd.setMaximum(maxValue);
         toAdd.setValue(maxValue);
@@ -118,6 +130,7 @@ public class SpecialTextMaker extends JFrame implements ChangeListener, ActionLi
 
         manualEnter.setText(String.valueOf(toAdd.getValue()));
         manualEnter.setColumns(2);
+        manualEnter.setName(manualName);
 
         toAdd.addChangeListener(this);
 
@@ -126,35 +139,38 @@ public class SpecialTextMaker extends JFrame implements ChangeListener, ActionLi
         c.add(manualEnter);
     }
 
-    private boolean evaluateColor = true;
+    private boolean changeTextBoxes = true;
+    private boolean evaulateColor = true;
 
     @Override
     public void stateChanged(ChangeEvent e) {
         JSlider source = (JSlider) e.getSource();
-        switch(source.getName()){
-            case "red":
-                redLabel.setText(String.valueOf(source.getValue()));
-                break;
-            case "blue":
-                blueLabel.setText(String.valueOf(source.getValue()));
-                break;
-            case "green":
-                greenLabel.setText(String.valueOf(source.getValue()));
-                break;
-            case "hue":
-                hueLabel.setText(String.valueOf(source.getValue()));
-                updateRGB();
-                break;
-            case "sat":
-                satLabel.setText(String.valueOf(source.getValue()));
-                updateRGB();
-                break;
-            case "bright":
-                briLabel.setText(String.valueOf(source.getValue()));
-                updateRGB();
-                break;
+        if (changeTextBoxes){
+            switch (source.getName()) {
+                case "red":
+                    redLabel.setText(String.valueOf(source.getValue()));
+                    break;
+                case "blue":
+                    blueLabel.setText(String.valueOf(source.getValue()));
+                    break;
+                case "green":
+                    greenLabel.setText(String.valueOf(source.getValue()));
+                    break;
+                case "hue":
+                    hueLabel.setText(String.valueOf(source.getValue()));
+                    break;
+                case "sat":
+                    satLabel.setText(String.valueOf(source.getValue()));
+                    break;
+                case "bright":
+                    briLabel.setText(String.valueOf(source.getValue()));
+                    break;
+            }
         }
-        if (evaluateColor) {
+        if (source.getName().equals("hue") || source.getName().equals("sat") || source.getName().equals("bright"))
+            updateRGB();
+        if (evaulateColor) {
+            changeTextBoxes = true;
             if (settingForeground) {
                 finalChar.setForeground(new Color(Integer.valueOf(redLabel.getText()), Integer.valueOf(greenLabel.getText()), Integer.valueOf(blueLabel.getText())));
                 setForegroundButton.setBackground(finalChar.getForegroundColor());
@@ -204,7 +220,7 @@ public class SpecialTextMaker extends JFrame implements ChangeListener, ActionLi
     @Override
     public void actionPerformed(ActionEvent e) {
         if ("foreground".equals(e.getActionCommand())){
-            evaluateColor = false;
+            evaulateColor = false;
             setForegroundButton.setEnabled(false);
             setBackgroundButton.setEnabled(true);
             redSlider.setValue(finalChar.getForegroundColor().getRed());
@@ -212,9 +228,9 @@ public class SpecialTextMaker extends JFrame implements ChangeListener, ActionLi
             blueSlider.setValue(finalChar.getForegroundColor().getBlue());
             updateHSB();
             settingForeground = true;
-            evaluateColor = true;
+            evaulateColor = true;
         } else if ("background".equals(e.getActionCommand())){
-            evaluateColor = false;
+            evaulateColor = false;
             setForegroundButton.setEnabled(true);
             setBackgroundButton.setEnabled(false);
             redSlider.setValue(finalChar.getBackgroundColor().getRed());
@@ -222,8 +238,30 @@ public class SpecialTextMaker extends JFrame implements ChangeListener, ActionLi
             blueSlider.setValue(finalChar.getBackgroundColor().getBlue());
             updateHSB();
             settingForeground = false;
-            evaluateColor = true;
+            evaulateColor = true;
         } else
             System.out.println(e.getActionCommand());
+    }
+
+    private class TextUpdate extends TimerTask {
+        String[] previousVals = {"", "", "", "", "", ""};
+
+        @Override
+        public void run() {
+            updateTextBox(redLabel, redSlider, 0);
+            updateTextBox(blueLabel, blueSlider, 1);
+            updateTextBox(greenLabel, greenSlider, 2);
+            updateTextBox(hueLabel, hueSlider, 3);
+            updateTextBox(satLabel, satSlider, 4);
+            updateTextBox(briLabel, briSlider, 5);
+        }
+
+        private void updateTextBox(JTextField label, JSlider slider, int pos){
+            if (!label.getText().equals(previousVals[pos]) && label.getText().length() > 0 && Integer.valueOf(label.getText()) <= 255){
+                slider.setValue(Integer.valueOf(label.getText()));
+                changeTextBoxes = false;
+            }
+            previousVals[pos] = label.getText();
+        }
     }
 }
