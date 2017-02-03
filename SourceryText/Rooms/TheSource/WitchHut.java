@@ -141,7 +141,7 @@ public class WitchHut extends Room {
     @Override
     public void fireKeyEvent(KeyEvent event, KeyMap keymap) {
         this.keymap = keymap;
-        genericKeyEvent(event);
+        genericKeyEvent(event, keymap);
         if (puzzler != null) {
                 if(event.getKeyCode() == keymap.CONFIRM_PRIMARY || event.getKeyCode() == keymap.CONFIRM_SECONDARY) {
                     puzzler.getInput("enter");

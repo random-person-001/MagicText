@@ -34,7 +34,7 @@ public class Wolf extends Mortal {
 
     @Override
     public void update() {
-        setDispIcon(new SpecialText("W", new Color(255, 200, 200)));
+        setDispIcon(new SpecialText("W", new Color(230, 81, 79)));
         Mortal closestGoodGuy = getClosestGoodGuy();
         if (closestGoodGuy != null) {
             if (Math.abs(x - closestGoodGuy.getX()) <= 1 && Math.abs(y - closestGoodGuy.getY()) <= 1) {
