@@ -61,7 +61,7 @@ public class Art implements java.io.Serializable{
             "|  -+- +-- | | -+-                           |\n" +
             "|   |  |   \\ /  |         Introduction       |\n" +
             "|   |  +--  |   |         New Game           |\n" +
-            "|   |  |   / \\  |         Multiplayer        |\n" +
+            "|   |  |   / \\  |         Join LAN Game      |\n" +
             "|   |  +-- | |  |         Load Game          |\n" +
             "|                         Settings           |\n" +
             "|                         Quit               |\n" +
@@ -143,12 +143,13 @@ public class Art implements java.io.Serializable{
     public String multiplayerMenu =
             "@                                            @\n" +
             "|                                            |\n" +
-            "|   M U L T I P L A Y E R     ( B E T A )    |\n" +
+            "|        C O N N E C T   T O   L A N         |\n" +
+            "|                                            |\n" +
+            "|      M U L T I P L A Y E R   G A M E       |\n" +
             "|                                            |\n" +
             "|                                            |\n" +
-            "|                   β     New Game as server |\n" +
-            "|                   β     Connect to server  |\n" +
-            "|                         Abort              |\n" +
+            "|                                            |\n" +
+            "|                                            |\n" +
             "|                                            |\n" +
             "|                                            |\n" +
             "|                                            |\n" +
@@ -555,7 +556,7 @@ public class Art implements java.io.Serializable{
     public String ipSetMenu =
             "  Type IP: _____________\n" +
             "  <Clear IP>            \n" +
-            "  Connect (Play!)       \n" +
+            "  Connect!              \n" +
             "  Back                  \n";
 
 
