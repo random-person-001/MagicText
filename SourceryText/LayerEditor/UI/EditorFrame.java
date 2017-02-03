@@ -5,11 +5,13 @@ import SourceryText.SpecialText;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 /**
  * Created by Jared on 1/29/2017.
  */
-public class EditorFrame extends JFrame {
+public class EditorFrame extends JFrame implements MouseListener {
 
     public ColoredTextMatrix viewMatrix;
     public EditorToolbar toolbar;
@@ -57,5 +59,29 @@ public class EditorFrame extends JFrame {
     protected void repaintComponents(){
         toolbar.repaint();
         viewMatrix.repaint();
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
     }
 }
