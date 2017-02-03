@@ -34,10 +34,9 @@ public class StartMethods {
         player.setGameInstance(master);
         new Thread(() -> master.runGame(player)).start();
 
-        // For multiplayer, if wanted
-        NetworkServerBoss nsb = new NetworkServerBoss(master);
+        // For multiplayer, call openNetworking immediately
         if (numPlayers > 1){
-            (new Thread(nsb::openNetworking)).start();
+            (new Thread(master::openNetworking)).start();
         }
     }
 
@@ -51,6 +50,7 @@ public class StartMethods {
         org = imported.org; // Now we switch orgs out.
         org.resetClock();
         imported.resumeFromSave();
+        instance.resetNSB();
         if (imported.getHasLocalWindow()) {
             System.out.println("Has local window, adding listener");
             PlayerKeyPressListener kl = new PlayerKeyPressListener(imported);

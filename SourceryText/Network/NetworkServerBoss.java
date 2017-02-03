@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
+import java.util.ArrayList;
 
 /**
  * Accepts incoming connection requests from clients, and creates a NetworkServerWorker for handling each one.
@@ -17,14 +18,17 @@ public class NetworkServerBoss {
     private ServerSocket serverSocket;
     private int PORT = 8793;
     private boolean acceptingConnections = false;
+    private ArrayList<NetworkServerWorker> workers = new ArrayList();
 
     public NetworkServerBoss(GameInstance master) {
         masterInstance = master;
         try {
             serverSocket = new ServerSocket(PORT);
-            serverSocket.setSoTimeout(5 * 1000);
+            serverSocket.setSoTimeout(50 * 1000);
+            System.out.println("[NetworkServerBoss] Started server socket");
         } catch (IOException e) {
             e.printStackTrace();
+            System.out.println("[NetworkServerBoss] IO Exception starting server socket");
         }
     }
 
@@ -44,7 +48,6 @@ public class NetworkServerBoss {
             try {
                 System.out.println("[NetworkServerBoss] serverSocket is " + (serverSocket==null ? "null" : "nonnull"));
                 System.out.println("[NetworkServerBoss] Waiting for client on port " + serverSocket.getLocalPort() + "...");
-                System.out.println(serverSocket.toString());
                 Socket server = serverSocket.accept(); // Note: code waits here until it accepts an incoming request
                 System.out.println("[NetworkServerBoss] Just connected to " + server.getRemoteSocketAddress());
 
@@ -56,8 +59,9 @@ public class NetworkServerBoss {
 
                 // Should pass whatever the serverSocket.accept() returns to the server worker, for it to listen on
                 // Network server worker should also run itself as a thread, allowing us to go on
-                NetworkServerWorker nsb = new NetworkServerWorker(instance.getCorrespondingPlayer(), server);
-                new Thread(nsb::begin).start();
+                NetworkServerWorker nsw = new NetworkServerWorker(instance.getCorrespondingPlayer(), server);
+                workers.add(nsw);
+                new Thread(nsw::begin).start();
                 System.out.println("[NetworkServerBoss] Accepted a client and passed on to worker.  Now waiting a bit");
                 Thread.sleep(2000);
             } catch (SocketTimeoutException e){
@@ -68,6 +72,16 @@ public class NetworkServerBoss {
                 e.printStackTrace();
                 System.out.println("Interrupt");
             }
+        }
+    }
+
+    /**
+     * Close any connections we've accepted thus far.  Does not change the state of whether we are accepting more
+     * connections.
+     */
+    public void bootOutClients(){
+        for (NetworkServerWorker w : workers){
+            w.disconnect();
         }
     }
 }

@@ -2,14 +2,13 @@ package SourceryText.Network;
 
 import SourceryText.GameSettings.KeyMap;
 import SourceryText.Layer;
+import SourceryText.Rooms.TheSource.SourceCaves;
 import SourceryText.Window;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.*;
-import java.net.ConnectException;
-import java.net.Socket;
-import java.net.SocketException;
+import java.net.*;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -29,9 +28,12 @@ public class NetworkClient {
     public void main(String serverName, KeyMap keymap) throws IOException {
         w = new Window();
         w.txtArea.addKeyListener(kl);
-        connect(serverName);
-        sendKeyMap(keymap);
-        new Timer().scheduleAtFixedRate(updateTask, 4, 50);
+        if (connect(serverName)) {
+            sendKeyMap(keymap);
+            new Timer().scheduleAtFixedRate(updateTask, 4, 50);
+        } else {
+            attemptCancel();
+        }
     }
 
     private void sendKeyMap(KeyMap keymap)  throws IOException {
@@ -39,28 +41,38 @@ public class NetworkClient {
             System.out.println("Sending keymap over");
             out.writeObject(keymap);
         } else {
-            System.out.println("Couldn't send keymap :(");
+            System.out.println("Couldn't send keymap - out stream was null :(");
         }
     }
 
-    private void connect(String serverName) throws IOException {
+    private boolean connect(String serverName) throws IOException {
         System.out.println("Connecting to " + serverName + " on port " + port);
         try {
             server = new Socket(serverName, port);
-        } catch (ConnectException e) {
-            System.out.println("Could not connect Sourcerery Text server " + serverName + " port " + port + "; therefore " +
-                    "nullpointers will be thrown.  Are you sure the server is up and running?");
+            server.setSoTimeout(5*1000);
+        } catch (SocketException e) {
+            System.out.println("[NetworkClient] Could not connect Sourcerery Text server " + serverName + " port " +
+                    port + "; therefore nullpointers will be thrown.  Are you sure the server is up and running?");
             server = null;
-            return;
+            System.out.println(e.getMessage());
+            return false;
         }
+        System.out.println("Connected to " + server.getRemoteSocketAddress() + ", and now trying to actually talk");
 
-        System.out.println("Just connected to " + server.getRemoteSocketAddress());
-        OutputStream outToServer = server.getOutputStream();
-        out = new ObjectOutputStream(outToServer);
+        try {
+            InputStream inFromServer = server.getInputStream();
+            in = new ObjectInputStream(inFromServer);
+            OutputStream outToServer = server.getOutputStream();
+            out = new ObjectOutputStream(outToServer);
 
-        InputStream inFromServer = server.getInputStream();
-        in = new ObjectInputStream(inFromServer);
-        System.out.println("Network connections look all good!");
+            System.out.println("Network connections look all good!");
+            return true;
+        }
+        catch (SocketTimeoutException e){
+            System.out.println("Socket timed out.  Are you sure that the multiplayer server is *accepting* connections?");
+            attemptCancel();
+            return false;
+        }
     }
 
     /**
@@ -68,14 +80,18 @@ public class NetworkClient {
      */
     public void attemptCancel() {
         try {
-            if (server != null)
-                server.close();
+            if (server != null) server.close();
         } catch (IOException e) {
             System.out.println("Cancelling the NetworkClient failed:");
             e.printStackTrace();
         } finally {
             updateTask.cancel();
+            server = null;
+            in = null;
+            out = null;
         }
+        w.removeKeyListener(kl);
+        w.dispose();
     }
 
     /**
@@ -89,7 +105,14 @@ public class NetworkClient {
             System.out.println("Input stream is null; aborting reading ColoredTextMatrix attempt");
             return;
         }
-        Layer l = (Layer) in.readObject();
+        Layer l;
+        try {
+            l = (Layer) in.readObject();
+        } catch (EOFException e){
+            System.out.println("Input stream has ended :(");
+            attemptCancel();
+            return;
+        }
         if (l != null) {
             System.out.println("Received image!");
             w.build(l);
