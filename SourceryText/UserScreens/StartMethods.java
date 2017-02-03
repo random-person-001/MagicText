@@ -34,12 +34,10 @@ public class StartMethods {
         player.setGameInstance(master);
         new Thread(() -> master.runGame(player)).start();
 
-        // For multiplayer
+        // For multiplayer, if wanted
+        NetworkServerBoss nsb = new NetworkServerBoss(master);
         if (numPlayers > 1){
-            NetworkServerBoss nsb = new NetworkServerBoss(master);
-            System.out.println("Network server boss init exited.");
-            (new Thread(() -> nsb.run())).start();
-            System.out.println("Network server boss run has began");
+            (new Thread(nsb::openNetworking)).start();
         }
     }
 

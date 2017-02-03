@@ -12,23 +12,35 @@ import java.net.SocketTimeoutException;
  * Accepts incoming connection requests from clients, and creates a NetworkServerWorker for handling each one.
  * Created by riley on 31-Jan-2017.
  */
-public class NetworkServerBoss extends Thread{
+public class NetworkServerBoss {
     private GameInstance masterInstance;
     private ServerSocket serverSocket;
     private int PORT = 8793;
+    private boolean acceptingConnections = false;
 
     public NetworkServerBoss(GameInstance master) {
         masterInstance = master;
         try {
             serverSocket = new ServerSocket(PORT);
-            serverSocket.setSoTimeout(60 * 1000);
+            serverSocket.setSoTimeout(5 * 1000);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void run(){
-        while (true){
+    public void openNetworking(){
+        if (!acceptingConnections) {
+            acceptingConnections = true;
+            (new Thread(this::networkingLoop)).start();
+        }
+    }
+
+    public void closeNetworking(){
+        acceptingConnections = false;
+    }
+
+    private void networkingLoop(){
+        while (acceptingConnections){
             try {
                 System.out.println("[NetworkServerBoss] serverSocket is " + (serverSocket==null ? "null" : "nonnull"));
                 System.out.println("[NetworkServerBoss] Waiting for client on port " + serverSocket.getLocalPort() + "...");
