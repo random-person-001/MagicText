@@ -95,15 +95,15 @@ public class NetworkClient {
         w.removeKeyListener(kl);
         w.dispose();
         JOptionPane.showMessageDialog(null, "Connection to Sourcery Text LAN game at " + ipAddress +
-                   " failed.\nMake sure you entered the correct IP and that they are accepting connections.",
-                "Connection failed", JOptionPane.ERROR_MESSAGE);
+                   " failed or was interrupted.\nMake sure you entered the correct IP and that they are accepting " +
+                   "connections.","Connection failed", JOptionPane.ERROR_MESSAGE);
     }
 
     /**
      * Get the image and put it on the window
      *
-     * @throws IOException
-     * @throws ClassNotFoundException
+     * @throws IOException when things go wrong with the network
+     * @throws ClassNotFoundException but really shouldn't
      */
     private void receiveImage() throws IOException, ClassNotFoundException {
         if (in == null) {

@@ -21,7 +21,7 @@ import java.util.List;
  * Created by riley on 02-Oct-2016, expanded significantly to accommodate zone switching on 22-Nov-2016
  */
 public class GameInstance implements java.io.Serializable {
-    private NetworkServerBoss nsb;
+    private transient NetworkServerBoss nsb = new NetworkServerBoss(this);
     private Player protaganist;
     private List<Player> playerList;
     private int zoneNumber;
@@ -39,7 +39,7 @@ public class GameInstance implements java.io.Serializable {
         protaganist.org.getWindow().txtArea.addKeyListener(kl);
         protaganist.org.terminateClock();
         switchZones(); // Initialize zone one to start
-        resetNSB();
+        //resetNSB();
     }
 
     /**
