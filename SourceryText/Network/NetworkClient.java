@@ -2,9 +2,9 @@ package SourceryText.Network;
 
 import SourceryText.GameSettings.KeyMap;
 import SourceryText.Layer;
-import SourceryText.Rooms.TheSource.SourceCaves;
 import SourceryText.Window;
 
+import javax.swing.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.*;
@@ -24,8 +24,10 @@ public class NetworkClient {
     private ObjectOutputStream out = null;
     private MultiplayerKeyListener kl = new MultiplayerKeyListener();
     private UpdateTask updateTask = new UpdateTask();
+    private String ipAddress;
 
     public void main(String serverName, KeyMap keymap) throws IOException {
+        ipAddress = serverName;
         w = new Window();
         w.txtArea.addKeyListener(kl);
         if (connect(serverName)) {
@@ -50,7 +52,7 @@ public class NetworkClient {
         try {
             server = new Socket(serverName, port);
             server.setSoTimeout(5*1000);
-        } catch (SocketException e) {
+        } catch (SocketException | UnknownHostException e) {
             System.out.println("[NetworkClient] Could not connect Sourcerery Text server " + serverName + " port " +
                     port + "; therefore nullpointers will be thrown.  Are you sure the server is up and running?");
             server = null;
@@ -92,6 +94,9 @@ public class NetworkClient {
         }
         w.removeKeyListener(kl);
         w.dispose();
+        JOptionPane.showMessageDialog(null, "Connection to Sourcery Text LAN game at " + ipAddress +
+                   " failed.\nMake sure you entered the correct IP and that they are accepting connections.",
+                "Connection failed", JOptionPane.ERROR_MESSAGE);
     }
 
     /**
