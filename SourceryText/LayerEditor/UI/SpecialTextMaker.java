@@ -53,7 +53,7 @@ public class SpecialTextMaker extends JFrame implements ChangeListener, ActionLi
 
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("SpecialText Creator");
-        setResizable(false);
+        //setResizable(false);
 
         redSlider.setName("red");
         blueSlider.setName("blue");

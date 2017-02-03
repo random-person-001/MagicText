@@ -31,8 +31,6 @@ public class EditorFrame extends JFrame {
 
         viewMatrix = new ColoredTextMatrix(510, 570);
 
-        setVisible(true);
-
         setBounds(100, 100, 700, 640);
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -48,6 +46,8 @@ public class EditorFrame extends JFrame {
         c.add(toolbar);
 
         c.validate();
+
+        setVisible(true);
 
         repaintComponents();
 
