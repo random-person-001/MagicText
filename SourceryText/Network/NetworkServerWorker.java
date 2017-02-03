@@ -67,6 +67,9 @@ public class NetworkServerWorker extends Thread {
         server = null;
         out = null;
         in = null;
+        player.room.splashMessage("Player '"+player.getUsername()+"' disconnected \n" +
+                " from the game", "* GAME *", player.room.playo);
+        player.braindead = true;
     }
 
     /**

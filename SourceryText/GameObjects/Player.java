@@ -114,6 +114,7 @@ public class Player extends Mortal implements java.io.Serializable {
 
     private int spellCasts = 0;
     private int snowflakes = 0; // Note: we'll probably want to improve the currency system later, like last few methods for this class
+    public boolean braindead = false;
 
 
     /**
@@ -515,7 +516,10 @@ public class Player extends Mortal implements java.io.Serializable {
         }
 
         SpecialText playerIcon;
-        if (!swimming)
+        if (braindead){
+            playerIcon = new SpecialText("@", new Color(44, 59, 38));
+        }
+        else if (!swimming)
             playerIcon = new SpecialText("@", new Color(150, 255, 100));
         else {
             if (waterEntry == 2)

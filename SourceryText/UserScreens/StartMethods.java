@@ -49,6 +49,11 @@ public class StartMethods {
 
         org = imported.org; // Now we switch orgs out.
         org.resetClock();
+        for (Player p : instance.getPlayers()){ // there will be no non-braindead client players on save resume.
+            if (!p.getHasLocalWindow()){
+                p.braindead = true;
+            }
+        }
         imported.resumeFromSave();
         instance.resetNSB();
         if (imported.getHasLocalWindow()) {

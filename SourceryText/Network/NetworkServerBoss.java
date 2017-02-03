@@ -1,6 +1,7 @@
 package SourceryText.Network;
 
 import SourceryText.GameInstance;
+import SourceryText.GameObjects.Player;
 import SourceryText.SlaveGameInstance;
 
 import java.io.IOException;
@@ -55,7 +56,16 @@ public class NetworkServerBoss {
                 // control its movements between rooms, etc)
                 System.out.println("[NetworkServerBoss] Adding another multiplayer player!  Welcome!");
                 SlaveGameInstance instance = new SlaveGameInstance(masterInstance);
-                instance.runGameAsSlave();
+                boolean foundBrainDeadPlayerToReconstitute = false;
+                for (Player p : masterInstance.getPlayers()){
+                    if (p.braindead && !foundBrainDeadPlayerToReconstitute){
+                        foundBrainDeadPlayerToReconstitute = true;
+                        instance.runGameAsSlave(p);
+                        p.braindead = false;
+                    }
+                } if (!foundBrainDeadPlayerToReconstitute){
+                    instance.runGameAsSlave(); // Run by getting a new player
+                }
 
                 // Should pass whatever the serverSocket.accept() returns to the server worker, for it to listen on
                 // Network server worker should also run itself as a thread, allowing us to go on
@@ -63,7 +73,7 @@ public class NetworkServerBoss {
                 workers.add(nsw);
                 new Thread(nsw::begin).start();
                 System.out.println("[NetworkServerBoss] Accepted a client and passed on to worker.  Now waiting a bit");
-                Thread.sleep(2000);
+                Thread.sleep(1000);
             } catch (SocketTimeoutException e){
                 System.out.println("[NetworkServerBoss] Bro, server socket timed out.  We'll try again.");
             } catch (IOException e) {

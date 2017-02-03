@@ -254,4 +254,8 @@ public class GameInstance implements java.io.Serializable {
         }
         nsb = new NetworkServerBoss(this);
     }
+
+    public List<Player> getPlayers(){
+        return playerList;
+    }
 }
