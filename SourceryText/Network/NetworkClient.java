@@ -25,7 +25,7 @@ public class NetworkClient {
     private MultiplayerKeyListener kl = new MultiplayerKeyListener();
     private UpdateTask updateTask = new UpdateTask();
     private String ipAddress;
-    private int fps = 30;
+    private int fps = 100; // Max read fps
 
     public void main(String serverName, KeyMap keymap) throws IOException {
         ipAddress = serverName;
@@ -33,7 +33,7 @@ public class NetworkClient {
         w.txtArea.addKeyListener(kl);
         if (connect(serverName)) {
             sendKeyMap(keymap);
-            new Timer().scheduleAtFixedRate(updateTask, 4, 1000/fps);
+            updateTask.start();
         } else {
             attemptCancel();
         }
@@ -88,7 +88,7 @@ public class NetworkClient {
             System.out.println("Cancelling the NetworkClient failed:");
             e.printStackTrace();
         } finally {
-            updateTask.cancel();
+            //updateTask.cancel();
             server = null;
             in = null;
             out = null;
@@ -161,14 +161,21 @@ public class NetworkClient {
         }
     }
 
-    private class UpdateTask extends TimerTask {
+    private class UpdateTask extends Thread {
         @Override
         public void run() {
             try {
-                receiveImage();
+                while (server != null) {
+                    receiveImage();
+                    Thread.sleep(1000/fps);
+                }
             } catch (SocketException e) {
                 System.out.println("The other side probably disconnected (SocketException).");
+                attemptCancel();
             } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+                attemptCancel();
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }

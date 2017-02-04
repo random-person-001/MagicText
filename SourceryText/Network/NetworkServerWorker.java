@@ -23,7 +23,7 @@ public class NetworkServerWorker extends Thread {
     private ObjectOutputStream out;
     private ObjectInputStream in;
     private Player player; //Client player
-    private int fps = 30;
+    private int fps = 30; // max write (display) fps
 
     /**
      * @param playery the Player who the display should be centered on
