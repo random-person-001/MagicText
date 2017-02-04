@@ -428,7 +428,17 @@ class Inventory implements java.io.Serializable {
      * Submenus: spells, items, equip, quit
      */
     private void operateTopMenu() {
-        loopAtMenuEnd(2, 6);
+        loopAtMenuEnd(2, 7);
+        String multiplayerText = (player.getGameInstance().getIsNetworkOpen()) ? "Close to LAN   " :  "Open to LAN    " ;
+        if (!player.getHasLocalWindow()){ // max 15 chars long
+            multiplayerText = "change LAN";
+        }
+        String [] sArray = new String [multiplayerText.toCharArray().length];
+        for (int i=0; i<sArray.length; i++){
+            sArray[i] = String.valueOf(multiplayerText.toCharArray()[i]);
+            org.editLayer(new SpecialText(sArray[i], (player.getHasLocalWindow()? Color.white: Color.gray)), topMenuLayer, 4, 3+i);
+        }
+        //org.editLayer(".", topMenuLayer, 4, 3);
         //cursorX = 28;
         if (pressedA) {
             switch (cursorY) {
@@ -445,10 +455,22 @@ class Inventory implements java.io.Serializable {
                     cursorY = 2;
                     break;
                 case 5:
+                    // Toggle open to lan-ness
+                    if (player.getHasLocalWindow()) {
+                        if (player.getGameInstance().getIsNetworkOpen()) {
+                            player.getGameInstance().bootClientPlayersOff();
+                            player.getGameInstance().closeNetworking();
+                        } else {
+                            player.getGameInstance().openNetworking();
+                        }
+                    }
+                    cursorY = 2;
+                    break;
+                case 6:
                     jumpToNewMenu(quitMenuLayer, QUIT, topMenuLayer, 28);
                     cursorY = 4;
                     break;
-                case 6:
+                case 7:
                     exitAllMenus();
                     break;
             }

@@ -226,6 +226,13 @@ public class GameInstance implements java.io.Serializable {
     }
 
     /**
+     * @return whether the game is accepting connections from other computers
+     */
+    public boolean getIsNetworkOpen(){
+        return nsb.getIsNetworkOpen();
+    }
+
+    /**
      * Kick all players out who aren't the host.
      * Notifies all client players that they'll be kicked off a bit before the fact, to be nice.
      */

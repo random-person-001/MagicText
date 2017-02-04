@@ -95,7 +95,7 @@ class MainMenu {
         }
         else if (cursorY == 9) {
             System.out.println("\n\nNEW GAME!!!\n\n");
-            starter.newGame(1, keymap);
+            starter.newGame(keymap);
         }
         else if (cursorY == 10) {
             Layer multiplayerLayer = new Layer(Art.strToArray(new Art().multiplayerMenu), "MULTIPLAYER_MENU");

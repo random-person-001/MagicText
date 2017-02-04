@@ -527,6 +527,7 @@ public class Art implements java.io.Serializable{
                     "|  Spells         |\n" +
                     "|  Items          |\n" +
                     "|  Equipment      |\n" +
+                    "|                 |\n" +
                     "|  SAVE / QUIT    |\n" +
                     "|  EXIT MENU      |\n" +
                     "+-----------------+\n" +

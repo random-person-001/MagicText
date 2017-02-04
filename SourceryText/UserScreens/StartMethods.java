@@ -23,21 +23,14 @@ public class StartMethods {
         this.org = org;
     }
 
-    void newGame(int numPlayers, KeyMap keymap) {
+    void newGame(KeyMap keymap) {
         System.out.println("[-]\n\\/\\/\\/\\/\\/\\/\\\n  CREATING NEW GAME\n\\/\\/\\/\\/\\/\\/\\\n");
-        if (numPlayers < 1) {
-            return;
-        }
         Player player = new Player(null, org, 0, keymap);
         player.roomName = "TutorialBasement";
         GameInstance master = new GameInstance(player);
         player.setGameInstance(master);
         new Thread(() -> master.runGame(player)).start();
-
-        // For multiplayer, call openNetworking immediately
-        if (numPlayers > 1){
-            (new Thread(master::openNetworking)).start();
-        }
+        (new Thread(master::openNetworking)).start();
     }
 
     void buildGame(GameInstance instance) {

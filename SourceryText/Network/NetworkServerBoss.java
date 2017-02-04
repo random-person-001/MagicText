@@ -25,7 +25,7 @@ public class NetworkServerBoss {
         masterInstance = master;
         try {
             serverSocket = new ServerSocket(PORT);
-            serverSocket.setSoTimeout(50 * 1000);
+            serverSocket.setSoTimeout(6 * 1000);
             System.out.println("[NetworkServerBoss] Started server socket");
         } catch (IOException e) {
             e.printStackTrace();
@@ -93,5 +93,9 @@ public class NetworkServerBoss {
         for (NetworkServerWorker w : workers){
             w.disconnect();
         }
+    }
+
+    public boolean getIsNetworkOpen() {
+        return acceptingConnections;
     }
 }
