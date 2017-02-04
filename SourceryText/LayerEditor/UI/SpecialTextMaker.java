@@ -9,8 +9,6 @@ import javax.swing.plaf.metal.MetalLookAndFeel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.*;
 import java.util.Timer;
 
@@ -140,43 +138,40 @@ public class SpecialTextMaker extends JFrame implements ChangeListener, ActionLi
     }
 
     private boolean changeTextBoxes = true;
-    private boolean evaulateColor = true;
+    private boolean evaluateColor = true;
 
     @Override
     public void stateChanged(ChangeEvent e) {
         JSlider source = (JSlider) e.getSource();
-        if (changeTextBoxes){
-            switch (source.getName()) {
-                case "red":
-                    redLabel.setText(String.valueOf(source.getValue()));
-                    break;
-                case "blue":
-                    blueLabel.setText(String.valueOf(source.getValue()));
-                    break;
-                case "green":
-                    greenLabel.setText(String.valueOf(source.getValue()));
-                    break;
-                case "hue":
-                    hueLabel.setText(String.valueOf(source.getValue()));
-                    break;
-                case "sat":
-                    satLabel.setText(String.valueOf(source.getValue()));
-                    break;
-                case "bright":
-                    briLabel.setText(String.valueOf(source.getValue()));
-                    break;
-            }
+        switch (source.getName()) {
+            case "red":
+                redLabel.setText(String.valueOf(source.getValue()));
+                break;
+            case "blue":
+                blueLabel.setText(String.valueOf(source.getValue()));
+                break;
+            case "green":
+                greenLabel.setText(String.valueOf(source.getValue()));
+                break;
+            case "hue":
+                hueLabel.setText(String.valueOf(source.getValue()));
+                break;
+            case "sat":
+                satLabel.setText(String.valueOf(source.getValue()));
+                break;
+            case "bright":
+                briLabel.setText(String.valueOf(source.getValue()));
+                break;
         }
-        if (source.getName().equals("hue") || source.getName().equals("sat") || source.getName().equals("bright"))
-            updateRGB();
-        if (evaulateColor) {
-            changeTextBoxes = true;
+        if (evaluateColor) {
+            if (source.getName().equals("hue") || source.getName().equals("sat") || source.getName().equals("bright"))
+                updateRGB();
             if (settingForeground) {
-                finalChar.setForeground(new Color(Integer.valueOf(redLabel.getText()), Integer.valueOf(greenLabel.getText()), Integer.valueOf(blueLabel.getText())));
+                finalChar.setForeground(new Color(redSlider.getValue(), greenSlider.getValue(), blueSlider.getValue()));
                 setForegroundButton.setBackground(finalChar.getForegroundColor());
                 setSpecTxt.setForeground(finalChar.getForegroundColor());
             } else {
-                finalChar.setBackground(new Color(Integer.valueOf(redLabel.getText()), Integer.valueOf(greenLabel.getText()), Integer.valueOf(blueLabel.getText())));
+                finalChar.setBackground(new Color(redSlider.getValue(), greenSlider.getValue(), blueSlider.getValue()));
                 setBackgroundButton.setBackground(finalChar.getBackgroundColor());
                 setSpecTxt.setBackground(finalChar.getBackgroundColor());
             }
@@ -192,53 +187,36 @@ public class SpecialTextMaker extends JFrame implements ChangeListener, ActionLi
 
     private void updateHSB(){
         float[] hsbVals =  new float[3];
-        Color.RGBtoHSB(getSliderVal(redSlider), getSliderVal(greenSlider), getSliderVal(blueSlider), hsbVals);
+        Color.RGBtoHSB(redSlider.getValue(), greenSlider.getValue(), blueSlider.getValue(), hsbVals);
         hueSlider.setValue((int)(hsbVals[0] * 255));
         satSlider.setValue((int)(hsbVals[1] * 255));
         briSlider.setValue((int)(hsbVals[2] * 255));
     }
 
-    public int getSliderVal(JSlider getFrom){
-        switch(getFrom.getName()){
-            case "red":
-                return Integer.valueOf(redLabel.getText());
-            case "blue":
-                return Integer.valueOf(blueLabel.getText());
-            case "green":
-                return Integer.valueOf(greenLabel.getText());
-            case "hue":
-                return Integer.valueOf(hueLabel.getText());
-            case "sat":
-                return Integer.valueOf(satLabel.getText());
-            case "bright":
-                return Integer.valueOf(briLabel.getText());
-            default:
-                return 0;
-        }
-    }
-
     @Override
     public void actionPerformed(ActionEvent e) {
         if ("foreground".equals(e.getActionCommand())){
-            evaulateColor = false;
+            evaluateColor = false;
             setForegroundButton.setEnabled(false);
             setBackgroundButton.setEnabled(true);
+            finalChar.setBackground(new Color(redSlider.getValue(), greenSlider.getValue(), blueSlider.getValue()));
+            settingForeground = true;
             redSlider.setValue(finalChar.getForegroundColor().getRed());
             greenSlider.setValue(finalChar.getForegroundColor().getGreen());
             blueSlider.setValue(finalChar.getForegroundColor().getBlue());
             updateHSB();
-            settingForeground = true;
-            evaulateColor = true;
+            evaluateColor = true;
         } else if ("background".equals(e.getActionCommand())){
-            evaulateColor = false;
+            evaluateColor = false;
             setForegroundButton.setEnabled(true);
             setBackgroundButton.setEnabled(false);
+            finalChar.setForeground(new Color(redSlider.getValue(), greenSlider.getValue(), blueSlider.getValue()));
+            settingForeground = false;
             redSlider.setValue(finalChar.getBackgroundColor().getRed());
             greenSlider.setValue(finalChar.getBackgroundColor().getGreen());
             blueSlider.setValue(finalChar.getBackgroundColor().getBlue());
             updateHSB();
-            settingForeground = false;
-            evaulateColor = true;
+            evaluateColor = true;
         } else
             System.out.println(e.getActionCommand());
     }
@@ -254,10 +232,11 @@ public class SpecialTextMaker extends JFrame implements ChangeListener, ActionLi
             updateTextBox(hueLabel, hueSlider, 3);
             updateTextBox(satLabel, satSlider, 4);
             updateTextBox(briLabel, briSlider, 5);
+            System.out.println("STM Alive");
         }
 
         private void updateTextBox(JTextField label, JSlider slider, int pos){
-            if (!label.getText().equals(previousVals[pos]) && label.getText().length() > 0 && Integer.valueOf(label.getText()) <= 255){
+            if (!label.getText().equals(previousVals[pos]) && label.getText().length() > 0 && Integer.valueOf(label.getText()) <= 255 && Integer.valueOf(label.getText()) > 0){
                 slider.setValue(Integer.valueOf(label.getText()));
                 changeTextBoxes = false;
             }
