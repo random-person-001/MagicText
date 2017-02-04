@@ -193,9 +193,9 @@ public class SpecialTextMaker extends JFrame implements ChangeListener, ActionLi
     private void updateHSB(){
         float[] hsbVals =  new float[3];
         Color.RGBtoHSB(redSlider.getValue(), greenSlider.getValue(), blueSlider.getValue(), hsbVals);
-        hueSlider.setValue((int)(hsbVals[0] * 255));
-        satSlider.setValue((int)(hsbVals[1] * 255));
-        briSlider.setValue((int)(hsbVals[2] * 255));
+        hueSlider.setValue((int)(hsbVals[0] * 360));
+        satSlider.setValue((int)(hsbVals[1] * 100));
+        briSlider.setValue((int)(hsbVals[2] * 100));
     }
 
     @Override
