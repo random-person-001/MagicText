@@ -9,11 +9,9 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.*;
 import java.net.*;
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
- * Connects to a NetworkServer and places the ColoredTextMatrix it recives on its own window.  Uses TCP.
+ * Connects to a NetworkServer and places the ColoredTextMatrix it receives on its own window.  Uses TCP.
  * Created by riley on 05-Nov-2016.
  */
 public class NetworkClient {
@@ -23,7 +21,7 @@ public class NetworkClient {
     private ObjectInputStream in = null;
     private ObjectOutputStream out = null;
     private MultiplayerKeyListener kl = new MultiplayerKeyListener();
-    private UpdateTask updateTask = new UpdateTask();
+    private UpdateTask updateTask = new UpdateTask("ST-Client-Layer-Receiver");
     private String ipAddress;
     private int fps = 100; // Max read fps
 
@@ -64,7 +62,7 @@ public class NetworkClient {
 
         try {
             InputStream inFromServer = server.getInputStream();
-            in = new ObjectInputStream(inFromServer);
+            in = new ObjectInputStream(new BufferedInputStream(inFromServer));
             OutputStream outToServer = server.getOutputStream();
             out = new ObjectOutputStream(outToServer);
 
@@ -73,7 +71,6 @@ public class NetworkClient {
         }
         catch (SocketTimeoutException e){
             System.out.println("Socket timed out.  Are you sure that the multiplayer server is *accepting* connections?");
-            attemptCancel();
             return false;
         }
     }
@@ -96,8 +93,8 @@ public class NetworkClient {
         w.removeKeyListener(kl);
         w.dispose();
         JOptionPane.showMessageDialog(null, "Connection to Sourcery Text LAN game at " + ipAddress +
-                   " failed or was interrupted.\nMake sure you entered the correct IP and that they are accepting " +
-                   "connections.","Connection failed", JOptionPane.ERROR_MESSAGE);
+                " failed, was interrupted, or was terminated.\nMake sure you entered the correct IP and that " +
+                "they are accepting connections.","Connection failed", JOptionPane.ERROR_MESSAGE);
     }
 
     /**
@@ -113,6 +110,7 @@ public class NetworkClient {
         }
         Layer l;
         try {
+            //System.out.println(in.available());
             l = (Layer) in.readObject();
         } catch (EOFException e){
             System.out.println("Input stream has ended :(");
@@ -162,6 +160,10 @@ public class NetworkClient {
     }
 
     private class UpdateTask extends Thread {
+        public UpdateTask(String myName) {
+            super(myName);
+        }
+
         @Override
         public void run() {
             try {

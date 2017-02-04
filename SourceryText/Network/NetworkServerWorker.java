@@ -5,9 +5,7 @@ import SourceryText.GameSettings.KeyMap;
 import SourceryText.Layer;
 
 import java.awt.event.KeyEvent;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.Socket;
 import java.net.SocketException;
 import java.util.Timer;
@@ -50,6 +48,7 @@ public class NetworkServerWorker extends Thread {
         } catch (IOException e){
             System.out.println("I/O Exception in the server worker.begin() method");
             e.printStackTrace();
+            disconnect();
         }
     }
 
@@ -58,12 +57,14 @@ public class NetworkServerWorker extends Thread {
      */
     public void disconnect() {
         updaterTask.cancel();
-        try {
-            if (server != null) server.close();
-            if (out != null) out.close();
-            if (in != null) in.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (server!=null && !server.isClosed()) {
+            try {
+                if (server != null) server.close();
+                if (out != null) out.close();
+                if (in != null) in.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         server = null;
         out = null;

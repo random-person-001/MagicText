@@ -432,14 +432,13 @@ class Inventory implements java.io.Serializable {
         //cursorX = 28;
 
         //Open to lan option stuff
-        String multiplayerText = (player.getGameInstance().getIsNetworkOpen()) ? "Close to LAN   " :  "Open to LAN    " ;
-        if (!player.getHasLocalWindow()){ // max 15 chars long
-            multiplayerText = "Change LAN";
+        String multiplayerText = (player.getGameInstance().getIsNetworkOpen()) ? "Close to LAN" :  "Open to LAN " ;
+        if (!player.getHasLocalWindow()){
+            multiplayerText = "Change LAN  ";
         }
-        String [] sArray = new String [multiplayerText.toCharArray().length];
-        for (int i=0; i<sArray.length; i++){
-            sArray[i] = String.valueOf(multiplayerText.toCharArray()[i]);
-            org.editLayer(new SpecialText(sArray[i], (player.getHasLocalWindow()? Color.white: Color.gray)), topMenuLayer, 4, 3+i);
+        for (int i=0; i<multiplayerText.toCharArray().length; i++){
+            org.editLayer(new SpecialText(String.valueOf(multiplayerText.toCharArray()[i]),
+                    (player.getHasLocalWindow()? Color.white: Color.gray)), topMenuLayer, 4, 3+i);
         }
         if (pressedA) {
             switch (cursorY) {
@@ -465,7 +464,7 @@ class Inventory implements java.io.Serializable {
                             player.getGameInstance().openNetworking();
                         }
                     }
-                    cursorY = 2;
+                    cursorY = 7;
                     break;
                 case 6:
                     jumpToNewMenu(quitMenuLayer, QUIT, topMenuLayer, 28);
