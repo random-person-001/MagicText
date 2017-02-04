@@ -67,6 +67,7 @@ public class SpecialTextMaker extends JFrame implements ChangeListener, ActionLi
         briSlider.setName("bright");
 
         c.setLayout(new FlowLayout());
+        JPanel group = new JPanel(new FlowLayout());
 
         addColorSlider("R:", c, redSlider, new Color(255, 200, 200), redLabel, "m_red", 255);
         addColorSlider("H:", c, hueSlider, new Color(255, 200, 255), hueLabel, "m_hue", 360);
@@ -79,7 +80,7 @@ public class SpecialTextMaker extends JFrame implements ChangeListener, ActionLi
         setSpecTxt.setFont(new Font("Monospaced", Font.PLAIN, 30));
         setSpecTxt.setHorizontalAlignment(JTextField.CENTER);
         setSpecTxt.setPreferredSize(new Dimension(30, 30));
-        c.add(setSpecTxt);
+        group.add(setSpecTxt);
 
         setForegroundButton = new JButton("Fg");
         setForegroundButton.setPreferredSize(new Dimension(80, 30));
@@ -97,14 +98,15 @@ public class SpecialTextMaker extends JFrame implements ChangeListener, ActionLi
         setBackgroundButton.setOpaque(true);
         setBackgroundButton.setEnabled(true);
 
-        c.add(setForegroundButton);
-        c.add(setBackgroundButton);
+        group.add(setForegroundButton);
+        group.add(setBackgroundButton);
 
         JButton finishButton = new JButton("Finish");
         finishButton.setActionCommand("finish");
 
-        c.add(finishButton);
+        group.add(finishButton);
 
+        c.add(group);
         c.validate();
 
         Timer textTimer = new Timer();
@@ -134,9 +136,12 @@ public class SpecialTextMaker extends JFrame implements ChangeListener, ActionLi
 
         toAdd.addChangeListener(this);
 
-        c.add(toAddLabel);
-        c.add(toAdd);
-        c.add(manualEnter);
+
+        JPanel group = new JPanel(new FlowLayout());
+        group.add(toAddLabel);
+        group.add(toAdd);
+        group.add(manualEnter);
+        c.add(group);
     }
 
     private boolean changeTextBoxes = true;
