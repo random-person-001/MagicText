@@ -22,6 +22,8 @@ public class NetworkServerWorker extends Thread {
     private ObjectInputStream in;
     private Player player; //Client player
     private int fps = 30; // max write (display) fps
+    private int sentCount = 0;
+    private boolean disconnected = false;
 
     /**
      * @param playery the Player who the display should be centered on
@@ -56,21 +58,24 @@ public class NetworkServerWorker extends Thread {
      * Disconnect socket and stop the timer
      */
     public void disconnect() {
-        if (server!=null && !server.isClosed()) {
-            try {
-                if (server != null) server.close();
-                if (out != null) out.close();
-                if (in != null) in.close();
-            } catch (IOException e) {
-                e.printStackTrace();
+        if (!disconnected) {
+            disconnected = true;
+            if (server != null && !server.isClosed()) {
+                try {
+                    if (server != null) server.close();
+                    if (out != null) out.close();
+                    if (in != null) in.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
+            server = null;
+            out = null;
+            in = null;
+            player.room.splashMessage("Player '" + player.getUsername() + "' disconnected \n" +
+                    " from the game", "* GAME *", player.room.playo);
+            player.braindead = true;
         }
-        server = null;
-        out = null;
-        in = null;
-        player.room.splashMessage("Player '"+player.getUsername()+"' disconnected \n" +
-                " from the game", "* GAME *", player.room.playo);
-        player.braindead = true;
     }
 
     /**
@@ -81,8 +86,11 @@ public class NetworkServerWorker extends Thread {
      *                     really really really wanted.
      */
     private void sendImage(Layer fullImage) throws IOException {
-        out.reset();
         out.writeObject(fullImage);
+        if (sentCount > 10){ // Memory leak stuff
+            sentCount = 0;
+            out.reset();
+        }
     }
 
     /**
@@ -145,7 +153,7 @@ public class NetworkServerWorker extends Thread {
                 e.printStackTrace();
                 System.out.println("[NetworkServerWorker] Something went wrong. (IOException).  Aborting this whole connection");
                 disconnect();
-            } catch (InterruptedException e) {
+            } catch (InterruptedException | NullPointerException e) {
                 e.printStackTrace();
                 disconnect();
             }

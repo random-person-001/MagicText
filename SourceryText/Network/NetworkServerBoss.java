@@ -48,6 +48,10 @@ public class NetworkServerBoss {
         while (acceptingConnections){
             try {
                 System.out.println("[NetworkServerBoss] serverSocket is " + (serverSocket==null ? "null" : "nonnull"));
+                if (serverSocket == null){
+                    acceptingConnections = false;
+                    return;
+                }
                 System.out.println("[NetworkServerBoss] Waiting for client on port " + serverSocket.getLocalPort() + "...");
                 Socket server = serverSocket.accept(); // Note: code waits here until it accepts an incoming request
                 System.out.println("[NetworkServerBoss] Just connected to " + server.getRemoteSocketAddress());
