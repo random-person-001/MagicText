@@ -8,7 +8,10 @@ import javax.swing.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.*;
-import java.net.*;
+import java.net.Socket;
+import java.net.SocketException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 
 /**
  * Connects to a NetworkServer and places the ColoredTextMatrix it receives on its own window.  Uses TCP.
@@ -38,7 +41,7 @@ public class NetworkClient {
         }
     }
 
-    private void sendKeyMap(KeyMap keymap)  throws IOException {
+    private void sendKeyMap(KeyMap keymap) throws IOException {
         if (out != null) {
             System.out.println("Sending keymap over");
             out.writeObject(keymap);
@@ -51,7 +54,7 @@ public class NetworkClient {
         System.out.println("Connecting to " + serverName + " on port " + port);
         try {
             server = new Socket(serverName, port);
-            server.setSoTimeout(5*1000);
+            server.setSoTimeout(5 * 1000);
         } catch (SocketException | UnknownHostException e) {
             System.out.println("[NetworkClient] Could not connect Sourcerery Text server " + serverName + " port " +
                     port + "; therefore nullpointers will be thrown.  Are you sure the server is up and running?");
@@ -69,8 +72,7 @@ public class NetworkClient {
 
             System.out.println("Network connections look all good!");
             return true;
-        }
-        catch (SocketTimeoutException e){
+        } catch (SocketTimeoutException e) {
             System.out.println("Socket timed out.  Are you sure that the multiplayer server is *accepting* connections?");
             return false;
         }
@@ -97,13 +99,13 @@ public class NetworkClient {
         w.dispose();
         JOptionPane.showMessageDialog(null, "Connection to Sourcery Text LAN game at " + ipAddress +
                 " failed, was interrupted, or was terminated.\nMake sure you entered the correct IP and that " +
-                "they are accepting connections.","Connection failed", JOptionPane.ERROR_MESSAGE);
+                "they are accepting connections.", "Connection failed", JOptionPane.ERROR_MESSAGE);
     }
 
     /**
      * Get the image and put it on the window
      *
-     * @throws IOException when things go wrong with the network
+     * @throws IOException            when things go wrong with the network
      * @throws ClassNotFoundException but really shouldn't
      */
     private void receiveImage() throws IOException, ClassNotFoundException {
@@ -115,7 +117,7 @@ public class NetworkClient {
         try {
             //System.out.println(in.available());
             l = (Layer) in.readObject();
-        } catch (EOFException e){
+        } catch (EOFException e) {
             System.out.println("Input stream has ended :(");
             attemptCancel();
             return;
@@ -142,7 +144,7 @@ public class NetworkClient {
             System.out.println("Bro, I would send this juicy key event (" + event.toString() + ") to Kathmandu or wherever" +
                     " my fellow Sourcery Text server is, but the output stream is just really null right now.");
         }
-        if (keysSentSoFar > 30){
+        if (keysSentSoFar > 30) {
             out.reset();
             keysSentSoFar = 0;
         }
@@ -177,7 +179,7 @@ public class NetworkClient {
             try {
                 while (server != null) {
                     receiveImage();
-                    Thread.sleep(1000/fps);
+                    Thread.sleep(1000 / fps);
                 }
             } catch (SocketException e) {
                 System.out.println("The other side probably disconnected (SocketException).");

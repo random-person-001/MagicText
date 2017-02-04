@@ -33,22 +33,22 @@ public class NetworkServerBoss {
         }
     }
 
-    public void openNetworking(){
+    public void openNetworking() {
         if (!acceptingConnections) {
             acceptingConnections = true;
             (new Thread(this::networkingLoop)).start();
         }
     }
 
-    public void closeNetworking(){
+    public void closeNetworking() {
         acceptingConnections = false;
     }
 
-    private void networkingLoop(){
-        while (acceptingConnections){
+    private void networkingLoop() {
+        while (acceptingConnections) {
             try {
-                System.out.println("[NetworkServerBoss] serverSocket is " + (serverSocket==null ? "null" : "nonnull"));
-                if (serverSocket == null){
+                System.out.println("[NetworkServerBoss] serverSocket is " + (serverSocket == null ? "null" : "nonnull"));
+                if (serverSocket == null) {
                     acceptingConnections = false;
                     return;
                 }
@@ -61,13 +61,14 @@ public class NetworkServerBoss {
                 System.out.println("[NetworkServerBoss] Adding another multiplayer player!  Welcome!");
                 SlaveGameInstance instance = new SlaveGameInstance(masterInstance);
                 boolean foundBrainDeadPlayerToReconstitute = false;
-                for (Player p : masterInstance.getPlayers()){
-                    if (p.braindead && !foundBrainDeadPlayerToReconstitute){
+                for (Player p : masterInstance.getPlayers()) {
+                    if (p.braindead && !foundBrainDeadPlayerToReconstitute) {
                         foundBrainDeadPlayerToReconstitute = true;
                         instance.runGameAsSlave(p);
                         p.braindead = false;
                     }
-                } if (!foundBrainDeadPlayerToReconstitute){
+                }
+                if (!foundBrainDeadPlayerToReconstitute) {
                     instance.runGameAsSlave(); // Run by getting a new player
                 }
 
@@ -78,7 +79,7 @@ public class NetworkServerBoss {
                 new Thread(nsw::begin).start();
                 System.out.println("[NetworkServerBoss] Accepted a client and passed on to worker.  Now waiting a bit");
                 Thread.sleep(1000);
-            } catch (SocketTimeoutException e){
+            } catch (SocketTimeoutException e) {
                 System.out.println("[NetworkServerBoss] Bro, server socket timed out.  We'll try again.");
             } catch (IOException e) {
                 e.printStackTrace();
@@ -93,8 +94,8 @@ public class NetworkServerBoss {
      * Close any connections we've accepted thus far.  Does not change the state of whether we are accepting more
      * connections.
      */
-    public void bootOutClients(){
-        for (NetworkServerWorker w : workers){
+    public void bootOutClients() {
+        for (NetworkServerWorker w : workers) {
             w.disconnect();
         }
     }
