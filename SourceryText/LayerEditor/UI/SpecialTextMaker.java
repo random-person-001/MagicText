@@ -67,12 +67,21 @@ public class SpecialTextMaker extends JFrame implements ChangeListener, ActionLi
         c.setLayout(new FlowLayout());
         JPanel group = new JPanel(new FlowLayout());
 
-        addColorSlider("R:", c, redSlider, new Color(255, 200, 200), redLabel, "m_red", 255);
-        addColorSlider("H:", c, hueSlider, new Color(255, 200, 255), hueLabel, "m_hue", 360);
-        addColorSlider("G:", c, greenSlider, new Color(200, 255, 200), greenLabel, "m_green", 255);
-        addColorSlider("S:", c, satSlider, new Color(204, 204, 204), satLabel, "m_saturation", 100);
-        addColorSlider("B:", c, blueSlider, new Color(200, 200, 255), blueLabel, "m_blue", 255);
-        addColorSlider("B:", c, briSlider, new Color(255, 255, 255), briLabel, "m_brightness", 100);
+        JPanel rgbP = new JPanel(new FlowLayout());
+        JPanel hsbP = new JPanel(new FlowLayout());
+
+        addColorSlider("R:", rgbP, redSlider, new Color(255, 200, 200), redLabel, "m_red", 255);
+        addColorSlider("H:", hsbP, hueSlider, new Color(255, 200, 255), hueLabel, "m_hue", 360);
+        addColorSlider("G:", rgbP, greenSlider, new Color(200, 255, 200), greenLabel, "m_green", 255);
+        addColorSlider("S:", hsbP, satSlider, new Color(204, 204, 204), satLabel, "m_saturation", 100);
+        addColorSlider("B:", rgbP, blueSlider, new Color(200, 200, 255), blueLabel, "m_blue", 255);
+        Dimension size = addColorSlider("B:", hsbP, briSlider, new Color(255, 255, 255), briLabel, "m_brightness", 100);
+
+        size.setSize(size.getWidth(), size.getHeight()*3.2);
+        rgbP.setPreferredSize(size);
+        hsbP.setPreferredSize(size);
+        c.add(rgbP);
+        c.add(hsbP);
 
         setSpecTxt.setEditable(true);
         setSpecTxt.setFont(new Font("Monospaced", Font.PLAIN, 30));
@@ -111,7 +120,7 @@ public class SpecialTextMaker extends JFrame implements ChangeListener, ActionLi
         textTimer.scheduleAtFixedRate(new TextUpdate(), 10, 50);
     }
     
-    private void addColorSlider (String sliderName, Container c, JSlider toAdd, Color bkgHue, JTextField manualEnter, String manualName, int maxValue){
+    private Dimension addColorSlider (String sliderName, Container c, JSlider toAdd, Color bkgHue, JTextField manualEnter, String manualName, int maxValue){
         toAdd.setMinimum(0);
         toAdd.setMaximum(maxValue);
         toAdd.setValue(maxValue);
@@ -140,6 +149,7 @@ public class SpecialTextMaker extends JFrame implements ChangeListener, ActionLi
         group.add(toAdd);
         group.add(manualEnter);
         c.add(group);
+        return group.preferredSize();
     }
 
     private boolean changeTextBoxes = true;
