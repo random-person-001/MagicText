@@ -23,7 +23,8 @@ public class NetworkClient {
     private MultiplayerKeyListener kl = new MultiplayerKeyListener();
     private UpdateTask updateTask = new UpdateTask("ST-Client-Layer-Receiver");
     private String ipAddress;
-    private int fps = 100; // Max read fps
+    private int fps = 35; // Max read fps
+    private int keysSentSoFar = 0;
 
     public void main(String serverName, KeyMap keymap) throws IOException {
         ipAddress = serverName;
@@ -81,6 +82,8 @@ public class NetworkClient {
     public void attemptCancel() {
         try {
             if (server != null) server.close();
+            if (in != null) in.close();
+            if (out != null) out.close();
         } catch (IOException e) {
             System.out.println("Cancelling the NetworkClient failed:");
             e.printStackTrace();
@@ -134,9 +137,14 @@ public class NetworkClient {
         if (out != null) {
             System.out.println("You pressed a key.  I'll try to send it over.");
             out.writeObject(event);
+            keysSentSoFar++;
         } else {
             System.out.println("Bro, I would send this juicy key event (" + event.toString() + ") to Kathmandu or wherever" +
                     " my fellow Sourcery Text server is, but the output stream is just really null right now.");
+        }
+        if (keysSentSoFar > 30){
+            out.reset();
+            keysSentSoFar = 0;
         }
     }
 

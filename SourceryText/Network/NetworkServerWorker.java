@@ -16,7 +16,7 @@ import java.util.TimerTask;
  * Created by riley on 05-Nov-2016.
  */
 public class NetworkServerWorker extends Thread {
-    private Updater updaterTask = new Updater();
+    private Thread updaterTask = new Updater("ST-Server-Layer-Sender");
     private Socket server = new Socket();
     private ObjectOutputStream out;
     private ObjectInputStream in;
@@ -42,7 +42,7 @@ public class NetworkServerWorker extends Thread {
             System.out.println("[NetworkServerWorker] point 1");
             out = new ObjectOutputStream(server.getOutputStream());
             in = new ObjectInputStream(server.getInputStream());
-            new Timer().scheduleAtFixedRate(updaterTask, 4, 1000/fps);
+            updaterTask.start();
             new Thread(this::keyReadLoop).start(); // we should cancel this, too
             System.out.println("[NetworkServerWorker] Finished execution of begin()");
         } catch (IOException e){
@@ -56,7 +56,6 @@ public class NetworkServerWorker extends Thread {
      * Disconnect socket and stop the timer
      */
     public void disconnect() {
-        updaterTask.cancel();
         if (server!=null && !server.isClosed()) {
             try {
                 if (server != null) server.close();
@@ -82,6 +81,7 @@ public class NetworkServerWorker extends Thread {
      *                     really really really wanted.
      */
     private void sendImage(Layer fullImage) throws IOException {
+        out.reset();
         out.writeObject(fullImage);
     }
 
@@ -125,18 +125,28 @@ public class NetworkServerWorker extends Thread {
         }
     }
 
-    private class Updater extends TimerTask {
+    private class Updater extends Thread {
+        public Updater(String s) {
+            super(s);
+        }
+
         @Override
         public void run() {
-            Layer fullImage = player.org.topDownBuild(player);
             try {
-                sendImage(fullImage);
+                while (server != null) {
+                    Layer fullImage = player.org.topDownBuild(player);
+                    sendImage(fullImage);
+                    Thread.sleep(1000/fps);
+                }
             } catch (SocketException e) {
                 System.out.println("[NetworkServerWorker] The other side probably disconnected (SocketException).  Aborting whole connection");
                 disconnect();
             } catch (IOException e) {
                 e.printStackTrace();
                 System.out.println("[NetworkServerWorker] Something went wrong. (IOException).  Aborting this whole connection");
+                disconnect();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
                 disconnect();
             }
         }
