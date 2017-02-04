@@ -27,6 +27,7 @@ public class GameInstance implements java.io.Serializable {
     private int zoneNumber;
     private HashMap<String, Room> thisZoneRooms;
     private boolean inMiddleOfSwitchingEveryonesZones = false;
+    private String startingRoomName = "TutorialBasement";
 
     public GameInstance(Player protaganistSet) {
         protaganist = protaganistSet;
@@ -100,7 +101,7 @@ public class GameInstance implements java.io.Serializable {
      */
     private void switchZones() {
         int to = zoneNumber;
-        String startingRoomName = "Define me in GameInstance.switchZones()";
+        startingRoomName = "Define me in GameInstance.switchZones()";
         switch (to) {
             case 1:
                 thisZoneRooms = initializeZone1Rooms(protaganist);
@@ -120,7 +121,7 @@ public class GameInstance implements java.io.Serializable {
                 thisZoneRooms = initializeZone5Rooms(protaganist);
                 break;
             default:
-                System.out.println("[GameInstance] zoneNumber read in switchZones()! (" + to + ")");
+                System.out.println("[GameInstance] bad zoneNumber read in switchZones()! (" + to + ")");
         }
         for (Player p : playerList) {
             if (p.room != null) {
@@ -139,7 +140,7 @@ public class GameInstance implements java.io.Serializable {
     Player requestNewPlayer() {
         Player noob = new Player(this, playerList.get(0).org, playerList.size(), null);
         noob.frozen = false;
-        noob.roomName = "TutorialBasement";
+        noob.roomName = startingRoomName;
         playerList.add(noob);
         return noob;
     }
