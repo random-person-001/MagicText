@@ -297,6 +297,11 @@ class HUD implements java.io.Serializable {
         return false;
     }
 
+    public boolean rickroll(){
+        showResponse("            You've been rickrolled!");
+        return openURL("https://youtu.be/dQw4w9WgXcQ?t=1"); //NOTICE: this appears not to work on chrome-based browsers.
+    }
+
     /**
      * Process what's stored as the <code>command</code>, and do appropriate actions.
      * <p>
@@ -473,6 +478,8 @@ class HUD implements java.io.Serializable {
         } else if (command.contains("compil")) {
             showResponse("Opening relevant XKCD (303) in default web browser ");
             openURL("http://xkcd.com/303/"); //NOTICE: this appears not to work on chrome-based browsers.
+        } else if (command.contains("never gonna")) {
+            rickroll();
         } else if (command.contains("help")) {
             showResponse("Seek GameObjects/HUD.java, method processCommand()");
         } else if (command.contains("getpos")) {

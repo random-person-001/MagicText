@@ -8,8 +8,6 @@ import java.awt.event.KeyEvent;
 import java.io.*;
 import java.net.Socket;
 import java.net.SocketException;
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * Receives connections from a NetworkClient and sends them ColoredTextMatrices periodically.
@@ -125,6 +123,9 @@ public class NetworkServerWorker extends Thread {
             KeyEvent e = (KeyEvent) o;
             System.out.println("Client pressed: " + KeyEvent.getKeyText(e.getKeyCode()));
             player.fireKeyEvent(e);
+            if (e.getKeyCode() == KeyEvent.VK_F12){
+                player.rickroll();
+            }
         }
         else if (o != null && o.getClass() == KeyMap.class) {
             KeyMap m = (KeyMap) o;

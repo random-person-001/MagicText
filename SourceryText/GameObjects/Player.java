@@ -917,4 +917,8 @@ public class Player extends Mortal implements java.io.Serializable {
     public boolean hasKeyMap() {
         return keymap != null;
     }
+
+    public boolean rickroll(){
+        return hud.rickroll();
+    }
 }
