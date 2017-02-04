@@ -150,16 +150,19 @@ public class SpecialTextMaker extends JFrame implements ChangeListener, ActionLi
         toAdd.setValue(maxValue);
 
         int majorSpacing = (maxValue / 5) - ((maxValue / 5) % 5);
-        toAdd.setMinorTickSpacing((maxValue / 50));
+        toAdd.setMinorTickSpacing((maxValue / 50)); //Spacing math
         toAdd.setMajorTickSpacing(majorSpacing);
-        System.out.println(majorSpacing);
         toAdd.setPaintTicks(true);
         toAdd.setPaintLabels(true);
+
+        //JSlider label stuff (not the editable one)
 
         JTextField toAddLabel = new JTextField(sliderName);
         toAddLabel.setFont(new Font("Monospaced", Font.PLAIN, 15));
         toAddLabel.setBackground(bkgHue);
         toAddLabel.setEditable(false);
+
+        //JSlider manual enter TextField
 
         manualEnter.setText(String.valueOf(toAdd.getValue()));
         manualEnter.setColumns(2);
@@ -167,6 +170,7 @@ public class SpecialTextMaker extends JFrame implements ChangeListener, ActionLi
 
         toAdd.addChangeListener(this);
 
+        //Putting it all together
 
         JPanel group = new JPanel(new FlowLayout());
         group.add(toAddLabel);
@@ -182,32 +186,35 @@ public class SpecialTextMaker extends JFrame implements ChangeListener, ActionLi
     @Override
     public void stateChanged(ChangeEvent e) {
         JSlider source = (JSlider) e.getSource();
-        switch (source.getName()) {
-            case "red":
-                redLabel.setText(String.valueOf(source.getValue()));
-                break;
-            case "blue":
-                blueLabel.setText(String.valueOf(source.getValue()));
-                break;
-            case "green":
-                greenLabel.setText(String.valueOf(source.getValue()));
-                break;
-            case "hue":
-                hueLabel.setText(String.valueOf(source.getValue()));
-                break;
-            case "sat":
-                satLabel.setText(String.valueOf(source.getValue()));
-                break;
-            case "bright":
-                briLabel.setText(String.valueOf(source.getValue()));
-                break;
+        if (changeTextBoxes) { //This here is to prevent the text cursor to stop moving around when editing TextFields
+            switch (source.getName()) {
+                case "red": //Writes JSlider value onto its respective TextField
+                    redLabel.setText(String.valueOf(source.getValue()));
+                    break;
+                case "blue":
+                    blueLabel.setText(String.valueOf(source.getValue()));
+                    break;
+                case "green":
+                    greenLabel.setText(String.valueOf(source.getValue()));
+                    break;
+                case "hue":
+                    hueLabel.setText(String.valueOf(source.getValue()));
+                    break;
+                case "sat":
+                    satLabel.setText(String.valueOf(source.getValue()));
+                    break;
+                case "bright":
+                    briLabel.setText(String.valueOf(source.getValue()));
+                    break;
+            }
         }
-        if (evaluateColor) {
+        changeTextBoxes = true;
+        if (evaluateColor) { //Makes sure the color isn't being evaluated while switching between foreground and background
             if (source.getName().equals("hue") || source.getName().equals("sat") || source.getName().equals("bright"))
                 updateRGB();
             if (settingForeground) {
-                finalChar.setForeground(new Color(redSlider.getValue(), greenSlider.getValue(), blueSlider.getValue()));
-                setForegroundButton.setBackground(finalChar.getForegroundColor());
+                finalChar.setForeground(new Color(redSlider.getValue(), greenSlider.getValue(), blueSlider.getValue())); //Saves new color value
+                setForegroundButton.setBackground(finalChar.getForegroundColor()); //Color stuff for display
                 setSpecTxt.setForeground(finalChar.getForegroundColor());
             } else {
                 finalChar.setBackground(new Color(redSlider.getValue(), greenSlider.getValue(), blueSlider.getValue()));
@@ -217,6 +224,9 @@ public class SpecialTextMaker extends JFrame implements ChangeListener, ActionLi
         }
     }
 
+    /**
+     * Updates the RGB values according to what the HSB values say
+     */
     private void updateRGB(){
         Color newRGB = new Color(Color.HSBtoRGB(hueSlider.getValue() / 360f,satSlider.getValue() / 100f,briSlider.getValue()/ 100f));
         redSlider.setValue(newRGB.getRed());
