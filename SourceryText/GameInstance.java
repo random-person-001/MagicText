@@ -83,6 +83,7 @@ public class GameInstance implements java.io.Serializable {
             }
         }
         p.dead = true;
+        playerList.remove(p);
         System.out.println(p.getUsername() + " has DIED.  Oh, no, not again.");
         Layer lastSight = p.org.topDownBuild(p);
         lastSight.influenceAll(Color.RED);
