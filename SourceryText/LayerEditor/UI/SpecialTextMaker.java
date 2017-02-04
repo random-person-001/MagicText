@@ -112,7 +112,7 @@ public class SpecialTextMaker extends JFrame implements ChangeListener, ActionLi
     }
     
     private void addColorSlider (String sliderName, Container c, JSlider toAdd, Color bkgHue, JTextField manualEnter, String manualName, int maxValue){
-        toAdd.setMinimum(0);
+        toAdd.setMinimum(0); //
         toAdd.setMaximum(maxValue);
         toAdd.setValue(maxValue);
 
