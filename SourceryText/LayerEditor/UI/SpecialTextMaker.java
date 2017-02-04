@@ -9,6 +9,8 @@ import javax.swing.plaf.metal.MetalLookAndFeel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.util.*;
 import java.util.Timer;
 
@@ -77,9 +79,31 @@ public class SpecialTextMaker extends JFrame implements ChangeListener, ActionLi
         addColorSlider("B:", rgbP, blueSlider, new Color(200, 200, 255), blueLabel, "m_blue", 255);
         Dimension size = addColorSlider("B:", hsbP, briSlider, new Color(255, 255, 255), briLabel, "m_brightness", 100);
 
-        size.setSize(size.getWidth(), size.getHeight()*3.2);
+        Dimension size2 = new Dimension( (int)(size.getWidth()*3.2), (int)(size.getHeight()) );
+        size.setSize( (int)(size.getWidth()), (int)(size.getHeight()*3.2) );
         rgbP.setPreferredSize(size);
         hsbP.setPreferredSize(size);
+        c.addComponentListener(new ComponentListener() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                if(c.getWidth()>size.getWidth()*3.2) {
+                    rgbP.setPreferredSize(size2);
+                    hsbP.setPreferredSize(size2);
+                }
+                else
+                {
+                    rgbP.setPreferredSize(size);
+                    hsbP.setPreferredSize(size);
+                }
+            }
+            @Override
+            public void componentMoved(ComponentEvent e) {}
+            @Override
+            public void componentShown(ComponentEvent e) {}
+            @Override
+            public void componentHidden(ComponentEvent e) {}
+        });
+
         c.add(rgbP);
         c.add(hsbP);
 
