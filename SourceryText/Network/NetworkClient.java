@@ -25,6 +25,7 @@ public class NetworkClient {
     private MultiplayerKeyListener kl = new MultiplayerKeyListener();
     private UpdateTask updateTask = new UpdateTask();
     private String ipAddress;
+    private int fps = 30;
 
     public void main(String serverName, KeyMap keymap) throws IOException {
         ipAddress = serverName;
@@ -32,7 +33,7 @@ public class NetworkClient {
         w.txtArea.addKeyListener(kl);
         if (connect(serverName)) {
             sendKeyMap(keymap);
-            new Timer().scheduleAtFixedRate(updateTask, 4, 50);
+            new Timer().scheduleAtFixedRate(updateTask, 4, 1000/fps);
         } else {
             attemptCancel();
         }

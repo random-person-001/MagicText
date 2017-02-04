@@ -245,7 +245,7 @@ class MainMenu {
             org.editLayer(String.valueOf(keyChar), "IP_ENTER_MENU", 0, ipSetXPos);
             ipSetXPos++;
             System.out.printf("IP Appended! (Now %1$s)\n", ipString);
-        } else if (cursorY == 10 && event.getKeyCode() == KeyEvent.VK_BACK_SPACE && ipSetXPos <= 24){
+        } else if (cursorY == 10 && event.getKeyCode() == KeyEvent.VK_BACK_SPACE && ipSetXPos >=11){
             ipSetXPos--;
             org.editLayer("_", "IP_ENTER_MENU", 0, ipSetXPos);
             ipString = ipString.substring(0, ipString.length()-1);

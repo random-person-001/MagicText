@@ -30,7 +30,6 @@ public class StartMethods {
         GameInstance master = new GameInstance(player);
         player.setGameInstance(master);
         new Thread(() -> master.runGame(player)).start();
-        (new Thread(master::openNetworking)).start();
     }
 
     void buildGame(GameInstance instance) {

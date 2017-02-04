@@ -23,6 +23,7 @@ public class NetworkServerWorker extends Thread {
     private ObjectOutputStream out;
     private ObjectInputStream in;
     private Player player; //Client player
+    private int fps = 30;
 
     /**
      * @param playery the Player who the display should be centered on
@@ -43,7 +44,7 @@ public class NetworkServerWorker extends Thread {
             System.out.println("[NetworkServerWorker] point 1");
             out = new ObjectOutputStream(server.getOutputStream());
             in = new ObjectInputStream(server.getInputStream());
-            new Timer().scheduleAtFixedRate(updaterTask, 4, 50);
+            new Timer().scheduleAtFixedRate(updaterTask, 4, 1000/fps);
             new Thread(this::keyReadLoop).start(); // we should cancel this, too
             System.out.println("[NetworkServerWorker] Finished execution of begin()");
         } catch (IOException e){
