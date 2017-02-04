@@ -228,6 +228,9 @@ public class Mortal extends GameObject implements java.io.Serializable {
     }
 
     protected void rangedPathfinding(Mortal target, int attackRange, int followDist) {
+        if (target == null){
+            return;
+        }
         int xdif = target.getX() - x;
         int ydif = target.getY() - y;
         if (xdif == 0 && ydif == 0) {

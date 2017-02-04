@@ -15,6 +15,7 @@ import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.*;
+import java.security.Key;
 
 
 /**
@@ -94,14 +95,22 @@ class MainMenu {
         }
         else if (cursorY == 9) {
             System.out.println("\n\nNEW GAME!!!\n\n");
-            starter.newGame(1, keymap);
+            starter.newGame(keymap);
         }
         else if (cursorY == 10) {
             Layer multiplayerLayer = new Layer(Art.strToArray(new Art().multiplayerMenu), "MULTIPLAYER_MENU");
             org.addLayer(multiplayerLayer);
             window.txtArea.addKeyListener(keyInputter); // Cuz we removed it before
-            menuID = MULTIPLAYER_MENU;
-            cursorY = 9;
+
+            org.editLayer(" ", "MULTIPLAYER_MENU", cursorY, 24);
+            Layer ipSetLayer = new Layer(Art.strToArray(new Art().ipSetMenu, true), "IP_ENTER_MENU", 10, 10);
+            for (int ii = 0; ii < ipString.length(); ii++) {
+                ipSetLayer.setStr(0, ii + 11, String.valueOf(ipString.charAt(ii)));
+            }
+            org.addLayer(ipSetLayer);
+            menuID = IP_ENTERING_MENU;
+            cursorY = 10;
+            onPressArrow(); // For graphic update
             waitAMomentAndUpdateCursor();
         }
         else if (cursorY == 11) {
@@ -146,11 +155,6 @@ class MainMenu {
                 org.editLayer(" ", "MAIN_MENU", oldCursorY, 24);
                 loopAtMenuEnd(8, 13);
                 org.editLayer("*", "MAIN_MENU", cursorY, 24);
-                break;
-            case MULTIPLAYER_MENU:
-                org.editLayer(" ", "MULTIPLAYER_MENU", oldCursorY, 24);
-                loopAtMenuEnd(5, 7);
-                org.editLayer("*", "MULTIPLAYER_MENU", cursorY, 24);
                 break;
             case IP_ENTERING_MENU:
                 org.editLayer(" ", "MULTIPLAYER_MENU", oldCursorY, 10);
@@ -209,45 +213,23 @@ class MainMenu {
      * Flow control and code to execute when, during the multiplayer menu, the enter key is pressed
      */
     private void onEnterPressedDuringMultiplayer() {
-        if (cursorY == 5) { //Starts new game "as a server"
-            org.removeLayer("MULTIPLAYER_MENU");
-            window.txtArea.removeKeyListener(keyInputter);
-            System.out.println("New multiplayer game made!");
-            starter.newGame(2, keymap);
+        if (cursorY == 11) { //Clears the ip address that you wrote
+            clearIPAddress();
         }
-        if (cursorY == 6) { //Jumps to ip address submenu
-            org.editLayer(" ", "MULTIPLAYER_MENU", cursorY, 24);
-            Layer ipSetLayer = new Layer(Art.strToArray(new Art().ipSetMenu, true), "IP_ENTER_MENU", 10, 10);
-            for (int ii = 0; ii < ipString.length(); ii++) {
-                ipSetLayer.setStr(0, ii + 11, String.valueOf(ipString.charAt(ii)));
-            }
-            org.addLayer(ipSetLayer);
-            menuID = IP_ENTERING_MENU;
-            cursorY = 10;
-            onPressArrow(); // For graphic update
+        if (cursorY == 12 || cursorY == 10) { //Runs client connection based on entered ip address
+            System.out.println("Requesting connection to Sourcery Text server at \"" + ipString + "\"");
+            starter.doNetworkClient(ipString, keymap);
         }
-        if (cursorY == 7) { //Go back to main menu
-            org.editLayer(" ", "MULTIPLAYER_MENU", cursorY, 24);
+        if (cursorY == 13) {
+            //Go back to top menu.
+            org.editLayer(" ", "MULTIPLAYER_MENU", cursorY, 10);
+            org.removeLayer("IP_ENTER_MENU");
             org.removeLayer("MULTIPLAYER_MENU");
             System.out.println("Returning to main menu");
             menuID = TOP_MENU;
             org.addLayer(new Layer(Art.strToArray(new Art().mainMenu, true), "MAIN_MENU"));
             cursorY = 10;
             waitAMomentAndUpdateCursor();
-        }
-        if (cursorY == 11) { //Clears the ip address that you wrote
-            clearIPAddress();
-        }
-        if (cursorY == 12) { //Runs client connection based on entered ip address
-            System.out.println("Requesting connection to Sourcery Text server at \"" + ipString + "\"");
-            starter.doNetworkClient(ipString); // Thread waits here until game finishes
-        }
-        if (cursorY == 13) { //Go back to multiplayer top menu.
-            org.editLayer(" ", "MULTIPLAYER_MENU", cursorY, 10);
-            org.removeLayer("IP_ENTER_MENU");
-            menuID = MULTIPLAYER_MENU;
-            cursorY = 5;
-            onPressArrow();
         }
     }
 
@@ -263,6 +245,11 @@ class MainMenu {
             org.editLayer(String.valueOf(keyChar), "IP_ENTER_MENU", 0, ipSetXPos);
             ipSetXPos++;
             System.out.printf("IP Appended! (Now %1$s)\n", ipString);
+        } else if (cursorY == 10 && event.getKeyCode() == KeyEvent.VK_BACK_SPACE && ipSetXPos >=11){
+            ipSetXPos--;
+            org.editLayer("_", "IP_ENTER_MENU", 0, ipSetXPos);
+            ipString = ipString.substring(0, ipString.length()-1);
+            System.out.printf("IP Lessened! (Now %1$s)\n", ipString);
         }
     }
 
@@ -280,6 +267,12 @@ class MainMenu {
             int ordinal = cursorX==30 ? 1 : 2;
             keymap.setMap(cursorY-3, ordinal, keyCode);
             mapping = false;
+            return;
+        }
+        else if(keyCode == KeyEvent.VK_DELETE) {
+            org.editLayer(new String(new char[6]).replace("\0", " "), "CONTROLS_MENU", cursorY, cursorX+1);
+            int ordinal = cursorX==30 ? 1 : 2;
+            keymap.setMap(cursorY-3, ordinal, -1);
             return;
         }
         switch(keyCode) {
@@ -439,7 +432,7 @@ class MainMenu {
     private void onEnterPressed() {
         if (menuID == TOP_MENU) {
             onEnterPressedDuringTop();
-        } else if(menuID == MULTIPLAYER_MENU) {
+        } else if(menuID == MULTIPLAYER_MENU || menuID == IP_ENTERING_MENU) {
             onEnterPressedDuringMultiplayer();
         } else if(menuID == SETTINGS_MENU) {
             onEnterPressedDuringSettings();

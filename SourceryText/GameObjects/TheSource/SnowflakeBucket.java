@@ -28,8 +28,8 @@ public class SnowflakeBucket extends GameObject {
 
     //Convenience variables
     private final int UP = 0;
-    private final int DOWN = 1;
-    private final int LEFT = 2;
+    private final int LEFT = 1;
+    private final int DOWN = 2;
     private final int RIGHT = 3;
 
     public SnowflakeBucket (Player holder){

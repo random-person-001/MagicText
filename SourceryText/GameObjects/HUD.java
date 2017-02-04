@@ -304,6 +304,7 @@ class HUD implements java.io.Serializable {
      * >addhp (amount) : Restores (amount) HP w/ 50 Overheal.
      * >addtater (amount) : Puts (amount) potato(es) in the player's inventory
      * >blue rinse | defoliator : murder every living thing. (except you)
+     * >boot client : kick off all currently connected clients
      * >die : subtract a fatal amount of health
      * >echo (message) : print message out to standard out
      * >exit : exit sudo mode, or the game if you aren't in it.
@@ -322,7 +323,8 @@ class HUD implements java.io.Serializable {
      * >ludicrous | fast : toggle player's ludicrousSpeed, which makes you move very very fast.  Ghosting recommended.
      * >ls | pwd : currently not developed.  Later will tell the name of current room.
      * >make me a sandwich : evoke snarky response
-     * >network | la n : be a server on port 8792 and send anyone who connects a serialized ColorTextMatrix
+     * >network on : be a host start accepting connections from other computers (clients)
+     * >network off : stop accepting connections from other computers (clients)
      * >pointer | compiling | wifi | random : all relevant xkcd comics.
      * >reset timer : reset the GameObject update timer on Player (calls setupTimer(20);)
      * >ser test : Test serializing the player to a .sav file
@@ -397,9 +399,6 @@ class HUD implements java.io.Serializable {
         } else if (command.contains("reset") && command.contains("time")) {
             player.restartTimer();
             showResponse("Called Player.restartTimer()");
-        } else if (command.contains("network") || command.contains("lan")) {
-            player.testSendOverNetwork();
-            showResponse("Called Player.testSendOverNetwork()");
         } else if ((command.contains("cancel") || command.contains("stop")) && (command.contains("network") || command.contains("lan"))) {
             player.cancelSendOverNetwork();
             showResponse("Called Player.cancelSendOverNetwork()");
@@ -628,6 +627,15 @@ class HUD implements java.io.Serializable {
             player.room.boundedCamera = false;
         } else if (command.contains("bound camera") && player.room != null){
             player.room.boundedCamera = true;
+        } else if (command.contains("network on")){
+            player.getGameInstance().openNetworking();
+            showResponse("Now accepting connection requests");
+        } else if (command.contains("network off")){
+            player.getGameInstance().closeNetworking();
+            showResponse("Stopped accepting connection requests");
+        } else if (command.contains("boot client")){
+            player.getGameInstance().bootClientPlayersOff();
+            showResponse("kicked all client players off; Muah ha ha");
         } else if (command.length() > 0) {
             showResponse("Command '" + command + "' not recognised.  Check your spelling or " +
                     "request it as a new feature.");

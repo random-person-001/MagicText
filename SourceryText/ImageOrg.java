@@ -7,6 +7,7 @@ package SourceryText;
 
 import SourceryText.GameObjects.Player;
 
+import javax.naming.OperationNotSupportedException;
 import java.awt.*;
 import java.util.*;
 
@@ -422,12 +423,16 @@ public class ImageOrg implements java.io.Serializable {
     private void newSendImage() {
         Layer fullImage;
         try {
-            if (defaultPlayer == null) {
+            if (defaultPlayer == null ) {
                 //System.out.println("[ImageOrg " + orgSerial + "] TopDownBuild on nobody");
                 fullImage = topDownBuild();
-            } else {
+            } else if (defaultPlayer.org == this){
                 //System.out.println("[ImageOrg " + orgSerial + "] TopDownBuild on " + defaultPlayer.getUsername());
                 fullImage = topDownBuild(defaultPlayer);
+                //System.out.println(fullImage.getStr());
+            } else {
+                //System.out.println("ImageOrg: 1st player's org is not this, so will not try to update");
+                return;
             }
             window.build(fullImage);
         } catch (ConcurrentModificationException e) {
@@ -483,37 +488,87 @@ public class ImageOrg implements java.io.Serializable {
         int maxW = screenW(); //Equals 46
         for (int row = 0; row < maxH; row++) { //Iterates over every coordinate of the screen
             for (int col = 0; col < maxW; col++) {
-                for (int ii = allLayers.size(); ii > 0; ii--) { //At each coordinate, goes through all layers until an opaque space is found
-                    Layer layer = allLayers.get(ii - 1);
-                    if (layer != null) {
-                        int xPos = row - layer.getY();
-                        int yPos = col - layer.getX(); //Math done to find out what portion of the layer corresponds with the screen coordinate
-                        if (layer.getCamOb()) {
-                            xPos += camX;
-                            yPos += camY;
-                        }
-                        SpecialText found = layer.getSpecTxt(xPos, yPos); //Gets SpecialText from derived layer coordinate
-                        String input = found.getStr(); //Gets string from SpecialText to make code easier to read
-                        if (found.isSignificant() && (layer.getRelaventPlayerUsername() == null || layer.getRelaventPlayerUsername().equals(owningPlayerUsername))) { //If the SpecialText isn't blank
-                            if ("ñ".equals(input)) { //If space found was opaque
-                                fullImage.setSpecTxt(row, col, new SpecialText(" ", Color.WHITE, found.getBackgroundColor()));
-                            } else { //Otherwise, place found SpecialText
-                                SpecialText toPlace = new SpecialText(found.getStr(), found.foregroundColor, found.backgroundColor);
-                                if (foregroundColor != null && foregroundColor != Color.WHITE) {
-                                    toPlace.setInfluencedForegroundColor(foregroundColor);
-                                }
-                                if (fabulousMode && Math.abs((row + col) - fabulousLocIndex) <= 7) { // Fabulous mode accommodations
-                                    toPlace.setInfluencedForegroundColor(fabulousColorWheel[fabulousColorIndex]);
-                                }
-                                fullImage.setSpecTxt(row, col, toPlace);
-                            }
-                            ii = 0; //Ends search at the coordinate and moves onto the next coordinate
-                        }
+                getSpecialTextForDisplay(allLayers, row, col, camX, camY, owningPlayerUsername, foregroundColor, fabulousMode, fabulousLocIndex, fabulousColorIndex, fullImage);
+            }
+        }
+        return fullImage;
+    }
+
+    private void getSpecialTextForDisplay(ArrayList<Layer> allLayers, int row, int col, int camX, int camY, String owningPlayerUsername, Color foregroundColor, boolean fabulousMode, int fabulousLocIndex, int fabulousColorIndex, Layer finalImage){
+        Color colorFilterSoFar = new Color(0,0,0,0); // Instead of keeping an arbitrarily large-sized array of
+        // translucent colors, it's more efficient just have one that is influenced with translucent layer we look at.
+        String characterHere = null;
+        Color characterHereColor = null;
+        for (int ii = allLayers.size(); ii > 0; ii--) { //At each coordinate, goes through all layers until an opaque space is found
+            Layer layer = allLayers.get(ii - 1);
+            if (layer != null) {
+                int xPos = row - layer.getY();
+                int yPos = col - layer.getX(); //Math done to find out what portion of the layer corresponds with the screen coordinate
+                if (layer.getCamOb()) {
+                    xPos += camX;
+                    yPos += camY;
+                }
+                SpecialText found = layer.getSpecTxt(xPos, yPos); //Gets SpecialText from derived layer coordinate
+                String input = found.getStr(); //Gets string from SpecialText to make code easier to read
+                if (found.isSignificant() && (layer.getRelaventPlayerUsername() == null || layer.getRelaventPlayerUsername().equals(owningPlayerUsername))) { //If the SpecialText isn't blank
+                    //place found SpecialText
+                    if (!found.backgroundColor.equals(Color.black)){
+                        colorFilterSoFar = blendColors(colorFilterSoFar, found.backgroundColor);
+                    }
+                    if (colorFilterSoFar.getAlpha() == 255){
+                        ii = 0;
+                    }
+                    if (input != null && input != "" && characterHere == null) { // if this is the first string we see at this coord, remember it
+                        characterHere = input;
+                        characterHereColor = found.foregroundColor;
+                    }
+                    if ("ñ".equals(input)) { //If space found was opaque
+                        characterHere = " ";
+                        characterHereColor = Color.white;
+                        ii = 0; //Ends search at the coordinate and moves onto the next coordinate
+                    }
+                    if (layer.isOpaque()){
+                        ii = 0;
                     }
                 }
             }
         }
-        return fullImage;
+        if (characterHere == null){
+            characterHere = " ";
+            characterHereColor = Color.white;
+        }
+        if (colorFilterSoFar.getAlpha() == 0){
+            colorFilterSoFar = Color.black;
+        }
+        else if (colorFilterSoFar.getAlpha() != 255){
+            System.out.println("Final background alpha: 0 < a < 255  |  a = " + colorFilterSoFar.getAlpha());
+        }
+        SpecialText toPlace = new SpecialText(characterHere, characterHereColor, colorFilterSoFar);
+        if (foregroundColor != null && foregroundColor != Color.WHITE) {
+            toPlace.setInfluencedForegroundColor(foregroundColor);
+        }
+        if (fabulousMode && Math.abs((row + col) - fabulousLocIndex) <= 7) { // Fabulous mode accommodations
+            toPlace.setInfluencedForegroundColor(fabulousColorWheel[fabulousColorIndex]);
+        }
+        finalImage.setSpecTxt(row, col, toPlace);
+    }
+
+    /**
+     * Mix colors, supporting Alpha!
+     * @param filter a Color that is to be placed on top of the ...
+     * @param destination a Color, behind the other, to be blended onto
+     * @return the blended, mushed up combination of the two
+     */
+    private Color blendColors(Color filter, Color destination) {
+        float filterAlphaPercent = (float)(filter.getAlpha()) / (float)(filter.getAlpha() + destination.getAlpha());
+        int r = (int) ((filter.getRed() * (filterAlphaPercent) + destination.getRed() * (1-filterAlphaPercent)));
+        int g = (int) ((filter.getGreen() * (filterAlphaPercent) + destination.getGreen() * (1-filterAlphaPercent)));
+        int b = (int) (filter.getBlue() * filterAlphaPercent + destination.getBlue() * (1-filterAlphaPercent));
+        float filterAlpha = (float)(filter.getAlpha())/255f;
+        float destAlpha = (float)(destination.getAlpha())/255f;
+        int newAlpha = (int) (255 * (filterAlpha + destAlpha - filterAlpha*destAlpha));  // Kudos to Nathan for this equation
+
+        return new Color(r,g,b,newAlpha);
     }
 
 

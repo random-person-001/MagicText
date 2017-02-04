@@ -136,67 +136,67 @@ public class KeyMap implements Settings{
             case 0: return new String[]
                     {"moves the character 1 space up (north)",
                     "",
-                    "Press enter & a key to map"};
+                    "Press (del) or enter & key to (un)map"};
             case 1: return new String[]
                     {"moves the character 1 space left",
                     "(west)",
-                    "Press enter & a key to map"};
+                    "Press (del) or enter & key to (un)map"};
             case 2: return new String[]
                     {"moves the character 1 space down",
                     "(south)",
-                    "Press enter & a key to map"};
+                    "Press (del) or enter & key to (un)map"};
             case 3: return new String[]
                     {"moves the character 1 space right",
                     "(east)",
-                    "Press enter & a key to map"};
+                    "Press (del) or enter & key to (un)map"};
             case 4: return new String[]
                     {"turns the character 90 degrees",
                     "clockwise",
-                    "Press enter & a key to map"};
+                    "Press (del) or enter & key to (un)map"};
             case 5: return new String[]
                     {"turns the character 90 degrees",
                     "anticlockwise",
-                    "Press enter & a key to map"};
+                    "Press (del) or enter & key to (un)map"};
             case 6: return new String[]
                     {"toggles between auto-turning(direction",
                     "follows movement) and manual-turning",
-                    "Press enter & a key to map"};
+                    "Press (del) or enter & key to (un)map"};
             case 7: return new String[]
                     {"swaps the turning mode while held down",
                     "",
-                    "Press enter & a key to map"};
+                    "Press (del) or enter & key to (un)map"};
             case 8: return new String[]
                     {"toggles the display of the direction",
                     "indicator",
-                    "Press enter & a key to map"};
+                    "Press (del) or enter & key to (un)map"};
             case 9: return new String[]
                     {"makes the character move faster",
                     "while held down (uses mana)",
-                    "Press enter & a key to map"};
+                    "Press (del) or enter & key to (un)map"};
             case 10: return new String[]
                     {"casts the spell currently equipped to",
                     "spell slot #1",
-                    "Press enter & a key to map"};
+                    "Press (del) or enter & key to (un)map"};
             case 11: return new String[]
                     {"casts the spell currently equipped to)",
                     "spell slot #2",
-                    "Press enter & a key to map"};
+                    "Press (del) or enter & key to (un)map"};
             case 12: return new String[]
                     {"interacts with people or things",
                     "",
-                    "Press enter & a key to map"};
+                    "Press (del) or enter & key to (un)map"};
             case 13: return new String[]
                     {"opens or closes the menu",
                     "",
-                    "Press enter & a key to map"};
+                    "Press (del) or enter & key to (un)map"};
             case 14: return new String[]
                     {"enters sub-menus, continues dialogs,",
                     "and makes selections",
-                    "Press enter & a key to map"};
+                    "Press (del) or enter & key to (un)map"};
             case 15: return new String[]
                     {"exits sub-menus, cancels dialogs,",
                     "and deselects",
-                    "Press enter & a key to map"};
+                    "Press (del) or enter & key to (un)map"};
         }
         return new String[]{"","",""};
     }
@@ -329,7 +329,7 @@ public class KeyMap implements Settings{
             case KeyEvent.VK_KP_UP: return "KPUP";
             case KeyEvent.VK_L: return "L";
             case KeyEvent.VK_LEFT: return "LEFT";
-            case KeyEvent.VK_LEFT_PARENTHESIS: return ")";
+            case KeyEvent.VK_LEFT_PARENTHESIS: return "(";
             case KeyEvent.VK_LESS: return "<";
             case KeyEvent.VK_M: return "M";
             case KeyEvent.VK_META: return "META";

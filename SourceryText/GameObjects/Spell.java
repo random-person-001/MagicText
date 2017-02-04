@@ -3,6 +3,7 @@ package SourceryText.GameObjects;
 import SourceryText.Layer;
 import SourceryText.Rooms.Room;
 import SourceryText.SpecialText;
+import sun.text.normalizer.UCharacterProperty;
 
 import java.util.Random;
 
@@ -35,6 +36,12 @@ public class Spell extends GameObject {
 
     private Item baseItem = null;
 
+    //Convenience variables
+    private final int UP = 0;
+    private final int LEFT = 1;
+    private final int DOWN = 2;
+    private final int RIGHT = 3;
+
     /**
      * You can name and customize different spells.  Some presets are:
      * Name    damage   range   char1   char2
@@ -46,7 +53,7 @@ public class Spell extends GameObject {
      * @param theRoom the Room
      * @param setX    X starting point
      * @param setY    Y starting point
-     * @param setOr   integer orientation.  0: up  1:down  2:left  3:right
+     * @param setOr   integer orientation.  0: up  1:left  2:down  3:right
      */
     public Spell(Room theRoom, int setX, int setY, int setOr, int setDmg, int setRng, SpecialText set1, SpecialText set2, boolean alting, boolean tracking, String spellName) {
         this(theRoom, setX, setY, setOr, setDmg, setRng, set1, set2, alting, spellName);
@@ -188,10 +195,10 @@ public class Spell extends GameObject {
                 int oldX = x;
                 int oldY = y;
                 pathToPos(range, target.getX(), target.getY(), layerName, false);
-                if (y < oldY) orientation = 0;
-                if (y > oldY) orientation = 1;
-                if (x < oldX) orientation = 2;
-                if (x > oldX) orientation = 3;
+                if (y < oldY) orientation = UP;
+                if (y > oldY) orientation = DOWN;
+                if (x < oldX) orientation = LEFT;
+                if (x > oldX) orientation = RIGHT;
             } else {
                 doMovement();
             }
@@ -208,16 +215,16 @@ public class Spell extends GameObject {
         boolean hitSomeOne = room.hurtSomethingAt(x, y, damage, killMessage, !isHostile, name);
         if (enemySeeking) {
             switch (orientation){
-                case 0:
+                case UP:
                     hitSomeOne |= room.hurtSomethingAt(x, y - 1, damage, killMessage, !isHostile, name);
                     break;
-                case 1:
+                case DOWN:
                     hitSomeOne |= room.hurtSomethingAt(x, y + 1, damage, killMessage, !isHostile, name);
                     break;
-                case 2:
+                case LEFT:
                     hitSomeOne |= room.hurtSomethingAt(x - 1, y, damage, killMessage, !isHostile, name);
                     break;
-                case 3:
+                case RIGHT:
                     hitSomeOne |= room.hurtSomethingAt(x + 1, y, damage, killMessage, !isHostile, name);
                     break;
             }
@@ -232,7 +239,7 @@ public class Spell extends GameObject {
                 onChar1 = true;
             }
         } else {
-            if (orientation <= 1) { //Orientation-sensitive display
+            if (orientation%2 == 0) { //Orientation-sensitive display
                 org.editLayer(char1, layerName, 0, 0);
             } else {
                 org.editLayer(char2, layerName, 0, 0);
@@ -272,16 +279,16 @@ public class Spell extends GameObject {
 
     protected void doMovement() {
         switch (orientation) {
-            case 0:
+            case UP:
                 y -= 1;
                 break;
-            case 1:
+            case DOWN:
                 y += 1;
                 break;
-            case 2:
+            case LEFT:
                 x -= 1;
                 break;
-            case 3:
+            case RIGHT:
                 x += 1;
                 break;
             case -1: // Random dir

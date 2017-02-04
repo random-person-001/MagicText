@@ -17,8 +17,6 @@ import java.awt.event.KeyEvent;
 import java.util.*;
 import java.util.List;
 
-import static java.lang.StrictMath.abs;
-
 /**
  * @author Jared
  */
@@ -39,8 +37,6 @@ public class Room implements java.io.Serializable {
     private ArrayList<InteractableEnvironment> interactableEnvironmentObjects = new ArrayList<>(); // things that should be notified on a spell going somewhere
 
     public Player playo = null;
-
-    private KeyMap keymap;
 
     public int roomWidth;
     public int roomHeight;
@@ -135,7 +131,7 @@ public class Room implements java.io.Serializable {
     }
 
     /**
-     * Thing to be called at the end of enter() after things are done.  Needs work for multiplayer.
+     * Thing to be called at the end of enter() after things are done.
      *
      * @param player a Player that left
      * @param exit   the String of what room they're trying to go to now.
@@ -154,6 +150,17 @@ public class Room implements java.io.Serializable {
             org.terminateClock();
             setObjsPause(true);
         }
+    }
+
+    /**
+     * Forcably make a player exit the room, whether the player wanted to or not (independant of normal stuff) (used to
+     * make resuming from save work well)
+     *
+     * @param player a Player to leave
+     * @param exit   the String of what room they shall go to now.
+     */
+    public void makePlayerExitRoom(Player player, String exit){
+        takeCareOfPlayerLeavingRoom(player, exit);
     }
 
     public void setNewRoom(String newID, Player player, int playerY, int playerX) {
@@ -710,7 +717,7 @@ public class Room implements java.io.Serializable {
         return toReturn;
     }
 
-    protected void genericKeyEvent (KeyEvent event){
+    protected void genericKeyEvent (KeyEvent event, KeyMap keymap){
         if (event.getKeyCode() == keymap.BACK_PRIMARY || event.getKeyCode() == keymap.BACK_SECONDARY) {
             resume = true;
         }
@@ -724,8 +731,8 @@ public class Room implements java.io.Serializable {
     }
 
     public void fireKeyEvent(KeyEvent event, KeyMap keymap) {
-        this.keymap = keymap;
-        genericKeyEvent(event);
+        //this.keymap = keymap;  // field not needed, I believe  --Riley
+        genericKeyEvent(event, keymap);
     }
 
     /**
@@ -747,6 +754,21 @@ public class Room implements java.io.Serializable {
             }
         }
         return toReturn;
+    }
+
+    /**
+     * Finds all SpecialTexts in layer and replaces it with another.
+     *
+     * @param find        SpecialText to find
+     */
+    public void multiPlantText(SpecialText find, FlavorText message, Layer template) {
+        for (int c = 0; c < template.getColumns(); c++) {
+            for (int r = 0; r < template.getRows(); r++) {
+                if (template.getSpecTxt(r, c).equals(find)) {
+                    plantText(message, c, r);
+                }
+            }
+        }
     }
 
     /**

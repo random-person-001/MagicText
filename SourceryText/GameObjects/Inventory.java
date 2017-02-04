@@ -96,7 +96,7 @@ class Inventory implements java.io.Serializable {
         equipMenuLayer.findAndReplace(new SpecialText(","), new SpecialText("_", new Color(15, 17, 15), new Color(20, 22, 20)));
         taterMenuLayer = new Layer(Art.strToArray(new Art().taterMenu), "tater" + player.getUsername(), 27, 1, false, true, true);
         taterMenuLayer.setOwningPlayerUsername(p.getUsername());
-        selectorLayer = new Layer(new String[1][1], "selector" + player.getUsername(), 0, 0, false, false, true);
+        selectorLayer = new Layer(new String[1][1], "selector" + player.getUsername(), 0, 0, false, true, true);
         selectorLayer.setOwningPlayerUsername(p.getUsername());
         infoLayer = new Layer(new String[22][46], "invInfo" + player.getUsername(), 0, 0, false, false, true);
         infoLayer.setOwningPlayerUsername(p.getUsername());
@@ -344,8 +344,8 @@ class Inventory implements java.io.Serializable {
         selectorLayer.setStr(0, 0, ">");
         selectorLayer.setPos(cursorX, cursorY);
         org.addLayer(topMenuLayer);
-        org.addLayer(selectorLayer);
         org.addLayer(infoLayer);
+        org.addLayer(selectorLayer);
 
         timer.scheduleAtFixedRate(new MenuTimer(), 10, 99);
     }
@@ -417,7 +417,10 @@ class Inventory implements java.io.Serializable {
         pressedD = false;
 
         Layer cursorLayer = org.getLayer(selectorLayer.getName());
-        if (cursorLayer != null) cursorLayer.setPos(cursorX, cursorY);
+        if (cursorLayer != null) {
+            cursorLayer.setPos(cursorX, cursorY);
+            cursorLayer.setOpaque(true);
+        }
     }
 
     /**
@@ -425,8 +428,18 @@ class Inventory implements java.io.Serializable {
      * Submenus: spells, items, equip, quit
      */
     private void operateTopMenu() {
-        loopAtMenuEnd(2, 6);
+        loopAtMenuEnd(2, 7);
         //cursorX = 28;
+
+        //Open to lan option stuff
+        String multiplayerText = (player.getGameInstance().getIsNetworkOpen()) ? "Close to LAN" :  "Open to LAN " ;
+        if (!player.getHasLocalWindow()){
+            multiplayerText = "Change LAN  ";
+        }
+        for (int i=0; i<multiplayerText.toCharArray().length; i++){
+            org.editLayer(new SpecialText(String.valueOf(multiplayerText.toCharArray()[i]),
+                    (player.getHasLocalWindow()? Color.white: Color.gray)), topMenuLayer, 4, 3+i);
+        }
         if (pressedA) {
             switch (cursorY) {
                 case 2:
@@ -442,10 +455,22 @@ class Inventory implements java.io.Serializable {
                     cursorY = 2;
                     break;
                 case 5:
+                    // Toggle open to lan-ness
+                    if (player.getHasLocalWindow()) {
+                        if (player.getGameInstance().getIsNetworkOpen()) {
+                            player.getGameInstance().bootClientPlayersOff();
+                            player.getGameInstance().closeNetworking();
+                        } else {
+                            player.getGameInstance().openNetworking();
+                        }
+                    }
+                    cursorY = 7;
+                    break;
+                case 6:
                     jumpToNewMenu(quitMenuLayer, QUIT, topMenuLayer, 28);
                     cursorY = 4;
                     break;
-                case 6:
+                case 7:
                     exitAllMenus();
                     break;
             }
@@ -468,8 +493,8 @@ class Inventory implements java.io.Serializable {
 
         org.removeLayer(selectorLayer.getName());
         org.removeLayer(infoLayer.getName());
-        org.addLayer(selectorLayer);
         org.addLayer(infoLayer);
+        org.addLayer(selectorLayer);
         menuID = newID;
         cursorX = newXIndex;
     }
@@ -874,7 +899,7 @@ class Inventory implements java.io.Serializable {
             else if (key == '\\') {
                 System.out.println(getY());
             }
-            else if (key == keymap.MENU_PRIMARY || key == keymap.MENU_SECONDARY) {
+            else if (key == keymap.MENU_PRIMARY || key == keymap.MENU_SECONDARY || key == keymap.BACK_PRIMARY || key == keymap.BACK_SECONDARY) {
                 exitAllMenus();
             }
             else if (Character.isDigit(event.getKeyChar())) {

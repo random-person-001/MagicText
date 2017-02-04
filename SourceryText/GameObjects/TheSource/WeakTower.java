@@ -44,17 +44,17 @@ public class WeakTower extends Mortal {
                 m.subtractHealth(2);
             }
             if (Math.abs(m.getX() - getX()) <= 2) {
-                int orientation = (m.getY() - getY() > 0) ? 1 : 0;
+                int orientation = (m.getY() - getY() > 0) ? 2 : 0;
                 room.addObject(new Spell(room, x, y, orientation, dmg, rng, anim1, anim2, alt, "arcane"));
             }
             if (Math.abs(m.getY() - getY()) <= 2) {
-                int orientation = (m.getX() - getX() > 0) ? 3 : 2;
+                int orientation = (m.getX() - getX() > 0) ? 3 : 1;
                 room.addObject(new Spell(room, x, y, orientation, dmg, rng, anim1, anim2, alt, "arcane"));
             }
         } else {
             System.out.println("WeakTower could not find a nearest good guy :(");
         }
-        setDispIcon(new SpecialText("T", new Color(255, 200, 160)));
+        setDispIcon(new SpecialText("T", new Color(211, 84, 83)));
     }
 
     @Override

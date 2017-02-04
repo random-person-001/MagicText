@@ -16,6 +16,7 @@ package SourceryText.GameObjects;
 
 import SourceryText.*;
 import SourceryText.GameSettings.KeyMap;
+import SourceryText.Network.NetworkServerWorker;
 import SourceryText.Rooms.Room;
 
 import javax.swing.*;
@@ -41,7 +42,7 @@ public class Player extends Mortal implements java.io.Serializable {
     private Inventory inv;
     private HUD hud;
     private KeyMap keymap;
-    private NetworkServer networkServer; // Only used in multiplayer
+    private NetworkServerWorker networkServer; // Only used in multiplayer
     private boolean hasLocalWindow;
     public java.util.List<Room.FlavorText> messageQueue = new ArrayList<>();
 
@@ -53,8 +54,8 @@ public class Player extends Mortal implements java.io.Serializable {
 
     //Convenience variables
     private final int UP = 0;
-    private final int DOWN = 1;
-    private final int LEFT = 2;
+    private final int LEFT = 1;
+    private final int DOWN = 2;
     private final int RIGHT = 3;
 
     // CONSTANT STATS
@@ -82,7 +83,10 @@ public class Player extends Mortal implements java.io.Serializable {
     public boolean ludicrousSpeed = false;
     private int orientation = UP;
     private boolean orientationLocked = false;
-    private boolean lockedAimLastTick = false;
+    private boolean turnTypeHeld = false;
+    private boolean aimDisplayLocked = false;
+    private boolean aimDisplayedLastTick;
+    private int lastOrientation = UP;
     private String aimDispName = "aimDisp";
     public boolean frozen = false;
     public boolean isGhost = false;
@@ -110,6 +114,7 @@ public class Player extends Mortal implements java.io.Serializable {
 
     private int spellCasts = 0;
     private int snowflakes = 0; // Note: we'll probably want to improve the currency system later, like last few methods for this class
+    public boolean braindead = false;
 
 
     /**
@@ -141,26 +146,10 @@ public class Player extends Mortal implements java.io.Serializable {
     }
 
     /**
-     * Initialize a new NetworkServer and start its doTimerSend() method, which sends display information to clients.
-     */
-    void testSendOverNetwork() {
-        try {
-            networkServer = new NetworkServer(this);
-            networkServer.doTimerSend();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
      * Attempt to cancel the sending of the display data over network. (stops an earlier instance of calling testSendOverNetwork())
      */
     void cancelSendOverNetwork() {
-        try {
-            networkServer.disconnect();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        networkServer.disconnect();
     }
 
     /**
@@ -169,7 +158,6 @@ public class Player extends Mortal implements java.io.Serializable {
     public void resumeFromSave() {
         //org.resetClock();
         hud.setupTimer();
-        inv.rebuildTimer();
     }
 
     public String getUsername() {
@@ -292,9 +280,9 @@ public class Player extends Mortal implements java.io.Serializable {
             }
 
             resetTime(); // time is used for mana regen and spell burnout.
+            graphicUpdate();
             aimDispUpdate();
             doMovement();
-            graphicUpdate();
         }
     }
 
@@ -368,29 +356,41 @@ public class Player extends Mortal implements java.io.Serializable {
     }
 
     private void aimDispUpdate() {
-        if (orientationLocked) {
-            switch (orientation) {
+        if(aimDisplayedLastTick) {
+            switch (lastOrientation) {
                 case UP:
-                    org.editLayer("+", layerName, 0, 1);
+                    org.editLayer(" ", layerName, 0, 1);
                     break;
                 case DOWN:
-                    org.editLayer("+", layerName, 2, 1);
+                    org.editLayer(" ", layerName, 2, 1);
                     break;
                 case LEFT:
-                    org.editLayer("+", layerName, 1, 0);
+                    org.editLayer(" ", layerName, 1, 0);
                     break;
                 case RIGHT:
-                    org.editLayer("+", layerName, 1, 2);
+                    org.editLayer(" ", layerName, 1, 2);
                     break;
             }
-            lockedAimLastTick = true;
-        } else {
-            org.editLayer(" ", layerName, 1, 0);
-            org.editLayer(" ", layerName, 0, 1);
-            org.editLayer(" ", layerName, 1, 2);
-            org.editLayer(" ", layerName, 2, 1);
-            lockedAimLastTick = false;
+            aimDisplayedLastTick = false;
+        } if(aimDisplayLocked || orientationLocked) {
+            SpecialText txt = new SpecialText("+", new Color(255, orientationLocked?0:255, orientationLocked?0:255));
+            switch (orientation) {
+                case UP:
+                    org.editLayer(txt, layerName, 0, 1);
+                    break;
+                case DOWN:
+                    org.editLayer(txt, layerName, 2, 1);
+                    break;
+                case LEFT:
+                    org.editLayer(txt, layerName, 1, 0);
+                    break;
+                case RIGHT:
+                    org.editLayer(txt, layerName, 1, 2);
+                    break;
+            }
+            aimDisplayedLastTick = true;
         }
+        lastOrientation = orientation;
     }
 
     private void reportPos() {
@@ -443,7 +443,6 @@ public class Player extends Mortal implements java.io.Serializable {
         try {
             System.out.println("Valid output file specified; attempting serialization of gameInstance...");
             room.setObjsPause(true);
-            inv.cancelTimer();
             FileOutputStream fileOut = new FileOutputStream(path);
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
             System.out.println("Writing, please wait...");
@@ -454,7 +453,6 @@ public class Player extends Mortal implements java.io.Serializable {
             System.out.printf("Serialized Player data is saved in " + path);
             room.setObjsPause(false);
             org.resetClock();
-            inv.rebuildTimer();
             room.splashMessage("Saving successful!", "Save Point", this);
             return true;
         } catch (IOException | ConcurrentModificationException e) {
@@ -518,15 +516,18 @@ public class Player extends Mortal implements java.io.Serializable {
         }
 
         SpecialText playerIcon;
-        if (!swimming)
+        if (braindead){
+            playerIcon = new SpecialText("@", new Color(44, 59, 38));
+        }
+        else if (!swimming)
             playerIcon = new SpecialText("@", new Color(150, 255, 100));
         else {
             if (waterEntry == 2)
-                playerIcon = new SpecialText("u", new Color(255, 255, 255), new Color(70, 70, 200));
+                playerIcon = new SpecialText("u", new Color(255, 255, 255));
             else if (waterEntry == 1) {
-                playerIcon = new SpecialText("Y", new Color(255, 255, 255), new Color(70, 70, 200));
+                playerIcon = new SpecialText("Y", new Color(255, 255, 255));
             } else
-                playerIcon = new SpecialText("@", new Color(100, 150, 255), new Color(65, 65, 200));
+                playerIcon = new SpecialText("@", new Color(100, 150, 255));
         }
         org.editLayer(playerIcon, layerName, 1, 1);
         Layer iconLayer = org.getLayer(layerName);
@@ -650,16 +651,16 @@ public class Player extends Mortal implements java.io.Serializable {
      */
     void keyPressed(int key) {
         if (!frozen) {
-            if      (key == keymap.BACK_PRIMARY || keymap.BACK_SECONDARY == key)                           { reportPos(); }
-            else if (key == keymap.TURN_TYPE_TOGGLE_PRIMARY || keymap.TURN_TYPE_TOGGLE_SECONDARY == key)   {
-                orientationLocked = !orientationLocked;
-                System.out.println("Aim-lock toggle!");
-            }
-            else if (key == keymap.SPELL1_PRIMARY || keymap.SPELL1_SECONDARY == key)                       { newCastSpell(spell1); }
-            else if (key == keymap.SPELL2_PRIMARY || keymap.SPELL2_SECONDARY == key)                       { newCastSpell(spell2); }
-            else if (key == keymap.MENU_PRIMARY || keymap.MENU_SECONDARY == key)                           { shouldNewInv = true; }
-            else if (key == keymap.INTERACT_PRIMARY || keymap.INTERACT_SECONDARY == key)                   { textBoxQuery(); }
-            else                                                                                           { System.out.print(key); }
+            if      (key == keymap.BACK_PRIMARY || keymap.BACK_SECONDARY == key)                            { reportPos(); }
+            else if (key == keymap.TURN_TYPE_TOGGLE_PRIMARY || keymap.TURN_TYPE_TOGGLE_SECONDARY == key)    { orientationLocked = !orientationLocked; }
+            else if (key == keymap.SPELL1_PRIMARY || keymap.SPELL1_SECONDARY == key)                        { newCastSpell(spell1); }
+            else if (key == keymap.SPELL2_PRIMARY || keymap.SPELL2_SECONDARY == key)                        { newCastSpell(spell2); }
+            else if (key == keymap.MENU_PRIMARY || keymap.MENU_SECONDARY == key)                            { shouldNewInv = true; }
+            else if (key == keymap.INTERACT_PRIMARY || keymap.INTERACT_SECONDARY == key)                    { textBoxQuery(); }
+            else if (key == keymap.CLOCKWISE_PRIMARY || keymap.CLOCKWISE_SECONDARY == key)                  { orientation = Math.floorMod(orientation-1, 4); }
+            else if (key == keymap.ANTICLOCKWISE_PRIMARY || keymap.ANTICLOCKWISE_SECONDARY == key)          { orientation = Math.floorMod(orientation+1, 4); }
+            else if (key == keymap.DISPLAY_DIRECTION_PRIMARY || keymap.DISPLAY_DIRECTION_SECONDARY == key)  { aimDisplayLocked = !aimDisplayLocked; }
+            else                                                                                            { System.out.print(key); }
             graphicUpdate();
         }
     }
@@ -812,11 +813,12 @@ public class Player extends Mortal implements java.io.Serializable {
                 if (textBox != null) textBox.receiveInput("change");
             } if (event.getKeyCode() == keymap.RUN_PRIMARY || event.getKeyCode() == keymap.RUN_SECONDARY) {
                 spacePressed = true;
-            } if (event.getKeyCode() == keymap.TURN_TYPE_HOLD_PRIMARY || event.getKeyCode() == keymap.TURN_TYPE_HOLD_SECONDARY) {
-                orientationLocked = true;
-            } if (event.getKeyCode() == keymap.BACK_PRIMARY || event.getKeyCode() == keymap.BACK_SECONDARY) {
-                keyPressed(event.getKeyCode());
+            } if((event.getKeyCode() == keymap.TURN_TYPE_HOLD_PRIMARY || event.getKeyCode() == keymap.TURN_TYPE_HOLD_SECONDARY) && !turnTypeHeld) {
+                orientationLocked = !orientationLocked;
+                turnTypeHeld = true;
             } if (event.getKeyCode() == keymap.CONFIRM_PRIMARY || event.getKeyCode() == keymap.CONFIRM_SECONDARY) {
+                if (textBox != null) textBox.receiveInput("end");
+            } if (event.getKeyCode() == keymap.BACK_PRIMARY || event.getKeyCode() == keymap.BACK_SECONDARY) {
                 if (textBox != null) textBox.receiveInput("end");
             } else {
                 keyPressed(event.getKeyCode());
@@ -837,8 +839,9 @@ public class Player extends Mortal implements java.io.Serializable {
                 rightPressed = false;
             } if (event.getKeyCode() == keymap.RUN_PRIMARY || event.getKeyCode() == keymap.RUN_SECONDARY) {
                 spacePressed = false;
-            } if (event.getKeyCode() == keymap.TURN_TYPE_HOLD_PRIMARY || event.getKeyCode() == keymap.TURN_TYPE_HOLD_SECONDARY) {
-                orientationLocked = false;
+            }if(event.getKeyCode() == keymap.TURN_TYPE_HOLD_PRIMARY || event.getKeyCode() == keymap.TURN_TYPE_HOLD_SECONDARY) {
+                orientationLocked = !orientationLocked;
+                turnTypeHeld = false;
             }
         }
         if (frozen){
@@ -901,5 +904,17 @@ public class Player extends Mortal implements java.io.Serializable {
 
     public boolean getOrientationLocked() {
         return orientationLocked;
+    }
+
+    public GameInstance getGameInstance() {
+        return gameInstance;
+    }
+
+    public void setKeyMap(KeyMap keyMap) {
+        this.keymap = keyMap;
+    }
+
+    public boolean hasKeyMap() {
+        return keymap != null;
     }
 }
