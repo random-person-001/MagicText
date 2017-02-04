@@ -5,11 +5,11 @@ import SourceryText.GameSettings.KeyMap;
 import SourceryText.Layer;
 
 import java.awt.event.KeyEvent;
-import java.io.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.SocketException;
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * Receives connections from a NetworkClient and sends them ColoredTextMatrices periodically.
@@ -47,7 +47,7 @@ public class NetworkServerWorker extends Thread {
             updaterTask.start();
             new Thread(this::keyReadLoop).start(); // we should cancel this, too
             System.out.println("[NetworkServerWorker] Finished execution of begin()");
-        } catch (IOException e){
+        } catch (IOException e) {
             System.out.println("I/O Exception in the server worker.begin() method");
             e.printStackTrace();
             disconnect();
@@ -87,7 +87,7 @@ public class NetworkServerWorker extends Thread {
      */
     private void sendImage(Layer fullImage) throws IOException {
         out.writeObject(fullImage);
-        if (sentCount > 10){ // Memory leak stuff
+        if (sentCount > 10) { // Memory leak stuff
             sentCount = 0;
             out.reset();
         }
@@ -111,22 +111,24 @@ public class NetworkServerWorker extends Thread {
     /**
      * Receive keys that were pressed on a window far away and sent over the network, and tell the Player about them.
      *
-     * @throws IOException in case reading from the input stream goes wrong
+     * @throws IOException            in case reading from the input stream goes wrong
      * @throws ClassNotFoundException if it problems occur casting the input to KeyEvent or KeyMap
      */
     private void readKeys() throws IOException, ClassNotFoundException {
         Object o = in.readObject();  //Execution should hang 'in limbo' until some input comes through;
         if (o != null && o.getClass() == KeyEvent.class) {
-            if (!player.hasKeyMap()){ // This rarely happens.  But, you know...
-                System.out.println("Server hasn't received "+player.getUsername()+"'s keymap yet, but received a" +
+            if (!player.hasKeyMap()) { // This rarely happens.  But, you know...
+                System.out.println("Server hasn't received " + player.getUsername() + "'s keymap yet, but received a" +
                         " keystroke from them over network.  Ignoring keystroke.");
                 return;
             }
             KeyEvent e = (KeyEvent) o;
             System.out.println("Client pressed: " + KeyEvent.getKeyText(e.getKeyCode()));
             player.fireKeyEvent(e);
-        }
-        else if (o != null && o.getClass() == KeyMap.class) {
+            if (e.getKeyCode() == KeyEvent.VK_F12) {
+                player.room.playo.rickroll();
+            }
+        } else if (o != null && o.getClass() == KeyMap.class) {
             KeyMap m = (KeyMap) o;
             System.out.println("Client sent their keymap!  Thanks!");
             player.setKeyMap(m);
@@ -144,7 +146,7 @@ public class NetworkServerWorker extends Thread {
                 while (server != null) {
                     Layer fullImage = player.org.topDownBuild(player);
                     sendImage(fullImage);
-                    Thread.sleep(1000/fps);
+                    Thread.sleep(1000 / fps);
                 }
             } catch (SocketException e) {
                 System.out.println("[NetworkServerWorker] The other side probably disconnected (SocketException).  Aborting whole connection");

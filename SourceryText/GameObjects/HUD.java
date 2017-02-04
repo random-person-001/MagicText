@@ -244,9 +244,9 @@ class HUD implements java.io.Serializable {
         }
     }
 
-    private Color createColorFromSpell (Item source, int charNum){
+    private Color createColorFromSpell(Item source, int charNum) {
         Color baseColor = Color.WHITE;
-        switch (source.getDescMode()){
+        switch (source.getDescMode()) {
             case "arcane":
                 baseColor = new Color(102, 102, 255);
                 break;
@@ -264,16 +264,16 @@ class HUD implements java.io.Serializable {
                 break;
         }
         float burnoutColorScalar = 1f;
-        if (source.spellBurnout < (5 - charNum) * 0.2f && source.spellBurnout > (4 - charNum) * 0.2f){
+        if (source.spellBurnout < (5 - charNum) * 0.2f && source.spellBurnout > (4 - charNum) * 0.2f) {
             burnoutColorScalar = ((0.2f - (source.spellBurnout % 0.2f)) * 3) + 0.4f;
             //System.out.printf("Burnout disp scalar: %1$f\n", burnoutColorScalar);
-        } else if ((source.spellBurnout) > (5 - charNum) * 0.2f){
+        } else if ((source.spellBurnout) > (5 - charNum) * 0.2f) {
             burnoutColorScalar = 0.4f;
         }
         Color finalColor = new Color(
-                (int)(baseColor.getRed() * burnoutColorScalar),
-                (int)(baseColor.getGreen() * burnoutColorScalar),
-                (int)(baseColor.getBlue() * burnoutColorScalar));
+                (int) (baseColor.getRed() * burnoutColorScalar),
+                (int) (baseColor.getGreen() * burnoutColorScalar),
+                (int) (baseColor.getBlue() * burnoutColorScalar));
         return finalColor;
     }
 
@@ -295,6 +295,11 @@ class HUD implements java.io.Serializable {
             System.out.println("Awwwwww! (IO)");
         }
         return false;
+    }
+
+    public boolean rickroll() {
+        showResponse("            You've been rickrolled!");
+        return openURL("https://youtu.be/dQw4w9WgXcQ?t=1"); //NOTICE: this appears not to work on chrome-based browsers.
     }
 
     /**
@@ -473,6 +478,8 @@ class HUD implements java.io.Serializable {
         } else if (command.contains("compil")) {
             showResponse("Opening relevant XKCD (303) in default web browser ");
             openURL("http://xkcd.com/303/"); //NOTICE: this appears not to work on chrome-based browsers.
+        } else if (command.contains("never gonna")) {
+            rickroll();
         } else if (command.contains("help")) {
             showResponse("Seek GameObjects/HUD.java, method processCommand()");
         } else if (command.contains("getpos")) {
@@ -611,7 +618,7 @@ class HUD implements java.io.Serializable {
             room.setNewRoom("switch to zone 2", player, 0, 0);
             nextCommand = "sleep 400 && goto 66 44 && jumpto FondantVillage";
             executeNextCommand = true;
-        }else if (command.startsWith("sleep ")) {
+        } else if (command.startsWith("sleep ")) {
             command = command.substring(6);
             System.out.println(command);
             int[] p = getNParameters(command, 1);
@@ -623,17 +630,17 @@ class HUD implements java.io.Serializable {
                     e.printStackTrace();
                 }
             }
-        } else if (command.contains("unbound camera") && player.room != null){
+        } else if (command.contains("unbound camera") && player.room != null) {
             player.room.boundedCamera = false;
-        } else if (command.contains("bound camera") && player.room != null){
+        } else if (command.contains("bound camera") && player.room != null) {
             player.room.boundedCamera = true;
-        } else if (command.contains("network on")){
+        } else if (command.contains("network on")) {
             player.getGameInstance().openNetworking();
             showResponse("Now accepting connection requests");
-        } else if (command.contains("network off")){
+        } else if (command.contains("network off")) {
             player.getGameInstance().closeNetworking();
             showResponse("Stopped accepting connection requests");
-        } else if (command.contains("boot client")){
+        } else if (command.contains("boot client")) {
             player.getGameInstance().bootClientPlayersOff();
             showResponse("kicked all client players off; Muah ha ha");
         } else if (command.length() > 0) {
