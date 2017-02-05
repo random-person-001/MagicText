@@ -42,10 +42,12 @@ public class SpecialTextMaker extends JFrame implements ChangeListener, ActionLi
 
     private SpecialText finalChar = new SpecialText("", Color.WHITE, Color.BLACK);
 
+    protected EditorFrame owner;
+
     public SpecialTextMaker (){
         setBackground(new Color(180, 180, 173));
 
-        setVisible(true);
+        setVisible(false);
 
         try {
             UIManager.setLookAndFeel(new MetalLookAndFeel());
@@ -55,7 +57,7 @@ public class SpecialTextMaker extends JFrame implements ChangeListener, ActionLi
 
         setBounds(400, 400, 565, 260);
 
-        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
         setTitle("SpecialText Creator");
         //setResizable(false);
 
@@ -123,7 +125,7 @@ public class SpecialTextMaker extends JFrame implements ChangeListener, ActionLi
 
         setBackgroundButton = new JButton("Bg");
         setBackgroundButton.setPreferredSize(new Dimension(80, 30));
-        setBackgroundButton.setBackground(Color.WHITE);
+        setBackgroundButton.setBackground(Color.BLACK);
         setBackgroundButton.setActionCommand("background");
         setBackgroundButton.addActionListener(this);
         setBackgroundButton.setOpaque(true);
@@ -134,6 +136,7 @@ public class SpecialTextMaker extends JFrame implements ChangeListener, ActionLi
 
         JButton finishButton = new JButton("Finish");
         finishButton.setActionCommand("finish");
+        finishButton.addActionListener(this);
 
         group.add(finishButton);
 
@@ -178,6 +181,15 @@ public class SpecialTextMaker extends JFrame implements ChangeListener, ActionLi
         group.add(manualEnter);
         c.add(group);
         return group.preferredSize();
+    }
+
+    public void setFinalChar(SpecialText setChar){
+        finalChar = setChar;
+        setSpecTxt.setText(setChar.getStr());
+        setSpecTxt.setBackground(setChar.getBackgroundColor());
+        setSpecTxt.setForeground(setChar.getForegroundColor());
+        setForegroundButton.setBackground(setChar.getForegroundColor());
+        setBackgroundButton.setBackground(setChar.getBackgroundColor());
     }
 
     private boolean changeTextBoxes = true;
@@ -266,6 +278,9 @@ public class SpecialTextMaker extends JFrame implements ChangeListener, ActionLi
             blueSlider.setValue(finalChar.getBackgroundColor().getBlue());
             updateHSB();
             evaluateColor = true;
+        } else if ("finish".equals(e.getActionCommand())) {
+            owner.toolbar.receiveSpecialText(finalChar);
+            setVisible(false);
         } else
             System.out.println(e.getActionCommand());
     }
@@ -281,7 +296,8 @@ public class SpecialTextMaker extends JFrame implements ChangeListener, ActionLi
             updateTextBox(hueLabel, hueSlider, 3);
             updateTextBox(satLabel, satSlider, 4);
             updateTextBox(briLabel, briSlider, 5);
-            System.out.println("STM Alive");
+            finalChar.setStr(setSpecTxt.getText());
+            //System.out.println("STM Alive");
         }
 
         private void updateTextBox(JTextField label, JSlider slider, int pos){

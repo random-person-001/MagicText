@@ -4,27 +4,27 @@ import SourceryText.SpecialText;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 /**
  * Created by Jared on 1/29/2017.
  */
-public class EditorToolbar extends JPanel {
-    int cornerX;
-    int cornerY;
-    int toolbarWidth;
+public class EditorToolbar extends JComponent implements MouseListener{
+    private int cornerX;
+    private int cornerY;
+    private int toolbarWidth;
 
-    SpecialText[] toolBarContents = new SpecialText[17];
-    int toolBarCursor = 4;
+    private SpecialText[] toolBarContents = new SpecialText[17];
+    private int toolBarCursor = 4;
 
-    JSlider redSilder;
-    JSlider greenSlider;
-    JSlider blueSlider;
+    EditorFrame owner;
 
     public EditorToolbar(int setX, int setY, int setWidth){
         cornerX = setX;
         cornerY = setY;
         toolbarWidth = setWidth;
-        String[] defaultChars = {"a","b","c","d","e","f","g","h","i","#","'","l","m","n","o","p","q"};
+        String[] defaultChars = {"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q"};
 
         for (int ii = 0; ii < toolBarContents.length; ii++){
             toolBarContents[ii] = new SpecialText(defaultChars[ii]);
@@ -36,27 +36,27 @@ public class EditorToolbar extends JPanel {
 
         JSlider redSlider = new JSlider(0, 255, 0);
         c.add(redSlider);
+
+        addMouseListener(this);
     }
 
     protected void paintComponent(Graphics g){
-        g.setColor(new Color(150, 150, 150));
-        g.drawLine(cornerX, cornerY, cornerX + toolbarWidth, cornerY);
+        int bottom = getHeight() - cornerY;
+        g.setColor(new Color(125, 125, 125));
+        g.fillRect(cornerX, cornerY, toolbarWidth, bottom);
         g.drawLine(cornerX + toolbarWidth, cornerY, cornerX + toolbarWidth, getHeight());
 
-        //g.draw3DRect(cornerX + 50, cornerY + 50, 20, 20, true);
-
+        int length = (toolbarWidth / toolBarContents.length) - 4;
         for (int id = 0; id < toolBarContents.length; id++){
-            int length = (toolbarWidth / toolBarContents.length) - 4;
             int boxCornerX = (length + 4) * id;
 
             boolean isSelected = (id == toolBarCursor);
             if (!isSelected) {
-                g.setColor(new Color(150, 150, 150));
                 g.draw3DRect(boxCornerX, cornerY + 1, length, length + 1, true);
             } else {
-                g.setColor(Color.WHITE);
-                g.drawRect(boxCornerX, cornerY + 1, length, length + 1);
-                g.drawRect(boxCornerX - 1, cornerY, length + 2, length + 3);
+                g.setColor(new Color(180, 180, 173));
+                g.fillRect(boxCornerX - 3, cornerY, length + 7, bottom);
+                g.draw3DRect(boxCornerX, cornerY + 1, length, length + 1, true);
             }
 
             g.setColor(toolBarContents[id].getBackgroundColor());
@@ -68,5 +68,42 @@ public class EditorToolbar extends JPanel {
             else
                 g.drawString(toolBarContents[id].getStr(), boxCornerX + 2, cornerY + length - 4);
         }
+    }
+
+    public void receiveSpecialText(SpecialText present){
+        toolBarContents[toolBarCursor] = present;
+        repaint();
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        if (e.getX() > cornerX && e.getX() < toolbarWidth + cornerX && e.getY() > cornerY){
+            toolBarCursor = (e.getX() - cornerX) / (toolbarWidth / toolBarContents.length);
+            repaint();
+            if (e.getButton() == MouseEvent.BUTTON3){
+                owner.maker.setVisible(true);
+                owner.maker.setFinalChar(toolBarContents[toolBarCursor]);
+            }
+        }
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
     }
 }

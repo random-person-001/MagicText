@@ -11,14 +11,16 @@ import java.awt.event.MouseListener;
 /**
  * Created by Jared on 1/29/2017.
  */
-public class EditorFrame extends JFrame implements MouseListener {
+public class EditorFrame extends JFrame{
 
     public ColoredTextMatrix viewMatrix;
-    public EditorToolbar toolbar;
+    EditorToolbar toolbar;
+
+    SpecialTextMaker maker;
 
     private Container c = getContentPane();
 
-    public SpecialText selectedSpecialText;
+    Color backgroundColor = new Color(180, 180, 173);
 
     public EditorFrame (){
         SpecialText[][] testDisplay = new SpecialText[46][28];
@@ -29,7 +31,7 @@ public class EditorFrame extends JFrame implements MouseListener {
             testDisplay[0][ii] = new SpecialText(String.valueOf(ii % 10));
         }
 
-        setBackground(new Color(180, 180, 173));
+        setBackground(backgroundColor);
 
         viewMatrix = new ColoredTextMatrix(510, 570);
 
@@ -44,6 +46,7 @@ public class EditorFrame extends JFrame implements MouseListener {
         viewMatrix.text = testDisplay;
 
         toolbar = new EditorToolbar(0, 572, 510);
+        toolbar.owner = this;
 
         c.add(toolbar);
 
@@ -53,35 +56,12 @@ public class EditorFrame extends JFrame implements MouseListener {
 
         repaintComponents();
 
-        SpecialTextMaker testMaker = new SpecialTextMaker();
+        maker = new SpecialTextMaker();
+        maker.owner = this;
     }
 
     protected void repaintComponents(){
         toolbar.repaint();
         viewMatrix.repaint();
-    }
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-
     }
 }

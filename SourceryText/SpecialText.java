@@ -25,6 +25,8 @@ public class SpecialText implements java.io.Serializable {
         return self;
     }
 
+    public void setStr(String set) {self = set;}
+
     public Color getForegroundColor() {
         return foregroundColor;
     }
