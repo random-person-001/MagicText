@@ -11,62 +11,57 @@ import java.awt.event.MouseListener;
  * Created by Jared on 1/29/2017.
  */
 public class EditorToolbar extends JComponent implements MouseListener{
-    private int cornerX;
-    private int cornerY;
-    private int toolbarWidth;
-
     private SpecialText[] toolBarContents = new SpecialText[17];
     private int toolBarCursor = 4;
 
     EditorFrame owner;
 
     public EditorToolbar(int setX, int setY, int setWidth){
-        cornerX = setX;
-        cornerY = setY;
-        toolbarWidth = setWidth;
         String[] defaultChars = {"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q"};
 
         for (int ii = 0; ii < toolBarContents.length; ii++){
             toolBarContents[ii] = new SpecialText(defaultChars[ii]);
         }
 
-        setFont(new Font("Monospaced", Font.PLAIN, toolbarWidth / toolBarContents.length));
+        int width = 710;
 
-        Container c = new Container();
+        // this won't work! getWidth() and getHeight() return 0 until you pack() or validate()
+        //setPreferredSize(new Dimension(getWidth(), getHeight()));
+        setPreferredSize(new Dimension(width, 60));
 
-        JSlider redSlider = new JSlider(0, 255, 0);
-        c.add(redSlider);
+        setFont(new Font("Monospaced", Font.PLAIN, width / toolBarContents.length));
 
         addMouseListener(this);
     }
 
     protected void paintComponent(Graphics g){
-        int bottom = getHeight() - cornerY;
+        System.out.println("DRAW toolbar");
+        int bottom = getHeight();
         g.setColor(new Color(125, 125, 125));
-        g.fillRect(cornerX, cornerY, toolbarWidth, bottom);
-        g.drawLine(cornerX + toolbarWidth, cornerY, cornerX + toolbarWidth, getHeight());
+        g.fillRect(0, 0, getWidth(), getHeight());
+        g.drawLine(0, 0, getWidth(), 0);
 
-        int length = (toolbarWidth / toolBarContents.length) - 4;
+        int xLength = (getWidth() / toolBarContents.length) - 4;
+        int yLength = (int)(xLength * 1.1);
         for (int id = 0; id < toolBarContents.length; id++){
-            int boxCornerX = (length + 4) * id;
-
             boolean isSelected = (id == toolBarCursor);
-            if (!isSelected) {
-                g.draw3DRect(boxCornerX, cornerY + 1, length, length + 1, true);
-            } else {
+            int boxCornerX = ((xLength + 4) * id);
+            int boxCornerY = (isSelected) ? 1 : 2;
+            
+            if (isSelected) {
                 g.setColor(new Color(180, 180, 173));
-                g.fillRect(boxCornerX - 3, cornerY, length + 7, bottom);
-                g.draw3DRect(boxCornerX, cornerY + 1, length, length + 1, true);
+                g.fillRect(boxCornerX - 4, boxCornerY, xLength + 9, bottom);
             }
+            g.draw3DRect(boxCornerX, boxCornerY + 1, xLength, yLength + 1, true);
 
             g.setColor(toolBarContents[id].getBackgroundColor());
-            g.fillRect(boxCornerX + 1, cornerY + 2, length - 1, length);
+            g.fillRect(boxCornerX + 1, boxCornerY + 2, xLength - 1, yLength);
 
             g.setColor(toolBarContents[id].getForegroundColor());
             if (toolBarContents[id].getStr().equals("_"))
-                g.drawString(toolBarContents[id].getStr(), boxCornerX + 2, cornerY + length - 6);
+                g.drawString(toolBarContents[id].getStr(), boxCornerX + 2, boxCornerY + xLength - 6);
             else
-                g.drawString(toolBarContents[id].getStr(), boxCornerX + 2, cornerY + length - 4);
+                g.drawString(toolBarContents[id].getStr(), boxCornerX + 2, boxCornerY + xLength - 4);
         }
     }
 
@@ -82,9 +77,10 @@ public class EditorToolbar extends JComponent implements MouseListener{
 
     @Override
     public void mousePressed(MouseEvent e) {
-        if (e.getX() > cornerX && e.getX() < toolbarWidth + cornerX && e.getY() > cornerY){
-            toolBarCursor = (e.getX() - cornerX) / (toolbarWidth / toolBarContents.length);
+        if (e.getX() > 0 && e.getX() < getWidth() && e.getY() > 0){
+            toolBarCursor = (e.getX()) / (getWidth() / toolBarContents.length);
             repaint();
+            owner.repaintComponents();
             if (e.getButton() == MouseEvent.BUTTON3){
                 owner.maker.setVisible(true);
                 owner.maker.setFinalChar(toolBarContents[toolBarCursor]);

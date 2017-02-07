@@ -34,13 +34,19 @@ public class ColoredTextMatrix extends JPanel {
     public ColoredTextMatrix(int setX, int setY) {
         setOpaque(true);
         setFocusable(true);
-        setSize(setX, setY);
+
+        setPreferredSize(new Dimension(setX, setY));
         fixedX = setX;
         fixedY = setY;
         recalculate();
+        repaint();
         sizeFixed = true;
         setFont(new Font("Monospaced", Font.PLAIN, CHAR_SIZE));
-        addComponentListener(new ComponentResizeListener());
+    }
+
+    public void setDisplay(SpecialText[][] martix){
+        text = martix;
+        System.out.println("Image received");
     }
 
     private class ComponentResizeListener implements ComponentListener {
@@ -112,6 +118,10 @@ public class ColoredTextMatrix extends JPanel {
                 }
             }
         }
+
+        // these are defined by the layout, but you can read them and calculate locations based upon them
+        int upperLeftX = getX();
+        int upperLeftY = getY();
 
         for (int col = 0; col < text.length; col++) { //Draws the text after doing the background
             for (int row = 0; row < text[0].length; row++) {
