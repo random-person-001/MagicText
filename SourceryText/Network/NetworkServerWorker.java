@@ -16,6 +16,7 @@ import java.net.SocketException;
  * Created by riley on 05-Nov-2016.
  */
 public class NetworkServerWorker extends Thread {
+    private static final boolean TEST = true;
     private Thread updaterTask = new Updater("ST-Server-Layer-Sender");
     private Socket server = new Socket();
     private ObjectOutputStream out;
@@ -93,6 +94,14 @@ public class NetworkServerWorker extends Thread {
         }
     }
 
+    private void sendImage(long time) throws IOException {
+        out.writeObject(time);
+        if (sentCount > 10) { // Memory leak stuff
+            sentCount = 0;
+            out.reset();
+        }
+    }
+
     /**
      * Start doing a playerLoop that reads the mey input from the client.
      */
@@ -143,10 +152,19 @@ public class NetworkServerWorker extends Thread {
         @Override
         public void run() {
             try {
-                while (server != null) {
-                    Layer fullImage = player.org.topDownBuild(player);
-                    sendImage(fullImage);
-                    Thread.sleep(1000 / fps);
+                if(!TEST) {
+                    while (server != null) {
+                        Layer fullImage = player.org.topDownBuild(player);
+                        sendImage(fullImage);
+                        Thread.sleep(1000 / fps);
+                    }
+                }
+                else {
+                    while (server != null) {
+                        long time = System.currentTimeMillis();
+                        sendImage(time);
+                        Thread.sleep(1000 / fps);
+                    }
                 }
             } catch (SocketException e) {
                 System.out.println("[NetworkServerWorker] The other side probably disconnected (SocketException).  Aborting whole connection");

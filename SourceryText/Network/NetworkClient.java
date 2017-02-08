@@ -18,6 +18,7 @@ import java.net.UnknownHostException;
  * Created by riley on 05-Nov-2016.
  */
 public class NetworkClient {
+    private static final boolean TEST = true;
     private int port = 8793;
     private Window w = null;
     private Socket server = null;
@@ -109,25 +110,39 @@ public class NetworkClient {
      * @throws ClassNotFoundException but really shouldn't
      */
     private void receiveImage() throws IOException, ClassNotFoundException {
-        if (in == null) {
-            System.out.println("Input stream is null; aborting reading ColoredTextMatrix attempt");
-            return;
-        }
-        Layer l;
-        try {
-            //System.out.println(in.available());
-            l = (Layer) in.readObject();
-        } catch (EOFException e) {
-            System.out.println("Input stream has ended :(");
-            attemptCancel();
-            return;
-        }
-        if (l != null) {
-            System.out.println("Received image!");
-            w.build(l);
-        } else {
-            System.out.println("no layer received over network");
-        }
+            if (in == null) {
+                System.out.println("Input stream is null; aborting reading ColoredTextMatrix attempt");
+                return;
+            }
+            Layer l;
+            try {
+                //System.out.println(in.available());
+                if(!TEST) {
+                    l = (Layer) in.readObject();
+                }
+                else {
+                    String serverTime = Long.toString( (long)in.readObject() );
+                    String time = Long.toString(System.currentTimeMillis());
+                    String[][] timeTxt = new String[28][46];
+                    for(int i=0;i<13;i++) {
+                        timeTxt[10][16+i] = serverTime.substring(i,i+1);
+                    }
+                    for(int i=0;i<13;i++) {
+                        timeTxt[13][16+i] = time.substring(i,i+1);
+                    }
+                    l = new Layer(timeTxt);
+                }
+            } catch (EOFException e) {
+                System.out.println("Input stream has ended :(");
+                attemptCancel();
+                return;
+            }
+            if (l != null) {
+                System.out.println("Received image!");
+                w.build(l);
+            } else {
+                System.out.println("no layer received over network");
+            }
     }
 
     /**
