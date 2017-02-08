@@ -121,14 +121,12 @@ public class NetworkClient {
                     l = (Layer) in.readObject();
                 }
                 else {
-                    String serverTime = Long.toString( (long)in.readObject() );
-                    String time = Long.toString(System.currentTimeMillis());
+                    long serverTime = (long)in.readObject();
+                    long time = System.currentTimeMillis();
+                    String deltaTime = Long.toString(time-serverTime);
                     String[][] timeTxt = new String[28][46];
-                    for(int i=0;i<13;i++) {
-                        timeTxt[10][16+i] = serverTime.substring(i,i+1);
-                    }
-                    for(int i=0;i<13;i++) {
-                        timeTxt[13][16+i] = time.substring(i,i+1);
+                    for(int i=0;i<deltaTime.length();i++) {
+                        timeTxt[14][16+i] = deltaTime.substring(i,i+1);
                     }
                     l = new Layer(timeTxt);
                 }

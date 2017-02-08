@@ -135,7 +135,7 @@ public class NetworkServerWorker extends Thread {
             System.out.println("Client pressed: " + KeyEvent.getKeyText(e.getKeyCode()));
             player.fireKeyEvent(e);
             if (e.getKeyCode() == KeyEvent.VK_F12) {
-                player.room.playo.rickroll();
+                player.rickroll();
             }
         } else if (o != null && o.getClass() == KeyMap.class) {
             KeyMap m = (KeyMap) o;
