@@ -1,20 +1,17 @@
 package SourceryText.LayerEditor.UI;
 
-import SourceryText.ColoredTextMatrix;
+import SourceryText.Layer;
 import SourceryText.SpecialText;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 /**
  * Created by Jared on 1/29/2017.
  */
 public class EditorFrame extends JFrame{
 
-    public ColoredTextMatrix viewMatrix;
+    public LayerViewWindow viewWindow;
     EditorToolbar toolbar;
     EditorSidebar sidebar;
 
@@ -25,27 +22,24 @@ public class EditorFrame extends JFrame{
     Color backgroundColor = new Color(180, 180, 173);
 
     public EditorFrame (){
-        SpecialText[][] testDisplay = new SpecialText[46][28];
-        for (int ii = 0; ii < testDisplay.length; ii++){
-            testDisplay[ii][0] = new SpecialText(String.valueOf(ii % 10));
-        }
-        for (int ii = 0; ii < testDisplay[0].length; ii++){
-            testDisplay[0][ii] = new SpecialText(String.valueOf(ii % 10));
+        Layer testDisplay = new Layer(new String[46][28]);
+        for (int col = 0; col < testDisplay.getColumns(); col++){
+            for (int row = 0; row < testDisplay.getRows(); row++) {
+                testDisplay.setSpecTxt(row, col, new SpecialText(String.valueOf(col % 10), new Color(255, 255, 255 - (row+col)), new Color((row+col),(row+col),(row+col))));
+            }
         }
 
         setBackground(backgroundColor);
 
-        viewMatrix = new ColoredTextMatrix(510, 570);
-        viewMatrix.setDisplay(testDisplay);
-
-        //setMinimumSize(new Dimension(700, 640));
+        viewWindow = new LayerViewWindow();
+        viewWindow.setImage(testDisplay);
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sourcery Text Layer Editor");
         setResizable(true); // false
 
         c.setLayout(new BorderLayout());
-        c.add(viewMatrix, BorderLayout.CENTER);
+        c.add(viewWindow, BorderLayout.CENTER);
 
         toolbar = new EditorToolbar(0, 572, 510);
         toolbar.owner = this;
@@ -69,7 +63,7 @@ public class EditorFrame extends JFrame{
 
     protected void repaintComponents(){
         toolbar.repaint();
-        viewMatrix.repaint();
+        viewWindow.repaint();
         repaint();
         pack();
     }

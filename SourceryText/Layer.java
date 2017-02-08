@@ -55,6 +55,10 @@ public class Layer implements java.io.Serializable {
         self = convertFromStrArray(assign);
     }
 
+    public Layer(SpecialText[][] assign) {
+        self = assign;
+    }
+
     /**
      * @param assign an ititial String[][] for the layer to have (can be later edited, element at a time)
      * @param inkey  a String name for the Layer to call itself
