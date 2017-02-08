@@ -22,6 +22,8 @@ public class SpecialText implements java.io.Serializable {
     }
 
     public String getStr() {
+        if (self == null)
+            return " ";
         return self;
     }
 
