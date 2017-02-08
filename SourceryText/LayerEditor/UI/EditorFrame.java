@@ -25,7 +25,7 @@ public class EditorFrame extends JFrame{
         Layer testDisplay = new Layer(new String[46][28]);
         for (int col = 0; col < testDisplay.getColumns(); col++){
             for (int row = 0; row < testDisplay.getRows(); row++) {
-                testDisplay.setSpecTxt(row, col, new SpecialText(String.valueOf(col % 10), new Color(255, 255, 255 - (row+col))));
+                testDisplay.setSpecTxt(row, col, new SpecialText(String.valueOf(col % 10), new Color(255, 255, 255 - (row+col)), new Color((row+col),(row+col),(row+col))));
             }
         }
 

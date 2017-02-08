@@ -49,6 +49,8 @@ public class LayerViewWindow extends JComponent implements MouseListener{
                 for (int row = 0; row < image.getRows(); row++) {
                     SpecialText get = image.getSpecTxt(row, col);
                     if (get != null){
+                        g.setColor((get.getBackgroundColor()));
+                        g.fillRect((row * char_xspacing) - camX, ((col -1 ) * char_yspacing) - camY, char_xspacing, char_yspacing);
                         g.setColor(get.getForegroundColor());
                         g.drawString(get.getStr(), (row * char_xspacing) - camX, (col * char_yspacing) - camY);
                     }
