@@ -163,6 +163,8 @@ public class NetworkServerWorker extends Thread {
                     while (server != null) {
                         long time = System.currentTimeMillis();
                         sendImage(time);
+                        Layer fullImage = player.org.topDownBuild(player);
+                        sendImage(fullImage);
                         Thread.sleep(1000 / fps);
                     }
                 }

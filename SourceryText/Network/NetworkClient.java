@@ -121,14 +121,20 @@ public class NetworkClient {
                     l = (Layer) in.readObject();
                 }
                 else {
-                    long serverTime = (long)in.readObject();
-                    long time = System.currentTimeMillis();
-                    String deltaTime = Long.toString(time-serverTime);
-                    String[][] timeTxt = new String[28][46];
-                    for(int i=0;i<deltaTime.length();i++) {
-                        timeTxt[14][16+i] = deltaTime.substring(i,i+1);
+                    Object obj = in.readObject();
+                    if(obj.getClass()==Long.class) {
+                        long serverTime = (long) obj;
+                        long time = System.currentTimeMillis();
+                        String deltaTime = Long.toString(time - serverTime);
+                        String[][] timeTxt = new String[28][46];
+                        for (int i = 0; i < deltaTime.length(); i++) {
+                            timeTxt[14][16 + i] = deltaTime.substring(i, i + 1);
+                        }
+                        l = new Layer(timeTxt);
                     }
-                    l = new Layer(timeTxt);
+                    else {
+                        l = (Layer) obj;
+                    }
                 }
             } catch (EOFException e) {
                 System.out.println("Input stream has ended :(");
