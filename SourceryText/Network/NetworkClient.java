@@ -2,6 +2,7 @@ package SourceryText.Network;
 
 import SourceryText.GameSettings.KeyMap;
 import SourceryText.Layer;
+import SourceryText.SpecialText;
 import SourceryText.Window;
 
 import javax.swing.*;
@@ -122,7 +123,16 @@ public class NetworkClient {
                 }
                 else {
                     Object obj = in.readObject();
-                    if(obj.getClass()==Long.class) {
+                    if (obj.getClass()==Object[].class) {
+                        long serverTime = (long) ((Object[])obj)[1];
+                        l = (Layer) ((Object[])obj)[0];
+                        long time = System.currentTimeMillis();
+                        String deltaTime = Long.toString(time - serverTime);
+                        for (int i = 0; i < deltaTime.length(); i++) {
+                            l.setSpecTxt(14, 16+i, new SpecialText(deltaTime.substring(i, i + 1)));
+                        }
+                    }
+                    else if(obj.getClass()==Long.class) {
                         long serverTime = (long) obj;
                         long time = System.currentTimeMillis();
                         String deltaTime = Long.toString(time - serverTime);

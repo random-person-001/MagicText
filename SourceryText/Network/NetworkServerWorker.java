@@ -102,6 +102,14 @@ public class NetworkServerWorker extends Thread {
         }
     }
 
+    private void sendImage(Layer image, long time) throws IOException {
+        out.writeObject(new Object[]{image, time});
+        if (sentCount > 10) { // Memory leak stuff
+            sentCount = 0;
+            out.reset();
+        }
+    }
+
     /**
      * Start doing a playerLoop that reads the mey input from the client.
      */
@@ -162,9 +170,8 @@ public class NetworkServerWorker extends Thread {
                 else {
                     while (server != null) {
                         long time = System.currentTimeMillis();
-                        sendImage(time);
                         Layer fullImage = player.org.topDownBuild(player);
-                        sendImage(fullImage);
+                        sendImage(fullImage, time);
                         Thread.sleep(1000 / fps);
                     }
                 }
