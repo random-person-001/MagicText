@@ -30,6 +30,7 @@ public class NetworkClient {
     private String ipAddress;
     private int fps = 35; // Max read fps
     private int keysSentSoFar = 0;
+    Layer l;
 
     public void main(String serverName, KeyMap keymap) throws IOException {
         ipAddress = serverName;
@@ -115,7 +116,6 @@ public class NetworkClient {
                 System.out.println("Input stream is null; aborting reading ColoredTextMatrix attempt");
                 return;
             }
-            Layer l;
             try {
                 //System.out.println(in.available());
                 if(!TEST) {
@@ -151,12 +151,20 @@ public class NetworkClient {
                 attemptCancel();
                 return;
             }
-            if (l != null) {
-                System.out.println("Received image!");
-                w.build(l);
-            } else {
-                System.out.println("no layer received over network");
-            }
+//            if (l != null) {
+//                System.out.println("Received image!");
+//                w.build(l);
+//            } else {
+//                System.out.println("no layer received over network");
+//            }
+                new Thread(() -> {
+                    if (l != null) {
+                        System.out.println("Received image!");
+                        w.build(l);
+                    } else {
+                        System.out.println("no layer received over network");
+                    }
+                }).start();
     }
 
     /**
