@@ -151,20 +151,20 @@ public class NetworkClient {
                 attemptCancel();
                 return;
             }
-//            if (l != null) {
-//                System.out.println("Received image!");
-//                w.build(l);
-//            } else {
-//                System.out.println("no layer received over network");
-//            }
-                new Thread(() -> {
-                    if (l != null) {
-                        System.out.println("Received image!");
-                        w.build(l);
-                    } else {
-                        System.out.println("no layer received over network");
-                    }
-                }).start();
+            if (l != null) {
+                System.out.println("Received image!");
+                w.build(l);
+            } else {
+                System.out.println("no layer received over network");
+            }
+//                new Thread(() -> {
+//                    if (l != null) {
+//                        System.out.println("Received image!");
+//                        w.build(l);
+//                    } else {
+//                        System.out.println("no layer received over network");
+//                    }
+//                }).start();
     }
 
     /**
@@ -216,17 +216,16 @@ public class NetworkClient {
             try {
                 while (server != null) {
                     receiveImage();
-                    Thread.sleep(1000 / fps);
                 }
             } catch (SocketException e) {
                 System.out.println("The other side probably disconnected (SocketException).");
                 attemptCancel();
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
-                attemptCancel();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+                attemptCancel();}
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
         }
     }
 }

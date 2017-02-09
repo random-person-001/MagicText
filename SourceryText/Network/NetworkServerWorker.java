@@ -172,7 +172,7 @@ public class NetworkServerWorker extends Thread {
                         long time = System.currentTimeMillis();
                         Layer fullImage = player.org.topDownBuild(player);
                         sendImage(fullImage, time);
-                        Thread.sleep(1000 / fps);
+//                        Thread.sleep(1000 / fps);
                     }
                 }
             } catch (SocketException e) {
