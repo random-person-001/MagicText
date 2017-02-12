@@ -35,7 +35,6 @@ public class EditorToolbar extends JComponent implements MouseListener{
     }
 
     protected void paintComponent(Graphics g){
-        System.out.println("DRAW toolbar");
         int bottom = getHeight();
         g.setColor(new Color(125, 125, 125));
         g.fillRect(0, 0, getWidth(), getHeight());
@@ -68,6 +67,10 @@ public class EditorToolbar extends JComponent implements MouseListener{
     public void receiveSpecialText(SpecialText present){
         toolBarContents[toolBarCursor] = present;
         repaint();
+    }
+
+    public SpecialText getSpecTxt(){
+        return toolBarContents[toolBarCursor];
     }
 
     @Override

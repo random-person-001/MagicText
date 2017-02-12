@@ -31,7 +31,7 @@ public class EditorFrame extends JFrame{
 
         setBackground(backgroundColor);
 
-        viewWindow = new LayerViewWindow();
+        viewWindow = new LayerViewWindow(this);
         viewWindow.setImage(testDisplay);
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
