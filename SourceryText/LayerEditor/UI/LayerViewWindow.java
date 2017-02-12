@@ -7,13 +7,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.util.TimerTask;
 import java.util.Timer;
 
 /**
  * Created by Jared on 2/7/2017.
  */
-public class LayerViewWindow extends JComponent implements MouseListener{
+public class LayerViewWindow extends JComponent implements MouseListener, MouseMotionListener{
 
     Layer image;
 
@@ -21,15 +22,16 @@ public class LayerViewWindow extends JComponent implements MouseListener{
     int camY = 0;
 
     public LayerViewWindow (){
-        setPreferredSize(new Dimension(540, 480));
+        setPreferredSize(new Dimension(650, 570));
 
         setFont(new Font("Monospaced", Font.PLAIN, 20));
 
         addMouseListener(this);
+        addMouseMotionListener(this);
         setFocusable(true);
 
         Timer dragListener = new Timer();
-        dragListener.scheduleAtFixedRate(new ViewDragTracker(), 50, 50);
+        dragListener.scheduleAtFixedRate(new DisplayUpdateTimer(), 50, 25);
     }
 
     public void setImage(Layer setLayer){
@@ -37,6 +39,10 @@ public class LayerViewWindow extends JComponent implements MouseListener{
 
         System.out.println(image);
     }
+
+    int mouseX = 0;
+    int mouseY = 0;
+    boolean displayCursorBox = true;
 
     @Override
     public void paintComponent(Graphics g){
@@ -57,11 +63,13 @@ public class LayerViewWindow extends JComponent implements MouseListener{
                 }
             }
         }
+        g.setColor(Color.WHITE);
+        if (displayCursorBox)
+            g.drawRect((mouseX - 7) - ((mouseX - 7) % 14) - (camX % 14), (mouseY - 10) - ((mouseY - 10) % 20) - (camY % 20), 14, 20);
     }
 
-    boolean movingCamera = false;
-    int mousePrevPosX = 0;
-    int mousePrevPosY = 0;
+    private int mousePrevPosX = 0;
+    private int mousePrevPosY = 0;
 
 
     @Override
@@ -72,9 +80,9 @@ public class LayerViewWindow extends JComponent implements MouseListener{
     @Override
     public void mousePressed(MouseEvent e) {
         if (e.getButton() == MouseEvent.BUTTON3) {
-            movingCamera = true;
-            mousePrevPosX = (int)MouseInfo.getPointerInfo().getLocation().getX();
-            mousePrevPosY = (int)MouseInfo.getPointerInfo().getLocation().getY();
+            displayCursorBox = false;
+            mousePrevPosX = e.getX();
+            mousePrevPosY = e.getY();
             System.out.println("Drag start");
         }
     }
@@ -83,11 +91,10 @@ public class LayerViewWindow extends JComponent implements MouseListener{
     @Override
     public void mouseReleased(MouseEvent e) {
         if (e.getButton() == MouseEvent.BUTTON3) {
-            movingCamera = false;
+            displayCursorBox = true;
             System.out.println("Drag end");
             System.out.println(camX);
             System.out.println(camY);
-            repaint();
         }
     }
 
@@ -101,17 +108,25 @@ public class LayerViewWindow extends JComponent implements MouseListener{
 
     }
 
-    private class ViewDragTracker extends TimerTask {
+    @Override
+    public void mouseDragged(MouseEvent e) {
+        camX -= e.getX() - mousePrevPosX;
+        camY -= e.getY() - mousePrevPosY;
+        mousePrevPosX = e.getX();
+        mousePrevPosY = e.getY();
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+        mouseX = e.getX();
+        mouseY = e.getY();
+    }
+
+    private class DisplayUpdateTimer extends TimerTask {
 
         @Override
         public void run() {
-            if (movingCamera){
-                camX -= MouseInfo.getPointerInfo().getLocation().getX() - mousePrevPosX;
-                camY -= MouseInfo.getPointerInfo().getLocation().getY() - mousePrevPosY;
-                mousePrevPosX = (int)MouseInfo.getPointerInfo().getLocation().getX();
-                mousePrevPosY = (int)MouseInfo.getPointerInfo().getLocation().getY();
-                repaint();
-            }
+            repaint();
         }
     }
 }

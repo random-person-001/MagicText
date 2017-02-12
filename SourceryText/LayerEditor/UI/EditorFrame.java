@@ -41,7 +41,7 @@ public class EditorFrame extends JFrame{
         c.setLayout(new BorderLayout());
         c.add(viewWindow, BorderLayout.CENTER);
 
-        toolbar = new EditorToolbar(0, 572, 510);
+        toolbar = new EditorToolbar();
         toolbar.owner = this;
         //toolbar.setMinimumSize(new Dimension(510, 60));
 
