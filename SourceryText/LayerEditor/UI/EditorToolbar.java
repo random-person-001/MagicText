@@ -58,9 +58,9 @@ public class EditorToolbar extends JComponent implements MouseListener{
 
             g.setColor(toolBarContents[id].getForegroundColor());
             if (toolBarContents[id].getStr().equals("_"))
-                g.drawString(toolBarContents[id].getStr(), boxCornerX + 2, boxCornerY + xLength - 6);
+                g.drawString(toolBarContents[id].getStr(), boxCornerX + 5, boxCornerY + xLength - 6);
             else
-                g.drawString(toolBarContents[id].getStr(), boxCornerX + 2, boxCornerY + xLength - 4);
+                g.drawString(toolBarContents[id].getStr(), boxCornerX + 5, boxCornerY + xLength - 4);
         }
     }
 

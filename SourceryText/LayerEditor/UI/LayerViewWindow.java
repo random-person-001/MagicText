@@ -37,9 +37,8 @@ public class LayerViewWindow extends JComponent implements MouseListener, MouseM
         dragListener.scheduleAtFixedRate(new DisplayUpdateTimer(), 50, 25);
     }
 
-    public void setImage(Layer setLayer){
+    void setImage(Layer setLayer){
         image = setLayer;
-
         System.out.println(image);
     }
 
@@ -60,6 +59,15 @@ public class LayerViewWindow extends JComponent implements MouseListener, MouseM
                     if (get != null){
                         g.setColor((get.getBackgroundColor()));
                         g.fillRect((row * char_xspacing) + camX, ((col - 1) * char_yspacing) + camY + 2, char_xspacing, char_yspacing);
+                    }
+                }
+            }
+        }
+        if (image != null) {
+            for (int col = 0; col < image.getColumns(); col++) {
+                for (int row = 0; row < image.getRows(); row++) {
+                    SpecialText get = image.getSpecTxt(row, col);
+                    if (get != null){
                         g.setColor(get.getForegroundColor());
                         g.drawString(get.getStr(), (row * char_xspacing) + camX, (col * char_yspacing) + camY);
                     }
@@ -70,13 +78,13 @@ public class LayerViewWindow extends JComponent implements MouseListener, MouseM
         if (!cameraMoving) {
             g.drawRect(calculateSnappedMousePos(mouseX, camX, 14) + camX, calculateSnappedMousePos(mouseY, camY, 20) + camY + 3, 14, 20);
         }
+        g.setColor(new Color(102, 102, 0));
+        g.drawRect(camX, camY - 18, image.getRows() * 14, image.getColumns() * 20);
     }
 
     private int calculateSnappedMousePos(int mouseVal, int cameraVal, int dim){
         int relativeVal = mouseVal - cameraVal;
-        int toreturn = relativeVal - (relativeVal % dim);
-        System.out.println((float)toreturn / (float)dim);
-        return toreturn;
+        return relativeVal - (relativeVal % dim);
     }
 
     private int mousePrevPosX = 0;
