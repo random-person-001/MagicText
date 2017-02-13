@@ -59,19 +59,24 @@ public class LayerViewWindow extends JComponent implements MouseListener, MouseM
                     SpecialText get = image.getSpecTxt(row, col);
                     if (get != null){
                         g.setColor((get.getBackgroundColor()));
-                        g.fillRect((row * char_xspacing) - camX, ((col -1 ) * char_yspacing) - camY + 2, char_xspacing, char_yspacing);
+                        g.fillRect((row * char_xspacing) + camX, ((col - 1) * char_yspacing) + camY + 2, char_xspacing, char_yspacing);
                         g.setColor(get.getForegroundColor());
-                        g.drawString(get.getStr(), (row * char_xspacing) - camX, (col * char_yspacing) - camY);
+                        g.drawString(get.getStr(), (row * char_xspacing) + camX, (col * char_yspacing) + camY);
                     }
                 }
             }
         }
         g.setColor(Color.WHITE);
         if (!cameraMoving) {
-            int offsetMouseX = mouseX;
-            int offsetMouseY = mouseY;
-            g.drawRect(offsetMouseX - (offsetMouseX % 14) - (camX % 14), offsetMouseY - (offsetMouseY % 20) + 2 - (camY % 20), 14, 20);
+            g.drawRect(calculateSnappedMousePos(mouseX, camX, 14) + camX, calculateSnappedMousePos(mouseY, camY, 20) + camY + 3, 14, 20);
         }
+    }
+
+    private int calculateSnappedMousePos(int mouseVal, int cameraVal, int dim){
+        int relativeVal = mouseVal - cameraVal;
+        int toreturn = relativeVal - (relativeVal % dim);
+        System.out.println((float)toreturn / (float)dim);
+        return toreturn;
     }
 
     private int mousePrevPosX = 0;
@@ -122,8 +127,8 @@ public class LayerViewWindow extends JComponent implements MouseListener, MouseM
     @Override
     public void mouseDragged(MouseEvent e) {
         if (cameraMoving) {
-            camX -= e.getX() - mousePrevPosX;
-            camY -= e.getY() - mousePrevPosY;
+            camX += e.getX() - mousePrevPosX;
+            camY += e.getY() - mousePrevPosY;
             mousePrevPosX = e.getX();
             mousePrevPosY = e.getY();
         } else {
@@ -142,7 +147,7 @@ public class LayerViewWindow extends JComponent implements MouseListener, MouseM
         @Override
         public void run() {
             if (drawing){
-                image.setSpecTxt((int)(mouseX / 14f) + (int)(camX / 14f), (int)(mouseY / 20f) + (int)(camY / 20f) + 1, owner.toolbar.getSpecTxt());
+                image.setSpecTxt(calculateSnappedMousePos(mouseX, camX, 14) / 14, (calculateSnappedMousePos(mouseY, camY, 20) / 20) + 1, owner.toolbar.getSpecTxt());
             }
             repaint();
         }
