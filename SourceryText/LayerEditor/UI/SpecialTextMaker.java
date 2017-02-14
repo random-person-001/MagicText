@@ -7,6 +7,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.plaf.metal.MetalLookAndFeel;
 import java.awt.*;
+import java.awt.color.ColorSpace;
 import java.awt.event.*;
 import java.util.*;
 import java.util.Timer;
@@ -158,6 +159,7 @@ public class SpecialTextMaker extends JFrame implements ChangeListener, ActionLi
         setForegroundButton = new JButton("Fg");
         setForegroundButton.setPreferredSize(new Dimension(80, 30));
         setForegroundButton.setBackground(Color.WHITE);
+        setForegroundButton.setForeground(Color.BLACK);
         setForegroundButton.setActionCommand("foreground");
         setForegroundButton.addActionListener(this);
         setForegroundButton.setOpaque(true);
@@ -166,6 +168,7 @@ public class SpecialTextMaker extends JFrame implements ChangeListener, ActionLi
         setBackgroundButton = new JButton("Bg");
         setBackgroundButton.setPreferredSize(new Dimension(80, 30));
         setBackgroundButton.setBackground(Color.BLACK);
+        setBackgroundButton.setForeground(Color.WHITE);
         setBackgroundButton.setActionCommand("background");
         setBackgroundButton.addActionListener(this);
         setBackgroundButton.setOpaque(true);
@@ -230,6 +233,22 @@ public class SpecialTextMaker extends JFrame implements ChangeListener, ActionLi
         setSpecTxt.setForeground(setChar.getForegroundColor());
         setForegroundButton.setBackground(setChar.getForegroundColor());
         setBackgroundButton.setBackground(setChar.getBackgroundColor());
+
+        float[] color = Color.RGBtoHSB(
+                setChar.getForegroundColor().getRed(),
+                setChar.getForegroundColor().getBlue(),
+                setChar.getForegroundColor().getGreen(),null);
+        color[2] = color[2]>0.5 ? 0 : 1;
+        UIManager.put("Button.disabledText", Color.getHSBColor(0,0,color[2]));
+        setForegroundButton.setForeground(Color.getHSBColor(0,0,color[2]));
+
+        color = Color.RGBtoHSB(
+                setChar.getBackgroundColor().getRed(),
+                setChar.getBackgroundColor().getBlue(),
+                setChar.getBackgroundColor().getGreen(),null);
+        color[2] = color[2]>0.5 ? 0 : 1;
+        setBackgroundButton.setForeground(Color.getHSBColor(0,0,color[2]));
+
         repaint();
     }
 
@@ -268,10 +287,28 @@ public class SpecialTextMaker extends JFrame implements ChangeListener, ActionLi
             if (settingForeground) {
                 finalChar.setForeground(new Color(redSlider.getValue(), greenSlider.getValue(), blueSlider.getValue())); //Saves new color value
                 setForegroundButton.setBackground(finalChar.getForegroundColor()); //Color stuff for display
+
+                float[] color = Color.RGBtoHSB(
+                        finalChar.getForegroundColor().getRed(),
+                        finalChar.getForegroundColor().getBlue(),
+                        finalChar.getForegroundColor().getGreen(),null);
+                color[2] = color[2]>0.5 ? 0 : 1;
+                UIManager.put("Button.disabledText", Color.getHSBColor(0,0,color[2]));
+                setForegroundButton.setForeground(Color.getHSBColor(0,0,color[2]));
+
                 setSpecTxt.setForeground(finalChar.getForegroundColor());
             } else {
                 finalChar.setBackground(new Color(redSlider.getValue(), greenSlider.getValue(), blueSlider.getValue()));
                 setBackgroundButton.setBackground(finalChar.getBackgroundColor());
+
+                float[] color = Color.RGBtoHSB(
+                        finalChar.getBackgroundColor().getRed(),
+                        finalChar.getBackgroundColor().getBlue(),
+                        finalChar.getBackgroundColor().getGreen(),null);
+                color[2] = color[2]>0.5 ? 0 : 1;
+                UIManager.put("Button.disabledText", Color.getHSBColor(0,0,color[2]));
+                setBackgroundButton.setForeground(Color.getHSBColor(0,0,color[2]));
+
                 setSpecTxt.setBackground(finalChar.getBackgroundColor());
             }
         }
