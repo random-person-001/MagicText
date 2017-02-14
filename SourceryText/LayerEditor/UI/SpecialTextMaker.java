@@ -7,12 +7,13 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.plaf.metal.MetalLookAndFeel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
+import java.awt.event.*;
 import java.util.*;
 import java.util.Timer;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DocumentFilter;
 
 /**
  * Created by Jared on 1/30/2017.
@@ -59,7 +60,46 @@ public class SpecialTextMaker extends JFrame implements ChangeListener, ActionLi
 
         setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
         setTitle("SpecialText Creator");
-        //setResizable(false);
+
+        class labelDocFilter extends DocumentFilter {
+            private int max;
+            private JTextField source;
+            public labelDocFilter(JTextField source, int max) { this.source=source;     this.max=max; }
+
+            @Override
+            public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
+                String beforeValue = source.getText();
+                String afterValue = string;
+                afterValue = beforeValue.substring(0,offset) +
+                             afterValue +
+                             beforeValue.substring(offset);
+                if(isValid(afterValue)) {super.insertString(fb, offset, string, attr);}
+            }
+
+            @Override
+            public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+                String beforeValue = source.getText();
+                String afterValue = text;
+                afterValue = beforeValue.substring(0, offset) +
+                             afterValue +
+                             beforeValue.substring(offset+length);
+                if(isValid(afterValue)) {super.replace(fb, offset, length, text, attrs);}
+            }
+
+            private boolean isValid(String value) {
+                try {
+                    return Integer.parseInt(value)<=max;
+                }
+                catch(Exception e) { return false; }
+            }
+        }
+
+        ((AbstractDocument)redLabel.getDocument()).setDocumentFilter(new labelDocFilter(redLabel, 255));
+        ((AbstractDocument)blueLabel.getDocument()).setDocumentFilter(new labelDocFilter(blueLabel, 255));
+        ((AbstractDocument)greenLabel.getDocument()).setDocumentFilter(new labelDocFilter(greenLabel, 255));
+        ((AbstractDocument)hueLabel.getDocument()).setDocumentFilter(new labelDocFilter(hueLabel, 360));
+        ((AbstractDocument)satLabel.getDocument()).setDocumentFilter(new labelDocFilter(satLabel, 100));
+        ((AbstractDocument)briLabel.getDocument()).setDocumentFilter(new labelDocFilter(briLabel, 100));
 
         redSlider.setName("red");
         blueSlider.setName("blue");
