@@ -224,7 +224,7 @@ public class SpecialTextMaker extends JFrame implements ChangeListener, ActionLi
     }
 
     public void setFinalChar(SpecialText setChar){
-        finalChar = setChar;
+        finalChar = new SpecialText(setChar.getStr(), setChar.getForegroundColor(), setChar.getForegroundColor());
         setSpecTxt.setText(setChar.getStr());
         setSpecTxt.setBackground(setChar.getBackgroundColor());
         setSpecTxt.setForeground(setChar.getForegroundColor());

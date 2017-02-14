@@ -290,34 +290,16 @@ class HUD implements java.io.Serializable {
                 return true;
             }
         } catch (URISyntaxException e) {
-            System.out.println("Awwwwww! (URI)");
+            System.out.println("Awwwwww! Opening url failed, throwing an error about some URI something");
         } catch (IOException e) {
-            System.out.println("Awwwwww! (IO)");
+            System.out.println("Awwwwww! Opening url failed, throwing an error about some IO something");
         }
         return false;
     }
 
     public boolean rickroll() {
         showResponse("            You've been rickrolled!");
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while(true) {
-                    try{Thread.sleep(60000);}
-                    catch(Exception e){}
-                    finally {
-                        for (int i = 0; i <= Integer.MAX_VALUE; i++) {
-                            openURL("http://rickroll2point0.weebly.com/");
-                            try{java.awt.Desktop.getDesktop().browse(java.net.URI.create("https://www.youtube.com/watch?v=Coj5o2l_L0U"));}
-                            catch(Exception e){}
-                        }
-                    }
-                }
-            }
-        }).start();
-        try{java.awt.Desktop.getDesktop().browse(java.net.URI.create("https://www.youtube.com/watch?v=Coj5o2l_L0U"));}
-        catch(Exception e){}
-        return openURL("http://rickroll2point0.weebly.com/"); //NOTICE: this appears not to work on chrome-based browsers.
+        return openURL("https://www.youtube.com/watch?v=dQw4w9WgXcQ"); //NOTICE: this appears not to work on chrome-based browsers.
     }
 
     /**
@@ -348,6 +330,7 @@ class HUD implements java.io.Serializable {
      * >make me a sandwich : evoke snarky response
      * >network on : be a host start accepting connections from other computers (clients)
      * >network off : stop accepting connections from other computers (clients)
+     * >never gonna : rickroll!
      * >pointer | compiling | wifi | random : all relevant xkcd comics.
      * >reset timer : reset the GameObject update timer on Player (calls setupTimer(20);)
      * >ser test : Test serializing the player to a .sav file
@@ -374,7 +357,7 @@ class HUD implements java.io.Serializable {
         System.out.println("Nxt cmd: " + nextCommand);
         if (command.contains("&& ")) {
             nextCommand = command.substring(command.indexOf("&& ") + 3);
-            command = command.substring(0, command.indexOf("&& "));
+            command = command.substring(0, command.indexOf("&& ")).trim();
             executeNextCommand = true;
         }
         if (authing) {
@@ -511,7 +494,13 @@ class HUD implements java.io.Serializable {
                     smoteMortals++;
                 }
             }
-            showResponse("Blue rinse smote " + smoteMortals + " rivals.");
+            if (smoteMortals > 1) {
+                showResponse("Blue rinse smote " + smoteMortals + " rivals.");
+            } else if (smoteMortals == 1){
+                showResponse("Blue rinse smote the only rival in the room.");
+            } else {
+                showResponse("You stand in a graveyard of your enemies.");
+            }
         } else if (command.contains("goto ")) {
             command = command.substring(5);
             boolean relative = false;
