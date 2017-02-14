@@ -45,7 +45,7 @@ public class EditorFrame extends JFrame {
         toolbar.owner = this;
         //toolbar.setMinimumSize(new Dimension(510, 60));
 
-        c.add(viewWindow, BorderLayout.WEST);
+        c.add(viewWindow, BorderLayout.CENTER);
         c.add(sidebar, BorderLayout.EAST);
         c.add(toolbar, BorderLayout.SOUTH);
         pack();

@@ -24,6 +24,8 @@ public class EditorSidebar extends JPanel implements ActionListener {
 
         setBounds(900, 200, 165, 260);
 
+
+
         opaqueBox.setActionCommand("Opaque");
         opaqueBox.addActionListener(this);
         importantBox.setActionCommand("Important");
@@ -37,11 +39,14 @@ public class EditorSidebar extends JPanel implements ActionListener {
         finishButton.setActionCommand("finish");
         finishButton.addActionListener(this);
 
-        this.add(new JPanel().add(opaqueBox));
-        this.add(new JPanel().add(importantBox));
-        this.add(new JPanel().add(cameraBox));
-        this.add(new JPanel().add(nameBox));
-        this.add(new JPanel().add(finishButton));
+        setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+
+        nameBox.setMaximumSize(new Dimension(300, 25));
+        add(nameBox);
+        add(opaqueBox);
+        add(importantBox);
+        add(cameraBox);
+        add(finishButton);
 
         setPreferredSize(new Dimension(180, 400));
         setVisible(true);
@@ -64,7 +69,7 @@ public class EditorSidebar extends JPanel implements ActionListener {
     private JCheckBox opaqueBox = new JCheckBox("Opaque");
     private JCheckBox importantBox = new JCheckBox("Important");
     private JCheckBox cameraBox = new JCheckBox("Camera Obedient");
-    private JTextField nameBox = new JTextField("name");
+    private JTextField nameBox = new JTextField("Name");
 
     @Override
     public void actionPerformed(ActionEvent e) {

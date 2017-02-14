@@ -91,6 +91,7 @@ public class LayerViewWindow extends JComponent implements MouseListener, MouseM
     private int mousePrevPosY = 0;
 
     private boolean drawing = false;
+    private boolean clearing = false;
 
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -106,6 +107,8 @@ public class LayerViewWindow extends JComponent implements MouseListener, MouseM
             System.out.println("Drag start");
         } else if (e.getButton() == MouseEvent.BUTTON1){
             drawing = true;
+        } else if (e.getButton() == MouseEvent.BUTTON2){
+            clearing = true;
         }
     }
 
@@ -119,6 +122,8 @@ public class LayerViewWindow extends JComponent implements MouseListener, MouseM
             System.out.println(camY);
         } else if (e.getButton() == MouseEvent.BUTTON1){
             drawing = false;
+        } else if (e.getButton() == MouseEvent.BUTTON2){
+            clearing = false;
         }
     }
 
@@ -156,6 +161,8 @@ public class LayerViewWindow extends JComponent implements MouseListener, MouseM
         public void run() {
             if (drawing){
                 image.setSpecTxt(calculateSnappedMousePos(mouseX, camX, 14) / 14, (calculateSnappedMousePos(mouseY, camY, 20) / 20) + 1, owner.toolbar.getSpecTxt());
+            } else if (clearing){
+                image.setSpecTxt(calculateSnappedMousePos(mouseX, camX, 14) / 14, (calculateSnappedMousePos(mouseY, camY, 20) / 20) + 1, new SpecialText(" "));
             }
             repaint();
         }
