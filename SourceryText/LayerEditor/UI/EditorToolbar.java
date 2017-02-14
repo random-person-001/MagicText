@@ -28,6 +28,7 @@ public class EditorToolbar extends JComponent implements MouseListener{
         // this won't work! getWidth() and getHeight() return 0 until you pack() or validate()
         //setPreferredSize(new Dimension(getWidth(), getHeight()));
         setPreferredSize(new Dimension(width, 60));
+        setMinimumSize(new Dimension(width, 60));
 
         setFont(new Font("Monospaced", Font.PLAIN, width / toolBarContents.length));
 
@@ -46,9 +47,9 @@ public class EditorToolbar extends JComponent implements MouseListener{
             boolean isSelected = (id == toolBarCursor);
             int boxCornerX = ((xLength + 4) * id);
             int boxCornerY = (isSelected) ? 1 : 2;
-            
+
+            g.setColor(new Color(180, 180, 173));
             if (isSelected) {
-                g.setColor(new Color(180, 180, 173));
                 g.fillRect(boxCornerX - 4, boxCornerY, xLength + 9, bottom);
             }
             g.draw3DRect(boxCornerX, boxCornerY + 1, xLength, yLength + 1, true);
@@ -57,10 +58,7 @@ public class EditorToolbar extends JComponent implements MouseListener{
             g.fillRect(boxCornerX + 1, boxCornerY + 2, xLength - 1, yLength);
 
             g.setColor(toolBarContents[id].getForegroundColor());
-            if (toolBarContents[id].getStr().equals("_"))
-                g.drawString(toolBarContents[id].getStr(), boxCornerX + 5, boxCornerY + xLength - 6);
-            else
-                g.drawString(toolBarContents[id].getStr(), boxCornerX + 5, boxCornerY + xLength - 4);
+            g.drawString(toolBarContents[id].getStr(), boxCornerX + (xLength / 4), boxCornerY + (int)(yLength / 1.35f));
         }
     }
 

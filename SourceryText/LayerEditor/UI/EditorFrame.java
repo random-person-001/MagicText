@@ -65,6 +65,5 @@ public class EditorFrame extends JFrame{
         toolbar.repaint();
         viewWindow.repaint();
         repaint();
-        pack();
     }
 }

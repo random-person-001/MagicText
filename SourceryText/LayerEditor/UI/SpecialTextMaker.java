@@ -230,6 +230,7 @@ public class SpecialTextMaker extends JFrame implements ChangeListener, ActionLi
         setSpecTxt.setForeground(setChar.getForegroundColor());
         setForegroundButton.setBackground(setChar.getForegroundColor());
         setBackgroundButton.setBackground(setChar.getBackgroundColor());
+        repaint();
     }
 
     private boolean changeTextBoxes = true;
