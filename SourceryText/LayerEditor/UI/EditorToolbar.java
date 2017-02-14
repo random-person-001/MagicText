@@ -103,4 +103,8 @@ public class EditorToolbar extends JComponent implements MouseListener{
     public void mouseExited(MouseEvent e) {
 
     }
+
+    public void setSelectedSpecTxt(SpecialText selectedSpecTxt) {
+        this.toolBarContents[toolBarCursor] = selectedSpecTxt;
+    }
 }

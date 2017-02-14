@@ -82,6 +82,10 @@ public class SpecialText implements java.io.Serializable {
         return self.equals(other.getStr()) && foregroundColor.equals(other.getForegroundColor()) && backgroundColor.equals(other.getBackgroundColor());
     }
 
+    public SpecialText clone(){
+        return new SpecialText(self, foregroundColor, Color.black);
+    }
+
     public void setForeground(Color newForeground) {
         foregroundColor = newForeground;
     }

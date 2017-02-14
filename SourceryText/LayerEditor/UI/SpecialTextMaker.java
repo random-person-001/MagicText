@@ -227,7 +227,7 @@ public class SpecialTextMaker extends JFrame implements ChangeListener, ActionLi
     }
 
     public void setFinalChar(SpecialText setChar){
-        finalChar = new SpecialText(setChar.getStr(), setChar.getForegroundColor(), setChar.getForegroundColor());
+        finalChar = setChar.clone();
         setSpecTxt.setText(setChar.getStr());
         setSpecTxt.setBackground(setChar.getBackgroundColor());
         setSpecTxt.setForeground(setChar.getForegroundColor());
@@ -361,6 +361,10 @@ public class SpecialTextMaker extends JFrame implements ChangeListener, ActionLi
             setVisible(false);
         } else
             System.out.println(e.getActionCommand());
+    }
+
+    public SpecialText getFinalChar() {
+        return finalChar.clone();
     }
 
     private class TextUpdate extends TimerTask {

@@ -5,16 +5,14 @@ import SourceryText.SpecialText;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
+import java.awt.event.*;
 import java.util.TimerTask;
 import java.util.Timer;
 
 /**
  * Created by Jared on 2/7/2017.
  */
-public class LayerViewWindow extends JComponent implements MouseListener, MouseMotionListener{
+public class LayerViewWindow extends JComponent implements MouseListener, MouseMotionListener, KeyListener{
 
     Layer image;
     EditorFrame owner;
@@ -27,6 +25,7 @@ public class LayerViewWindow extends JComponent implements MouseListener, MouseM
 
         setFont(new Font("Monospaced", Font.PLAIN, 20));
 
+        addKeyListener(this);
         addMouseListener(this);
         addMouseMotionListener(this);
         setFocusable(true);
@@ -67,7 +66,7 @@ public class LayerViewWindow extends JComponent implements MouseListener, MouseM
             for (int col = 0; col < image.getColumns(); col++) {
                 for (int row = 0; row < image.getRows(); row++) {
                     SpecialText get = image.getSpecTxt(row, col);
-                    if (get != null){
+                    if (get != null && !get.getStr().equals("ñ")){
                         g.setColor(get.getForegroundColor());
                         g.drawString(get.getStr(), (row * char_xspacing) + camX, (col * char_yspacing) + camY);
                     }
@@ -85,6 +84,10 @@ public class LayerViewWindow extends JComponent implements MouseListener, MouseM
     private int calculateSnappedMousePos(int mouseVal, int cameraVal, int dim){
         int relativeVal = mouseVal - cameraVal;
         return relativeVal - (relativeVal % dim);
+    }
+
+    public SpecialText getSelectedSpecTxt(){
+        return image.getSpecTxt(calculateSnappedMousePos(mouseX, camX, 14) / 14, (calculateSnappedMousePos(mouseY, camY, 20) / 20)+1);
     }
 
     private int mousePrevPosX = 0;
@@ -154,6 +157,23 @@ public class LayerViewWindow extends JComponent implements MouseListener, MouseM
     public void mouseMoved(MouseEvent e) {
         mouseX = e.getX();
         mouseY = e.getY();
+    }
+
+    @Override
+    public void keyTyped(KeyEvent keyEvent) {}
+
+    @Override
+    public void keyPressed(KeyEvent keyEvent) {
+        System.out.println("Key pressed  " + keyEvent.getKeyChar());
+        if (keyEvent.getKeyChar() == 'c'){
+            System.out.println("Setting bar value this");
+            owner.toolbar.setSelectedSpecTxt(getSelectedSpecTxt());
+            owner.toolbar.repaint();
+        }
+    }
+    @Override
+    public void keyReleased(KeyEvent keyEvent) {
+        keyPressed(keyEvent);
     }
 
     private class DisplayUpdateTimer extends TimerTask {
