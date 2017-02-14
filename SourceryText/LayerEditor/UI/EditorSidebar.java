@@ -12,10 +12,7 @@ import java.awt.event.ActionListener;
  * Created by Jared on 06-Feb-17.
  */
 public class EditorSidebar extends JPanel implements ActionListener {
-    private Container c;
-
-    EditorSidebar(Container c, Layer editable){
-        this.c = c;
+    EditorSidebar(Layer editable){
         editLayer = editable;
         setBackground(new Color(180, 180, 173));
         setVisible(false);
@@ -26,7 +23,6 @@ public class EditorSidebar extends JPanel implements ActionListener {
         }
 
         setBounds(900, 200, 165, 260);
-        c.setLayout(new FlowLayout());
 
         opaqueBox.setActionCommand("Opaque");
         opaqueBox.addActionListener(this);
@@ -47,8 +43,7 @@ public class EditorSidebar extends JPanel implements ActionListener {
         this.add(new JPanel().add(nameBox));
         this.add(new JPanel().add(finishButton));
 
-        setPreferredSize(new Dimension(200, 540));
-        c.validate();
+        setPreferredSize(new Dimension(180, 400));
         setVisible(true);
     }
 
@@ -92,8 +87,8 @@ public class EditorSidebar extends JPanel implements ActionListener {
         if ("finish".equals(e.getActionCommand())) {
             System.out.println("Name: " + nameBox.getText());
             editLayer.name = nameBox.getText();
-            System.out.println("Done.");;
-            setVisible(false);
+            System.out.println("Done.");
+            //setVisible(false);
         }
     }
 }

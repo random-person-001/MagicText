@@ -33,21 +33,20 @@ public class EditorFrame extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sourcery Text Layer Editor");
         setResizable(true); // false
+        c.setLayout(new BorderLayout());
 
         viewWindow = new LayerViewWindow(this);
         viewWindow.setImage(testDisplay);
 
-        c.setLayout(new BorderLayout());
-        c.add(viewWindow, BorderLayout.WEST);
-
-        sidebar = new EditorSidebar(c, testDisplay);
+        sidebar = new EditorSidebar(testDisplay);
         //sidebar.setMinimumSize(new Dimension(100, 640));
-        c.add(sidebar, BorderLayout.EAST);
 
         toolbar = new EditorToolbar();
         toolbar.owner = this;
         //toolbar.setMinimumSize(new Dimension(510, 60));
 
+        c.add(viewWindow, BorderLayout.WEST);
+        c.add(sidebar, BorderLayout.EAST);
         c.add(toolbar, BorderLayout.SOUTH);
         pack();
         c.validate();
