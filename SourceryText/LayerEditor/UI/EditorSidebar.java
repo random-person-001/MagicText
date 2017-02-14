@@ -33,12 +33,16 @@ public class EditorSidebar extends JPanel implements ActionListener {
 
         opaqueBox.setActionCommand("Opaque");
         opaqueBox.addActionListener(this);
+        opaqueBox.setAlignmentX(Component.LEFT_ALIGNMENT);
         importantBox.setActionCommand("Important");
         importantBox.addActionListener(this);
+        opaqueBox.setAlignmentX(0.0f);
         cameraBox.setActionCommand("Camera");
         cameraBox.addActionListener(this);
+        opaqueBox.setAlignmentX(0.0f);
         nameBox.setActionCommand("Name");
         nameBox.addActionListener(this);
+        opaqueBox.setAlignmentX(0.0f);
 
         JButton replaceButton= new JButton("Find & Replace");
         replaceButton.setActionCommand("Replace");
@@ -55,7 +59,8 @@ public class EditorSidebar extends JPanel implements ActionListener {
         add(opaqueBox);
         add(importantBox);
         add(cameraBox);
-        add(replaceButton);
+        //add(replaceButton);
+        add(new FindAndReplaceTool(editorFrame));
         add(finishButton);
 
         setBounds(900, 200, 165, 260);
@@ -65,7 +70,7 @@ public class EditorSidebar extends JPanel implements ActionListener {
 
     @Override
     protected void paintComponent(Graphics g) {
-        g.setColor(new Color(170, 170, 170));
+        g.setColor(Color.WHITE);
 
         g.fill3DRect(0, 0, getWidth(), getHeight(), false);
         /*

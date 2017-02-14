@@ -75,19 +75,32 @@ public class LayerViewWindow extends JComponent implements MouseListener, MouseM
         }
         g.setColor(Color.WHITE);
         if (!cameraMoving) {
-            g.drawRect(calculateSnappedMousePos(mouseX, camX, 14) + camX, calculateSnappedMousePos(mouseY, camY, 20) + camY + 3, 14, 20);
+            g.drawRect(calculateSnappedMouseXPos() + camX, calculateSnappedMouseYPos() + camY + 3, 14, 20);
         }
         g.setColor(new Color(102, 102, 0));
         g.drawRect(camX, camY - 18, image.getRows() * 14, image.getColumns() * 20);
     }
 
-    private int calculateSnappedMousePos(int mouseVal, int cameraVal, int dim){
-        int relativeVal = mouseVal - cameraVal;
-        return relativeVal - (relativeVal % dim);
+    private int calculateSnappedMouseXPos(){
+        int relativeVal = mouseX - camX;
+        if (relativeVal < 0)
+            return 0;
+        if (relativeVal > image.getRows() * 14)
+            return (image.getRows() - 1) * 14;
+        return relativeVal - (relativeVal % 14);
+    }
+
+    private int calculateSnappedMouseYPos(){
+        int relativeVal = mouseY - camY;
+        if (relativeVal < 0)
+            return -20;
+        if (relativeVal > image.getColumns() * 20)
+            return (image.getColumns() - 2) * 20;
+        return relativeVal - (relativeVal % 20);
     }
 
     public SpecialText getSelectedSpecTxt(){
-        return image.getSpecTxt(calculateSnappedMousePos(mouseX, camX, 14) / 14, (calculateSnappedMousePos(mouseY, camY, 20) / 20)+1);
+        return image.getSpecTxt(calculateSnappedMouseXPos() / 14, (calculateSnappedMouseYPos() / 20)+1);
     }
 
     private int mousePrevPosX = 0;
@@ -180,9 +193,9 @@ public class LayerViewWindow extends JComponent implements MouseListener, MouseM
         @Override
         public void run() {
             if (drawing){
-                image.setSpecTxt(calculateSnappedMousePos(mouseX, camX, 14) / 14, (calculateSnappedMousePos(mouseY, camY, 20) / 20) + 1, owner.toolbar.getSpecTxt());
+                image.setSpecTxt(calculateSnappedMouseXPos() / 14, (calculateSnappedMouseYPos() / 20) + 1, owner.toolbar.getSpecTxt());
             } else if (clearing){
-                image.setSpecTxt(calculateSnappedMousePos(mouseX, camX, 14) / 14, (calculateSnappedMousePos(mouseY, camY, 20) / 20) + 1, new SpecialText(" "));
+                image.setSpecTxt(calculateSnappedMouseXPos() / 14, (calculateSnappedMouseYPos() / 20) + 1, new SpecialText(" "));
             }
             repaint();
         }
