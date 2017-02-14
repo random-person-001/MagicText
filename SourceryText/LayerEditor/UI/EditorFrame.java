@@ -9,7 +9,7 @@ import java.awt.*;
 /**
  * Created by Jared on 1/29/2017.
  */
-public class EditorFrame extends JFrame{
+public class EditorFrame extends JFrame {
 
     public LayerViewWindow viewWindow;
     EditorToolbar toolbar;
@@ -30,28 +30,25 @@ public class EditorFrame extends JFrame{
         }*/
 
         setBackground(backgroundColor);
-
-        viewWindow = new LayerViewWindow(this);
-        viewWindow.setImage(testDisplay);
-
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sourcery Text Layer Editor");
         setResizable(true); // false
 
+        viewWindow = new LayerViewWindow(this);
+        viewWindow.setImage(testDisplay);
+
         c.setLayout(new BorderLayout());
-        c.add(viewWindow, BorderLayout.CENTER);
+        c.add(viewWindow, BorderLayout.WEST);
+
+        sidebar = new EditorSidebar(c, testDisplay);
+        //sidebar.setMinimumSize(new Dimension(100, 640));
+        c.add(sidebar, BorderLayout.EAST);
 
         toolbar = new EditorToolbar();
         toolbar.owner = this;
         //toolbar.setMinimumSize(new Dimension(510, 60));
 
         c.add(toolbar, BorderLayout.SOUTH);
-
-        sidebar = new EditorSidebar();
-        //sidebar.setMinimumSize(new Dimension(100, 640));
-
-        c.add(sidebar, BorderLayout.EAST);
-
         pack();
         c.validate();
 
