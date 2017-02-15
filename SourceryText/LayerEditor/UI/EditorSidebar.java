@@ -67,6 +67,8 @@ public class EditorSidebar extends JPanel implements ActionListener {
         add(new FindAndReplaceTool(editorFrame));
         add(new DrawToolsPanel(editorFrame));
 
+        //This "serializationPanel" is NOT a separate class because it would be a little redundant.
+        //The other JPanels need to have special code written for it, but this one doesn't.
         JPanel serializationPanel = new JPanel();
         serializationPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "File"));
 

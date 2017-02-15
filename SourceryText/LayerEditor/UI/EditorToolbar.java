@@ -17,7 +17,7 @@ public class EditorToolbar extends JComponent implements MouseListener{
     EditorFrame owner;
 
     public EditorToolbar(){
-        String[] defaultChars = {"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q"};
+        String[] defaultChars = {"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p"," "};
 
         for (int ii = 0; ii < toolBarContents.length; ii++){
             toolBarContents[ii] = new SpecialText(defaultChars[ii]);

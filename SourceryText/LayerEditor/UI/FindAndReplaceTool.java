@@ -11,14 +11,13 @@ import java.awt.event.ActionListener;
  * Created by Jared on 14-Feb-17.
  */
 public class FindAndReplaceTool extends JPanel implements ActionListener{
-    EditorFrame editorFrame;
+    private EditorFrame editorFrame;
 
-    SpecialText find;
-    SpecialText replaceWith;
+    private SpecialText find;
+    private SpecialText replaceWith;
 
-    JButton findButton = new JButton();
-    JButton replaceWithButton = new JButton();
-    JButton replaceButton = new JButton();
+    private JButton findButton = new JButton();
+    private JButton replaceWithButton = new JButton();
 
     public FindAndReplaceTool(EditorFrame source){
         editorFrame = source;
@@ -39,7 +38,8 @@ public class FindAndReplaceTool extends JPanel implements ActionListener{
         replaceWithButton.setActionCommand("ChangeReplaceWith");
         replaceWithButton.addActionListener(this);
         replaceWithButton.setFont(specTextFont);
-        replaceButton = new JButton("Replace");
+
+        JButton replaceButton = new JButton("Replace");
         replaceButton.setActionCommand("DoReplace");
         replaceButton.addActionListener(this);
 
