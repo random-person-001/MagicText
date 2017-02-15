@@ -18,18 +18,19 @@ public class EditorSidebar extends JPanel implements ActionListener {
     private JCheckBox opaqueBox = new JCheckBox("Opaque");
     private JCheckBox importantBox = new JCheckBox("Important");
     private JCheckBox cameraBox = new JCheckBox("Camera Obedient");
-    private JTextField nameBox = new JTextField("name", 12);
+    private JTextField nameBox = new JTextField("Layer Name Here", 12);
 
     EditorSidebar(Layer editable, EditorFrame editorFrame){
         this.editorFrame = editorFrame;
         editLayer = editable;
         setVisible(false);
-        setBackground(new Color(180, 180, 173));
         try {
             UIManager.setLookAndFeel(new MetalLookAndFeel());
         } catch (UnsupportedLookAndFeelException e) {
             e.printStackTrace();
         }
+
+        setBorder(BorderFactory.createEtchedBorder());
 
         opaqueBox.setActionCommand("Opaque");
         opaqueBox.addActionListener(this);
@@ -44,13 +45,17 @@ public class EditorSidebar extends JPanel implements ActionListener {
         nameBox.addActionListener(this);
         opaqueBox.setAlignmentX(0.0f);
 
-        JButton replaceButton= new JButton("Find & Replace");
-        replaceButton.setActionCommand("Replace");
-        replaceButton.addActionListener(this);
+        JButton saveLayerButton = new JButton("Pretend Save");
+        saveLayerButton.setActionCommand("finish");
+        saveLayerButton.addActionListener(this);
 
-        JButton finishButton = new JButton("Pretend Save");
-        finishButton.setActionCommand("finish");
-        finishButton.addActionListener(this);
+        JButton newLayerButton = new JButton("Pretend New Layer");
+        saveLayerButton.setActionCommand("new");
+        saveLayerButton.addActionListener(this);
+
+        JButton openLayerButton = new JButton("Pretend Open");
+        saveLayerButton.setActionCommand("open");
+        saveLayerButton.addActionListener(this);
 
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
@@ -59,26 +64,24 @@ public class EditorSidebar extends JPanel implements ActionListener {
         add(opaqueBox);
         add(importantBox);
         add(cameraBox);
-        //add(replaceButton);
         add(new FindAndReplaceTool(editorFrame));
-        add(finishButton);
+        add(new DrawToolsPanel(editorFrame));
+
+        JPanel serializationPanel = new JPanel();
+        serializationPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "File"));
+
+        serializationPanel.add(newLayerButton);
+        serializationPanel.add(saveLayerButton);
+        serializationPanel.add(openLayerButton);
+
+        serializationPanel.setAlignmentX(0f);
+        serializationPanel.setLayout(new BoxLayout(serializationPanel, BoxLayout.PAGE_AXIS));
+
+        add(serializationPanel);
 
         setBounds(900, 200, 165, 260);
         setPreferredSize(new Dimension(180, 400));
         setVisible(true);
-    }
-
-    @Override
-    protected void paintComponent(Graphics g) {
-        g.setColor(Color.WHITE);
-
-        g.fill3DRect(0, 0, getWidth(), getHeight(), false);
-        /*
-        g.setColor(new Color(200, 200, 200));
-        g.fill3DRect(5, getHeight() - 35, 30, 30, true);
-        g.fill3DRect(5, getHeight() - 70, 30, 30, true);
-        g.fill3DRect(5, getHeight() - 105, 30, 30, false);
-        */
     }
 
     @Override

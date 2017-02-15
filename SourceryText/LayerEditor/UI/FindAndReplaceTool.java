@@ -23,11 +23,11 @@ public class FindAndReplaceTool extends JPanel implements ActionListener{
     public FindAndReplaceTool(EditorFrame source){
         editorFrame = source;
 
-        setMaximumSize(new Dimension(125, 75));
+        setMaximumSize(new Dimension(135, 85));
         setAlignmentX(Component.LEFT_ALIGNMENT);
 
         setLayout(new BorderLayout(10, 5));
-        setBorder(BorderFactory.createEtchedBorder());
+        setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Find and Replace"));
 
         Font specTextFont = new Font("Monospaced", Font.BOLD, 20);
 
@@ -49,12 +49,12 @@ public class FindAndReplaceTool extends JPanel implements ActionListener{
     }
 
     public void paintComponent(Graphics g){
-        g.setColor(Color.WHITE);
+        g.setColor(getBackground());
         g.fillRect(0,0,getWidth(),getHeight());
         g.setColor(Color.BLACK);
-        g.drawLine(50, 23, 70, 23);
-        g.drawLine(70, 23, 60, 13);
-        g.drawLine(70, 23, 60, 33);
+        g.drawLine(55, 33, 75, 33);
+        g.drawLine(75, 33, 65, 23);
+        g.drawLine(75, 33, 65, 43);
     }
 
     @Override

@@ -63,7 +63,10 @@ public class EditorToolbar extends JComponent implements MouseListener{
     }
 
     public void receiveSpecialText(SpecialText present){
-        toolBarContents[toolBarCursor] = present;
+        if (present.getStr().equals(""))
+            toolBarContents[toolBarCursor] = new SpecialText(" ", present.getForegroundColor(), present.getBackgroundColor());
+        else
+            toolBarContents[toolBarCursor] = present;
         repaint();
     }
 
