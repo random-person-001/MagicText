@@ -109,6 +109,31 @@ public class LayerViewWindow extends JComponent implements MouseListener, MouseM
     private boolean drawing = false;
     private boolean clearing = false;
 
+    private int getToolID(){
+        if (owner.sidebar != null)
+            return owner.sidebar.getToolID();
+        else
+            return 0;
+    }
+
+    private void fillTool(int row, int col){
+        spreadText(row, col);
+    }
+
+    private void spreadText(int row, int col){
+        placeSpreadingText(row - 1, col);
+        placeSpreadingText(row + 1, col);
+        placeSpreadingText(row, col - 1);
+        placeSpreadingText(row, col + 1);
+    }
+
+    private void placeSpreadingText(int row, int col){
+        if (row >= 0 && col >= 0 && row < image.getRows() && col < image.getColumns() && image.getSpecTxt(row, col).equals(new SpecialText(" "))){
+            image.setSpecTxt(row, col, owner.toolbar.getSpecTxt());
+            spreadText(row, col);
+        }
+    }
+
     @Override
     public void mouseClicked(MouseEvent e) {
 
@@ -123,6 +148,11 @@ public class LayerViewWindow extends JComponent implements MouseListener, MouseM
             System.out.println("Drag start");
         } else if (e.getButton() == MouseEvent.BUTTON1){
             drawing = true;
+            if (getToolID() == 1){ //Pick tool
+                owner.toolbar.receiveSpecialText(image.getSpecTxt(calculateSnappedMouseXPos() / 14, (calculateSnappedMouseYPos() / 20) + 1));
+            } else if (getToolID() == 2){ //Fill tool
+                fillTool(calculateSnappedMouseXPos() / 14, (calculateSnappedMouseYPos() / 20) + 1);
+            }
         } else if (e.getButton() == MouseEvent.BUTTON2){
             clearing = true;
         }
@@ -192,10 +222,12 @@ public class LayerViewWindow extends JComponent implements MouseListener, MouseM
     private class DisplayUpdateTimer extends TimerTask {
         @Override
         public void run() {
-            if (drawing){
-                image.setSpecTxt(calculateSnappedMouseXPos() / 14, (calculateSnappedMouseYPos() / 20) + 1, owner.toolbar.getSpecTxt());
-            } else if (clearing){
-                image.setSpecTxt(calculateSnappedMouseXPos() / 14, (calculateSnappedMouseYPos() / 20) + 1, new SpecialText(" "));
+            if (getToolID() == 0) { //Pencil Tool
+                if (drawing) {
+                    image.setSpecTxt(calculateSnappedMouseXPos() / 14, (calculateSnappedMouseYPos() / 20) + 1, owner.toolbar.getSpecTxt());
+                } else if (clearing) {
+                    image.setSpecTxt(calculateSnappedMouseXPos() / 14, (calculateSnappedMouseYPos() / 20) + 1, new SpecialText(" "));
+                }
             }
             repaint();
         }

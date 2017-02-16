@@ -20,10 +20,14 @@ public class DrawToolsPanel extends JPanel implements ActionListener{
 
     private JButton[] btns = {pencilBtn, pickBtn, fillBtn, lineBtn, rectBtn, randomBtn};
 
+    int currentTool = 0;
+
+    private JCheckBox rectFilled;
+
     public DrawToolsPanel (EditorFrame editFrame){
         editorFrame = editFrame;
 
-        setLayout(new GridLayout(3, 2));
+        setLayout(new GridLayout(4, 2));
         setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Tools"));
         setAlignmentX(0.0f);
 
@@ -34,13 +38,19 @@ public class DrawToolsPanel extends JPanel implements ActionListener{
         fillBtn = createButton("Fill", "fill");
         lineBtn = createButton("Line", "line");
         rectBtn = createButton("Rect", "rect");
-        randomBtn = createButton("Random", "random");
+        randomBtn = createButton("Move", "move");
 
         btns = new JButton[]{pencilBtn, pickBtn, fillBtn, lineBtn, rectBtn, randomBtn};
 
         for (JButton btn : btns){
             add(btn);
         }
+
+        rectFilled = new JCheckBox("Filled");
+        rectFilled.setEnabled(false);
+        add(rectFilled);
+
+        validate();
     }
 
     private JButton createButton(String buttonName, String buttonAction){
@@ -55,6 +65,7 @@ public class DrawToolsPanel extends JPanel implements ActionListener{
         for (JButton btn : btns){
             btn.setEnabled(true);
         }
+        rectFilled.setEnabled(false);
     }
 
     @Override
@@ -68,9 +79,16 @@ public class DrawToolsPanel extends JPanel implements ActionListener{
         }
         if (wasAButton){
             resetButtons();
-            for (JButton btn : btns){ //The amount of convenience to this is astounding
+            for (int ii = 0; ii < btns.length ; ii++){ //The amount of convenience to this is astounding
+                JButton btn = btns[ii];
                 if (e.getActionCommand().equals(btn.getActionCommand())) {
                     btn.setEnabled(false);
+                    if (btn.equals(rectBtn)){
+                        rectFilled.setEnabled(true);
+                    }
+                    currentTool = ii;
+                    System.out.println(ii);
+                    return; //Hopefully two buttons don't have the same action command
                 }
             }
         }

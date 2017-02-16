@@ -20,6 +20,8 @@ public class EditorSidebar extends JPanel implements ActionListener {
     private JCheckBox cameraBox = new JCheckBox("Camera Obedient");
     private JTextField nameBox = new JTextField("Layer Name Here", 12);
 
+    private DrawToolsPanel toolPanel = new DrawToolsPanel(editorFrame);
+
     EditorSidebar(Layer editable, EditorFrame editorFrame){
         this.editorFrame = editorFrame;
         editLayer = editable;
@@ -65,7 +67,7 @@ public class EditorSidebar extends JPanel implements ActionListener {
         add(importantBox);
         add(cameraBox);
         add(new FindAndReplaceTool(editorFrame));
-        add(new DrawToolsPanel(editorFrame));
+        add(toolPanel);
 
         //This "serializationPanel" is NOT a separate class because it would be a little redundant.
         //The other JPanels need to have special code written for it, but this one doesn't.
@@ -84,6 +86,10 @@ public class EditorSidebar extends JPanel implements ActionListener {
         setBounds(900, 200, 165, 260);
         setPreferredSize(new Dimension(180, 400));
         setVisible(true);
+    }
+
+    public int getToolID(){
+        return toolPanel.currentTool;
     }
 
     @Override
