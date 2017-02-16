@@ -116,21 +116,21 @@ public class LayerViewWindow extends JComponent implements MouseListener, MouseM
             return 0;
     }
 
-    private void fillTool(int row, int col){
-        spreadText(row, col);
+    private void fillTool(int row, int col){ //Outside of recursion
+        placeSpreadingText(row, col); //Starts recursion
     }
 
     private void spreadText(int row, int col){
-        placeSpreadingText(row - 1, col);
+        placeSpreadingText(row - 1, col); //Does the placeSpreadingText operation on adjacent tiles
         placeSpreadingText(row + 1, col);
         placeSpreadingText(row, col - 1);
         placeSpreadingText(row, col + 1);
     }
 
-    private void placeSpreadingText(int row, int col){
+    private void placeSpreadingText(int row, int col){ // below: Makes sure the text is spreading into the correct area and the space it's spreading into is empty
         if (row >= 0 && col >= 0 && row < image.getRows() && col < image.getColumns() && image.getSpecTxt(row, col).equals(new SpecialText(" "))){
-            image.setSpecTxt(row, col, owner.toolbar.getSpecTxt());
-            spreadText(row, col);
+            image.setSpecTxt(row, col, owner.toolbar.getSpecTxt()); //Sets down the text
+            spreadText(row, col); //Then recurses on to the new point to continue spreading the text
         }
     }
 
