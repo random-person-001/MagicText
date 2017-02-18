@@ -88,6 +88,8 @@ public class EditorSidebar extends JPanel implements ActionListener {
         setVisible(true);
     }
 
+    public boolean getIsRectFilled() {return toolPanel.getRectToolFilled();}
+
     public int getToolID(){
         return toolPanel.currentTool;
     }

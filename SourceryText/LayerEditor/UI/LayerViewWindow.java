@@ -74,8 +74,11 @@ public class LayerViewWindow extends JComponent implements MouseListener, MouseM
             }
         }
         g.setColor(Color.WHITE);
-        if (!cameraMoving) {
+        if (!cameraMoving && !doingASelection) {
             g.drawRect(calculateSnappedMouseXPos() + camX, calculateSnappedMouseYPos() + camY + 3, 14, 20);
+        } else if (doingASelection){
+            g.setColor(new Color(255, 175, 0));
+            g.drawRect(selectedX, selectedY, calculateSnappedMouseXPos() - selectedX + camX + 14, calculateSnappedMouseYPos() - selectedY + camY + 20);
         }
         g.setColor(new Color(102, 102, 0));
         g.drawRect(camX, camY - 18, image.getRows() * 14, image.getColumns() * 20);
@@ -106,6 +109,10 @@ public class LayerViewWindow extends JComponent implements MouseListener, MouseM
     private int mousePrevPosX = 0;
     private int mousePrevPosY = 0;
 
+    private int selectedX = 0;
+    private int selectedY = 0;
+    private boolean doingASelection = false;
+
     private boolean drawing = false;
     private boolean clearing = false;
 
@@ -128,12 +135,26 @@ public class LayerViewWindow extends JComponent implements MouseListener, MouseM
     }
 
     private void placeSpreadingText(int row, int col){ // below: Makes sure the text is spreading into the correct area and the space it's spreading into is empty
-        if (row >= 0 && col >= 0 && row < image.getRows() && col < image.getColumns() && image.getSpecTxt(row, col).equals(new SpecialText(" "))){
+        if (row >= 0 && col >= 0 && row < image.getRows() && col < image.getColumns() && image.getSpecTxt(row, col).getStr().equals(" ")){
             image.setSpecTxt(row, col, owner.toolbar.getSpecTxt()); //Sets down the text
             spreadText(row, col); //Then recurses on to the new point to continue spreading the text
         }
     }
 
+    private void drawRectangle(boolean filled){
+        int layerX = (selectedX - camX) / 14;
+        int layerY = (selectedY - camY) / 20 + 1;
+        int boxEndX = (calculateSnappedMouseXPos() / 14);
+        int boxEndY = (calculateSnappedMouseYPos() / 20) + 1;
+        System.out.printf("Rectangle:\n cornerX: %1$d\n cornerY: %2$d\n endX: %3$d\n endY: %4$d\n", layerX, layerY, boxEndX, boxEndY);
+        for (int row = layerX; row <= boxEndX; row++){
+            for (int col = layerY; col <= boxEndY; col++){
+                if (filled || row == layerX || row == boxEndX || col == layerY || col == boxEndY){
+                    image.setSpecTxt(row, col, owner.toolbar.getSpecTxt());
+                }
+            }
+        }
+    }
     @Override
     public void mouseClicked(MouseEvent e) {
 
@@ -152,6 +173,10 @@ public class LayerViewWindow extends JComponent implements MouseListener, MouseM
                 owner.toolbar.receiveSpecialText(image.getSpecTxt(calculateSnappedMouseXPos() / 14, (calculateSnappedMouseYPos() / 20) + 1));
             } else if (getToolID() == 2){ //Fill tool
                 fillTool(calculateSnappedMouseXPos() / 14, (calculateSnappedMouseYPos() / 20) + 1);
+            } else if (getToolID() == 5 || getToolID() == 4){ //Move/Rect Tool area selection
+                selectedX = calculateSnappedMouseXPos() + camX;
+                selectedY = calculateSnappedMouseYPos() + camY;
+                doingASelection = true;
             }
         } else if (e.getButton() == MouseEvent.BUTTON2){
             clearing = true;
@@ -168,6 +193,12 @@ public class LayerViewWindow extends JComponent implements MouseListener, MouseM
             System.out.println(camY);
         } else if (e.getButton() == MouseEvent.BUTTON1){
             drawing = false;
+            if (getToolID() == 5 || getToolID() == 4){
+                doingASelection = false;
+            }
+            if (getToolID() == 4){
+                drawRectangle(owner.sidebar.getIsRectFilled());
+            }
         } else if (e.getButton() == MouseEvent.BUTTON2){
             clearing = false;
         }
@@ -225,9 +256,11 @@ public class LayerViewWindow extends JComponent implements MouseListener, MouseM
             if (getToolID() == 0) { //Pencil Tool
                 if (drawing) {
                     image.setSpecTxt(calculateSnappedMouseXPos() / 14, (calculateSnappedMouseYPos() / 20) + 1, owner.toolbar.getSpecTxt());
-                } else if (clearing) {
-                    image.setSpecTxt(calculateSnappedMouseXPos() / 14, (calculateSnappedMouseYPos() / 20) + 1, new SpecialText(" "));
                 }
+
+            }
+            if (clearing) {
+                image.setSpecTxt(calculateSnappedMouseXPos() / 14, (calculateSnappedMouseYPos() / 20) + 1, new SpecialText(" "));
             }
             repaint();
         }
