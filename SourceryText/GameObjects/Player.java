@@ -261,13 +261,24 @@ public class Player extends Mortal implements java.io.Serializable {
                 shouldNewInv = false;
             }
 
-            manaRegenClock += getTime();
-            if (manaWait > 0) {
-                manaWait -= getTime();
-                manaRegenClock = 0;
-            } else if (manaRegenClock >= (500 / maxMana) && mana < maxMana) {
-                mana++;
-                manaRegenClock = 0;
+            boolean blocked = false;
+            for (GameObject object: room.objs) {
+                if(object.getClass() == MagicSmoke.class) {
+                    if(((MagicSmoke) object).isBlockManaRegen( x, y)) {
+                        blocked = true;
+                        break;
+                    }
+                }
+            }
+            if(!blocked) {
+                manaRegenClock += getTime();
+                if (manaWait > 0) {
+                    manaWait -= getTime();
+                    manaRegenClock = 0;
+                } else if (manaRegenClock >= (500 / maxMana) && mana < maxMana) {
+                    mana++;
+                    manaRegenClock = 0;
+                }
             }
 
             burnoutRecoveryClock += getTime();
@@ -678,7 +689,16 @@ public class Player extends Mortal implements java.io.Serializable {
     }
 
     private void newCastSpell(Item spell) {
-        if (!swimming) { //Swimming AND casting spells at the same time?!?!?! That's too much, man!
+        boolean blocked = false;
+        for (GameObject object: room.objs) {
+            if(object.getClass() == MagicSmoke.class) {
+                if(((MagicSmoke) object).isBlockSpell(spell, x, y)) {
+                    blocked = true;
+                    break;
+                }
+            }
+        }
+        if (!swimming && !blocked) { //Swimming AND casting spells at the same time?!?!?! That's too much, man!
             spellCasts++;
             if (spell.isDmgSpell) {
                 int damage = spell.damage + allSpellBoost;

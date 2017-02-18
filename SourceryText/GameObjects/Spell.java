@@ -121,6 +121,17 @@ public class Spell extends GameObject {
         return type;
     }
 
+    public int getSpellType(){
+        switch (type){
+            case "healing": return 0;
+            case "arcane": return 1;
+            case "fire": return 2;
+            case "ice": return 3;
+            case "dark": return 4;
+            default: return Integer.MAX_VALUE;
+        }
+    }
+
     public void setHostility(boolean set) {
         isHostile = set;
     }

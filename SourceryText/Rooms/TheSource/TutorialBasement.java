@@ -202,7 +202,7 @@ public class TutorialBasement extends Room {
         //Spider spoidur = new Spider(this, 15, 29);
         addMortal(spoidur);
 
-        super.addObject(new MagicSmoke(5, 12, 6, new int[0]));
+        super.addObject(new MagicSmoke(this, 12, 6, 7, new int[]{MagicSmoke.MANAREGEN, MagicSmoke.FIRETYPE, MagicSmoke.HEALTYPE}));
 
         /*
         Item potion = new Item("SC&OPotatoChip", "This variety of magic\n potato chip is flavored\n with sour cream and onions\n\nIt makes your breath so bad\n it hurts nearby enemies.", "item");
