@@ -22,8 +22,12 @@ public class SpecialText implements java.io.Serializable {
     }
 
     public String getStr() {
+        if (self == null)
+            return " ";
         return self;
     }
+
+    public void setStr(String set) {self = set;}
 
     public Color getForegroundColor() {
         return foregroundColor;
@@ -76,6 +80,10 @@ public class SpecialText implements java.io.Serializable {
 
     public boolean equals(SpecialText other) {
         return self.equals(other.getStr()) && foregroundColor.equals(other.getForegroundColor()) && backgroundColor.equals(other.getBackgroundColor());
+    }
+
+    public SpecialText clone(){
+        return new SpecialText(self, foregroundColor, Color.black);
     }
 
     public void setForeground(Color newForeground) {

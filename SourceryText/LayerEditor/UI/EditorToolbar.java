@@ -4,69 +4,110 @@ import SourceryText.SpecialText;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 /**
  * Created by Jared on 1/29/2017.
  */
-public class EditorToolbar extends JPanel {
-    int cornerX;
-    int cornerY;
-    int toolbarWidth;
+public class EditorToolbar extends JComponent implements MouseListener{
+    private SpecialText[] toolBarContents = new SpecialText[17];
+    private int toolBarCursor = 4;
 
-    SpecialText[] toolBarContents = new SpecialText[17];
-    int toolBarCursor = 4;
+    EditorFrame owner;
 
-    JSlider redSilder;
-    JSlider greenSlider;
-    JSlider blueSlider;
-
-    public EditorToolbar(int setX, int setY, int setWidth){
-        cornerX = setX;
-        cornerY = setY;
-        toolbarWidth = setWidth;
-        String[] defaultChars = {"a","b","c","d","e","f","g","h","i","#","'","l","m","n","o","p","q"};
+    public EditorToolbar(){
+        String[] defaultChars = {"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p"," "};
 
         for (int ii = 0; ii < toolBarContents.length; ii++){
             toolBarContents[ii] = new SpecialText(defaultChars[ii]);
         }
 
-        setFont(new Font("Monospaced", Font.PLAIN, toolbarWidth / toolBarContents.length));
+        int width = 710;
 
-        Container c = new Container();
+        // this won't work! getWidth() and getHeight() return 0 until you pack() or validate()
+        //setPreferredSize(new Dimension(getWidth(), getHeight()));
+        setPreferredSize(new Dimension(width, 60));
+        setMinimumSize(new Dimension(width, 60));
 
-        JSlider redSlider = new JSlider(0, 255, 0);
-        c.add(redSlider);
+        setFont(new Font("Monospaced", Font.PLAIN, width / toolBarContents.length));
+
+        addMouseListener(this);
     }
 
     protected void paintComponent(Graphics g){
-        g.setColor(new Color(150, 150, 150));
-        g.drawLine(cornerX, cornerY, cornerX + toolbarWidth, cornerY);
-        g.drawLine(cornerX + toolbarWidth, cornerY, cornerX + toolbarWidth, getHeight());
+        int bottom = getHeight();
+        g.setColor(new Color(125, 125, 125));
+        g.fillRect(0, 0, getWidth(), getHeight());
+        g.drawLine(0, 0, getWidth(), 0);
 
-        //g.draw3DRect(cornerX + 50, cornerY + 50, 20, 20, true);
-
+        int xLength = (getWidth() / toolBarContents.length) - 4;
+        int yLength = (int)(xLength * 1.1);
         for (int id = 0; id < toolBarContents.length; id++){
-            int length = (toolbarWidth / toolBarContents.length) - 4;
-            int boxCornerX = (length + 4) * id;
-
             boolean isSelected = (id == toolBarCursor);
-            if (!isSelected) {
-                g.setColor(new Color(150, 150, 150));
-                g.draw3DRect(boxCornerX, cornerY + 1, length, length + 1, true);
-            } else {
-                g.setColor(Color.WHITE);
-                g.drawRect(boxCornerX, cornerY + 1, length, length + 1);
-                g.drawRect(boxCornerX - 1, cornerY, length + 2, length + 3);
+            int boxCornerX = ((xLength + 4) * id);
+            int boxCornerY = (isSelected) ? 1 : 2;
+
+            g.setColor(new Color(180, 180, 173));
+            if (isSelected) {
+                g.fillRect(boxCornerX - 4, boxCornerY, xLength + 9, bottom);
             }
+            g.draw3DRect(boxCornerX, boxCornerY + 1, xLength, yLength + 1, true);
 
             g.setColor(toolBarContents[id].getBackgroundColor());
-            g.fillRect(boxCornerX + 1, cornerY + 2, length - 1, length);
+            g.fillRect(boxCornerX + 1, boxCornerY + 2, xLength - 1, yLength);
 
             g.setColor(toolBarContents[id].getForegroundColor());
-            if (toolBarContents[id].getStr().equals("_"))
-                g.drawString(toolBarContents[id].getStr(), boxCornerX + 2, cornerY + length - 6);
-            else
-                g.drawString(toolBarContents[id].getStr(), boxCornerX + 2, cornerY + length - 4);
+            g.drawString(toolBarContents[id].getStr(), boxCornerX + (xLength / 4), boxCornerY + (int)(yLength / 1.35f));
         }
+    }
+
+    public void receiveSpecialText(SpecialText present){
+        if (present.getStr().equals(""))
+            toolBarContents[toolBarCursor] = new SpecialText(" ", present.getForegroundColor(), present.getBackgroundColor());
+        else
+            toolBarContents[toolBarCursor] = present;
+        repaint();
+    }
+
+    public SpecialText getSpecTxt(){
+        return toolBarContents[toolBarCursor];
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        if (e.getX() > 0 && e.getX() < getWidth() && e.getY() > 0){
+            toolBarCursor = (e.getX()) / (getWidth() / toolBarContents.length);
+            repaint();
+            owner.repaintComponents();
+            if (e.getButton() == MouseEvent.BUTTON3){
+                owner.maker.setVisible(true);
+                owner.maker.setFinalChar(toolBarContents[toolBarCursor]);
+            }
+        }
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
+    }
+
+    public void setSelectedSpecTxt(SpecialText selectedSpecTxt) {
+        this.toolBarContents[toolBarCursor] = selectedSpecTxt;
     }
 }

@@ -61,7 +61,7 @@ public class Art implements java.io.Serializable{
             "|  -+- +-- | | -+-                           |\n" +
             "|   |  |   \\ /  |         Introduction       |\n" +
             "|   |  +--  |   |         New Game           |\n" +
-            "|   |  |   / \\  |         Multiplayer        |\n" +
+            "|   |  |   / \\  |         Join LAN Game      |\n" +
             "|   |  +-- | |  |         Load Game          |\n" +
             "|                         Settings           |\n" +
             "|                         Quit               |\n" +
@@ -143,12 +143,13 @@ public class Art implements java.io.Serializable{
     public String multiplayerMenu =
             "@                                            @\n" +
             "|                                            |\n" +
-            "|   M U L T I P L A Y E R     ( B E T A )    |\n" +
+            "|        C O N N E C T   T O   L A N         |\n" +
+            "|                                            |\n" +
+            "|      M U L T I P L A Y E R   G A M E       |\n" +
             "|                                            |\n" +
             "|                                            |\n" +
-            "|                   β     New Game as server |\n" +
-            "|                   β     Connect to server  |\n" +
-            "|                         Abort              |\n" +
+            "|                                            |\n" +
+            "|                                            |\n" +
             "|                                            |\n" +
             "|                                            |\n" +
             "|                                            |\n" +
@@ -526,6 +527,7 @@ public class Art implements java.io.Serializable{
                     "|  Spells         |\n" +
                     "|  Items          |\n" +
                     "|  Equipment      |\n" +
+                    "|                 |\n" +
                     "|  SAVE / QUIT    |\n" +
                     "|  EXIT MENU      |\n" +
                     "+-----------------+\n" +
@@ -555,7 +557,7 @@ public class Art implements java.io.Serializable{
     public String ipSetMenu =
             "  Type IP: _____________\n" +
             "  <Clear IP>            \n" +
-            "  Connect (Play!)       \n" +
+            "  Connect!              \n" +
             "  Back                  \n";
 
 
@@ -1412,7 +1414,7 @@ public String fondantVillage =
                 "ttttttttttttttth122222221httttTTTTTTTTTTTTTttttttttTTTTTTTTTTTTTTTTTtttttttttttttttttttttttttttttttttttttttttttttttttTTTTTTTTttttttttttttttttttTTTTTTTTTTTTTTTTTTTTttttttt\n" +
                 "ttttttttttttttth122w22221htttttttttttttttttttttttttttttttTTTTTTttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt\n" +
                 "tttttttttttttth122222221htttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttthhhhhhhhhtttttttthhhhhhhhhhhttttttttttttttttttttttttttttttttttttttttttttttttttt\n" +
-                "ttttttttttttth122222221htttttttttttttttttttttttttttttttttttttttttttttttttttttttttthhhhhhhhh        htttttttth          hhhhhhhhhtttttttttttttttttttttttttttttttttttttttttt\n" +
+                "ttttttttttttth122222221htttttttttttttttttttttttttttttttttttttttttttttttttttttthhhhhhhhhhhhh        htttttttth          hhhhhhhhhtttttttttttttttttttttttttttttttttttttttttt\n" +
                 "ttttttttttttth122222221htttttttttttttttttttttttttttttttttttttttttttttttttthhhh___                   htttttth    e               hhhhhttttttttttttttttttttttttttttttttttttt\n" +
                 "tttttttttttth122222221httttttttttttttttttttttttttttttttttttttttttttthhhhhh    ###______________    htttttth          hhhhhhh         hhhtttttttttttttttttttttttttttttttttt\n" +
                 "tttttttttttth12w222221httttttttttttttttttttttttttttttttttttttttttthh         /##r=++==r==++==l=%   htttttth   ___        hhthhh          hhhhtttttttttttttttttttttthhhhhhh\n" +
@@ -1437,7 +1439,7 @@ public String fondantVillage =
                 "TTTTTTTTTTT1w22ww22wTTTTTTThhhhhhhhttttttttttttttthh  _____  hthhh    e oooooo    e   oooooo   hhhttttttttth  eoe  /============%  eeoo            htttttttttttttttttttttt\n" +
                 "TTTTTTTTTTTh1ww22ww21hTTTTTTTThhhhhhhhttttttttttth   /=====%  htttth     ooeooeo e   oooeooooooo  hhhtttttth eoe    #b########b#  eoo  e   e      httttttttttttttttttttttt\n" +
                 "TTTTTTTTTThh1w22w2221hTTTTTTTTTTThhhhhhhttttttttth  /b=====b%  htttthh   e  eooooo  eooe  e  ooooo   hhhtth   eo    #b#dd#####b# ooo   e          httttttttttttttttttttttt\n" +
-                "TTTTTTThhhhh122222w21hTTTTTTTTTTTTThhhhhhttttttttth  b==d==b  httttttth      e  ooeooo         oooooooo hh  eeoeo     eooo  e   oooe            hhtttttttttttttttttttttttt\n" +
+                "TTTTTTThhhhh122222w21hTTTTTTTTTTTTThhhhhhttttttttth  b==d==b  hhtttttth      e  ooeooo         oooooooo hh  eeoeo     eooo  e   oooe            hhtttttttttttttttttttttttt\n" +
                 "hhhhhhhhhhh1222w2221hTTTTTTTTTTTTTTTTThhhhhtttttttth     e      hhttttthh     eooooo    e    e     eooooeeoooeeooe   eoooooooeoooo  e   e    hhhtttttttttttttttttttttttttt\n" +
                 "hhhhhhhhhss122222w21hTTTTTTTTTTTTTTTTTThhhhhtttttttthh     e   e  htttttth     oeoo hhh          e  eoooe      oooooooee   oooo  e          httttttttttttttttttttttttttttt\n" +
                 "hhh      ss122222221hTTTTTTTTTTTTTTTTTTThhhhttttttttth    e   e    htttttthhh e oo httthhh          eooe   eoeooe  ee e     e       e      htttttttttttttttttttttttttttttt\n" +

@@ -1,6 +1,6 @@
 package SourceryText.LayerEditor.UI;
 
-import SourceryText.ColoredTextMatrix;
+import SourceryText.Layer;
 import SourceryText.SpecialText;
 
 import javax.swing.*;
@@ -10,52 +10,54 @@ import java.awt.*;
  * Created by Jared on 1/29/2017.
  */
 public class EditorFrame extends JFrame {
-
-    public ColoredTextMatrix viewMatrix;
-    public EditorToolbar toolbar;
+    public LayerViewWindow viewWindow;
+    EditorToolbar toolbar;
+    EditorSidebar sidebar;
+    SpecialTextMaker maker;
 
     private Container c = getContentPane();
 
-    public SpecialText selectedSpecialText;
+    Color backgroundColor = new Color(180, 180, 173);
 
     public EditorFrame (){
-        SpecialText[][] testDisplay = new SpecialText[46][28];
-        for (int ii = 0; ii < testDisplay.length; ii++){
-            testDisplay[ii][0] = new SpecialText(String.valueOf(ii % 10));
-        }
-        for (int ii = 0; ii < testDisplay[0].length; ii++){
-            testDisplay[0][ii] = new SpecialText(String.valueOf(ii % 10));
+        Layer testDisplay = new Layer(new String[46][28]);
+        for (int col = 0; col < testDisplay.getColumns(); col++){
+            for (int row = 0; row < testDisplay.getRows(); row++) {
+                testDisplay.setSpecTxt(row, col, new SpecialText(" "));//String.valueOf(col % 10), new Color(255, 255, 255 - (row+col)), new Color((row+col),(row+col),(row+col))));
+            }
         }
 
-        setBackground(new Color(180, 180, 173));
+        setBackground(backgroundColor);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Sourcery Text Layer Editor");
+        setResizable(true); // false
+        c.setLayout(new BorderLayout());
 
-        viewMatrix = new ColoredTextMatrix(510, 570);
+        viewWindow = new LayerViewWindow(this);
+        viewWindow.setImage(testDisplay);
+
+        sidebar = new EditorSidebar(testDisplay, this);
+        //sidebar.setMinimumSize(new Dimension(100, 640));
+
+        toolbar = new EditorToolbar();
+        toolbar.owner = this;
+        //toolbar.setMinimumSize(new Dimension(510, 60));
+
+        c.add(viewWindow, BorderLayout.CENTER);
+        c.add(sidebar, BorderLayout.EAST);
+        c.add(toolbar, BorderLayout.SOUTH);
+        pack();
+        c.validate();
 
         setVisible(true);
 
-        setBounds(100, 100, 700, 640);
-
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Sourcery Text Layer Editor");
-        setResizable(false);
-
-        c.add(viewMatrix);
-
-        viewMatrix.text = testDisplay;
-
-        toolbar = new EditorToolbar(0, 572, 510);
-
-        c.add(toolbar);
-
-        c.validate();
-
-        repaintComponents();
-
-        SpecialTextMaker testMaker = new SpecialTextMaker();
+        maker = new SpecialTextMaker();
+        maker.owner = this;
     }
 
     protected void repaintComponents(){
         toolbar.repaint();
-        viewMatrix.repaint();
+        viewWindow.repaint();
+        repaint();
     }
 }

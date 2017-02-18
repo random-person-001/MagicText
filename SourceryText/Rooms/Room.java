@@ -17,8 +17,6 @@ import java.awt.event.KeyEvent;
 import java.util.*;
 import java.util.List;
 
-import static java.lang.StrictMath.abs;
-
 /**
  * @author Jared
  */
@@ -39,8 +37,6 @@ public class Room implements java.io.Serializable {
     private ArrayList<InteractableEnvironment> interactableEnvironmentObjects = new ArrayList<>(); // things that should be notified on a spell going somewhere
 
     public Player playo = null;
-
-    private KeyMap keymap;
 
     public int roomWidth;
     public int roomHeight;
@@ -721,7 +717,7 @@ public class Room implements java.io.Serializable {
         return toReturn;
     }
 
-    protected void genericKeyEvent (KeyEvent event){
+    protected void genericKeyEvent (KeyEvent event, KeyMap keymap){
         if (event.getKeyCode() == keymap.BACK_PRIMARY || event.getKeyCode() == keymap.BACK_SECONDARY) {
             resume = true;
         }
@@ -735,8 +731,8 @@ public class Room implements java.io.Serializable {
     }
 
     public void fireKeyEvent(KeyEvent event, KeyMap keymap) {
-        this.keymap = keymap;
-        genericKeyEvent(event);
+        //this.keymap = keymap;  // field not needed, I believe  --Riley
+        genericKeyEvent(event, keymap);
     }
 
     /**

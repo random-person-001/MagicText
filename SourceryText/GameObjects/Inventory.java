@@ -417,8 +417,10 @@ class Inventory implements java.io.Serializable {
         pressedD = false;
 
         Layer cursorLayer = org.getLayer(selectorLayer.getName());
-        cursorLayer.setOpaque(true);
-        if (cursorLayer != null) cursorLayer.setPos(cursorX, cursorY);
+        if (cursorLayer != null) {
+            cursorLayer.setPos(cursorX, cursorY);
+            cursorLayer.setOpaque(true);
+        }
     }
 
     /**
@@ -426,8 +428,18 @@ class Inventory implements java.io.Serializable {
      * Submenus: spells, items, equip, quit
      */
     private void operateTopMenu() {
-        loopAtMenuEnd(2, 6);
+        loopAtMenuEnd(2, 7);
         //cursorX = 28;
+
+        //Open to lan option stuff
+        String multiplayerText = (player.getGameInstance().getIsNetworkOpen()) ? "Close to LAN" :  "Open to LAN " ;
+        if (!player.getHasLocalWindow()){
+            multiplayerText = "Change LAN  ";
+        }
+        for (int i=0; i<multiplayerText.toCharArray().length; i++){
+            org.editLayer(new SpecialText(String.valueOf(multiplayerText.toCharArray()[i]),
+                    (player.getHasLocalWindow()? Color.white: Color.gray)), topMenuLayer, 4, 3+i);
+        }
         if (pressedA) {
             switch (cursorY) {
                 case 2:
@@ -443,10 +455,22 @@ class Inventory implements java.io.Serializable {
                     cursorY = 2;
                     break;
                 case 5:
+                    // Toggle open to lan-ness
+                    if (player.getHasLocalWindow()) {
+                        if (player.getGameInstance().getIsNetworkOpen()) {
+                            player.getGameInstance().bootClientPlayersOff();
+                            player.getGameInstance().closeNetworking();
+                        } else {
+                            player.getGameInstance().openNetworking();
+                        }
+                    }
+                    cursorY = 7;
+                    break;
+                case 6:
                     jumpToNewMenu(quitMenuLayer, QUIT, topMenuLayer, 28);
                     cursorY = 4;
                     break;
-                case 6:
+                case 7:
                     exitAllMenus();
                     break;
             }

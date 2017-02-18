@@ -5,7 +5,6 @@ import SourceryText.GameObjects.*;
 import SourceryText.GameObjects.ForestOfFondant.Alligator;
 import SourceryText.GameObjects.ForestOfFondant.FlammableTree;
 import SourceryText.GameObjects.TheSource.Bandit;
-import SourceryText.GameObjects.TheSource.SnowPatch;
 import SourceryText.SpecialText;
 import SourceryText.Rooms.Room;
 import SourceryText.Layer;
@@ -14,7 +13,7 @@ import java.awt.*;
 
 /**
  * The landing Room for zone 2
- * You find Sven here, and a fondant grove.  Also, there's a river and a dock.
+ * You find Sven here, and a colorful fondant grove.  Also, there's a river and a dock.
  * Created by riley on 30-Nov-2016.
  */
 public class Cliffbottom extends Room {
@@ -25,7 +24,9 @@ public class Cliffbottom extends Room {
 
     @Override
     protected String playerLoop(Player play) {
-        //play.goTo(137,113);
+        if (play.isAt(0,0)){
+            play.goTo(137, 113);
+        }
 
         while (exitCode.equals("")) {
             if (play.getY() < 1){
@@ -77,7 +78,7 @@ public class Cliffbottom extends Room {
         Item perriwinkle = new Item("wrinkleInTime", "Distorts spacetime in a \n bubble around you, so \n nearby entities slow down \n in your perception of time", "item");
         perriwinkle.setDuration(60 * 1000);
         perriwinkle.setSpellType("potion");
-        super.addObject(new DroppedItem(this, "Oooh, lucky! You found a potion that locally \n distorts spacetime.", perriwinkle, 64, 57));
+        super.addObject(new DroppedItem(this, "Oooh, lucky! You found a potion that locally \n distorts spacetime.", perriwinkle, 72, 59));
 
     }
 
