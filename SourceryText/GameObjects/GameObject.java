@@ -184,6 +184,14 @@ public class GameObject implements java.io.Serializable {
         magicSmokes = temp;
     }
 
+    public MagicSmoke getMagicSmoke(int i) {
+        return (i<magicSmokes.length && i>=0 ) ? magicSmokes[i] : null;
+    }
+
+    public MagicSmoke[] getMagicSmokes() {
+        return magicSmokes;
+    }
+
     /**
      * pathToPos, createPathTo, spreadPathPts, attemptPoint, and withinDist are all methods used in a path-finding
      * algorithm I found on the internet.
@@ -209,6 +217,9 @@ public class GameObject implements java.io.Serializable {
         //System.out.println(stepsNeeded);
         for (PathPoint pt : pathPts) {
             if (pt.getCntr() == stepsNeeded - 1 && pt.getCntr() != 0 && abs(pt.getX() - x) <= 1 && abs(pt.getY() - y) <= 1) {
+                for(MagicSmoke MS : getMagicSmokes()) {
+                    MS.move(pt.getX(), pt.getY());
+                }
                 x = pt.getX();
                 y = pt.getY();
                 Layer selfLayer = org.getLayer(layerName);

@@ -101,8 +101,10 @@ public class MagicSmoke extends GameObject implements java.io.Serializable{
     }
 
     public void move (int x, int y) {
-        this.x = x - radius;
-        this.y = y - radius;
+        this.x = x;
+        this.y = y;
+        org.getLayer(layerName).setX(x - radius);
+        org.getLayer(layerName).setY(y - radius);
     }
 
     public void update()

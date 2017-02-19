@@ -190,6 +190,9 @@ public class Mortal extends GameObject implements java.io.Serializable {
     }
 
     public void goTo(int newX, int newY) {
+        for(MagicSmoke MS : getMagicSmokes()) {
+            MS.move(newX, newY);
+        }
         org.editLayer(" ", layerName, y, x);
         x = newX;
         y = newY;
@@ -218,6 +221,9 @@ public class Mortal extends GameObject implements java.io.Serializable {
             //System.out.printf("Jumping to %1$d,%2$d (dif: %3$d,%4$d, curr: %5$d,%6$d)\n", gotoX, gotoY, x - gotoX, y - gotoY, x, y);
             atPathLoc = true;
             room.removeFromObjHitMesh(x, y);
+            for(MagicSmoke MS : getMagicSmokes()) {
+                MS.move(gotoX, gotoY);
+            }
             x = gotoX;
             y = gotoY;
             room.addToObjHitMesh(x, y);
