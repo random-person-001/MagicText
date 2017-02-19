@@ -20,7 +20,7 @@ public class EditorSidebar extends JPanel implements ActionListener {
     private JCheckBox cameraBox = new JCheckBox("Camera Obedient");
     private JTextField nameBox = new JTextField("Layer Name Here", 12);
 
-    private DrawToolsPanel toolPanel = new DrawToolsPanel(editorFrame);
+    private DrawToolsPanel toolPanel;
 
     EditorSidebar(Layer editable, EditorFrame editorFrame){
         this.editorFrame = editorFrame;
@@ -31,6 +31,8 @@ public class EditorSidebar extends JPanel implements ActionListener {
         } catch (UnsupportedLookAndFeelException e) {
             e.printStackTrace();
         }
+
+        toolPanel = new DrawToolsPanel(editorFrame);
 
         setBorder(BorderFactory.createEtchedBorder());
 

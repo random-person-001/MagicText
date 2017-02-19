@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.util.Objects;
 
 /**
  * Created by Jared on 15-Feb-17.
@@ -19,9 +18,14 @@ public class DrawToolsPanel extends JPanel implements ActionListener, ItemListen
     private JButton fillBtn;
     private JButton lineBtn;
     private JButton rectBtn;
-    private JButton randomBtn;
+    private JButton selectBtn;
 
-    private JButton[] btns = {pencilBtn, pickBtn, fillBtn, lineBtn, rectBtn, randomBtn};
+    private JButton[] btns = {pencilBtn, pickBtn, fillBtn, lineBtn, rectBtn, selectBtn};
+
+    private JButton copyBtn;
+    private JButton cutBtn;
+
+    JPanel clipboardBtnsPanel;
 
     int currentTool = 0;
 
@@ -42,9 +46,9 @@ public class DrawToolsPanel extends JPanel implements ActionListener, ItemListen
         fillBtn = createButton("Fill", "fill");
         lineBtn = createButton("Line", "line");
         rectBtn = createButton("Rect", "rect");
-        randomBtn = createButton("Move", "move");
+        selectBtn = createButton("Select", "select");
 
-        btns = new JButton[]{pencilBtn, pickBtn, fillBtn, lineBtn, rectBtn, randomBtn};
+        btns = new JButton[]{pencilBtn, pickBtn, fillBtn, lineBtn, rectBtn, selectBtn};
 
         for (JButton btn : btns){
             add(btn);
@@ -55,6 +59,20 @@ public class DrawToolsPanel extends JPanel implements ActionListener, ItemListen
         add(rectFilledBox);
 
         rectFilledBox.addItemListener(this);
+
+        clipboardBtnsPanel = new JPanel(new GridLayout(1, 3));
+
+        copyBtn = new JButton("C");
+        copyBtn.setMargin(new Insets(5, 5, 5, 5));
+        copyBtn.setEnabled(false);
+        cutBtn = new JButton("X");
+        cutBtn.setMargin(new Insets(5, 5, 5, 5));
+        cutBtn.setEnabled(false);
+
+        clipboardBtnsPanel.add(copyBtn);
+        clipboardBtnsPanel.add(cutBtn);
+
+        add(clipboardBtnsPanel);
 
         validate();
     }
@@ -76,6 +94,8 @@ public class DrawToolsPanel extends JPanel implements ActionListener, ItemListen
             btn.setEnabled(true);
         }
         rectFilledBox.setEnabled(false);
+        copyBtn.setEnabled(false);
+        cutBtn.setEnabled(false);
     }
 
     @Override
@@ -95,9 +115,12 @@ public class DrawToolsPanel extends JPanel implements ActionListener, ItemListen
                     btn.setEnabled(false);
                     if (btn.equals(rectBtn)){
                         rectFilledBox.setEnabled(true);
+                    } else if (btn.equals(selectBtn)) {
+                        copyBtn.setEnabled(true);
+                        cutBtn.setEnabled(true);
                     }
                     currentTool = ii;
-                    System.out.println(ii);
+                    editorFrame.viewWindow.toolReset();
                     return; //Hopefully two buttons don't have the same action command
                 }
             }
