@@ -76,17 +76,19 @@ public class LayerViewWindow extends JComponent implements MouseListener, MouseM
         g.setColor(Color.WHITE);
         if (!cameraMoving && selectionStage == 0) {
             g.drawRect(calculateSnappedMouseXPos() + camX, calculateSnappedMouseYPos() + camY + 3, 14, 20);
-        } else if (getToolID() == 4 || getToolID() == 5) {
-            if (selectionStage == 1 && calculateSnappedMouseXPos() >= selectedX && calculateSnappedMouseYPos() >= selectedY) {
-                g.setColor(new Color(255, 175, 0));
-                g.drawRect(selectedX, selectedY + 3, calculateSnappedMouseXPos() - selectedX + camX + 14, calculateSnappedMouseYPos() - selectedY + camY + 20);
-            } else if (selectionStage == 2 && selectedWidth > 0 && selectedHeight > 0) {
-                g.setColor(new Color(255, 175, 0));
-                g.drawRect(selectedX, selectedY + 3, selectedWidth, selectedHeight);
+        } else if (!cameraMoving) {
+            if ((getToolID() == 4 || getToolID() == 5)) {
+                if (selectionStage == 1 && calculateSnappedMouseXPos() >= selectedX && calculateSnappedMouseYPos() >= selectedY) {
+                    g.setColor(new Color(255, 175, 0));
+                    g.drawRect(selectedX, selectedY + 3, calculateSnappedMouseXPos() - selectedX + camX + 14, calculateSnappedMouseYPos() - selectedY + camY + 20);
+                } else if (selectionStage == 2 && selectedWidth > 0 && selectedHeight > 0) {
+                    g.setColor(new Color(255, 175, 0));
+                    g.drawRect(selectedX, selectedY + 3, selectedWidth, selectedHeight);
+                }
+            } else if (getToolID() == 3) {
+                g.setColor(new Color(50, 175, 255));
+                g.drawLine(selectedX + 7, selectedY + 10, calculateSnappedMouseXPos() + camX + 7, calculateSnappedMouseYPos() + camY + 10);
             }
-        } else if (getToolID() == 3){
-            g.setColor(new Color(50, 175, 255));
-            g.drawLine(selectedX + 7, selectedY + 10, calculateSnappedMouseXPos() + camX + 7, calculateSnappedMouseYPos() + camY + 10);
         }
         g.setColor(new Color(102, 102, 0));
         g.drawRect(camX, camY - 18, image.getRows() * 14, image.getColumns() * 20);
@@ -171,13 +173,11 @@ public class LayerViewWindow extends JComponent implements MouseListener, MouseM
         int y1 = (selectedY - camY) / 20 + 1;
         int x2 = (calculateSnappedMouseXPos() / 14);
         int y2 = (calculateSnappedMouseYPos() / 20) + 1;
-        float slope = (float)(y2 - y1) / (float)(x2 - x1);
-        System.out.printf("Line:\n x1: %1$d\n y1: %2$d\n x2: %3$d\n y2: %4$d\n slope: %5$f\n", x1, y1, x2, y2, slope);
-        int startX = Math.min(x1, x2);
-        int endX = Math.max(x1, x2);
-        int startY = Math.min(y1, y2);
-        for (int ix = startX; ix <= endX; ix++){
-            image.setSpecTxt(ix, (int)((ix - startX) * slope) + startY, owner.toolbar.getSpecTxt());
+        double angle = Math.atan2(y2 - y1, x2 - x1);
+        int dist = (int)Math.round(Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2)));
+        System.out.printf("Line:\n x1: %1$d\n y1: %2$d\n x2: %3$d\n y2: %4$d\n slope: %5$f\n", x1, y1, x2, y2, angle);
+        for (int ix = 0; ix <= dist; ix++){
+            image.setSpecTxt((int)Math.round(ix * Math.cos(angle)) + x1, (int)Math.round(ix * Math.sin(angle)) + y1, owner.toolbar.getSpecTxt());
         }
     }
 
