@@ -279,7 +279,7 @@ public class Spell extends GameObject {
         splashDamage();
         room.removeObject(this);
     }
-    protected void onHitNonMortal(){
+    public void onHitNonMortal(){
         splashDamage();
         room.removeObject(this);
     }

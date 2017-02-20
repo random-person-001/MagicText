@@ -45,6 +45,8 @@ public class GameObject implements java.io.Serializable {
 
     MagicSmoke[] magicSmokes = new MagicSmoke[0];
 
+    public float[] suckage = new float[] {0,0};
+
     int time; //May be useful when trying to do something asynchronous with room update timings
 
     public void addTime(int add) {
@@ -87,13 +89,19 @@ public class GameObject implements java.io.Serializable {
     public void onInspect(Player inspector){
     }
 
+
     public int getX() {
         return x;
     }
 
-    public int getY() {
-        return y;
-    }
+    public void setX(int x) { room.removeFromObjHitMesh(x,y); this.x = x; }
+
+    public int getY() { return y; }
+
+    public void setY(int y) { room.removeFromObjHitMesh(x,y); this.y = y; }
+
+    public void translate(int xShift, int yShift) { room.removeFromObjHitMesh(x,y); x+=xShift; y+=yShift; }
+
 
     protected int distanceTo(GameObject m) {
         return abs(x - m.getX()) + abs(y - m.getY());
@@ -323,9 +331,7 @@ public class GameObject implements java.io.Serializable {
             return x;
         }
 
-        protected int getY() {
-            return y;
-        }
+        protected int getY() { return y; }
 
         int getCntr() {
             return counter;

@@ -387,6 +387,9 @@ class HUD implements java.io.Serializable {
         } else if (command.contains("testkit")) {
             player.getInventory().testKit();
             showResponse("Items given!");
+        } else if (command.contains("smokekit")) {
+            player.getInventory().smokeKit();
+            showResponse("Items given!");
         } else if (command.contains("fabulous off")) {
             player.fabulousMode = false;
             showResponse("FABULOUS POWERS DISABLED?");

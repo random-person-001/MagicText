@@ -44,7 +44,7 @@ public class MagicSmoke extends GameObject implements java.io.Serializable{
         this.y = y;
 
         this.room = room;
-        org =room.org;
+        org = room.org;
 
         layerName = room.makeUniqueLayerName(strClass);
         Layer selfIcon = new Layer(new String[radius*2+1][radius*2+1], layerName, x - radius, y - radius);

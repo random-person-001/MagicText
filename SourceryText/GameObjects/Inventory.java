@@ -288,6 +288,12 @@ class Inventory implements java.io.Serializable {
         }
     }
 
+    void smokeKit() {
+        Item stickySmoke = new Item("StickySmoke", "Smoke spell;", "Stiky", "spell", true);
+        stickySmoke.dmgSpellDefine(6, 20, 7, 0.1f, "smoke", new SpecialText("\\"), new SpecialText("/"), true, 0);
+        spells.add(stickySmoke);
+    }
+
     /**
      * Press a key?  Call this to do stuff!
      *

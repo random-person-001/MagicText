@@ -131,6 +131,10 @@ public class Layer implements java.io.Serializable {
         //System.out.printf("Layer Created! I am %1s, whose opacity is %2$b\n", name, opaque);
     }
 
+    public void setSelf(SpecialText[][] self) {
+        this.self = self;
+    }
+
     public void setCamOb(boolean set) {  // JARED, I'M WORKING ON THIS
         cameraObedient = set;
     }
