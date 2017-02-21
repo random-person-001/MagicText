@@ -24,22 +24,22 @@ import java.awt.*;
  */
 public class Art implements java.io.Serializable{
 
-    public Color mountainPallette1 = new Color(255, 210, 179);
-    public Color mountainPallette2 = new Color(230, 230, 230);
-    public Color mountainPallette3 = new Color(130, 130, 100);
+    public static final Color mountainPallette1 = new Color(255, 210, 179);
+    public static final Color mountainPallette2 = new Color(230, 230, 230);
+    public static final Color mountainPallette3 = new Color(130, 130, 100);
 
-    public Color mtnPeakPallette1 = new Color(180, 220, 255);
-    public Color mtnPeakPallette2 = new Color(0, 180, 255);
+    public static final Color mtnPeakPallette1 = new Color(180, 220, 255);
+    public static final Color mtnPeakPallette2 = new Color(0, 180, 255);
 
-    public Color wallBackground = new Color(60/2, 58/2, 56/2);
-    public Color wallForeground = new Color(40*3, 38*3, 36*3);
-    public SpecialText poundWall = new SpecialText("#", wallForeground, wallBackground);
+    public static final Color wallBackground = new Color(60/2, 58/2, 56/2);
+    public static final Color wallForeground = new Color(40*3, 38*3, 36*3);
+    public static final SpecialText poundWall = new SpecialText("#", wallForeground, wallBackground);
 
-    public Color forestPallete1 = new Color(80, 120, 40);
-    public Color forestPallete2 = new Color(100, 240, 50);
+    public static final Color forestPallete1 = new Color(80, 120, 40);
+    public static final Color forestPallete2 = new Color(100, 240, 50);
 
 
-    public String optionsText =
+    public static final String optionsText =
             " _____           __                                  \n" +
                     "/\\  __`\\        /\\ \\__  __                           \n" +
                     "\\ \\ \\/\\ \\  _____\\ \\ ,_\\/\\_\\    ___     ___     ____  \n" +
@@ -50,7 +50,7 @@ public class Art implements java.io.Serializable{
                     "             \\ \\_\\                                   \n" +
                     "              \\/_/                                   ";
 
-    public String mainMenu =
+    public static final String mainMenu =
             "|                                            |\n" +
             "| +-- +-+ | | +-- +-+ +-- +-- +-+ | |        |\n" +
             "| |   | | | | |   | | |   |   | | \\ /        |\n" +
@@ -80,15 +80,15 @@ public class Art implements java.io.Serializable{
             "|                                            |\n" +
             "|                                            |\n";
 
-    public String settingsMenu =
+    public static final String settingsMenu =
             "@                                            @\n" +
             "|                                            |\n" +
             "|              S E T T I N G S               |\n" +
             "|                                            |\n" +
             "|                                            |\n" +
-            "|                   α     Controls           |\n" +
+            "|                         Display            |\n" +
+            "|                         Controls           |\n" +
             "|                         Main Menu          |\n" +
-            "|                                            |\n" +
             "|                                            |\n" +
             "|                                            |\n" +
             "|                                            |\n" +
@@ -110,7 +110,37 @@ public class Art implements java.io.Serializable{
             "|                                            |\n" +
             "@                                            @\n";
 
-    public String controlsMenu =
+    public static final String displayMenu =
+            "@              C O N T R O L S               @\n" +
+            "|    Profile                                 |\n" +
+            "| #----------------#-----------------------# |\n" +
+            "| |  Font          |                       | |\n" +
+            "| #----------------#-----------------------# |\n" +
+            "| |  Font Style    |                       | |\n" +
+            "| #----------------#-----------------------# |\n" +
+            "| |  Color         |                       | |\n" +
+            "| #----------------#-----------------------# |\n" +
+            "| |  Brightness    |                       | |\n" +
+            "| #----------------#-----------------------# |\n" +
+            "| |  Frame Style   |                       | |\n" +
+            "| #----------------#-----------------------# |\n" +
+            "| |  Window Border |                       | |\n" +
+            "| #----------------#-----------------------| |\n" +
+            "| |  Window Size   |                       | |\n" +
+            "| #----------------#-----------------------# |\n" +
+            "| |  Always On Top |                       | |\n" +
+            "| #----------------#-----------------------# |\n" +
+            "|    Settings                                |\n" +
+            "| #----------------------------------------# |\n" +
+            "| |                                        | |\n" +
+            "| |                                        | |\n" +
+            "| |                                        | |\n" +
+            "| |                                        | |\n" +
+            "| |                                        | |\n" +
+            "| #----------------------------------------# |\n" +
+            "@                                            @\n";
+
+    public static final String controlsMenu =
             "@              C O N T R O L S               @\n" +
             "|   Profile                                  |\n" +
             "|                  Mapping   |   1   |   2   |\n" +
@@ -133,14 +163,14 @@ public class Art implements java.io.Serializable{
             "|                                            |\n" +
             "|   Settings                                 |\n" +
             "|                                            |\n" +
-            "|  @--------------------------------------@  |\n" +
+            "|  #--------------------------------------#  |\n" +
             "|  |                                      |  |\n" +
             "|  |                                      |  |\n" +
             "|  |                                      |  |\n" +
-            "|  @--------------------------------------@  |\n" +
+            "|  #--------------------------------------#  |\n" +
             "@                                            @\n";
 
-    public String multiplayerMenu =
+    public static final String multiplayerMenu =
             "@                                            @\n" +
             "|                                            |\n" +
             "|        C O N N E C T   T O   L A N         |\n" +
@@ -171,7 +201,7 @@ public class Art implements java.io.Serializable{
             "|                                            |\n" +
             "@                                            @\n";
 
-    public String pausedText =
+    public static final String pausedText =
             " ____                                     __     \n" +
                     "/\\  _`\\                                  /\\ \\    \n" +
                     "\\ \\ \\L\\ \\ __     __  __    ____     __   \\_\\ \\   \n" +
@@ -181,7 +211,7 @@ public class Art implements java.io.Serializable{
                     "    \\/_/\\/__/\\/_/ \\/___/  \\/___/  \\/____/\\/__,_ /";
 
 
-    public String tutForest =
+    public static final String tutForest =
 
             "             0---------------------------------------0                                                                                  \n" +
             "             |                                       |                                                                                  \n" +
@@ -221,11 +251,11 @@ public class Art implements java.io.Serializable{
             "                                                                  |    #$##%      ,#%#    %#|                                           \n" +
             "                                                                  0-------------------------0                                           \n";
 
-    public String tutWaterPool =
+    public static final String tutWaterPool =
             "W      \n" +
             "WWW    \n" +
             "WWWWWW \n";
-    public String sourcePit =
+    public static final String sourcePit =
             "                                                                                                                                                             \n" +
             "                                                                                                               .                                             \n" +
             "                                                                                                              o                                              \n" +
@@ -271,21 +301,21 @@ public class Art implements java.io.Serializable{
             "                                                      .:   :                                                                                                 \n" +
             "                                                      :    ^                                                                                                 \n";
 
-    public String textBox =
+    public static final String textBox =
             "#-------------------------------------------#\n" +
             "|                                           |\n" +
             "|                                           |\n" +
             "|                                           |\n" +
             "#-------------------------------------------#\n";
 
-    public String textBoxHelpful =
+    public static final String textBoxHelpful =
             "#-------------------------------------------#\n" +
             "|                                           |\n" +
             "|                                           |\n" +
             "|                                           |\n" +
             "#-ENTER-to-continue-------------------------#\n";
 
-    public String textBoxQuestion =
+    public static final String textBoxQuestion =
             "#-------------------------------------------#\n" +
             "|                                           |\n" +
             "|                                           |\n" +
@@ -293,7 +323,7 @@ public class Art implements java.io.Serializable{
             "   > NO      YES                             \n";
 
 
-    public String circle1 =
+    public static final String circle1 =
                     "                      ╔══════════════╗\n" +
                     "                 ╔════╝              ╚════╗\n" +
                     "             ╔═══╝                        ╚═══╗\n" +
@@ -325,21 +355,21 @@ public class Art implements java.io.Serializable{
                     "                 ╚════╗              ╔════╝\n" +
                     "                      ╚══════════════╝\n";
 
-    public String smallRoom =
+    public static final String smallRoom =
                     "╔═══════════╗                             ╔═══════════╗ \n"+
                     "║           ╚═════════════════════════════╝         ..║ \n"+
                     "║           |     |     |     |     |     |         ... \n"+
                     "║           ╔═════════════════════════════╗         ..║ \n"+
                     "╚═══════════╝                             ╚═══════════╝ \n";
 
-    public String smallRoome =
+    public static final String smallRoome =
                     "╔═══════════╗                             ╔═══════════╗ \n"+
                     "║           ╚═════════════════════════════╝         ..║ \n"+
                     "║           |     |     |     |     |     |         ... \n"+
                     "║           ╔═════════════════════════════╗         ..║ \n"+
                     "╚═══════════╝                             ╚═══════════╝ \n";
 
-    public String largerRoom =
+    public static final String largerRoom =
                     "╔════╝   ╚════╗\n" +
                     "║>        .  L║\n" +
                     "╝     .  .    ╚\n" +
@@ -349,7 +379,7 @@ public class Art implements java.io.Serializable{
                     "╚════╗   ╔════╝\n" ;
 
 
-    public String smallerRoom =
+    public static final String smallerRoom =
                     "     ║   ║     \n" +
                     " ╔═══╝   ╚═══╗ \n" +
                     "═╝           ╚═\n" +
@@ -358,22 +388,22 @@ public class Art implements java.io.Serializable{
                     " ╚═══╗   ╔═══╝ \n" +
                     "     ║   ║     \n";
 
-    public String horizCorridor =// 3 high, 30 wide
+    public static final String horizCorridor =// 3 high, 30 wide
                     "══════════════════════════════\n"+
                     "  |    |    |    |    |    |  \n"+
                     "══════════════════════════════\n";
 
-    public String horizCorridorBlockedClean =// 3 high, 30 wide
+    public static final String horizCorridorBlockedClean =// 3 high, 30 wide
                     "═════════╗          ╔═════════\n"+
                     "  |    | ║          ║ |    |  \n"+
                     "═════════╝          ╚═════════\n";
 
-    public String horizCorridorBlockedDebris = // 3 high, 30 wide
+    public static final String horizCorridorBlockedDebris = // 3 high, 30 wide
                     "═══════════#.#══##═#══════════\n"+
                     "  |    | .#### . |.   |    |  \n"+
                     "════════^═══## #═^════════════\n";
 
-    public String vertCorridor =// 10 high, 5 wide
+    public static final String vertCorridor =// 10 high, 5 wide
                             "║ _ ║\n"+
                             "║   ║\n"+
                             "║ _ ║\n"+
@@ -385,7 +415,7 @@ public class Art implements java.io.Serializable{
                             "║ _ ║\n"+
                             "║   ║\n";
 
-    public String vertCorridorBlockedClean = // 10 high, 5 wide
+    public static final String vertCorridorBlockedClean = // 10 high, 5 wide
                     "║ _ ║\n"+
                     "║   ║\n"+
                     "║ _ ║\n"+
@@ -398,7 +428,7 @@ public class Art implements java.io.Serializable{
                     "║   ║\n";
 
 
-    public String intro1 =
+    public static final String intro1 =
             "######################    ####################\n" +
             "######################   @####################\n" +
             "######################    ####################\n" +
@@ -432,11 +462,11 @@ public class Art implements java.io.Serializable{
             "           @                                  \n";
 
 
-    public String intro2 =
-            "public class World extends MagicPlanet{        \n" +
+    public static final String intro2 =
+            "public static final class World extends MagicPlanet{        \n" +
             "   ArrayList<Stuff> things = new ArrayList<>();\n" +
             "                                               \n" +
-            "   public World(God god, int x, int y, int z){ \n" +
+            "   public static final World(God god, int x, int y, int z){ \n" +
             "      benev = god.getBenevolence();            \n" +
             "      summonAllThings(benev, MAGICAL);         \n" +
             "      super.xPos = x;                          \n" +
@@ -447,13 +477,13 @@ public class Art implements java.io.Serializable{
             "      init();                                  \n" +
             "   }                                           \n" +
             "                                               \n" +
-            "   public void orbit(Star sun, velMultiplier){ \n" +
+            "   public static final void orbit(Star sun, velMultiplier){ \n" +
             "      setOrbit(star, velMultip, false);        \n" +
             "   }                                           \n" +
             "                                               \n" +
             "   boolean useAllCharacters = false;           \n" +
             "                                               \n" +
-            "   public void getUsage(){                     \n" +
+            "   public static final void getUsage(){                     \n" +
             "      return useAllCharacters;                 \n" +
             "   }                                           \n" +
             "                                               \n" +
@@ -464,7 +494,7 @@ public class Art implements java.io.Serializable{
             "     It should've been fixed last Thursday...  \n" +
             "   */                                          \n" +
             "                                               \n" +
-            "   public void generateWorldMagic(){           \n" +
+            "   public static final void generateWorldMagic(){           \n" +
             "      for(int ii = 0; ii < 9001; ii++){        \n" +
             "         int x = Math.random() * 100:          \n" +
             "         int y = Math.random() * 100;          \n" +
@@ -480,7 +510,7 @@ public class Art implements java.io.Serializable{
 
 
 
-    public String sideMtns =
+    public static final String sideMtns =
             "                      _                                                         \n" +
                     "                     /#\\                                                        \n" +
                     "                    /###\\     /\\                                                \n" +
@@ -505,7 +535,7 @@ public class Art implements java.io.Serializable{
                     "IIIIilIIIIITTTTTTTIIIIIIIIIIIIITTTTTIIIIIIIIITTTTTTTTTTIIIIIIIIIlIIIIIIIITTTT   \n" +
                     "IIIIIIIIITTTTTTTTTTTTTIIIIIIIITTTTTTTTIIIIIITTTTTTTTTTTTTTIIIIIIIIIIIIIITTTTT   ";
 
-    public String houseByMountansSide =
+    public static final String houseByMountansSide =
             "                                   /\\                                   \n" +
                     "                              /\\  //\\\\                              \n" +
                     "                       /\\    //\\\\///\\\\\\        /\\                   \n" +
@@ -522,7 +552,7 @@ public class Art implements java.io.Serializable{
                     "/ ^ ^ ^  ^  ^  ^   ||||||||||||||||||||||||||||||oooooooooo| |oooooo\n" +
                     "ooooooooooooooooooooooooooooooooooooooooooooooooooooooooo           ";
 
-    public String topMenu =
+    public static final String topMenu =
                     "+MENU-------------+\n" +
                     "|  Spells         |\n" +
                     "|  Items          |\n" +
@@ -533,7 +563,7 @@ public class Art implements java.io.Serializable{
                     "+-----------------+\n" +
                     "    A: Confirm     \n";
 
-    public String quitMenu =
+    public static final String quitMenu =
                     "+-SAVE / QUIT-----+\n" +
                     "|  BACK TO MENU   |\n" +
                     "|  SAVE GAME      |\n" +
@@ -543,7 +573,7 @@ public class Art implements java.io.Serializable{
                     "+-----------------+\n" +
                     "    A: Confirm     \n";
 
-    public String taterMenu =
+    public static final String taterMenu =
                     "+-MAGIC POTATO----+\n" +
                     "| UPGRADE?        |\n" +
                     "|                 |\n" +
@@ -554,14 +584,14 @@ public class Art implements java.io.Serializable{
                     "+-----------------+\n" +
                     "    A: Confirm     \n";
 
-    public String ipSetMenu =
+    public static final String ipSetMenu =
             "  Type IP: _____________\n" +
             "  <Clear IP>            \n" +
             "  Connect!              \n" +
             "  Back                  \n";
 
 
-    public String itemsMenu =
+    public static final String itemsMenu =
                     "+Info-----------------------+ +Items-----( / )\n" +
                     "|                           | 1               \n" +
                     "|                           |  ,,,,,,,,,,,,,,,\n" +
@@ -590,7 +620,7 @@ public class Art implements java.io.Serializable{
                     "                                              \n" +
                     "                                              \n";
 
-    public String spellsMenu =
+    public static final String spellsMenu =
                     "#Info=======================# #Spells====( / )\n" +
                     "|                           | 1               \n" +
                     "|                           |  ,,,,,,,,,,,,,,,\n" +
@@ -619,7 +649,7 @@ public class Art implements java.io.Serializable{
                     "                                              \n" +
                     "                                              \n";
 
-    public String equipMenu =
+    public static final String equipMenu =
                     "@Info~~~~~~~~~~~~~~~~~~~~~~~@ @Equipment~( / )\n" +
                     "|                           | 1               \n" +
                     "|                           |  ,,,,,,,,,,,,,,,\n" +
@@ -650,7 +680,7 @@ public class Art implements java.io.Serializable{
 
 
 
-    public String cliffSide =
+    public static final String cliffSide =
             "          :    :                                                                                                         (mountain)    :  ::        \n" +
             "         :     :                                                                                                                        :   :       \n" +
             "        :     :                                                                        ::^:::    ::^::                                  :    ^::    \n" +
@@ -686,7 +716,7 @@ public class Art implements java.io.Serializable{
             "                                                                                                      |                  ##  #######   #############\n";
 
 
-    public String sourceCaves =
+    public static final String sourceCaves =
                                     "#############################################################  ###########################################################################################################################HHHHHHH###################################################################################################################################################################################################################################\n" +
                                     "############################################################1111##########################################################################################################################HHHH  H################################################################################################################################                                                                                                  #\n" +
                                     "###########################################################222222################### ######################### ###########################################################################H     H################################################################################################################################ ########################### ########## ###############################################           #\n" +
@@ -752,7 +782,7 @@ public class Art implements java.io.Serializable{
                                     "############################################################################################################################################################################################################################################### ####################################################################################################################################################################################\n";
 
 
-    public String banditFortress =
+    public static final String banditFortress =
                     "                  ss           ss                                     ss                                                                \n" +
                     "         s        ssss       ssssss                                ssss     ss       s                                                  \n" +
                     "  ss      ss     ssssssssssssssssssss            :   :         sssssss     sss       ss                                                 \n" +
@@ -859,7 +889,7 @@ public class Art implements java.io.Serializable{
                     "                                                              gggg   gggg                                                               \n" +
                     "                                                             gggg     gggg                                                              \n";
 
-    public String innerMountains =
+    public static final String innerMountains =
                     "                       :   :                                       \n" +
                     "                      ^    :                                       \n" +
                     "                    ::    ;                                        \n" +
@@ -909,7 +939,7 @@ public class Art implements java.io.Serializable{
                     "       :     :                                                     \n";
 
 
-    public String snowyPeak =
+    public static final String snowyPeak =
             "                                                                                                                         @                                                                    00           \n" +
             "                                                                                                                      @                                                                      O  \\         \n"+
             "                                                                                                                       @                                                                    o    \\        \n"+
@@ -937,7 +967,7 @@ public class Art implements java.io.Serializable{
             "    |             |                                                                                                                                                                                       \n";
 
 
-    public String iceCave =
+    public static final String iceCave =
             "#############################################################################\n" +
             "#######################   ###################################################\n" +
             "####################^       #################################################\n" +
@@ -977,7 +1007,7 @@ public class Art implements java.io.Serializable{
             "######################################222####################################\n" +
             "######################################11#####################################\n";
 
-    public String hiddenBunker =
+    public static final String hiddenBunker =
             "                                                                                                                              C   C                      \n" +
             "                                ############## ############## ##############          ###########################            CC   C                      \n" +
             "                                #888888888   ###            ###            #          #                      888#            C    CC                     \n" +
@@ -1016,7 +1046,7 @@ public class Art implements java.io.Serializable{
             "    #  #                                                                                                                                                 \n" +
             "    #  #                                                                                                                                                 \n";
 
-    public String witchHut =
+    public static final String witchHut =
             "                          ##                      \n" +
             "                          ##                      \n" +
             "                          ##                      \n" +
@@ -1032,7 +1062,7 @@ public class Art implements java.io.Serializable{
             "     |__|                                         \n" +
             "     |__|                                         \n";
 
-    public String witchHutCauldronUI =
+    public static final String witchHutCauldronUI =
             "o------------------------------o\n" +
             "|        - RECIPE -            |\n" +
             "|   1.                         |\n" +
@@ -1047,7 +1077,7 @@ public class Art implements java.io.Serializable{
             "|                              |\n" +
             "o------------------------------o\n";
 
-    public String hiddenBunkerWater =
+    public static final String hiddenBunkerWater =
             "          \n" +
             "       WWW\n" +
             "    WWWWWW\n" +
@@ -1056,7 +1086,7 @@ public class Art implements java.io.Serializable{
             "WWWW      \n" +
             "          \n";
 
-    public String banditKingHall =
+    public static final String banditKingHall =
             "                                         ^::;:^:::^:                        \n" +
                     "                                     ;^:;           ^::                     \n" +
                     "                                    :8                 ^                    \n" +
@@ -1132,7 +1162,7 @@ public class Art implements java.io.Serializable{
                     "                               #   #                                        \n" +
                     "                               #   #                                        \n";
 
-    public String largeBoat =
+    public static final String largeBoat =
                     "                      .^.                   \n" +
                     "                      | |                   \n" +
                     "                      | |                   \n" +
@@ -1207,7 +1237,7 @@ public class Art implements java.io.Serializable{
                     "              \\               /             \n" +
                     "               \\_____________/              \n";
 
-    public String dock =
+    public static final String dock =
         "                      ______________..\n" +
         "                      | .  .   .    ||\n" +
         "                      |       .     ||\n" +
@@ -1255,7 +1285,7 @@ public class Art implements java.io.Serializable{
         "                      |_____________||\n";
 
 
-public String testRoom =
+public static final String testRoom =
         "O-------------------------------O\n" +
         "|                               |\n" +
         "|                               |\n" +
@@ -1274,7 +1304,7 @@ public String testRoom =
         "O-------------------------------O\n";
 
 //15 x shift
-public String forest = // LMNOPQRS UVWXYZ lmnqrs uv xyz
+public static final String forest = // LMNOPQRS UVWXYZ lmnqrs uv xyz
                 "TTTTTTThhh  ddw22w222w1hTTTTTTTTTTTTThhhhttttttttttttttttttttttttttttttttttttttttttttty     httttttttttttztttttttttttttttxtttttttttxtttttttttttttttttttttttttttttttttTTTTT\n" +
                 "TTTTTTThh   dd1w2w2w2w21hTTTTTTTTTTThhhhhtttttttttttttttttyttttxtytttttztyttyttxttthh     ztttttxtttttttttttttttztttxttytttxtttttttttttttttytttttttttttttttttttttttttTTTTT\n" +
                 "TTTTTTThh    dd1www2ww21hTTTTTTTTThhhhhhttttttttttytttxttttttytttttthhxhhhzhhxhhhzhy     xhttzttttyttttttytyxtzttthhhhhzhhnnnnyhhtzhhhhytttttttttttttttttttttttttttttTTTTT\n" +
@@ -1403,7 +1433,7 @@ public String forest = // LMNOPQRS UVWXYZ lmnqrs uv xyz
                 "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr\n";
 
 
-public String fondantVillage =
+public static final String fondantVillage =
                 "33333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333\n" +
                 "22222222222233333333333333333333333333333333333222222222223333333332222222222222222222222222222333333333222222222222233333333222222222223333333333333333333333333333222222\n" +
                 "22222222222222233333333333222222223333333222222222222222222233333222222222111111111111111111122222222222221111111112222222222221111112222222222333333333222222222222222222\n" +
@@ -1483,7 +1513,7 @@ public String fondantVillage =
 "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr33rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr\n"
 */
 
-    public String forestVeil =
+    public static final String forestVeil =
         "tttttttttttttttttttttttttttttttttttttttttttttttttttt                  \n"+
         "ttttttttttttttttttttttttttttttttttttttttttttttttttth                  \n"+
         "tttttttttttttttttttttttttttttttttttttttttttttttttth  hhh              \n"+
@@ -1504,14 +1534,14 @@ public String fondantVillage =
         "tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt        \n"+
         "tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt        \n";
 
-public String forestKiosk =
+public static final String forestKiosk =
         "  ____  \n" +
         " /      \n" +
         "        \n" +
         "  ____/ \n";
 
 
-    public String testSnow =
+    public static final String testSnow =
         "            sssssssssssssssss                                               \n" +
         "           ssssssssssssssssssss                                   sssss     \n" +
         "              ssssssssssssss                                    sssssssss   \n" +
@@ -1523,7 +1553,7 @@ public String forestKiosk =
         "                    sssssssssssssssss                               ssss    \n" +
         "               sssssssssssssssssssssss                               sss    \n";
 
-    public String villageInterior =
+    public static final String villageInterior =
         "      O---------------O                                   FF                                       FF                     \n" +
         "      |ooo_____ooooooo|                               O###FF#############O                      O#FFFF###############O    \n" +
         "      |ooooo_____ooooo|                               #_tFFFFt___mmmm____#                      #tFFFFt_______#oootto#    \n" +
@@ -1592,7 +1622,7 @@ public String forestKiosk =
         "                                                                                                                          \n";
 
 
-    public String shopTunnel =
+    public static final String shopTunnel =
             ".............................................................................\n" +
             ".............................................................................\n" +
             ".............................................................................\n" +
@@ -1637,7 +1667,7 @@ public String forestKiosk =
             ".............................................................................\n" +
             ".............................................................................\n";
 
-    public String shopStorgeVeil =
+    public static final String shopStorgeVeil =
                                         "#############################\n" +
                                         "#############################\n" +
                                         "#############################\n" +
@@ -1649,12 +1679,12 @@ public String forestKiosk =
                                         "#############################\n" +
                                         "#############################\n" +
                                         "#############################\n";
-    public String aura1 =
+    public static final String aura1 =
             "   ### \n" +
             " ######\n" +
             "###### \n" +
             " ####  \n";
-    public String aura2 =
+    public static final String aura2 =
             " ## ####  \n" +
             "#######   \n" +
             "  ####### \n" +

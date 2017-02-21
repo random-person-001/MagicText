@@ -12,7 +12,7 @@ public class MetaSettings implements Settings{
 
     public static final transient String FILE_NAME = "MetaSettings";
 
-    public static final transient String[] OVERITE_PROTECTED_KEYMAPS = {} ;
-    public static final transient String DEFAULT_KEYMAP = "DefaultKeyMap";
+    public static final transient String[] OVERWRITE_PROTECTED_KEYMAPS = {} ;
+    public static final transient String DEFAULT_KEYMAP = "";
     public String USER_KEYMAP = "";
 }

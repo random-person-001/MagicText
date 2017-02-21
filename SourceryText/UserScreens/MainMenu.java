@@ -29,15 +29,16 @@ class MainMenu {
     private StartMethods starter;
     private KeyInput keyInputter;
     private int keyCode = 0;
-    private final int UP = 1;
-    private final int DOWN = 2;
-    private final int ENTER = 3;
-    private final int TOP_MENU = 0;
-    private final int MULTIPLAYER_MENU = 1;
-    private final int IP_ENTERING_MENU = 2;
-    private final int SETTINGS_MENU = 3;
-    private final int CONTROLS_MENU = 4;
-    private final int EXIT_MENU = 5;
+    private static final int UP = 1;
+    private static final int DOWN = 2;
+    private static final int ENTER = 3;
+    private static final int TOP_MENU = 0;
+    private static final int MULTIPLAYER_MENU = 1;
+    private static final int IP_ENTERING_MENU = 2;
+    private static final int SETTINGS_MENU = 3;
+    private static final int CONTROLS_MENU = 4;
+    private static final int DISPLAY_MENU = 5;
+    private static final int EXIT_MENU = 6;
 
     private int menuID = TOP_MENU;
     private char keyChar = ' ';
@@ -67,6 +68,7 @@ class MainMenu {
         org.addLayer(menuLayer);
 
         metasettings = (MetaSettings) saveORload.loadSettings(metasettings, metasettings.FILE_NAME);
+        if(metasettings==null)      metasettings = new MetaSettings();
         presets = saveORload.getFileNames(keymap);
         for (int i=0;i<presets.length;i++) {
             if (presets[i] == metasettings.DEFAULT_KEYMAP) {
@@ -163,8 +165,14 @@ class MainMenu {
                 break;
             case SETTINGS_MENU:
                 org.editLayer(" ", "SETTINGS_MENU", oldCursorY, 24);
-                loopAtMenuEnd(5, 6);
+                loopAtMenuEnd(5, 7);
                 org.editLayer("*", "SETTINGS_MENU", cursorY, 24);
+                break;
+            case DISPLAY_MENU:
+                cursorY += cursorY>oldCursorY ? 1 : cursorY!=1 ? -1 : 0;
+                org.editLayer(" ", "DISPLAY_MENU", oldCursorY, 3);
+                loopAtMenuEnd(1, 19);
+                org.editLayer("*", "DISPLAY_MENU", cursorY, 3);
                 break;
             case CONTROLS_MENU:
                 if(cursorY==2 || cursorY==19)       {cursorY+=cursorY-oldCursorY;}
@@ -210,6 +218,22 @@ class MainMenu {
     }
 
     /**
+     * Generic case for pressing enter; splits flow off into the different methods according to whether in multiplayer
+     * menu or not.
+     */
+    private void onEnterPressed() {
+        if (menuID == TOP_MENU) {
+            onEnterPressedDuringTop();
+        } else if(menuID == MULTIPLAYER_MENU || menuID == IP_ENTERING_MENU) {
+            onEnterPressedDuringMultiplayer();
+        } else if(menuID == SETTINGS_MENU) {
+            onEnterPressedDuringSettings();
+        } else if(menuID == CONTROLS_MENU){
+            onEnterPressedDuringControls();
+        }
+    }
+
+    /**
      * Flow control and code to execute when, during the multiplayer menu, the enter key is pressed
      */
     private void onEnterPressedDuringMultiplayer() {
@@ -234,6 +258,141 @@ class MainMenu {
     }
 
     /**
+     * Flow control and code to execute when, during the Settings menu, the enter key is pressed
+     */
+    private void onEnterPressedDuringSettings() {
+        if (cursorY == 5) { //to display menu
+            org.editLayer(" ", "SETTINGS_MENU", cursorY, 24);
+            org.removeLayer("SETTINGS_MENU");
+            System.out.println("Entering display menu");
+            menuID = DISPLAY_MENU;
+            org.addLayer(new Layer(Art.strToArray(new Art().displayMenu, true), "DISPLAY_MENU"));
+            cursorY = 1;
+            waitAMomentAndUpdateCursor();
+//            org.editLayer(presets[presetI], "CONTROLS_MENU", 1, 13);
+//            for(int action=0; action<=15;action++){
+//                for(int ordinal=1; ordinal<=2; ordinal++) {
+//                    int k = keymap.getMap(action, ordinal);
+//                    org.editLayer(k!=-1 ? keymap.getKeyText(k) : "", "CONTROLS_MENU", action+3, 31+(ordinal-1)*8);
+//                }
+//            }
+        }
+        if (cursorY == 6) { //to control menu
+            org.editLayer(" ", "SETTINGS_MENU", cursorY, 24);
+            org.removeLayer("SETTINGS_MENU");
+            System.out.println("Entering controls menu");
+            menuID = CONTROLS_MENU;
+            org.addLayer(new Layer(Art.strToArray(new Art().controlsMenu, true), "CONTROLS_MENU"));
+            cursorY = 1;
+            waitAMomentAndUpdateCursor();
+            org.editLayer(presets[presetI], "CONTROLS_MENU", 1, 13);
+            for(int action=0; action<=15; action++){
+                for(int ordinal=1; ordinal<=2; ordinal++) {
+                    int k = keymap.getMap(action, ordinal);
+                    org.editLayer(k!=-1 ? keymap.getKeyText(k) : "", "CONTROLS_MENU", action+3, 31+(ordinal-1)*8);
+                }
+            }
+        }
+        else if (cursorY == 7) { //back to main menu
+            saveORload.saveSettings(metasettings, metasettings.FILE_NAME);
+            org.editLayer(" ", "SETTINGS_MENU", cursorY, 24);
+            org.removeLayer("SETTINGS_MENU");
+            System.out.println("Returning to main menu");
+            menuID = TOP_MENU;
+            org.addLayer(new Layer(Art.strToArray(new Art().mainMenu, true), "MAIN_MENU"));
+            cursorY = 12;
+            waitAMomentAndUpdateCursor();
+        }
+    }
+
+    /**
+     * Flow control and code to execute when, during the Controls Mapping menu, the enter key is pressed
+     */
+    private void onEnterPressedDuringDisplay() {
+        if (cursorY == 1) {
+//            String name = newName!="" ? newName : presets[presetI] ;
+//            for (int i=0;i<metasettings.OVERITE_PROTECTED_KEYMAPS.length;i++) {
+//                if(name.equals(metasettings.OVERITE_PROTECTED_KEYMAPS[i]))        {return;}
+//            }
+//            saveORload.saveSettings(keymap, newName!="" ? newName : presets[presetI]);
+//            newName = "";
+//            namingI = 0;
+//            presetI = -1;
+//            presets = saveORload.getFileNames(keymap);
+//            for (int i=0;i<presets.length;i++) {
+//                if (presets[i].equals(name)) {
+//                    presetI = i;
+//                    break;
+//                }
+//            }
+        }
+        else if (cursorY == 20) { //back to settings menu
+//            metasettings.USER_KEYMAP = presets[presetI];
+            org.editLayer(" ", "DISPLAY_MENU", cursorY, 3);
+            org.removeLayer("DISPLAY_MENU");
+            System.out.println("Returning to settings menu");
+            menuID = SETTINGS_MENU;
+            org.addLayer(new Layer(Art.strToArray(new Art().settingsMenu, true), "SETTINGS_MENU"));
+            cursorY = 5;
+            waitAMomentAndUpdateCursor();
+        }
+//        else{
+//            mapping = true;
+//        }
+    }
+
+    /**
+     * Flow control and code to execute when, during the Controls Mapping menu, the enter key is pressed
+     */
+    private void onEnterPressedDuringControls() {
+        if (cursorY == 1) {
+            String name = newName!="" ? newName : presets[presetI] ;
+            for (int i=0;i<metasettings.OVERWRITE_PROTECTED_KEYMAPS.length;i++) {
+                if(name.equals(metasettings.OVERWRITE_PROTECTED_KEYMAPS[i]))        {return;}
+            }
+            saveORload.saveSettings(keymap, newName!="" ? newName : presets[presetI]);
+            newName = "";
+            namingI = 0;
+            presetI = -1;
+            presets = saveORload.getFileNames(keymap);
+            for (int i=0;i<presets.length;i++) {
+                if (presets[i].equals(name)) {
+                    presetI = i;
+                    break;
+                }
+            }
+        }
+        else if (cursorY == 20) { //back to settings menu
+            metasettings.USER_KEYMAP = presets[presetI];
+            org.editLayer(" ", "CONTROLS_MENU", cursorY, 2);
+            org.removeLayer("CONTROLS_MENU");
+            System.out.println("Returning to settings menu");
+            menuID = SETTINGS_MENU;
+            org.addLayer(new Layer(Art.strToArray(new Art().settingsMenu, true), "SETTINGS_MENU"));
+            cursorY = 5;
+            waitAMomentAndUpdateCursor();
+        }
+        else{
+            mapping = true;
+        }
+    }
+
+    /**
+     * Call when a non-arrow, non-enter key is pressed.
+     *
+     * @param e which key
+     */
+    private void onGenericKeyPressed(KeyEvent e) {
+        if (menuID == IP_ENTERING_MENU) {
+            onKeyPressedDuringIP(e);
+        } else if (menuID == DISPLAY_MENU){
+            onKeyPressedDuringDisplay(e);
+        } else if (menuID == CONTROLS_MENU){
+            onKeyPressedDuringControls(e);
+        }
+    }
+
+    /**
      * Generally, when a key is pressed during the IP entering submenu, call this.
      *
      * @param event the KeyEvent generated
@@ -251,6 +410,15 @@ class MainMenu {
             ipString = ipString.substring(0, ipString.length()-1);
             System.out.printf("IP Lessened! (Now %1$s)\n", ipString);
         }
+    }
+
+    /**
+     * Generally, when a key is pressed during the control mapping menu, call this.
+     *
+     * @param event the KeyEvent generated
+     */
+    private void onKeyPressedDuringDisplay(KeyEvent event) {
+
     }
 
     /**
@@ -358,101 +526,6 @@ class MainMenu {
         }
     }
 
-    /**
-     * Flow control and code to execute when, during the Settings menu, the enter key is pressed
-     */
-    private void onEnterPressedDuringSettings() {
-        if (cursorY == 5) { //to control menu
-            org.editLayer(" ", "SETTINGS_MENU", cursorY, 24);
-            org.removeLayer("SETTINGS_MENU");
-            System.out.println("Entering controls menu");
-            menuID = CONTROLS_MENU;
-            org.addLayer(new Layer(Art.strToArray(new Art().controlsMenu, true), "CONTROLS_MENU"));
-            cursorY = 1;
-            waitAMomentAndUpdateCursor();
-            org.editLayer(presets[presetI], "CONTROLS_MENU", 1, 13);
-            for(int action=0; action<=15;action++){
-                for(int ordinal=1; ordinal<=2; ordinal++) {
-                    int k = keymap.getMap(action, ordinal);
-                    org.editLayer(k!=-1 ? keymap.getKeyText(k) : "", "CONTROLS_MENU", action+3, 31+(ordinal-1)*8);
-                }
-            }
-        }
-        else if (cursorY == 6) { //back to main menu
-            saveORload.saveSettings(metasettings, metasettings.FILE_NAME);
-            org.editLayer(" ", "SETTINGS_MENU", cursorY, 24);
-            org.removeLayer("SETTINGS_MENU");
-            System.out.println("Returning to main menu");
-            menuID = TOP_MENU;
-            org.addLayer(new Layer(Art.strToArray(new Art().mainMenu, true), "MAIN_MENU"));
-            cursorY = 12;
-            waitAMomentAndUpdateCursor();
-        }
-    }
-
-    /**
-     * Flow control and code to execute when, during the Settings menu, the enter key is pressed
-     */
-    private void onEnterPressedDuringControls() {
-        if (cursorY == 1) {
-            String name = newName!="" ? newName : presets[presetI] ;
-            for (int i=0;i<metasettings.OVERITE_PROTECTED_KEYMAPS.length;i++) {
-                if(name.equals(metasettings.OVERITE_PROTECTED_KEYMAPS[i]))        {return;}
-            }
-            saveORload.saveSettings(keymap, newName!="" ? newName : presets[presetI]);
-            newName = "";
-            namingI = 0;
-            presetI = -1;
-            presets = saveORload.getFileNames(keymap);
-            for (int i=0;i<presets.length;i++) {
-                if (presets[i].equals(name)) {
-                    presetI = i;
-                    break;
-                }
-            }
-        }
-        else if (cursorY == 20) { //back to settings menu
-            metasettings.USER_KEYMAP = presets[presetI];
-            org.editLayer(" ", "CONTROLS_MENU", cursorY, 24);
-            org.removeLayer("CONTROLS_MENU");
-            System.out.println("Returning to settings menu");
-            menuID = SETTINGS_MENU;
-            org.addLayer(new Layer(Art.strToArray(new Art().settingsMenu, true), "SETTINGS_MENU"));
-            cursorY = 5;
-            waitAMomentAndUpdateCursor();
-        }
-        else{
-            mapping = true;
-        }
-    }
-    /**
-     * Generic case for pressing enter; splits flow off into the different methods according to whether in multiplayer
-     * menu or not.
-     */
-    private void onEnterPressed() {
-        if (menuID == TOP_MENU) {
-            onEnterPressedDuringTop();
-        } else if(menuID == MULTIPLAYER_MENU || menuID == IP_ENTERING_MENU) {
-            onEnterPressedDuringMultiplayer();
-        } else if(menuID == SETTINGS_MENU) {
-            onEnterPressedDuringSettings();
-        } else if(menuID == CONTROLS_MENU){
-            onEnterPressedDuringControls();
-        }
-    }
-
-    /**
-     * Call when a non-arrow, non-enter key is pressed.
-     *
-     * @param e which key
-     */
-    private void onGenericKeyPressed(KeyEvent e) {
-        if (menuID == IP_ENTERING_MENU) {
-            onKeyPressedDuringIP(e);
-        } else if (menuID == CONTROLS_MENU){
-            onKeyPressedDuringControls(e);
-        }
-    }
 
     /**
      * Sometimes ImageOrg takes a bit to add your layer, so you can't edit it right away.  This waits a duration

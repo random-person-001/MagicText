@@ -5,6 +5,7 @@ import SourceryText.Rooms.Room;
 import SourceryText.SpecialText;
 
 import java.awt.*;
+import java.util.Random;
 
 /**
  * Created by Zach on 2/1/2017.
@@ -21,6 +22,27 @@ public class MagicSmoke extends GameObject implements java.io.Serializable{
     public static final int FIRETYPE = 2;
     public static final int ICETYPE = 3;
     public static final int DARKTYPE = 4;
+
+    private SmokeFormula smokeFormula = DEFAULT_THIN_SMOKEFROMULA;
+    public interface SmokeFormula {
+        public boolean contains(int x, int y, MagicSmoke MS);
+    }
+    public static final SmokeFormula DEFAULT_SMOKEFROMULA = new SmokeFormula() {
+        @Override
+        public boolean contains(int x, int y, MagicSmoke MS) {
+            return ((x-MS.x)*(x-MS.x))*4+(y-MS.y)*(y-MS.y) <= MS.radius*MS.radius;
+        }
+    };
+    public static final SmokeFormula DEFAULT_THIN_SMOKEFROMULA = new SmokeFormula() {
+        @Override
+        public boolean contains(int x, int y, MagicSmoke MS) {
+            Random rand = new Random();
+            boolean chance = rand.nextInt(5)!=1;
+            return ((x-MS.x)*(x-MS.x))*4+(y-MS.y)*(y-MS.y) <= MS.radius*MS.radius && chance;
+        }
+    };
+
+
 
     public MagicSmoke (Room room, GameObject follow, int radius, int[] blockedTypes) {
         this(room, follow.getX(), follow.getY(), radius, blockedTypes);
@@ -60,8 +82,11 @@ public class MagicSmoke extends GameObject implements java.io.Serializable{
         SpecialText paint = new SpecialText("", new Color(0, 0, 255, 0), color);
         for (int x=0;x<=radius*2+1;x++) {
             for (int y=0;y<=radius*2+1;y++) {
-                if( ((x-radius)*(x-radius))*4+(y-radius)*(y-radius) <= radius*radius){
+                if( smokeFormula.contains(x+this.x-radius, y+this.y-radius, this)){
                     org.editLayer(paint, layerName, x, y);
+                }
+                else {
+                    org.editLayer(new SpecialText(""), layerName, x, y);
                 }
             }
         }
@@ -75,7 +100,7 @@ public class MagicSmoke extends GameObject implements java.io.Serializable{
                 break;
             }
         }
-        boolean blockedSpot = ((x-this.x)*(x-this.x))+(y-this.y)*(y-this.y) <= radius*radius;
+        boolean blockedSpot = smokeFormula.contains(x, y, this);
         return blockedType && blockedSpot;
     }
 
@@ -87,7 +112,7 @@ public class MagicSmoke extends GameObject implements java.io.Serializable{
                 break;
             }
         }
-        boolean blockedSpot = ((x-this.x)*(x-this.x))+(y-this.y)*(y-this.y) <= radius*radius;
+        boolean blockedSpot = smokeFormula.contains(x, y, this);
         return manaRegenBlocked && blockedSpot;
     }
 
