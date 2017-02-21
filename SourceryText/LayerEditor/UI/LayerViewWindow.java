@@ -99,7 +99,7 @@ public class LayerViewWindow extends JComponent implements MouseListener, MouseM
             }
         }
         g.setColor(new Color(102, 102, 0));
-        g.drawRect(camX, camY - 18, image.getRows() * 14, image.getColumns() * 20);
+        g.drawRect(camX, camY - 18, image.getRows() * 14, image.getColumns() * 20); //Layer border
     }
 
     /**
@@ -214,6 +214,24 @@ public class LayerViewWindow extends JComponent implements MouseListener, MouseM
         }
     }
 
+    private SpecialText[][] clipBoard;
+
+    private void copySelection(){
+        /*
+        int layerX = (selectedX - camX) / 14;
+        int layerY = (selectedY - camY) / 20 + 1;
+        int boxEndX = (calculateSnappedMouseXPos() / 14);
+        int boxEndY = (calculateSnappedMouseYPos() / 20) + 1;
+        System.out.printf("Rectangle:\n cornerX: %1$d\n cornerY: %2$d\n endX: %3$d\n endY: %4$d\n", layerX, layerY, boxEndX, boxEndY);
+        for (int row = layerX; row <= boxEndX; row++){
+            for (int col = layerY; col <= boxEndY; col++){
+                image.setSpecTxt(row, col, owner.toolbar.getSpecTxt());
+            }
+        }
+        */
+        System.out.println("I copy!");
+    }
+
     public void toolReset(){
         selectionStage = 0;
         drawing = false;
@@ -313,18 +331,20 @@ public class LayerViewWindow extends JComponent implements MouseListener, MouseM
     @Override
     public void keyTyped(KeyEvent keyEvent) {}
 
+    private boolean ctrlHeld = false;
+
     @Override
     public void keyPressed(KeyEvent keyEvent) {
-        System.out.println("Key pressed  " + keyEvent.getKeyChar());
-        if (keyEvent.getKeyChar() == 'c'){
-            System.out.println("Setting bar value this");
-            owner.toolbar.setSelectedSpecTxt(getSelectedSpecTxt());
-            owner.toolbar.repaint();
+        ctrlHeld = keyEvent.getKeyCode() == KeyEvent.VK_CONTROL;
+        if (ctrlHeld) {
+            copySelection();
         }
+        System.out.println(ctrlHeld);
     }
     @Override
     public void keyReleased(KeyEvent keyEvent) {
-        keyPressed(keyEvent);
+        ctrlHeld = false;
+        System.out.println("No ctrl anymore");
     }
 
     private class DisplayUpdateTimer extends TimerTask {
@@ -334,7 +354,6 @@ public class LayerViewWindow extends JComponent implements MouseListener, MouseM
                 if (drawing) {
                     image.setSpecTxt(calculateSnappedMouseXPos() / 14, (calculateSnappedMouseYPos() / 20) + 1, owner.toolbar.getSpecTxt());
                 }
-
             }
             if (clearing) {
                 image.setSpecTxt(calculateSnappedMouseXPos() / 14, (calculateSnappedMouseYPos() / 20) + 1, new SpecialText(" "));

@@ -65,9 +65,11 @@ public class DrawToolsPanel extends JPanel implements ActionListener, ItemListen
         copyBtn = new JButton("C");
         copyBtn.setMargin(new Insets(5, 5, 5, 5));
         copyBtn.setEnabled(false);
+        copyBtn.setActionCommand("copy");
         cutBtn = new JButton("X");
         cutBtn.setMargin(new Insets(5, 5, 5, 5));
         cutBtn.setEnabled(false);
+        cutBtn.setActionCommand("cut");
 
         clipboardBtnsPanel.add(copyBtn);
         clipboardBtnsPanel.add(cutBtn);
@@ -100,14 +102,14 @@ public class DrawToolsPanel extends JPanel implements ActionListener, ItemListen
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        boolean wasAButton = false;
+        boolean wasAToolButton = false;
         for (JButton btn : btns){ //Why use long if statements and tedious switch statements, when you can just use for loops?
             if (btn != null)
-                wasAButton |= e.getActionCommand().equals(btn.getActionCommand());
+                wasAToolButton |= e.getActionCommand().equals(btn.getActionCommand());
             else
                 System.out.println("Null btn!");
         }
-        if (wasAButton){
+        if (wasAToolButton){
             resetButtons();
             for (int ii = 0; ii < btns.length ; ii++){ //The amount of convenience to this is astounding
                 JButton btn = btns[ii];
