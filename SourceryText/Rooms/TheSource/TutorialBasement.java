@@ -10,7 +10,7 @@ import SourceryText.GameObjects.*;
 import SourceryText.GameObjects.TheSource.PotOfPetunias;
 import SourceryText.GameObjects.TheSource.Spider;
 import SourceryText.Layer;
-import SourceryText.MagicHole;
+import SourceryText.GameObjects.MagicHole;
 import SourceryText.Rooms.Room;
 import SourceryText.SpecialText;
 
@@ -205,7 +205,7 @@ public class TutorialBasement extends Room {
 
         super.addObject(new MagicSmoke(this, spoidur, 7, new int[]{MagicSmoke.MANAREGEN, MagicSmoke.FIRETYPE, MagicSmoke.HEALTYPE}));
 
-        MagicHole whiteHole = new MagicHole(this, 30, 30, true, new String[]{"Player", "Spell"}, null, null, Color.WHITE, -1, 1);
+        MagicHole whiteHole = new MagicHole(this, 30, 30, true, new String[]{"Player", "Spell"}, null, null, Color.WHITE, -1, 0);
         super.addObject(whiteHole);
 
         super.addObject(new MagicHole(this, 0, 0, whiteHole, new String[]{"Player", "Spell"}, null, null, null, -1, 0));

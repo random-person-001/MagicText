@@ -1,13 +1,12 @@
-package SourceryText;
+package SourceryText.GameObjects;
 
-import SourceryText.GameObjects.GameObject;
-import SourceryText.GameObjects.Mortal;
-import SourceryText.GameObjects.Player;
-import SourceryText.GameObjects.Spell;
+import SourceryText.Layer;
 import SourceryText.Rooms.Room;
+import SourceryText.SpecialText;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.Random;
 
 /**
@@ -110,15 +109,24 @@ public class MagicHole extends GameObject implements java.io.Serializable{
     }
 
     private GameObject[] getSuckables() {
-        ArrayList<GameObject> suckablesList = new ArrayList<>();
-        for(GameObject potentialSuckable: room.objs) {
-            if(isSuckable(potentialSuckable))   { suckablesList.add(potentialSuckable); }
-        } for(GameObject potentialSuckable: room.enemies) {
-            if(isSuckable(potentialSuckable))   { suckablesList.add(potentialSuckable); }
+        while(true) {
+            try {
+                ArrayList<GameObject> suckablesList = new ArrayList<>();
+                for (GameObject potentialSuckable : room.objs) {
+                    if (isSuckable(potentialSuckable)) {
+                        suckablesList.add(potentialSuckable);
+                    }
+                }
+                for (GameObject potentialSuckable : room.enemies) {
+                    if (isSuckable(potentialSuckable)) {
+                        suckablesList.add(potentialSuckable);
+                    }
+                }
+                GameObject[] suckables = new GameObject[suckablesList.size()];
+                suckablesList.toArray(suckables);
+                return suckables;
+            } catch (ConcurrentModificationException e) {e.printStackTrace();}
         }
-        GameObject[] suckables = new GameObject[suckablesList.size()];
-        suckablesList.toArray(suckables);
-        return suckables;
     }
     private boolean isSuckable(GameObject potentialSuckable) {
         boolean suckable = false;
@@ -145,17 +153,21 @@ public class MagicHole extends GameObject implements java.io.Serializable{
 
     private void applySuckage(GameObject toSuck) {
         float[] suckStrength = suckFormula.suckStrength(x - toSuck.getX(), y - toSuck.getY(), toSuck);
-        if(toSuck.isAt(x,y) && spitter)  { suckStrength[0]=rand.nextInt(3)-1; suckStrength[1]=rand.nextInt(3)-1; }
+        if(toSuck.isAt(x,y) && spitter)  {
+            while(suckStrength[0]==0 && suckStrength[1]==0) {
+                suckStrength[0]=rand.nextInt(3)-1;
+                suckStrength[1]=rand.nextInt(3)-1;
+            }
+        }
         toSuck.suckage[0] += spitter ? -suckStrength[0] : suckStrength[0];
         toSuck.suckage[1] += spitter ? -suckStrength[1] : suckStrength[1];
         int suckX = (int) toSuck.suckage[0];
         int suckY = (int) toSuck.suckage[1];
         toSuck.suckage[0]-=suckX;
         toSuck.suckage[1]-=suckY;
-        if(!room.isPlaceSolid(toSuck.getX()+suckX,toSuck.getY()+suckY)) {
+        if(!room.isPlaceSolid(toSuck.getX()+suckX,toSuck.getY()+suckY) || toSuck.getClass()==Spell.class) {
             toSuck.translate(suckX, suckY);
         }
-        else if(toSuck.getClass()==Spell.class) {((Spell)toSuck).onHitNonMortal();}
     }
 
     private void applySpitage(GameObject toSpit) {
