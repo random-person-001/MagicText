@@ -217,19 +217,17 @@ public class LayerViewWindow extends JComponent implements MouseListener, MouseM
     private SpecialText[][] clipBoard;
 
     private void copySelection(){
-        /*
         int layerX = (selectedX - camX) / 14;
         int layerY = (selectedY - camY) / 20 + 1;
-        int boxEndX = (calculateSnappedMouseXPos() / 14);
-        int boxEndY = (calculateSnappedMouseYPos() / 20) + 1;
+        int boxEndX = layerX + (selectedWidth / 14);
+        int boxEndY = layerY + (selectedHeight / 20);
         System.out.printf("Rectangle:\n cornerX: %1$d\n cornerY: %2$d\n endX: %3$d\n endY: %4$d\n", layerX, layerY, boxEndX, boxEndY);
-        for (int row = layerX; row <= boxEndX; row++){
-            for (int col = layerY; col <= boxEndY; col++){
+        for (int row = layerX; row < boxEndX; row++){
+            for (int col = layerY; col < boxEndY; col++){
                 image.setSpecTxt(row, col, owner.toolbar.getSpecTxt());
             }
         }
-        */
-        System.out.println("I copy!");
+        //System.out.println("I copy!");
     }
 
     public void toolReset(){
@@ -240,11 +238,11 @@ public class LayerViewWindow extends JComponent implements MouseListener, MouseM
 
     @Override
     public void mouseClicked(MouseEvent e) {
-
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
+        requestFocus();
         if (e.getButton() == MouseEvent.BUTTON3) { //Camera panning
             cameraMoving = true;
             mousePrevPosX = e.getX();
@@ -331,21 +329,22 @@ public class LayerViewWindow extends JComponent implements MouseListener, MouseM
     @Override
     public void keyTyped(KeyEvent keyEvent) {}
 
-    private boolean ctrlHeld = false;
-
     @Override
     public void keyPressed(KeyEvent keyEvent) {
-        ctrlHeld = keyEvent.getKeyCode() == KeyEvent.VK_CONTROL;
-        if (ctrlHeld) {
-            copySelection();
+        if (keyEvent.isControlDown()) {
+            switch (keyEvent.getKeyCode()){
+                case 'c':
+                    copySelection();
+                    break;
+                case 'x':
+                    //cutSelection();
+                    break;
+            }
         }
-        System.out.println(ctrlHeld);
+        System.out.println(keyEvent.getKeyCode());
     }
     @Override
-    public void keyReleased(KeyEvent keyEvent) {
-        ctrlHeld = false;
-        System.out.println("No ctrl anymore");
-    }
+    public void keyReleased(KeyEvent keyEvent) {}
 
     private class DisplayUpdateTimer extends TimerTask {
         @Override
