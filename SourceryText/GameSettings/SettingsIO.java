@@ -14,6 +14,14 @@ public class SettingsIO {
 
     public void saveSettings(Settings settings, String fileName) {
         try {
+            File folder = new File(System.getProperty("user.dir") + "/" + settings.getSavePath());
+            if (!folder.exists()) {
+                if (folder.mkdir()) {
+                    System.out.println("Created \"" + System.getProperty("user.dir") + "/" + settings.getSavePath() + "\"");
+                } else {
+                    System.out.println("Failed to create \"" + System.getProperty("user.dir") + "/" + settings.getSavePath() + "\"");
+                }
+            }
             fileOut = new FileOutputStream(System.getProperty("user.dir") + "/" + settings.getSavePath() + fileName + settings.getExtension());
             objOut = new ObjectOutputStream(fileOut);
             objOut.writeObject(settings);
@@ -37,7 +45,7 @@ public class SettingsIO {
             i.printStackTrace();
             return null;
         }catch(ClassNotFoundException c) {
-            System.out.println("Employee class not found");
+            System.out.println(settings.getClass().getSimpleName() + " class not found");
             c.printStackTrace();
             return null;
         }

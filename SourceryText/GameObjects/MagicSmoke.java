@@ -15,6 +15,7 @@ public class MagicSmoke extends GameObject implements java.io.Serializable{
     private String layerName = "";
     private Color color;
     private int radius;
+    private GameObject follow;
     private int[] blockedTypes;
     public static final int MANAREGEN = -1;
     public static final int HEALTYPE = 0;
@@ -47,11 +48,13 @@ public class MagicSmoke extends GameObject implements java.io.Serializable{
     public MagicSmoke (Room room, GameObject follow, int radius, int[] blockedTypes) {
         this(room, follow.getX(), follow.getY(), radius, blockedTypes);
         follow.addMagicSmoke(this);
+        this.follow = follow;
     }
 
     public MagicSmoke (Room room, GameObject follow, int radius, int[] blockedTypes, Color color) {
         this(room, follow.getX(), follow.getY(), radius, blockedTypes, color);
         follow.addMagicSmoke(this);
+        this.follow = follow;
     }
 
     public MagicSmoke (Room room, int x, int y, int radius, int[] blockedTypes) {this(room, x, y, radius, blockedTypes, new Color(50, 255, 100, 100));}
